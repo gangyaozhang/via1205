@@ -1,0 +1,20 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "361b9c4d-35f9-4814-8f11-005f446eac8d"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "361b9c4d-35f9-4814-8f11-005f446eac8d",
+    "modelStatus": "valid",
+    "name": "VIA - D3 Horizon Chart Library"
+  }
+}

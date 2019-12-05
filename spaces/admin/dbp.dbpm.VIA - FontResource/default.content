@@ -1,0 +1,21 @@
+<DashboardPluginModel description="" name="fontresource" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services/>
+    <Resources>
+      <Resource uuid="fd9617d4-ed21-43bf-86bd-088ce4c626be" name="OxygenRegular.tff" type="application/octet-stream" size="62066" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="ff5bc967-cc97-4160-823a-db8328f7f42c" name="test" type="text/plain" size="4398" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

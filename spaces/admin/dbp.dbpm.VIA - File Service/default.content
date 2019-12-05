@@ -1,0 +1,238 @@
+<DashboardPluginModel description=" " name="VIA - File Service" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services>
+      <Service name="_fsCreateDirectory" args="name" private="false">
+        <CodeText>
+          <![CDATA[//print("_fsCreateDirectory: name=" + name);
+
+var EnvLib = com.vitria.fc.utils.EnvLib;
+var File = java.io.File;
+
+var path = "${VTBA_HOME}/tmp/" + name;
+path = EnvLib.expandVars(path);
+print("_fsCreateDirectory: path=" + path);
+
+var file = new File(path);
+return file.mkdirs();
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_fsDeleteDirectories" args="name,recursive" private="false">
+        <CodeText>
+          <![CDATA[//print("_fsDeleteDirectories: name=" + name);
+
+var success = true;
+
+function deleteDirectory(file)
+{
+    if (file.isDirectory()) {
+        var files = file.listFiles();
+        if (files.length > 0) {
+            if (recursive) {
+                for (var i=0; i<files.length; i++) {
+                    if ((files[i]).isDirectory()) {
+                        deleteDirectory(files[i]);
+                    }
+                    else {
+                        if (!(files[i]).delete()) {
+                            success = false;
+                        }
+                    }
+                }
+                if (!file.delete()) {
+                    success = false;
+                }
+            }
+            else {
+                success = false;
+            }
+        }
+        else {
+            if (!file.delete()) {
+                success = false;
+            }
+        }
+    }
+}
+
+var EnvLib = com.vitria.fc.utils.EnvLib;
+var File = java.io.File;
+
+var path = "${VTBA_HOME}/tmp/" + name;
+path = EnvLib.expandVars(path);
+//print("_fsDeleteDirectories: path=" + path);
+
+var file = new File(path);
+deleteDirectory(file);
+return success;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_fsDeleteFiles" args="startsWith,endsWith" private="false">
+        <CodeText>
+          <![CDATA[//print("_fsDeleteFiles: startsWith=" + startsWith + " endsWith=" + endsWith);
+
+var EnvLib = com.vitria.fc.utils.EnvLib;
+var File = java.io.File;
+
+var path = "${VTBA_HOME}/tmp";
+path = EnvLib.expandVars(path);
+var dir = new File(path);
+var files = dir.listFiles();
+for (var i=0; i<files.length; i++) {
+    var file = files[i];
+    if (file.isFile() && file.getName().startsWith(startsWith) && file.getName().endsWith(endsWith)) {
+        print("delete file: " + file.getPath());
+        file.delete();
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_fsHasDirectory" args="name" private="false">
+        <CodeText>
+          <![CDATA[//print("_fsHasDirectory: name=" + name);
+
+var EnvLib = com.vitria.fc.utils.EnvLib;
+var File = java.io.File;
+
+var path = "${VTBA_HOME}/tmp/" + name;
+path = EnvLib.expandVars(path);
+var file = new File(path);
+return file.exists() && file.isDirectory();
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_fsHasFile" args="name" private="false">
+        <CodeText>
+          <![CDATA[//print("_fsHasFile: name=" + name);
+
+var EnvLib = com.vitria.fc.utils.EnvLib;
+var File = java.io.File;
+
+var path = "${VTBA_HOME}/tmp/" + name + ".json";
+path = EnvLib.expandVars(path);
+var file = new File(path);
+return file.exists() && file.isFile();
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_fsListDirectories" args="name" private="false">
+        <CodeText>
+          <![CDATA[//print("_fsListDirectories: name=" + name);
+
+var EnvLib = com.vitria.fc.utils.EnvLib;
+var File = java.io.File;
+
+var path = "${VTBA_HOME}/tmp/" + name;
+path = EnvLib.expandVars(path);
+//print("_fsListDirectories: path=" + path);
+
+var file = new File(path);
+var files = file.listFiles();
+
+var dirs = [];
+for (var i=0; i<files.length; i++) {
+    if ((files[i]).isDirectory()) {
+        dirs.push((files[i]).getName());
+    }
+}
+return dirs;
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_fsLoadFromFile" args="name" private="false">
+        <CodeText>
+          <![CDATA[//print("_fsLoadFromFile: name=" + name);
+
+var EnvLib = com.vitria.fc.utils.EnvLib;
+var File = java.io.File;
+
+var path = "${VTBA_HOME}/tmp/" + name + ".json";
+path = EnvLib.expandVars(path);
+var file = new File(path);
+if (file.exists()) {
+    //print("load from file: " + path);
+    var text = Context.getFileAsString(path);
+    if (text != null && text != "") {
+        return JSON.parse(text);
+    }
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_fsMoveFile" args="fromPath,toRelPath" private="false">
+        <CodeText>
+          <![CDATA[//print("_fsMoveFile: fromPath=" + fromPath);
+//print("_fsMoveFile: toRelPath=" + toRelPath);
+
+var EnvLib = com.vitria.fc.utils.EnvLib;
+var FileSystems = java.nio.file.FileSystems;
+var Files = java.nio.file.Files;
+var Path = java.nio.file.Path;
+var StandardCopyOption = java.nio.file.StandardCopyOption;
+
+var fromFile = FileSystems.getDefault().getPath(fromPath);
+
+var toPath = EnvLib.expandVars("${VTBA_HOME}/tmp/" + toRelPath);
+//print("_fsMoveFile: toPath=" + toPath);
+var toFile = FileSystems.getDefault().getPath(toPath);
+
+Files.move(fromFile, toFile, StandardCopyOption.REPLACE_EXISTING);
+return true;
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_fsSaveToFile" args="name,data" private="false">
+        <CodeText>
+          <![CDATA[//print("_fsSaveToFile: name=" + name);
+
+var ServiceUtil = com.vitria.dbp.resource.utils.ServiceUtil;
+
+var path = "${VTBA_HOME}/tmp/" + name + ".json";
+//print("_fsSaveToFile: path=" + path);
+
+var text = ServiceUtil.toJSON(data, false).toString(4);
+Context.writeToFile(path, text);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_fsStringFromFile" args="name" private="false">
+        <CodeText>
+          <![CDATA[//print("_fsStringFromFile: name=" + name);
+
+var EnvLib = com.vitria.fc.utils.EnvLib;
+var File = java.io.File;
+
+var path = "${VTBA_HOME}/tmp/" + name;
+path = EnvLib.expandVars(path);
+var file = new File(path);
+if (file.exists()) {
+    return Context.getFileAsString(path);
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_fsStringToFile" args="name,str" private="false">
+        <CodeText>
+          <![CDATA[//print("_fsStringToFile: name=" + name);
+
+var path = "${VTBA_HOME}/tmp/" + name;
+//print("_fsStringToFile: path=" + path);
+
+Context.writeToFile(path, str);
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources/>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

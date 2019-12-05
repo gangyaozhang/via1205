@@ -1,0 +1,25 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "fd9617d4-ed21-43bf-86bd-088ce4c626be"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "ff5bc967-cc97-4160-823a-db8328f7f42c"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "ff5bc967-cc97-4160-823a-db8328f7f42c",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "VIA - FontResource"
+  }
+}

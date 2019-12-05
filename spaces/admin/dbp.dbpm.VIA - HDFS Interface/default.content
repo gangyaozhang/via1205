@@ -1,0 +1,758 @@
+<DashboardPluginModel description="" name="VIA - HDFS Interface" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets>
+      <Widget name="HDFSWidget" private="false">
+        <PropertyText>
+          <![CDATA[[]]]>
+        </PropertyText>
+        <CodeText segment="#methods">
+          <![CDATA[
+        DOTDOT : {
+            name      : "..",
+            owner     : "",
+            group     : "",
+            size      : "",
+            type      : "",
+            modified  : "",
+            accessed  : "",
+            __xperm__ : "",
+        },
+
+        _onChangeURL : function(value) {
+            var url = this._urlText.get("value").trim();
+            var enabled = url != "" && (url.toLowerCase().indexOf("hdfs://") == 0 || url.toLowerCase().indexOf("file://") == 0) && this._selectedURL != url;
+            this._connectBtn.set("disabled", !enabled);
+        },
+        
+        _onClickConnect : function(evt) {
+            var self = this;
+            if (!this._isConnected) {
+                this._selectedURL = this._urlText.get("value").trim();
+                this._currentPath = "";
+                var parameters = {
+                    url : this._selectedURL,
+                };
+                Plugin().executeCommand(this._sessionId, "getFileSystem", parameters, function(response) {
+                    if (response.status == "OK") {
+                        self._isConnected = true;
+                        self._connectBtn.set("label", "Disconnect");
+                        self._urlText.set("disabled", true);
+                        self._uploadBtn.set("disabled", false);
+                        self._createBtn.set("disabled", false);
+                        self._selectedResult = response.value;
+                        self._showResult();
+                    }
+                });
+            }
+            else {
+                var parameters = {
+                    url : this._selectedURL,
+                };
+                Plugin().executeCommand(this._sessionId, "closeFileSystem", parameters, function(response) {
+                    if (response.status == "OK") {
+                        self._isConnected = false;
+                        self._connectBtn.set("label", "Connect");
+                        self._urlText.set("disabled", false);
+                        self._uploadBtn.set("disabled", true);
+                        self._createBtn.set("disabled", true);
+                        self._divCurrentPath.innerHTML = "";
+                        self._selectedResult = null;
+                        self._showResult();
+                    }
+                });
+            }
+        },
+
+        _onClickRefresh : function(evt) {
+            var parameters = {
+                url  : this._selectedURL,
+                path : this._currentPath,
+            };
+            var self = this;
+            Plugin().executeCommand(this._sessionId, "listFiles", parameters, function(response) {
+                if (response.status == "OK") {
+                    self._selectedResult = response.value;
+                    self._showResult();
+                }
+            });
+        },
+
+        _onClickUpload : function(evt) {
+            // upload to this._currentPath
+            var CommonPlugin = Plugin("VIA - Common");
+            var self = this;
+            CommonPlugin.uploadFile(null, false, function(data) {
+                var parameters = {
+                    url  : self._selectedURL,
+                    path : self._currentPath,
+                    data : data,
+                };
+                Plugin().executeCommand(self._sessionId, "uploadFile", parameters, function(response) {
+                    if (response.status == "OK") {
+                        self._onClickRefresh();
+                    }
+                });
+            });
+        },
+
+        _onClickDownload : function(evt) {
+            // download selected FILE
+            var selectedFileName = this._resultSelection[0]["name"];
+            var parameters = {
+                url  : this._selectedURL,
+                path : this._currentPath + "/" + selectedFileName,
+            };
+            var self = this;
+            Plugin().executeCommand(this._sessionId, "downloadFile", parameters, function(response) {
+                if (response.status == "OK") {
+                    var uuid = response.value;
+                    window.open("/vitria-oi/rest/app/dojoclient/user/*/*/" + selectedFileName + "?op=downloadcsv&uid=" + uuid);
+                }
+            });
+        },
+
+        _onClickCreate : function(evt) {
+            // create new folder in current path
+            var itemDef = [
+                {
+                    name  :"name",
+                    label :"Folder Name:",
+                    type  :"string",
+                    style : {
+                        "width"       : "100%",
+                        "height"      : "30px",
+                        "font-family" : "monospace",
+                    }
+                }
+            ];
+            var self = this;
+            this.openFormDialog("New Folder Name", null, itemDef, null, null, function(ok, data) {
+                if (ok) {
+                    var folderName = data["name"];
+                    var parameters = {
+                        url  : self._selectedURL,
+                        path : self._currentPath + "/" + folderName,
+                    };
+                    Plugin().executeCommand(self._sessionId, "createFolder", parameters, function(response) {
+                        if (response.status == "OK") {
+                            self._onClickRefresh();
+                        }
+                    });
+                }
+            });
+        },
+
+        _onClickRename : function(evt) {
+            // rename selected folder or file
+        },
+
+        _onClickDelete : function(evt) {
+            // delete selected FILE or DIRECTORY
+            if (this._resultSelection != null && this._resultSelection.length == 1) {
+                var selectedFileName = this._resultSelection[0]["name"];
+                var parameters = {
+                    url  : this._selectedURL,
+                    path : this._currentPath + "/" + selectedFileName,
+                };
+                var self = this;
+                Plugin().executeCommand(this._sessionId, "deleteFolderOrFile", parameters, function(response) {
+                    if (response.status == "OK") {
+                        self._onClickRefresh();
+                    }
+                });
+            }
+        },
+
+        _showResult : function() {
+            if (this._resultWidget != null) {
+                this._resultWidget.grid.destroy();
+                delete this._resultWidget;
+                AppUtil.removeAllChildrenOf(this._divResultGrid);
+            }
+            if (this._selectedResult != null) {
+                this._selectedResult.sort(function(a,b) {
+                    return a.name.localeCompare(b.name);
+                });
+                if (this._currentPath != "") {
+                    this._selectedResult = [this.DOTDOT].concat(this._selectedResult);
+                }
+                this._divCurrentPath.innerHTML = this._selectedURL + this._currentPath;
+                var self = this;
+                createResultGrid("Result", this._divResultGrid, lang.hitch(self, "_onResultSelect"), this._selectedResult, function(widget) {
+                    self._resultWidget = widget;
+                    self._resultWidget.grid.on('.dgrid-content .dgrid-row:dblclick', lang.hitch(self, "_onDoubleClickDrillDown"));
+                    self._onResultSelect(null);
+                });
+            }
+        },
+        
+        _onResultSelect : function(event) {
+            if (this._resultWidget && this._resultWidget.grid) {
+                this._resultSelection = getSelectedItems(this._resultWidget.grid, "__index__");
+            }
+            else {
+                this._resultSelection = [];
+            }
+            this._downloadBtn.set("disabled", this._resultSelection.length == 0 || this._resultSelection[0]["type"] != "file");
+            this._renameBtn.set("disabled", this._resultSelection.length == 0 || this._resultSelection[0]["type"] == "");
+            this._deleteBtn.set("disabled", this._resultSelection.length == 0 || this._resultSelection[0]["type"] == "");
+        },
+
+        _onDoubleClickDrillDown : function(evt) {
+            var selectedEntry = null;
+            for (var index in this._resultWidget.grid.selection) {
+                if (this._resultWidget.grid.selection[index] == true) {
+                    for (var i=0; i<this._selectedResult.length; i++) {
+                        var record = this._selectedResult[i];
+                        if (record["__index__"] == index) {
+                            selectedEntry = record;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (selectedEntry != null) {
+                var isDirectory = false;
+                if (selectedEntry == this.DOTDOT) {
+                    isDirectory = true;
+                    var slash = this._currentPath.lastIndexOf("/");
+                    this._currentPath = this._currentPath.substring(0, slash);
+                }
+                else {
+                    isDirectory = selectedEntry["type"] == "directory";
+                    if (isDirectory) {
+                        this._currentPath = this._currentPath + "/" + selectedEntry.name;
+                    }
+                }
+                if (isDirectory) {
+                    var parameters = {
+                        url  : this._selectedURL,
+                        path : this._currentPath,
+                    };
+                    var self = this;
+                    Plugin().executeCommand(this._sessionId, "listFiles", parameters, function(response) {
+                        if (response.status == "OK") {
+                            self._selectedResult = response.value;
+                            self._showResult();
+                        }
+                    });
+                }
+            }
+        },
+
+        openFormDialog : function(title, description, itemDef, buttonDef, style, callback) {
+            var autoHeight = null;
+            if (style == null) style = {
+                "form-label" : {
+                    width : "1%",
+                },
+                "form-value" : {
+                    width : "99%",
+                },
+            };
+            if (style["width"] == null) {
+                style["width"] = "500px";
+            }
+            if (style["height"] == null) {
+                autoHeight = itemDef.length * 40;
+                style["height"] = autoHeight + "px";
+            }
+            var self = this;
+            require(["af/scripts/controls/FormDialog"], function(FormDialog) {
+                var dialog = new FormDialog({
+                    title   : title,
+                    message : description,
+                    items   : itemDef,
+                    buttons : buttonDef,
+                    style   : style,
+                    callback : function(value, data) {
+                        if (callback != null) {
+                            try {
+                                callback(value, data);
+                            }
+                            catch (x) {
+                                console.error(x);
+                            }
+                        }
+                    },
+                });
+                dialog.show();
+                if (autoHeight != null) {
+                    domStyle.set(dialog._dialog.dialogContentNode, "height", autoHeight+"px");
+                }
+            });
+        },
+        
+        showMessage : function(category, title, message, callback) {
+            var self = this;
+            var growlManager = this.controller && this.controller.appController && this.controller.appController.main && this.controller.appController.main.growlManager;
+            require(["af/controls/AppMessageBox"], function(AppMessageBox) {
+                var buttonCount = 1;
+                switch (category) {
+                    case "growl"   : buttonCount = 0; break;
+                    case "confirm" : buttonCount = 2; break;
+                    case "warn"    : buttonCount = 1; break;
+                    case "error"   : buttonCount = 1; break;
+                    default        : buttonCount = 1; break;
+                }
+                if (buttonCount > 0) {
+                    var alert = new AppMessageBox({
+                        title   : title,
+                        message : message,
+                        buttons : buttonCount,
+                        okHandler: function() {
+                            if (callback != null) {
+                                try {
+                                    callback(true);
+                                }
+                                catch (x) {
+                                    console.error(x);
+                                }
+                            }
+                        },
+                        cancelHandler: function() {
+                            if (callback != null) {
+                                try {
+                                    callback(false);
+                                }
+                                catch (x) {
+                                    console.error(x);
+                                }
+                            }
+                        }
+                    });
+                    alert.show();
+                }
+                else if (growlManager) {
+                    var growlText = "";
+                    if (title != null && title != "") {
+                        growlText = "<b><big>" + title + "</big></b><br><hr>";
+                    }
+                    growlText += message;
+                    growlManager.addGrowl(growlText);
+                    if (callback != null) {
+                        try {
+                            callback(true);
+                        }
+                        catch (x) {
+                            console.error(x);
+                        }
+                    }
+                }
+            });
+        },
+]]>
+        </CodeText>
+        <CodeText segment="#doRefresh">
+          <![CDATA[
+            var data = this.renderer.result;
+            if (data != null && data.length == 1) {
+                this._selectedURL = data[0]["url"];
+                this._currentPath = "";
+                this._urlText.set("value", this._selectedURL, false);
+            }
+            this._onResultSelect(null);
+]]>
+        </CodeText>
+        <CodeText segment="#postCreate">
+          <![CDATA[
+            this.doRefresh();
+
+            this._uploadBtn.set("disabled", true);
+            this._createBtn.set("disabled", true);
+]]>
+        </CodeText>
+        <CodeText segment="#constructor">
+          <![CDATA[
+            this._sessionId = generateRandomUuid();
+            this._selectedURL = "";
+            this._currentPath = "";
+            this._isConnected = false;
+]]>
+        </CodeText>
+        <CodeText segment="#functions">
+          <![CDATA[
+    function getSelectedItems(grid, keyField)
+    {
+        var items = [];
+        for (var i=0; i<grid.collection.data.length; i++) {
+            var item = grid.collection.data[i];
+            if (grid.selection[item[keyField]] == true) {
+                items.push(item);
+            }
+        }
+        return items;
+    }
+
+    function createResultGrid(name, parentNode, onSelect, data, callback)
+    {
+        require(["dijit/form/CheckBox", "dijit/form/TimeTextBox",  "dijit/form/Select"], function(CheckBox, TimeTextBox, Select) {
+            var div = domConstruct.create("div", {});
+            parentNode.appendChild(div);
+            
+            for (var i=0; i<data.length; i++) {
+                data[i]["__index__"] = String(i);
+                if (data[i]["__xperm__"] == null) {
+                    data[i]["__xperm__"] = (data[i]["type"] == "directory" ? "d" : "-") + data[i]["perm"];
+                }
+            }
+            
+            var NAMES  = ["name",    "owner",   "group",   "__xperm__",         "size",  "modified",        "accessed"];
+            var LABELS = ["Name",    "Owner",   "Group",   "Type/Permission",   "Size",  "Last Modified",   "Last Accessed"];
+            var WIDTH  = ["300px",   "100px",   "100px",   "150px",             "100px", "200px",           "200px"];
+            var columns = [];
+            for (var i=0; i<NAMES.length; i++) {
+                columns.push({
+                    field    : NAMES[i],
+                    label    : LABELS[i],
+                    style    : "font-family:monospace;cursor:pointer;width:" + WIDTH[i] + ";",
+                    sortable : false,
+                });
+            }
+            var store = GridUtil.createGridStore("__index__", data);
+            var grid = GridUtil.createGridWidget(name, div, true, null, columns, store,
+                                                 onSelect, null, "single", onSelect, null);
+            callback({
+                store : store,
+                grid  : grid,
+            });
+        });
+    }
+]]>
+        </CodeText>
+        <CodeText segment="#updateWidthAndHeight">
+          <![CDATA[
+            if (this._resultWidget != null) {
+                this._resultWidget.grid.resize();
+            }
+]]>
+        </CodeText>
+        <CodeText segment="#destroy">
+          <![CDATA[
+            if (this._isConnected && this._selectedURL != null) {
+                this._isConnected = false;
+                var parameters = {
+                    url : this._selectedURL,
+                };
+                var self = this;
+                Plugin().executeCommand(this._sessionId, "closeFileSystem", parameters, function(response) {
+                    console.debug("closeFileSystem: sessionId=" + self._sessionId);
+                });
+            }
+]]>
+        </CodeText>
+        <HtmlText>
+          <![CDATA[<div class="hdfs-widget" style="width:100%;height:100%;border:none;background-color:white;">
+    <style>
+    </style>
+    <table cellspacing="0" data-dojo-attach-point="_headerTable" style="width:100%;height:50px;border:none;background-color:white;padding:0px 0px 10px 0px;">
+        <tr style="width:100%;height:100%;">
+            <td style="white-space:nowrap;text-align:right;">HDFS URL:</td>
+            <td style="width:100%;padding-left:5px;padding-right:5px;">
+                <input type="text" style="width:100%;font-family:monospace;"
+                       data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_urlText" data-dojo-attach-event="change:_onChangeURL"/>
+            </td>
+            <td style="text-align:center;">
+                <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="_connectBtn" data-dojo-attach-event="click:_onClickConnect" type="button">Connect</button>
+            </td>
+            <td style="text-align:center;">
+                <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="_refreshBtn" data-dojo-attach-event="click:_onClickRefresh" type="button">Refresh</button>
+            </td>
+        </tr>
+    </table>
+    <div data-dojo-attach-point="_divCurrentPath" style="width:100%;height:30px;font-family:monospace;word-break:break-all;"></div>
+    <div data-dojo-attach-point="_divResultGrid" style="width:100%;height:calc(100% - 110px);" class="via-scroller">
+    </div>
+    <table cellspacing="0" data-dojo-attach-point="_headerTable" style="width:100%;height:25px;border:none;background-color:white;padding:5px 0px 0px 0px;">
+        <tr style="width:100%;height:100%;">
+            <td style="text-align:center;">
+                <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="_uploadBtn" data-dojo-attach-event="click:_onClickUpload" type="button">Upload</button>
+            </td>
+            <td style="text-align:center;">
+                <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="_downloadBtn" data-dojo-attach-event="click:_onClickDownload" type="button">Download</button>
+            </td>
+            <td style="text-align:center;">
+                <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="_createBtn" data-dojo-attach-event="click:_onClickCreate" type="button">New Folder</button>
+            </td>
+            <td style="text-align:center;">
+                <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="_renameBtn" data-dojo-attach-event="click:_onClickRename" type="button">Rename</button>
+            </td>
+            <td style="text-align:center;">
+                <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="_deleteBtn" data-dojo-attach-event="click:_onClickDelete" type="button">Delete</button>
+            </td>
+            <td style="width:100%;"></td>
+        </tr>
+    </table>
+</div>
+]]>
+        </HtmlText>
+      </Widget>
+    </Widgets>
+    <Functions/>
+    <Services>
+      <Service name="deleteFSDirectory" args="fsHostURI,directoryPath" private="false">
+        <CodeText>
+          <![CDATA[//print("NotificationService:deleteFSDirectory()");
+
+if( fsHostURI == null || directoryPath == null ) return [];
+
+try{
+    var fs = HDFS.getFileSystem(fsHostURI);
+    if( HDFS.isDirectory(fs, directoryPath) ){
+        var list = HDFS.listFiles(fs,directoryPath,true,true) || [];
+        if( list.length > 0 ){
+            for( var l=0, len=list.length; l < len; l++ ){
+                var id = list[l]["name"];
+                if( id != null && id != "" ){
+                    if( HDFS.exists(fs, directoryPath+id) ){
+                        HDFS.deleteFile(fs, directoryPath+id);   
+                    }
+                }
+            }
+        }
+    }
+    return [ list.length + " files removed from: " + directoryPath ];
+}
+catch (err){
+    print("NotificationService:deleteFSDirectory() --> " + err);
+    return( "NotificationService:deleteFSDirectory(): init err: " + err.message );
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="executeCommand" args="sessionId,command,parameters" private="false">
+        <CodeText>
+          <![CDATA[var File = java.io.File;
+var System = java.lang.System;
+var FileUtils = org.apache.commons.io.FileUtils;
+var UUID = java.util.UUID;
+var CacheUtil = com.vitria.util.CacheUtil;
+var HdfsUtil = com.vitria.dbp.resource.utils.HdfsUtil;
+var Path = org.apache.hadoop.fs.Path;
+
+function createTempFileForDownload(content)
+{
+    var tempDirectory = System.getProperty("java.io.tmpdir");
+    var tgtFile = new File(tempDirectory + "/" + UUID.randomUUID().toString());
+    FileUtils.writeStringToFile(tgtFile, content, "UTF-8");
+    
+    TimerTask.setTimeout("DeleteTempDownloadFile", 10, function(path) {
+        var file = new java.io.File(path);
+        print("Deleting download file: "+ file.getPath());
+        if (file.delete()) {
+            print("... " + file.getPath() + " deleted");
+        }
+        else {
+            print("... " + file.getPath() + " delete exception");
+        }
+    }, tgtFile.getPath());
+    
+    return tgtFile.getName();
+}
+
+var fileSystem = null;
+
+var cache = CacheUtil.getCache("via.hdfs.interface", 24*60);
+
+var connection = cache.get(sessionId);
+if (connection != null) {
+    fileSystem = connection.fs;
+}
+if (fileSystem == null && command == "getFileSystem" && parameters["url"] != null) {
+    fileSystem = HDFS.getFileSystem(parameters["url"]);
+    connection = {
+        url : parameters["url"],
+        fs  : fileSystem,
+    };
+    cache.put(sessionId, connection);
+}
+if (fileSystem != null) {
+    try {
+        switch (command) {
+            case "getFileSystem":
+                var files = HDFS.listFiles(connection.fs, "/", true, true);
+                return files;
+    
+            case "closeFileSystem":
+                HDFS.closeFileSystem(connection.url, connection.fs);
+                cache.remove(sessionId);
+                return true;
+    
+            case "listFiles":
+                var path = parameters["path"];
+                if (path == "") path = "/";
+                var files = HDFS.listFiles(connection.fs, path, true, true);
+                return files;
+    
+            case "uploadFile":
+                var path = parameters["path"];
+                if (path == "") path = "/";
+                var data = parameters["data"];
+                var tempDirectory = System.getProperty("java.io.tmpdir");
+                var uploadedPath = tempDirectory + "/" + data.uid;
+                var uploadedData = Context.getFileAsString(uploadedPath);
+
+                var targetPath = path + "/" + data.name;
+                var uploadPath = targetPath + "-uploading";
+                HDFS.writeFile(connection.fs, uploadPath, uploadedData);
+                targetPath = new Path(targetPath);
+                connection.fs.rename(new Path(uploadPath), targetPath);
+                var now = System.currentTimeMillis();
+                connection.fs.setTimes(targetPath, now, now);
+                return true;
+    
+            case "downloadFile":
+                var path = parameters["path"];
+                if (path != null && path != "") {
+                    var content = HDFS.readFile(connection.fs, path);
+                    if (content != null) {
+                        return createTempFileForDownload(content);
+                    }
+                }
+                return false;
+    
+            case "createFolder":
+                var path = parameters["path"];
+                if (path != null && path != "") {
+                    HDFS.createDirectory(connection.fs, path);
+                    return true;
+                }
+                return false;
+    
+            case "renameFolderOrFile":
+                return false;
+    
+            case "deleteFolderOrFile":
+                var path = parameters["path"];
+                if (path != null && path != "") {
+                    if (HDFS.isDirectory(connection.fs, path)) {
+                        HDFS.deleteDirectory(connection.fs, path, true);
+                        return true;
+                    }
+                    else if (HDFS.isFile(connection.fs, path)) {
+                        HDFS.deleteFile(connection.fs, path);
+                        return true;
+                    }
+                }
+                return false;
+    
+        }
+    }
+    catch (err) {
+        print("ERROR: HDFS/executeCommand(" + command + ")=" + err);
+    }
+}
+return false;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getFileByName" args="fsHostURI,directoryPath,fileName" private="false">
+        <CodeText>
+          <![CDATA[//print("NotificationService:getFileByName()");
+
+if( fsHostURI == null || directoryPath == null || fileName == null ) return [];
+
+try {
+    var fs = HDFS.getFileSystem(fsHostURI);
+        if( HDFS.isFile(fs, directoryPath+fileName) ){
+            //print("NotificationService:getFileByName(): " + directoryPath + fileName + " exists " );  
+            var content = HDFS.readFile(fs, directoryPath + fileName);
+            print(content);
+            return content;
+        }
+        else {
+            //print("NotificationService:getFileByName(): " + directoryPath + fileName + " cannot be located " );
+            return("NotificationService:getFileByName(): " + directoryPath + fileName + " cannot be located " );
+        }
+   
+        HDFS.closeFileSystem(fsHostURI, fs); 
+}
+catch(err){
+    print("NotificationService:getFileByName() --> " + err);
+    return( err.message ); 
+}]]>
+        </CodeText>
+      </Service>
+      <Service name="getListOfFiles" args="fsHostURI,directoryPath" private="false">
+        <CodeText>
+          <![CDATA[//print("NotificationService:getlistOfFiles()");
+
+if( fsHostURI == null || directoryPath == null ) return [];
+
+try {
+    
+    var fs = HDFS.getFileSystem(fsHostURI);
+    var list = HDFS.listFiles(fs,directoryPath,true,true);
+    if( list != null ){
+        return list;
+    }
+    else {
+        print("getListOfFiles() returned null");   
+    }
+    HDFS.closeFileSystem(fsHostURI, fs);
+        
+}
+catch (err){
+    print("NotificationService:getlistOfFiles() --> " + err);
+    return( err.message );
+}]]>
+        </CodeText>
+      </Service>
+      <Service name="guaranteeDirectory" args="fsHostURI,directoryPath" private="false">
+        <CodeText>
+          <![CDATA[//print("NotificationService:guaranteeDirectory()");
+
+if( fsHostURI == null || directoryPath == null ) return [];
+
+try{
+    var fs = HDFS.getFileSystem(fsHostURI);
+    if( HDFS.isDirectory(fs, directoryPath) ){
+        return( "NotificationService:guaranteeDirectory(): path exists: " + fsHostURI+directoryPath );   
+    }
+    else {
+        try {
+            HDFS.createDirectory( fs, directoryPath );
+            return ( "NotificationService:guaranteeDirectory(): directory created: " + fsHostURI+directoryPath );
+        }
+        catch ( dirErr ){
+            print( "NotificationService:guaranteeDirectory(): path error: " + fsHostURI+directoryPath );
+            return( "NotificationService:guaranteeDirectory(): path error message: " + dirErr.message );
+        }
+    }
+    HDFS.closeFileSystem(fsHostURI, fs);
+}
+catch (err){
+    print("NotificationService:guaranteeDirectory() --> " + err);
+    return( "NotificationService:guaranteeDirectory(): init err: " + err.message );
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="writeDataToFS" args="fsHostURI,directoryPath,fileName,content" private="false">
+        <CodeText>
+          <![CDATA[// print("NotificationService:writeDataToFS()");
+// print( "hostURI: " + fsHostURI );
+// print( "directoryPath: " + directoryPath );
+// print( "fileName: " + fileName );
+
+if( fsHostURI == null || directoryPath == null || fileName == null ) return [];
+
+try{
+    var fs = HDFS.getFileSystem(fsHostURI);
+    HDFS.writeFile(fs, directoryPath+fileName, content);
+    var fileRet = HDFS.readFile(fs, directoryPath+fileName);
+    HDFS.closeFileSystem(fsHostURI, fs); 
+    return fileRet;
+}
+catch(err){
+    print("NotificationService:writeDataToFS() --> " + err);
+    return( err.message ); 
+}]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources/>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

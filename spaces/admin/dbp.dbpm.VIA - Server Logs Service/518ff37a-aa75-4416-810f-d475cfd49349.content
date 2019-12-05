@@ -1,0 +1,10 @@
+{
+    "server-type" : ["PresentationServer", "RuntimeServer", "DomainServer"],
+    "view-line-count" : 1000,
+    "download-line-count" : 100000,
+    "collapse-sql-block" : true,
+    "#excluded-log-pattern" : [
+        "[com.vitria.spark.resource.utils.IFunctionWrapper]",
+        "[com.vitria.spark.statemachine.codegen.StateMachineCodeGenerator]"
+    ]
+}
