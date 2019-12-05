@@ -21,7 +21,7 @@
   "properties": {
     "_RESOURCE_Description": "",
     "_RESOURCE_Type": "sparkm",
-    "__references__": "adf.subflow:///viaops.ingestion/FileSource@5816,adf.subflow:///viaops.ingestion/MetricReferenceData@528,adf.subflow:///viaops.ingestion/MetricOutput@4405,adf.subflow:///viaops.ingestion/DroppedEvents@809",
+    "__references__": "",
     "modelStatus": "valid",
     "name": "D_E_F_PARSER",
     "subflowReg": "",

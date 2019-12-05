@@ -21,7 +21,7 @@
   "properties": {
     "_RESOURCE_Description": "",
     "_RESOURCE_Type": "sparkm",
-    "__references__": "adf.subflow:///viaops.anomaly/Baseline Anomaly Detection@4947,adf.subflow:///viaops.anomaly/AnomalyPersistence@95,adf.subflow:///viaops.anomaly/Anomaly Aggregate Metrics@4826,adf.subflow:///viaops.anomaly/Threshold Anomaly Detection@1738,adf.subflow:///viaops.anomaly/Enrich MetricID@709",
+    "__references__": "",
     "modelStatus": "valid",
     "name": "A_B_C_ANOMALY",
     "subflowReg": "",
