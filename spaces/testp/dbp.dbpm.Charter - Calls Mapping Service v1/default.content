@@ -1,0 +1,285 @@
+<DashboardPluginModel description="" name="Charter - Calls Mapping Service v1" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions>
+      <Function name="__addSettingItems" args="items,available,config" private="true">
+        <CodeText>
+          <![CDATA[for (var i=0; i<available.length; i++) {
+    if (config[available[i].name] != undefined) {
+        items.push(available[i]);
+    }
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="__inclSettingItems" args="available,config" private="true">
+        <CodeText>
+          <![CDATA[for (var i=0; i<available.length; i++) {
+    if (config[available[i].name] != undefined) {
+        return true;
+    }
+}
+return false;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_addCallsMappingGeneralConfig" args="items,config,services" private="true">
+        <CodeText>
+          <![CDATA[function getServiceName(svc)
+{
+    // service name has '#' fragment... need to strip
+    var hash = svc.value.indexOf("#");
+    return hash != -1 ? svc.value.substring(0, hash) : svc.value;
+}
+
+var serviceEnums = [];
+services.forEach(function(svc) {
+    var svcName = getServiceName(svc);
+    serviceEnums.push(svcName+"|"+svc.label);
+});
+serviceEnums.sort();
+
+var ITEMS = [
+    {
+        name   : "issue",
+        type   : "string",
+        label  : "Issue",
+        config : {
+            readonly : true
+        },
+    },
+    {
+        name   : "cause",
+        type   : "string",
+        label  : "Cause",
+        config : {
+            readonly : true
+        },
+    },
+    {
+        name   : "cust_type",
+        type   : "string",
+        label  : "Customer Type",
+        config : {
+            readonly : true
+        },
+    },
+    {
+        name   : "company",
+        type   : "string",
+        label  : "Company",
+        config : {
+            readonly : true
+        },
+    },
+    {
+        name  : "service",
+        type  : "enumeration",
+        label : "Service Name/Label",
+        enums : serviceEnums,
+    }
+];
+var incl = this.__inclSettingItems(ITEMS, config);
+if (incl) {
+    items.push({
+        name  : "general_section",
+        type  : "section",
+        label : "General Setting",
+    });
+    items.push({
+        name  : "general_label",
+        type  : "label",
+        text  : [
+            "Edit Settings, then Save.",
+        ]
+    });
+    this.__addSettingItems(items, ITEMS, config);
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="editCallsMappingConfig" args="CommonPlugin,controller,config,title,description,services,callback" private="false">
+        <CodeText>
+          <![CDATA[var title  = title;
+var width  = 700;
+var height = 500;
+var items = [];
+config["service"] = config["service_name"] + "|" + config["service_label"];
+this._addCallsMappingGeneralConfig(items, config, services);
+CommonPlugin.popupEditForm(controller, config, title, width, height, description, items, null, function(obj) {
+    var toks = (obj["service"]).split("|");
+    obj["service_name"] = toks[0];
+    obj["service_label"] = toks[1];
+    delete obj["service"];
+    callback(obj);
+});
+]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services>
+      <Service name="createCallsMappingModel" args="selected" private="false">
+        <CodeText>
+          <![CDATA[print("createCallsMappingModel: selected="+__prettyPrintJSON(selected));
+//return;
+
+this.deleteCallsMappingModel([selected]);
+
+var queryConfig = this.getQueryConfig();
+var DATASOURCE = queryConfig["data-source"]["calls-mapping-model"];
+
+var sql = Context.getLocalResource("CALLS_MAPPING_MODEL_INSERT_SQL");
+var args = [[
+    selected["issue"],
+    selected["cust_type"],
+    selected["company"],
+    selected["cause"],
+    selected["service_name"],
+    selected["service_label"],
+]];
+this.executeSQLUpdate(queryConfig, [], ["CallsMappingModel", "Insert"], DATASOURCE, sql, args);
+return true;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="deleteCallsMappingModel" args="selection" private="false">
+        <CodeText>
+          <![CDATA[print("deleteCallsMappingModel: selection="+__prettyPrintJSON(selection));
+//return;
+
+var queryConfig = this.getQueryConfig();
+var DATASOURCE = queryConfig["data-source"]["calls-mapping-model"];
+
+var sql = Context.getLocalResource("CALLS_MAPPING_MODEL_DELETE_SQL");
+var args = [];
+for (var i=0; i<selection.length; i++) {
+    args.push([
+        selection[i]["issue"],
+        selection[i]["cust_type"],
+        selection[i]["company"],
+        selection[i]["cause"],
+    ]);
+}
+this.executeSQLUpdate(queryConfig, [], ["CallsMappingModel", "Delete"], DATASOURCE, sql, args);
+return true;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getCallsMappingModel" args="" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var DATASOURCE = queryConfig["data-source"]["calls-mapping-model"];
+var SELECT = Context.getLocalResource("CALLS_MAPPING_MODEL_SELECT_SQL");
+var result = this.executeSQLQuery(queryConfig, [], ["CallsMappingModel", "Select"], DATASOURCE, SELECT, null);
+if (result != null && result.items != null) {
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getCallsViewModel" args="filters" private="false">
+        <CodeText>
+          <![CDATA[print("getCallsViewModel: filters="+__prettyPrintJSON(filters));
+
+function pad(str, len) {
+    while (str.length < len) {
+        str = "0" + str;
+    }
+    return str;
+}
+
+var startDate = null;
+if (filters != null && filters.length > 0) {
+    for (var i=0; i<filters.length; i++) {
+        switch (filters[i].name) {
+            case "general.startDate":
+                startDate = new Date(Number(filters[i].value)*1000);
+                break;
+        }
+    }
+}
+if (startDate == null) startDate = new Date();
+var dateKey = String(startDate.getUTCFullYear()) + pad(String(startDate.getUTCMonth()+1), 2) + pad(String(startDate.getUTCDate()), 2);
+
+var queryConfig = this.getQueryConfig();
+var DATASOURCE = queryConfig["data-source"]["calls-view-model"];
+var sql = Context.getLocalResource("CALLS_VIEW_MODEL_SELECT_SQL");
+var map = {
+    "dateKey" : dateKey,
+};
+sql = this._doValueSubstitution(sql, map);
+var result = this.executeSQLQuery(queryConfig, [], ["CallsViewModel", "Select"], DATASOURCE, sql, null);
+if (result != null && result.items != null) {
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="updateCallsMappingModel" args="selected" private="false">
+        <CodeText>
+          <![CDATA[print("updateCallsMappingModel: selected="+__prettyPrintJSON(selected));
+//return;
+
+var queryConfig = this.getQueryConfig();
+var DATASOURCE = queryConfig["data-source"]["calls-mapping-model"];
+
+var sql = Context.getLocalResource("CALLS_MAPPING_MODEL_UPDATE_SQL");
+var args = [[
+    selected["service_name"],
+    selected["service_label"],
+    selected["issue"],
+    selected["cust_type"],
+    selected["company"],
+    selected["cause"],
+]];
+this.executeSQLUpdate(queryConfig, [], ["CallsMappingModel", "Update"], DATASOURCE, sql, args);
+return true;
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="09687f83-0449-4b18-8892-ddeb12a8bfdc" name="CALLS_MAPPING_MODEL_DELETE_SQL" type="application/sql" size="115" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="e828610f-978d-4d6d-8ac2-cbaaa5997731" name="CALLS_MAPPING_MODEL_EXISTS_SQL" type="application/sql" size="129" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="856c37e8-39e0-4da1-8c70-1ee16073e72b" name="CALLS_MAPPING_MODEL_INSERT_SQL" type="application/sql" size="162" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="52838938-9f04-4804-891c-98092aabdcf9" name="CALLS_MAPPING_MODEL_SELECT_SQL" type="application/sql" size="219" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="b3c593d7-809f-4239-8080-b5673f09667e" name="CALLS_MAPPING_MODEL_UPDATE_SQL" type="application/sql" size="151" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="326f75e6-c074-4ee4-8ed3-fcf975fc8876" name="CALLS_VIEW_MODEL_SELECT_SQL" type="application/sql" size="287" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="5bc07cd5-3a18-4c82-8cb2-573a7d2d8577" name="QueryConfig" type="application/json" size="300" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/user/viaops_admin/dbpm/VIAOps - Base Service"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

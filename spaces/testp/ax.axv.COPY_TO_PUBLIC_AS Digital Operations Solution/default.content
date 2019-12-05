@@ -1,0 +1,172 @@
+<AnalyticsExplorerView is_init="false" name="COPY_TO_PUBLIC_AS Digital Operations Solution" description="">
+  <ModelInfo nextPageId="2" validated="true">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="0"/>
+      <NoTileSpacing value="true"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <Page id="1" name="Default" title="Default" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<div class="contentMain" data-vitria-type="tile" data-vitria-tile-name="containerMain">
+</div>]]></PageFrameContent>
+      <PageCustomCSS><![CDATA[.contentMain {
+    width: 100%;
+    height: 100%;
+    background-color: #111111;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.containerTile {
+    background-color: #111111;
+}
+]]></PageCustomCSS>
+      <PageProperties/>
+      <Layout type="10" numRow="NaN" numCol="NaN" count="NaN" templateType="21" screenHeight="undefined" renderType="undefined" positions="[]" unitSize="undefined" viewRows="NaN" viewCols="NaN"/>
+      <frame_tile name="containerMain" title="containerMain" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="contentMain" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="ax.DashboardView" label="Dashboard View" optional="false" minimode="false">
+          <Property name="model" value="/app/ax/user/viaops_admin/axv/VIAOps - Solution Frame"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+    </Page>
+    <Script>
+      <Stores/>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id="node:1" type="UserScript" label="Init" _undefined_title="" originHeight="100" width="182" height="261" x="120" y="160">
+        <dynOut id="dout:0" type="string" label="Template" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="Base Config" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="string" label="Time Zone" propagate="always" _isArray="true"/>
+        <dynOut id="dout:3" type="string" label="Locale" propagate="always" _isArray="true"/>
+        <dynOut id="dout:4" type="string" label="Interval" propagate="always" _isArray="true"/>
+        <dynOut id="dout:5" type="any,string" label="solutionName" propagate="always" _isArray="true"/>
+        <dynOut id="dout:6" type="string" label="Logo" propagate="always" _isArray="true"/>
+        <dynOut id="dout:7" type="string" label="opsJNDIName" propagate="always" _isArray="true"/>
+        <dynOut id="dout:8" type="any" label="usageAnalytics" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:9" type="Tile" label="Solution Frame" _undefined_title="" originHeight="160" width="180" height="331" x="540" y="160">
+        <dynIn id="din:BaseConfig" type="any[]" label="BaseConfig" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Time Zone" type="string" label="Time Zone" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Locale" type="string" label="Locale" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Interval" type="string" label="Interval" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:FilterObj" type="any" label="FilterObj" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Visualization" type="string" label="Visualization" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:result" type="any" label="result" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:solutionName" type="any,string" label="solutionName" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Logo" type="string" label="Logo" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:opsJNDIName" type="string" label="opsJNDIName" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:usageAnalytics" type="any" label="usageAnalytics" _undefined_default="" evaluate="always" _isArray="true"/>
+      </Item>
+      <Link srcId="node:1" srcPort="dout:0" tgtId="node:9" tgtPort="in:0"/>
+      <Link srcId="node:1" srcPort="dout:1" tgtId="node:9" tgtPort="din:BaseConfig"/>
+      <Link srcId="node:1" srcPort="dout:2" tgtId="node:9" tgtPort="din:Time Zone"/>
+      <Link srcId="node:1" srcPort="dout:3" tgtId="node:9" tgtPort="din:Locale"/>
+      <Link srcId="node:1" srcPort="dout:4" tgtId="node:9" tgtPort="din:Interval"/>
+      <Link srcId="node:1" srcPort="dout:5" tgtId="node:9" tgtPort="din:solutionName"/>
+      <Link srcId="node:1" srcPort="dout:6" tgtId="node:9" tgtPort="din:Logo"/>
+      <Link srcId="node:1" srcPort="dout:7" tgtId="node:9" tgtPort="din:opsJNDIName"/>
+      <Link srcId="node:1" srcPort="dout:8" tgtId="node:9" tgtPort="din:usageAnalytics"/>
+      <Input key="node:1/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Template&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Base Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Time Zone&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:3&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Locale&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:4&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Interval&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:5&quot;,&quot;portType&quot;:&quot;any,string&quot;,&quot;portLabel&quot;:&quot;solutionName&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:6&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Logo&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:7&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;opsJNDIName&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:8&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;usageAnalytics&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:1/cfg:model/default" value="&quot;var CharterPlugin = Plugin(\&quot;Charter\&quot;);\n\nfunction excludeCommentedItems(items)\n{\n    // because JSON does not support comment construct, we iterate thru\n    // items and exclude items without \&quot;id\&quot; attribute... so to comment\n    // and item out, change its \&quot;id\&quot; attribute to something like \&quot;#id\&quot;\n    var list = [];\n    items.forEach(function(item) {\n        if (item[\&quot;id\&quot;] != null) {\n            list.push(item);\n        }\n    });\n    return list;\n}\n\nif (CharterPlugin != null) {\n    CharterPlugin.getFrameConfig(function(response) {\n        if (response != null &amp;&amp; response.status == \&quot;OK\&quot;) {\n            var frameConfig = response.value;\n            if (frameConfig.items &amp;&amp; frameConfig.items.length &gt; 0) {\n                console.log(frameConfig.items);\n                \n                var logo    = frameConfig.logo;\n                if( logo &amp;&amp; logo != \&quot;\&quot; ) {\n                    setOutput(\&quot;dout:6\&quot;, logo);    \n                }\n                \n                var opsJNDIName = frameConfig.opsJNDIName;\n                if( opsJNDIName &amp;&amp; opsJNDIName != \&quot;\&quot; ){\n                    setOutput( \&quot;dout:7\&quot;, opsJNDIName );   \n                }\n                \n                var solutionName    = frameConfig.solutionName;\n                if( solutionName &amp;&amp; solutionName != \&quot;\&quot; ) {\n                    setOutput(\&quot;dout:5\&quot;, solutionName);    \n                }\n                \n                if( solutionName &amp;&amp; solutionName != \&quot;\&quot; ) {\n                    setOutput(\&quot;dout:5\&quot;, solutionName);    \n                }\n                \n                setOutput(\&quot;dout:0\&quot;, {\n                    axflow : {\n                        \&quot;change-nested-component\&quot; : true,\n                        \&quot;cache-nested-component\&quot; : true,\n                    },\n                    widget : {\n                        path : frameConfig.template\n                    }\n                });\n                setTimeout(function(){\n                    setOutput(\&quot;dout:1\&quot;, excludeCommentedItems(frameConfig.items)); \n                    setOutput(\&quot;dout:2\&quot;, frameConfig.timezone); \n                    setOutput(\&quot;dout:3\&quot;, frameConfig.locale); \n                    setOutput(\&quot;dout:4\&quot;, frameConfig.interval); \n                }, 1500)          \n            }\n        }\n    });\n\n    CharterPlugin.getAccessControlList(function(result) {\n        if (result != null &amp;&amp; result.status == \&quot;OK\&quot;) {\n            var accessControlList = result.value;\n            CharterPlugin._checkRoleAccessList(accessControlList, {\&quot;allow-else-deny\&quot;: [\&quot;Admin/Analytics\&quot;]}, function(result) {\n                if (result != null &amp;&amp; result.status == \&quot;OK\&quot;) {\n                    setOutput(\&quot;dout:8\&quot;, {\n                        isAnalyticsAdmin: result.value === true\n                    });\n                }\n            });\n        }\n    });\n\n}\n&quot;"/>
+      <Input key="node:1/cfg:schema/default" value="&quot;var schema = [];\n\nschema.push({ name: \&quot;id\&quot;, label: \&quot;id\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;name\&quot;, label: \&quot;name\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;label\&quot;, label: \&quot;label\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;iconType\&quot;, label: \&quot;iconType\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;icon\&quot;, label: \&quot;icon\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;selected\&quot;, label: \&quot;selected\&quot;, type: \&quot;boolean\&quot; });\nschema.push({ name: \&quot;view\&quot;, label: \&quot;view\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;service\&quot;, label: \&quot;service\&quot;, type: \&quot;object\&quot; });\nschema.push({ name: \&quot;props\&quot;, label: \&quot;props\&quot;, type: \&quot;object\&quot; });\nsetOutputSchema( \&quot;dout:0\&quot;, schema );&quot;"/>
+      <Input key="node:1/cfg:inPorts/default" value="[]"/>
+      <Input key="node:9/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#containerMain&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;containerMain&quot;}]"/>
+      <Schema id="node:1/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;props&quot;,&quot;label&quot;:&quot;props&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <Schema id="node:9/in:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;props&quot;,&quot;label&quot;:&quot;props&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <DynInput id="node:9">
+        <Port id="din:BaseConfig" type="any[]" label="BaseConfig" _undefined_default="" evaluate="always"/>
+        <Port id="din:Time Zone" type="string" label="Time Zone" _undefined_default="" evaluate="always"/>
+        <Port id="din:Locale" type="string" label="Locale" _undefined_default="" evaluate="always"/>
+        <Port id="din:Interval" type="string" label="Interval" _undefined_default="" evaluate="always"/>
+        <Port id="din:FilterObj" type="any" label="FilterObj" _undefined_default="" evaluate="always"/>
+        <Port id="din:Visualization" type="string" label="Visualization" _undefined_default="" evaluate="always"/>
+        <Port id="din:result" type="any" label="result" _undefined_default="" evaluate="always"/>
+        <Port id="din:solutionName" type="any,string" label="solutionName" _undefined_default="" evaluate="always"/>
+        <Port id="din:Logo" type="string" label="Logo" _undefined_default="" evaluate="always"/>
+        <Port id="din:opsJNDIName" type="string" label="opsJNDIName" _undefined_default="" evaluate="always"/>
+        <Port id="din:usageAnalytics" type="any" label="usageAnalytics" _undefined_default="" evaluate="always"/>
+      </DynInput>
+      <DynOutput id="node:1">
+        <Port id="dout:0" type="string" label="Template" propagate="always"/>
+        <Port id="dout:1" type="any[]" label="Base Config" propagate="always"/>
+        <Port id="dout:2" type="string" label="Time Zone" propagate="always"/>
+        <Port id="dout:3" type="string" label="Locale" propagate="always"/>
+        <Port id="dout:4" type="string" label="Interval" propagate="always"/>
+        <Port id="dout:5" type="any,string" label="solutionName" propagate="always"/>
+        <Port id="dout:6" type="string" label="Logo" propagate="always"/>
+        <Port id="dout:7" type="string" label="opsJNDIName" propagate="always"/>
+        <Port id="dout:8" type="any" label="usageAnalytics" propagate="always"/>
+      </DynOutput>
+      <Version id="node:1" version="2"/>
+      <Version id="node:9" version="1"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/space/testp/dbpm/Charter - Plugin v11" alias="Charter"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

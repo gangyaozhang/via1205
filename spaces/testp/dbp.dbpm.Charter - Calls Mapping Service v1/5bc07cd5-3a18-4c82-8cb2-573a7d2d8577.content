@@ -1,0 +1,15 @@
+{
+	"sql-query-config" : {
+		"debug" : {
+			"*" : true
+		}
+    },
+    "data-source":{
+        "calls-mapping-model":"charter_ref_db",
+        "calls-view-model": "VT_ODA_QS"
+    },
+    "default-column-names" : {
+        "app-name" : "app",
+        "metric-name" : "metric_name"
+    }
+}

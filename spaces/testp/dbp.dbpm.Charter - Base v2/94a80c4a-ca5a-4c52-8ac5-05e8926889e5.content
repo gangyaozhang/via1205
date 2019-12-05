@@ -1,0 +1,16 @@
+{
+    "name":"Indexers",
+    "label":"Indexers",
+    "items":[
+    	{
+            "name": "Latency",
+            "uom" : "Average",
+            "aggr": "avg"
+        },
+        {
+            "name": "Record Count",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+   ]
+}

@@ -1,0 +1,142 @@
+{
+    "name":"popserv",
+    "label":"FEP-POP",
+    "items":[
+        {
+            "name": "Log Account Bad Password",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Account Bad Password Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Account Bad Password Max Address",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Account Bad Password Max Delay",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Account Bad Password Max Users",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Account Unknown User",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Conf End Update",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Conf Server Lock",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Conf Start Update",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Connections Made",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },
+    	{
+            "name": "Log Connections Quit",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Connections TimedOut",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Ms Mailbox Created",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Ms Message Read Fail",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Nio Conn Timeout",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Nio Get Sock Name Fail",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Nio Recv Error",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Nio Recv Fail",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Nio Send Error",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Nio TimeOut Read",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Protocol Error",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Proxy Connections Made",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },
+    	{
+            "name": "Log Proxy Greeting Failed",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Proxy User Failed",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log Server Too Many Bad Commands",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+    	{
+            "name": "Log User Data Exception",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ]
+}

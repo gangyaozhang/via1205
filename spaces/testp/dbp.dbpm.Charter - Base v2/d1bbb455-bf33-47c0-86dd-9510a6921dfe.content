@@ -1,0 +1,34 @@
+{
+    "name": "Quantum",
+    "label": "Client",
+    "items": [
+        {
+            "name": "Failed API Attempt",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Successful API Attempt",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Application Errors",
+            "uom" : "Total Errors",
+            "aggr": "sum"
+        },
+        {
+            "name": "Page Load Duration",
+            "uom" : "Time (ms)",
+            "aggr": "avg"
+        }
+    ],
+    "meta":{
+        "dimension-values":[
+            {
+                "name":"api",
+                "value":["","accountV1Services","awsEndPoints","careV1ApplicationInit","careV1BillingPaymentMethods","careV1BillingSettings","careV1BillingSummary","careV1EquipmentWiFiSettings","careV1FedLogin","careV1ForgotPwd1","careV1GetAppointment","careV1GetCustInfo","careV1GetNotification","careV1GetPendingPayments","careV1Logout","careV1NotificationRegistration","careV1Payment","careV1Phone","careV1UserEntitlement","cmsV1Content","cmsV1ContentSnippets","equipmentV1ModemPing","identityV1Identities","notificationRegister","onBridgeExpressV3RetrievedPDF","partnerLocationEdgeV1PartnerZipcode","voiceV2Lines","voiceV2LinesVms","wifiPortalServV1CreateSecureProfile","agreementV1ContractsAp","agreementV1ContractsOtp","phoneEdgeV2CallFwrd","phoneEdgeV2CallFwrdManageNumber","phoneEdgeV2Notification","sbNetLoginEdgeV1Session","sbNetMemberEdgeV2Member","sbNetMemberEdgeV2MembersPhone","sbNetPartnerLocEdgeV1PartnerIP","sbNetServiceApptEdgeV1Appts","sbNetValueAddServicesV1Services","activitySummary","mobileAccountV1Devices","mobileAccountV1LinesDisplay","mobileAccountV1PlansLine","mobileAccountV1PlansLineCancel","mobileAccountV1SettingsAccount","mobileAccountV1Usage","mobilecmsV1Content","mobilecmsV1ContentSearch","mobileNotificationV1SettingsAccount","mobileV1Profile","statementList","tdcsV1PublicInform","version","accountV1Services","agreementV1ContractsOtp","agreementV2ContractsTCR","assetSpectrumCopy","campaignEdgeServicesV1OptInSpecGuide01Eligibility","campaignEdgeServiceV1Campaigns","cmsV1Content","cmsV1ContentAlert","configedgeServicesV1","customertrackingedgeServicesV1","deviceedgeDevicesV3","emailV1Mailbox","gatewayTtl","geolocationV1IpToZip","identityV1Identities","partnerLocationV1ServicesPartnerZipcode","pomedgeRestPom","prefcommedgeServicesV1","searchV1Search","serviceapptedgeV1","tdcsPublicInform"]
+            }
+        ]
+    }
+}

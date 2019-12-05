@@ -1,0 +1,24 @@
+{
+    "name": "Quantum",
+    "label": "Client",
+    "items": [
+        {
+            "name": "Failed API Attempt",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Successful API Attempt",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ],
+    "meta":{
+        "dimension-values":[
+            {
+                "name":"api",
+                "value":["","accountV1Accounts","billingV1","billingV1StatementList","billingV1StatementPDF","paymentMethodV1","paymentV2Mop","pciV1PaymentMethod","pciV1Payments","accountV1Accounts","billingV1","pciEdgeV1Payments","billingV2StatmentsCurrent","mobileBillingV1","mobileBillingV1BillingAutopay","mobileBillingV1Orders","mobileBillingV1StatementList","mobileBillingV1StatementsDate","mobileBillingV1UsageDetailsSummary","mobileBillingV1UsageLineDetails","accountV1Accounts","billingV1","pciV1Payments"]
+            }
+        ]
+    }
+}

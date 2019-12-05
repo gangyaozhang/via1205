@@ -1,0 +1,11 @@
+{
+    "name":"Syslog",
+    "label":"Syslog",
+    "items":[
+        {
+            "name": "Configuration Change",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ]
+}

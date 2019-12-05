@@ -1,0 +1,16 @@
+select
+    round(tsepoch/1000) as epochtime,
+    ${timestampSQL} as timestamp,
+    host as host,
+    userType as userType,
+    user as user,
+    processType as processType,
+    processId as processId,
+    action as action,
+    ticket as ticket,
+    details as details
+from charter_syslog_entries
+where floor(tsepoch/1000) >= ${fromEpoch} and ceil(tsepoch/1000) <= ${toEpoch}
+and datekey in (${dateKeys})
+and user = '${user}'
+and host = '${host}'

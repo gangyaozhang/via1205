@@ -1,0 +1,100 @@
+{
+    "name":"Quantum",
+    "label":"Client",
+    "items":[
+        {
+            "name": "Failed API Attempt",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "#metric-id":"Quantum|Failed API Attempt|init",
+                "anomaly-config[5/5]":{
+                    "median_baseline":358
+                }
+            }
+        },
+        {
+            "name": "Failed API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        },
+        {
+            "name": "Successful API Attempt",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Successful API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        },
+        {
+            "name": "Avg Startup Time",
+            "uom" : "Avg Time(ms)",
+            "aggr": "avg"
+        },
+        {
+            "name": "Failed Stream Start",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "anomaly-config[5/5]":{
+                    "median_baseline":330
+                }
+            }
+        },
+        {
+            "#name": "Failed API Attempt (liveUrlFetch/403)",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "synthetic-metric":true,
+                "dimension-values":[
+                    {
+                        "name":"$.METRIC",
+                        "value":"Failed API Attempt"
+                    },
+                    {
+                        "name":"api",
+                        "value":"liveUrlFetch"
+                    },
+                    {
+                        "name":"response",
+                        "value":403
+                    }
+                ]
+            }
+        },
+        {
+            "#name": "API Attempt (liveUrlFetch)",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "synthetic-metric":true,
+                "dimension-values":[
+                    {
+                        "name":"$.METRIC",
+                        "value":["Failed API Attempt", "Successful API Attempt"]
+                    },
+                    {
+                        "name":"api",
+                        "value":"liveUrlFetch"
+                    }
+                ]
+            }
+        }
+    ],
+    "meta":{
+        "dimension-values":[
+            {
+                "name":"api",
+                "value":["","drm", "liveUrlFetch"]
+            },
+            {
+                "name":"stream",
+                "not":true,
+                "value":["dvr"]
+            }
+        ]
+    }
+}

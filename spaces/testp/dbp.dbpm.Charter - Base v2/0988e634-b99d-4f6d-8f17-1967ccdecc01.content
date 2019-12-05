@@ -1,0 +1,21 @@
+{
+    "name":"RM",
+    "label":"Record Manager",
+    "items":[
+        {
+            "name": "Error Event",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Span Duration",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        },
+        {
+            "name": "Status Duration",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        }
+    ]
+}

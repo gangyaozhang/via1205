@@ -1,0 +1,101 @@
+{
+    "name":"CAPM_FW",
+    "label":"Firewall",
+    "items":[
+        {
+            "name": "CPU Utilization Max",
+            "uom" : "Percent",
+            "aggr": "avg"
+        },
+        {
+            "name": "Memory Utilization Max",
+            "uom" : "Percent",
+            "aggr": "avg"
+        },
+        {
+            "name": "Port Utilization In Max",
+            "uom" : "Percent",
+            "aggr": "avg"
+        },
+        {
+            "name": "Port Utilization Out Max",
+            "uom" : "Percent",
+            "aggr": "avg"
+        },
+        {
+            "name": "Port Discards In Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Discards Out Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Errors In Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Errors Out Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Discards In Pct",
+            "uom" : "Percent",
+            "aggr": "avg"
+        },
+        {
+            "name": "Port Discards Out Pct",
+            "uom" : "Percent",
+            "aggr": "avg"
+        },
+        {
+            "name": "Port Discards",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Discards In",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Discards Out",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Errors",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Errors In",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Errors Out",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Utilization",
+            "uom" : "Percent",
+            "aggr": "avg"
+        },
+        {
+            "name": "Port Utilization In",
+            "uom" : "Percent",
+            "aggr": "avg"
+        },
+        {
+            "name": "Port Utilization Out",
+            "uom" : "Percent",
+            "aggr": "avg"
+        }
+    ]
+}

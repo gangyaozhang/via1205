@@ -1,0 +1,45 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "326f75e6-c074-4ee4-8ed3-fcf975fc8876"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "52838938-9f04-4804-891c-98092aabdcf9"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "856c37e8-39e0-4da1-8c70-1ee16073e72b"
+    },
+    {
+      "fileref": "ModelContentFile4",
+      "name": "09687f83-0449-4b18-8892-ddeb12a8bfdc"
+    },
+    {
+      "fileref": "ModelContentFile5",
+      "name": "e828610f-978d-4d6d-8ac2-cbaaa5997731"
+    },
+    {
+      "fileref": "ModelContentFile6",
+      "name": "b3c593d7-809f-4239-8080-b5673f09667e"
+    },
+    {
+      "fileref": "ModelContentFile7",
+      "name": "5bc07cd5-3a18-4c82-8cb2-573a7d2d8577"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "09687f83-0449-4b18-8892-ddeb12a8bfdc,e828610f-978d-4d6d-8ac2-cbaaa5997731,856c37e8-39e0-4da1-8c70-1ee16073e72b,52838938-9f04-4804-891c-98092aabdcf9,b3c593d7-809f-4239-8080-b5673f09667e,326f75e6-c074-4ee4-8ed3-fcf975fc8876,5bc07cd5-3a18-4c82-8cb2-573a7d2d8577,/app/dbp/user/viaops_admin/dbpm/VIAOps - Base Service:e7ad0afd-5240-433e-8fa8-3954ddc76d38",
+    "__references__": "/app/dbp/user/viaops_admin/dbpm/VIAOps - Base Service",
+    "modelStatus": "valid",
+    "name": "Charter - Calls Mapping Service v1"
+  }
+}

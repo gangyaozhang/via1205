@@ -1,0 +1,39 @@
+{
+    "name":"popserv",
+    "label":"FEP-POP",
+    "items":[
+        {
+            "name": "Log Account Bad Password",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Account Unknown User",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Connections Made",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+        }
+        },
+        {
+            "name": "Log Ms Already Pop Locked",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Pop Protocol Error",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Pop Server Too Many Bad Commands",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ]
+}

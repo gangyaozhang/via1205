@@ -1,0 +1,64 @@
+{
+    "module-name":"IncidentAnalysis",
+    "query-delay-tolerance" : 2,
+    "sql-query-config" : {
+        "debug" : {
+            "*"  : true
+        }
+    },
+    "debug-print" : {
+		"_enrichIncidentsWithMetrics" : false,
+		"_enrichIncidentsWithNotificationsAndCalls" : false,
+		"_getMetricIdWhereClause" : false,
+		"clearAnalysisCache" : false,
+		"getAnomalyIncidents" : false,
+		"getAnomalyIncidentsByID" : false,
+		"getEnrichedAnomalyData" : false,
+		"getEnrichedIncidentData" : false,
+		"getIncidentGroupData" : false,
+		"getIncidentGroupIncidentData" : false,
+		"getIncidentHistoryData" : false,
+		"getIncidentNotifications" : false,
+		"getLatestIncidentRecordById" : false,
+		"getMetricInfo" : false
+    },
+    "data-source" : {
+        "analysis-cache" : "charter_ref_db",
+        "reference-data" : "charter_ref_db"
+    },
+    "analytic-service-manifest":"/app/dbp/user/charter_admin/dbpm/Charter - Manifest/AnalyticServiceManifest",
+    "submit-ticket" : {
+        "project" : "/home/andy/VIAOPS_NotificationResource$Deployment",
+        "feed" : "VIAOPS_NotificationFeed"
+    },
+    "cache-analysis-results" : {
+        "trend-analysis" : true,
+        "dimension-analysis" : true,
+        "incident-detail" : true,
+        "anomaly-incidents-by-id" : true,
+        "incident-notifications" : true,
+        "incident-by-id" : true
+    },
+    "trend-config" : {
+        "#primary-metric-label"     : "Measure",
+        "#primary-baseline-label"   : "Measure Baseline",
+        "#secondary-metric-label"   : "QoS",
+        "#secondary-baseline-label" : "QoS Baseline"
+    },
+    "metric-id-where-clause" : {
+        "Network|Other|" : [
+            "metric_id like 'Network|%'",
+            "and metric_id not like 'Network|NCE|%'",
+            "and metric_id not like 'Network|NCW|%'",
+            "and metric_id not like 'Network|Irvine|%'",
+            "and metric_id not like 'Network|Billerica|%'",
+            "and metric_id not like 'Network|Madison|%'",
+            "and metric_id not like 'Network|Spartanburg|%'",
+            "and metric_id not like 'Network|StLouis|%'",
+            "and metric_id not like 'Network|Tampa|%'",
+            "and metric_id not like 'Network|Dallas|%'",
+            "and metric_id not like 'Network|Columbus|%'"
+        ]
+    },
+    "autorefresh" : true
+}

@@ -1,0 +1,21 @@
+{
+    "name": "VM-IMS",
+    "label": "VM-IMS",
+    "items": [
+        {
+            "name": "Messages Retreived",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Messages Deposited",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Traps/Errors",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ]
+}

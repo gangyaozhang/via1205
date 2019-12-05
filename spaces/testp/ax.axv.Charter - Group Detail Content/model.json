@@ -1,0 +1,20 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "locale"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "axv",
+    "__references__": "/app/dbp/space/testp/dbpm/Charter - Causal Analysis Service v3,/app/dbp/space/testp/dbpm/Charter - Incident Analysis Service v9,/app/dbp/space/VIA Common Library/dbpm/VIA - Common,/app/dbp/space/testp/dbpm/Charter - Trend Analysis Service v4,/app/dbp/space/testp/dbpm/Charter - Execution Monitor Service v1,/app/dbp/space/VIA Common Library/dbpm/VIA - TimeSeriesChart,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Commonality Plugin,/app/ax/space/Product Prototyping/axv/Dimension Summary Comp v2",
+    "modelStatus": "invalid",
+    "name": "Charter - Group Detail Content"
+  }
+}

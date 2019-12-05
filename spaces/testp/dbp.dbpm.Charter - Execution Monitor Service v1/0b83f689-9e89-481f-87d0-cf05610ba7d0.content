@@ -1,0 +1,52 @@
+{
+    "analytic-services" : {
+        "IncidentRollup" : {
+            "url" : "/app/dbp/user/charter_admin/dbpm/Charter - Incident Analysis Service v6/getIncidentSummaryRollup"
+        }
+    },
+    "round-time-to":"StartTime",
+    "minimum-acknowledge-age":"15M",
+    "module-name":"ExecutionMonitor",
+	"sql-query-config" : {
+		"debug" : {
+			"ExecutionMonitor" : true
+		}
+	},
+    "data-source" : {
+        "via-model-repository" : "via_mr",
+        "change-log"  : "",
+        "change-mgmt" : ""
+    },
+	"user-where-clause":{
+	    "anazeer":[
+	        "m.user like 'p%' or m.user in ('svc_netopsjunosspace')"
+	    ],
+	    "aso":[
+	        "m.user in ('shashi.kunduru', 'eric.neumeier', 'dheeraj.nagunoori')"
+	    ],
+	    "bhillyard":[
+	        "m.user like 'e8%' or m.user like 'e0%' or m.user like 'e1%' or m.user like 'e2%' or m.user in ('richard.rosica', 'dinesh.murugan')"
+	    ],
+	    "cmenier":[
+	        "m.user like 'v%'"
+	    ],
+	    "dmcpherson":[
+	        "m.user like 'e6%' or m.user like 'e7%'"
+	    ],
+	    "ekwang":[
+	        "m.user like 'e0%' or m.user like 'e1%' or m.user like 'e2%'"
+	    ],
+	    "jnorthrup":[
+	        "m.user like 'e3%' or m.user in ('shiva.kumar', 'bigben', 'yee.yang')"
+	    ],
+	    "mgibbs":[
+	        "m.user in ('harish.namburi', 'prudhviraj.yagateela', 'junos_space')"
+	    ],
+	    "wmak":[
+	    ]
+	},
+    "change-log-queries":{
+    },
+    "sys-log-queries":{
+    }
+}

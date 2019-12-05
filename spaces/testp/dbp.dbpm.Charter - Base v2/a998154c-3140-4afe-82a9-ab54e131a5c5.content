@@ -1,0 +1,108 @@
+{
+    "Video": {
+    },
+    "cDVR": {
+    },
+    "SpecGuide": {
+    },
+    "SpecNet": {
+    },
+    "SpecMobile": {
+    },
+    "MySpectrum": {
+    },
+    "SMB": {
+    },
+    "Voice": {
+    },
+    "E-Mail": {
+    },
+    "CHTR_E-Mail": {
+    },
+    "*": {
+    	"contact-group": [
+    		"APO-PortalOps",
+    		"APO-Support Center",
+    		"VSC-SST",
+    		"VSC-Systems"
+    	],
+    	"remedy-severity": [
+    		"Urgent",
+    		"High",
+    		"Medium",
+    		"Low"
+    	],
+    	"network-condition": [
+    		"Outage",
+    		"Informational"
+    	],
+    	"netcool-severity": [
+    		"Critical",
+    		"Major"
+    	],
+    	"work-info-type": [
+    		"General Information",
+    		"Operational Information"
+    	],
+    	"corporate-id": [
+    		"Charter Internal",
+    		"Charter Executive",
+    		"Charter Partner"
+    	],
+    	"reported-source": [
+    		"Alarms"
+    	],
+    	"service-type": [
+    		"Infrastructure Event"
+    	],
+    	"assigned-group": [
+    		"APO-Support Center",
+    		"NOC-National Video",
+    		"VO-Support Center-Systems"
+    	],
+    	"anomaly-weight": [
+    		"High",
+    		"Medium",
+    		"Low"
+    	],
+    	"customer-impact": [
+    		"High",
+    		"Medium",
+    		"Low"
+    	],
+    	"category-1": [
+    		"Application",
+    		"Video"
+    	],
+    	"category-2": [
+            "APO-Mail Residential Operations",
+            "APO-Portal",
+            "Content Delivery"
+    	],
+    	"category-3": [
+            "Mobile Apps - Mobile Apps (Value Add Service)",
+            "MySpectrum - MySpectrum Application",
+            "Spectrum TV App (STVA)",
+            "Spectrum.net",
+            "SpectrumBusiness.net"
+    	],
+    	"product-category-1": [
+            "Network",
+            "Video - STVA",
+            "Video National Services"
+    	],
+    	"product-category-2": [
+            "May vary"
+    	],
+    	"product-category-3": [
+            "May vary"
+    	],
+    	"noc-severity": [
+    		"Critical",
+    		"Urgent",
+    		"High",
+    		"Medium",
+    		"Low"
+    	]
+    }
+}

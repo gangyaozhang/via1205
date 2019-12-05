@@ -1,0 +1,20 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "locale"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "axv",
+    "__references__": "/app/dbp/space/testp/dbpm/Charter - Operation Service v1,/app/dbp/space/testp/dbpm/Charter - Options Service v3,/app/dbp/space/testp/dbpm/Charter - Anomaly Viewer Service v2,/app/dbp/space/VIA Common Library/dbpm/VIA - Common,/app/dbp/space/testp/dbpm/Charter - Incident Analysis Service v9,/app/ax/space/VIA Digital Operations/axv/VIAOps - Operation Comp",
+    "modelStatus": "valid",
+    "name": "Charter - Operation Comp v1"
+  }
+}

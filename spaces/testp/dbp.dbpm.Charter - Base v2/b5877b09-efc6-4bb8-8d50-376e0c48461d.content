@@ -1,0 +1,14 @@
+{
+    "name":"webmail_imap",
+    "label":"Web Mail",
+    "items":[
+    	{
+            "name": "Log Connections Made",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        }
+   ]
+}

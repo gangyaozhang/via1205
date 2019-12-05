@@ -1,0 +1,46 @@
+{
+    "name":"IP2MAC",
+    "label":"IP2MAC",
+    "items":[
+        {
+            "name": "LL Search Delay",
+            "uom" : "Percent",
+            "aggr": "pct"
+        },
+        {
+            "name": "LL Update Delay",
+            "uom" : "Time (s)",
+            "aggr": "avg"
+        },
+        {
+            "name": "LL Receiver",
+            "uom" : "Avg Messages",
+            "aggr": "avg"
+        },
+        {
+            "name": "DLN Delay",
+            "uom" : "Time (sec)",
+            "aggr": "avg"
+        },
+        {
+            "name": "DLN v4 Delay",
+            "uom" : "Time (sec)",
+            "aggr": "avg"
+        },
+        {
+            "name": "DLN v6 Delay",
+            "uom" : "Time (sec))",
+            "aggr": "avg"
+        },
+        {
+            "name": "DLN v4 Status",
+            "uom" : "1-Standalone",
+            "aggr": "avg"
+        },
+        {
+            "name": "DLN v6 Status",
+            "uom" : "1-Standalone",
+            "aggr": "avg"
+        }
+    ]
+}

@@ -1,0 +1,51 @@
+{
+    "name":"Quantum",
+    "label":"Quantum",
+    "items":[
+        {
+            "name": "Application Errors",
+            "uom" : "Total Errors",
+            "aggr": "sum"
+        },
+        {
+            "name": "Failed API Attempt",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "#metric-id":"Quantum|Failed API Attempt|browse",
+                "anomaly-config[5/5]":{
+                    "median_baseline":80
+                }
+            }
+        },
+        {
+            "name": "Failed API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        },
+        {
+            "name": "Successful API Attempt",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Successful API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        },        {
+            "name": "Stat Active User Count",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Stat Active Device Count",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+
+    ],
+    "meta":{
+        "dimension-values":[
+        ]
+    }
+}

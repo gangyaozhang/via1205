@@ -1,0 +1,29 @@
+<DashboardPluginModel is_init="false" name="Charter - Dimension Analysis Service v5" description="">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services/>
+    <Resources>
+      <Resource uuid="216996d9-3378-4a34-8e55-03acd4676631" name="en" type="application/json" size="2741" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="ae0d263b-9186-402e-8cd7-ffece045724b" name="QueryConfig" type="application/json" size="86215" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="f6e16b70-d8c1-4953-8730-4f5296efe792" name="QueryConfig-OLD" type="application/json" size="91655" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/user/viaops_admin/dbpm/VIAOps - Commonality Service"/>
+      <Plugin uri="/app/dbp/space/testp/dbpm/Charter - Base v2"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

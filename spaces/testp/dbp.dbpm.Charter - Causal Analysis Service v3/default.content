@@ -1,0 +1,1350 @@
+<DashboardPluginModel is_init="false" name="Charter - Causal Analysis Service v3" description="">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions>
+      <Function name="getIncidentSets" args="incidents" private="false">
+        <CodeText>
+          <![CDATA[if (typeof incidents == "string") {
+    incidents = JSON.parse(incidents);
+}
+
+var SEVERITY = ["Low", "Medium", "High"];
+var TYPE = ["Hazcon", "Outage"];
+
+var incidentSets = [];
+incidents.forEach(function(keyIncident) {
+    if (keyIncident["severity"] == null) {
+        debugger;
+    }
+    var corrIncidents = keyIncident["correlated_incidents"];
+    if (typeof corrIncidents == "string") {
+        corrIncidents = JSON.parse(corrIncidents);
+    }
+    else {
+        corrIncidents = corrIncidents.slice(0);
+    }
+    // prepend key incident to begining of list
+    corrIncidents.splice(0, 0, keyIncident);
+    var maxScore     = NaN;
+    var severity     = null;
+    var anomalies    = 0;
+    var notification = 0;
+    var type         = null;
+    corrIncidents.forEach(function(corrIncident) {
+        if (isNaN(maxScore) || Math.abs(maxScore) < Math.abs(corrIncident["display_max"])) {
+            maxScore = corrIncident["display_max"];
+        }
+        if (severity == null) {
+            severity = corrIncident["severity"];
+        }
+        else if (corrIncident["severity"] != "" && SEVERITY.indexOf(severity) < SEVERITY.indexOf(corrIncident["severity"])) {
+            severity = corrIncident["severity"];
+        }
+        if (type == null) {
+            type = corrIncident["type"];
+        }
+        else if (corrIncident["type"] != "" && TYPE.indexOf(type) < TYPE.indexOf(corrIncident["type"])) {
+            type = corrIncident["type"];
+        }
+        anomalies += corrIncident["anomalies"];
+        if (corrIncident['notification'] != "Not Actioned") {
+            var toks = (corrIncident['notification']).split(" ");
+            if (toks.length == 2) {
+                notification += Number(toks[0]);
+            }
+        }
+    });
+    if (notification == 0) {
+        notification = "Not Actioned";
+    }
+    else if (notification == 1) {
+        notification = "1 notification";
+    }
+    else if (notification > 1) {
+        notification = notification + " notifications";
+    }
+    // adjust metric time to cover all incidents in set
+    var incidentSet = {
+        "_is_incident_set_"    : true,
+        "correlated_incidents" : corrIncidents,
+        "correlated_count"     : corrIncidents.length,
+        "start_epoch"          : keyIncident["min_epoch"],
+        "end_epoch"            : keyIncident["max_epoch"],
+        "call_start_epoch"     : keyIncident["min_call_epoch"],
+        "call_end_epoch"       : keyIncident["max_call_epoch"],
+        "display_max"          : maxScore,
+        "severity"             : severity,
+        "type"                 : type,
+        "anomalies"            : anomalies,
+        "notification"         : notification,
+        "metric_value_bl"      : "--",
+    };
+    var COPY_AS_IS = [
+        "id", "metric_id",
+        "service", "service_label", "sub_service", "sub_service_label",
+        "component", "component_label", "metric", "metric_label",
+        "dim_keys", "dim_values", "dim_labels", 
+        "causation", "anomaly_window", "status", "call_count_bl"
+    ];
+    COPY_AS_IS.forEach(function(attribute) {
+        incidentSet[attribute] = keyIncident[attribute];
+    });
+    incidentSet["start_date"]   = (new Date(1000*incidentSet["start_epoch"])).toISOString();
+    incidentSet["end_date"]     = (new Date(1000*incidentSet["end_epoch"])).toISOString();
+    incidentSet["local_detect"] = String(incidentSet["start_epoch"]) + "/" + String(incidentSet["end_epoch"]);
+    if (incidentSet["call_start_epoch"] > 0) {
+        incidentSet["local_call_detect"]  = String(incidentSet["call_start_epoch"]) + "/" + String(incidentSet["call_end_epoch"]);
+    }
+    else {
+        incidentSet["local_call_detect"]  = "---";
+    }
+    incidentSets.push(incidentSet);
+});
+return incidentSets;
+]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services>
+      <Service name="_createFilters" args="startEpoch,endEpoch,service,sub_service,component,metric,dim_values,dim_keys,metaFilters" private="true">
+        <CodeText>
+          <![CDATA[//print("_createFilters: service="+__prettyPrintJSON(service));
+//print("_createFilters: sub_service="+__prettyPrintJSON(sub_service));
+//print("_createFilters: component="+__prettyPrintJSON(component));
+//print("_createFilters: metric="+__prettyPrintJSON(metric));
+//print("_createFilters: dim_keys="+__prettyPrintJSON(dim_keys));
+//print("_createFilters: dim_values="+__prettyPrintJSON(dim_values));
+//print("_createFilters: metaFilters="+__prettyPrintJSON(metaFilters));
+var filters = [{
+    name  : "data.svc",
+    value : [service]
+}, {
+    name  : "data.comp",
+    value : [sub_service]
+}, {
+    name  : "data.app",
+    value : [component]
+}, {
+    name  : "data.metric",
+    value : [metric]
+}, {
+    name  : "data.timeRange",
+    value : "absolute:" + startEpoch + "/" + endEpoch
+}];
+if (typeof dim_values == "string") {
+    if (dim_values != "") {
+        if (dim_values.charAt(0) == "[") {
+            dim_values = JSON.parse(dim_values);
+        }
+        else {
+            dim_values = dim_values.split("|");
+        }
+    }
+    else {
+        dim_values = [];
+    }
+}
+if (typeof dim_keys == "string") {
+    if (dim_keys != "") {
+        if (dim_keys.charAt(0) == "[") {
+            dim_keys = JSON.parse(dim_keys);
+        }
+        else {
+            dim_keys = dim_keys.split("|");
+        }
+    }
+    else {
+        dim_keys = [];
+    }
+}
+if (dim_values.length > 0) {
+    var whereClause = {};
+    for (var j=0; j<dim_values.length; j++) {
+        whereClause[dim_keys[j]] = dim_values[j];
+    }
+    filters.push({
+        name  : "$.dimensionWhereClause",
+        value : whereClause
+    });
+}
+if (metaFilters != null) {
+    filters = filters.concat(metaFilters);
+}
+return filters;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_findDrilldownDimensionRule" args="queryConfig,svc,comp,app,metric" private="true">
+        <CodeText>
+          <![CDATA[var rules = queryConfig["drilldown-dimension-rules"] || [];
+var metricId = svc + "|" + comp + "|" + app + "|" + metric;
+for (var i=0; i<rules.length; i++) {
+    if (this._matchRule(rules[i], metricId)) {
+        return rules[i];
+    }
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_findGroupRule" args="queryConfig,incident,matchBy" private="true">
+        <CodeText>
+          <![CDATA[var groupRules = queryConfig["incident-group-rules"] || [];
+var metricId = incident["metric_id"];
+//print("_findGroupRule: metricId="+metricId);
+switch (matchBy) {
+    case "key-metric":
+        for (var i=0; i<groupRules.length; i++) {
+            if (groupRules[i]["key-metric"] == metricId) {
+                return groupRules[i];
+            }
+        }
+        break;
+    case "match-rule":
+        for (var i=0; i<groupRules.length; i++) {
+            if (this._matchRule(groupRules[i], metricId)) {
+                return groupRules[i];
+            }
+        }
+        break;
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDimConfig" args="queryConfig,analysisScoreAttribute" private="true">
+        <CodeText>
+          <![CDATA[var scoreAllowance = queryConfig["dimension-analysis-config"] && queryConfig["dimension-analysis-config"]["score-allowance"];
+if (scoreAllowance == null) scoreAllowance = {};
+
+var scoreCutOff = queryConfig["dimension-analysis-config"] && queryConfig["dimension-analysis-config"]["score-cutoff"];
+if (scoreCutOff == null) scoreCutOff = {};
+
+return {
+    allowance : scoreAllowance[analysisScoreAttribute] || 0.05,
+    cutoff    : scoreCutOff[analysisScoreAttribute] || 0,
+    attribute : analysisScoreAttribute.split("/")[0],
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDimScoreText" args="analysisScoreAttribute,item" private="true">
+        <CodeText>
+          <![CDATA[switch (analysisScoreAttribute) {
+    case "_count/value":
+        return String(item["_count"]);
+        break;
+    case "_baseline/value":
+        return String(item["_baseline"]);
+        break;
+    case "_diff/value":
+        return String(item["_diff"]) + " (" + (item["_diffPct"]).toFixed(2) + "%)";
+        break;
+    case "_diffPct/percent":
+        return (item["_diffPct"]).toFixed(2) + "% (" + item["_diff"] + ")";
+        break;
+    case "_pTotal/percent":
+        return (item["_pTotal"]).toFixed(2);
+        break;
+    case "_pBaseline/percent":
+        return (item["_pBaseline"]).toFixed(2);
+        break;
+    case "_pctDev/percent":
+        return (item["_pctDev"]).toFixed(2);
+        break;
+    case "_relDiff/percent":
+        return (item["_relDiff"]).toFixed(2);
+        break;
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getMetricIdWhereClause" args="metricInfo" private="true">
+        <CodeText>
+          <![CDATA[var debug = false;
+
+function getCommonPrefix(str1, str2)
+{
+    var result = "";
+    var n1 = str1.length, n2 = str2.length; 
+
+    // Compare str1 and str2  
+    for (var i=0, j=0; i <= n1 - 1 && j <= n2 - 1; i++, j++) { 
+        if (str1.charAt(i) != str2.charAt(j)) { 
+            break; 
+        } 
+        result += str1.charAt(i); 
+    } 
+    return result; 
+} 
+
+if (metricInfo && metricInfo.length > 0) {
+    var mids = [];
+    for( var mi=0, mlen=metricInfo.length; mi < mlen; mi++ ){
+        mids.push( metricInfo[mi]["metric_id"] );   
+    }
+    mids.sort();
+    if( debug ) print("mids[] = " + __prettyPrintJSON(mids) );
+    if (mids.length > 1) {
+        var whereClause = [];
+        var prefix = getCommonPrefix(mids[0], mids[1]);
+        for (var i=2, n=mids.length; i<n; i++) {
+            var newPrefix = getCommonPrefix(prefix, mids[i]);
+            if (newPrefix == "") {
+                whereClause.push("metric_id like '" + prefix + "%'");
+                prefix = mids[i];
+            }
+            else {
+                prefix = newPrefix;
+            }
+        }
+        whereClause.push("metric_id LIKE '" + prefix + "%'");
+        if( debug ) print("whereClause[] = " + __prettyPrintJSON(whereClause) );
+        if (whereClause.length == 1) {
+            return "AND " + whereClause[0] + " ";
+        }
+        else if (whereClause.length > 1) {
+            return "AND (" + whereClause.join(" OR ") + ") ";
+        }
+    }
+    else {
+        return "AND metric_id = '" + mids[0] + "' ";
+    }
+}
+return "";
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_isCorrelated" args="rule,incident,keyIncident" private="true">
+        <CodeText>
+          <![CDATA[var metricId = incident["metric_id"];
+if (rule["correlated-metrics"] != null) {
+    var correlatedMetrics = rule["correlated-metrics"];
+    for (var i=0; i<correlatedMetrics.length; i++) {
+        var metric = correlatedMetrics[i];
+        if (metric["metric-id"] == metricId) {
+            return true;
+        }
+    }
+}
+else if (rule["match-rule"] != null) {
+    if (this._matchRule(rule, metricId, keyIncident["metric_id"])) {
+        return true;
+    }
+}
+return false;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_isTemporalMatch" args="startEpoch,endEpoch,incident,leadingInterval,trailingInterval" private="true">
+        <CodeText>
+          <![CDATA[if (endEpoch == 0 && incident["end_epoch"] == 0) {
+    // both open
+    if (incident["start_epoch"] >= (startEpoch-leadingInterval)) {
+        // incident started after keyIncident
+        return true;
+    }
+}
+else if (endEpoch == 0) {
+    // keyIncident still open
+    if (incident["start_epoch"] >= (startEpoch-leadingInterval) || incident["end_epoch"] >= (startEpoch-leadingInterval)) {
+        // incident started or ended after keyIncident
+        return true;
+    }
+}
+else if (incident["end_epoch"] == 0) {
+    // incident open
+    if (incident["start_epoch"] >= (startEpoch-leadingInterval) && incident["start_epoch"] <= (endEpoch+trailingInterval)) {
+        // incident started after keyIncident started and before keyIncident ended
+        return true;
+    }
+}
+else {
+    // both close
+    if (incident["start_epoch"] <= (startEpoch-leadingInterval) && incident["end_epoch"] >= (endEpoch+trailingInterval)) {
+        // incident completely overlaps keyIncident
+        return true;
+    }
+    else if (incident["start_epoch"] >= (startEpoch-leadingInterval) && incident["start_epoch"] <= (endEpoch+trailingInterval)) {
+        // incident started during keyIncident
+        return true;
+    }
+    else if (incident["end_epoch"] >= (startEpoch-leadingInterval) && incident["end_epoch"] <= (endEpoch+trailingInterval)) {
+        // incident ended during keyIncident
+        return true;
+    }
+}
+return false;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_matchRule" args="rule,metricId,refId" private="true">
+        <CodeText>
+          <![CDATA[var matchRules = rule["match-rule"];
+if (matchRules == null) return false;
+
+if (typeof matchRules == "string") {
+    matchRules = [matchRules];
+}
+for (var m=0; m<matchRules.length; m++) {
+    var matchRule = matchRules[m];
+    var match = matchRule.split("|");
+    var metric = metricId.split("|");
+    var ref = refId != null ? refId.split("|") : null;
+    if (metric.length >= match.length) {
+        var ok = true;
+        for (var i=0; i<match.length; i++) {
+            if (match[i] == "%" && ref != null) {
+                if (i >= ref.length || metric[i] != ref[i]) {
+                    ok = false;
+                    break;
+                }
+            }
+            else if (metric[i] != match[i] && (match[i] != "*" && match[i] != "%") && metric[i] != "*") {
+                ok = false;
+                break;
+            }
+        }
+        //print("_matchRule: matchRule="+matchRule+" metricId="+metricId+" ok="+ok);
+        if (ok) return true;
+    }
+}
+return false;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_setCacheConfig" args="filters,key1,key2,closed" private="true">
+        <CodeText>
+          <![CDATA[filters.push({
+    name  : "$.cacheConfig",
+    value : {
+        key1 : key1,
+        key2 : key2,
+        type : closed ? "persistent" : "transient",
+    }
+});
+]]>
+        </CodeText>
+      </Service>
+      <Service name="analyzeIncidentData" args="filters,timeStamp" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+print("_invokeIncidentAnalysisService: filters="+__prettyPrintJSON(filters));
+var incidents = this._invokeIncidentAnalysisService(queryConfig, filters, timeStamp);
+incidents = incidents.filter(function(incident) {
+    return incident["start_epoch"] != null && incident["start_epoch"] > 0 && incident["severity"] != null;
+});
+
+// Incident sorting is _not_ amenable for temporal grouping as it sorts by typeVal first
+// need to re-sort by start_epoch, end_epoch, then typeVal
+incidents.sort(function(a,b) {
+    if (a["start_epoch"] > b["start_epoch"]) return -1;
+    else if (a["start_epoch"] < b["start_epoch"]) return 1;
+    else {
+        if (a["end_epoch"] > b["end_epoch"]) return -1;
+        else if (a["end_epoch"] < b["end_epoch"]) return 1;
+        else {
+            if (a["typeVal"] > b["typeVal"]) return -1;
+            else if (a["typeVal"] < b["typeVal"]) return 1;
+            else return 0;
+        }
+    }
+});
+
+var key_incidents = this.applyTemporalCorrelation(queryConfig, incidents);
+return key_incidents;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="applyDimensionAnalysis" args="keyIncident,analysisScoreAttribute" private="false">
+        <CodeText>
+          <![CDATA[var incidents = [];
+if (keyIncident["_is_incident_set_"] != true) {
+    incidents.push(keyIncident);
+}
+
+var daMetaFilters = [
+    {
+        "name"  : "$.rankLimit",
+        "value" : 0
+    },
+    {
+        "name"  : "$.dimensionList",
+        "value" : {
+            "compound-dimensions" : []
+        }
+    }
+];
+
+var queryConfig = this.getQueryConfig();
+var dimConfig = this._getDimConfig(queryConfig, analysisScoreAttribute);
+
+var cacheAnalysisResults = queryConfig["dimension-analysis-config"] && queryConfig["dimension-analysis-config"]["cache-analysis-results"];
+if (cacheAnalysisResults == null) cacheAnalysisResults = false;
+
+var minTimeInterval = queryConfig["dimension-analysis-config"] && queryConfig["dimension-analysis-config"]["minimum-time-interval"];
+if (minTimeInterval == null) minTimeInterval = 5*60;
+var maxOpenTimeInterval = queryConfig["dimension-analysis-config"] && queryConfig["dimension-analysis-config"]["maximum-open-time-interval"];
+if (maxOpenTimeInterval == null) maxOpenTimeInterval = 24*60*60;
+
+var correlated = keyIncident["correlated_incidents"];
+if (correlated != null) {
+    if (typeof correlated == "string") {
+        correlated = correlated != "" ? JSON.parse(correlated) : [];
+    }
+    incidents = incidents.concat(correlated);
+}
+
+for (var i=0; i<incidents.length; i++) {
+    var startEpoch = incidents[i]["start_epoch"];
+    var endEpoch = incidents[i]["end_epoch"];
+    var isClosed = endEpoch > 0;
+    if (endEpoch == 0) {
+        endEpoch = Math.round(Date.now()/1000);
+        if (maxOpenTimeInterval > 0 && (endEpoch - startEpoch) > maxOpenTimeInterval) {
+            endEpoch = startEpoch + maxOpenTimeInterval;
+        }
+    }
+    if ((endEpoch - startEpoch) < minTimeInterval) {
+        endEpoch = startEpoch + minTimeInterval;
+    }
+    var filters = this._createFilters(startEpoch, endEpoch,
+                                      incidents[i]["service"], incidents[i]["sub_service"], incidents[i]["component"],  incidents[i]["metric"],
+                                      incidents[i]["dim_values"], incidents[i]["dim_keys"], daMetaFilters);
+    if (cacheAnalysisResults) {
+        this._setCacheConfig(filters, incidents[i]["id"], "DA:#", isClosed);
+    }
+    var dimension = this._invokeDimensionAnalysisService(queryConfig, filters);
+    incidents[i]["dimension.analysis.items"] = dimension.items;
+    var maxScore = 0;
+    for (var j=0; j<dimension.items.length; j++) {
+        var item = dimension.items[j];
+        if (item[dimConfig.attribute] != null && maxScore < item[dimConfig.attribute]) {
+            maxScore = item[dimConfig.attribute];
+        }
+    }
+    incidents[i]["dimension.analysis.max-score"] = maxScore;
+    incidents[i]["dimension.analysis.filters"] = JSON.stringify(dimension.filters);
+}
+
+var additionalMetrics = [];
+var correlatedMetrics = [];
+var rule = this._findGroupRule(queryConfig, keyIncident, "key-metric");
+if (rule == null) {
+    rule = this._findGroupRule(queryConfig, keyIncident, "match-rule");
+    if (rule != null) {
+        correlatedMetrics = rule["additional-metrics"];
+    }
+}
+else {
+    correlatedMetrics = rule["correlated-metrics"];
+}
+
+if (rule != null && correlatedMetrics != null) {
+    var incident_dim_values = {};
+    incidents.forEach(function(incident) {
+        incident_dim_values[incident["service"] + "|" + incident["sub_service"] + "|" + incident["dim_values"]] = true;
+    });
+
+    for (var i=0; i<correlatedMetrics.length; i++) {
+        var metric = correlatedMetrics[i];
+        if (metric["incident-only"] != true && incident_dim_values[metric["metric-id"]] == null) {
+            var dim_values = (metric["metric-id"]).split("|");
+            var dim_keys = metric["dim-keys"];
+            if (dim_keys != null && dim_keys != "") {
+                dim_keys = dim_keys.split("|");
+            }
+            else {
+                dim_keys = [];
+            }
+            if (dim_values.length >= 4) {
+                var startEpoch = keyIncident["start_epoch"];
+                var endEpoch = keyIncident["end_epoch"];
+                var isClosed = endEpoch > 0;
+                if (endEpoch == 0) {
+                    endEpoch = Math.round(Date.now()/1000);
+                    if (maxOpenTimeInterval > 0 && (endEpoch - startEpoch) > maxOpenTimeInterval) {
+                        endEpoch = startEpoch + maxOpenTimeInterval;
+                    }
+                }
+                if ((endEpoch - startEpoch) < minTimeInterval) {
+                    endEpoch = startEpoch + minTimeInterval;
+                }
+                var service = dim_values.shift();
+                var sub_service = dim_values.shift();
+                var app_name = dim_values.shift();
+                var metric_name = dim_values.shift();
+                var filters = this._createFilters(startEpoch, endEpoch, service, sub_service, app_name, metric_name,
+                                                  dim_values, dim_keys, daMetaFilters);
+                if (cacheAnalysisResults) {
+                    this._setCacheConfig(filters, keyIncident["id"], "DA:"+metric["metric-id"], isClosed);
+                }
+                var dimension = this._invokeDimensionAnalysisService(queryConfig, filters);
+                var maxScore = 0;
+                for (var j=0; j<dimension.items.length; j++) {
+                    var item = dimension.items[j];
+                    if (item[dimConfig.attribute] != null && maxScore < item[dimConfig.attribute]) {
+                        maxScore = item[dimConfig.attribute];
+                    }
+                }
+                additionalMetrics.push({
+                    metricId       : metric["metric-id"],
+                    dimensionItems : dimension.items,
+                    maxScore       : maxScore,
+                    filters        : JSON.stringify(dimension.filters),
+                });
+            }
+        }
+    }
+}
+
+var result = [];
+for (var i=0; i<incidents.length; i++) {
+    //print("applyDimensionAnalysis: id=" + incidents[i]["id"]);
+    var incident_dim_values = incidents[i]["service"] + "|" + incidents[i]["sub_service"] + "|" + incidents[i]["dim_values"];
+    var incident_dim_labels = incidents[i]["service_label"] + "|" + incidents[i]["sub_service_label"] + "|" + incidents[i]["dim_labels"];
+    var items = incidents[i]["dimension.analysis.items"];
+    var maxScore = incidents[i]["dimension.analysis.max-score"];
+    if (maxScore > 0) {
+        var threshold = maxScore - (maxScore*dimConfig.allowance);
+        if (threshold < dimConfig.cutoff) threshold = dimConfig.cutoff;
+        for (var j=0; j<items.length; j++) {
+            var item = items[j];
+            if (item[dimConfig.attribute] != null && item[dimConfig.attribute] > threshold) {
+                result.push({
+                    incident_id         : keyIncident["id"],
+                    incident_dim_values : incident_dim_values + " (" + incidents[i]["id"] + ")",
+                    incident_dim_labels : incident_dim_labels + " (" + incidents[i]["id"] + ")",
+                    dim_name            : item["_name"],
+                    dim_label           : item["_label"],
+                    dim_value           : item["_value"],
+                    dim_score           : item[dimConfig.attribute],
+                    dim_score_text      : this._getDimScoreText(analysisScoreAttribute, item) || String(item[dimConfig.attribute]),
+                    dim_filters         : incidents[i]["dimension.analysis.filters"],
+                });
+            }
+        }
+    }
+}
+for (var i=0; i<additionalMetrics.length; i++) {
+    var items = additionalMetrics[i]["dimensionItems"];
+    var maxScore = additionalMetrics[i]["maxScore"];
+    if (maxScore > 0) {
+        var threshold = maxScore - (maxScore*dimConfig.allowance);
+        if (threshold < dimConfig.cutoff) threshold = dimConfig.cutoff;
+        for (var j=0; j<items.length; j++) {
+            var item = items[j];
+            if (item[dimConfig.attribute] != null && item[dimConfig.attribute] > threshold) {
+                result.push({
+                    incident_id         : keyIncident["id"],
+                    incident_dim_values : additionalMetrics[i]["metricId"] + " (" + keyIncident["id"] + ")",
+                    incident_dim_labels : additionalMetrics[i]["metricId"] + " (" + keyIncident["id"] + ")",
+                    dim_name            : item["_name"],
+                    dim_label           : item["_label"],
+                    dim_value           : item["_value"],
+                    dim_score           : item[dimConfig.attribute],
+                    dim_score_text      : this._getDimScoreText(analysisScoreAttribute, item) || String(item[dimConfig.attribute]),
+                    dim_filters         : additionalMetrics[i]["filters"],
+                });
+            }
+        }
+    }
+}
+result.sort(function(a,b) {
+    if (a["dim_score"] > b["dim_score"]) return -1;
+    else if (a["dim_score"] < b["dim_score"]) return 1;
+    else return 0;
+});
+//print("applyDimensionAnalysis: result="+__prettyPrintJSON(result));
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="applyDrilldownDimensionAnalysis" args="incidentId,dimName,dimLabel,dimValue,filters" private="false">
+        <CodeText>
+          <![CDATA[if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+//print("applyDrilldownDimensionAnalysis: incidentId=" + incidentId);
+//print("applyDrilldownDimensionAnalysis: dimName=" + dimName);
+//print("applyDrilldownDimensionAnalysis: dimLabel=" + dimLabel);
+//print("applyDrilldownDimensionAnalysis: dimValue=" + dimValue);
+//print("applyDrilldownDimensionAnalysis: filters=" + __prettyPrintJSON(filters));
+
+function enhanceFilters(dimList, selectedDimName, selectedDimValue, subPopOnly, inclSelectedDim)
+{
+    selectedDimName = selectedDimName.split("|");
+    selectedDimValue = selectedDimValue.split("|");
+    var enhancedFilters = filters.slice(0);
+    var eventTypeDimensions = [];
+    var excludeDimensions = {};
+    var compoundDimensions = [];
+    if (subPopOnly) {
+        var whereClause = {};
+        for (var i=0; i<selectedDimName.length; i++) {
+            whereClause[selectedDimName[i]] = selectedDimValue[i];
+        }
+        enhancedFilters.push({
+            name  : "$.dimensionWhereClause",
+            value : whereClause
+        });
+    }
+    else if (inclSelectedDim) {
+        for (var i=0; i<selectedDimName.length; i++) {
+            eventTypeDimensions.push(selectedDimName[i]);
+        }
+    }
+    dimList.forEach(function(dims) {
+        if (dims != "") {
+            dims = dims.split("|");
+            dims.forEach(function(dim) {
+                if (selectedDimName.indexOf(dim) == -1) {
+                    if (eventTypeDimensions.indexOf(dim) == -1) {
+                        eventTypeDimensions.push(dim);
+                    }
+                    if (inclSelectedDim) {
+                        excludeDimensions[dim] = true;
+                    }
+                }
+            });
+            if (subPopOnly || !inclSelectedDim) {
+                if (dims.length > 1) {
+                    compoundDimensions.push(dims);
+                }
+            }
+            else {
+                compoundDimensions.push(selectedDimName.concat(dims));
+            }
+        }
+    });
+    enhancedFilters.push({
+        "name"  : "$.dimensionList",
+        "value" : {
+            "event-type-dimensions" : eventTypeDimensions,
+            "exclude-dimensions"    : excludeDimensions,
+            "compound-dimensions"   : compoundDimensions,
+        }
+    });
+    enhancedFilters.push({
+        "name"  : "$.rankLimit",
+        "value" : 0
+    });
+    return enhancedFilters;
+}
+
+var svc="*", comp="*", app="*", metric="*";
+for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    switch (filter.name) {
+        case "data.svc":
+            if (filter.value.length == 1) {
+                svc = filter.value[0];
+            }
+            break;
+        case "data.comp":
+            if (filter.value.length == 1) {
+                comp = filter.value[0];
+            }
+            break;
+        case "data.app":
+            if (filter.value.length == 1) {
+                app = filter.value[0];
+            }
+            break;
+        case "data.metric":
+            if (filter.value.length == 1) {
+                metric = filter.value[0];
+            }
+            break;
+    }
+}
+
+var result = {
+    "all" : [],
+    "sub" : []
+};
+
+var queryConfig = this.getQueryConfig();
+var rule = this._findDrilldownDimensionRule(queryConfig, svc, comp, app, metric);
+if (rule != null) {
+    // first check if we have dimName specific dimension-list, eg... dimension-list[device]
+    var dimensionList = rule["dimension-list["+dimName+"]"];
+    if (dimensionList == null || dimensionList.length == 0) {
+        // dimName specific list not defined... use default list
+        dimensionList = rule["dimension-list"];
+    }
+    if (dimensionList != null && dimensionList.length > 0) {
+        var all = this._invokeDimensionAnalysisService(queryConfig, enhanceFilters(dimensionList, dimName, dimValue, false, false));
+        //print(__prettyPrintJSON(all));
+        result["all"] = all.items;
+
+        //var subPopLabel = " (" + dimLabel + " = " + dimValue + ")";
+        var sub = this._invokeDimensionAnalysisService(queryConfig, enhanceFilters(dimensionList, dimName, dimValue, true, false));
+        //sub.items.forEach(function(item) {
+        //    item["_label"] += subPopLabel; 
+        //);
+        //print(__prettyPrintJSON(sub));
+        result["sub"] = sub.items;
+    }
+}
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="applyTemporalCorrelation" args="queryConfig,incidents" private="false">
+        <CodeText>
+          <![CDATA[if (queryConfig == null) {
+    queryConfig = this.getQueryConfig();
+}
+var groupDefaults = queryConfig["incident-group-defaults"] || {};
+
+if (queryConfig["reverse-correlation-order"] != true) {
+    incidents.reverse();
+}
+
+var defaultKeyMetricLeadingInterval = 0;
+var defaultKeyMetricTrailingInterval = 0;
+if (groupDefaults["key-metric-correlation-window"] != null) {
+    defaultKeyMetricLeadingInterval = groupDefaults["key-metric-correlation-window"]["leading-interval"] || 0;
+    defaultKeyMetricTrailingInterval = groupDefaults["key-metric-correlation-window"]["trailing-interval"] || 0;
+}
+var defaultMatchRuleLeadingInterval = 0;
+if (groupDefaults["match-rule-correlation-window"] != null) {
+    defaultMatchRuleLeadingInterval = groupDefaults["match-rule-correlation-window"]["leading-interval"] || 0;
+}
+
+function isCorrelated(_added_, metricId)
+{
+    for (var i=0; i<correlatedMetrics.length; i++) {
+        var metric = correlatedMetrics[i];
+        if (metric["metric-id"] == metricId) return true;
+    }
+    return false;
+}
+
+function collectCorrelatedIncidents(keyIncident, leadingInterval, trailingInterval, rule, adjustTimeWindow)
+{
+    var startEpoch = keyIncident["start_epoch"];
+    var endEpoch = keyIncident["end_epoch"];
+
+    var startCallEpoch = keyIncident["cust_call_start_tm"];
+    var endCallEpoch = keyIncident["cust_call_end_tm"];
+
+    var correlatedIncidents = [];
+    incidents.forEach(function(incident) {
+        if (incident._added_ != true && incident != keyIncident) {
+            if (this._isCorrelated(rule, incident, keyIncident)) {
+                if (this._isTemporalMatch(startEpoch, endEpoch, incident, leadingInterval, trailingInterval)) {
+                    correlatedIncidents.push(incident);
+                    incident._added_ = true;
+                    if (adjustTimeWindow) {
+                        if (startEpoch > incident["start_epoch"]) {
+                            startEpoch = incident["start_epoch"];
+                        }
+                        if (endEpoch > 0 && incident["end_epoch"] > 0 && endEpoch < incident["end_epoch"]) {
+                            endEpoch = incident["end_epoch"];
+                        }
+                        if (incident["cust_call_start_tm"] != 0 && (startCallEpoch == 0 || startCallEpoch > incident["cust_call_start_tm"])) {
+                            startCallEpoch = incident["cust_call_start_tm"];
+                        }
+                        if (endCallEpoch > 0 && incident["cust_call_end_tm"] > 0 && endCallEpoch < incident["cust_call_end_tm"]) {
+                            endCallEpoch = incident["cust_call_end_tm"];
+                        }
+                    }
+                }
+            }
+        }
+    });
+    return {
+        minEpoch     : startEpoch,
+        maxEpoch     : endEpoch,
+        minCallEpoch : startCallEpoch,
+        maxCallEpoch : endCallEpoch,
+        incidents    : correlatedIncidents
+    };
+}
+
+function getKeyIncidentIndex(rule, list)
+{
+    var index = NaN;
+    if (rule["metric-ranking"] == "time") {
+        var start = NaN;
+        var score = NaN;
+        for (var i=0; i<list.length; i++) {
+            if (isNaN(start) || start > list[i]["start_epoch"]) {
+                index = i;
+                start = list[i]["start_epoch"];
+                score = list[i]["display_max"];
+            }
+            else if (start == list[i]["start_epoch"] && score < list[i]["display_max"]) {
+                // if same start time, take higher score
+                index = i;
+                start = list[i]["start_epoch"];
+                score = list[i]["display_max"];
+            }
+        }
+        return index;
+    }
+    else if (rule["metric-ranking"] == "score") {
+        var score = NaN;
+        var start = NaN;
+        for (var i=0; i<list.length; i++) {
+            if (isNaN(score) || score < list[i]["display_max"]) {
+                index = i;
+                score = list[i]["display_max"];
+                start = list[i]["start_epoch"];
+            }
+            else if (score == list[i]["display_max"] && start > list[i]["start_epoch"]) {
+                // if same score, take earlier start time
+                index = i;
+                score = list[i]["display_max"];
+                start = list[i]["start_epoch"];
+            }
+        }
+        return index;
+    }
+    else if (Array.isArray(rule["metric-ranking"])) {
+        var ranking = rule["metric-ranking"];
+        var rank = NaN;
+        for (var i=0; i<list.length; i++) {
+            //var metricId = list[i]["service"] + "|" + list[i]["sub_service"] + "|" + list[i]["dim_values"];
+            var metricId = list[i]["metric_id"]
+            for (var j=0; j<ranking.length; j++) {
+                if (ranking[j] == metricId) {
+                    //print("rank for " + metricId + " = " + j);
+                    if (isNaN(rank) || rank > j) {
+                        index = i;
+                        rank = j;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    return index;
+}
+
+var key_incidents = [];
+incidents.forEach(function(incident) {
+    if (incident._added_ != true) {
+        var rule = this._findGroupRule(queryConfig, incident, "key-metric");
+        if (rule != null) {
+            var leadingInterval = defaultKeyMetricLeadingInterval;
+            var trailingInterval = defaultKeyMetricTrailingInterval;
+            if (rule["correlation-window"] != null) {
+                leadingInterval = rule["correlation-window"]["leading-interval"] || defaultKeyMetricLeadingInterval;
+                trailingInterval = rule["correlation-window"]["trailing-interval"] || defaultKeyMetricTrailingInterval;
+            }
+            incident._added_ = true;
+            var correlatedIncidents = collectCorrelatedIncidents(incident, leadingInterval, trailingInterval, rule, true);
+            key_incidents.push(incident);
+            incident["min_epoch"] = correlatedIncidents.minEpoch;
+            incident["max_epoch"] = correlatedIncidents.maxEpoch;
+            incident["min_call_epoch"] = correlatedIncidents.minCallEpoch;
+            incident["max_call_epoch"] = correlatedIncidents.maxCallEpoch;
+            incident["correlated_count"] = correlatedIncidents.incidents.length;
+            incident["correlated_incidents"] = correlatedIncidents.incidents;
+        }
+    }
+});
+incidents.forEach(function(incident) {
+    if (incident._added_ != true) {
+        var rule = this._findGroupRule(queryConfig, incident, "match-rule");
+        if (rule != null) {
+            var leadingInterval = defaultMatchRuleLeadingInterval;
+            if (rule["correlation-window"] != null) {
+                leadingInterval = rule["correlation-window"]["leading-interval"] || defaultMatchRuleLeadingInterval;
+            }
+            incident._added_ = true;
+            var correlatedIncidents = collectCorrelatedIncidents(incident, leadingInterval, 0, rule, true);
+            correlatedIncidents.incidents.push(incident);
+            // find incident with highest rank... lowest index
+            var index = getKeyIncidentIndex(rule, correlatedIncidents.incidents);
+            if (isNaN(index)) index = 0;
+            var keyIncident = correlatedIncidents.incidents.splice(index, 1)[0];
+            key_incidents.push(keyIncident);
+            keyIncident["min_epoch"] = correlatedIncidents.minEpoch;
+            keyIncident["max_epoch"] = correlatedIncidents.maxEpoch;
+            keyIncident["min_call_epoch"] = correlatedIncidents.minCallEpoch;
+            keyIncident["max_call_epoch"] = correlatedIncidents.maxCallEpoch;
+            keyIncident["correlated_count"] = correlatedIncidents.incidents.length;
+            keyIncident["correlated_incidents"] = correlatedIncidents.incidents;
+        }
+    }
+});
+if (queryConfig["reverse-correlation-order"] != true) {
+    key_incidents.reverse();
+}
+return key_incidents;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="applyTrendAnalysis" args="keyIncident" private="false">
+        <CodeText>
+          <![CDATA[//print("applyTrendAnalysis: incident=" + __prettyPrintJSON(keyIncident));
+var incidents = [keyIncident];
+
+function computeScoreValue(record)
+{
+    if (record["_value1_"] != null && record["_baseline1_"] != null) {
+        var value = Number(record["_value1_"]);
+        var baseline = Number(record["_baseline1_"]);
+        if (!isNaN(value) && !isNaN(baseline)) {
+            record["_scoreval_"] = value - baseline;
+            record["_scorepct_"] = baseline > 0 ? Number((100 * ((value - baseline) / baseline)).toFixed(2)) : 0;
+        }
+    }
+    else if (record["_value2_"] != null && record["_baseline2_"] != null) {
+        var value = Number(record["_value2_"]);
+        var baseline = Number(record["_baseline2_"]);
+        if (!isNaN(value) && !isNaN(baseline)) {
+            record["_scoreval_"] = value - baseline;
+            record["_scorepct_"] = baseline > 0 ? Number((100 * ((value - baseline) / baseline)).toFixed(2)) : 0;
+        }
+    }
+}
+
+var taMetaFilters = [
+    {
+        "name"  : "$.aggregation.interval",
+        "value" : [{ "seconds": null, "interval": "5*M" }]
+    }
+];
+
+var queryConfig = this.getQueryConfig();
+
+var cacheAnalysisResults = queryConfig["trend-analysis-config"] && queryConfig["trend-analysis-config"]["cache-analysis-results"];
+if (cacheAnalysisResults == null) cacheAnalysisResults = false;
+
+var leadingInterval = queryConfig["trend-analysis-config"] && queryConfig["trend-analysis-config"]["leading-time-interval"];
+if (leadingInterval == null) leadingInterval = 1*60*60;
+var trailingInterval = queryConfig["trend-analysis-config"] && queryConfig["trend-analysis-config"]["trailing-time-interval"];
+if (trailingInterval == null) trailingInterval = 1*60*60;
+
+var minTimeInterval = queryConfig["trend-analysis-config"] && queryConfig["trend-analysis-config"]["minimum-time-interval"];
+if (minTimeInterval == null) minTimeInterval = 5*60;
+var maxOpenTimeInterval = queryConfig["trend-analysis-config"] && queryConfig["trend-analysis-config"]["maximum-open-time-interval"];
+if (maxOpenTimeInterval == null) maxOpenTimeInterval = 24*60*60;
+
+var correlated = keyIncident["correlated_incidents"];
+if (correlated != null) {
+    if (typeof correlated == "string") {
+        correlated = correlated != "" ? JSON.parse(correlated) : [];
+    }
+    incidents = incidents.concat(correlated);
+}
+
+var minEpoch = NaN;
+var maxEpoch = NaN;
+for (var i=0; i<incidents.length; i++) {
+    var startEpoch = incidents[i]["start_epoch"];
+    var endEpoch = incidents[i]["end_epoch"];
+    if (endEpoch == 0) {
+        endEpoch = Math.round(Date.now()/1000);
+        if (maxOpenTimeInterval > 0 && (endEpoch - startEpoch) > maxOpenTimeInterval) {
+            endEpoch = startEpoch + maxOpenTimeInterval;
+        }
+    }
+    if ((endEpoch - startEpoch) < minTimeInterval) {
+        endEpoch = startEpoch + minTimeInterval;
+    }
+    if (isNaN(minEpoch) || minEpoch > startEpoch) {
+        minEpoch = startEpoch;
+    }
+    if (isNaN(maxEpoch) || maxEpoch < endEpoch) {
+        maxEpoch = endEpoch;
+    }
+}
+
+minEpoch -= leadingInterval;
+maxEpoch += trailingInterval;
+//print("applyTrendAnalysis: minEpoch="+minEpoch+" maxEpoch="+maxEpoch);
+
+// trends are _not_ incident specific but by metric-id
+var trended = {};
+var result = [];
+for (var i=0; i<incidents.length; i++) {
+    var metricId = incidents[i]["metric_id"];
+    if (trended[metricId] == null) {
+        var isClosed = incidents[i]["end_epoch"] > 0;
+        var filters = this._createFilters(minEpoch, maxEpoch,
+                                          incidents[i]["service"], incidents[i]["sub_service"], incidents[i]["component"], incidents[i]["metric"],
+                                          incidents[i]["dim_values"], incidents[i]["dim_keys"], taMetaFilters);
+        if (cacheAnalysisResults) {
+            this._setCacheConfig(filters, incidents[i]["id"], "TA:"+metricId, isClosed);
+        }
+        var trend = this._invokeTrendAnalysisService(queryConfig, filters);
+        if (trend != null) {
+            trend.forEach(function(item) {
+                item["incident_key"] = incidents[i]["service_label"] + "|" + incidents[i]["sub_service_label"] + "|" + incidents[i]["dim_labels"];
+                computeScoreValue(item);
+            });
+        }
+        if (trend != null) {
+            //print("applyTrendAnalysis: incident_key="+incidents[i]["id"]+" items.length="+trend.length);
+            result = result.concat(trend);
+        }
+        trended[metricId] = true;
+    }
+}
+var additionalMetrics = [];
+var correlatedMetrics = [];
+var rule = this._findGroupRule(queryConfig, keyIncident, "key-metric");
+if (rule == null) {
+    rule = this._findGroupRule(queryConfig, keyIncident, "match-rule");
+    if (rule != null) {
+        correlatedMetrics = rule["additional-metrics"];
+    }
+}
+else {
+    correlatedMetrics = rule["correlated-metrics"];
+}
+//print("applyTrendAnalysis: correlatedMetrics="+__prettyPrintJSON(correlatedMetrics));
+if (rule != null && correlatedMetrics != null) {
+    var serviceConfig = this.getServiceConfig();
+    for (var i=0; i<correlatedMetrics.length; i++) {
+        var metric = correlatedMetrics[i];
+        if (trended[metric["metric-id"]] == null && metric["incident-only"] != true) {
+            var dim_values = (metric["metric-id"]).split("|");
+            var dim_keys = metric["dim-keys"];
+            if (dim_keys != null && dim_keys != "") {
+                dim_keys = dim_keys.split("|");
+            }
+            else {
+                dim_keys = [];
+            }
+            if (dim_values.length >= 4) {
+                var isClosed = keyIncident["end_epoch"] > 0;
+                var service = dim_values.shift();
+                var sub_service = dim_values.shift();
+                var app_name = dim_values.shift();
+                var metric_name = dim_values.shift();
+                var filters = this._createFilters(minEpoch, maxEpoch,
+                                                  service, sub_service, app_name, metric_name,
+                                                  dim_values, dim_keys, taMetaFilters);
+                if (cacheAnalysisResults) {
+                    this._setCacheConfig(filters, keyIncident["id"], "TA:"+metric["metric-id"], isClosed);
+                }
+                //print("applyTrendAnalysis: correlatedMetric="+metric["metric-id"]+" filters="+__prettyPrintJSON(filters));
+                var trend = this._invokeTrendAnalysisService(queryConfig, filters);
+                if (trend != null) {
+                    var metricIdLabels = this._getGroupItemLabels(serviceConfig, (metric["metric-id"]).split("|")).join("|");
+                    trend.forEach(function(item) {
+                        item["incident_key"] = metricIdLabels;
+                        computeScoreValue(item);
+                    });
+                }
+                if (trend != null) {
+                    //print("applyTrendAnalysis: correlatedMetric="+metric["metric-id"]+" items.length="+trend.length);
+                    result = result.concat(trend);
+                }
+                trended[metric["metric-id"]] = true;
+            }
+        }
+    }
+}
+//print("applyTrendAnalysis: result="+__prettyPrintJSON(result));
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="clearAnalysisCache" args="ids" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var deleteCount = 0;
+if (ids == null) {
+    deleteCount = this._cacheClear(queryConfig, null);
+    print("clearAnalysisCache: count="+deleteCount);
+}
+else {
+    if (!Array.isArray(ids)) {
+        ids = [ids];
+    }
+    ids.forEach(function(id) {
+        var count = this._cacheClear(queryConfig, id);
+        print("clearAnalysisCache: id="+id+" count="+count);
+        deleteCount += count;
+    });
+}
+return deleteCount;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getIncidentGroupData" args="filters,metricInfo" private="false">
+        <CodeText>
+          <![CDATA[var debug = false;
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+if( debug ) print("getIncidentGroupData: filters=" + __prettyPrintJSON(filters));
+if( debug ) print("getIncidentGroupData: metricInfo=" + __prettyPrintJSON(metricInfo));
+
+var queryConfig = this.getQueryConfig();
+if (queryConfig == null) return [];
+
+var svc = this._getFilterValue(filters, "data.svc", [], true);
+svc = this._stripDupAndHashItems(svc);
+//print("getIncidentGroupData: svc=" + __prettyPrintJSON(svc));
+//if (svc.length == 0) return [];
+
+var comp = this._getFilterValue(filters, "data.comp", [], true);
+comp = this._stripDupAndHashItems(comp);
+//print("getIncidentGroupData: comp=" + __prettyPrintJSON(comp));
+
+var timeRange = this.getTimeRange(filters);
+if (timeRange == null) return [];
+if( debug ) print("getIncidentGroupData: timeRange=" + __prettyPrintJSON(timeRange));
+
+var metricIdWhereClause = this._getMetricIdWhereClause(metricInfo).replace("metric_id","incident_metric_id");;
+
+var sql = Context.getLocalResource("INCIDENT_GROUP_ROLLUP_SQL");
+if( debug ) print( "INCIDENT_GROUP_ROLLUP_SQL" );
+var values = {
+    "dateKeys"              : this._getDateKeysFromUnixtimeRange(timeRange.fromUnixTime, timeRange.toUnixTime),
+    "fromEpoch"             : String(timeRange.fromUnixTime),
+    "toEpoch"               : String(timeRange.toUnixTime),
+    "startTime"             : this._getEpochTimestampSQL("FIRST(start_tm)"),
+    "endTime"               : this._getEpochTimestampSQL("LAST(end_tm)"),
+    "eventTime"             : this._getEpochTimestampSQL("LAST(event_tm)"),
+    "callTime"              : this._getEpochTimestampSQL("LAST(cust_call_end_tm)"),
+    "metricIdWhereClause"   : metricIdWhereClause
+};
+
+sql = this._doValueSubstitution(sql, values);
+if( debug ) print(sql);
+var executeContext = [svc];
+if (comp.length > 0) {
+    executeContext.push(comp);
+}
+var moduleName = queryConfig["module-name"] || "(IA)";
+var moduleContext = [moduleName, "getIncidentGroupData"];
+var result = this.executeSQLQuery(queryConfig, executeContext, moduleContext, "VT_ODA_QS", sql, null);
+if (result != null) {
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getIncidentGroupIncidentData" args="filters,metricInfo" private="false">
+        <CodeText>
+          <![CDATA[var debug = false;
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+if( debug ) print("getIncidentGroupIncidentData: filters=" + __prettyPrintJSON(filters));
+if( debug ) print("getIncidentGroupIncidentData: metricInfo=" + __prettyPrintJSON(metricInfo));
+
+var queryConfig = this.getQueryConfig();
+if (queryConfig == null) return [];
+
+var svc = this._getFilterValue(filters, "data.svc", [], true);
+svc = this._stripDupAndHashItems(svc);
+//print("getIncidentGroupIncidentData: svc=" + __prettyPrintJSON(svc));
+//if (svc.length == 0) return [];
+
+var comp = this._getFilterValue(filters, "data.comp", [], true);
+comp = this._stripDupAndHashItems(comp);
+//print("getIncidentGroupIncidentData: comp=" + __prettyPrintJSON(comp));
+
+var timeRange = this.getTimeRange(filters);
+if (timeRange == null) return [];
+if( debug ) print("getIncidentGroupIncidentData: timeRange=" + __prettyPrintJSON(timeRange));
+
+var metricIdWhereClause = this._getMetricIdWhereClause(metricInfo).replace("metric_id","incident_metric_id");;
+
+var sql = Context.getLocalResource("INCIDENT_GROUP_INCIDENTS_SQL");
+if( debug ) print( "INCIDENT_GROUP_INCIDENTS_SQL" );
+var values = {
+    "dateKeys"              : this._getDateKeysFromUnixtimeRange(timeRange.fromUnixTime, timeRange.toUnixTime),
+    "fromEpoch"             : String(timeRange.fromUnixTime),
+    "toEpoch"               : String(timeRange.toUnixTime),
+    "startTime"             : this._getEpochTimestampSQL("FIRST(start_tm)"),
+    "endTime"               : this._getEpochTimestampSQL("LAST(end_tm)"),
+    "eventTime"             : this._getEpochTimestampSQL("LAST(event_tm)"),
+    "callTime"              : this._getEpochTimestampSQL("LAST(cust_call_end_tm)"),
+    "metricIdWhereClause"   : metricIdWhereClause
+};
+
+sql = this._doValueSubstitution(sql, values);
+if( debug ) print(sql);
+var executeContext = [svc];
+if (comp.length > 0) {
+    executeContext.push(comp);
+}
+var moduleName = queryConfig["module-name"] || "(IA)";
+var moduleContext = [moduleName, "getIncidentGroupIncidentData"];
+var result = this.executeSQLQuery(queryConfig, executeContext, moduleContext, "VT_ODA_QS", sql, null);
+if (result != null) {
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getIncidentGroupTimeRange" args="groupId" private="false">
+        <CodeText>
+          <![CDATA[var debug = false;
+var queryConfig = this.getQueryConfig();
+if (queryConfig == null) return [];
+if( groupId == null || groupId == "" ) return;
+
+var sql = Context.getLocalResource("INCIDENT_GROUP_TIME_RANGE");
+if( debug ) print( "INCIDENT_GROUP_TIME_RANGE" );
+
+values = {
+    incidentGroupID: "'" + groupId + "'"
+};
+
+sql = this._doValueSubstitution(sql, values);
+if( debug ) print(sql);
+var executeContext = [];
+
+var moduleName = queryConfig["module-name"] || "(IA)";
+var moduleContext = [moduleName, "getIncidentGroupTimeRange"];
+var result = this.executeSQLQuery(queryConfig, executeContext, moduleContext, "VT_ODA_QS", sql, null);
+if (result != null) {
+    return result.items;
+}
+return [];]]>
+        </CodeText>
+      </Service>
+      <Service name="getTimeRange" args="filters" private="false">
+        <CodeText>
+          <![CDATA[return this._getTimeRange(this.getQueryConfig(), filters);
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="11f06eeb-4f29-40cf-8d7a-a967b7870c2b" name="INCIDENT_GROUP_INCIDENTS_SQL" type="text/plain" size="6621" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="96302d55-e857-46f5-838d-b13b4b211e81" name="INCIDENT_GROUP_ROLLUP_SQL" type="text/plain" size="5632" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="12764499-4699-4375-8c6d-bf51b54c4e1f" name="INCIDENT_GROUP_TIME_RANGE" type="text/plain" size="199" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="00505e6f-829e-4ea9-87a2-5a2a51df8489" name="QueryConfig" type="application/json" size="25242" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/user/via_common/dbpm/VIA - File Service"/>
+      <Plugin uri="/app/dbp/user/viaops_admin/dbpm/VIAOps - Base Service"/>
+      <Plugin uri="/app/dbp/space/testp/dbpm/Charter - Base v2"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

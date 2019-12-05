@@ -1,0 +1,128 @@
+{
+    "name":"Quantum",
+    "label":"Client",
+    "items":[
+        {
+            "name": "Failed API Attempt",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "#metric-id":"Quantum|Failed API Attempt|watch",
+                "anomaly-config[5/5]":{
+                    "median_baseline":49
+                }
+            }
+        },
+        {
+            "name": "Failed API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        },
+        {
+            "name": "Successful API Attempt",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Successful API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        },
+        {
+            "name": "Bitrate Downshifts",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "anomaly-config[5/5]":{
+                    "median_baseline":110343
+                }
+            }
+        },
+        {
+            "name": "Broken Stream Streams",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "anomaly-config[5/5]":{
+                    "median_baseline":204
+                }
+            }
+        },
+        {
+            "name": "Buffering Events",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "anomaly-config[5/5]":{
+                    "median_baseline":13083
+                }
+            }
+        },
+        {
+            "name": "Failing Streams",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Playback Starts",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Stat Active Device Count",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Stat Active User Count",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Stat Active Device Average",
+            "uom" : "Count",
+            "aggr": "avg",
+            "meta": {
+                "synthetic-metric":true,
+                "dimension-values":[
+                    {
+                        "name":"$.METRIC",
+                        "value":"Stat Active Device Count"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Stat Active User Average",
+            "uom" : "Count",
+            "aggr": "avg",
+            "meta": {
+                "synthetic-metric":true,
+                "dimension-values":[
+                    {
+                        "name":"$.METRIC",
+                        "value":"Stat Active User Count"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Total Buffering Duration",
+            "uom" : "Total Time(s)",
+            "aggr": "sum"
+        }
+    ],
+    "meta":{
+        "dimension-values":[
+            {
+                "name":"api",
+                "value":["", "vodStream","adobeSession","aegisV1","blackArrowPsn","aegisRefresh"]
+            },
+            {
+                "name":"stream",
+                "not":true,
+                "value":["dvr"]
+            }
+        ]
+    }
+}

@@ -1,0 +1,50 @@
+{
+    "name":"Quantum",
+    "label":"Client",
+    "items":[
+        {
+            "name": "Failed API Attempt",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "#metric-id":"Quantum|Failed API Attempt|browse",
+                "anomaly-config[5/5]":{
+                    "median_baseline":80
+                }
+            }
+        },
+        {
+            "name": "Failed API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        },
+        {
+            "name": "Successful API Attempt",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Successful API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        }
+    ],
+    "meta":{
+        "dimension-values":[
+            {
+                "name":"api",
+                "value":["", "base","buyFlowEligibleV2","cartBase","cartExtras","cartPremiums","cartSummarize","extras","premiums","cartPurchase",
+                         "actor","autoComplete","bookmarksHiddenV2","bookmarksV3","getBookmarksV2",
+                         "getCustomerFips","guideStreamingShowDetailsV1","guideStreamingShowDetailsV2",
+                         "nationalNavigationEntrypoint","nationalNavigationEvent","nationalNavigationHomepage",
+                         "nationalNavigationMyLibrary","nationalNavigationNetworkPortal","nationalNavigationNetworksGrid",
+                         "nationalNavigationPortalFrontDoor","nationalNavigationPortalGrid","nationalNavigationPortalMenu",
+                         "nationalNavigationSearchComponent","nationalNavigationSeries","nationalNavigationWatchLater",
+                         "nnsMyLibraryFrontDoor","nnsMyLibraryFrontDoor","nnsMyLibraryViewAll","nnsNetworkGridsFrontDoor",
+                         "nnsSearch","nnsSearchComplete","nnsSearchComponent","nnsSurfer","nowAndNextV1","nowAndNextV2","nmdEpgsGuide",
+                         "nnsVodStoreFrontDoor","nnsVodStoreGrid","parentalControlPin","ParentalControlPinValidate",
+                         "parentalControlValidate","ping","recentChannelsV1","searchResults","similarTo","tdcsErrors","topSearches","userMso"]
+            }
+        ]
+    }
+}

@@ -1,0 +1,303 @@
+{
+    "name": "MetaSwitch",
+    "label": "MetaSwitch",
+    "items": [
+        {
+            "name": "Out of Service",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },
+        {
+            "name": "Out of Service Pct",
+            "uom" : "Percent",
+            "aggr": "avg",
+            "meta": {
+                "quick-access":true
+            }
+        },
+        {
+            "name": "Total Service",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Residential Service",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Business Service",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Call Attempts",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },
+        {
+            "name": "Call Currently Connected",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Call Fail",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Call Success",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Emergency Call Connected",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Emergency Call Connecting",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Call on Switch",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Call on Switch Success",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Call on Switch Fail",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Call on Switch Connected",
+            "uom" : "Count",
+            "aggr": "sum"
+        },        
+        {
+            "name": "Call from Trunk",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Call from Trunk Success",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Call from Trunk Fail",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Call from Trunk Connected",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Device Unavailable Switch Fail",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Device Unavailable Trunk Fail",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "No Citrcuit Switch",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "No Citrcuit Trunk",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Trunk Route Fail",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Switch Congestion Fail",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Switch Resource Fail",
+            "uom" : "Count",
+            "aggr": "sum"
+        },        
+        {
+            "name": "Switch Media Fail",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Switch Signal Fail",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Switch Other Fail",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Trunk Congestion Fail",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Trunk Resource Fail",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Trunk Media Fail",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Trunk Signal Fail",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Trunk Other Fail",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },        
+        {
+            "name": "Total Business Group Lines",
+            "uom" : "Count",
+            "aggr": "sum"
+        },        
+        {
+            "name": "Total Lines",
+            "uom" : "Count",
+            "aggr": "sum"
+        },        
+        {
+            "name": "Total Multi Line Pilot",
+            "uom" : "Count",
+            "aggr": "sum"
+        },        
+        {
+            "name": "Total Multiple Appearance Directory",
+            "uom" : "Count",
+            "aggr": "sum"
+        },        
+        {
+            "name": "Total PBX Configurations",
+            "uom" : "Count",
+            "aggr": "sum"
+        },        
+        {
+            "name": "Total ACD Super Business Group",
+            "uom" : "Count",
+            "aggr": "sum"
+        },        
+        {
+            "name": "Total Premium ACD Groups",
+            "uom" : "Count",
+            "aggr": "sum"
+        },        
+        {
+            "name": "Total Basic ACD Groups",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ]
+}

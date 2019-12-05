@@ -1,0 +1,122 @@
+<DashboardPluginModel is_init="false" name="Charter - Plugin v11" description=" ">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services>
+      <Service name="getFilterModelPath" args="" private="false">
+        <CodeText>
+          <![CDATA[return "/users/charter_admin/_appdata/dbp/dbpm/Charter - Plugin v11";
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="f09317e5-49fa-426c-8c1f-524a0fbae1b4" name="FilterConfig" type="application/json" size="5747" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="24c4bcbb-18a0-4473-8dfd-8803a09e410b" name="FilterConfig?svc=Cable" type="application/json" size="11098" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="9be40f4b-ab4e-450a-8c1e-2d592c971837" name="FilterConfig?svc=cDVR" type="application/json" size="31764" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="bd9786e3-6da6-42f4-8fe6-9fdf35bafacf" name="FilterConfig?svc=CHTR_E-Mail" type="application/json" size="21345" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="c8f3efff-93fb-430a-87ee-7ff955a3b4c3" name="FilterConfig?svc=Connectivity" type="application/json" size="15544" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="f6ebc737-0fb3-4969-8772-9cfc2583455a" name="FilterConfig?svc=Customer" type="application/json" size="13092" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="56d0955c-0937-4cda-8977-1e2d9083d1a1" name="FilterConfig?svc=Digital Operations" type="application/json" size="5380" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="2f762e3a-f9f4-406e-8bf6-20d5cdfed31c" name="FilterConfig?svc=E-Mail" type="application/json" size="16915" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="a2fa89bc-a63e-426f-8c22-e8513527797e" name="FilterConfig?svc=HSD" type="application/json" size="9359" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="8a56bfe1-a7ad-44bb-873e-a435c89994b0" name="FilterConfig?svc=Legacy_VOD" type="application/json" size="16540" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="89b7c301-2fb0-4e05-8a8e-c479f3e2868d" name="FilterConfig?svc=MySpectrum" type="application/json" size="19551" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="559218ff-de95-41d5-847b-42be49abe286" name="FilterConfig?svc=Network" type="application/json" size="4778" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="57be348a-af85-4928-82e8-11551d237fc0" name="FilterConfig?svc=SMB" type="application/json" size="19166" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="aeebd0e9-9081-4efc-8bde-a88b2c6e638e" name="FilterConfig?svc=SpecGuide" type="application/json" size="20496" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="6d26fcff-49d2-4c28-8ec3-0774be76b0d2" name="FilterConfig?svc=SpecMobile" type="application/json" size="19543" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="4e9b3653-a65b-46c5-89bb-65e2cdae26e4" name="FilterConfig?svc=SpecNet" type="application/json" size="19378" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="06ce28c0-77c4-4fd2-8a0b-e63aef970610" name="FilterConfig?svc=Video" type="application/json" size="31823" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="294854c1-ec3f-4f6c-8798-4745b8cda666" name="FilterConfig?svc=Voice" type="application/json" size="21817" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="d826724e-ad1b-4f50-84b8-64de91f0edf0" name="FrameConfig" type="application/json" size="17734" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="fd6a02de-ba69-4a58-8ae8-d67b17cc91ae" name="QueryConfig" type="application/json" size="323" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/user/viaops_admin/dbpm/VIAOps - Base Service"/>
+      <Plugin uri="/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Nuova Stella Plugin"/>
+      <Plugin uri="/app/dbp/space/testp/dbpm/Charter - Base v2"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

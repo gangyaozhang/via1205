@@ -1,0 +1,18 @@
+<DashboardPluginModel description=" " name="Charter - Execution Monitor Service v2" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services/>
+    <Resources>
+      <Resource uuid="0b83f689-9e89-481f-87d0-cf05610ba7d0" name="QueryConfig" type="application/json" size="581" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Execution Monitor Service"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

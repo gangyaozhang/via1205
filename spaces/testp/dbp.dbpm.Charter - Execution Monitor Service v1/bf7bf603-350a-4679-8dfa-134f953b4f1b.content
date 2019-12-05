@@ -1,0 +1,9 @@
+Select 
+    * 
+from 
+    viaops_planned_maintenance
+WHERE  scheduled_start_date BETWEEN ${fromEpoch} AND ${toEpoch}
+    AND  scheduled_start_date > 0
+order by 
+    scheduled_start_date desc, 
+    actual_start_date desc

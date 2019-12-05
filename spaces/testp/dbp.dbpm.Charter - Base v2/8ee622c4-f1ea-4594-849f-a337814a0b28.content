@@ -1,0 +1,71 @@
+{
+    "name":"Quantum",
+    "label":"Client",
+    "items":[
+        {
+            "name": "Application Errors",
+            "uom" : "Total Errors",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[
+                    {
+                        "name":"response",
+                        "value":["", "GGU-9006", "GVOD-3004", "GVOD-3025", "GVOD-3026", "GVOD-3027", "GVOD-5000", "GVOD-6001", "GVOD-6002", "GVOD-6006", "GVOD-6007", "GVOD-6008", "GVOD-6009", "GVOD-6010", "GVOD-6011", "GVOD-6012", "GVOD-6013", "GVOD-6014", "GVOD-6015", "GVOD-6016", "GVOD-6017", "GVOD-6018", "GVOD-6019", "GVOD-6020", "GVOD-6021", "GVOD-9040","GVOD-9041"]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Failed API Attempt",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+               "dimension-values":[
+                    {
+                        "name":"api",
+                        "value":["", "appEdgeEntitlements","rentalsEdgeRentals", "videoCatalogEdgeCatalogTitles", "videoCatalogEdgeDeliveryInfo", "videoCatalogEdgeGuide", "videoCatalogEdgeGuideLineups", "videoCatalogEdgeNetwork", "videoCatalogEdgePersonInfo", "videoCatalogEdgeRecommendations", "videoCatalogEdgeSeries", "videoCatalogEdgeTvShows", "videoCatalogEdgeV2Series", "videoCatalogEdgeVideoStore", "videoCatalogEdgeVodMovies", "videoCatalogEdgeSupportVideos"]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Failed API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg",
+            "meta":{
+               "dimension-values":[
+                    {
+                        "name":"api",
+                        "value":["", "appEdgeEntitlements","rentalsEdgeRentals", "videoCatalogEdgeCatalogTitles", "videoCatalogEdgeDeliveryInfo", "videoCatalogEdgeGuide", "videoCatalogEdgeGuideLineups", "videoCatalogEdgeNetwork", "videoCatalogEdgePersonInfo", "videoCatalogEdgeRecommendations", "videoCatalogEdgeSeries", "videoCatalogEdgeTvShows", "videoCatalogEdgeV2Series", "videoCatalogEdgeVideoStore", "videoCatalogEdgeVodMovies", "videoCatalogEdgeSupportVideos"]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Successful API Attempt",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+               "dimension-values":[
+                    {
+                        "name":"api",
+                        "value":["", "appEdgeEntitlements","rentalsEdgeRentals", "videoCatalogEdgeCatalogTitles", "videoCatalogEdgeDeliveryInfo", "videoCatalogEdgeGuide", "videoCatalogEdgeGuideLineups", "videoCatalogEdgeNetwork", "videoCatalogEdgePersonInfo", "videoCatalogEdgeRecommendations", "videoCatalogEdgeSeries", "videoCatalogEdgeTvShows", "videoCatalogEdgeV2Series", "videoCatalogEdgeVideoStore", "videoCatalogEdgeVodMovies", "videoCatalogEdgeSupportVideos"]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Successful API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg",
+            "meta":{
+               "dimension-values":[
+                    {
+                        "name":"api",
+                        "value":["", "appEdgeEntitlements","rentalsEdgeRentals", "videoCatalogEdgeCatalogTitles", "videoCatalogEdgeDeliveryInfo", "videoCatalogEdgeGuide", "videoCatalogEdgeGuideLineups", "videoCatalogEdgeNetwork", "videoCatalogEdgePersonInfo", "videoCatalogEdgeRecommendations", "videoCatalogEdgeSeries", "videoCatalogEdgeTvShows", "videoCatalogEdgeV2Series", "videoCatalogEdgeVideoStore", "videoCatalogEdgeVodMovies", "videoCatalogEdgeSupportVideos"]
+                    }
+                ]
+            }
+        }
+    ]
+}

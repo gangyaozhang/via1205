@@ -1,0 +1,618 @@
+<AnalyticsExplorerView is_init="false" name="Charter - Calls Mapping Comp v1" description="">
+  <ModelInfo nextPageId="3" validated="true">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="0.8"/>
+      <NoTileSpacing value="false"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <CustomCSSSetting><![CDATA[@import '/vitria-oi/rest/app/dbp/user/via_common/dbpm/VIA - Common/VIA-CSS';
+@import '/vitria-oi/rest/app/dbp/user/viaops_admin/dbpm/VIAOps - Anomaly Viewer Service/ANOMALY-CSS';
+
+.incident-config .dgrid-cell.field-service {
+    font-family: Arial;
+}
+.incident-config .dgrid-cell.field-sub_service {
+    font-family: Arial;
+}
+.incident-config .dgrid-cell.field-dim_values {
+    font-family: Arial;
+}
+
+.incident-config-table {
+    border-collapse: unset;
+}
+
+.soflow {
+   -webkit-appearance: button;
+   -webkit-border-radius: 2px;
+   -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+   -webkit-padding-end: 20px;
+   -webkit-padding-start: 2px;
+   -webkit-user-select: none;
+   background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+   background-position: 99% center;
+   background-repeat: no-repeat;
+   border: 1px solid #AAA;
+   color: #555;
+   font-size: 12pt !important;
+   overflow: hidden;
+   padding: 5px 10px;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   width: 730px !important;
+   height: auto !important;
+}
+
+select.soflow:disabled {
+   color: #BBB;
+}
+
+]]></CustomCSSSetting>
+    <Page id="2" name="Installed" title="Calls Map" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<div style="width:calc(100% - 2px);height:100%;background-color:white;padding:0px;">
+    <div data-vitria-type="tile" style="width:100%;height:29px;padding:0px;border:none;" data-vitria-tile-name="ActionBar"></div>
+    <div data-vitria-type="tile" class="filter-container" style="width:calc(100% - 4px);height:40px;padding:0px;margin-left:1px;" data-vitria-tile-name="Filter"></div>
+    <div style="width:100%;height:calc(100% - 75px);" data-vitria-type="layout"></div> 
+</div>
+]]></PageFrameContent>
+      <PageProperties/>
+      <Layout type="10" numRow="19" numCol="1" count="2" templateType="3" screenHeight="1080" renderType="undefined" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:36,&quot;id&quot;:0,&quot;title&quot;:&quot;Calls View - SparkSQL (Double-click to add to Calls Mapping)&quot;},{&quot;data_col&quot;:1,&quot;data_row&quot;:37,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:36,&quot;id&quot;:1,&quot;title&quot;:&quot;Calls Mapping - MySQL (Double-click to edit)&quot;}]" unitSize="undefined" viewRows="72" viewCols="120"/>
+      <Tile name="Calls View" title="Calls View - SparkSQL (Double-click to add to Calls Mapping)" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:38" name="axflow:localstore:node:38" label="Calls View Store" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="issue" label="Issue" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="service_name" label="Service Name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="cust_type" label="Customer Type" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="cause" label="Cause" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="company" label="Company" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="calls" label="Calls" type="number" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="4"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="extended"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;isKeyField&quot;:true,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:200,&quot;backgroundColor&quot;:&quot;#ededed&quot;}},{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;isKeyField&quot;:true,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:200,&quot;backgroundColor&quot;:&quot;#ededed&quot;}},{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;isKeyField&quot;:true,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:200,&quot;backgroundColor&quot;:&quot;#ededed&quot;}},{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;isKeyField&quot;:true,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:150,&quot;backgroundColor&quot;:&quot;#ededed&quot;}},{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:250},&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;calls&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;number&quot;,&quot;defaultListId&quot;:6,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:50},&quot;format&quot;:{&quot;type&quot;:&quot;number&quot;,&quot;pattern&quot;:&quot;0&quot;}}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <Tile name="Calls Mapping" title="Calls Mapping - MySQL (Double-click to edit)" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="true" allowFullscreen="true">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:40" name="axflow:localstore:node:40" label="Calls Mapping Store" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="issue" label="Issue" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="service_label" label="Service Label" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="service_name" label="Service Name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="cust_type" label="Customer Type" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="cause" label="Cause" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="company" label="Company" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="4"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="extended"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:200,&quot;backgroundColor&quot;:&quot;#ededed&quot;}},{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:200,&quot;backgroundColor&quot;:&quot;#ededed&quot;}},{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:200,&quot;backgroundColor&quot;:&quot;#ededed&quot;}},{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:150,&quot;backgroundColor&quot;:&quot;#ededed&quot;}},{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:100},&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;Service Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:6,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:200},&quot;isKeyField&quot;:false}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <frame_tile name="ActionBar" title="ActionBar" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="via-action-bar" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:25" name="axflow:localstore:node:25" label="Actionbar Data" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="value" label="value" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="disable" label="disable" type="boolean" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/user/via_common/dbpm/VIA - Common/Action Bar&quot;,&quot;model&quot;:&quot;{\r\n    \&quot;toolbar\&quot;: [\r\n        {\r\n    \t\t\&quot;label\&quot;: \&quot;Calls View\&quot;\r\n    \t},\r\n        {\r\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-plus-square&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n            \&quot;title\&quot; : \&quot;Add/Create new entries to Calls Mapping table\&quot;,\r\n            \&quot;value\&quot; : \&quot;config/create\&quot;\r\n        },\r\n        {\r\n    \t\t\&quot;label\&quot;: \&quot;Calls Mapping\&quot;\r\n    \t},\r\n        {\r\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-edit&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n            \&quot;title\&quot; : \&quot;Edit selected Calls Mapping entries\&quot;,\r\n            \&quot;value\&quot; : \&quot;config/edit\&quot;\r\n        },\r\n        {\r\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-trash-alt&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n            \&quot;title\&quot; : \&quot;Delete selected Calls Mapping entries\&quot;,\r\n            \&quot;value\&quot; : \&quot;config/delete\&quot;\r\n        },\r\n        {\r\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-redo&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n            \&quot;title\&quot; : \&quot;Refresh entries from Calls View Table and Calls Mapping Table\&quot;,\r\n            \&quot;value\&quot; : \&quot;config/refresh\&quot;\r\n        }\r\n    ],\r\n    \&quot;#\&quot;: [\r\n        {\r\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-eye&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n            \&quot;title\&quot; : \&quot;Insert New entry into Calls Mapping Table from item selected in View Tile.\&quot;,\r\n            \&quot;value\&quot; : \&quot;config/insert-from-view\&quot;\r\n        },\r\n        {\r\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-user-shield&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n            \&quot;title\&quot; : \&quot;Publish Changes from MySQL Reference Table to SparkSQL View\&quot;,\r\n            \&quot;value\&quot; : \&quot;config/publish-changes\&quot;\r\n        }\r\n    ]\r\n}\r\n&quot;}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="Filter" title="Filter" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/user/via_common/dbpm/VIA - Common/Dimension Filter&quot;,&quot;model&quot;:&quot;{\n    \&quot;div-style\&quot; : \&quot;overflow:hidden;\&quot;,\n    \&quot;categories\&quot; : [{\n        \&quot;name\&quot;        : \&quot;general\&quot;,\n        \&quot;#submit\&quot;      : \&quot;manual\&quot;,\n        \&quot;fa-label\&quot;    : \&quot;Apply\&quot;,\n        \&quot;name-style\&quot;  : \&quot;padding-left:0px;width:0px;\&quot;,\n        \&quot;value-style\&quot; : \&quot;padding:0px;width:100%;\&quot;,\n        \&quot;label-position\&quot; : \&quot;left\&quot;,\n        \&quot;dimensions\&quot; : [{\n            \&quot;name\&quot;    : \&quot;startDate\&quot;,\n            \&quot;label\&quot;   : \&quot;Date\&quot;,\n            \&quot;type\&quot;    : \&quot;date\&quot;,\n            \&quot;default\&quot; : \&quot;today-1\&quot;\n        }]\n    }]\n}\n&quot;,&quot;saveCookie&quot;:false}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+    </Page>
+    <DataFlow showFooter="true">
+      <Item id="node:11" type="Tile" label="Calls Mapping Tile" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="74" y="27"/>
+      <Item id="node:12" type="UserScript" label="Script 3" _undefined_title="" originHeight="117" width="140" height="177" x="400" y="87">
+        <dynIn id="din:0" type="event[]" label="UI event" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="any" label="Edit" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Refresh" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:25" type="LocalStore" label="Actionbar Data" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="700" y="394"/>
+      <Item id="node:27" type="Tile" label="Toolbar" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="87" y="480"/>
+      <Item id="node:28" type="UserScript" label="Script 1" _undefined_title="" originHeight="117" width="180" height="177" x="388" y="354">
+        <dynIn id="din:0" type="event[]" label="Action" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="event[]" label="Selection from Mapping" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="event[]" label="Selection from View" evaluate="always" _isArray="true"/>
+        <dynIn id="din:3" type="event[]" label="UI Event" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Edit" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="Refresh" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="event[]" label="Disables" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:33" type="UserScript" label="Script 2" _undefined_title="" originHeight="117" width="130" height="117" x="800" y="87">
+        <dynIn id="din:0" type="any" label="Refresh" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:38" type="LocalStore" label="Calls View Store" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1352" y="290"/>
+      <Item id="node:40" type="LocalStore" label="Calls Mapping Store" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1080" y="87"/>
+      <Item id="node:46" type="Tile" label="Calls View Tile" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="47" y="230"/>
+      <Item id="node:48" type="UserScript" label="Script 4" _undefined_title="" originHeight="117" width="130" height="117" x="1114" y="290">
+        <dynIn id="din:0" type="any" label="Refresh" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any[]" label="Filter" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:49" type="Tile" label="Filters" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="880" y="393"/>
+      <Link srcId="node:46" srcPort="out:0" tgtId="node:28" tgtPort="din:2"/>
+      <Link srcId="node:11" srcPort="out:0" tgtId="node:28" tgtPort="din:1"/>
+      <Link srcId="node:33" srcPort="dout:0" tgtId="node:40" tgtPort="in:0"/>
+      <Link srcId="node:28" srcPort="dout:1" tgtId="node:33" tgtPort="din:0"/>
+      <Link srcId="node:28" srcPort="dout:0" tgtId="node:12" tgtPort="din:2"/>
+      <Link srcId="node:11" srcPort="out:0" tgtId="node:12" tgtPort="din:1"/>
+      <Link srcId="node:27" srcPort="out:0" tgtId="node:28" tgtPort="din:0"/>
+      <Link srcId="node:11" srcPort="out:3" tgtId="node:12" tgtPort="din:0"/>
+      <Link srcId="node:12" srcPort="dout:0" tgtId="node:33" tgtPort="din:0"/>
+      <Link srcId="node:28" srcPort="dout:2" tgtId="node:25" tgtPort="in:0"/>
+      <Link srcId="node:46" srcPort="out:3" tgtId="node:28" tgtPort="din:3"/>
+      <Link srcId="node:48" srcPort="dout:0" tgtId="node:38" tgtPort="in:0"/>
+      <Link srcId="node:12" srcPort="dout:0" tgtId="node:48" tgtPort="din:0"/>
+      <Link srcId="node:49" srcPort="out:1" tgtId="node:48" tgtPort="din:1"/>
+      <Link srcId="node:28" srcPort="dout:1" tgtId="node:48" tgtPort="din:0"/>
+      <Input key="node:12/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;UI event&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Edit&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:12/cfg:model/default" value="&quot;var CommonPlugin = Plugin(\&quot;Common\&quot;);\nvar CallsMapPlugin = Plugin(\&quot;CallsMap\&quot;);\nvar CharterPlugin = Plugin(\&quot;CharterPlugin\&quot;);\n\nvar controller = this.axflow.config.controller;\n\nfunction doEdit(record, callback)\n{\n    var labelStyle = \&quot; style=&apos;width:1%;font-style:normal;padding:5px 0px 5px 0px;vertical-align:top;&apos;\&quot;;\n    var valueStyle = \&quot; style=&apos;width:99%;font-weight:normal;font-family:Arial;padding:5px 0px 5px 5px; font-size: 14px; color: #666666;vertical-align:top;&apos;\&quot;;\n    var description = [\n        \&quot;&lt;table style=&apos;background-color: #f2f2f2f2; width: 100%; padding: 10px;&apos;&gt;\&quot;,\n        \&quot;&lt;tr&gt;&lt;td\&quot;+labelStyle+\&quot;Call IDs:&lt;/td&gt;&lt;td\&quot;+valueStyle+\&quot;&gt;\&quot; + record[\&quot;call_id\&quot;] + \&quot;&lt;/td&gt;&lt;/tr&gt;\&quot;,\n        \&quot;&lt;table&gt;\&quot;,\n    ];\n    CharterPlugin.getSvcOptions(null, null, function(response) {\n        if (response.status == \&quot;OK\&quot;) {\n            var services = response.value;\n            CallsMapPlugin.editCallsMappingConfig(CommonPlugin, controller, record, \&quot;Edit Calls Mapping\&quot;, description, services, function(obj) {\n                if (callback == null) {\n                    CallsMapPlugin.updateCallsMappingModel(obj, function(response) {\n                        if (response.status == \&quot;OK\&quot;) {\n                            setOutput(\&quot;dout:0\&quot;, Date.now());\n                        }\n                    });\n                }\n                else {\n                    callback(obj);\n                }\n            });\n        }\n    });\n}\n\nfunction doUpdate(records, changed)\n{\n    if (records.length == 0) {\n        setOutput(\&quot;dout:0\&quot;, Date.now());\n    }\n    else {\n        var record = lang.clone(records.shift());\n        delete record[\&quot;__EVENT__\&quot;];\n        delete record[\&quot;__FIELD__\&quot;];\n        delete record[\&quot;__TYPE__\&quot;];\n        delete record[\&quot;_vtid\&quot;];\n        delete record[\&quot;__userClick\&quot;];\n        record[\&quot;service_name\&quot;] = changed[\&quot;service_name\&quot;];\n        record[\&quot;service_label\&quot;] = changed[\&quot;service_label\&quot;];\n        CallsMapPlugin.updateCallsMappingModel(record, function(response) {\n            if (response.status == \&quot;OK\&quot;) {\n                doUpdate(records, changed);\n            }\n        });\n    }\n}\n\nif (port == \&quot;din:0\&quot;) {\n    var events = getInput(\&quot;din:0\&quot;) || [];\n    if (events.length == 1) {\n        if (events[0][\&quot;__TYPE__\&quot;] == \&quot;dblclick\&quot;) {\n            var record = lang.clone(events[0]);\n            delete record[\&quot;__EVENT__\&quot;];\n            delete record[\&quot;__FIELD__\&quot;];\n            delete record[\&quot;__TYPE__\&quot;];\n            delete record[\&quot;_vtid\&quot;];\n            delete record[\&quot;__userClick\&quot;];\n            doEdit(record);\n        }\n    }\n}\nelse if (port == \&quot;din:2\&quot;) {\n    var selection = getInput(\&quot;din:1\&quot;) || [];\n    if (selection.length == 1) {\n        var record = lang.clone(selection[0]);\n        delete record[\&quot;_vtid\&quot;];\n        doEdit(record, null);\n    }\n    else if (selection.length &gt; 1) {\n        var record = lang.clone(selection[0]);\n        var call_ids = selection.map(a =&gt; a[\&quot;call_id\&quot;]);\n        record[\&quot;call_id\&quot;] = call_ids.join(\&quot;&lt;br&gt;\&quot;);\n        delete record[\&quot;_vtid\&quot;];\n        doEdit(record, function(changed) {\n            doUpdate(selection.slice(0), changed);\n        });\n    }\n}\n&quot;"/>
+      <Input key="node:11/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#2#Calls Mapping&quot;,&quot;path&quot;:[&quot;Installed&quot;],&quot;name&quot;:&quot;Calls Mapping&quot;}]"/>
+      <Input key="node:12/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Refresh&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:12/cfg:schema/default" value="&quot;&quot;"/>
+      <Input key="node:27/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#2#ActionBar&quot;,&quot;path&quot;:[&quot;Installed&quot;],&quot;name&quot;:&quot;ActionBar&quot;}]"/>
+      <Input key="node:28/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Action&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selection from Mapping&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selection from View&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:3&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;UI Event&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:28/cfg:model/default" value="&quot;var CommonPlugin = Plugin(\&quot;Common\&quot;);\nvar CallsMapPlugin = Plugin(\&quot;CallsMap\&quot;);\nvar CharterPlugin = Plugin(\&quot;CharterPlugin\&quot;);\nvar controller = this.axflow.config.controller;\n\nfunction doEdit(record, callback)\n{\n    var labelStyle = \&quot; style=&apos;width:1%;font-style:normal;padding:5px 0px 5px 0px;vertical-align:top;&apos;\&quot;;\n    var valueStyle = \&quot; style=&apos;width:99%;font-weight:normal;font-family:Arial;padding:5px 0px 5px 5px; font-size: 14px; color: #666666;vertical-align:top;&apos;\&quot;;\n    var description = [\n        \&quot;&lt;table style=&apos;background-color: #f2f2f2f2; width: 100%; padding: 10px;&apos;&gt;\&quot;,\n        \&quot;&lt;tr&gt;&lt;td\&quot;+labelStyle+\&quot;Call IDs:&lt;/td&gt;&lt;td\&quot;+valueStyle+\&quot;&gt;\&quot; + record[\&quot;call_id\&quot;] + \&quot;&lt;/td&gt;&lt;/tr&gt;\&quot;,\n        \&quot;&lt;table&gt;\&quot;,\n    ];\n    CharterPlugin.getSvcOptions(null, null, function(response) {\n        if (response.status == \&quot;OK\&quot;) {\n            var services = response.value;\n            CallsMapPlugin.editCallsMappingConfig(CommonPlugin, controller, record, \&quot;Create Calls Mapping\&quot;, description, services, function(obj) {\n                if (callback == null) {\n                    CallsMapPlugin.createCallsMappingModel(obj, function(response) {\n                        if (response.status == \&quot;OK\&quot;) {\n                            setOutput(\&quot;dout:1\&quot;, Date.now());\n                        }\n                    });\n                }\n                else {\n                    callback(obj);\n                }\n            });\n        }\n    });\n}\n\nfunction doCreate(records, changed)\n{\n    if (records.length == 0) {\n        setOutput(\&quot;dout:1\&quot;, Date.now());\n    }\n    else {\n        var record = lang.clone(records.shift());\n        delete record[\&quot;__EVENT__\&quot;];\n        delete record[\&quot;__FIELD__\&quot;];\n        delete record[\&quot;__TYPE__\&quot;];\n        delete record[\&quot;_vtid\&quot;];\n        delete record[\&quot;__userClick\&quot;];\n        record[\&quot;service_name\&quot;] = changed[\&quot;service_name\&quot;];\n        record[\&quot;service_label\&quot;] = changed[\&quot;service_label\&quot;];\n        CallsMapPlugin.createCallsMappingModel(record, function(response) {\n            if (response.status == \&quot;OK\&quot;) {\n                doCreate(records, changed);\n            }\n        });\n    }\n}\n\nif (port == \&quot;din:0\&quot;) {\n    var action = getInput(\&quot;din:0\&quot;);\n    if (action != null &amp;&amp; action.length == 1) {\n        action = action[0];\n        switch (action.value) {\n            case \&quot;config/create\&quot;:\n                var selection = getInput(\&quot;din:2\&quot;) || [];\n                if (selection.length == 1) {\n                    var record = lang.clone(selection[0]);\n                    delete record[\&quot;__EVENT__\&quot;];\n                    delete record[\&quot;__FIELD__\&quot;];\n                    delete record[\&quot;__TYPE__\&quot;];\n                    delete record[\&quot;_vtid\&quot;];\n                    delete record[\&quot;__userClick\&quot;];\n                    doEdit(record, null);\n                }\n                else if (selection.length &gt; 1) {\n                    var record = lang.clone(selection[0]);\n                    var call_ids = selection.map(a =&gt; a[\&quot;call_id\&quot;]);\n                    record[\&quot;call_id\&quot;] = call_ids.join(\&quot;&lt;br&gt;\&quot;);\n                    delete record[\&quot;_vtid\&quot;];\n                    doEdit(record, function(changed) {\n                        doCreate(selection.slice(0), changed);\n                    });\n                }\n                break;\n            case \&quot;config/edit\&quot;:\n                setOutput(\&quot;dout:0\&quot;, Date.now());\n                break;\n            case \&quot;config/delete\&quot;:\n                var selection = getInput(\&quot;din:1\&quot;) || [];\n                if (selection.length &gt; 0) {\n                    CallsMapPlugin.deleteCallsMappingModel(selection, function(response) {\n                        if (response.status == \&quot;OK\&quot;) {\n                            setOutput(\&quot;dout:1\&quot;, Date.now());\n                        }\n                    });\n                }\n                break;\n            case \&quot;config/refresh\&quot;:\n                setOutput(\&quot;dout:1\&quot;, Date.now());\n                break;\n        }\n    }\n}\nelse if (port == null || port == \&quot;din:1\&quot; || port == \&quot;din:2\&quot;) {\n    var selectionInTable = getInput(\&quot;din:1\&quot;) || [];\n    var selectionInView = getInput(\&quot;din:2\&quot;) || [];\n    var disables = [{\n        \&quot;value\&quot;   : \&quot;config/edit\&quot;,\n        \&quot;disable\&quot; : selectionInTable.length == 0,\n    }, {\n        \&quot;value\&quot;   : \&quot;config/delete\&quot;,\n        \&quot;disable\&quot; : selectionInTable.length == 0,\n    }, {\n        \&quot;value\&quot;   : \&quot;config/create\&quot;,\n        \&quot;disable\&quot; : selectionInView.length == 0,\n    }];\n    setOutput(\&quot;dout:2\&quot;, disables);\n}\nelse if (port == \&quot;din:3\&quot;) {\n    var events = getInput(\&quot;din:3\&quot;) || [];\n    if (events.length == 1) {\n        if (events[0][\&quot;__TYPE__\&quot;] == \&quot;dblclick\&quot;) {\n            var record = lang.clone(events[0]);\n            delete record[\&quot;__EVENT__\&quot;];\n            delete record[\&quot;__FIELD__\&quot;];\n            delete record[\&quot;__TYPE__\&quot;];\n            delete record[\&quot;_vtid\&quot;];\n            delete record[\&quot;__userClick\&quot;];\n            doEdit(record, null);\n        }\n    }\n}\n&quot;"/>
+      <Input key="node:28/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Edit&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Refresh&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Disables&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:28/cfg:schema/default" value="&quot;setOutputSchema(\&quot;dout:2\&quot;, [{\n    name  : \&quot;value\&quot;,\n    label : \&quot;value\&quot;,\n    type  : \&quot;string\&quot;,\n}, {\n    name  : \&quot;disable\&quot;,\n    label : \&quot;disable\&quot;,\n    type  : \&quot;boolean\&quot;,\n}]);\n&quot;"/>
+      <Input key="node:33/cfg:schema/default" value="&quot;setOutputSchema(\&quot;dout:0\&quot;, [{\n\t\&quot;name\&quot;  : \&quot;issue\&quot;,\n\t\&quot;label\&quot; : \&quot;Issue\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n},\n{\n\t\&quot;name\&quot;  : \&quot;service_label\&quot;,\n\t\&quot;label\&quot; : \&quot;Service Label\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n},\n{\n\t\&quot;name\&quot;  : \&quot;service_name\&quot;,\n\t\&quot;label\&quot; : \&quot;Service Name\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n},\n{\n\t\&quot;name\&quot;  : \&quot;cust_type\&quot;,\n\t\&quot;label\&quot; : \&quot;Customer Type\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n},\n{\n\t\&quot;name\&quot;  : \&quot;cause\&quot;,\n\t\&quot;label\&quot; : \&quot;Cause\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n\t\n},\n{\n\t\&quot;name\&quot;  : \&quot;company\&quot;,\n\t\&quot;label\&quot;: \&quot;Company\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n}]);\n\nsetOutputSchema(\&quot;dout:1\&quot;, [{\n\t\&quot;name\&quot;  : \&quot;issue\&quot;,\n\t\&quot;label\&quot; : \&quot;Issue\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n},\n{\n\t\&quot;name\&quot;  : \&quot;service_name\&quot;,\n\t\&quot;label\&quot; : \&quot;Service Name\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n},\n{\n\t\&quot;name\&quot;  : \&quot;cust_type\&quot;,\n\t\&quot;label\&quot; : \&quot;Customer Type\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n},\n{\n\t\&quot;name\&quot;  : \&quot;cause\&quot;,\n\t\&quot;label\&quot; : \&quot;Cause\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n\t\n},\n{\n\t\&quot;name\&quot;  : \&quot;company\&quot;,\n\t\&quot;label\&quot; : \&quot;Company\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n},\n{\n\t\&quot;name\&quot;  : \&quot;calls\&quot;,\n\t\&quot;label\&quot; : \&quot;Calls\&quot;,\n\t\&quot;type\&quot;  : \&quot;number\&quot;,\n}]);\n\n&quot;"/>
+      <Input key="node:33/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:33/cfg:model/default" value="&quot;var CallsMapPlugin = Plugin(\&quot;CallsMap\&quot;);\nCallsMapPlugin.getCallsMappingModel(function(response) {\n    if (response.status == \&quot;OK\&quot;) {\n        setOutput(\&quot;dout:0\&quot;, response.value);\n    }\n});\n&quot;"/>
+      <Input key="node:33/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Refresh&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:46/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#2#Calls View&quot;,&quot;path&quot;:[&quot;Installed&quot;],&quot;name&quot;:&quot;Calls View&quot;}]"/>
+      <Input key="node:48/cfg:schema/default" value="&quot;\nsetOutputSchema(\&quot;dout:0\&quot;, [{\n\t\&quot;name\&quot;  : \&quot;issue\&quot;,\n\t\&quot;label\&quot; : \&quot;Issue\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n},\n{\n\t\&quot;name\&quot;  : \&quot;service_name\&quot;,\n\t\&quot;label\&quot; : \&quot;Service Name\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n},\n{\n\t\&quot;name\&quot;  : \&quot;cust_type\&quot;,\n\t\&quot;label\&quot; : \&quot;Customer Type\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n},\n{\n\t\&quot;name\&quot;  : \&quot;cause\&quot;,\n\t\&quot;label\&quot; : \&quot;Cause\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n\t\n},\n{\n\t\&quot;name\&quot;  : \&quot;company\&quot;,\n\t\&quot;label\&quot; : \&quot;Company\&quot;,\n\t\&quot;type\&quot;  : \&quot;string\&quot;,\n},\n{\n\t\&quot;name\&quot;  : \&quot;calls\&quot;,\n\t\&quot;label\&quot; : \&quot;Calls\&quot;,\n\t\&quot;type\&quot;  : \&quot;number\&quot;,\n}]);\n\n&quot;"/>
+      <Input key="node:48/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:48/cfg:model/default" value="&quot;var CommonPlugin = Plugin(\&quot;Common\&quot;);\nvar CallsMapPlugin = Plugin(\&quot;CallsMap\&quot;);\n\nif (port != null) {\n    var filters = getInput(\&quot;din:1\&quot;) || [];\n    CommonPlugin.pbShowProgressBar(\&quot;getCallsViewModel\&quot;, \&quot;Retrieving calls record...\&quot;);\n    CallsMapPlugin.getCallsViewModel(filters, function(response) {\n        if (response.status == \&quot;OK\&quot;) {\n            setOutput(\&quot;dout:0\&quot;, response.value);\n        }\n        CommonPlugin.pbHideProgressBar(\&quot;getCallsViewModel\&quot;);\n    });\n}\n&quot;"/>
+      <Input key="node:48/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Refresh&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Filter&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:49/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#2#Filter&quot;,&quot;path&quot;:[&quot;Installed&quot;],&quot;name&quot;:&quot;Filter&quot;}]"/>
+      <Schema id="node:25/in:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:25/out:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:28/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;median_baseline&quot;,&quot;label&quot;:&quot;median_baseline&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_low&quot;,&quot;label&quot;:&quot;threshold_low&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_med&quot;,&quot;label&quot;:&quot;threshold_med&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_high&quot;,&quot;label&quot;:&quot;threshold_high&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cool_down_period&quot;,&quot;label&quot;:&quot;cool_down_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_threshold&quot;,&quot;label&quot;:&quot;warmup_threshold&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_period&quot;,&quot;label&quot;:&quot;warmup_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_deviation&quot;,&quot;label&quot;:&quot;min_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_deviation&quot;,&quot;label&quot;:&quot;min_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_vol&quot;,&quot;label&quot;:&quot;min_metric_vol&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_vol&quot;,&quot;label&quot;:&quot;min_call_vol&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_threshold_period&quot;,&quot;label&quot;:&quot;med_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_threshold_period&quot;,&quot;label&quot;:&quot;high_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_call_vol_pct&quot;,&quot;label&quot;:&quot;med_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_call_vol_pct&quot;,&quot;label&quot;:&quot;high_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emit_notification&quot;,&quot;label&quot;:&quot;emit_notification&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;above&quot;,&quot;label&quot;:&quot;above&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;below&quot;,&quot;label&quot;:&quot;below&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;generate&quot;,&quot;label&quot;:&quot;generate&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_measure&quot;,&quot;label&quot;:&quot;causation_measure&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_top_count&quot;,&quot;label&quot;:&quot;causation_top_count&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:28/dout:2">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:33/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;Service Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:33/din:0">
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;median_baseline&quot;,&quot;label&quot;:&quot;median_baseline&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_low&quot;,&quot;label&quot;:&quot;threshold_low&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_med&quot;,&quot;label&quot;:&quot;threshold_med&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_high&quot;,&quot;label&quot;:&quot;threshold_high&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cool_down_period&quot;,&quot;label&quot;:&quot;cool_down_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_threshold&quot;,&quot;label&quot;:&quot;warmup_threshold&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_period&quot;,&quot;label&quot;:&quot;warmup_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_deviation&quot;,&quot;label&quot;:&quot;min_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_deviation&quot;,&quot;label&quot;:&quot;min_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_vol&quot;,&quot;label&quot;:&quot;min_metric_vol&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_vol&quot;,&quot;label&quot;:&quot;min_call_vol&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_threshold_period&quot;,&quot;label&quot;:&quot;med_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_threshold_period&quot;,&quot;label&quot;:&quot;high_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_call_vol_pct&quot;,&quot;label&quot;:&quot;med_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_call_vol_pct&quot;,&quot;label&quot;:&quot;high_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emit_notification&quot;,&quot;label&quot;:&quot;emit_notification&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;above&quot;,&quot;label&quot;:&quot;above&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;below&quot;,&quot;label&quot;:&quot;below&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;generate&quot;,&quot;label&quot;:&quot;generate&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_measure&quot;,&quot;label&quot;:&quot;causation_measure&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_top_count&quot;,&quot;label&quot;:&quot;causation_top_count&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:27/out:0">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:28/din:0">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:27/out:1">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:27/out:2">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:27/out:3">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:33/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;calls&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:38/out:0">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;calls&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:40/in:0">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;Service Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:40/out:0">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;Service Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:38/in:0">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;calls&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:11/out:0">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;Service Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:28/din:1">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;Service Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:12/din:1">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;Service Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:11/out:1">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;Service Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:11/out:2">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;Service Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:11/out:3">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;Service Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:12/din:0">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;Service Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:46/out:0">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;calls&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:46/out:1">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;calls&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:46/out:2">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;calls&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:46/out:3">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;calls&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:28/din:2">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;calls&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:28/din:3">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;calls&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:48/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;calls&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:48/din:0">
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;median_baseline&quot;,&quot;label&quot;:&quot;median_baseline&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_low&quot;,&quot;label&quot;:&quot;threshold_low&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_med&quot;,&quot;label&quot;:&quot;threshold_med&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_high&quot;,&quot;label&quot;:&quot;threshold_high&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cool_down_period&quot;,&quot;label&quot;:&quot;cool_down_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_threshold&quot;,&quot;label&quot;:&quot;warmup_threshold&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_period&quot;,&quot;label&quot;:&quot;warmup_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_deviation&quot;,&quot;label&quot;:&quot;min_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_deviation&quot;,&quot;label&quot;:&quot;min_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_vol&quot;,&quot;label&quot;:&quot;min_metric_vol&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_vol&quot;,&quot;label&quot;:&quot;min_call_vol&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_threshold_period&quot;,&quot;label&quot;:&quot;med_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_threshold_period&quot;,&quot;label&quot;:&quot;high_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_call_vol_pct&quot;,&quot;label&quot;:&quot;med_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_call_vol_pct&quot;,&quot;label&quot;:&quot;high_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emit_notification&quot;,&quot;label&quot;:&quot;emit_notification&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;above&quot;,&quot;label&quot;:&quot;above&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;below&quot;,&quot;label&quot;:&quot;below&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;generate&quot;,&quot;label&quot;:&quot;generate&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_measure&quot;,&quot;label&quot;:&quot;causation_measure&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_top_count&quot;,&quot;label&quot;:&quot;causation_top_count&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:48/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;issue&quot;,&quot;label&quot;:&quot;Issue&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_type&quot;,&quot;label&quot;:&quot;Customer Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cause&quot;,&quot;label&quot;:&quot;Cause&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;company&quot;,&quot;label&quot;:&quot;Company&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;calls&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:49/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:49/out:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:49/out:2">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:49/out:3">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:48/din:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <DynInput id="node:12">
+        <Port id="din:0" type="event[]" label="UI event" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <Port id="din:2" type="any" label="Edit" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:28">
+        <Port id="din:0" type="event[]" label="Action" evaluate="always"/>
+        <Port id="din:1" type="event[]" label="Selection from Mapping" evaluate="always"/>
+        <Port id="din:2" type="event[]" label="Selection from View" evaluate="always"/>
+        <Port id="din:3" type="event[]" label="UI Event" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:33">
+        <Port id="din:0" type="any" label="Refresh" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:48">
+        <Port id="din:0" type="any" label="Refresh" evaluate="always"/>
+        <Port id="din:1" type="any[]" label="Filter" evaluate="always"/>
+      </DynInput>
+      <DynOutput id="node:12">
+        <Port id="dout:0" type="any" label="Refresh" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:28">
+        <Port id="dout:0" type="any" label="Edit" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="any" label="Refresh" propagate="always" _isArray="true"/>
+        <Port id="dout:2" type="event[]" label="Disables" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:33">
+        <Port id="dout:0" type="event[]" label="Out(0)" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:48">
+        <Port id="dout:0" type="event[]" label="Out(0)" propagate="always"/>
+      </DynOutput>
+      <Version id="node:11" version="1"/>
+      <Version id="node:12" version="2"/>
+      <Version id="node:25" version="2"/>
+      <Version id="node:27" version="1"/>
+      <Version id="node:28" version="2"/>
+      <Version id="node:33" version="2"/>
+      <Version id="node:38" version="2"/>
+      <Version id="node:40" version="2"/>
+      <Version id="node:46" version="1"/>
+      <Version id="node:48" version="2"/>
+      <Version id="node:49" version="1"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/user/via_common/dbpm/VIA - Common" alias="Common"/>
+      <DashboardPlugin uri="/app/dbp/space/testp/dbpm/Charter - Calls Mapping Service v1" alias="CallsMap"/>
+      <DashboardPlugin uri="/app/dbp/space/testp/dbpm/Charter - Plugin v11" alias="CharterPlugin"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

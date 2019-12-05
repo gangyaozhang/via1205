@@ -1,0 +1,688 @@
+<DashboardPluginModel description=" " name="Charter - Execution Monitor Service v1" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions>
+      <Function name="getDurationLabel" args="duration" private="false">
+        <CodeText>
+          <![CDATA[var D = 24*60*60;
+var H = 60*60;
+var M = 60;
+
+if (duration >= D && (duration%D) == 0) {
+    // day(s)
+    var days = duration/D;
+    return days + (days > 1 ? " days" : " day");
+}
+if (duration >= H && (duration%H) == 0) {
+    // hour(s)
+    var hours = duration/H;
+    return hours + (hours > 1 ? " hours" : " hour");
+}
+if (duration >= M && (duration%M) == 0) {
+    // minutes(s)
+    var minutes = duration/M;
+    return minutes + (minutes > 1 ? " minutes" : " minute");
+}
+// second(s)
+return String(duration) + (duration > 1 ? " seconds" : " second");
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getLabel" args="attribute" private="false">
+        <CodeText>
+          <![CDATA[var LABELS = {
+    "epochtime" : "Commit Time",
+    //"timestamp" : "Time of Commit",
+    "user" : "User",
+    "ticket" : "Ticket #",
+    "host" : "Host",
+    "component" : "Component",
+    "location" : "Location",
+    "impact1" : "Labeled Correlation",
+    "impact2" : "Unlabeled Correlation",
+    "ip" : "IP Address",
+};
+return LABELS[attribute];
+]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services>
+      <Service name="_alignSampleData" args="uuid,host,ip,start_tm,end_tm" private="false">
+        <CodeText>
+          <![CDATA[print("_alignSampleData: uuid = " + uuid);
+print("_alignSampleData: host = " + host);
+print("_alignSampleData: ip = " + ip);
+print("_alignSampleData: start_tm = " + start_tm);
+print("_alignSampleData: end_tm = " + end_tm);
+
+if( uuid == null || host == null || ip == null || start_tm == null || end_tm == null ) return "error: missing parameter value";
+
+var queryConfig = this._getQueryConfig();
+if (queryConfig == null || queryConfig["sys-log-queries"] == null) return [];
+
+var data = [];
+data.push([host, ip, start_tm, end_tm, uuid]);
+
+
+var sql = "UPDATE `charter_change_mgmt` SET `host`=?, `ip`=?, `start_tm`=?, `end_tm`=? WHERE `uuid`=? ";
+print(sql);
+
+var moduleName = queryConfig["module-name"] || "(EM)";
+//var result = this.executeSQLQuery(queryConfig, [moduleName], ["SysLog"], "charter_ops_db", sql, null);
+
+
+
+var result = SQL.executeUpdate("jdbc:mysql://apoopsintmln-ncw-via01:3306/charter_ops_db?useSSL=false", "via61", "V2tr2a4300!", sql, data);
+
+if (result != null) {
+    return result.items;
+}
+return [];]]>
+        </CodeText>
+      </Service>
+      <Service name="_getQueryConfig" args="" private="true">
+        <CodeText>
+          <![CDATA[return JSON.parse(Context.getLocalResource("QueryConfig"));
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_invokeIncidentRollupService" args="startEpoch,endEpoch,groupingField,service,subService" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+if (queryConfig["analytic-services"] == null) {
+    throw "Analytics services not defined in query config";
+}
+var url = queryConfig["analytic-services"]["IncidentRollup"] && queryConfig["analytic-services"]["IncidentRollup"]["url"];
+if (url == null || url == "") {
+    throw "Dimension Analysis service url not defined";
+}
+
+var headers = {
+    "startEpoch" : JSON.stringify(startEpoch),
+    "endEpoch" : JSON.stringify(endEpoch),
+    "groupingField" : JSON.stringify(groupingField),
+    "service" : JSON.stringify(service),
+    "subService" : JSON.stringify(subService)
+};
+print("invokeDimensionAnalysisService: headers="+__prettyPrintJSON(headers));
+return this._callExternalService(url, headers);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="addChangeMgmtAcknowledgment" args="uuid,ackvalue,acknotes" private="false">
+        <CodeText>
+          <![CDATA[// uuid, ack_tm, ackuser, ackvalue, acknotes
+
+function DQ(str)
+{
+    return '"'+str+'"';
+}
+
+print( "addChangeMgmtAcknowledgment" );
+
+var ack_tm = Math.round( new Date().getTime() / 1000 );
+var ackuser = Context.getCurrentUserId();
+
+if( uuid == null || uuid == "" ) return;
+if( ackvalue == null || ackvalue == "" ) return;
+
+
+var values = [];
+    values.push(DQ(uuid));
+    values.push(String(ack_tm));
+    values.push(DQ(ackuser));
+    values.push(DQ(ackvalue));
+    values.push(DQ(acknotes));
+
+var jndiName = "charter_ref_db";
+var sql = "INSERT INTO viaops_change_mgmt_acks (uuid, ack_tm, ackuser, ackvalue, acknotes)  VALUES (" + values.join(",") + ")";
+
+    print(sql);
+    SQL.executeUpdate(jndiName, sql, null);
+    
+var returnObj = {};
+    returnObj["action"]         = "Insert Acknowledgment";
+    returnObj["uuid"]           = uuid
+    returnObj["ackvalue"]       = ackvalue;
+    returnObj["ack_tm"]         = ack_tm;
+    returnObj["ackuser"]        = ackuser;
+    returnObj["acknotes"]       = acknotes;
+    return returnObj;]]>
+        </CodeText>
+      </Service>
+      <Service name="canAcknowledgeChangeLog" args="event" private="false">
+        <CodeText>
+          <![CDATA[var minAckAge = this.getMinimumAcknowledgeAge();
+var epochTime = Number(event["epochtime"]);
+return epochTime <= ((Date.now()/1000) - minAckAge);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="doAcknowledgeChangeLog" args="event,value,notes" private="false">
+        <CodeText>
+          <![CDATA[function DQ(str)
+{
+    return '"'+str+'"';
+}
+
+if (this.canAcknowledgeChangeLog(event)) {
+    var id       = event["id"];
+    var tsepoch  = event["epochtime"];
+    var ackuser  = Context.getCurrentUserId();
+    var ackepoch = Date.now();
+    var ackvalue = value;
+    var acknotes = notes;
+
+    var values = [];
+    values.push(DQ(id));
+    values.push(String(tsepoch));
+    values.push(DQ(ackuser));
+    values.push(String(ackepoch));
+    values.push(DQ(ackvalue));
+    values.push(DQ(acknotes));
+    
+    var jndiName = "charter_ops_db";
+    var sql = "INSERT INTO charter_change_acks (id, tsepoch, ackuser, ackepoch, ackvalue, acknotes) VALUES (" + values.join(",") + ")";
+    print(sql);
+    SQL.executeUpdate(jndiName, sql, null);
+    
+	event["ackvalue"] = ackvalue;
+	event["ackepoch"] = ackepoch;
+	event["ackuser"]  = ackuser;
+	event["acknotes"] = acknotes;
+	event["acktimestamp"]  = (new Date(ackepoch)).toLocaleString();
+    return event;
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getAllPlannedMaintenance" args="filters" private="false">
+        <CodeText>
+          <![CDATA[var debug = true;
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+
+if( debug ) print("getAllPlannedMaintenance: filters=" + __prettyPrintJSON(filters));
+
+var queryConfig = this.getQueryConfig();
+if (queryConfig == null) return [];
+
+var svc = this._getFilterValue(filters, "data.svc", [], true);
+svc = this._stripDupAndHashItems(svc);
+var serviceWhereClause = "";
+if( svc && svc != ""){
+ serviceWhereClause = " AND service in ('"+ svc +"','')";
+}
+if( debug ) print("getAllPlannedMaintenance: svc=" + svc);
+
+
+var comp = this._getFilterValue(filters, "data.comp", [], true);
+comp = this._stripDupAndHashItems(comp);
+var subServiceWhereClause = "";
+if( comp && comp != "" ){
+    subServiceWhereClause = " AND sub_service in ('"+comp+"','')";
+}
+if( debug ) print("getAllPlannedMaintenance: comp=" + comp);
+
+var timeRange = this.getTimeRange(filters);
+if (timeRange == null) return [];
+if( debug ) print("getAllPlannedMaintenance: timeRange=" + __prettyPrintJSON(timeRange));
+
+var sql = Context.getLocalResource("PLANNED_MAINTENANCE_EVENTS_SQL");
+
+if( debug ) print( "PLANNED_MAINTENANCE_EVENTS_SQL" );
+
+var values = {
+
+    "fromEpoch"                 : String(timeRange.fromUnixTime),
+    "toEpoch"                   : String(timeRange.toUnixTime),
+    "serviceWhereClause"        : serviceWhereClause,
+    "subServiceWhereClause"     : subServiceWhereClause
+}
+
+sql = this._doValueSubstitution(sql, values);
+if( debug ) print("getAllPlannedMaintenance: sql" ); 
+if( debug ) print(sql);
+
+var moduleName = queryConfig["module-name"] || "(EM)";
+var result = this.executeSQLQuery(queryConfig, [moduleName], ["ChangeLog"], "charter_ref_db", sql, null);
+if (result != null) {
+    if( debug ) print("getAllPlannedMaintenance: returned: " + result.items.length + " records" ); 
+   return result.items; 
+}
+
+return [];]]>
+        </CodeText>
+      </Service>
+      <Service name="getChangeLogs" args="filters" private="false">
+        <CodeText>
+          <![CDATA[if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+print("getChangeLogs: filters=" + __prettyPrintJSON(filters));
+
+var timeRange = this.getTimeRange(filters);
+if (timeRange == null) return [];
+
+var queryConfig = this._getQueryConfig();
+if (queryConfig == null || queryConfig["change-log-queries"] == null) return [];
+
+var userWhereClause = "";
+var userAssignments = (queryConfig["user-where-clause"] || {})[Context.getCurrentUserId()] || [];
+if (userAssignments.length > 0) {
+    var whereClause = [];
+    for (var i=0; i<userAssignments.length; i++) {
+        whereClause.push(userAssignments[i]);
+    }
+    if (whereClause.length > 0) {
+        userWhereClause = "and (" + whereClause.join(" and ") + ")"
+    }
+}
+
+var timestampSQL = "from_unixtime(m.tsepoch/1000)";
+var ackTimestampSQL = "from_unixtime(a.ackepoch/1000)";
+
+var sql = Context.getLocalResource("CHANGE_LOG_SQL");
+var values = {
+    "timestampSQL" : timestampSQL,
+    "fromEpoch" : String(timeRange.fromUnixTime),
+    "toEpoch" : String(timeRange.toUnixTime),
+    "userWhereClause" : userWhereClause,
+    "ackTimestampSQL" : ackTimestampSQL,
+};
+sql = this._doValueSubstitution(sql, values);
+print("getChangeLogs()");
+print(sql);
+var moduleName = queryConfig["module-name"] || "(EM)";
+var result = this.executeSQLQuery(queryConfig, [moduleName], ["ChangeLog"], "charter_ops_db", sql, null);
+if (result != null) {
+    // because we don't have data for labeled and unlabeled correlation, generate dummy for show
+    for (var i=0; i<result.items.length; i++) {
+        var impact1 = Math.random();
+        if (impact1 >= 0.8) {
+            result.items[i]["impact1"] =  "positive";
+        }
+        else if (impact1 <= 0.2) {
+            result.items[i]["impact1"] =  "negative";
+        }
+        var impact2 = Math.random();
+        if (impact2 >= 0.8) {
+            result.items[i]["impact2"] =  "positive";
+        }
+        else if (impact2 <= 0.2) {
+            result.items[i]["impact2"] =  "negative";
+        }
+    }
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getChangeMgmtData" args="intervalHours" private="false">
+        <CodeText>
+          <![CDATA[print("getChangeMgmtData: interval in hours=" + intervalHours );
+
+if( intervalHours == null || intervalHours == "" ){
+    intervalHours = 12;   
+}
+
+var queryConfig = this._getQueryConfig();
+if (queryConfig == null || queryConfig["change-log-queries"] == null) return [];
+print("getChangeMgmtData: queryConfig = " + queryConfig );
+
+var dataSources = queryConfig["data-source"] || {};
+
+var sql = Context.getLocalResource("CHANGE_MGMT_SQL");
+var values = {
+    "intervalHours" : intervalHours,
+    "viaDataSource" : dataSources["via-model-repository"] || "via_mr",
+};
+sql = this._doValueSubstitution(sql, values);
+print("getChangeMgmtData: SQL = " + sql );
+
+var moduleName = queryConfig["module-name"] || "(EM)";
+var result = this.executeSQLQuery(queryConfig, [moduleName], ["ChangeLog"], "charter_ref_db", sql, null);
+if (result != null) {
+   return result.items; 
+}
+
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getEnrichedChangeLogs" args="filters,timePad" private="false">
+        <CodeText>
+          <![CDATA[if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+print("getEnrichedChangeLogs: filters=" + __prettyPrintJSON(filters));
+
+var windowSize = 0;
+if( timePad != null ){
+    var tpad = parseInt(timePad);
+    if(!isNaN(tpad) ){
+        
+        windowSize = tpad;   
+    }
+}
+
+var timeRange = this.getTimeRange(filters);
+if (timeRange == null) return [];
+
+var queryConfig = this._getQueryConfig();
+if (queryConfig == null || queryConfig["change-log-queries"] == null) return [];
+
+var userWhereClause = "";
+var userAssignments = (queryConfig["user-where-clause"] || {})[Context.getCurrentUserId()] || [];
+if (userAssignments.length > 0) {
+    var whereClause = [];
+    for (var i=0, ualen=userAssignments.length; i<ualen ; i++) {
+        whereClause.push(userAssignments[i]);
+    }
+    if (whereClause.length > 0) {
+        userWhereClause = "and (" + whereClause.join(" and ") + ")"
+    }
+}
+
+var timestampSQL = "from_unixtime(m.tsepoch/1000)";
+var ackTimestampSQL = "from_unixtime(a.ackepoch/1000)";
+
+var sql = Context.getLocalResource("CHANGE_LOG_SQL");
+var values = {
+    "timestampSQL" : timestampSQL,
+    "fromEpoch" : String(timeRange.fromUnixTime),
+    "toEpoch" : String(timeRange.toUnixTime),
+    "userWhereClause" : userWhereClause,
+    "ackTimestampSQL" : ackTimestampSQL,
+};
+sql = this._doValueSubstitution(sql, values);
+
+var moduleName = queryConfig["module-name"] || "(EM)";
+var result = this.executeSQLQuery(queryConfig, [moduleName], ["ChangeLog"], "charter_ops_db", sql, null);
+if (result != null) {
+    // because we don't have data for labeled and unlabeled correlation, generate dummy for show
+    for (var i=0, rlen=result.items.length; i< rlen; i++) {
+        var rObj = result.items[i];
+        var start           = parseFloat(rObj["startepoch"]);
+        var end             = parseFloat(rObj["endepoch"]) + windowSize;
+        var groupingField   = "service";
+        var service         = null;
+        var subService      = null;
+       // print(  "this._invokeIncidentRollupService(" + start +","+ end +","+ groupingField + ")" );
+        var incidents = this._invokeIncidentRollupService( start, end, groupingField, '','' );
+        
+        var maxSeverity = '---';
+        var serviceCt   = 0;
+        if( incidents != null && incidents.length > 0 ){
+            for( var ii=0, ilen=incidents.length; ii < ilen; ii++ ){
+                var sevL = incidents[ii]["severityL"].toLowerCase();
+                var sevH = incidents[ii]["severityH"].toLowerCase();
+                serviceCt++;
+                if( sevH == "high"){
+                    maxSeverity = "high";   
+                } else if( sevH == "low" && sevL == "medium"){
+                    if( maxSeverity != "high"){
+                        maxSeverity = "medium";
+                    }
+                } else if( sevH == "low" && sevL == "low"){
+                    if( maxSeverity != "high" && maxSeverity != "medium"){
+                        maxSeverity = "low";
+                    }
+                }
+            }
+            result.items[i]["incident_data"] = incidents;   
+        } else {
+            result.items[i]["incident_data"] = [];   
+        }
+        
+        result.items[i]["serviceCt"]    = serviceCt;
+        result.items[i]["impact1"]      = maxSeverity;
+        result.items[i]["impact2"]      = maxSeverity;
+
+    }
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getMinimumAcknowledgeAge" args="" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this._getQueryConfig();
+if (queryConfig != null && queryConfig["minimum-acknowledge-age"] != null) {
+    var minAckAge = queryConfig["minimum-acknowledge-age"];
+    if (minAckAge.length > 1) {
+        // must be at least 2 characters long... value+unit
+        var value = Number(minAckAge.substring(0, minAckAge.length-1));
+        var unit = minAckAge.substring(minAckAge.length-1);
+        if (!isNaN(value)) {
+            switch (unit) {
+                case "S":
+                    return value;
+                case "M":
+                    return value * 60;
+                case "H":
+                    return value * 60 * 60;
+                case "D":
+                    return value * 60 * 60 * 24;
+            }
+        }
+    }
+}
+return 0;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getPlannedMaintenanceData" args="filters" private="false">
+        <CodeText>
+          <![CDATA[var debug = true;
+
+var queryConfig = this._getQueryConfig();
+if (queryConfig == null || queryConfig["change-log-queries"] == null) return [];
+if ( debug ) print("getPlannedMaintenanceData: queryConfig = " + __prettyPrintJSON(queryConfig) );
+
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+
+if( debug ) print( "getPlannedMaintenanceData: filters:: " );
+if( debug ) print( __prettyPrintJSON(filters) )
+
+var timeRange = this.getTimeRange(filters);
+if (timeRange == null) return [];
+if( debug ) print("getPlannedMaintenanceData: timeRange::" + __prettyPrintJSON(timeRange));
+
+var dataSources = queryConfig["data-source"] || {};
+
+var sql = Context.getLocalResource("PLANNED_MAINTENANCE_SQL");
+var values = {
+    "dateKeys"              : this._getDateKeysFromUnixtimeRange(timeRange.fromUnixTime, timeRange.toUnixTime),
+    "fromEpoch"             : String(timeRange.fromUnixTime),
+    "toEpoch"               : String(timeRange.toUnixTime),
+    "viaDataSource" : dataSources["via-model-repository"] || "via_mr",
+};
+sql = this._doValueSubstitution(sql, values);
+if( debug ) print("getPlannedMaintenanceData: SQL = " + sql );
+
+var moduleName = queryConfig["module-name"] || "(EM)";
+var result = this.executeSQLQuery(queryConfig, [moduleName], ["ChangeLog"], "charter_ref_db", sql, null);
+if (result != null) {
+   return result.items; 
+}
+
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getPlannedMaintenanceEvents" args="startTime,endTime,service,subService" private="false">
+        <CodeText>
+          <![CDATA[var debug = true;
+
+if ( debug ) print("getPlannedMaintenanceEvents( "+ startTime +", "+ endTime +", "+ service +" , "+ subService +" )" );
+
+if( ( startTime == null || startTime == 0 ) || endTime == null ) return [];
+
+var queryConfig = this._getQueryConfig();
+if (queryConfig == null || queryConfig["change-log-queries"] == null) return [];
+if ( debug ) print("getPlannedMaintenanceEvents: queryConfig = " + __prettyPrintJSON(queryConfig) );
+
+if( endTime == 0 ){
+    endTime = new Date().getTime() / 1000;   
+}
+
+
+var serviceWhereClause          = "";
+if( service != null && service != "" ){
+    serviceWhereClause = " AND service in ('" + service + "','')";   
+} 
+
+var subServiceWhereClause       = "";
+if( subService != null && subService != "" ){
+    subServiceWhereClause = " AND sub_service in ('" + subService + "','')";   
+} 
+
+var dataSources = queryConfig["data-source"] || {};
+
+var sql = Context.getLocalResource("PLANNED_MAINTENANCE_EVENTS_SQL");
+var values = {
+    "dateKeys"                  : this._getDateKeysFromUnixtimeRange(startTime, endTime),
+    "fromEpoch"                 : startTime -1800,
+    "toEpoch"                   : endTime,
+    "serviceWhereClause"        : serviceWhereClause,
+    "subServiceWhereClause"     : subServiceWhereClause,
+    "viaDataSource"             : dataSources["via-model-repository"] || "via_mr",
+};
+sql = this._doValueSubstitution(sql, values);
+if( debug ) print("getPlannedMaintenanceEvents: SQL = " + sql );
+
+var moduleName = queryConfig["module-name"] || "(EM)";
+var result = this.executeSQLQuery(queryConfig, [moduleName], ["ChangeLog"], "charter_ref_db", sql, null);
+if (result != null) {
+   return result.items; 
+}
+
+return [];]]>
+        </CodeText>
+      </Service>
+      <Service name="getSysLogs" args="user,host,startepoch,endepoch" private="false">
+        <CodeText>
+          <![CDATA[print("getSysLogs: user=" + user);
+print("getSysLogs: host=" + host);
+print("getSysLogs: startepoch=" + startepoch);
+print("getSysLogs: endepoch=" + endepoch);
+
+var queryConfig = this._getQueryConfig();
+if (queryConfig == null || queryConfig["sys-log-queries"] == null) return [];
+
+var timestampSQL = "from_unixtime(tsepoch/1000)";
+var dateKeys = this._getDateKeysFromUnixtimeRange(startepoch,endepoch);
+
+var sql = Context.getLocalResource("SYS_LOG_SQL");
+var values = {
+    "timestampSQL" : timestampSQL,
+    "user" : user,
+    "host" : host,
+    "fromEpoch" : String(startepoch),
+    "toEpoch" : String(endepoch),
+    "dateKeys" : dateKeys,
+};
+sql = this._doValueSubstitution(sql, values);
+
+var moduleName = queryConfig["module-name"] || "(EM)";
+var result = this.executeSQLQuery(queryConfig, [moduleName], ["SysLog"], "VT_ODA_QS", sql, null);
+if (result != null) {
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getTimeRange" args="filters" private="false">
+        <CodeText>
+          <![CDATA[return this._getTimeRange(this.getQueryConfig(), filters);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="updateChangeMgmtAcknowledgment" args="uuid,ackvalue,acknotes" private="false">
+        <CodeText>
+          <![CDATA[// uuid, ack_tm, ackuser, ackvalue, acknotes
+
+function DQ(str)
+{
+    return '"'+str+'"';
+}
+
+print( "addChangeMgmtAcknowledgment" );
+
+var ack_tm = Math.round( new Date().getTime() / 1000 );
+var ackuser = Context.getCurrentUserId();
+
+if( uuid == null || uuid == "" ) return;
+if( ackvalue == null ) return;
+
+
+var jndiName = "charter_ref_db";
+var sql = "UPDATE viaops_change_mgmt_acks SET ack_tm = '" + ack_tm + "', ackuser = '" + ackuser + "', ackvalue = '" + ackvalue + "', acknotes = '" + acknotes + "' WHERE uuid = '" + uuid + "'";
+
+    print(sql);
+    SQL.executeUpdate(jndiName, sql, null);
+    
+var returnObj = {};
+    returnObj["action"]         = "Update Acknowledgment";
+    returnObj["uuid"]           = uuid
+    returnObj["ackvalue"]       = ackvalue;
+    returnObj["ack_tm"]         = ack_tm;
+    returnObj["ackuser"]        = ackuser;
+    returnObj["acknotes"]       = acknotes;
+    return returnObj;]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="eb03fcbf-d664-44d4-8cf2-7de33ae2be40" name="CHANGE_LOG_SQL" type="application/sql" size="679" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="5fe2b976-3655-475e-8159-697159b5117d" name="CHANGE_MGMT_SQL" type="text/plain" size="1863" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="138f16d3-ca64-4bc0-848f-b53a6631a7d1" name="CHANGE_MGMT_SQL_OLD" type="text/plain" size="996" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="030f00d7-20b9-448b-8fb4-d6d808562ace" name="PLANNED_MAINTENANCE_EVENTS_SQL" type="text/plain" size="512" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="bf7bf603-350a-4679-8dfa-134f953b4f1b" name="PLANNED_MAINTENANCE_SQL" type="text/plain" size="218" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="0b83f689-9e89-481f-87d0-cf05610ba7d0" name="QueryConfig" type="application/json" size="1412" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="2c3ace45-bafe-4525-84c9-bd446c1ecfc4" name="SYS_LOG_SQL" type="application/sql" size="446" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/user/viaops_admin/dbpm/VIAOps - Base Service"/>
+      <Plugin uri="/app/dbp/user/via_common/dbpm/VIA - File Service"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

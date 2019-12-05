@@ -1,0 +1,131 @@
+<DashboardPluginModel is_init="false" name="Charter - Trend Analysis Service v4" description="">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services>
+      <Service name="getBaseConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[var URI = "/app/dbp/user/" + Context.getModelOwnerId() + "/" + Context.getModelPath();
+var config = {
+    "service" : {
+        "method" : "POST",
+        "url" : URI + "/getTrendData",
+        "cancel-url" : URI + "/abortSQLQuery"
+    },
+    "config" : {
+        "layout" : {
+            "rows" : 2,
+            "cols" : 1
+        },
+        "style" : {
+            "chart" : {
+                "selectionMode" : "multiple",
+                "axis" : {
+                    "primary" : {
+                        "label" : "(Metric Score)"
+                    },
+                    "secondary" : {
+                        "label" : "(Call Volume)"
+                    }
+                },
+                "axisConfig" : {
+                    "dimensionAxisRangeFromValue" : "MIN",
+                    "dimensionAxisRangeToValue"   : "MAX"
+                },
+                "labels" : {
+                    "_value1_"    : "Metrics",
+                    "_value2_"    : "Calls",
+                    "_baseline1_" : "Metric Baseline",
+                    "_baseline2_" : "Call Baseline",
+                    "_diffval1_"  : "Metrics +/- to Baseline",
+                    "_diffval2_"  : "Calls +/- to Baseline",
+                    "_diffpct1_"  : "Metrics +/- Percentage to Baseline",
+                    "_diffpct2_"  : "Calls +/- Percentage to Baseline",
+                },
+                "series" : {
+                    "config" : {
+                        "_value1_" : {
+                            "seriesType" : "column",
+                            "color"      : "#1296d7",
+                            "fillAlpha"  : "0.5",
+                            "width"      : "0",
+                            //"gap"        : "1",
+                        },
+                        "_value2_" : {
+                            "seriesType" : "area",
+                            "color"      : "#72b3d2",
+                            "fillAlpha"  : "0.4",
+                            "width"      : "0",
+                        },
+                        "_baseline1_" : {
+                            "seriesType" : "line",
+                            "color"      : "#148ac4",
+                            "width"      : "2",
+                        },
+                        "_baseline2_" : {
+                            "seriesType" : "line",
+                            "color"      : "#72B3D2",
+                            "width"      : "1",
+                        },
+                        "_diffval1_" : {
+                            "seriesType" : "column",
+                            "color"      : "#148ac4",
+                            "fillAlpha"  : "0.5",
+                            "width"      : "0",
+                            //"gap"        : "1",
+                        },
+                       "_diffval2_" : {
+                            "seriesType" : "line",
+                            "color"      : "#72B3D2",
+                            "width"      : "1",
+                        },
+                        "_diffpct1_" : {
+                            "seriesType" : "column",
+                            "color"      : "#148ac4",
+                            "fillAlpha"  : "0.5",
+                            "width"      : "0",
+                            //"gap"        : "1",
+                        },
+                        "_diffpct2_" : {
+                            "seriesType" : "line",
+                            "color"      : "#72B3D2",
+                            "width"      : "1",
+                        },
+                    }
+                },
+                "legendConfig" : {
+                    "legendVisibilityValue": "display",
+                    "legendPositionValue": "floating"
+                }
+            }
+        },
+    },
+};
+return config;]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="028c0e28-62cc-4605-8276-21c0aaf11b78" name="en" type="application/json" size="1276" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="6d13c56e-3bfa-4b79-8688-14954480feef" name="QueryConfig" type="application/json" size="169180" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="e1558eda-aef1-4c04-8caf-3d0635f4d0af" name="QueryConfig-OLD" type="application/json" size="193430" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/user/viaops_admin/dbpm/VIAOps - Trend Service"/>
+      <Plugin uri="/app/dbp/space/testp/dbpm/Charter - Base v2"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

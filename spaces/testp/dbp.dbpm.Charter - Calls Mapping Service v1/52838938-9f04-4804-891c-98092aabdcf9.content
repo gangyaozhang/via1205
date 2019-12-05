@@ -1,0 +1,11 @@
+SELECT
+    concat(issue,"|",cust_type,"|",cause) as call_id,
+    issue,
+    cause,
+    cust_type,
+    company,
+    service_name,
+    service as service_label
+FROM
+    charter_customer_call_metadata
+order by 1,2,3,4,5,6

@@ -1,0 +1,75 @@
+{
+    "name":"Quantum",
+    "label":"Client",
+    "items":[
+        {
+            "name": "Application Errors",
+            "uom" : "Total Errors",
+            "aggr": "sum",
+            "meta":{
+            "dimension-values":[
+                    {
+                    "name":"response",
+                    "not": true,
+                    "value":["", "GDV-1007", "GDV-1008", "GDV-1009", "GDV-1010", "GFE-1002", "GGU-0004", "GGU-6001", "GGU-7001", "GGU-9006","GDVR-1000", "GDVR-1001", "GDVR-1002", "GDVR-1003", "GDVR-1004", "GDVR-1005", "GDVR-1006", "GDVR-1007", "GDVR-2007", "GDVR-2008", "GDVR-2009", "GDVR-2010", "GDVR-8001", "GDVR-8010", "GDVR-8011", "GDVR-8012", "GDVR-8013", "GDVR-8015", "GDVR-8016", "GDVR-8017", "GDVR-8018", "GDVR-8019", "GDVR-8020","GGU-9006", "GVOD-3004", "GVOD-3025", "GVOD-3026", "GVOD-3027", "GVOD-5000", "GVOD-6001", "GVOD-6002", "GVOD-6006", "GVOD-6007", "GVOD-6008", "GVOD-6009", "GVOD-6010", "GVOD-6011", "GVOD-6012", "GVOD-6013", "GVOD-6014", "GVOD-6015", "GVOD-6016", "GVOD-6017", "GVOD-6018", "GVOD-6019", "GVOD-6020", "GVOD-6021", "GVOD-9040","GVOD-9041"]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Failed API Attempt",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[
+                    {
+                      "name":"api",
+                      "value":["", "ppvEdgePpvPurchases", "videoCatalogMiddle"]
+                    }                   
+                ]
+            }
+        },
+        {
+            "name": "Failed API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg",
+            "meta":{
+                "dimension-values":[
+                    {
+                      "name":"api",
+                      "value":["", "ppvEdgePpvPurchases", "videoCatalogMiddle"]
+                    }                   
+                ]
+            }
+
+        },
+        {
+            "name": "Successful API Attempt",
+            "uom" : "Count",
+            "aggr": "sum",
+                        "meta":{
+                "dimension-values":[
+                    {
+                      "name":"api",
+                      "value":["", "ppvEdgePpvPurchases", "videoCatalogMiddle"]
+                    }                   
+                ]
+            }
+        },
+        {
+            "name": "Successful API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg",
+            "meta":{
+                "dimension-values":[
+                    {
+                      "name":"api",
+                      "value":["", "ppvEdgePpvPurchases", "videoCatalogMiddle"]
+                    }                   
+                ]
+            }
+
+        }
+    ]
+
+    }

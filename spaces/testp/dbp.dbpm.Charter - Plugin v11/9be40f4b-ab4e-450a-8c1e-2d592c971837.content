@@ -1,0 +1,668 @@
+[
+    {
+        "name"          : "cdvr",
+        "label"         : "cDVR Client Metric Dimensions",
+        "name-style"    : "padding-left:0px;width:0px;",
+        "value-style"   : "padding:0px;width:100%;",
+        "display"       : "return helper.has(${data.svc}, ['cDVR']) && helper.has(${data.app}, ['Quantum'])",
+        "dimensions" : [{
+            "name"      : "device",
+            "label"     : "Devices",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['cDVR']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of devices",
+                "dialog/title"                      : "Build device list",
+                "dialog/description"                : "Build list of devices to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Metric", "Device"]
+                }
+            },
+            "default" : []
+        }, {
+            "name"      : "version",
+            "label"     : "Versions",
+            "dependent" : ["cdvr.device"],
+            "enable"    : "return helper.isSet(${cdvr.device})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of device-dependent versions",
+                "dialog/title"                      : "Build version list",
+                "dialog/description"                : "Build list of versions to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Metric", "Version"]
+                }
+            },
+            "default" : []
+        }, {
+            "name"      : "conn",
+            "label"     : "Connections",
+            "dependent" : ["cdvr.device"],
+            "enable"    : "return helper.isSet(${cdvr.device})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of device-dependent connection methods",
+                "dialog/title"                      : "Build connection method list",
+                "dialog/description"                : "Build list of connection methods to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Metric", "Connection"]
+                }
+            },
+            "default" : []
+        }, {
+            "name"      : "auth",
+            "label"     : "Authentications",
+            "dependent" : ["cdvr.device"],
+            "enable"    : "return helper.isSet(${cdvr.device})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of authentication methods",
+                "dialog/title"                      : "Build authentication method list",
+                "dialog/description"                : "Build list of authentication methods to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Metric", "Authentication"]
+                }
+            },
+            "default" : []
+        }, {
+            "name"      : "msgcat",
+            "label"     : "API Categories",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['cDVR']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of API categories",
+                "dialog/title"                      : "Build API category list",
+                "dialog/description"                : "Build list of API categories to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Metric", "APICategory"]
+                }
+            },
+            "default" : []
+        },{
+            "name"      : "api",
+            "label"     : "API Names",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['cDVR']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                      : "List of API names",
+                "dialog/title"                          : "Build API name list",
+                "dialog/description"                    : "Build list of API names to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Metric", "APIName"]
+                }
+            },
+            "default" : []
+        }, {
+            "name"      : "response",
+            "label"     : "API Response Codes",
+            "dependent" : ["cdvr.api"],
+            "enable"    : "return helper.isSet(${cdvr.api})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of API response codes",
+                "dialog/title"                      : "Build API response list",
+                "dialog/description"                : "Build list of API response codes to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Metric", "Response"]
+                }
+            },
+            "default" : []
+        }, {
+            "name"      : "state",
+            "label"     : "States",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['cDVR']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of states",
+                "dialog/title"                      : "Build state list",
+                "dialog/description"                : "Build list of states to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Metric", "State"]
+                }
+            },
+            "default" : []
+        }, {
+            "name"      : "stream",
+            "label"     : "Stream Types",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['cDVR']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of stream types",
+                "dialog/title"                      : "Build stream type list",
+                "dialog/description"                : "Build list of stream types to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Metric", "Stream"]
+                }
+            },
+            "default" : []
+        }, {
+            "name"      : "channel",
+            "label"     : "Channels",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['cDVR']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of channels",
+                "dialog/title"                      : "Build channel list",
+                "dialog/description"                : "Build list of channels to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Metric", "Channel"]
+                }
+            },
+            "default" : []
+        }, {
+            "name"      : "content",
+            "label"     : "Content",
+            "dependent" : ["cdvr.channel"],
+            "enable"    : "return helper.isSet(${cdvr.channel})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of channel content",
+                "dialog/title"                      : "Build channel content list",
+                "dialog/description"                : "Build list of channel content to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Metric", "Content"]
+                }
+            },
+            "default" : []
+        }, {
+            "name"      : "company",
+            "label"     : "Companies",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['cDVR']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of companies",
+                "dialog/title"                      : "Build company name list",
+                "dialog/description"                : "Build list of companies to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Metric", "Company"]
+                }
+            },
+            "default" : []
+        }]
+    },
+    {
+        "name"          : "cdvr_application",
+        "label"         : "cDVR Application Metric Dimensions",
+        "name-style"    : "padding-left:0px;width:0px;",
+        "value-style"   : "padding:0px;width:100%;",
+        "display"       : "return helper.has(${data.svc}, ['cDVR']);",
+        "dimensions" : [{
+            "name"      : "location",
+            "label"     : "Locations",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['cDVR']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of locations",
+                "dialog/title"                      : "Build location list",
+                "dialog/description"                : "Build list of locations to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR", "Application"],
+                    "module-context"  : ["Metric", "Location"]
+                }
+            },
+            "default": []
+        }, {
+            "name"      : "host",
+            "label"     : "Hosts",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of hosts",
+                "dialog/title"                      : "Build host list",
+                "dialog/description"                : "Build list of hosts to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR", "Application"],
+                    "module-context"  : ["Metric", "Host"]
+                }
+            },
+            "default" : []
+        },
+        {
+            "name"      : "event_name",
+            "label"     : "Events",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of event names",
+                "dialog/title"                      : "Build event name list",
+                "dialog/description"                : "Build list of event names to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR", "Application"],
+                    "module-context"  : ["Metric", "Event"]
+                }
+            },
+            "default" : []
+        },
+        {
+            "name"      : "vmr_name",
+            "label"     : "VMRs",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of VMRs",
+                "dialog/title"                      : "Build VMR list",
+                "dialog/description"                : "Build list of VMRs to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR", "Application"],
+                    "module-context"  : ["Metric", "VMR"]
+                }
+            },
+            "default" : []
+        },
+        {
+            "name"      : "http_response",
+            "label"     : "HTTP Responses",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of HTTP Responses",
+                "dialog/title"                      : "Build HTTP Response list",
+                "dialog/description"                : "Build list of HTTP Responses to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR", "Application"],
+                    "module-context"  : ["Metric", "HTTP Response"]
+                }
+            },
+            "default" : []
+        },
+        {
+            "name"      : "error_code",
+            "label"     : "Error Codes",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of error codes",
+                "dialog/title"                      : "Build error code list",
+                "dialog/description"                : "Build list of error codes to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR", "Application"],
+                    "module-context"  : ["Metric", "Error Code"]
+                }
+            },
+            "default" : []
+        },
+        {
+            "name"      : "response_msg",
+            "label"     : "Response Messages",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of Response Messages",
+                "dialog/title"                      : "Build Response Message list",
+                "dialog/description"                : "Build list of Response Messages to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR", "Application"],
+                    "module-context"  : ["Metric", "Response Msg"]
+                }
+            },
+            "default" : []
+        }]
+    },
+    {
+        "name" : "cdvr_calls",
+        "label" : "cDVR Customer Call Dimensions",
+        "name-style" : "padding-left:0px;width:0px;",
+        "value-style" : "padding:0px;width:100%;",
+        "display" : "return helper.has(${data.svc}, ['cDVR']);",
+        "dimensions" : [{
+            "name" : "cmts",
+            "label" : "CMTS",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['cDVR']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of CMTS",
+                "dialog/title" : "Build CMTS list",
+                "dialog/description" : "Build list of CMTS to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Call", "CMTS"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "controller",
+            "label" : "Controllers",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['cDVR']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of controllers",
+                "dialog/title" : "Build controller list",
+                "dialog/description" : "Build list of controllers to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Call", "Controller"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "state",
+            "label" : "States",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['cDVR']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of states",
+                "dialog/title" : "Build state list",
+                "dialog/description" : "Build list of states to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Call", "State"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "city",
+            "label" : "Cities",
+            "dependent" : ["cdvr_calls.state"],
+            "enable" : "return helper.isSet(${cdvr_calls.state})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of cities",
+                "dialog/title" : "Build city list",
+                "dialog/description" : "Build list of cities to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Call", "City"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "issue",
+            "label" : "Issues",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['cDVR']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of issues",
+                "dialog/title" : "Build issue list",
+                "dialog/description" : "Build list of issues to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Call", "Issue"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "cause",
+            "label" : "Causes",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['cDVR']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of causes",
+                "dialog/title" : "Build cause list",
+                "dialog/description" : "Build list of causes to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Call", "Cause"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "resolution",
+            "label" : "Resolutions",
+            "dependent" : ["cdvr_calls.cause"],
+            "enable" : "return helper.isSet(${cdvr_calls.cause})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of resolutions",
+                "dialog/title" : "Build resolution list",
+                "dialog/description" : "Build list of resolutions to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Call", "Resolution"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "company",
+            "label" : "Companies",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['cDVR']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of companies",
+                "dialog/title" : "Build company list",
+                "dialog/description" : "Build list of companies to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Call", "Company"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "market",
+            "label" : "Markets",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['cDVR']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of markets",
+                "dialog/title" : "Build market list",
+                "dialog/description" : "Build list of markets to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Call", "Market"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "cust_type",
+            "label" : "Customer Types",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['cDVR']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of customer types",
+                "dialog/title" : "Build customer type list",
+                "dialog/description" : "Build list of customer types to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Call", "Customer Type"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "call_type",
+            "label" : "Call Types",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['cDVR']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of call types",
+                "dialog/title" : "Build call type list",
+                "dialog/description" : "Build list of call types to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Call", "Call Type"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "headend",
+            "label" : "Headends",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['cDVR']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of headends",
+                "dialog/title" : "Build headend list",
+                "dialog/description" : "Build list of headends to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Call", "Headend"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "node",
+            "label" : "Nodes",
+            "dependent" : ["cdvr_calls.headend"],
+            "enable"    : "return helper.isSet(${cdvr_calls.headend})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of headend-dependent nodes",
+                "dialog/title" : "Build node list",
+                "dialog/description" : "Build list of nodes to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR"],
+                    "module-context"  : ["Call", "Node"]
+                }
+            },
+            "default": []
+        }]
+    },
+    {
+        "name"          : "cdvr_network",
+        "label"         : "cDVR Network Metric Dimensions",
+        "name-style"    : "padding-left:0px;width:0px;",
+        "value-style"   : "padding:0px;width:100%;",
+        "display"       : "return helper.has(${data.svc}, ['cDVR'])  && helper.has(${data.comp}, ['cDVR Network'])",
+        "dimensions" : [{
+            "name"      : "location",
+            "label"     : "Locations",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['cDVR']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of locations",
+                "dialog/title"                      : "Build location list",
+                "dialog/description"                : "Build list of locations to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR", "Network"],
+                    "module-context"  : ["Metric", "Location"]
+                }
+            },
+            "default": []
+        }, {
+            "name"      : "host",
+            "label"     : "Hosts",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of hosts",
+                "dialog/title"                      : "Build host list",
+                "dialog/description"                : "Build list of hosts to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR", "Network"],
+                    "module-context"  : ["Metric", "Host"]
+                }
+            },
+            "default" : []
+        }, {
+            "name"      : "node",
+            "label"     : "Interfaces",
+            "dependent" : ["cdvr_network.host"],
+            "enable"    : "return helper.isSet(${cdvr_network.host})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of host-dependent interfaces",
+                "dialog/title"                      : "Build interface list",
+                "dialog/description"                : "Build list of interfaces to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR", "Network"],
+                    "module-context"  : ["Metric", "Node"]
+                }
+            },
+            "default" : []
+        }, {
+            "name"      : "ip",
+            "label"     : "IP Addresses",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['cDVR']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of IP addresses",
+                "dialog/title"                      : "Build IP address list",
+                "dialog/description"                : "Build list of IP addresses to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR", "Network"],
+                    "module-context"  : ["Metric", "IP"]
+                }
+            },
+            "default": []
+        }, {
+            "name"      : "usr",
+            "label"     : "Users",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['cDVR']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of users",
+                "dialog/title"                      : "Build user list",
+                "dialog/description"                : "Build list of users to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["cDVR", "Network"],
+                    "module-context"  : ["Metric", "User"]
+                }
+            },
+            "default": []
+        }]
+    }
+]

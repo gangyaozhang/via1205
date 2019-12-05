@@ -1,0 +1,23 @@
+{
+    "time.axis.label.start"        : "Time: Interval starting",
+    "time.axis.label.start.300"    : "Time: 5 min interval starting",
+    "time.axis.label.start.900"    : "Time: 15 min interval starting",
+    "time.axis.label.start.1800"   : "Time: 30 min interval starting",
+    "time.axis.label.start.3600"   : "Time: 1 hour interval starting",
+    "time.axis.label.start.14400"  : "Time: 4 hour interval starting",
+    "time.axis.label.start.86400"  : "Time: 1 day interval starting",
+    "time.axis.label.start.604800" : "Time: 7 day interval starting",
+
+    "time.axis.label.end"          : "Time: Interval ending",
+    "time.axis.label.end.300"      : "Time: 5 min interval ending",
+    "time.axis.label.end.900"      : "Time: 15 min interval ending",
+    "time.axis.label.end.1800"     : "Time: 30 min interval ending",
+    "time.axis.label.end.3600"     : "Time: 1 hour interval ending",
+    "time.axis.label.end.14400"    : "Time: 4 hour interval ending",
+    "time.axis.label.end.86400"    : "Time: 1 day interval ending",
+    "time.axis.label.end.604800"   : "Time: 7 day interval ending",
+
+    "button.label.view.data"          : "View Data",
+    "button.label.dimension.analysis" : "Dimension Analysis",
+    "button.label.anomaly.viewer"     : "Incident Lab"
+}

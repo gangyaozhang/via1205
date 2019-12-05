@@ -1,0 +1,59 @@
+{
+    "computed.metric.title"                : "Computed Measure",
+    "computed.metric.count"                : "Number of Associated Events",
+    "computed.metric.average"              : "Average of Associated Events",
+    "computed.metric.baseline"             : "Baseline of Associated Events",
+    "computed.metric.difference"           : "+/- to Baseline",
+    "computed.metric.difference.pct"       : "+/- Percentage to Baseline",
+    "computed.metric.proportion.total"     : "Proportion of Total Events",
+    "computed.metric.proportion.baseline"  : "Baseline Proportion of Total Events",
+    "computed.metric.proportion.deviation" : "Deviation Proportion of Total Events",
+    "computed.metric.relative.difference"  : "Relative Difference over Baseline",
+    "computed.metric.index.dissimilarity"  : "Index of Dissimilarity",
+    "computed.metric.s.score"              : "S-Score",
+    "computed.metric.ns.score"             : "Normalized S-Score",
+    "computed.metric.e.score"              : "E-Score",
+    
+    "selected.event.type"      : "Event Type",
+    "selected.column.name"     : "Column Name",
+    "selected.dimension.name"  : "Dimension Name",
+    "selected.dimension.value" : "Dimension Value",
+
+    "metric.event"   : "Event Type",
+    "metric.name"    : "Dimension",
+    "metric.value"   : "Value",
+    "metric.count"   : "Count",
+    "metric.average" : "Average",
+    "metric.percent" : "Percent",
+    "metric.rank"    : "Rank",
+    
+    "proportion.metric.value"   : "Dimension Value",
+    "proportion.metric.percent" : "Percent",
+    "proportion.metric.count"   : "Count",
+    "proportion.metric.average" : "Average",
+    "proportion.metric.rank"    : "Rank",
+    
+    "apex.count"    : "Count",
+    "apex.baseline" : "Baseline",
+    "apex.diff"     : "Difference",
+    "apex.pct.diff" : "Percent Difference",
+
+    "exploring.commonalities" : "Exploring dimension analysis...",
+    "filters.error.message"   : "Error found in filter settings. Cannot run dimension analysis queries.",
+    "filters.warn.message"    : "Filter settings may cause issue when running dimension analysis query. Do you want to proceed?",
+    
+    "prompt.title"            : "Dimension Analysis",
+    "evaluate.individually"   : "Multiple compatible metrics specified within metric group. Evaluate individually?",
+    
+    "button.label.trend.analysis" : "Trend Analysis",
+
+    "dimension.time.interval.label" : "Time Interval",
+
+    "time.interval.auto"       : "(auto)",
+    "time.interval.5.minutes"  : "5 minutes",
+    "time.interval.15.minutes" : "15 minutes",
+    "time.interval.1.hour"     : "1 hour",
+    "time.interval.4.hours"    : "4 hours",
+    "time.interval.1.day"      : "1 day",
+    "time.interval.7.days"     : "7 days"
+}

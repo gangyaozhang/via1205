@@ -1,0 +1,8 @@
+{
+    "OptionPlugin" : {
+        "url" : "/app/dbp/user/charter_admin/dbpm/Charter - Options Service v3"
+    },
+    "ConfigPlugin" : {
+        "url" : "/app/dbp/user/charter_admin/dbpm/Charter - Config Service v2"
+    }
+}

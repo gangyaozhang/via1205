@@ -1,0 +1,26 @@
+<DashboardPluginModel description="" name="Charter - Manifest" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services/>
+    <Resources>
+      <Resource uuid="2e382b30-df1f-4203-86bc-81cf53b18b34" name="AnalyticServiceManifest" type="application/json" size="1452" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="5dff3906-01ac-4736-89c8-48cbd4ea9bd9" name="DependentPluginManifest" type="application/json" size="222" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="09999b96-f0a3-4850-837b-57f454ab4d4e" name="SnapshotServiceManifest" type="application/json" size="0" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

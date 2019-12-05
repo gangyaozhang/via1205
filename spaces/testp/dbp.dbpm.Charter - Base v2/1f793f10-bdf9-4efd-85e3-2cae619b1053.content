@@ -1,0 +1,63 @@
+{
+    "name": "Data Source",
+    "label": "Data Source",
+    "items": [
+        {
+            "name": "Valid Events",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[]
+            }
+        },
+        {
+            "name": "Late Events",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[]
+            }
+        },
+        {
+            "name": "Poorly Formed Events",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "dimension-values":[]
+            }
+        },
+        {
+            "name": "Skew",
+            "uom" : "Seconds",
+            "aggr": "avg",
+            "meta":{
+                "dimension-values":[]
+            }
+        },
+        {
+            "name": "File Count",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[]
+            }
+        },
+        {
+            "name": "Input Lines",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[]
+            }
+        },
+        {
+            "name": "Ignored Events",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[]
+            }
+        }
+    ]
+}
+

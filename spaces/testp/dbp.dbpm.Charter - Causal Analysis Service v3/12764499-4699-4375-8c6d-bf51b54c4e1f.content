@@ -1,0 +1,7 @@
+select 
+    MIN(group_create_tm) AS group_create_tm,
+    MAX(group_end_tm) AS group_end_tm,
+    LAST(group_id)
+from viaops_incident_group_history
+where group_id = ${incidentGroupID}
+group by group_id

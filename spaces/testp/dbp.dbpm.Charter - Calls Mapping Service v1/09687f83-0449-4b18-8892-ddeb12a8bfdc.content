@@ -1,0 +1,6 @@
+DELETE FROM
+    charter_customer_call_metadata
+WHERE issue=?
+  AND cust_type=?
+  AND company=?
+  AND cause=?

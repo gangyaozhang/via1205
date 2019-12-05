@@ -1,0 +1,9 @@
+UPDATE
+    charter_customer_call_metadata
+SET
+    service_name=?,
+    service=?
+WHERE issue=?
+  AND cust_type=?
+  AND company=?
+  AND cause=?

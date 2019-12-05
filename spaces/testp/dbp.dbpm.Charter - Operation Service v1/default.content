@@ -1,0 +1,26 @@
+<DashboardPluginModel is_init="false" name="Charter - Operation Service v1" description="">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services>
+      <Service name="getOperationModules" args="" private="false">
+        <CodeText>
+          <![CDATA[return this.getBaseOperationModules();
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="ec2c3452-5092-4ba0-8169-6adba9fed850" name="QueryConfig" type="application/json" size="1033" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/space/testp/dbpm/Charter - Base v2"/>
+      <Plugin uri="/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Operation Service"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

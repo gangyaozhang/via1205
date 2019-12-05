@@ -1,0 +1,426 @@
+[
+    {
+        "name"          : "myspectrum",
+        "label"         : "MySpectrum Metric Dimensions",
+        "name-style"    : "padding-left:0px;width:0px;",
+        "value-style"   : "padding:0px;width:100%;",
+        "display"       : "return helper.has(${data.svc}, ['MySpectrum']);",
+                "dimensions" : [{
+            "name"      : "api",
+            "label"     : "API Names",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['MySpectrum']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of API names",
+                "dialog/title"                      : "Build API name list",
+                "dialog/description"                : "Build list of API names to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Metric", "APIName"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "browser",
+            "label"     : "Browsers",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['MySpectrum']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of browsers",
+                "dialog/title"                      : "Build browser list",
+                "dialog/description"                : "Build list of browsers to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Metric", "Browser"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "company",
+            "label"     : "Companies",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['MySpectrum']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of companies",
+                "dialog/title"                      : "Build company name list",
+                "dialog/description"                : "Build list of companies to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Metric", "Company"]
+                }
+            },
+            "default" : []
+            },{
+            "name"      : "device",
+            "label"     : "Devices",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['MySpectrum']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of devices",
+                "dialog/title"                      : "Build device list",
+                "dialog/description"                : "Build list of devices to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Metric", "Device"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "deviceandversion",
+            "label"     : "Device and Versions",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['MySpectrum']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of device and version combinations",
+                "dialog/title"                      : "Build device and version list",
+                "dialog/description"                : "Build list of device and version combinations to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Metric", "DeviceandVersion"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "msgcat",
+            "label"     : "Categories",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['MySpectrum']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of categories",
+                "dialog/title"                      : "Build category list",
+                "dialog/description"                : "Build list of categories to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Metric", "Category"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "page",
+            "label"     : "Pages",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['MySpectrum']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of pages",
+                "dialog/title"                      : "Build page list",
+                "dialog/description"                : "Build list of pages to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Metric", "Page"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "platform",
+            "label"     : "Platforms",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['MySpectrum']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of platforms",
+                "dialog/title"                      : "Build platform list",
+                "dialog/description"                : "Build list of platforms to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Metric", "Platform"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "response",
+            "label"     : "API Response Codes",
+            "dependent" : ["myspectrum.api"],
+            "enable"    : "return helper.isSet(${myspectrum.api})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of API-dependent response codes",
+                "dialog/title"                      : "Build API response code list",
+                "dialog/description"                : "Build list of API response codes to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Metric", "APIResponse"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "state",
+            "label"     : "States",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['MySpectrum']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of states",
+                "dialog/title"                      : "Build state list",
+                "dialog/description"                : "Build list of states to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Metric", "State"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "version",
+            "label"     : "Versions",
+            "dependent" : ["myspectrum.device"],
+            "enable"    : "return helper.isSet(${myspectrum.device})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of device-dependent versions",
+                "dialog/title"                      : "Build device version list",
+                "dialog/description"                : "Build list of device versions to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Metric", "Version"]
+                }
+            },
+            "default" : []
+            }
+        ]
+    }, 
+    {
+        "name" : "myspectrum_calls",
+        "label" : "MySpectrum Customer Call Dimensions",
+        "name-style" : "padding-left:0px;width:0px;",
+        "value-style" : "padding:0px;width:100%;",
+        "display" : "return helper.has(${data.svc}, ['MySpectrum']);",
+        "dimensions" : [{
+            "name" : "cmts",
+            "label" : "CMTS",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['MySpectrum']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of CMTS",
+                "dialog/title" : "Build CMTS list",
+                "dialog/description" : "Build list of CMTS to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Call", "CMTS"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "controller",
+            "label" : "Controllers",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['MySpectrum']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of controllers",
+                "dialog/title" : "Build controller list",
+                "dialog/description" : "Build list of controllers to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Call", "Controller"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "state",
+            "label" : "States",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['MySpectrum']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of states",
+                "dialog/title" : "Build state list",
+                "dialog/description" : "Build list of states to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Call", "State"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "city",
+            "label" : "Cities",
+            "dependent" : ["myspectrum_calls.state"],
+            "enable" : "return helper.isSet(${myspectrum_calls.state})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of state-dependent cities",
+                "dialog/title" : "Build city list",
+                "dialog/description" : "Build list of cities to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Call", "City"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "issue",
+            "label" : "Issues",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['MySpectrum']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of issues",
+                "dialog/title" : "Build issue list",
+                "dialog/description" : "Build list of issues to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Call", "Issue"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "cause",
+            "label" : "Causes",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['MySpectrum']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of causes",
+                "dialog/title" : "Build cause list",
+                "dialog/description" : "Build list of causes to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Call", "Cause"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "resolution",
+            "label" : "Resolutions",
+            "dependent" : ["myspectrum_calls.cause"],
+            "enable" : "return helper.isSet(${myspectrum_calls.cause})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of cause-dependent resolutions",
+                "dialog/title" : "Build resolution list",
+                "dialog/description" : "Build list of resolutions to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Call", "Resolution"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "company",
+            "label" : "Companies",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['MySpectrum']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of companies",
+                "dialog/title" : "Build company list",
+                "dialog/description" : "Build list of companies to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Call", "Company"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "market",
+            "label" : "Markets",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['MySpectrum']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of markets",
+                "dialog/title" : "Build market list",
+                "dialog/description" : "Build list of markets to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Call", "Market"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "cust_type",
+            "label" : "Customer Types",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['MySpectrum']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of customer types",
+                "dialog/title" : "Build customer type list",
+                "dialog/description" : "Build list of customer types to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Call", "Customer Type"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "call_type",
+            "label" : "Call Types",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['MySpectrum']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of call types",
+                "dialog/title" : "Build call type list",
+                "dialog/description" : "Build list of call types to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Call", "Call Type"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "headend",
+            "label" : "Headends",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['MySpectrum']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of headends",
+                "dialog/title" : "Build headend list",
+                "dialog/description" : "Build list of headends to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Call", "Headend"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "node",
+            "label" : "Nodes",
+            "dependent" : ["myspectrum_calls.headend"],
+            "enable"    : "return helper.isSet(${myspectrum_calls.headend})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of headend-dependent nodes",
+                "dialog/title" : "Build node list",
+                "dialog/description" : "Build list of nodes to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["MySpectrum"],
+                    "module-context"  : ["Call", "Node"]
+                }
+            },
+            "default": []
+        }]
+    }]

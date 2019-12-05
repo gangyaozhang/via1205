@@ -1,0 +1,38 @@
+{
+    "name": "ST_CAST",
+    "label": "Speed Test",
+    "items": [
+        {
+            "name": "Failed Attempts",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[]
+            }
+        },
+        {
+            "name": "Successful Attempts",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[]
+            }
+        },
+        {
+            "name": "Download Speed",
+            "uom" : "Unknown",
+            "aggr": "avg",
+            "meta": {
+                "dimension-values":[]
+            }
+        },
+        {
+            "name": "Upload Speed",
+            "uom" : "Unknown",
+            "aggr": "avg",
+            "meta":{
+                "dimension-values":[]
+            }
+        }
+    ]
+}

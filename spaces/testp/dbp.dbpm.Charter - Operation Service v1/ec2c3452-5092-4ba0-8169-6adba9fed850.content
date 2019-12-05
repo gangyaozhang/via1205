@@ -1,0 +1,19 @@
+{
+	"sql-query-config" : {
+		"debug" : {
+			"*"     : true
+		}
+    },
+    "data-source":{
+
+    },
+    "analytic-service-manifest":"/app/dbp/user/charter_admin/dbpm/Charter - Manifest/AnalyticServiceManifest",
+    "access-roles-by-module" : {
+        "incident" : {
+            "allow-else-deny" : ["Admin", "Admin/Config"]
+        },
+        "incident-group" : {
+            "allow-else-deny" : ["Admin"]
+        }
+    }
+}

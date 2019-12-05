@@ -1,0 +1,43 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "registeredTypes"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "usedTypes"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "miniviewData"
+    },
+    {
+      "fileref": "ModelContentFile4",
+      "name": "running.profile"
+    },
+    {
+      "fileref": "ModelContentFile5",
+      "name": "debug.profile"
+    },
+    {
+      "fileref": "ModelContentFile6",
+      "name": "debug.configuration"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "Description of New Model 1",
+    "_RESOURCE_Type": "sparkm",
+    "__references__": "adf.subflow:///viaops.ingestion/FileSource@5639,adf.subflow:///viaops.ingestion/MetricReferenceData@549,adf.subflow:///viaops.ingestion/Aggregate@1810,adf.subflow:///viaops.ingestion/MetricOutput@4189,adf.subflow:///viaops.ingestion/DroppedEvents@672",
+    "modelStatus": "valid",
+    "name": "Adhoc CHTR E-Mail Parse IMAP Logs v5",
+    "subflowReg": "",
+    "typeDeps": "{\"dependencies\":[\"viaops.ingestion.AuditLog\",\"viaops.ingestion.DroppedEvents\"],\"contributes\":[]}",
+    "typeReg": ""
+  }
+}

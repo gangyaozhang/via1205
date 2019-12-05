@@ -1,0 +1,109 @@
+{
+    "name":"cm",
+    "label":"Cloudmark",
+    "items":[
+        {
+            "name": "Inbound Log Client Perm Fail",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Inbound Log Client Temp Fail",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Inbound Log Defer",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Inbound Log Delivered",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Inbound Log Drop",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Inbound Log Info",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Inbound Log Queue",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Inbound Log Reject",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Inbound Log Suspect",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Outbound Log Auth Info",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Outbound Log Client Perm Fail",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Outbound Log Client Temp Fail",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Outbound Log Defer",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Outbound Log Delivered",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+        }
+        },
+        {
+            "name": "Outbound Log Drop",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Outbound Log Generate NDR",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Outbound Log Info",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Outbound Log Queue",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Outbound Log Reject",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Outbound Log Suspect",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ]
+}

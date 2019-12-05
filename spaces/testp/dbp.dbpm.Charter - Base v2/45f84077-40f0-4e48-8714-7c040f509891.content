@@ -1,0 +1,11 @@
+{
+    "name":"Quantum",
+    "label":"Client",
+    "items":[
+        {
+            "name": "Application Errors",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ]
+}

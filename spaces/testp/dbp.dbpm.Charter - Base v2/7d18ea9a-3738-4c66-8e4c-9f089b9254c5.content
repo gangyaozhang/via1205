@@ -1,0 +1,26 @@
+{
+    "name": "IMS",
+    "label": "IMS",
+    "items": [
+        {
+            "name": "Timeouts",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Request Retries",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Failed Transactions",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Successful Transactions",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ]
+}

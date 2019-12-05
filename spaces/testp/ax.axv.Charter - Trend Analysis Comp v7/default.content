@@ -1,0 +1,455 @@
+<AnalyticsExplorerView is_init="false" name="Charter - Trend Analysis Comp v7" description=" ">
+  <ModelInfo nextPageId="3" validated="true">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <BackgroundColor color="#f1f2f2"/>
+      <TileBackgroundColor color="#f1f2f2"/>
+      <TileOpacity opacity="0.8"/>
+      <NoTileSpacing value="true"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <CustomCSSSetting><![CDATA[/*
+.xxx .dijitButtonNode {
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+    color: #148ac4 !important;
+    text-decoration: underline;
+    font-size: 8pt !important;
+    font-weight: bold !important;
+}
+*/
+
+.click-to-open-div {
+    color : black !important;
+    font-size : 11px !important;
+}
+
+.xxx .dijitButtonNode {
+    color: #1f78b4 !important;
+    font-weight: normal !important;
+    padding: 1px 3px 1px 3px !important;
+    margin-top: -2px !important;
+    font-size: 12px !important;
+    border: 1px solid #1f78b4 !important;
+    background-color: #fff !important;
+}
+
+
+.xxx .dijitButtonNode:hover {
+    color: white !important;
+    background-color: #148ac4 !important;
+}
+]]></CustomCSSSetting>
+    <Page id="2" name="Main Tile" title="Main Tile" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="trendAnalysis5">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageCustomCSS><![CDATA[.trendAnalysis {
+    padding-right: 15px;   
+}
+
+.trendAnalysis .CartesianChartFloatingLegend {
+    left: unset !important;
+    right:65px !important;
+    top: unset !important;
+    top: 30px !important;
+  
+}
+
+.trendAnalysis .tileContainer.trendAnalysisMin {
+    padding-top: 5px !important;
+}
+
+.trendAnalysis .metricTrends {
+    margin-bottom: 10px;   
+}
+
+.trendAnalysis .dijitButton .dijitButtonNode {
+    	border: 1px solid rgba(0,0,0,0.15) !important;
+    	border-radius: 0px !important;
+    	color: #2d3538 !important;
+    	background: none;
+    	background-color: transparent;
+    	margin-top: -1px;
+ }
+
+.trendAnalysis .tileContainer.trendHeader.filters span {
+    font-size: 12px !important;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.trendAnalysis .filterLeft .category-table:first-child {
+    background: rgba(255,255,255,0) !important;
+}
+
+.trendAnalysis .common-plugin.dimension-filter .time-interval-control {
+    white-space: nowrap;
+    padding-top: 2px !important;
+    padding-bottom: 1px !important;
+    border: none !important;
+    background-color: white !important;
+    border-bottom: 1px solid #148ac4 !important;
+}
+
+
+
+.trendAnalysis .tileContainer.trendHeader.filters .ok-cancel-div span {
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.trendAnalysis .tileContainer.trendHeader.filters span {
+    font-size: 14px;
+    font-weight: normal;
+    color: #2d3538;
+    vertical-align: top;
+}
+
+.trendAnalysis .tileContainer.trendHeader.filters .filterIcon{
+    font-size: 20px !important;
+    color: #2d3538;
+    padding-right: 5px;
+}
+
+.trendAnalysis .tileContainer.trendHeader.filters .filterArrow {
+    color: #2d3538;
+    padding-left: 4px;
+    font-size: 14px !important;
+}
+
+.trendAnalysis .tileContainer.trendHeader.filters span {
+    font-size: 15px;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.trendAnalysis .metricTrends .dijitBorderContainer-child SPAN {
+    font-size: 20px;
+    margin-left: 75px;
+}
+
+.trendAnalysis .smallTile .maxTileIcon {
+    margin-right: 10px;  
+     width: 35px !important;
+    height: 29px !important;
+    border: 1px solid rgba(0,0,0,0.15) !important;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAQCAYAAAAmlE46AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAC9JREFUeNpiYCATMALxfxziyABDDRM1bGQkUs9/imwkW+NIAEMoOuifVskGAAEGAMxRCA3U5rs/AAAAAElFTkSuQmCC);
+}
+
+.trendAnalysis .smallTile .maxTileIcon:hover {
+    background-color: #92DBFF !important;
+}
+
+.trendAnalysis .smallTile .restoreTileIcon {
+    width: 35px !important;
+    height: 29px !important;
+    border: 1px solid rgba(0,0,0,0.15) !important;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAQCAYAAAAmlE46AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAC9JREFUeNpiYCATMALxfxziyABDDRM1bGQkUs9/imwkW+NIAEMoOuifVskGAAEGAMxRCA3U5rs/AAAAAElFTkSuQmCC);
+    background-color: lightgray;
+}
+
+.trendAnalysis .smallTile .restoreTileIcon:hover {
+    background-color: #92DBFF !important;
+}
+
+.trendAnalysis .trendHeader {
+    background-color: transparent!important;
+    white-space: nowrap;
+    padding: 8px 15px !important;
+    border: none !important;
+    border-bottom: 1px solid transparent !important;
+}
+
+.trendAnalysis .tileContainer.trendHeader.filterSummary SPAN {
+    color: #333333 !important;
+}
+
+.trendAnalysis .maxBox .tileContainer.trendHeader .rendererBox {
+   /* background-color: #7fceff!important; */
+    color: #2d3538;
+    border-radius: 5px;
+}
+
+.trendAnalysis .e div[name^="Widget"] {
+    border-top: 10px solid #f1f2f2;
+    border-bottom: 10px solid #f1f2f2;
+    border-left: 20px solid #f1f2f2;
+    border-right: 20px solid #f1f2f2;
+    padding-top: 5px;
+}
+
+.trendAnalysis .e div[name^="Widget"]:first-child {
+    border-top: 20px solid #f1f2f2;
+}
+
+.trendAnalysis .e div[name^="Widget"]:last-child {
+    border-bottom: 20px solid #f1f2f2;
+}]]></PageCustomCSS>
+      <PageProperties/>
+      <Layout type="10" numRow="1" numCol="1" count="1" templateType="1" screenHeight="1080" renderType="null" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:72,&quot;id&quot;:0,&quot;title&quot;:&quot;Default&quot;}]" unitSize="undefined" viewRows="72" viewCols="120"/>
+      <Tile name="Default" title="Default" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="trendAnalysis fontawesomeFilter" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="ax.DashboardView" label="Dashboard View" optional="false" minimode="false">
+          <Property name="model" value="/app/ax/user/viaops_admin/axv/VIAOps - Trend Comp"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+    </Page>
+    <Script>
+      <Stores/>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id="node:44" type="UserScript" label="Script 5" _undefined_title="" _undefined_originHeight="" width="130" height="100" x="271" y="120">
+        <dynIn id="din:0" type="any[]" label="Context" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Notify" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:71" type="Tile" label="Tile 0" _undefined_title="" originHeight="177" width="140" height="217" x="734" y="40">
+        <dynIn id="din:Config" type="json" label="Config" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Lang" type="string" label="Lang" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Mini Filters" type="any[]" label="Mini Filters" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Full Filters" type="any[]" label="Full Filters" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Mini Notify" type="any" label="Mini Notify" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Full Notify" type="any" label="Full Notify" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:Trend Data" type="event[]" label="Trend Data" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:73" type="UserScript" label="Script 8" _undefined_title="" originHeight="117" width="130" height="117" x="494" y="120">
+        <dynIn id="din:0" type="any" label="Values" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Config" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="Values" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:75" type="UserScript" label="Script 9" _undefined_title="" originHeight="117" width="160" height="177" x="960" y="100">
+        <dynIn id="din:0" type="any[]" label="UI Event" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="event[]" label="Trend Data" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="UI Event" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="event[]" label="Trend Data" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any" label="Trend Notify" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:82" type="PortIn" label="Port IN 1" _undefined_title="" originHeight="160" width="140" height="177" x="50" y="100">
+        <dynOut id="dout:0" type="any[]" label="Context" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="FrameMenuSelection" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:85" type="PortOut" label="Port OUT 1" _undefined_title="" originHeight="160" width="140" height="177" x="1220" y="40"/>
+      <Item id="node:87" type="Widget" label="Trend Data" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1220" y="250"/>
+      <Link srcId="node:75" srcPort="dout:0" tgtId="node:85" tgtPort="in:3"/>
+      <Link srcId="node:82" srcPort="dout:0" tgtId="node:44" tgtPort="din:0"/>
+      <Link srcId="node:73" srcPort="dout:1" tgtId="node:71" tgtPort="din:Mini Notify"/>
+      <Link srcId="node:44" srcPort="dout:0" tgtId="node:73" tgtPort="din:0"/>
+      <Link srcId="node:73" srcPort="dout:0" tgtId="node:71" tgtPort="din:Config"/>
+      <Link srcId="node:73" srcPort="dout:1" tgtId="node:71" tgtPort="din:Full Notify"/>
+      <Link srcId="node:71" srcPort="out:3" tgtId="node:75" tgtPort="din:0"/>
+      <Link srcId="node:71" srcPort="dout:Trend Data" tgtId="node:75" tgtPort="din:1"/>
+      <Link srcId="node:75" srcPort="dout:1" tgtId="node:87" tgtPort="in:0"/>
+      <Link srcId="node:75" srcPort="dout:2" tgtId="node:87" tgtPort="in:2"/>
+      <Input key="node:44/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Context&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;}]"/>
+      <Input key="node:44/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Notify&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:44/cfg:model/default" value="&quot;if (port != null) {\n    var context = getInput(port);\n    if (context != null &amp;&amp; context.target == \&quot;trendAnalysis\&quot; &amp;&amp; context.filters != null) {\n        var evt = {\n            values : {\n            }\n        };\n        for (var i=0; i&lt;context.filters.length; i++) {\n            evt.values[context.filters[i][\&quot;name\&quot;]] = context.filters[i][\&quot;value\&quot;];\n        }\n        setOutput(\&quot;dout:0\&quot;, evt);\n    }\n}&quot;"/>
+      <Input key="node:71/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#2#Default&quot;,&quot;path&quot;:[&quot;Main Tile&quot;],&quot;name&quot;:&quot;Default&quot;}]"/>
+      <Input key="node:73/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Values&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:73/cfg:model/default" value="&quot;var CharterPlugin = Plugin(\&quot;Charter\&quot;);\r\nvar TrendService = Plugin(\&quot;Trend\&quot;);\r\n\r\nfunction mapDimensionWhereClauseToFilter(evt, callback)\r\n{\r\n    if (evt &amp;&amp; evt.values &amp;&amp; evt.values[\&quot;$.dimensionWhereClause\&quot;] != null) {\r\n        TrendService.mapDimensionWhereClauseToFilter(evt.values, function(response) {\r\n            if (response.status == \&quot;OK\&quot;) {\r\n                evt.values = response.value;\r\n            }\r\n            callback(evt);\r\n        });\r\n    }\r\n    else {\r\n        callback(evt);\r\n    }\r\n}\r\n\r\nif (port == \&quot;din:0\&quot;) {\r\n    // received values\r\n    // check if we have been initialized...\r\n    if (getOutput(\&quot;dout:0\&quot;) != null) {\r\n        // initialized... pass values thru\r\n        mapDimensionWhereClauseToFilter(getInput(\&quot;din:0\&quot;), function(evt) {\r\n            if (evt &amp;&amp; evt.values) {\r\n                setOutput(\&quot;dout:1\&quot;, evt);\r\n            }\r\n        });\r\n    }\r\n}\r\nelse {\r\n    var AGGREGATION_INTERVAL = {\r\n        \&quot;name\&quot;    : \&quot;aggregationInterval\&quot;,\r\n        \&quot;label\&quot;   : \&quot;Interval\&quot;,\r\n        \&quot;type\&quot;    : \&quot;enumeration\&quot;,\r\n        \&quot;none\&quot;    : false,\r\n        \&quot;default\&quot; : \&quot;(AUTO)\&quot;,\r\n        \&quot;enums\&quot; : [{\r\n            \&quot;value\&quot; : \&quot;(AUTO)\&quot;,\r\n            \&quot;label\&quot; : \&quot;(auto)\&quot;,\r\n        }, {\r\n            \&quot;value\&quot; : \&quot;5*M\&quot;,\r\n            \&quot;label\&quot; : \&quot;5 minutes\&quot;,\r\n        }, {\r\n            \&quot;value\&quot; : \&quot;15*M\&quot;,\r\n            \&quot;label\&quot; : \&quot;15 minutes\&quot;,\r\n        }, {\r\n            \&quot;value\&quot; : \&quot;30*M\&quot;,\r\n            \&quot;label\&quot; : \&quot;30 minutes\&quot;,\r\n        }, {\r\n            \&quot;value\&quot; : \&quot;1*H\&quot;,\r\n            \&quot;label\&quot; : \&quot;1 hour\&quot;,\r\n        }]\r\n    };\r\n    // on initialization\r\n    var config = {\r\n        \&quot;mini-filter-config\&quot; : {\r\n            \&quot;method\&quot; : \&quot;POST\&quot;,\r\n            \&quot;url\&quot; : CharterPlugin[\&quot;$uri\&quot;] + \&quot;/getFilterConfig\&quot;,\r\n            \&quot;params\&quot; : {\r\n                \&quot;name\&quot; : \&quot;mini\&quot;,\r\n            },\r\n            \&quot;aggregation-interval\&quot; : {\r\n                \&quot;definition\&quot; : AGGREGATION_INTERVAL,\r\n                \&quot;add-after\&quot;  : {\r\n                    \&quot;category\&quot;  : \&quot;data\&quot;,\r\n                    \&quot;dimension\&quot; : \&quot;timeRange\&quot;,\r\n                },\r\n            }\r\n        },\r\n        \&quot;full-filter-config\&quot; : {\r\n            \&quot;method\&quot; : \&quot;POST\&quot;,\r\n            \&quot;url\&quot; : CharterPlugin[\&quot;$uri\&quot;] + \&quot;/getFilterConfig\&quot;,\r\n            \&quot;params\&quot; : {\r\n                \&quot;name\&quot; : \&quot;full\&quot;,\r\n            },\r\n            \&quot;aggregation-interval\&quot; : {\r\n                \&quot;definition\&quot; : AGGREGATION_INTERVAL,\r\n                \&quot;add-after\&quot;  : {\r\n                    \&quot;category\&quot;  : \&quot;data\&quot;,\r\n                    \&quot;dimension\&quot; : \&quot;timeRange\&quot;,\r\n                },\r\n            }\r\n        },\r\n        \&quot;base-config\&quot; : {\r\n            \&quot;method\&quot; : \&quot;POST\&quot;,\r\n            \&quot;url\&quot; : TrendService[\&quot;$uri\&quot;] + \&quot;/getBaseConfig\&quot;,\r\n        },\r\n        \&quot;time-interval-format\&quot; : {\r\n            \&quot;method\&quot; : \&quot;POST\&quot;,\r\n            \&quot;url\&quot; : TrendService[\&quot;$uri\&quot;] + \&quot;/getTimeIntervalAndFormat\&quot;,\r\n        },\r\n        \&quot;check-filters\&quot; : {\r\n            \&quot;method\&quot; : \&quot;POST\&quot;,\r\n            \&quot;url\&quot; : TrendService[\&quot;$uri\&quot;] + \&quot;/checkFilters\&quot;\r\n        },\r\n        \&quot;query-config\&quot; : {\r\n            \&quot;method\&quot; : \&quot;POST\&quot;,\r\n            \&quot;url\&quot; : TrendService[\&quot;$uri\&quot;] + \&quot;/getQueryConfig\&quot;\r\n        },\r\n        \&quot;unit-of-measure\&quot; : {\r\n            \&quot;method\&quot; : \&quot;POST\&quot;,\r\n            \&quot;url\&quot; : TrendService[\&quot;$uri\&quot;] + \&quot;/getMetricUnitOfMeasure\&quot;,\r\n            \&quot;defaults\&quot; : {\r\n                \&quot;STVA[secondary-axis]\&quot; : \&quot;STVA Customer Calls\&quot;,\r\n                \&quot;TWC E-Mail[secondary-axis]\&quot; : \&quot;TWC E-Mail Customer Calls\&quot;,\r\n                \&quot;[primary-axis]\&quot; : \&quot;Metric Value\&quot;,\r\n                \&quot;[secondary-axis]\&quot; : \&quot;Call Volume\&quot;,\r\n            }\r\n        },\r\n        \&quot;//drilldown-config\&quot; : {\r\n            \&quot;method\&quot; : \&quot;POST\&quot;,\r\n            \&quot;url\&quot; : TrendService[\&quot;$uri\&quot;] + \&quot;/getDrilldownConfig\&quot;,\r\n        },\r\n        \&quot;//hover-config\&quot; : {\r\n            \&quot;method\&quot; : \&quot;POST\&quot;,\r\n            \&quot;url\&quot; : TrendService[\&quot;$uri\&quot;] + \&quot;/getHoverConfig\&quot;,\r\n        },\r\n        \&quot;//overlay-config\&quot; : {\r\n            \&quot;method\&quot; : \&quot;POST\&quot;,\r\n            \&quot;url\&quot; : TrendService[\&quot;$uri\&quot;] + \&quot;/getOverlayConfig\&quot;,\r\n        },\r\n        \&quot;action-buttons\&quot; : [\r\n            {\r\n                \&quot;value\&quot; : \&quot;data\&quot;,\r\n                \&quot;label\&quot; : \&quot;{i18n::button.label.view.data}\&quot;\r\n            },\r\n            {\r\n                \&quot;value\&quot; : \&quot;dimension\&quot;,\r\n                \&quot;label\&quot; : \&quot;{i18n::button.label.dimension.analysis}\&quot;,\r\n                \&quot;selected\&quot; : {\r\n                    \&quot;min\&quot; : 1,\r\n                    \&quot;max\&quot; : 1000,\r\n                },\r\n            },\r\n            {\r\n                \&quot;value\&quot; : \&quot;anomaly\&quot;,\r\n                \&quot;label\&quot; : \&quot;{i18n::button.label.anomaly.viewer}\&quot;,\r\n                \&quot;selected\&quot; : {\r\n                    \&quot;min\&quot; : 1,\r\n                    \&quot;max\&quot; : 1000,\r\n                },\r\n            }\r\n        ],\r\n        \&quot;locales\&quot; : [{\r\n            \&quot;code\&quot; : \&quot;en\&quot;,\r\n            \&quot;url\&quot;  : TrendService[\&quot;$uri\&quot;] + \&quot;/en\&quot;\r\n        }],\r\n    };\r\n    setOutput(\&quot;dout:0\&quot;, config);\r\n    mapDimensionWhereClauseToFilter(getInput(\&quot;din:0\&quot;), function(evt) {\r\n        if (evt &amp;&amp; evt.values) {\r\n            setOutput(\&quot;dout:1\&quot;, evt.values);\r\n        }\r\n    });\r\n}\r\n&quot;"/>
+      <Input key="node:73/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Values&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:75/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;UI Event&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Trend Data&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:75/cfg:model/default" value="&quot;var CharterPlugin = Plugin(\&quot;Charter\&quot;);\n\nfunction getAdjustedTimeRange(minEpoch, maxEpoch, timeInterval, refTime)\n{\n    if (refTime == \&quot;StartTime\&quot;) {\n        return String(minEpoch)+\&quot;/\&quot;+String(maxEpoch+timeInterval);\n    }\n    else if (refTime == \&quot;EndTime\&quot;) {\n        return String(minEpoch-timeInterval)+\&quot;/\&quot;+String(maxEpoch);\n    }\n    else {\n        // default same as EndTime, for backward compatibility\n        return String(minEpoch-timeInterval)+\&quot;/\&quot;+String(maxEpoch);\n    }\n}\n\nif (port != null) {\n    var events = getInput(\&quot;din:0\&quot;) || [];\n    if (events.length == 1) {\n        switch (events[0][\&quot;__TYPE__\&quot;]) {\n            case \&quot;DigiOpsFilterChange\&quot;:\n                //detect filter change - push context\n                var filters = [];\n                if (events[0][\&quot;__EVENT__\&quot;][\&quot;filters\&quot;] != null &amp;&amp; events[0][\&quot;__EVENT__\&quot;][\&quot;filters\&quot;].length &gt; 0) {\n                    filters = events[0][\&quot;__EVENT__\&quot;][\&quot;filters\&quot;];\n                }\n                CharterPlugin.getContextInfo(\&quot;Trend Analysis\&quot;, filters, function(evt) {\n                    setOutput(\&quot;dout:0\&quot;, [evt]);\n                });\n                break;\n            case \&quot;DigiOpsButtonAction\&quot;:\n                if (events[0][\&quot;__VALUE__\&quot;] == \&quot;dimension\&quot; || events[0][\&quot;__VALUE__\&quot;] == \&quot;anomaly\&quot;) {\n                    // drill to Dimension Analysis or Anomaly Viewer (Analysis)\n                    var selection = events[0][\&quot;__DATA__\&quot;];\n                    var service = \&quot;\&quot;;\n                    var minEpoch = null;\n                    var maxEpoch = null;\n                    var timeInterval = null;\n                    var refTime = null;\n                    var filters = null;\n                    var context = null;\n                    var hasMetrics = false;\n                    var hasCalls = false;\n                    for (var i=0; i&lt;selection.length; i++) {\n                        var record = selection[i];\n                        if (record[\&quot;_value1_\&quot;] != null) {\n                            hasMetrics = true;\n                        }\n                        if (record[\&quot;_value2_\&quot;] != null) {\n                            hasCalls = true;\n                        }\n                        if (minEpoch == null || minEpoch &gt; Number(record[\&quot;_epoch_\&quot;])) {\n                            minEpoch = Number(record[\&quot;_epoch_\&quot;]);\n                        }\n                        if (maxEpoch == null || maxEpoch &lt; Number(record[\&quot;_epoch_\&quot;])) {\n                            maxEpoch = Number(record[\&quot;_epoch_\&quot;]);\n                        }\n                        if (context == null &amp;&amp; record[\&quot;_data_\&quot;] != null) {\n                            context = record[\&quot;_data_\&quot;];\n                        }\n                    }\n                    // we cannot drill-across unless we have context and time range from selected record\n                    if (context == null) return;\n                    if (minEpoch == null || maxEpoch == null) return;\n                    \n                    filters = [];\n                    if (events[0][\&quot;__EVENT__\&quot;] != null) {\n                        var timeInfo = events[0][\&quot;__EVENT__\&quot;][\&quot;time-info\&quot;];\n                        if (timeInfo != null) {\n                            if (timeInfo.interval != null) {\n                                timeInterval = Number(timeInfo.interval);\n                            }\n                            if (timeInfo[\&quot;round-time-to\&quot;] != null) {\n                                refTime = timeInfo[\&quot;round-time-to\&quot;];\n                            }\n                        }\n                        var trendFilters = events[0][\&quot;__EVENT__\&quot;][\&quot;filters\&quot;];\n                        if (trendFilters != null) {\n                            for (var i=0; i&lt;trendFilters.length; i++) {\n                                var filter = trendFilters[i];\n                                switch (filter.name) {\n                                    case \&quot;data.svc\&quot;:\n                                    case \&quot;data.comp\&quot;:\n                                    case \&quot;data.app\&quot;:\n                                    case \&quot;data.metric\&quot;:\n                                    case \&quot;data.predefined\&quot;:\n                                    case \&quot;data.timeRange\&quot;:\n                                        // skip all these as we will be replacing them with context data and selected time range\n                                        break;\n                                    default:\n                                        // add all other filters\n                                        filters.push({\n                                            name : filter.name,\n                                            value : filter.value\n                                        });\n                                        break;\n                                }\n                            }\n                        }\n                    }\n                    var dims = context.split(\&quot;;\&quot;);\n                    for (var j=0; j&lt;dims.length; j++) {\n                        var dim = (dims[j]).split(\&quot;=\&quot;);\n                        if (dim.length == 2) {\n                            var filter = {\n                                name  : dim[0],\n                                value : [dim[1]]\n                            };\n                            switch (filter.name) {\n                                case \&quot;data.metric\&quot;:\n                                    if (hasMetrics &amp;&amp; hasCalls) {\n                                        // dimension captured in context is that of metrics... we need to add \&quot;Customer Call Volume\&quot; to it\n                                        filter.value.push(\&quot;Customer Call Volume\&quot;);\n                                    }\n                                    break;\n                            }\n                            filters.push(filter);\n                        }\n                    }\n                    filters.push({\n                        name  : \&quot;data.predefined\&quot;,\n                        value : \&quot;adhoc\&quot;,\n                    });\n                    filters.push({\n                        name  : \&quot;data.timeRange\&quot;,\n                        value : getAdjustedTimeRange(minEpoch, maxEpoch, timeInterval, refTime),\n                    });\n                    var timeLabel;\n                    if (minEpoch == maxEpoch) {\n                        var dt = new Date(minEpoch*1000);\n                        timeLabel = dt.toLocaleString();\n                    }\n                    else {\n                        var dt1 = new Date(minEpoch*1000);\n                        var dt2 = new Date(maxEpoch*1000);\n                        timeLabel = dt1.toLocaleString() + \&quot;-\&quot; + dt2.toLocaleString();\n                    }\n                    var CharterPlugin = Plugin(\&quot;Charter\&quot;);\n                    var evt = null;\n                    switch (events[0][\&quot;__VALUE__\&quot;]) {\n                        case \&quot;dimension\&quot;:\n                            evt = CharterPlugin.getNavEvent(\&quot;trendAnalysis\&quot;, \&quot;dimensionAnalysis\&quot;, filters);\n                            break;\n                        case \&quot;anomaly\&quot;:\n                            evt = CharterPlugin.getNavEvent(\&quot;trendAnalysis\&quot;, \&quot;anomalyAnalysis\&quot;, filters);\n                            break;\n                    }\n                    if (evt != null) {\n                        setOutput(\&quot;dout:0\&quot;, evt);\n                    }\n                }\n                else if (events[0][\&quot;__VALUE__\&quot;] == \&quot;data\&quot;) {\n                    var data = getInput(\&quot;din:1\&quot;) || [];\n                    setOutput(\&quot;dout:1\&quot;, data);\n                    setOutput(\&quot;dout:2\&quot;, {\n                        dialog : {\n                            className : \&quot;via-scroller\&quot;\n                        }\n                    });\n                }\n                break;\n        }\n    }\n}\n&quot;"/>
+      <Input key="node:75/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;UI Event&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Trend Data&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Trend Notify&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:82/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Context&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;FrameMenuSelection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:85/cfg:inPorts/default" value="[]"/>
+      <Input key="node:85/in:3/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:71/cfg:values/default" value="[{&quot;name&quot;:&quot;din:Config&quot;,&quot;value&quot;:&quot;&quot;},{&quot;name&quot;:&quot;din:Lang&quot;,&quot;value&quot;:&quot;en&quot;},{&quot;name&quot;:&quot;din:Mini Filters&quot;},{&quot;name&quot;:&quot;din:Full Filters&quot;},{&quot;name&quot;:&quot;din:Mini Notify&quot;},{&quot;name&quot;:&quot;din:Full Notify&quot;}]"/>
+      <Input key="node:71/cfg:fields/default" value="[&quot;Trend Data&quot;]"/>
+      <Input key="node:75/cfg:schema/default" value="&quot;setOutputSchema(\&quot;dout:1\&quot;, [{\n    name  : \&quot;_group_\&quot;,\n    label : \&quot;Group\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_epoch_\&quot;,\n    label : \&quot;Epoch Time\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_time_\&quot;,\n    label : \&quot;GMT\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_value1_\&quot;,\n    label : \&quot;Metric Value\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_baseline1_\&quot;,\n    label : \&quot;Metric Baseline\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_uom1_\&quot;,\n    label : \&quot;Metric UoM\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_value2_\&quot;,\n    label : \&quot;Calls Value\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_baseline2_\&quot;,\n    label : \&quot;Calls Baseline\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_uom2_\&quot;,\n    label : \&quot;Calls UoM\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_diffval1_\&quot;,\n    label : \&quot;+/- Metric over Baseline\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_diffval2_\&quot;,\n    label : \&quot;+/- Calls over Baseline\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_diffpct1_\&quot;,\n    label : \&quot;% +/- Metric over Baseline\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_diffpct2_\&quot;,\n    label : \&quot;% +/- Calls over Baseline\&quot;,\n    type  : \&quot;string\&quot;\n}]);&quot;"/>
+      <Input key="node:87/cfg:width/default" value="800"/>
+      <Input key="node:87/cfg:height/default" value="600"/>
+      <Input key="node:87/in:0/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:87/cfg:widget/default" value="[{&quot;viewer&quot;:&quot;DataGrid&quot;,&quot;label&quot;:&quot;Data Grid&quot;,&quot;properties&quot;:{&quot;showHeader&quot;:&quot;enable&quot;,&quot;borderType&quot;:&quot;all&quot;,&quot;rowSpacing&quot;:&quot;5&quot;,&quot;columnResize&quot;:&quot;enable&quot;,&quot;columnReorder&quot;:&quot;disable&quot;,&quot;columnSortable&quot;:&quot;enable&quot;,&quot;dataExport&quot;:&quot;enable&quot;,&quot;pagination&quot;:&quot;disable&quot;,&quot;lockedColumns&quot;:&quot;3&quot;,&quot;highlightColor&quot;:&quot;#148AC4&quot;,&quot;hoverColor&quot;:&quot;#148AC4&quot;,&quot;selectionMode&quot;:&quot;single&quot;,&quot;showSummary&quot;:&quot;disable&quot;,&quot;lineWrapping&quot;:&quot;disable&quot;,&quot;columnSetting&quot;:&quot;[{\&quot;name\&quot;:\&quot;_group_\&quot;,\&quot;label\&quot;:\&quot;Group\&quot;,\&quot;type\&quot;:\&quot;string\&quot;,\&quot;defaultListId\&quot;:1,\&quot;opened\&quot;:true,\&quot;style\&quot;:{\&quot;width\&quot;:250,\&quot;backgroundColor\&quot;:\&quot;#ededed\&quot;}},{\&quot;name\&quot;:\&quot;_epoch_\&quot;,\&quot;label\&quot;:\&quot;Epoch Time\&quot;,\&quot;type\&quot;:\&quot;string\&quot;,\&quot;defaultListId\&quot;:2,\&quot;opened\&quot;:true,\&quot;display\&quot;:\&quot;false\&quot;,\&quot;style\&quot;:{\&quot;backgroundColor\&quot;:\&quot;#ededed\&quot;}},{\&quot;name\&quot;:\&quot;_time_\&quot;,\&quot;label\&quot;:\&quot;Local Date/Time\&quot;,\&quot;type\&quot;:\&quot;date\&quot;,\&quot;defaultListId\&quot;:3,\&quot;opened\&quot;:true,\&quot;format\&quot;:{\&quot;type\&quot;:\&quot;datetime\&quot;,\&quot;pattern\&quot;:\&quot;MM/dd hh:mma\&quot;},\&quot;style\&quot;:{\&quot;backgroundColor\&quot;:\&quot;#ededed\&quot;}},{\&quot;name\&quot;:\&quot;_value1_\&quot;,\&quot;label\&quot;:\&quot;Metric Value\&quot;,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;defaultListId\&quot;:4,\&quot;opened\&quot;:true,\&quot;format\&quot;:{\&quot;type\&quot;:\&quot;number\&quot;,\&quot;pattern\&quot;:\&quot;2\&quot;}},{\&quot;name\&quot;:\&quot;_baseline1_\&quot;,\&quot;label\&quot;:\&quot;Metric Baseline\&quot;,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;defaultListId\&quot;:5,\&quot;opened\&quot;:true,\&quot;format\&quot;:{\&quot;type\&quot;:\&quot;number\&quot;,\&quot;pattern\&quot;:\&quot;2\&quot;}},{\&quot;name\&quot;:\&quot;_uom1_\&quot;,\&quot;label\&quot;:\&quot;Metric UoM\&quot;,\&quot;type\&quot;:\&quot;string\&quot;,\&quot;defaultListId\&quot;:6,\&quot;opened\&quot;:true,\&quot;display\&quot;:\&quot;false\&quot;},{\&quot;name\&quot;:\&quot;_value2_\&quot;,\&quot;label\&quot;:\&quot;Calls Value\&quot;,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;defaultListId\&quot;:7,\&quot;opened\&quot;:true,\&quot;format\&quot;:{\&quot;type\&quot;:\&quot;number\&quot;,\&quot;pattern\&quot;:\&quot;0\&quot;}},{\&quot;name\&quot;:\&quot;_baseline2_\&quot;,\&quot;label\&quot;:\&quot;Calls Baseline\&quot;,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;defaultListId\&quot;:8,\&quot;opened\&quot;:true,\&quot;format\&quot;:{\&quot;type\&quot;:\&quot;number\&quot;,\&quot;pattern\&quot;:\&quot;0\&quot;}},{\&quot;name\&quot;:\&quot;_uom2_\&quot;,\&quot;label\&quot;:\&quot;Calls UoM\&quot;,\&quot;type\&quot;:\&quot;string\&quot;,\&quot;defaultListId\&quot;:9,\&quot;opened\&quot;:true,\&quot;display\&quot;:\&quot;false\&quot;},{\&quot;name\&quot;:\&quot;_diffval1_\&quot;,\&quot;label\&quot;:\&quot;+/- Metric over Baseline\&quot;,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;defaultListId\&quot;:10,\&quot;opened\&quot;:true,\&quot;format\&quot;:{\&quot;type\&quot;:\&quot;number\&quot;,\&quot;pattern\&quot;:\&quot;2\&quot;}},{\&quot;name\&quot;:\&quot;_diffval2_\&quot;,\&quot;label\&quot;:\&quot;+/- Calls over Baseline\&quot;,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;defaultListId\&quot;:11,\&quot;opened\&quot;:true,\&quot;format\&quot;:{\&quot;type\&quot;:\&quot;number\&quot;,\&quot;pattern\&quot;:\&quot;0\&quot;}},{\&quot;name\&quot;:\&quot;_diffpct1_\&quot;,\&quot;label\&quot;:\&quot;% +/- Metric over Baseline\&quot;,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;defaultListId\&quot;:12,\&quot;opened\&quot;:true,\&quot;format\&quot;:{\&quot;type\&quot;:\&quot;number\&quot;,\&quot;pattern\&quot;:\&quot;2\&quot;}},{\&quot;name\&quot;:\&quot;_diffpct2_\&quot;,\&quot;label\&quot;:\&quot;% +/- Calls over Baseline\&quot;,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;defaultListId\&quot;:13,\&quot;opened\&quot;:true,\&quot;format\&quot;:{\&quot;type\&quot;:\&quot;number\&quot;,\&quot;pattern\&quot;:\&quot;2\&quot;}}]&quot;},&quot;schema&quot;:[{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;GMT&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;_uom1_&quot;,&quot;label&quot;:&quot;Metric UoM&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;_uom2_&quot;,&quot;label&quot;:&quot;Calls UoM&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;_diffval1_&quot;,&quot;label&quot;:&quot;+/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;_diffval2_&quot;,&quot;label&quot;:&quot;+/- Calls over Baseline&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;_diffpct1_&quot;,&quot;label&quot;:&quot;% +/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;_diffpct2_&quot;,&quot;label&quot;:&quot;% +/- Calls over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}]}]"/>
+      <Schema id="node:71/out:0">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;_group_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;_epoch_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;_time_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;_value1_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;_baseline1_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;_value2_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;_baseline2_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval1_&quot;,&quot;label&quot;:&quot;_diffval1_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct1_&quot;,&quot;label&quot;:&quot;_diffpct1_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval2_&quot;,&quot;label&quot;:&quot;_diffval2_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct2_&quot;,&quot;label&quot;:&quot;_diffpct2_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:71/dout:Trend Data">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;_group_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;_epoch_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;_time_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;_value1_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;_baseline1_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;_value2_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;_baseline2_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval1_&quot;,&quot;label&quot;:&quot;_diffval1_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct1_&quot;,&quot;label&quot;:&quot;_diffpct1_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval2_&quot;,&quot;label&quot;:&quot;_diffval2_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct2_&quot;,&quot;label&quot;:&quot;_diffpct2_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:75/din:1">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;_group_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;_epoch_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;_time_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;_value1_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;_baseline1_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;_value2_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;_baseline2_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval1_&quot;,&quot;label&quot;:&quot;_diffval1_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct1_&quot;,&quot;label&quot;:&quot;_diffpct1_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval2_&quot;,&quot;label&quot;:&quot;_diffval2_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct2_&quot;,&quot;label&quot;:&quot;_diffpct2_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:75/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;GMT&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_uom1_&quot;,&quot;label&quot;:&quot;Metric UoM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_uom2_&quot;,&quot;label&quot;:&quot;Calls UoM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval1_&quot;,&quot;label&quot;:&quot;+/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval2_&quot;,&quot;label&quot;:&quot;+/- Calls over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct1_&quot;,&quot;label&quot;:&quot;% +/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct2_&quot;,&quot;label&quot;:&quot;% +/- Calls over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:87/in:0">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;GMT&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_uom1_&quot;,&quot;label&quot;:&quot;Metric UoM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_uom2_&quot;,&quot;label&quot;:&quot;Calls UoM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval1_&quot;,&quot;label&quot;:&quot;+/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval2_&quot;,&quot;label&quot;:&quot;+/- Calls over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct1_&quot;,&quot;label&quot;:&quot;% +/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct2_&quot;,&quot;label&quot;:&quot;% +/- Calls over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:87/out:0">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;GMT&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_uom1_&quot;,&quot;label&quot;:&quot;Metric UoM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_uom2_&quot;,&quot;label&quot;:&quot;Calls UoM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval1_&quot;,&quot;label&quot;:&quot;+/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval2_&quot;,&quot;label&quot;:&quot;+/- Calls over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct1_&quot;,&quot;label&quot;:&quot;% +/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct2_&quot;,&quot;label&quot;:&quot;% +/- Calls over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:87/out:1">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;GMT&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_uom1_&quot;,&quot;label&quot;:&quot;Metric UoM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_uom2_&quot;,&quot;label&quot;:&quot;Calls UoM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval1_&quot;,&quot;label&quot;:&quot;+/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval2_&quot;,&quot;label&quot;:&quot;+/- Calls over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct1_&quot;,&quot;label&quot;:&quot;% +/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct2_&quot;,&quot;label&quot;:&quot;% +/- Calls over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <DynInput id="node:44">
+        <Port id="din:0" type="any[]" label="Context" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:71">
+        <Port id="din:Config" type="json" label="Config" _undefined_default="" evaluate="always"/>
+        <Port id="din:Lang" type="string" label="Lang" _undefined_default="" evaluate="always"/>
+        <Port id="din:Mini Filters" type="any[]" label="Mini Filters" _undefined_default="" evaluate="always"/>
+        <Port id="din:Full Filters" type="any[]" label="Full Filters" _undefined_default="" evaluate="always"/>
+        <Port id="din:Mini Notify" type="any" label="Mini Notify" _undefined_default="" evaluate="always"/>
+        <Port id="din:Full Notify" type="any" label="Full Notify" _undefined_default="" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:73">
+        <Port id="din:0" type="any" label="Values" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:75">
+        <Port id="din:0" type="any[]" label="UI Event" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="event[]" label="Trend Data" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynOutput id="node:44">
+        <Port id="dout:0" type="any" label="Notify" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:73">
+        <Port id="dout:0" type="any" label="Config" propagate="always"/>
+        <Port id="dout:1" type="any" label="Values" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:75">
+        <Port id="dout:0" type="any[]" label="UI Event" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="event[]" label="Trend Data" propagate="always" _isArray="true"/>
+        <Port id="dout:2" type="any" label="Trend Notify" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:82">
+        <Port id="dout:0" type="any[]" label="Context" propagate="always"/>
+        <Port id="dout:1" type="any[]" label="FrameMenuSelection" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:71">
+        <Port id="dout:Trend Data" type="event[]" label="Trend Data" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <Version id="node:44" version="2"/>
+      <Version id="node:71" version="1"/>
+      <Version id="node:73" version="2"/>
+      <Version id="node:75" version="2"/>
+      <Version id="node:82" version="1"/>
+      <Version id="node:85" version="1"/>
+      <Version id="node:87" version="1"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/user/via_common/dbpm/VIA - Common" alias="Common"/>
+      <DashboardPlugin uri="/app/dbp/space/testp/dbpm/Charter - Plugin v11" alias="Charter"/>
+      <DashboardPlugin uri="/app/dbp/space/testp/dbpm/Charter - Trend Analysis Service v4" alias="Trend"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

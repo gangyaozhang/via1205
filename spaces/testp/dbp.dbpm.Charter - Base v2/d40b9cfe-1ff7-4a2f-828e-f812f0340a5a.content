@@ -1,0 +1,74 @@
+{
+    "name":"Quantum",
+    "label":"Client",
+    "items":[
+        {
+            "name": "Application Errors",
+            "uom" : "Total Errors",
+            "aggr": "sum"    ,
+            "meta":{
+                "dimension-values":[
+                    {
+                        "name":"response",
+                        "value":["", "GDVR-1000", "GDVR-1001", "GDVR-1002", "GDVR-1003", "GDVR-1004", "GDVR-1005", "GDVR-1006", "GDVR-1007", "GDVR-2007", "GDVR-2008", "GDVR-2009", "GDVR-2010", "GDVR-8001", "GDVR-8010", "GDVR-8011", "GDVR-8012", "GDVR-8013", "GDVR-8015", "GDVR-8016", "GDVR-8017", "GDVR-8018", "GDVR-8019", "GDVR-8020"]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Failed API Attempt",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "dimension-values":[
+                    {
+                        "name":"api",
+                        "value":["","companionDevicesMiddleCdevices","dvrEdgeMetadata","dvrEdgeSeriesPriority","dvrEdgeV2Groups","dvrEdgeV2ModifyRecordings","dvrEdgeV2Recordings","dvrEdgeV2RecordingsSchedules"]
+                    }
+                ],
+                "anomaly-config[5/5]":{
+                    "median_baseline":80
+                }
+            }
+        },
+        {
+            "name": "Failed API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg",
+            "meta":{
+                "dimension-values":[
+                    {
+                        "name":"api",
+                        "value":["","companionDevicesMiddleCdevices","dvrEdgeMetadata","dvrEdgeSeriesPriority","dvrEdgeV2Groups","dvrEdgeV2ModifyRecordings","dvrEdgeV2Recordings","dvrEdgeV2RecordingsSchedules"]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Successful API Attempt",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[
+                    {
+                        "name":"api",
+                        "value":["","companionDevicesMiddleCdevices","dvrEdgeMetadata","dvrEdgeSeriesPriority","dvrEdgeV2Groups","dvrEdgeV2ModifyRecordings","dvrEdgeV2Recordings","dvrEdgeV2RecordingsSchedules"]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Successful API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg",
+            "meta":{
+                "dimension-values":[
+                    {
+                        "name":"api",
+                        "value":["","companionDevicesMiddleCdevices","dvrEdgeMetadata","dvrEdgeSeriesPriority","dvrEdgeV2Groups","dvrEdgeV2ModifyRecordings","dvrEdgeV2Recordings","dvrEdgeV2RecordingsSchedules"]
+                    }
+                ]
+            }
+        }
+    ]
+}

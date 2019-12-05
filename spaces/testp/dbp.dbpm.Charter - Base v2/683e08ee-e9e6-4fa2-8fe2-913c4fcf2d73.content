@@ -1,0 +1,95 @@
+{
+    "name":"Quantum",
+    "label":"Client",
+    "items":[
+        {
+            "name": "Bitrate Downshifts",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "anomaly-config[5/5]":{
+                    "median_baseline":30
+                }
+            }
+        },
+        {
+            "name": "Broken Stream Streams",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "anomaly-config[5/5]":{
+                    "median_baseline":30
+                }
+            }
+        },
+        {
+            "name": "Buffering Events",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "anomaly-config[5/5]":{
+                    "median_baseline":30
+                }
+            }
+        },
+        {
+            "name": "Failing Streams",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Failed Stream Start",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Playback Starts",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Total Buffering Duration",
+            "uom" : "Total Time(s)",
+            "aggr": "sum"
+        },
+        {
+            "name": "Failed API Attempt",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "#metric-id":"Quantum|Failed API Attempt|play",
+                "anomaly-config[5/5]":{
+                    "median_baseline":30
+                }
+            }
+            
+        },
+        {
+            "name": "Failed API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        },
+        {
+            "name": "Successful API Attempt",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Successful API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        }
+    ],
+    "meta":{
+        "dimension-values":[{
+                "name":"api",
+                "value":["","cdvr" ]
+            },
+            {
+                "name":"stream",
+                "value":["","dvr"]
+            }
+
+        ]
+    }
+}

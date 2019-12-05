@@ -1,0 +1,218 @@
+<AnalyticsExplorerView is_init="false" name="Charter - Anomaly Viewer Comp v6" description=" ">
+  <ModelInfo nextPageId="8" validated="true">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="1"/>
+      <NoTileSpacing value="true"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <CustomCSSSetting><![CDATA[@import '/vitria-oi/rest/app/dbp/user/via_common/dbpm/VIA - Common/VIA-CSS';
+@import '/vitria-oi/rest/app/dbp/user/viaops_admin/dbpm/VIAOps - Anomaly Viewer Service/ANOMALY-CSS';
+
+.app .smallTile .tileContainer.digiops-filter {
+    margin-top: -3px;
+    margin-left: -3px;
+    padding: 0px;
+    height: 57px !important;
+}
+
+.xxx .dijitButtonNode {
+    color: #1f78b4 !important;
+    font-weight: normal !important;
+    padding: 1px 3px 1px 3px !important;
+    margin-top: -2px !important;
+    font-size: 12px !important;
+    border: 1px solid #1f78b4 !important;
+    background-color: #fff !important;
+}
+
+.xxx .dijitButtonNode:hover {
+    color: white !important;
+    background-color: #148ac4 !important;
+}
+
+.digiops-filterBar-container {
+	padding-bottom: 0px !important;
+	border: thin solid lightgray !important;
+}
+
+.common-plugin.dimension-filter .click-to-open-div {
+    margin-top: 8px !important;
+    color: inherit !important;
+}
+
+.common-plugin.dimension-filter div.click-to-open-link {
+	border: thin solid lightgray;
+	border-radius: 20px;
+}
+
+.common-plugin.dimension-filter .click-for-summary-link {
+    margin-top: 5px !important;
+    color: inherit !important;
+}
+
+.common-plugin.dimension-filter div.click-for-summary-link {
+	border: thin solid lightgray;
+	border-radius: 20px;
+}
+
+.app .tile .tileContainer .rendererBox .rendererDataGrid{
+    height:100%!important;
+}
+
+.app .tile .tileContainer .rendererBox .dgrid-scroller{
+    overflow-y:auto!important;
+}
+
+]]></CustomCSSSetting>
+    <Page id="1" name="Default" title="Default" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageProperties/>
+      <Layout type="10" numRow="1" numCol="1" count="1" templateType="21" screenHeight="1050" renderType="null" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:72,&quot;id&quot;:0,&quot;title&quot;:&quot;Main Tile&quot;}]" unitSize="{&quot;x&quot;:9.616666666666667,&quot;y&quot;:10.541666666666666}" viewRows="72" viewCols="120"/>
+      <Tile name="Main Tile" title="Main Tile" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="fontawesomeFilter" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{"_tileOpacity":"1"}]]></TileThemeSetting>
+        <DataViewer name="ax.DashboardView" label="Dashboard View" optional="false" minimode="false">
+          <Property name="model" value="/app/ax/space/VIA Digital Operations/axv/VIAOps - Anomaly Viewer Comp"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+    </Page>
+    <Script>
+      <Stores/>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id="node:181" type="UserScript" label="Script 8" _undefined_title="" originHeight="100" width="160" height="177" x="546" y="160">
+        <dynIn id="din:0" type="any" label="Values" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Base Filter Config" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="Full Filter Config" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any" label="Plugins" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:207" type="PortIn" label="Port IN 0" _undefined_title="" originHeight="160" width="140" height="177" x="69" y="140">
+        <dynOut id="dout:0" type="any[]" label="Context" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="FrameMenuSelection" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:208" type="UserScript" label="Script 14" _undefined_title="" originHeight="117" width="130" height="117" x="309" y="160">
+        <dynIn id="din:0" type="any[]" label="Context" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Notify" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:213" type="UserScript" label="Script 15" _undefined_title="" originHeight="100" width="160" height="117" x="1120" y="200">
+        <dynIn id="din:0" type="any[]" label="Filter UI Event" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="SetContext" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:214" type="PortOut" label="Port OUT 0" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1406" y="140"/>
+      <Item id="node:227" type="Tile" label="Tile 0" _undefined_title="" originHeight="177" width="160" height="177" x="840" y="140">
+        <dynIn id="din:Base Filter Config" type="any" label="Base Filter Config" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Full Filter Config" type="any" label="Full Filter Config" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Plugins" type="any" label="Plugins" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Version" type="string" label="Version" _undefined_default="" evaluate="always" _isArray="true"/>
+      </Item>
+      <Link srcId="node:227" srcPort="out:3" tgtId="node:213" tgtPort="din:0"/>
+      <Link srcId="node:181" srcPort="dout:2" tgtId="node:227" tgtPort="din:Plugins"/>
+      <Link srcId="node:181" srcPort="dout:1" tgtId="node:227" tgtPort="din:Full Filter Config"/>
+      <Link srcId="node:181" srcPort="dout:0" tgtId="node:227" tgtPort="din:Base Filter Config"/>
+      <Link srcId="node:208" srcPort="dout:0" tgtId="node:181" tgtPort="din:0"/>
+      <Link srcId="node:207" srcPort="dout:0" tgtId="node:208" tgtPort="din:0"/>
+      <Link srcId="node:213" srcPort="dout:0" tgtId="node:214" tgtPort="in:3"/>
+      <Input key="node:181/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portLabel&quot;:&quot;Base Filter Config&quot;,&quot;portTrigger&quot;:&quot;always&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portValue&quot;:&quot;&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Full Filter Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Plugins&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:181/cfg:model/default" value="&quot;var CharterPlugin = Plugin(\&quot;Charter\&quot;);\nvar TrendService = Plugin(\&quot;Trend\&quot;);\n\nfunction mapDimensionWhereClauseToFilter(evt, callback)\n{\n    if (evt &amp;&amp; evt.values &amp;&amp; evt.values[\&quot;$.dimensionWhereClause\&quot;] != null) {\n        TrendService.mapDimensionWhereClauseToFilter(evt.values, function(response) {\n            if (response.status == \&quot;OK\&quot;) {\n                evt.values = response.value;\n            }\n            callback(evt);\n        });\n    }\n    else {\n        callback(evt);\n    }\n}\n\nfunction getFilterValues(callback)\n{\n    var evt = getInput(\&quot;din:0\&quot;);\n    mapDimensionWhereClauseToFilter(evt, function(evt) {\n        if (evt &amp;&amp; evt.values) {\n            callback(evt);\n        }\n        else {\n            callback(null);\n        }\n    });\n}\n\nfunction getFilterDimension(dimensions, name)\n{\n    for (var i=0; i&lt;dimensions.length; i++) {\n        if (dimensions[i][\&quot;name\&quot;] == name) return dimensions[i];\n    }\n    return null;\n}\n\nfunction changeFilterType(dimensions, name, type)\n{\n    var dimension = getFilterDimension(dimensions, name);\n    if (dimension != null) {\n        dimension[\&quot;type\&quot;] = type;\n    }\n}\n\nfunction setPlugins()\n{\n    setOutput(\&quot;dout:2\&quot;, {\n        OptionsPlugin : Plugin(\&quot;Options\&quot;),\n        AnomalyPlugin : Plugin(\&quot;Anomaly\&quot;),\n        ConfigPlugin  : Plugin(\&quot;Config\&quot;),\n    });\n}\n\nfunction initialize()\n{\n    var CUSTOM_DEFAULT = \&quot;predefined:24H\&quot;;\n    var OPTIONS = [\n        \&quot;timeRange=true\&quot;,\n        \&quot;svc=enum\&quot;,\n        \&quot;comp=enum\&quot;,\n        \&quot;app=enum\&quot;,\n        \&quot;metric=enum\&quot;,\n        \&quot;svc.default=Video\&quot;,\n    ];\n    CharterPlugin.getFilterConfig(\&quot;base?\&quot;+OPTIONS.join(\&quot;&amp;\&quot;), function(response) {\n        if (response.status == \&quot;OK\&quot;) {\n            var filterConfig = response.value;\n            var dimensions = filterConfig[\&quot;categories\&quot;][0][\&quot;dimensions\&quot;];\n            if (CUSTOM_DEFAULT != null) {\n                var dimTimeRange = getFilterDimension(dimensions, \&quot;timeRange\&quot;);\n                if (dimTimeRange != null) {\n                    dimTimeRange[\&quot;default\&quot;] = CUSTOM_DEFAULT;\n                }\n            }\n            var evt = {\n                model : filterConfig\n            };\n            var evt2 = getLocal(\&quot;BASE_VALUE\&quot;);\n            if (evt2 != null) {\n                evt.values = evt2.values;\n            }\n            setLocal(\&quot;BASE_VALUE\&quot;, null)\n            setLocal(\&quot;BASE_FILTER\&quot;, Date.now());\n            console.debug(\&quot;BASE_FILTER \&quot; + getLocal(\&quot;BASE_FILTER\&quot;));\n            setOutput(\&quot;dout:0\&quot;, evt);\n            setPlugins();\n        }\n    });\n    // get full filter\n    CharterPlugin.getFilterConfig(\&quot;full\&quot;, function(response) {\n        if (response.status == \&quot;OK\&quot;) {\n            var filterConfig = response.value;\n            var dimensions = filterConfig[\&quot;categories\&quot;][0][\&quot;dimensions\&quot;];\n            if (CUSTOM_DEFAULT != null) {\n                var dimTimeRange = getFilterDimension(dimensions, \&quot;timeRange\&quot;);\n                if (dimTimeRange != null) {\n                    dimTimeRange[\&quot;default\&quot;] = CUSTOM_DEFAULT;\n                }\n            }\n            // change svc, comp, app, metric to enum\n            changeFilterType(dimensions, \&quot;svc\&quot;, \&quot;enumeration\&quot;);\n            changeFilterType(dimensions, \&quot;comp\&quot;, \&quot;enumeration\&quot;);\n            changeFilterType(dimensions, \&quot;app\&quot;, \&quot;enumeration\&quot;);\n            changeFilterType(dimensions, \&quot;metric\&quot;, \&quot;enumeration\&quot;);\n            var evt = {\n                model : filterConfig\n            };\n            var evt2 = getLocal(\&quot;FULL_VALUE\&quot;);\n            if (evt2 != null) {\n                evt.values = evt2.values;\n            }\n            setLocal(\&quot;FULL_VALUE\&quot;, null)\n            setLocal(\&quot;FULL_FILTER\&quot;, Date.now());\n            console.debug(\&quot;FULL_FILTER \&quot; + getLocal(\&quot;FULL_FILTER\&quot;));\n            setOutput(\&quot;dout:1\&quot;, evt);\n            setPlugins();\n        }\n    });\n}\n\nfunction passThruToBaseFilter()\n{\n    getFilterValues(function(evt) {\n        if (evt != null &amp;&amp; evt.values != null) {\n            var initialized = getLocal(\&quot;BASE_FILTER\&quot;);\n            if (initialized == null) {\n                setLocal(\&quot;BASE_VALUE\&quot;, evt);\n            }\n            else {\n                var elapsed = Date.now() - initialized;\n                if (elapsed &lt; 5000) {\n                    setTimeout(passThruToBaseFilter, (5000 - elapsed));\n                    return;\n                }\n                console.debug(\&quot;BASE_FILTER pass thru elapsed=\&quot;+(Date.now()-initialized));\n                // initialized... pass values thru\n                setOutput(\&quot;dout:0\&quot;, evt);\n                setPlugins();\n            }\n        }\n    });\n}\n\nfunction passThruToFullFilter()\n{\n    getFilterValues(function(evt) {\n        if (evt != null &amp;&amp; evt.values != null) {\n            var initialized = getLocal(\&quot;FULL_FILTER\&quot;);\n            if (initialized == null) {\n                setLocal(\&quot;FULL_VALUE\&quot;, evt);\n            }\n            else {\n                var elapsed = Date.now() - initialized;\n                if (elapsed &lt; 5000) {\n                    setTimeout(passThruToFullFilter, (5000 - elapsed));\n                    return;\n                }\n                console.debug(\&quot;FULL_FILTER pass thru elapsed=\&quot;+(Date.now()-initialized));\n                // initialized... pass values thru\n                setOutput(\&quot;dout:1\&quot;, evt);\n                setPlugins();\n            }\n        }\n    });\n}\n\nif (port == \&quot;din:0\&quot;) {\n    // received values\n    passThruToBaseFilter();\n    passThruToFullFilter();\n}\nelse {\n    initialize();\n}\n\n&quot;"/>
+      <Input key="node:207/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Context&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;FrameMenuSelection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:208/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Context&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;}]"/>
+      <Input key="node:208/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Notify&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:208/cfg:model/default" value="&quot;if (port != null) {\n    var context = getInput(port);\n    if (context != null &amp;&amp; context.target == \&quot;anomalyAnalysis\&quot; &amp;&amp; context.filters != null) {\n        var evt = {\n            values : {\n            }\n        };\n        for (var i=0; i&lt;context.filters.length; i++) {\n            evt.values[context.filters[i][\&quot;name\&quot;]] = context.filters[i][\&quot;value\&quot;];\n        }\n        setOutput(\&quot;dout:0\&quot;, evt);\n    }\n}&quot;"/>
+      <Input key="node:181/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Values&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:213/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Filter UI Event&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;}]"/>
+      <Input key="node:213/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;SetContext&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:213/cfg:model/default" value="&quot;var CharterPlugin = Plugin(\&quot;Charter\&quot;);\n\nif( getInput(\&quot;din:0\&quot;) != null &amp;&amp; getInput(\&quot;din:0\&quot;).length &gt; 0 ){\n    var filterEvt = getInput(\&quot;din:0\&quot;)[0];\n    if (filterEvt[\&quot;__TYPE__\&quot;] != \&quot;change\&quot;) return;\n\n    var filters = filterEvt[\&quot;__EVENT__\&quot;][\&quot;data\&quot;];\n    CharterPlugin.getContextInfo(\&quot;Incident Lab\&quot;, filters, function(evt) {\n        setOutput(\&quot;dout:0\&quot;, [evt]); \n    });\n}&quot;"/>
+      <Input key="node:227/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#Main Tile&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Main Tile&quot;}]"/>
+      <Input key="node:227/cfg:trigger/default" value="&quot;all&quot;"/>
+      <Input key="node:227/cfg:values/default" value="[{&quot;name&quot;:&quot;din:Base Filter Config&quot;,&quot;value&quot;:&quot;&quot;},{&quot;name&quot;:&quot;din:Full Filter Config&quot;},{&quot;name&quot;:&quot;din:Plugins&quot;},{&quot;name&quot;:&quot;din:Version&quot;,&quot;value&quot;:&quot;V2&quot;}]"/>
+      <DynInput id="node:208">
+        <Port id="din:0" type="any[]" label="Context" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:181">
+        <Port id="din:0" type="any" label="Values" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:213">
+        <Port id="din:0" type="any[]" label="Filter UI Event" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:227">
+        <Port id="din:Base Filter Config" type="any" label="Base Filter Config" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:Full Filter Config" type="any" label="Full Filter Config" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:Plugins" type="any" label="Plugins" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:Version" type="string" label="Version" _undefined_default="" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynOutput id="node:181">
+        <Port id="dout:0" type="any" label="Base Filter Config" propagate="always"/>
+        <Port id="dout:1" type="any" label="Full Filter Config" propagate="always"/>
+        <Port id="dout:2" type="any" label="Plugins" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:207">
+        <Port id="dout:0" type="any[]" label="Context" propagate="always"/>
+        <Port id="dout:1" type="any[]" label="FrameMenuSelection" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:208">
+        <Port id="dout:0" type="any" label="Notify" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:213">
+        <Port id="dout:0" type="any[]" label="SetContext" propagate="always"/>
+      </DynOutput>
+      <Version id="node:181" version="2"/>
+      <Version id="node:207" version="1"/>
+      <Version id="node:208" version="2"/>
+      <Version id="node:213" version="2"/>
+      <Version id="node:214" version="1"/>
+      <Version id="node:227" version="1"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/user/via_common/dbpm/VIA - Common" alias="Common"/>
+      <DashboardPlugin uri="/app/dbp/space/testp/dbpm/Charter - Plugin v11" alias="Charter"/>
+      <DashboardPlugin uri="/app/dbp/space/testp/dbpm/Charter - Trend Analysis Service v4" alias="Trend"/>
+      <DashboardPlugin uri="/app/dbp/space/testp/dbpm/Charter - Options Service v3" alias="Options"/>
+      <DashboardPlugin uri="/app/dbp/space/testp/dbpm/Charter - Anomaly Viewer Service v2" alias="Anomaly"/>
+      <DashboardPlugin uri="/app/dbp/space/testp/dbpm/Charter - Config Service v2" alias="Config"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

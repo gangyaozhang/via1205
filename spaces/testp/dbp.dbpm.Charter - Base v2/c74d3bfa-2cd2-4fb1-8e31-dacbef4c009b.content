@@ -1,0 +1,21 @@
+{
+    "name":"JITP",
+    "label":"JITP",
+    "items":[
+        {
+            "name": "Error Event",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Success Event",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Request Response Duration",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        }
+    ]
+}

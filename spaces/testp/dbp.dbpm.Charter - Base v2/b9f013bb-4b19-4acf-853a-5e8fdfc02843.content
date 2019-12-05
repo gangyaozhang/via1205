@@ -1,0 +1,11 @@
+{
+    "name": "IMS",
+    "label": "IMS",
+    "items": [
+        {
+            "name": "Key Error Indicators",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ]
+}

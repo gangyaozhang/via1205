@@ -1,0 +1,98 @@
+{
+    "name":"Quantum",
+    "label":"Client",
+    "items":[
+        {
+            "name": "Application Errors",
+            "uom" : "Total Errors",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[
+                    {
+                        "name":"response",
+                        "value":["", "GDV-1007", "GDV-1008", "GDV-1009", "GDV-1010", "GFE-1002", "GGU-0004", "GGU-6001", "GGU-7001", "GGU-9006"]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Failed API Attempt",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[
+                    {
+                        "name":"api",
+                        "value":["", "deviceEdgeDevices","loginEdgeLogin","loginEdgeSessionInfo","lrmEdgeEntitlements","networkSettingsEdgeSettings","savedSearchEdgeSavedSearch","searchEdgeSavedSearchRecent","stbDeviceEdgeRefresh","viewingHistoryEdgeCollated","viewingHistoryEdgeViewingHistory","watchListEdgeWatchList","avappsTermsAndConditions","companionDevicesEdgeHandoff","searchEdgeUnfiltered","searchedgeV1CatalogUnfiltered"]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Failed API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg",
+            "meta":{
+                "dimension-values":[
+                    {
+                        "name":"api",
+                        "value":["", "deviceEdgeDevices","loginEdgeLogin","loginEdgeSessionInfo","lrmEdgeEntitlements","networkSettingsEdgeSettings","savedSearchEdgeSavedSearch","searchEdgeSavedSearchRecent","stbDeviceEdgeRefresh","viewingHistoryEdgeCollated","viewingHistoryEdgeViewingHistory","watchListEdgeWatchList","avappsTermsAndConditions","companionDevicesEdgeHandoff","searchEdgeUnfiltered","searchedgeV1CatalogUnfiltered"]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Successful API Attempt",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[
+                    {
+                        "name":"api",
+                        "value":["", "deviceEdgeDevices","loginEdgeLogin","loginEdgeSessionInfo","lrmEdgeEntitlements","networkSettingsEdgeSettings","savedSearchEdgeSavedSearch","searchEdgeSavedSearchRecent","stbDeviceEdgeRefresh","viewingHistoryEdgeCollated","viewingHistoryEdgeViewingHistory","watchListEdgeWatchList","avappsTermsAndConditions","companionDevicesEdgeHandoff","searchEdgeUnfiltered","searchedgeV1CatalogUnfiltered"]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Successful API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg",
+            "meta":{
+                "dimension-values":[
+                    {
+                        "name":"api",
+                        "value":["", "deviceEdgeDevices","loginEdgeLogin","loginEdgeSessionInfo","lrmEdgeEntitlements","networkSettingsEdgeSettings","savedSearchEdgeSavedSearch","searchEdgeSavedSearchRecent","stbDeviceEdgeRefresh","viewingHistoryEdgeCollated","viewingHistoryEdgeViewingHistory","watchListEdgeWatchList","avappsTermsAndConditions","companionDevicesEdgeHandoff","searchEdgeUnfiltered","searchedgeV1CatalogUnfiltered"]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Stat Active User Count",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[
+                    {
+                        "name":"api",
+                        "value":["", "deviceEdgeDevices","loginEdgeLogin","loginEdgeSessionInfo","lrmEdgeEntitlements","networkSettingsEdgeSettings","savedSearchEdgeSavedSearch","searchEdgeSavedSearchRecent","stbDeviceEdgeRefresh","viewingHistoryEdgeCollated","viewingHistoryEdgeViewingHistory","watchListEdgeWatchList","avappsTermsAndConditions","companionDevicesEdgeHandoff","searchEdgeUnfiltered","searchedgeV1CatalogUnfiltered"]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Stat Active Device Count",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[
+                    {
+                        "name":"api",
+                        "value":["", "deviceEdgeDevices","loginEdgeLogin","loginEdgeSessionInfo","lrmEdgeEntitlements","networkSettingsEdgeSettings","savedSearchEdgeSavedSearch","searchEdgeSavedSearchRecent","stbDeviceEdgeRefresh","viewingHistoryEdgeCollated","viewingHistoryEdgeViewingHistory","watchListEdgeWatchList","avappsTermsAndConditions","companionDevicesEdgeHandoff","searchEdgeUnfiltered","searchedgeV1CatalogUnfiltered"]
+                    }
+                ]
+            }
+        }
+    ]
+
+    }

@@ -1,0 +1,165 @@
+{
+    "action-types":{
+        "SNMP":[
+            {
+                "name"  : "target_addr1",
+                "label" : "IP Address",
+                "type"  : "string"
+            },
+            {
+                "name"  : "target_addr2",
+                "label" : "IP Port",
+                "type"  : "integer"
+            },
+            {
+                "name"  : "target_attr1",
+                "label" : "Trap Timeout (ms)",
+                "type"  : "integer"
+            },
+            {
+                "name"  : "target_attr2",
+                "label" : "Retry Count",
+                "type"  : "integer"
+            }
+        ],
+        "EMAIL1":[
+            {
+                "name"  : "target_addr1",
+                "label" : "Email Address",
+                "type"  : "string"
+            }
+        ],
+        "EMAIL2":[
+            {
+                "name"  : "target_addr1",
+                "label" : "Primary Email Address",
+                "type"  : "string"
+            },
+            {
+                "name"  : "target_addr1",
+                "label" : "Secondary Email Address",
+                "type"  : "string"
+            }
+        ],
+        "DIMENSION_ANALYSIS":[
+            {
+                "name"  : "target_addr1",
+                "label" : "Dimension Analysis",
+                "type"  : "choice",
+                "enums" : [
+                    "company_da",
+                    "location_da",
+                    "top_incident_da",
+                    "top_call_da",
+                    "key_dim_da"
+                ]
+            }
+        ],
+        "YES_OR_NO":[
+        ]
+    },
+    "rule-types":{
+        "Sev Value":[
+            {
+                "name"  : "value1",
+                "label" : "Severity",
+                "type"  : "enumeration",
+                "enums" : ["High", "Medium", "Low"]
+            }
+        ],
+        "Effective Period":[
+            {
+                "name"  : "value1",
+                "label" : "Effective Period",
+                "type"  : "integer"
+            }
+        ],
+        "SEVERITY_VALUE":[
+            {
+                "name"  : "value1",
+                "label" : "Severity",
+                "type"  : "enumeration",
+                "enums" : ["High", "Medium", "Low"]
+            }
+        ],
+        "INITIAL_PERIOD":[
+            {
+                "name"  : "value1",
+                "label" : "Initial Periods",
+                "type"  : "integer"
+            }
+        ],
+        "SUBSEQUENT_PERIOD":[
+            {
+                "name"  : "value1",
+                "label" : "Subsequent Periods",
+                "type"  : "integer"
+            }
+        ],
+        "AFTER_NOC_PERIOD":[
+            {
+                "name"  : "value1",
+                "label" : "After NOC Periods",
+                "type"  : "integer"
+            }
+        ],
+        "SCORE_PERCENT_CHANGE":[
+            {
+                "name"  : "value1",
+                "label" : "Percentage",
+                "type"  : "number"
+            }
+        ],
+        "MEASURED_ATTRIBUTE_TOP_N":[
+            {
+                "name"  : "measured_attr",
+                "label" : "Measured Attribute",
+                "type"  : "enumeration",
+                "enums" : [{
+                    "value":"_diffPct",
+                    "label":"+/- to Baseline"
+                }, {
+                    "value":"_diff",
+                    "label":"+/- Percentage to Baseline"
+                }]
+            },
+            {
+                "name"  : "value3",
+                "label" : "Top N",
+                "type"  : "integer"
+            }
+        ]
+    },
+    "actions":{
+        "1":"SNMP",
+        "2":"EMAIL1",
+        "3":"EMAIL2",
+        "4":[
+            {
+                "name"  : "target_addr1",
+                "label" : "SOAP URL",
+                "type"  : "string"
+            },
+            {
+                "name"  : "target_attr1",
+                "label" : "Namespace",
+                "type"  : "string"
+            }
+        ],
+        "5":"YES_OR_NO",
+        "6":"YES_OR_NO",
+        "7":"DIMENSION_ANALYSIS",
+        "8":"DIMENSION_ANALYSIS",
+        "9":"DIMENSION_ANALYSIS",
+        "10":"EMAIL1",
+        "11":"EMAIL1",
+        "12":"EMAIL1",
+        "13":"EMAIL1",
+        "14":"EMAIL1",
+        "15":"EMAIL1",
+        "16":"SNMP",
+        "18":"SNMP"
+    },
+    "rules":{
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "name": "Client",
+    "label": "Client",
+    "items": [
+        {
+            "name": "Function Invocations",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[]
+            }
+        },
+        {
+            "name": "Function Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg",
+            "meta":{
+                "dimension-values":[]
+            }
+        },
+        {
+            "name": "Function Return Results",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[]
+            }
+        },
+        {
+            "name": "Active Users",
+            "uom" : "Distinct Users (5 min)",
+            "aggr": "avg",
+            "meta":{
+                "dimension-values":[]
+            }
+        }
+    ]
+}

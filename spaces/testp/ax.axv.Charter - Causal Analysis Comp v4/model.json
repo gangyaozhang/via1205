@@ -1,0 +1,20 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "locale"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "axv",
+    "__references__": "/app/dbp/space/testp/dbpm/Charter - Plugin v11,/app/dbp/user/via_common/dbpm/VIA - Common,/app/dbp/space/testp/dbpm/Charter - Causal Analysis Service v3,/app/dbp/space/testp/dbpm/Charter - Incident Analysis Service v9,/app/dbp/space/testp/dbpm/Charter - Trend Analysis Service v4,/app/dbp/user/via_common/dbpm/VIA - Horizon Chart,/app/dbp/user/viaops_admin/dbpm/VIAOps - Commonality Plugin,/app/dbp/space/VIA Common Library/dbpm/VIA - Hierarchy Grid,/app/dbp/space/testp/dbpm/Charter - Execution Monitor Service v1,/app/ax/space/Charter Digital Operations/axv/Charter - Notification Action Comp v2,/app/ax/space/testp/axv/Charter - Incident Detail Popup,/app/ax/space/testp/axv/Charter - Group Detail Popup",
+    "modelStatus": "valid",
+    "name": "Charter - Incident Analysis Comp v5"
+  }
+}

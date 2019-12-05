@@ -1,0 +1,281 @@
+{
+    "name":"CAPM_LB_A10",
+    "label":"A10 Load Balancer",
+    "items":[
+        {
+        	"name": "Server Status",
+        	"uom" : "Status",
+            "aggr": "avg"
+        },
+        {
+        	"name": "CPU Utilization Max",
+        	"uom" : "Percent",
+            "aggr": "avg"
+        },
+        {
+        	"name": "Virtual Port Bytes In",
+            "uom" : "MB",
+            "aggr": "sum"
+        },
+        {
+        	"name": "Virtual Port Bytes Out",
+            "uom" : "MB",
+            "aggr": "sum"
+        },
+        {
+        	"name": "Virtual Port Current Connections",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "Virtual Port Packets In",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "Virtual Port Packets Out",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "Virtual Port Total Connections",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "Memory Utilization Max",
+                "uom" : "Percemt",
+            "aggr": "avg"
+        },
+        {
+        	"name": "Cert Validation Errors",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "Current Connections",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "L4 Sessions",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "L7 Requests",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "New Connections",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "New L4 Connections",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "New L7 Connections",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "New NAT Connections",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "Packet Drops",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "SSL Connections",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "Total Bandwidth",
+            "uom" : "Unknown",
+            "aggr": "avg"
+        },
+        {
+    	    "name": "Total Request Errors",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+    	    "name": "Total SSL Throughput",
+            "uom" : "Unknown",
+            "aggr": "avg"
+        },
+        {
+    	    "name": "Total Throughput",
+            "uom" : "Unknown",
+            "aggr": "avg"
+        },
+        {
+    	    "name": "Current Packet Drops Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+    	    "name": "Current Connections Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+    	    "name": "L4 Sessions Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "L7 Requests Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "New Connections Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "New L4 Connections Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "New L7 Connections Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "New NAT Connections Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+       {
+    	"name": "Packet Drops Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+           	"name": "SSL Connections Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+    	"name": "Total Bandwidth Max",
+            "uom" : "Unknown",
+            "aggr": "avg"
+        },
+        {
+        	"name": "Total Request Errors Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+        	"name": "Total SSL Throughput Max",
+            "uom" : "Unknown",
+            "aggr": "avg"
+        },
+        {
+        	"name": "Total Throughput Max",
+            "uom" : "Unknown",
+            "aggr": "avg"
+        },
+        {
+        	"name": "Cert Validation Errors Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Utilization In Max",
+            "uom" : "Percent",
+            "aggr": "avg"
+        },
+        {
+            "name": "Port Utilization Out Max",
+            "uom" : "Percent",
+            "aggr": "avg"
+        },
+        {
+            "name": "Port Discards In Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Discards Out Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Errors In Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Errors Out Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Discards In Pct Max",
+            "uom" : "Percent",
+            "aggr": "avg"
+        },
+        {
+            "name": "Port Discards Out Pct Max",
+            "uom" : "Percent",
+            "aggr": "avg"
+        },
+        {
+            "name": "Port Discards",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Discards In",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Discards Out",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Errors",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Errors In",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Errors Out",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Port Utilization",
+            "uom" : "Percent",
+            "aggr": "avg"
+        },
+        {
+            "name": "Port Utilization In",
+            "uom" : "Percent",
+            "aggr": "avg"
+        },
+        {
+            "name": "Port Utilization Out",
+            "uom" : "Percent",
+            "aggr": "avg"
+        }
+    ]
+}

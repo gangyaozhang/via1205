@@ -1,0 +1,4150 @@
+{
+    "evaluate-nested-sql":false,
+    "sql-query-config" : {
+        "debug" : {
+            "E-Mail" : false,
+            "Customer" : false,
+            "HSD" : false,
+            "Voice" : false,
+            "Cable" : false,
+            "CHTR_E-Mail" : false,
+            "Video" : false,
+            "SpecGuide" : false,
+            "Portals" : false,
+            "Network" : false,
+            "cDVR" : false,
+            "Connectivity" : false,
+            "*" : true
+        }
+    },
+    "default-column-names" : {
+        "epoch-column"   : "aggr_start_tm",
+        "datekey-column" : "date_key"
+    },
+    "option-queries":{
+        "Legacy VOD[Metric|Host]":{
+            "table-name"          : "viaops_metric_legacy_vod",
+            "distinct-column"     : "host",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "host != ''"
+            ]
+        },
+        "Legacy VOD[Metric|Region]":{
+            "table-name"          : "viaops_metric_legacy_vod",
+            "distinct-column"     : "region",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "region != ''"
+            ]
+        },
+        "Legacy VOD[Metric|Market]":{
+            "table-name"          : "viaops_metric_legacy_vod",
+            "distinct-column"     : "market",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "market != ''"
+            ]
+        },
+        "Legacy VOD[Metric|Market Alias]":{
+            "table-name"          : "viaops_metric_legacy_vod",
+            "distinct-column"     : "market_alias",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "market_alias != ''"
+            ]
+        },
+        "Legacy VOD[Metric|Source Type]":{
+            "table-name"          : "viaops_metric_legacy_vod",
+            "distinct-column"     : "source_type",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "source_type != ''"
+            ]
+        },
+        "Legacy VOD[Metric|Reason]":{
+            "table-name"          : "viaops_metric_legacy_vod",
+            "distinct-column"     : "reason",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "reason != ''"
+            ]
+        },
+        "Legacy VOD[Call|CMTS]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Legacy_VOD'",
+                "cmts != ''"
+            ]
+        },
+        "Legacy VOD[Call|Controller]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "controller",
+            "option-where-clause" : [ 
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Legacy_VOD'",
+                "controller != ''"
+            ]
+        },
+        "Legacy VOD[Call|State]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "state != '' and service = 'HSD'"
+            ]
+        },
+        "Legacy VOD[Call|City]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "city",
+            "option-where-clause" : [ 
+                { "option" : "states",  "filter" : "legacy_vod_calls.state","column" : "state",       "required" : true },
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "city != '' and service = 'HSD'"
+            ]
+        },
+        "Legacy VOD[Call|Issue]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "issue",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "issue != '' and service = 'HSD'"
+            ]
+        },
+        "Legacy VOD[Call|Cause]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cause",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "cause != '' and service = 'HSD'"
+            ]
+        },
+        "Legacy VOD[Call|Resolution]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "resolution",
+            "option-where-clause" : [
+                { "option" : "causes",  "filter" : "legacy_vod_calls.cause","column" : "cause",       "required" : false},
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "resolution != '' and service = 'HSD'"
+            ]
+        },
+        "Legacy VOD[Call|Customer Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "cust_type != '' and service = 'HSD'"
+            ]
+        },
+        "Legacy VOD[Call|Node]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",              "column" : "metric_name",   "required" : true},
+                { "option" : "headends", "filter" : "legacy_vod_calls.headend", "column" : "headend",       "required" : true}
+            ],
+            "custom-where-clause" : [
+                "node != '' and service = 'HSD'"
+            ]
+        },
+        "Legacy VOD[Call|Headend]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "headend",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "headend != '' and service = 'HSD'"
+            ]
+        },
+        "Legacy VOD[Call|Call Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "category",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "category != '' and service = 'HSD'"
+            ]
+        },
+        "Legacy VOD[Call|Market]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "kma",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "kma != '' and service = 'HSD'"
+            ]
+        },
+        "Legacy VOD[Call|Company]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "company != '' and service = 'HSD'"
+            ]
+        },
+        "Connectivity[Call|CMTS]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='HSD'",
+                "cmts != ''"
+            ]
+        },
+        "Connectivity[Call|Controller]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "controller",
+            "option-where-clause" : [ 
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='HSD'",
+                "controller != ''"
+            ]
+        },
+        "Connectivity[Call|State]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "state != '' and service = 'HSD'"
+            ]
+        },
+        "Connectivity[Call|City]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "city",
+            "option-where-clause" : [ 
+                { "option" : "states",  "filter" : "connectivity_calls.state",  "column" : "state",       "required" : true },
+                { "option" : "metrics", "filter" : "data.metric",               "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "city != '' and service = 'HSD'"
+            ]
+        },
+        "Connectivity[Call|Issue]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "issue",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "issue != '' and service = 'HSD'"
+            ]
+        },
+        "Connectivity[Call|Cause]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cause",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "cause != '' and service = 'HSD'"
+            ]
+        },
+        "Connectivity[Call|Resolution]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "resolution",
+            "option-where-clause" : [
+                { "option" : "causes",  "filter" : "connectivity_calls.cause",  "column" : "cause",       "required" : false},
+                { "option" : "metrics", "filter" : "data.metric",               "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "resolution != '' and service = 'HSD'"
+            ]
+        },
+        "Connectivity[Call|Customer Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "cust_type != '' and service = 'HSD'"
+            ]
+        },
+        "Connectivity[Call|Node]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",                  "column" : "metric_name",   "required" : true},
+                { "option" : "headends", "filter" : "connectivity_calls.headend",   "column" : "headend",       "required" : true}
+            ],
+            "custom-where-clause" : [
+                "node != '' and service = 'HSD'"
+            ]
+        },
+        "Connectivity[Call|Headend]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "headend",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "headend != '' and service = 'HSD'"
+            ]
+        },
+        "Connectivity[Call|Call Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "category",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "category != '' and service = 'HSD'"
+            ]
+        },
+        "Connectivity[Call|Market]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "kma",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "kma != '' and service = 'HSD'"
+            ]
+        },
+        "Connectivity[Call|Company]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "company != '' and service = 'HSD'"
+            ]
+        },
+        "Connectivity[Metric|Host]":{
+            "table-name"          : "viaops_metric_connectivity",
+            "distinct-column"     : "host",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "host != ''"
+            ]
+        },
+        "Connectivity[Metric|CMTS]":{
+            "table-name"          : "viaops_metric_connectivity",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "cmts != ''"
+            ]
+        },
+        "Connectivity[Metric|Interface]":{
+            "table-name"          : "viaops_metric_connectivity",
+            "distinct-column"     : "interface_name",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true },
+                { "option" : "cmts",  "filter" : "connectivity.cmts",  "column" : "cmts", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "interface_name != ''"
+            ]
+        },
+        "Connectivity[Metric|Company]":{
+            "table-name"          : "viaops_metric_connectivity",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "company != ''"
+            ]
+        },
+        "Connectivity[Metric|Location]":{
+            "table-name"          : "viaops_metric_connectivity",
+            "distinct-column"     : "location",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "location != ''"
+            ]
+        },
+        "HSD[Call|CMTS]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='HSD'",
+                "cmts != ''"
+            ]
+        },
+        "HSD[Call|Controller]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "controller",
+            "option-where-clause" : [ 
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='HSD'",
+                "controller != ''"
+            ]
+        },
+        "HSD[Call|State]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "state != '' and service = 'HSD'"
+            ]
+        },
+        "HSD[Call|City]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "city",
+            "option-where-clause" : [ 
+                { "option" : "states",  "filter" : "hsd_calls.state",   "column" : "state",       "required" : true },
+                { "option" : "metrics", "filter" : "data.metric",       "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "city != '' and service = 'HSD'"
+            ]
+        },
+        "HSD[Call|Issue]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "issue",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "issue != '' and service = 'HSD'"
+            ]
+        },
+        "HSD[Call|Cause]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cause",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "cause != '' and service = 'HSD'"
+            ]
+        },
+        "HSD[Call|Resolution]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "resolution",
+            "option-where-clause" : [
+                { "option" : "causes",  "filter" : "hsd_calls.cause",   "column" : "cause",       "required" : false},
+                { "option" : "metrics", "filter" : "data.metric",       "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "resolution != '' and service = 'HSD'"
+            ]
+        },
+        "HSD[Call|Customer Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "cust_type != '' and service = 'HSD'"
+            ]
+        },
+        "HSD[Call|Node]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",      "column" : "metric_name",   "required" : true},
+                { "option" : "headends", "filter" : "hsd_calls.headend","column" : "headend",       "required" : true}
+            ],
+            "custom-where-clause" : [
+                "node != '' and service = 'HSD'"
+            ]
+        },
+        "HSD[Call|Headend]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "headend",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "headend != '' and service = 'HSD'"
+            ]
+        },
+        "HSD[Call|Call Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "category",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "category != '' and service = 'HSD'"
+            ]
+        },
+        "HSD[Call|Market]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "kma",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "kma != '' and service = 'HSD'"
+            ]
+        },
+        "HSD[Call|Company]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "company != '' and service = 'HSD'"
+            ]
+        },
+        "Voice[Metric|Device Name]": {
+            "table-name"          : "viaops_metric_voice",
+            "distinct-column"     : "device_name",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "device_name != ''"
+            ]
+        },
+        "Voice[Metric|Client Site Name]": {
+            "table-name"          : "viaops_metric_voice",
+            "distinct-column"     : "client_site_name",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "client_site_name != ''"
+            ]
+        },
+        "Voice[Metric|Server Site Name]": {
+            "table-name"          : "viaops_metric_voice",
+            "distinct-column"     : "server_site_name",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "server_site_name != ''"
+            ]
+        },
+        "Voice[Metric|Application Protocol Type Code]": {
+            "table-name"          : "viaops_metric_voice",
+            "distinct-column"     : "app_protocol_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "app_protocol_type != ''"
+            ]
+        },
+        "Voice[Metric|Application Name]": {
+            "table-name"          : "viaops_metric_voice",
+            "distinct-column"     : "app_name",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "app_name != ''"
+            ]
+        },
+        "Voice[Metric|Message Protocol Type Code]": {
+            "table-name"          : "viaops_metric_voice",
+            "distinct-column"     : "message_protocol_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "message_protocol_type != ''"
+            ]
+        },
+        "Voice[Metric|Message Name]": {
+            "table-name"          : "viaops_metric_voice",
+            "distinct-column"     : "message_name",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "message_name != ''"
+            ]
+        },
+        "Voice[Metric|Response Code]": {
+            "table-name"          : "viaops_metric_voice",
+            "distinct-column"     : "response_code",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "response_code != ''"
+            ]
+        },
+        "Voice[Metric|Response Description]": {
+            "table-name"          : "viaops_metric_voice",
+            "distinct-column"     : "response_description",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "response_description != ''"
+            ]
+        },
+        "Voice[Metric|Legacy Company]": {
+            "table-name"          : "viaops_metric_voice",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "company != ''"
+            ]
+        },
+        "Voice[Metric|Service Type]": {
+            "table-name"          : "viaops_metric_voice",
+            "distinct-column"     : "service_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service_type != ''"
+            ]
+        },
+        "Voice[Metric|AGC]": {
+            "table-name"          : "viaops_metric_voice",
+            "distinct-column"     : "agc_name",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "agc_name != ''"
+            ]
+        },
+        "Voice[Metric|MetaName]": {
+            "table-name"          : "viaops_metric_voice",
+            "distinct-column"     : "meta_name",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "meta_name != ''"
+            ]
+        },        
+        "Voice[Metric|Location]": {
+            "table-name"          : "viaops_metric_voice",
+            "distinct-column"     : "location",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "location != ''"
+            ]
+        },
+        "Voice[Call|CMTS]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Voice'",
+                "cmts != ''"
+            ]
+        },
+        "Voice[Call|Controller]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "controller",
+            "option-where-clause" : [ 
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Voice'",
+                "controller != ''"
+            ]
+        },
+        "Voice[Call|State]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Voice'",
+                "state != ''"
+            ]
+        },
+        "Voice[Call|City]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "city",
+            "option-where-clause" : [ 
+                { "option" : "states",  "filter" : "voice_calls.state",  "column" : "state",       "required" : true },
+                { "option" : "metrics", "filter" : "data.metric",        "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Voice'",
+                "city != ''"
+            ]
+        },
+        "Voice[Call|Issue]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "issue",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Voice'",
+                "issue != ''"
+            ]
+        },
+        "Voice[Call|Cause]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cause",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Voice'",
+                "cause != ''"
+            ]
+        },
+        "Voice[Call|Resolution]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "resolution",
+            "option-where-clause" : [
+                { "option" : "causes",  "filter" : "voice_calls.cause", "column" : "cause",       "required" : false},
+                { "option" : "metrics", "filter" : "data.metric",       "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Voice'",
+                "resolution != ''"
+            ]
+        },
+        "Voice[Call|Customer Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Voice'",
+                "cust_type != ''"
+            ]
+        },
+        "Voice[Call|Node]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",          "column" : "metric_name",   "required" : true},
+                { "option" : "headends", "filter" : "voice_calls.headend",  "column" : "headend",       "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Voice'",
+                "node != ''"
+            ]
+        },
+        "Voice[Call|Headend]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "headend",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Voice'",
+                "headend != ''"
+            ]
+        },
+        "Voice[Call|Call Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "category",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Voice'",
+                "category != ''"
+            ]
+        },
+        "Voice[Call|Market]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "kma",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Voice'",
+                "kma != ''"
+            ]
+        },
+        "Voice[Call|Company]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Voice'",
+                "company != ''"
+            ]
+        },
+        "Cable[Call|CMTS]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Cable'",
+                "cmts != ''"
+            ]
+        },
+        "Cable[Call|Controller]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "controller",
+            "option-where-clause" : [ 
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Cable'",
+                "controller != ''"
+            ]
+        },
+        "Cable[Call|State]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",   "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Cable'",
+                "state != ''"
+            ]
+        },
+        "Cable[Call|City]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "city",
+            "option-where-clause" : [ 
+                { "option" : "states",  "filter" : "cable_calls.state",  "column" : "state",       "required" : true },
+                { "option" : "metrics", "filter" : "data.metric",        "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Cable'",
+                "city != ''"
+            ]
+        },
+        "Cable[Call|Issue]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "issue",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Cable'",
+                "issue != ''"
+            ]
+        },
+        "Cable[Call|Cause]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cause",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Cable'",
+                "cause != ''"
+            ]
+        },
+        "Cable[Call|Resolution]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "resolution",
+            "option-where-clause" : [
+                { "option" : "causes",  "filter" : "cable_calls.cause", "column" : "cause",       "required" : false},
+                { "option" : "metrics", "filter" : "data.metric",       "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Cable'",
+                "resolution != ''"
+            ]
+        },
+        "Cable[Call|Customer Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Cable'",
+                "cust_type != ''"
+            ]
+        },
+        "Cable[Call|Node]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",          "column" : "metric_name",  "required" : true},
+                { "option" : "headends", "filter" : "cable_calls.headend",  "column" : "headend",      "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Cable'",
+                "node != ''"
+            ]
+        },
+        "Cable[Call|Headend]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "headend",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Cable'",
+                "headend != ''"
+            ]
+        },
+        "Cable[Call|Call Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "category",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Cable'",
+                "category != ''"
+            ]
+        },
+        "Cable[Call|Market]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "kma",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Cable'",
+                "kma != ''"
+            ]
+        },
+        "Cable[Call|Company]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Cable'",
+                "company != ''"
+            ]
+        },
+        "Customer[Call|CMTS]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "cmts != ''"
+            ]
+        },
+        "Customer[Call|Controller]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "controller",
+            "option-where-clause" : [ 
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "controller != ''"
+            ]
+        },
+        "Customer[Call|State]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "state != ''"
+            ]
+        },
+        "Customer[Call|City]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "city",
+            "option-where-clause" : [ 
+                { "option" : "states",  "filter" : "customer_calls.state",  "column" : "state",       "required" : true },
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "city != ''"
+            ]
+        },
+        "Customer[Call|Issue]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "issue",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "issue != ''"
+            ]
+        },
+        "Customer[Call|Cause]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cause",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "cause != ''"
+            ]
+        },
+        "Customer[Call|Resolution]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "resolution",
+            "option-where-clause" : [
+                { "option" : "causes",  "filter" : "customer_calls.cause",  "column" : "cause",       "required" : false},
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "resolution != ''"
+            ]
+        },
+        "Customer[Call|Customer Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "cust_type != ''"
+            ]
+        },
+        "Customer[Call|Node]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",              "column" : "metric_name",   "required" : true},
+                { "option" : "headends", "filter" : "customer_calls.headend",   "column" : "headend",       "required" : true}
+            ],
+            "custom-where-clause" : [
+                "node != ''"
+            ]
+        },
+        "Customer[Call|Headend]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "headend",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",   "required" : true}
+            ],
+            "custom-where-clause" : [
+                "headend != ''"
+            ]
+        },
+        "Customer[Call|Call Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "category",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "category != ''"
+            ]
+        },
+        "Customer[Call|Market]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "kma",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "kma != ''"
+            ]
+        },
+        "Customer[Call|Company]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "company != ''"
+            ]
+        },
+        "Customer[Metric|Company]":{
+            "table-name"          : "viaops_metric_customer",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "company != ''"
+            ]
+        },
+        "Customer[Metric|Customer Type]":{
+            "table-name"          : "viaops_metric_customer",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "cust_type != ''"
+            ]
+        },
+        "E-Mail[Metric|Host]":{
+            "table-name"          : "viaops_metric_twc_email",
+            "distinct-column"     : "host",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+            ]
+        },
+        "E-Mail[Metric|Domain]":{
+            "table-name"          : "viaops_metric_twc_email",
+            "distinct-column"     : "dom",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true },
+                { "option" : "hosts",    "filter" : "email.host",   "column" : "host",        "required" : false }
+            ],
+            "custom-where-clause" : [
+                "dom is not null and dom != ''"
+            ]
+        },
+        "E-Mail[Metric|Target]":{
+            "table-name"          : "viaops_metric_twc_email",
+            "distinct-column"     : "dhost",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true },
+                { "option" : "hosts",    "filter" : "email.host",   "column" : "host",        "required" : false }
+            ],
+            "custom-where-clause" : [
+                "dhost is not null and dhost != ''"
+            ]
+        },
+        "E-Mail|Network[Metric|Host]":{
+            "table-name"          : "charter_network_metadata",
+            "distinct-column"     : "host",
+            "epoch-column"        : "",
+            "datekey-column"      : "",
+            "option-where-clause" : [
+            ],
+            "custom-where-clause" : [
+                "service = 'E-Mail'"
+            ]
+        },
+        "E-Mail|Network[Metric|Node]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",            "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",         "column" : "metric_name", "required" : true },
+                { "option" : "hosts",    "filter" : "email_network.host",  "column" : "host",        "required" : true }
+            ],
+            "custom-where-clause" : [
+                "node is not null and node != ''"            ]
+        },
+        "E-Mail|Network[Metric|Location]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "location",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",            "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",         "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "location != ''"            ]
+        },
+        "E-Mail|Network[Metric|IP]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "ip",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",            "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",         "column" : "metric_name", "required" : true },
+                { "option" : "hosts",    "filter" : "email_network.host",  "column" : "host",        "required" : true }
+            ],
+            "custom-where-clause" : [
+                "ip != ''"            ]
+        },
+        "E-Mail|Network[Metric|User]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "usr",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",            "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",         "column" : "metric_name", "required" : true },
+                { "option" : "hosts",    "filter" : "email_network.host",  "column" : "host",        "required" : true }
+            ],
+            "custom-where-clause" : [
+                "usr != ''"            ]
+        },
+        "E-Mail[Call|CMTS]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='E-Mail'",
+                "cmts != ''"
+            ]
+        },
+        "E-Mail[Call|Controller]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "controller",
+            "option-where-clause" : [ 
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='E-Mail'",
+                "controller != ''"
+            ]
+        },
+        "E-Mail[Call|State]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='E-Mail'",
+                "state != ''"
+            ]
+        },
+        "E-Mail[Call|City]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "city",
+            "option-where-clause" : [ 
+                { "option" : "states",  "filter" : "email_calls.state", "column" : "state",       "required" : true },
+                { "option" : "metrics", "filter" : "data.metric",       "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='E-Mail'",
+                "city != ''"
+            ]
+        },
+        "E-Mail[Call|Issue]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "issue",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='E-Mail'",
+                "issue != ''"
+            ]
+        },
+        "E-Mail[Call|Cause]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cause",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='E-Mail'",
+                "cause != ''"
+            ]
+        },
+        "E-Mail[Call|Resolution]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "resolution",
+            "option-where-clause" : [
+                { "option" : "causes",  "filter" : "email_calls.cause",  "column" : "cause",       "required" : false},
+                { "option" : "metrics", "filter" : "data.metric",       "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='E-Mail'",
+                "resolution != ''"
+            ]
+        },
+        "E-Mail[Call|Customer Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='E-Mail'",
+                "cust_type != ''"
+            ]
+        },
+        "E-Mail[Call|Node]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",          "column" : "metric_name",   "required" : true},
+                { "option" : "headends", "filter" : "email_calls.headend",  "column" : "headend",       "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='E-Mail'",
+                "node != ''"
+            ]
+        },
+        "E-Mail[Call|Headend]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "headend",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='E-Mail'",
+                "headend != ''"
+            ]
+        },
+        "E-Mail[Call|Call Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "category",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='E-Mail'",
+                "category != ''"
+            ]
+        },
+        "E-Mail[Call|Market]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "kma",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='E-Mail'",
+                "kma != ''"
+            ]
+        },
+        "E-Mail[Call|Company]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='E-Mail'",
+                "company != ''"
+            ]
+        },
+        "CHTR_E-Mail[Metric|Host]":{
+            "table-name"          : "viaops_metric_chtr_email",
+            "distinct-column"     : "host",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "host != ''"
+            ]
+        },
+        "CHTR_E-Mail[Metric|Domain]":{
+            "table-name"          : "viaops_metric_chtr_email",
+            "distinct-column"     : "dom",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "dom is not null and dom != ''"
+            ]
+        },
+        "CHTR_E-Mail[Metric|Target]":{
+            "table-name"          : "viaops_metric_chtr_email",
+            "distinct-column"     : "dhost",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "dhost is not null and dhost != ''"
+            ]
+        },
+        "CHTR_E-Mail[Metric|Reason]":{
+            "table-name"          : "viaops_metric_chtr_email",
+            "distinct-column"     : "reason",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "reason is not null and reason != ''"
+            ]
+        },
+        "CHTR_E-Mail|Network[Metric|Host]":{
+            "table-name"          : "charter_network_metadata",
+            "distinct-column"     : "host",
+            "epoch-column"        : "",
+            "datekey-column"      : "",
+            "option-where-clause" : [
+            ],
+            "custom-where-clause" : ["service = 'CHTR_E-Mail'"
+            ]
+        },
+        "CHTR_E-Mail|Network[Metric|Node]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",                 "column" : "app",           "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",              "column" : "metric_name",   "required" : true },
+                { "option" : "hosts",    "filter" : "chtremail_network.host",   "column" : "host",          "required" : true }
+            ],
+            "custom-where-clause" : [
+                "node is not null and node != ''"            ]
+        },
+        "CHTR_E-Mail|Network[Metric|IP]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "ip",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",              "column" : "metric_name",  "required" : true },
+                { "option" : "hosts",    "filter" : "chtremail_network.host",   "column" : "host",         "required" : true }
+            ],
+            "custom-where-clause" : [
+                "ip != ''"
+            ]
+        },
+        "CHTR_E-Mail|Network[Metric|User]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "usr",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",              "column" : "metric_name",  "required" : true },
+                { "option" : "hosts",    "filter" : "chtremail_network.host",   "column" : "host",         "required" : true }
+            ],
+            "custom-where-clause" : [
+                "usr != ''"
+            ]
+        },
+        "CHTR_E-Mail|Network[Metric|Location]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "location",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",              "column" : "metric_name",  "required" : true }            ],
+            "custom-where-clause" : [
+                "location != ''"
+            ]
+        },
+        "CHTR_E-Mail[Call|CMTS]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='CHTR_E-Mail'",
+                "cmts != ''"
+            ]
+        },
+        "CHTR_E-Mail[Call|Controller]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "controller",
+            "option-where-clause" : [ 
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='CHTR_E-Mail'",
+                "controller != ''"
+            ]
+        },
+        "CHTR_E-Mail[Call|State]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='CHTR_E-Mail'",
+                "state != ''"
+            ]
+        },
+        "CHTR_E-Mail[Call|City]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "city",
+            "option-where-clause" : [ 
+                { "option" : "states",  "filter" : "chtremail_calls.state", "column" : "state",       "required" : true },
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='CHTR_E-Mail'",
+                "city != ''"
+            ]
+        },
+        "CHTR_E-Mail[Call|Issue]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "issue",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='CHTR_E-Mail'",
+                "issue != ''"
+            ]
+        },
+        "CHTR_E-Mail[Call|Cause]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cause",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='CHTR_E-Mail'",
+                "cause != ''"
+            ]
+        },
+        "CHTR_E-Mail[Call|Resolution]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "resolution",
+            "option-where-clause" : [
+                { "option" : "causes",  "filter" : "chtremail_calls.cause", "column" : "cause",       "required" : false},
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='CHTR_E-Mail'",
+                "resolution != ''"
+            ]
+        },
+        "CHTR_E-Mail[Call|Customer Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='CHTR_E-Mail'",
+                "cust_type != ''"
+            ]
+        },
+        "CHTR_E-Mail[Call|Node]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",              "column" : "metric_name",   "required" : true},
+                { "option" : "headends", "filter" : "chtremail_calls.headend",  "column" : "headend",       "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='CHTR_E-Mail'",
+                "node != ''"
+            ]
+        },
+        "CHTR_E-Mail[Call|Headend]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "headend",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='CHTR_E-Mail'",
+                "headend != ''"
+            ]
+        },
+        "CHTR_E-Mail[Call|Call Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "category",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='CHTR_E-Mail'",
+                "category != ''"
+            ]
+        },
+        "CHTR_E-Mail[Call|Market]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "kma",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='CHTR_E-Mail'",
+                "kma != ''"
+            ]
+        },
+        "CHTR_E-Mail[Call|Company]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='CHTR_E-Mail'",
+                "company != ''"
+            ]
+        },
+        "Network[Metric|Host]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "host",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.app",     "column" : "app",        "required" : true},
+                { "option" : "apps",    "filter" : "data.metric",  "column" : "metric_name","required" : true},
+                { "option" : "locs",    "filter" : "data.comp",    "column" : "location",   "required" : true}
+            ],
+            "custom-where-clause" : [
+            ],
+            "custom-value-map" : {
+                "location" : {
+                    "Other" : "date_key in (${date_keys}) and location not in ('Billerica','Columbus','Dallas','Irvine','Madison','NCE','NCW','Spartanburg','StLouis','Tampa')"
+                }
+            }
+        },
+        "Network[Metric|Node]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true},
+                { "option" : "hosts",    "filter" : "network.host", "column" : "host",         "required" : true}
+            ],
+            "custom-where-clause" : [
+                "node != ''"
+            ]
+        },
+        "Network[Metric|IP]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "ip",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "ip != ''"
+            ]
+        },
+        "Network[Metric|User]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "usr",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "usr != ''"
+            ]
+        },
+        "Network[Metric|Location]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "location",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "location not in ('Billerica','Columbus','Dallas','Irvine','Madison','NCE','NCW','Spartanburg','StLouis','Tampa')"
+            ]
+        },
+        "Video[Metric|Device]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "device",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "device != ''"
+            ]
+        },
+        "Video[Metric|Version]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "version",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "video.device",  "column" : "device",       "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "version != ''"
+            ]
+        },
+        "Video[Metric|Connection]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "connection",
+            "option-where-clause" : [       
+                { "option" : "devices",  "filter" : "video.device",  "column" : "device",       "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "connection != ''"
+            ]
+        },
+        "Video[Metric|Authentication]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "authentication",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "video.device",  "column" : "device",       "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "authentication != ''"
+            ]
+        },
+        "Video[Metric|APICategory]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "msgcat",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "msgcat != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            },
+            "dimension-clause-values" : {
+                "app" : ["Quantum"]
+            }
+        },
+        "Video[Metric|APIName]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "api",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",   "column" : "metric_name", "required" : true },
+                { "option" : "category",  "filter" : "video.msgcat",  "column" : "msgcat",      "required" : false}
+            ],
+            "custom-where-clause" : [
+                "api != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            },
+            "dimension-clause-values" : {
+                "app" : ["Quantum"]
+            }
+        },
+        "Video[Metric|Response]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "response",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",   "column" : "metric_name", "required" : true },
+                { "option" : "category",  "filter" : "video.msgcat",  "column" : "msgcat",      "required" : false},
+                { "option" : "api",       "filter" : "video.api",     "column" : "api",         "required" : true }
+            ],
+            "custom-where-clause" : [
+                "response != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            },
+            "dimension-clause-values" : {
+                "app" : ["Quantum"]
+            }
+        },
+        "Video[Metric|State]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "state != ''"
+            ]
+        },
+        "Video[Metric|Stream]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "stream",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "stream != ''"
+            ]
+        },
+        "Video[Metric|Channel]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "channel",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",   "column" : "metric_name", "required" : true },
+                { "option" : "states",   "filter" : "video.state",   "column" : "state",       "required" : false}
+            ],
+            "custom-where-clause" : [
+                "channel != ''"
+            ]
+        },
+        "Video[Metric|Content]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "content",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",    "column" : "metric_name", "required" : true },
+                { "option" : "states",    "filter" : "video.state",    "column" : "state",       "required" : false },
+                { "option" : "channels",  "filter" : "video.channel",  "column" : "channel",     "required" : true }
+            ],
+            "custom-where-clause" : [
+                "content != ''"
+            ]
+        },
+        "Video[Metric|Company]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",    "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "company != ''"
+            ]
+        },
+        "Video[Metric|App Company]":{
+            "table-name"          : "viaops_metric_stva_application",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "company != ''"
+            ]
+        },
+        "Video[Metric|App Cluster]":{
+            "table-name"          : "viaops_metric_stva_application",
+            "distinct-column"     : "cluster",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "cluster != ''"
+            ]
+        },
+        "Video[Metric|App Host]":{
+            "table-name"          : "viaops_metric_stva_application",
+            "distinct-column"     : "host",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "host != ''"
+            ]
+        },
+        "Video[Metric|App Location]":{
+            "table-name"          : "viaops_metric_stva_application",
+            "distinct-column"     : "location",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "location != ''"
+            ]
+        },
+        "Video[Metric|NetServ Host]":{
+            "table-name"          : "viaops_metric_provisioning",
+            "distinct-column"     : "host",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "host != ''"
+            ]
+        },
+        "Video[Metric|NetServ Company]":{
+            "table-name"          : "viaops_metric_provisioning",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "company != ''"
+            ]
+        },
+        "Video[Metric|NetServ Customer Type]":{
+            "table-name"          : "viaops_metric_provisioning",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "cust_type != ''"
+            ]
+        },
+        "Video[Metric|NetServ Service]":{
+            "table-name"          : "viaops_metric_provisioning",
+            "distinct-column"     : "service",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service != ''"
+            ]
+        },
+        "Video|Network[Metric|Host]":{
+            "table-name"          : "charter_network_metadata",
+            "distinct-column"     : "host",
+            "epoch-column"        : "",
+            "datekey-column"      : "",
+            "option-where-clause" : [
+            ],
+            "custom-where-clause" : ["service = 'Video'"
+            ]
+        },
+        "Video|Network[Metric|Node]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",            "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",         "column" : "metric_name", "required" : true },
+                { "option" : "hosts",    "filter" : "video_network.host",  "column" : "host",        "required" : true }
+            ],
+            "custom-where-clause" : [
+                "node is not null and node != ''"
+            ]
+        },
+        "Video|Network[Metric|Location]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "location",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",            "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",         "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "location != ''"            ]
+        },
+        "Video|Network[Metric|IP]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "ip",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",            "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",         "column" : "metric_name", "required" : true },
+                { "option" : "hosts",    "filter" : "video_network.host",  "column" : "host",        "required" : true }
+            ],
+            "custom-where-clause" : [
+                "ip != ''"            ]
+        },
+        "Video|Network[Metric|User]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "usr",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",            "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",         "column" : "metric_name", "required" : true },
+                { "option" : "hosts",    "filter" : "video_network.host",  "column" : "host",        "required" : true }
+            ],
+            "custom-where-clause" : [
+                "usr != ''"            ]
+        },
+        "Video[Call|CMTS]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Video'",
+                "cmts != ''"
+            ]
+        },
+        "Video[Call|Controller]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "controller",
+            "option-where-clause" : [ 
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Video'",
+                "controller != ''"
+            ]
+        },
+        "Video[Call|State]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Video'",
+                "state != ''"
+            ]
+        },
+        "Video[Call|City]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "city",
+            "option-where-clause" : [ 
+                { "option" : "states",  "filter" : "video_calls.state", "column" : "state",       "required" : true },
+                { "option" : "metrics", "filter" : "data.metric",       "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Video'",
+                "city != ''"
+            ]
+        },
+        "Video[Call|Issue]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "issue",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Video'",
+                "issue != ''"
+            ]
+        },
+        "Video[Call|Cause]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cause",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Video'",
+                "cause != ''"
+            ]
+        },
+        "Video[Call|Resolution]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "resolution",
+            "option-where-clause" : [
+                { "option" : "causes",  "filter" : "video_calls.cause", "column" : "cause",       "required" : false},
+                { "option" : "metrics", "filter" : "data.metric",       "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Video'",
+                "resolution != ''"
+            ]
+        },
+        "Video[Call|Customer Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Video'",
+                "cust_type != ''"
+            ]
+        },
+        "Video[Call|Node]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",          "column" : "metric_name",   "required" : true},
+                { "option" : "headends", "filter" : "video_calls.headend",  "column" : "headend",       "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Video'",
+                "node != ''"
+            ]
+        },
+        "Video[Call|Headend]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "headend",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Video'",
+                "headend != ''"
+            ]
+        },
+        "Video[Call|Call Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "category",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Video'",
+                "category != ''"
+            ]
+        },
+        "Video[Call|Market]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "kma",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Video'",
+                "kma != ''"
+            ]
+        },
+        "Video[Call|Company]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Video'",
+                "company != ''"
+            ]
+        },
+        "cDVR[Metric|Device]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "device",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "device != ''"
+            ]
+        },
+        "cDVR[Metric|Version]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "version",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "cdvr.device",  "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "version != ''"
+            ]
+        },
+        "cDVR[Metric|Connection]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "connection",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "cdvr.device",  "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "connection != ''"
+            ]
+        },
+        "cDVR[Metric|Authentication]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "authentication",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "cdvr.device",  "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "authentication != ''"
+            ]
+        },
+        "cDVR[Metric|APICategory]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "msgcat",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+				"msgcat != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "cDVR[Metric|APIName]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "api",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",     "column" : "metric_name",   "required" : true },
+                { "option" : "category",  "filter" : "cdvr.msgcat",     "column" : "msgcat",        "required" : false}
+            ],
+            "custom-where-clause" : [
+                "api != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "cDVR[Metric|Response]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "response",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",  "column" : "metric_name", "required" : true },
+                { "option" : "category",  "filter" : "cdvr.msgcat",  "column" : "msgcat",      "required" : false},
+                { "option" : "api",       "filter" : "cdvr.api",     "column" : "api",         "required" : true }
+            ],
+            "custom-where-clause" : [
+                "response != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "cDVR[Metric|State]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "state != ''"
+            ]
+        },
+        "cDVR[Metric|Stream]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "stream",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "stream in ('dvr')"
+            ]
+        },
+        "cDVR[Metric|Channel]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "channel",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true },
+                { "option" : "states",   "filter" : "cdvr.state",   "column" : "state",       "required" : false}
+            ],
+            "custom-where-clause" : [
+                "channel != ''"
+            ]
+        },
+        "cDVR[Metric|Content]":{
+            "table-name"          : "viaops_metric_stva",
+            "distinct-column"     : "content",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",   "column" : "metric_name", "required" : true },
+                { "option" : "states",    "filter" : "cdvr.state",    "column" : "state",       "required" : false},
+                { "option" : "channels",  "filter" : "cdvr.channel",  "column" : "channel",     "required" : true }
+            ],
+            "custom-where-clause" : [
+                "content != ''"
+            ]
+        },
+        "cDVR|Application[Metric|Location]":{
+            "table-name"          : "viaops_metric_cdvr_application",
+            "distinct-column"     : "location",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "location != ''"
+            ]
+        },
+        "cDVR|Application[Metric|Host]":{
+            "table-name"          : "viaops_metric_cdvr_application",
+            "distinct-column"     : "host",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "host != ''"
+            ]
+        },
+        "cDVR|Application[Metric|Event]":{
+            "table-name"          : "viaops_metric_cdvr_application",
+            "distinct-column"     : "event_name",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "event_name != ''"
+            ]
+        },
+        "cDVR|Application[Metric|VMR]":{
+            "table-name"          : "viaops_metric_cdvr_application",
+            "distinct-column"     : "vmr_name",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "vmr_name != ''"
+            ]
+        },
+        "cDVR|Application[Metric|HTTP Response]":{
+            "table-name"          : "viaops_metric_cdvr_application",
+            "distinct-column"     : "http_response",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "http_response != ''"
+            ]
+        },
+        "cDVR|Application[Metric|Error Code]":{
+            "table-name"          : "viaops_metric_cdvr_application",
+            "distinct-column"     : "error_code",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "error_codes != ''"
+            ]
+        },
+        "cDVR|Application[Metric|Response Msg]":{
+            "table-name"          : "viaops_metric_cdvr_application",
+            "distinct-column"     : "response_msg",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "response_msg != ''"
+            ]
+        },        
+        "cDVR|Network[Metric|Host]":{
+            "table-name"          : "charter_network_metadata",
+            "distinct-column"     : "host",
+            "epoch-column"        : "",
+            "datekey-column"      : "",
+            "option-where-clause" : [
+            ],
+            "custom-where-clause" : ["service = 'cDVR'"
+            ]
+        },
+        "cDVR|Network[Metric|Node]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",            "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",         "column" : "metric_name", "required" : true },
+                { "option" : "hosts",    "filter" : "cdvr_network.host",   "column" : "host",        "required" : true }
+            ],
+            "custom-where-clause" : [
+                "node is not null and node != ''"
+            ]
+        },
+        "cDVR|Network[Metric|Location]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "location",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",            "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",         "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "location != ''"            ]
+        },
+        "cDVR|Network[Metric|IP]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "ip",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",            "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",         "column" : "metric_name", "required" : true },
+                { "option" : "hosts",    "filter" : "cdvr_network.host",    "column" : "host",        "required" : true }
+            ],
+            "custom-where-clause" : [
+                "ip != ''"            ]
+        },
+        "cDVR|Network[Metric|User]":{
+            "table-name"          : "viaops_metric_network",
+            "distinct-column"     : "usr",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",             "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",          "column" : "metric_name", "required" : true },
+                { "option" : "hosts",    "filter" : "cdvr_network.host",    "column" : "host",        "required" : true }
+            ],
+            "custom-where-clause" : [
+                "usr != ''"            ]
+        },
+        "cDVR[Call|CMTS]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='cDVR'",
+                "cmts != ''"
+            ]
+        },
+        "cDVR[Call|Controller]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "controller",
+            "option-where-clause" : [ 
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='cDVR'",
+                "controller != ''"
+            ]
+        },
+        "cDVR[Call|State]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='cDVR'",
+                "state != ''"
+            ]
+        },
+        "cDVR[Call|City]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "city",
+            "option-where-clause" : [ 
+                { "option" : "states",  "filter" : "cdvr_calls.state",  "column" : "state",       "required" : true },
+                { "option" : "metrics", "filter" : "data.metric",       "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='cDVR'",
+                "city != ''"
+            ]
+        },
+        "cDVR[Call|Issue]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "issue",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='cDVR'",
+                "issue != ''"
+            ]
+        },
+        "cDVR[Call|Cause]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cause",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='cDVR'",
+                "cause != ''"
+            ]
+        },
+        "cDVR[Call|Resolution]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "resolution",
+            "option-where-clause" : [
+                { "option" : "causes",  "filter" : "cdvr_calls.cause",  "column" : "cause",       "required" : false},
+                { "option" : "metrics", "filter" : "data.metric",       "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='cDVR'",
+                "resolution != ''"
+            ]
+        },
+        "cDVR[Call|Customer Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='cDVR'",
+                "cust_type != ''"
+            ]
+        },
+        "cDVR[Call|Node]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",          "column" : "metric_name",   "required" : true},
+                { "option" : "headends", "filter" : "cdvr_calls.headend",   "column" : "headend",       "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='cDVR'",
+                "node != ''"
+            ]
+        },
+        "cDVR[Call|Headend]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "headend",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='cDVR'",
+                "headend != ''"
+            ]
+        },
+        "cDVR[Call|Call Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "category",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='cDVR'",
+                "category != ''"
+            ]
+        },
+        "cDVR[Call|Market]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "kma",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='cDVR'",
+                "kma != ''"
+            ]
+        },
+        "cDVR[Call|Company]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='cDVR'",
+                "company != ''"
+            ]
+        },
+        "SMB[Metric|APIName]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "api",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric", "column" : "metric_name", "required" : true },
+                { "option" : "category",  "filter" : "smb.msgcat",  "column" : "msgcat",      "required" : false}
+            ],
+            "custom-where-clause" : [
+                "api != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SMB[Metric|Browser]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "browser",
+            "option-where-clause" : [
+                { "option" : "metrics",     "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "browser != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SMB[Metric|Category]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "msgcat",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "msgcat != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "SMB[Metric|Company]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",    "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "company != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SMB[Metric|Device]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "device",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "device != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SMB[Metric|DeviceandVersion]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "deviceandversion",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "smb.device", "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric","column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "deviceandversion != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SMB[Metric|Page]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "page",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "page != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "SMB[Metric|Platform]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "platform",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "smb.device", "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric","column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "platform != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SMB[Metric|APIResponse]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "response",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric", "column" : "metric_name", "required" : true },
+                { "option" : "api",       "filter" : "smb.api",     "column" : "api",         "required" : true }
+            ],
+            "custom-where-clause" : [
+                "response != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "SMB[Metric|State]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "state != '' and state != 'null'"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SMB[Metric|Version]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "version",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "smb.device",   "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "version != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SMB[Call|CMTS]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "cmts != ''"
+            ]
+        },
+        "SMB[Call|Controller]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "controller",
+            "option-where-clause" : [ 
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "controller != ''"
+            ]
+        },
+        "SMB[Call|State]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "state != ''"
+            ]
+        },
+        "SMB[Call|City]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "city",
+            "option-where-clause" : [
+                { "option" : "states",  "filter" : "smb_calls.state", "column" : "state",       "required" : true },
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "city != ''"
+            ]
+        },
+        "SMB[Call|Issue]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "issue",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "issue != ''"
+            ]
+        },
+        "SMB[Call|Cause]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cause",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "cause != ''"
+            ]
+        },
+        "SMB[Call|Resolution]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "resolution",
+            "option-where-clause" : [
+                { "option" : "causes",  "filter" : "smb_calls.cause",   "column" : "cause",       "required" : false},
+                { "option" : "metrics", "filter" : "data.metric",       "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "resolution != ''"
+            ]
+        },
+        "SMB[Call|Customer Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "cust_type != ''"
+            ]
+        },
+        "SMB[Call|Node]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",          "column" : "metric_name",   "required" : true},
+                { "option" : "headends", "filter" : "smb_calls.headend",    "column" : "headend",       "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "node != ''"
+            ]
+        },
+        "SMB[Call|Headend]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "headend",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "headend != ''"
+            ]
+        },
+        "SMB[Call|Call Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "category",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "category != ''"
+            ]
+        },
+        "SMB[Call|Market]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "kma",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "kma != ''"
+            ]
+        },
+        "SMB[Call|Company]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "company != ''"
+            ]
+        },
+        "SpecNet[Metric|APIName]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "api",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",     "column" : "metric_name", "required" : true },
+                { "option" : "category",  "filter" : "specnet.msgcat",  "column" : "msgcat",      "required" : false}
+            ],
+            "custom-where-clause" : [
+                "api != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecNet[Metric|Browser]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "browser",
+            "option-where-clause" : [
+                { "option" : "browsers",    "filter" : "specnet.browser",   "column" : "browser",      "required" : false},
+                { "option" : "metrics",     "filter" : "data.metric",       "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "browser != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecNet[Metric|Category]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "msgcat",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "msgcat != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "SpecNet[Metric|Company]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",    "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "company != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecNet[Metric|Device]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "device",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "device != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecNet[Metric|DeviceandVersion]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "deviceandversion",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "specnet.device",   "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",      "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "deviceandversion != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecNet[Metric|Page]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "page",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "page != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "SpecNet[Metric|Platform]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "platform",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "specnet.device",   "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",      "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "platform != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecNet[Metric|APIResponse]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "response",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",     "column" : "metric_name", "required" : true },
+                { "option" : "api",       "filter" : "specnet.api",     "column" : "api",         "required" : true }
+            ],
+            "custom-where-clause" : [
+                "response != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "SpecNet[Metric|State]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "state != '' and state != 'null'"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecNet[Metric|Version]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "version",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "specnet.device",   "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",      "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "version != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecNet[Call|CMTS]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "cmts != ''"
+            ]
+        },
+        "SpecNet[Call|Controller]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "controller",
+            "option-where-clause" : [ 
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "controller != ''"
+            ]
+        },
+        "SpecNet[Call|State]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "state != ''"
+            ]
+        },
+        "SpecNet[Call|City]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "city",
+            "option-where-clause" : [
+                { "option" : "states",  "filter" : "specnet_calls.state",   "column" : "state",       "required" : true },
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "city != ''"
+            ]
+        },
+        "SpecNet[Call|Issue]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "issue",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "issue != ''"
+            ]
+        },
+        "SpecNet[Call|Cause]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cause",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "cause != ''"
+            ]
+        },
+        "SpecNet[Call|Resolution]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "resolution",
+            "option-where-clause" : [
+                { "option" : "causes",  "filter" : "specnet_calls.cause",   "column" : "cause",       "required" : false},
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "resolution != ''"
+            ]
+        },
+        "SpecNet[Call|Customer Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "cust_type != ''"
+            ]
+        },
+        "SpecNet[Call|Node]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "node",
+            "option-where-clause" : [   
+                { "option" : "metrics",  "filter" : "data.metric",          "column" : "metric_name",   "required" : true},
+                { "option" : "headends", "filter" : "specnet_calls.headend","column" : "headend",       "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "node != ''"
+            ]
+        },
+        "SpecNet[Call|Headend]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "headend",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "headend != ''"
+            ]
+        },
+        "SpecNet[Call|Call Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "category",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "category != ''"
+            ]
+        },
+        "SpecNet[Call|Market]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "kma",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "kma != ''"
+            ]
+        },
+        "SpecNet[Call|Company]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "company != ''"
+            ]
+        },
+        "SpecMobile[Metric|APIName]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "api",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",         "column" : "metric_name", "required" : true },
+                { "option" : "category",  "filter" : "specmobile.msgcat",   "column" : "msgcat",      "required" : false}
+            ],
+            "custom-where-clause" : [
+                "api != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecMobile[Metric|Browser]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "browser",
+            "option-where-clause" : [
+                { "option" : "browsers",    "filter" : "specmobile.browser",    "column" : "browser",      "required" : false},
+                { "option" : "metrics",     "filter" : "data.metric",           "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "browser != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecMobile[Metric|Category]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "msgcat",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "msgcat != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "SpecMobile[Metric|Company]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",    "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "company != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecMobile[Metric|Device]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "device",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "device != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecMobile[Metric|DeviceandVersion]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "deviceandversion",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "specmobile.device",    "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",          "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "deviceandversion != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecMobile[Metric|Page]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "page",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "page != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "SpecMobile[Metric|Platform]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "platform",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "specmobile.device",    "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",          "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "platform != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecMobile[Metric|APIResponse]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "response",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",         "column" : "metric_name", "required" : true },
+                { "option" : "api",       "filter" : "specmobile.api",      "column" : "api",         "required" : true }
+            ],
+            "custom-where-clause" : [
+                "response != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "SpecMobile[Metric|State]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "state != '' and state != 'null'"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecMobile[Metric|Version]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "version",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "specmobile.device",    "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",          "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "version != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecMobile[Call|CMTS]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "cmts != ''"
+            ]
+        },
+        "SpecMobile[Call|Controller]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "controller",
+            "option-where-clause" : [ 
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "controller != ''"
+            ]
+        },
+        "SpecMobile[Call|State]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                    { "option" : "metrics", "filter" : "data.metric",   "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "state != ''"
+            ]
+        },
+        "SpecMobile[Call|City]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "city",
+            "option-where-clause" : [
+                { "option" : "states",  "filter" : "specmobile_calls.state",    "column" : "state",       "required" : true },
+                { "option" : "metrics", "filter" : "data.metric",               "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "city != ''"
+            ]
+        },
+        "SpecMobile[Call|Issue]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "issue",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "issue != ''"
+            ]
+        },
+        "SpecMobile[Call|Cause]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cause",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "cause != ''"
+            ]
+        },
+        "SpecMobile[Call|Resolution]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "resolution",
+            "option-where-clause" : [
+                { "option" : "causes",  "filter" : "specmobile_calls.cause",    "column" : "cause",       "required" : false},
+                { "option" : "metrics", "filter" : "data.metric",               "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "resolution != ''"
+            ]
+        },
+        "SpecMobile[Call|Customer Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "cust_type != ''"
+            ]
+        },
+        "SpecMobile[Call|Node]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",              "column" : "metric_name",   "required" : true},
+                { "option" : "headends", "filter" : "specmobile_calls.headend", "column" : "headend",       "required" : true}
+
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "node != ''"
+            ]
+        },
+        "SpecMobile[Call|Headend]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "headend",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "headend != ''"
+            ]
+        },
+        "SpecMobile[Call|Call Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "category",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "category != ''"
+            ]
+        },
+        "SpecMobile[Call|Market]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "kma",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "kma != ''"
+            ]
+        },
+        "SpecMobile[Call|Company]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "company != ''"
+            ]
+        },
+        "MySpectrum[Metric|APIName]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "api",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",         "column" : "metric_name", "required" : true },
+                { "option" : "category",  "filter" : "myspectrum.msgcat",   "column" : "msgcat",      "required" : false}
+            ],
+            "custom-where-clause" : [
+                "api != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "MySpectrum[Metric|Browser]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "browser",
+            "option-where-clause" : [
+                { "option" : "browsers",    "filter" : "myspectrum.browser","column" : "browser",      "required" : false},
+                { "option" : "metrics",     "filter" : "data.metric",       "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "browser != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "MySpectrum[Metric|Category]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "msgcat",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "msgcat != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "MySpectrum[Metric|Company]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",    "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "company != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "MySpectrum[Metric|Device]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "device",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "device != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "MySpectrum[Metric|DeviceandVersion]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "deviceandversion",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "myspectrum.device","column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",      "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "deviceandversion != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "MySpectrum[Metric|Page]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "page",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "page != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "MySpectrum[Metric|Platform]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "platform",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "myspectrum.device", "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",       "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "platform != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "MySpectrum[Metric|APIResponse]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "response",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",         "column" : "metric_name", "required" : true },
+                { "option" : "api",       "filter" : "myspectrum.api",      "column" : "api",         "required" : true }
+            ],
+            "custom-where-clause" : [
+                "response != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "MySpectrum[Metric|State]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics",   "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "state != '' and state != 'null'"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "MySpectrum[Metric|Version]":{
+            "table-name"          : "viaops_metric_portals",
+            "distinct-column"     : "version",
+            "option-where-clause" : [
+                { "option" : "devices",  "filter" : "myspectrum.device", "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",       "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "version != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "MySpectrum[Call|CMTS]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "cmts != ''"
+            ]
+        },
+        "MySpectrum[Call|Controller]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "controller",
+            "option-where-clause" : [ 
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "controller != ''"
+            ]
+        },
+        "MySpectrum[Call|State]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "state != ''"
+            ]
+        },
+        "MySpectrum[Call|City]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "city",
+            "option-where-clause" : [
+                { "option" : "states",  "filter" : "myspectrum_calls.state",    "column" : "state",       "required" : true },
+                { "option" : "metrics", "filter" : "data.metric",               "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "city != ''"
+            ]
+        },
+        "MySpectrum[Call|Issue]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "issue",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "issue != ''"
+            ]
+        },
+        "MySpectrum[Call|Cause]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cause",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "cause != ''"
+            ]
+        },
+        "MySpectrum[Call|Resolution]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "resolution",
+            "option-where-clause" : [
+                { "option" : "causes",  "filter" : "myspectrum_calls.cause",    "column" : "cause",       "required" : false},
+                { "option" : "metrics", "filter" : "data.metric",               "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "resolution != ''"
+            ]
+        },
+        "MySpectrum[Call|Customer Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "cust_type != ''"
+            ]
+        },
+        "MySpectrum[Call|Node]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",              "column" : "metric_name",   "required" : true},
+                { "option" : "headends", "filter" : "myspectrum_calls.headend", "column" : "headend",       "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "node != ''"
+            ]
+        },
+        "MySpectrum[Call|Headend]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "headend",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "headend != ''"
+            ]
+        },
+        "MySpectrum[Call|Call Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "category",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "category != ''"
+            ]
+        },
+        "MySpectrum[Call|Market]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "kma",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "kma != ''"
+            ]
+        },
+        "MySpectrum[Call|Company]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='Portals'",
+                "company != ''"
+            ]
+        },
+        "SpecGuide[Metric|Device]":{
+            "table-name"          : "viaops_metric_specguide",
+            "distinct-column"     : "device",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "device != ''"
+            ]
+        },
+        "SpecGuide[Metric|Version]":{
+            "table-name"          : "viaops_metric_specguide",
+            "distinct-column"     : "version",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "devices",  "filter" : "specguide.device", "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",      "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "version != ''"
+            ]
+        },
+        "SpecGuide[Metric|Connection]":{
+            "table-name"          : "viaops_metric_specguide",
+            "distinct-column"     : "connection",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "devices",  "filter" : "specguide.device", "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",      "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "connection != ''"
+            ]
+        },
+        "SpecGuide[Metric|Division]":{
+            "table-name"          : "viaops_metric_specguide",
+            "distinct-column"     : "division",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",          "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "division != ''"
+            ]
+        },
+        "SpecGuide[Metric|Region]":{
+            "table-name"          : "viaops_metric_specguide",
+            "distinct-column"     : "region",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",          "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "region != '' and region != 'Test'"
+            ]
+        },
+        "SpecGuide[Metric|City]":{
+            "table-name"          : "viaops_metric_specguide",
+            "distinct-column"     : "city",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",          "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "city != ''"
+            ]
+        },
+        "SpecGuide[Metric|DeviceandVersion]":{
+            "table-name"          : "viaops_metric_specguide",
+            "distinct-column"     : "deviceandversion",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "devices",  "filter" : "specguide.device", "column" : "device",        "required" : false},
+                { "option" : "metrics",  "filter" : "data.metric",      "column" : "metric_name",   "required" : true }
+            ],
+            "custom-where-clause" : [
+                "deviceandversion != ''"
+            ]
+        },
+        "SpecGuide[Metric|APICategory]":{
+            "table-name"          : "viaops_metric_specguide",
+            "distinct-column"     : "msgcat",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",  "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "msgcat != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "SpecGuide[Metric|APIName]":{
+            "table-name"          : "viaops_metric_specguide",
+            "distinct-column"     : "api",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",   "filter" : "data.metric",     "column" : "metric_name", "required" : true },
+                { "option" : "category",  "filter" : "specguide.msgcat","column" : "msgcat",      "required" : false}
+            ],
+            "custom-where-clause" : [
+                "api != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }
+        },
+        "SpecGuide[Metric|Response]":{
+            "table-name"          : "viaops_metric_specguide",
+            "distinct-column"     : "response",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",   "filter" : "data.metric",       "column" : "metric_name", "required" : true },
+                { "option" : "category",  "filter" : "specguide.msgcat",  "column" : "msgcat",      "required" : false},
+                { "option" : "api",       "filter" : "specguide.api",     "column" : "api",         "required" : true }
+            ],
+            "custom-where-clause" : [
+                "response != ''"
+            ],
+            "dimension-clause-attributes" : {
+                "svc"  : "data.svc",
+                "comp" : "data.comp",
+                "app"  : "data.app"
+            }            
+        },
+        "SpecGuide[Metric|Stream]":{
+            "table-name"          : "viaops_metric_specguide",
+            "distinct-column"     : "stream",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",   "filter" : "data.metric",   "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "stream != '' and stream != 'null'"
+            ]
+        },
+        "SpecGuide[Metric|Company]":{
+            "table-name"          : "viaops_metric_specguide",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "apps",     "filter" : "data.app",     "column" : "app",         "required" : true },
+                { "option" : "metrics",   "filter" : "data.metric",    "column" : "metric_name",  "required" : true }
+            ],
+            "custom-where-clause" : [
+                "company != ''"
+            ]
+        },
+        "SpecGuide[Call|CMTS]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cmts",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='SpecGuide'",
+                "cmts != ''"
+            ]
+        },
+        "SpecGuide[Call|Controller]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "controller",
+            "option-where-clause" : [ 
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='SpecGuide'",
+                "controller != ''"
+            ]
+        },
+        "SpecGuide[Call|State]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "state",
+            "option-where-clause" : [
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='SpecGuide'",
+                "state != ''"
+            ]
+        },
+        "SpecGuide[Call|City]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "city",
+            "option-where-clause" : [
+                { "option" : "states",  "filter" : "specguide_calls.state", "column" : "state",       "required" : true },
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='SpecGuide'",
+                "city != ''"
+            ]
+        },
+        "SpecGuide[Call|Issue]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "issue",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='SpecGuide'",
+                "issue != ''"
+            ]
+        },
+        "SpecGuide[Call|Cause]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cause",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='SpecGuide'",
+                "cause != ''"
+            ]
+        },
+        "SpecGuide[Call|Resolution]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "resolution",
+            "option-where-clause" : [
+                { "option" : "causes",  "filter" : "specguide_calls.cause", "column" : "cause",       "required" : false},
+                { "option" : "metrics", "filter" : "data.metric",           "column" : "metric_name", "required" : true }
+            ],
+            "custom-where-clause" : [
+                "service='SpecGuide'",
+                "resolution != ''"
+            ]
+        },
+        "SpecGuide[Call|Customer Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "cust_type",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='SpecGuide'",
+                "cust_type != ''"
+            ]
+        },
+        "SpecGuide[Call|Node]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "node",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",              "column" : "metric_name",   "required" : true},
+                { "option" : "headends", "filter" : "specguide_calls.headend",  "column" : "headend",       "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='SpecGuide'",
+                "node != ''"
+            ]
+        },
+        "SpecGuide[Call|Headend]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "headend",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='SpecGuide'",
+                "headend != ''"
+            ]
+        },
+        "SpecGuide[Call|Call Type]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "category",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='SpecGuide'",
+                "category != ''"
+            ]
+        },
+        "SpecGuide[Call|Market]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "kma",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='SpecGuide'",
+                "kma != ''"
+            ]
+        },
+        "SpecGuide[Call|Company]":{
+            "table-name"          : "viaops_metric_customer_calls_view",
+            "distinct-column"     : "company",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "service='SpecGuide'",
+                "company != ''"
+            ]
+        },
+        "Digital Operations[Metric|Data Source]": {
+            "table-name"          : "viaops_metric_monitoring",
+            "distinct-column"     : "data_source",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "data_source != ''"
+            ]
+        },
+        "Digital Operations[Metric|Host]": {
+            "table-name"          : "viaops_metric_monitoring",
+            "distinct-column"     : "host",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "host != ''"
+            ]
+        },
+        "Digital Operations[Metric|Function]": {
+            "table-name"          : "viaops_metric_monitoring",
+            "distinct-column"     : "function",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "function != ''"
+            ]
+        },
+        "Digital Operations[Metric|Context]": {
+            "table-name"          : "viaops_metric_monitoring",
+            "distinct-column"     : "context",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "context != ''"
+            ]
+        },
+        "Digital Operations[Metric|User]": {
+            "table-name"          : "viaops_metric_monitoring_view",
+            "distinct-column"     : "user",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "user != ''"
+            ]
+        },
+        "Digital Operations[Metric|Server]": {
+            "table-name"          : "viaops_metric_monitoring",
+            "distinct-column"     : "server",
+            "option-where-clause" : [
+                { "option" : "metrics",  "filter" : "data.metric",  "column" : "metric_name",  "required" : true}
+            ],
+            "custom-where-clause" : [
+                "server != ''"
+            ]
+        }        
+    }
+}

@@ -1,0 +1,39 @@
+{
+	"sql-query-config" : {
+		"debug" : {
+			"*" : true
+		}
+    },
+    "data-source":{
+        "incident-model":"charter_ref_db",
+        "incident-history":"VT_ODA_QS",
+        "anomaly-config":"charter_ref_db",
+        "favorite-list":"charter_ref_db",
+        "notification-rules":"charter_ref_db",
+        "config-audit": "charter_ref_db"
+    },
+    "enable-config-audit": true,
+    "days-of-incidents":30,
+    "current-median-baseline":false,
+    "#score-factor-function":"median",
+    "score-factor-function":"mean",
+    "analytic-service-manifest":"/app/dbp/user/charter_admin/dbpm/Charter - Manifest/AnalyticServiceManifest",
+    "config-defaults":{
+        "Video":{
+            "mode":"percentile",
+            "metrics":[
+                "Video|STVA Entry|Quantum|Stat Login Failures",
+                "Video|STVA Entry|Quantum|Failed API Attempt|capabilitiesV3"
+            ]
+        },
+        "*":{
+            "mode":"percentile",
+            "defaults":{
+                "high":99,
+                "medium":97,
+                "low":95,
+                "warmup":93
+            }
+        }
+    }
+}

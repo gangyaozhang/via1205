@@ -1,0 +1,718 @@
+<AnalyticsExplorerView description="" name="Charter - Group Detail Popup" is_init="false">
+  <ModelInfo validated="false" nextPageId="2">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <BackgroundColor color="#f5f5f5"/>
+      <TileOpacity opacity="0"/>
+      <NoTileSpacing value="true"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="false"/>
+    <DWRSetting disable="false"/>
+    <CustomCSSSetting><![CDATA[@font-face {
+  font-family: vitriaDefaultFont;
+  src: url(/vitria-oi/rest/app/dbp/space/VIA%20Common%20Library/dbpm/VIA%20-%20FontResource?op=vt:dbp:resource:OxygenRegular.tff);
+}
+
+body, input, textarea, div, span, table, select, svg g, p, * {
+    font-family: vitriaDefaultFont,Arial,sans-serif !important;
+}
+
+
+.fa, .far, .fas {
+    font-family: Font Awesome\ 5 Free !important;
+}
+
+/*
+.tileContainer.caMainTile .content{
+    overflow: visible;
+}
+.tileContainer.caMainTile .content .rendererBox {
+    overflow: visible !important;
+}
+.tileContainer.caMainTile .content .rendererBox div:last-child {
+    overflow: visible !important;
+    z-index: 0 !important;
+}
+*/
+
+.caMainTile .tt.title.nowrap {
+    position: relative;
+    top: 0px !important;
+    border: none !important;
+}
+
+.demoContent .caMainTile .tt.title.nowrap {
+    top: 15px !important;
+}
+
+.overlay-button .dijitButton {
+    margin: 0;
+    padding: 0;
+    
+}
+
+.overlay-button .dijitButton .dijitButtonNode, 
+.overlay-button .dijitDropDownButton .dijitButtonNode, 
+.overlay-button .dijitComboButton .dijitButtonNode, 
+.overlay-button .dijitToggleButton .dijitButtonNode, 
+.overlay-button .HeaderButtonDiv,
+.overlay-button .dijitValidationTextBox, 
+.overlay-button .dijitSelect, 
+.overlay-button input.dijitTextBox, 
+.overlay-button select {
+    height: 15px;
+    background-image: none !important;
+    padding: 7px 10px !important;
+    border-radius: 0 !important;
+    margin-right: 5px !important;
+    font-size: 14px !important;
+    color: #2d3538 !important;
+    border: 1px solid rgba(0,0,0,0.15) !important;
+    box-shadow: none !important;
+}
+
+.overlay-button .dijitButtonNode:hover,
+.overlay-button .HeaderButtonDiv:hover {
+    color: white !important;
+    background: none !important;
+    background-color: #148ac4 !important;
+}
+
+.overlay-button .dijitValidationTextBox, 
+.overlay-button .dijitSelect {
+    padding: 9px 0px 1px 10px !important;
+    font-family: vitriaDefaultFont,Arial,sans-serif !important;
+    font-size: 14px !important;
+} 
+
+.overlay-button .dijitSelect .dijitArrowButtonContainer {
+    border: none !important;
+    top: -3px !important;
+    position: relative;
+}
+
+.overlay-button .dijitSelect .dijitArrowButtonContainer:before {
+    left: -118px;
+    content: 'Display:';
+    position: absolute;
+    font-size: 10px;
+    top: -4px;
+}
+
+.enumeration-control.dimension-control.dimension-filter-item-metric td.dijitReset.dijitRight.dijitButtonNode.dijitArrowButton.dijitDownArrowButton.dijitArrowButtonContainer {
+    top: -4px;
+    right: -14px;
+    position: relative;
+}
+
+.overlay-button .dijitValidationTextBox, 
+.overlay-button .dijitSelect {
+    padding: 9px 0px 1px 10px !important;
+    font-family: vitriaDefaultFont,Arial,sans-serif !important;
+    font-size: 14px !important;
+} 
+
+.overlay-button .dijitSelect .dijitReset.dijitInputField.dijitButtonText {
+    height: 15px !important; 
+    margin-top: 2px !important;
+}
+
+.overlay-button .dijitSelect {
+    height: 32px !important;
+}
+.overlay-button .dijitButtonNode:hover {
+    color: white !important;
+    background-color: #148ac4 !important;
+}
+
+
+
+
+
+
+
+.demoContent .tabbar.tabBarWithTitle {
+    background-color: rgba(16,35,37, 0.9) !important;
+}
+
+.demoContent .leftDivWithTitle TABLE {
+    float: left !important;
+}
+.demoContent .leftDivWithTitle {
+    position: absolute;
+    left: 45px;
+}
+
+.demoContent .tabbar .tabBarItem.tabTD{
+    color: white !important;   
+    font-weight: normal !important;
+
+}
+
+.demoContent .tabbar .tabBarItem.tabTD.dojoDndItemSelected {
+    font-weight: bold !important;   
+    border-top: none !important;
+}
+
+.caMainTile,
+.caMainPage {
+    padding: 0 !important;
+    left: -1px;
+}
+
+.demoContent .template-main {
+    right: 0px;
+    left: -2px;
+}
+
+
+
+.caMainPage .caMainTile .tabbar.tabBarWithTitle {
+    border: none !important;
+    border-bottom: 1px solid #148ac4 !important;
+}]]></CustomCSSSetting>
+    <Page id="1" name="Default" title="Default" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="caMainPage">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<style>
+    
+    .caPopupContainer {
+        width: 100%;
+        height: 100%;
+        background-color: white;
+    }
+    
+    .caPopupContainer .mainTile {
+        width: 100%;
+        height: calc( 100% - 50px );
+        
+    }
+    
+    .caPopupContainer .gutter {
+        width: 100%;
+        height: 30px;
+        background-color: #f5f5f5;
+    }
+    
+    
+    
+</style>
+
+<div class="caPopupContainer">
+
+    <div class="mainTile" data-vitria-type="tile" data-vitria-tile-name="GROUP_DETAILS"></div>
+    <div class="gutter" data-vitria-type="tile" data-vitria-tile-name="Gutter"></div>
+</div>]]></PageFrameContent>
+      <PageCustomCSS><![CDATA[.tileContainer.caMainTile {
+    padding: 0 10px 10px 10px !important;
+}
+
+.caMainPage .gutterTile {
+    padding: 0 !important;   
+}
+
+.caMainPage .gutterTile .titleholder {
+    padding: 0 !important;   
+}
+
+.gutterTile .contentContainer .content div {
+    background-color: #f5f5f5;
+}
+
+.caMainPage .contentContainer {
+    border: none !important;
+    border-top: none !important;
+}
+
+]]></PageCustomCSS>
+      <PageProperties/>
+      <Layout type="10" numRow="NaN" numCol="NaN" count="NaN" templateType="7" screenHeight="undefined" renderType="undefined" positions="[]" unitSize="undefined" viewRows="NaN" viewCols="NaN"/>
+      <frame_tile name="GROUP_DETAILS" title="Details: Group" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="caMainTile" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"block","color":"#555555"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{"_tileOpacity":"1","_tileBackgroundColor":"#ffffff"}]]></TileThemeSetting>
+        <DataViewer name="ax.DashboardView" label="Dashboard View" optional="false" minimode="false">
+          <Property value="/app/ax/space/testp/axv/Charter - Group Detail Content" name="model"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="Gutter" title="Tile1" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="gutterTile" parentSelect="false" advancedConfig="undefined" advancedDisable="undefined" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{"_tileOpacity":"0"}]]></TileThemeSetting>
+      </frame_tile>
+    </Page>
+    <DataFlow showFooter="true">
+      <Item id="node:1" type="ToolbarOverlay" label="Overlay Toolbar 0" _undefined_title="" _undefined_originHeight="" width="130" height="117" x="1230" y="20">
+        <dynOut id="dout:triggerClose" type="string" label="triggerClose" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:3" type="PortOut" label="Port OUT 0" _undefined_title="" originHeight="177" width="130" height="177" x="1410" y="20">
+        <dynIn id="din:0" type="any" label="closeTile" evaluate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:5" type="PortIn" label="Port IN 0" _undefined_title="" originHeight="117" width="130" height="177" x="84" y="128">
+        <dynOut id="dout:0" type="any[]" label="Filters" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="event[]" label="Selection" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="string" label="View" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:6" type="Tile" label="Tile 0" _undefined_title="" originHeight="177" width="130" height="177" x="280" y="128">
+        <dynIn id="din:Filters" type="any[]" label="Filters" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Selection" type="event[]" label="Selection" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:View" type="string" label="View" _undefined_default="" evaluate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:8" type="UserScript" label="Script 0" _undefined_title="" originHeight="117" width="130" height="117" x="980" y="334">
+        <dynIn id="din:0" type="any[]" label="In(0)" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="selectedGroup" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="selectedItem" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:9" type="UserScript" label="Script 1" _undefined_title="" originHeight="117" width="130" height="117" x="1240" y="334">
+        <dynIn id="din:0" type="any[]" label="grpIn" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any[]" label="CorrIn" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Out(0)" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="Out(1)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:10" type="Tile" label="Tile 1" _undefined_title="" originHeight="177" width="130" height="177" x="1440" y="354"/>
+      <Item id="node:11" type="Tile" label="Tile 2" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="820" y="334"/>
+      <Link srcId="node:1" srcPort="dout:triggerClose" tgtId="node:3" tgtPort="din:0"/>
+      <Link srcId="node:5" srcPort="dout:0" tgtId="node:6" tgtPort="din:Filters"/>
+      <Link srcId="node:5" srcPort="dout:1" tgtId="node:6" tgtPort="din:Selection"/>
+      <Link srcId="node:5" srcPort="dout:2" tgtId="node:6" tgtPort="din:View"/>
+      <Link srcId="node:8" srcPort="dout:1" tgtId="node:9" tgtPort="din:1"/>
+      <Link srcId="node:8" srcPort="dout:0" tgtId="node:9" tgtPort="din:0"/>
+      <Link srcId="node:11" srcPort="out:0" tgtId="node:8" tgtPort="din:0"/>
+      <Link srcId="node:9" srcPort="dout:1" tgtId="node:10" tgtPort="in:0"/>
+      <Input key="node:1/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#Gutter&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Gutter&quot;}]"/>
+      <Input key="node:1/cfg:toolbarItems/default" value="[{&quot;itemName&quot;:&quot;triggerClose&quot;,&quot;itemLabel&quot;:&quot;&quot;,&quot;itemType&quot;:&quot;textButton&quot;,&quot;extData&quot;:[{&quot;name&quot;:&quot;type&quot;,&quot;value&quot;:&quot;stateless&quot;},{&quot;name&quot;:&quot;label&quot;,&quot;value&quot;:&quot;Close&quot;}]}]"/>
+      <Input key="node:1/cfg:refCorner/default" value="&quot;TopRight&quot;"/>
+      <Input key="node:1/cfg:yOffset/default" value="-12"/>
+      <Input key="node:1/cfg:customClass/default" value="&quot;overlay-button action-buttons&quot;"/>
+      <Input key="node:1/cfg:xOffset/default" value="0"/>
+      <Input key="node:3/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;closeTile&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:1/in:0/evaluate" value="&quot;ignore&quot;"/>
+      <Input key="node:1/cfg:frameStyle/default" value="[{&quot;name&quot;:&quot;padding-top&quot;,&quot;value&quot;:&quot;0&quot;},{&quot;name&quot;:&quot;padding-bottom&quot;,&quot;value&quot;:&quot;0&quot;},{&quot;name&quot;:&quot;padding-left&quot;,&quot;value&quot;:&quot;0&quot;},{&quot;name&quot;:&quot;padding-right&quot;,&quot;value&quot;:&quot;0&quot;},{&quot;name&quot;:&quot;border&quot;,&quot;value&quot;:&quot;none&quot;},{&quot;name&quot;:&quot;border-radius&quot;,&quot;value&quot;:&quot;0&quot;},{&quot;name&quot;:&quot;box-shadow&quot;,&quot;value&quot;:&quot;none&quot;},{&quot;name&quot;:&quot;background-color&quot;,&quot;value&quot;:&quot;transparent&quot;},{&quot;name&quot;:&quot;color&quot;,&quot;value&quot;:&quot;#2d3538&quot;},{&quot;name&quot;:&quot;vt-extended-styles&quot;,&quot;value&quot;:&quot;&quot;}]"/>
+      <Input key="node:5/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Filters&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;View&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:5/cfg:schema/default" value="&quot;var fields = \&quot;detect,call_detect,local_detect,local_call_detect,id,dim_values,correlated_count,\&quot;\n           + \&quot;service_label,sub_service_label,component_label,metric_label,\&quot;\n           + \&quot;anomaly_window,anomalies,min_score,max_score,display_max,status,duration,call_duration,\&quot;\n           + \&quot;start_epoch,end_epoch,event_epoch,cust_call_start_tm,cust_call_end_tm,\&quot;\n           + \&quot;start_date,end_date,event_date,call_date,\&quot;\n           + \&quot;metric_measure,metric_baseline,cust_call_count,cust_call_baseline,\&quot;\n           + \&quot;service,sub_service,sub_service_label,severity,\&quot;\n           + \&quot;score_min_max,metric_value_bl,call_count_bl,causation,type,notification,score_level\&quot;;\nvar schema = fields.split(\&quot;,\&quot;);\nfor (var i=0; i&lt;schema.length; i++) {\n    schema[i] = {\n        name  : schema[i],\n        label : schema[i],\n        type  : \&quot;string\&quot;\n    };\n}\nsetOutputSchema(\&quot;dout:1\&quot;, schema);\n&quot;"/>
+      <Input key="node:6/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#GROUP_DETAILS&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;GROUP_DETAILS&quot;}]"/>
+      <Input key="node:8/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;selectedGroup&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;selectedItem&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:8/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;In(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:8/cfg:model/default" value="&quot;var selection = getInput( \&quot;din:0\&quot; ) || [];\n\nif( selection.length &gt; 0 ){\n    if( selection[0][\&quot;_type\&quot;] == \&quot;group\&quot; ){\n        setOutput( \&quot;dout:0\&quot;, selection )   \n    } else {\n        setOutput( \&quot;dout:1\&quot;, selection )\n    }\n    \n}&quot;"/>
+      <Input key="node:8/cfg:schema/default" value="&quot;setOutputSchema( \&quot;dout:0\&quot;, getInputSchema( \&quot;din:0\&quot; ) );&quot;"/>
+      <Input key="node:9/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;grpIn&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;CorrIn&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:9/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Out(1)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:9/cfg:model/default" value="&quot;if( port != null ){\n    \n    var selection = getInput( \&quot;din:0\&quot; ) || [];\n    var corrSel   = getInput( \&quot;din:1\&quot; ) || [];\n    \n    if( selection.length &gt; 0 ){\n        var sel = selection[0];\n        var dim = sel[\&quot;dim_labels\&quot;];\n        \n        if( dim &amp;&amp; dim != null &amp;&amp; dim != \&quot;\&quot; ){\n            setOutput(\&quot;dout:0\&quot;, {\n                tile : {\n                    title : {\n                        text : \&quot;Incidents for Leading Indicator: \&quot; + dim + \&quot; ( click for trend ) \&quot;\n                    }\n                }\n            });  \n        }\n        \n    }\n    \n    var trendTitleEvt = {\n                            tile : {\n                                title : {\n                                    text : \&quot;Leading Metric Trending\&quot;\n                                }\n                            }\n                        };\n            \n            \n    if( corrSel.length &gt; 0 ){\n         var incident   = corrSel[0];\n         var incMetric  = incident[\&quot;dim_labels\&quot;];\n         \n         trendTitleEvt.tile.title.text = \&quot;Performance Trending\&quot;;\n        \n    } \n    \n    setOutput( \&quot;dout:1\&quot;, trendTitleEvt );\n    \n    \n}&quot;"/>
+      <Input key="node:10/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#TREND_CHART&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;TREND_CHART&quot;}]"/>
+      <Input key="node:11/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#INCIDENT_HISTORY&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;INCIDENT_HISTORY&quot;}]"/>
+      <Schema id="node:1/out:0">
+        <JSON value="{&quot;name&quot;:&quot;triggerClose&quot;,&quot;type&quot;:&quot;string&quot;,&quot;label&quot;:&quot;triggerClose&quot;}"/>
+      </Schema>
+      <Schema id="node:5/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;detect&quot;,&quot;label&quot;:&quot;detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_detect&quot;,&quot;label&quot;:&quot;call_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_detect&quot;,&quot;label&quot;:&quot;local_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_call_detect&quot;,&quot;label&quot;:&quot;local_call_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;correlated_count&quot;,&quot;label&quot;:&quot;correlated_count&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_label&quot;,&quot;label&quot;:&quot;component_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomalies&quot;,&quot;label&quot;:&quot;anomalies&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_score&quot;,&quot;label&quot;:&quot;min_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_score&quot;,&quot;label&quot;:&quot;max_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_max&quot;,&quot;label&quot;:&quot;display_max&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;duration&quot;,&quot;label&quot;:&quot;duration&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_duration&quot;,&quot;label&quot;:&quot;call_duration&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_epoch&quot;,&quot;label&quot;:&quot;event_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_start_tm&quot;,&quot;label&quot;:&quot;cust_call_start_tm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_end_tm&quot;,&quot;label&quot;:&quot;cust_call_end_tm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_date&quot;,&quot;label&quot;:&quot;start_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_date&quot;,&quot;label&quot;:&quot;end_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_date&quot;,&quot;label&quot;:&quot;event_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_date&quot;,&quot;label&quot;:&quot;call_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_measure&quot;,&quot;label&quot;:&quot;metric_measure&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_baseline&quot;,&quot;label&quot;:&quot;metric_baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_count&quot;,&quot;label&quot;:&quot;cust_call_count&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_baseline&quot;,&quot;label&quot;:&quot;cust_call_baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity&quot;,&quot;label&quot;:&quot;severity&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_min_max&quot;,&quot;label&quot;:&quot;score_min_max&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_value_bl&quot;,&quot;label&quot;:&quot;metric_value_bl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_count_bl&quot;,&quot;label&quot;:&quot;call_count_bl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation&quot;,&quot;label&quot;:&quot;causation&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;notification&quot;,&quot;label&quot;:&quot;notification&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_level&quot;,&quot;label&quot;:&quot;score_level&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:6/din:Selection">
+        <JSON value="{&quot;name&quot;:&quot;detect&quot;,&quot;label&quot;:&quot;detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_detect&quot;,&quot;label&quot;:&quot;call_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_detect&quot;,&quot;label&quot;:&quot;local_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_call_detect&quot;,&quot;label&quot;:&quot;local_call_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;correlated_count&quot;,&quot;label&quot;:&quot;correlated_count&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_label&quot;,&quot;label&quot;:&quot;component_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomalies&quot;,&quot;label&quot;:&quot;anomalies&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_score&quot;,&quot;label&quot;:&quot;min_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_score&quot;,&quot;label&quot;:&quot;max_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_max&quot;,&quot;label&quot;:&quot;display_max&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;duration&quot;,&quot;label&quot;:&quot;duration&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_duration&quot;,&quot;label&quot;:&quot;call_duration&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_epoch&quot;,&quot;label&quot;:&quot;event_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_start_tm&quot;,&quot;label&quot;:&quot;cust_call_start_tm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_end_tm&quot;,&quot;label&quot;:&quot;cust_call_end_tm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_date&quot;,&quot;label&quot;:&quot;start_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_date&quot;,&quot;label&quot;:&quot;end_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_date&quot;,&quot;label&quot;:&quot;event_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_date&quot;,&quot;label&quot;:&quot;call_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_measure&quot;,&quot;label&quot;:&quot;metric_measure&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_baseline&quot;,&quot;label&quot;:&quot;metric_baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_count&quot;,&quot;label&quot;:&quot;cust_call_count&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_baseline&quot;,&quot;label&quot;:&quot;cust_call_baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity&quot;,&quot;label&quot;:&quot;severity&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_min_max&quot;,&quot;label&quot;:&quot;score_min_max&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_value_bl&quot;,&quot;label&quot;:&quot;metric_value_bl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_count_bl&quot;,&quot;label&quot;:&quot;call_count_bl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation&quot;,&quot;label&quot;:&quot;causation&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;notification&quot;,&quot;label&quot;:&quot;notification&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_level&quot;,&quot;label&quot;:&quot;score_level&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:8/din:0">
+        <JSON value="{&quot;name&quot;:&quot;above&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;above&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;algorithm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;algorithm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;base_metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;base_metric_id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;below&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;below&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;call_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;causation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_duration&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;call_duration&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;component&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;component&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;component_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;config_metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;config_metric_id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;correlated_count&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;correlated_count&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_baseline&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_count&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_count&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_deviation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_deviation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_end_tm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_end_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_start_tm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_start_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;date_key&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;date_key&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;derived_severity&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;derived_severity&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;derived_severity_scale&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;derived_severity_scale&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_keys&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;dim_keys&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_labels&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;dim_labels&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_max&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;display_max&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;duration&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;duration&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;end_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;event_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;event_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_causation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;group_causation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_create_tm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;group_create_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_end_tm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;group_end_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;group_id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_operation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;group_operation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;idKey&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;idKey&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_severity&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;max_severity&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_severity_scale&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;max_severity_scale&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_baseline&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_measure&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_measure&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;notification&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;notification&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;operation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;operation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_factor&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;score_factor&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service_name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;severity&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity_scale&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;severity_scale&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;start_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;sub_service_name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_parent&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_parent&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;action&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;action&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:8/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;above&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;above&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;algorithm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;algorithm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;base_metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;base_metric_id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;below&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;below&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;call_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;causation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_duration&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;call_duration&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;component&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;component&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;component_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;config_metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;config_metric_id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;correlated_count&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;correlated_count&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_baseline&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_count&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_count&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_deviation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_deviation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_end_tm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_end_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_start_tm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_start_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;date_key&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;date_key&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;derived_severity&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;derived_severity&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;derived_severity_scale&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;derived_severity_scale&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_keys&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;dim_keys&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_labels&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;dim_labels&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_max&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;display_max&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;duration&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;duration&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;end_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;event_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;event_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_causation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;group_causation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_create_tm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;group_create_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_end_tm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;group_end_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;group_id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_operation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;group_operation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;idKey&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;idKey&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_severity&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;max_severity&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_severity_scale&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;max_severity_scale&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_baseline&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_measure&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_measure&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;notification&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;notification&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;operation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;operation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_factor&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;score_factor&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service_name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;severity&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity_scale&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;severity_scale&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;start_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;sub_service_name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_parent&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_parent&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;action&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;action&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:9/din:1">
+        <JSON value="{&quot;name&quot;:&quot;detect&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;detect&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_detect&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;call_detect&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_detect&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;local_detect&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_call_detect&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;local_call_detect&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;correlated_count&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;correlated_count&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;component_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_labels&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;dim_labels&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomalies&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;anomalies&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_score&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;min_score&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_score&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;max_score&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_max&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;display_max&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;duration&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;duration&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_duration&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;call_duration&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;event_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_start_tm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_start_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_end_tm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_end_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;start_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;end_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;event_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;call_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_measure&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_measure&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_baseline&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_count&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_count&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_baseline&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;severity&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_min_max&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;score_min_max&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_value_bl&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_value_bl&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_count_bl&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;call_count_bl&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;causation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;notification&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;notification&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_level&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;score_level&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;typeVal&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;typeVal&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;severityVal&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;severityVal&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:9/din:0">
+        <JSON value="{&quot;name&quot;:&quot;above&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;above&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;algorithm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;algorithm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;base_metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;base_metric_id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;below&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;below&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;call_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;causation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_duration&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;call_duration&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;component&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;component&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;component_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;config_metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;config_metric_id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;correlated_count&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;correlated_count&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_baseline&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_count&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_count&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_deviation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_deviation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_end_tm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_end_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_start_tm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cust_call_start_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;date_key&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;date_key&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;derived_severity&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;derived_severity&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;derived_severity_scale&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;derived_severity_scale&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_keys&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;dim_keys&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_labels&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;dim_labels&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_max&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;display_max&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;duration&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;duration&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;end_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;event_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;event_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_causation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;group_causation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_create_tm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;group_create_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_end_tm&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;group_end_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;group_id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_operation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;group_operation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;idKey&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;idKey&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_severity&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;max_severity&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_severity_scale&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;max_severity_scale&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_baseline&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_measure&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;metric_measure&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;notification&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;notification&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;operation&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;operation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_factor&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;score_factor&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service_name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;severity&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity_scale&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;severity_scale&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_date&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;start_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;sub_service_name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_parent&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_parent&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;action&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;action&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <DynInput id="node:3">
+        <Port id="din:0" type="any" label="closeTile" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:6">
+        <Port id="din:Filters" type="any[]" label="Filters" _undefined_default="" evaluate="always"/>
+        <Port id="din:Selection" type="event[]" label="Selection" _undefined_default="" evaluate="always"/>
+        <Port id="din:View" type="string" label="View" _undefined_default="" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:8">
+        <Port id="din:0" type="any[]" label="In(0)" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:9">
+        <Port id="din:0" type="any[]" label="grpIn" evaluate="always"/>
+        <Port id="din:1" type="any[]" label="CorrIn" evaluate="always"/>
+      </DynInput>
+      <DynOutput id="node:1">
+        <Port id="dout:triggerClose" type="string" label="triggerClose" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:5">
+        <Port id="dout:0" type="any[]" label="Filters" propagate="always"/>
+        <Port id="dout:1" type="event[]" label="Selection" propagate="always"/>
+        <Port id="dout:2" type="string" label="View" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:8">
+        <Port id="dout:0" type="any[]" label="selectedGroup" propagate="always"/>
+        <Port id="dout:1" type="any[]" label="selectedItem" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:9">
+        <Port id="dout:0" type="any" label="Out(0)" propagate="always"/>
+        <Port id="dout:1" type="any" label="Out(1)" propagate="always"/>
+      </DynOutput>
+      <Version id="node:1" version="3"/>
+      <Version id="node:3" version="1"/>
+      <Version id="node:5" version="1"/>
+      <Version id="node:6" version="1"/>
+      <Version id="node:8" version="2"/>
+      <Version id="node:9" version="2"/>
+      <Version id="node:10" version="1"/>
+      <Version id="node:11" version="1"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins/>
+  </ModelInfo>
+</AnalyticsExplorerView>

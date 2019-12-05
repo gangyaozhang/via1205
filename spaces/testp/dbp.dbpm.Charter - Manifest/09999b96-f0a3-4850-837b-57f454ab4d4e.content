@@ -1,0 +1,10 @@
+{
+	"IncidentTrend" : {
+		"dashboard" : "/app/ax/space/Charter Digital Operations/axv/Charter - Incident Snapshot Viewer",
+		"selector"  : "div.trend",
+		"format"    : "base64",
+		"config"    : {
+			"nestedElementSelector" : "div.trend.loadIncident g.barlayer g.points"
+		}
+	}
+}

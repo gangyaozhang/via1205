@@ -1,0 +1,67 @@
+{
+    "name":"Quantum",
+    "label":"Client",
+    "items":[
+        {
+            "name": "Failed API Attempt",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "#metric-id":"Quantum|Failed API Attempt|entry"
+            }
+        },
+        {
+            "name": "Failed API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        },
+        {
+            "name": "Stat Login Attempts",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Stat Login Failures",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "anomaly-config[5/5]":{
+                    "median_baseline":546
+                }
+            }
+        },
+        {
+            "name": "Stat Login Successes",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Successful API Attempt",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Successful API Response Time",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        },
+        {
+            "name": "Stat Avg Login Duration",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        }
+    ],
+    "meta":{
+        "dimension-values":[
+            {
+                "name":"api",
+                "value":["", "oauthToken","oauthAuthorize","oauthRequest","oauthDeauthorize","autoAuth","ssoTokenExchange","capabilitiesV2","capabilitiesV3","location","behindModemV1"]
+            },
+            {
+                "name":"stream",
+                "not":true,
+                "value":["dvr"]
+            }
+        ]
+    }
+}

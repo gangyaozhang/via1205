@@ -1,0 +1,25 @@
+{
+    "name": "VBO",
+    "label": "VBO",
+    "items": [
+        {
+            "name": "Stream Release Success",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Stream Release Error",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Stream Release Orphan Clean-up",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ],
+    "meta":{
+        "dimension-values":[
+        ]
+    }
+}

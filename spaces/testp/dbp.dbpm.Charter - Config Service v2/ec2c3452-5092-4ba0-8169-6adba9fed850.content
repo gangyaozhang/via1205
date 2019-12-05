@@ -1,0 +1,151 @@
+{
+	"sql-query-config" : {
+		"debug" : {
+			"*"     : true
+		}
+    },
+    "data-source":{
+        "parse-model":"charter_ref_db",
+        "baseline-model":"charter_ref_db",
+        "anomaly-model":"charter_ref_db",
+        "incident-model":"charter_ref_db",
+        "incident-group":"charter_ref_db",
+        "metric-qdc":"charter_ref_db",
+        "metric-info":"charter_ref_db",
+        "notification-model":"charter_ref_db",
+        "config-property":"charter_ref_db",
+        "config-audit": "charter_ref_db"
+    },
+    "enable-config-audit": true,
+    "evaluate-nested-sql":true,
+    "cache-nested-sql-result":true,
+    "default-column-names" : {
+        "app-name" : "app",
+        "metric-name" : "metric_name"
+    },
+    "analytic-service-manifest":"/app/dbp/user/charter_admin/dbpm/Charter - Manifest/AnalyticServiceManifest",
+    "query-params" : {
+        "#SpecGuide": {
+            "app-name" : "app",
+            "metric-name" : "metric_name"
+        },
+        "#*": {
+            "app-name" : "app",
+            "metric-name" : "metric_name"
+        }
+    },
+    "config-properties" : [
+        {
+            "name"  : "email_address",
+            "type"  : "string",
+            "label" : "Email Address",
+            "value" : "digital.operations@vitria.com"
+        },
+        {
+            "name"  : "dst_section",
+            "type"  : "section",
+            "label" : "DST Settings"
+        },
+        {
+            "name"  : "dst_label",
+            "type"  : "label",
+            "text"  : [
+                "Configure default values for analysis to take DST into account."
+            ]
+        },
+        {
+            "name"  : "time_zone",
+            "type"  : "enumeration",
+            "label" : "Time Zone",
+            "enums" : "${TIMEZONES}",
+            "value" : "Etc/GMT"
+        },
+        {
+            "name"  : "time_loop",
+            "type"  : "enumeration",
+            "label" : "Time Loop",
+            "enums" : [
+                "0=Use hour before DST change",
+                "1=Use hour after DST change"
+            ],
+            "value" : "1"
+        },
+        {
+            "name"  : "time_gap",
+            "type"  : "enumeration",
+            "label" : "Time Gap",
+            "enums" : [
+                "0=Use hour before DST change",
+                "1=Use hour after DST change"
+            ],
+            "value" : "0"
+        },
+        {
+            "name"  : "incident_group_section",
+            "type"  : "section",
+            "label" : "Incident Group Defaults"
+        },
+        {
+            "name"  : "incident_group_label",
+            "type"  : "label",
+            "text"  : [
+                "Configure default values for incident groups."
+            ]
+        },
+        {
+            "name"  : "default_correlation_time",
+            "type"  : "number",
+            "label" : "Correlation Time (secs)",
+            "value" : "600"
+        },
+        {
+            "name"  : "default_max_lookback",
+            "type"  : "number",
+            "label" : "Max Lookback (secs)",
+            "value" : "3600"
+        },
+        {
+            "name"  : "default_group_expire_after",
+            "type"  : "number",
+            "label" : "Expiration Time (secs)",
+            "value" : "86400"
+        }
+    ],
+    "access-roles-by-module" : {
+        "service" : {
+            "allow-else-deny" : ["Admin"]
+        },
+        "parse" : {
+            "allow-else-deny" : ["Admin"]
+        },
+        "baseline" : {
+            "allow-else-deny" : ["Admin"]
+        },
+        "anomaly" : {
+            "allow-else-deny" : ["Admin"]
+        },
+        "incident" : {
+            "allow-else-deny" : ["Admin", "Admin/Config"]
+        },
+        "notification" : {
+            "allow-else-deny" : ["Admin", "Admin/Config"]
+        },
+        "incident-group" : {
+            "allow-else-deny" : ["Admin"]
+        },
+        "calls-mapping" : {
+            "allow-else-deny" : ["Admin", "Admin/Config"]
+        },
+        "config-audit": {
+            "allow-else-deny" : ["Admin"]
+        }
+    },
+    "#config-labels" : {
+        "*" : {
+            "incident.min_call_vol"      : "Min QoS Value",
+            "incident.min_call_dev"      : "Min QoS Deviation (%)",
+            "incident.med_call_vol_pct"  : "Medium QoS Deviation (%)",
+            "incident.high_call_vol_pct" : "High QoS Deviation (%)"
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "0b83f689-9e89-481f-87d0-cf05610ba7d0"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": " ",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "0b83f689-9e89-481f-87d0-cf05610ba7d0,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Execution Monitor Service:5fe2b976-3655-475e-8159-697159b5117d,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Execution Monitor Service:138f16d3-ca64-4bc0-848f-b53a6631a7d1,/app/dbp/user/viaops_admin/dbpm/VIAOps - Base Service:4fa80cae-ab79-41c0-850f-68c371d35cbf,/app/dbp/user/viaops_admin/dbpm/VIAOps - Base Service:48639379-e854-4da3-8f0b-ea5ec00a4f4e,/app/dbp/user/viaops_admin/dbpm/VIAOps - Base Service:e7ad0afd-5240-433e-8fa8-3954ddc76d38",
+    "__references__": "/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Execution Monitor Service",
+    "modelStatus": "valid",
+    "name": "Charter - Execution Monitor Service v2"
+  }
+}

@@ -1,0 +1,442 @@
+[
+    {
+        "name"          : "specguide",
+        "label"         : "SpecGuide Metric Dimensions",
+        "name-style"    : "padding-left:0px;width:0px;",
+        "value-style"   : "padding:0px;width:100%;",
+        "display"       : "return helper.has(${data.svc}, ['SpecGuide']);",
+        "dimensions" : [{
+            "name"      : "api",
+            "label"     : "API Names",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['SpecGuide']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                      : "List of API names",
+                "dialog/title"                          : "Build API name list",
+                "dialog/description"                    : "Build list of API names to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Metric", "APIName"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "division",
+            "label"     : "Division / Controller",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['SpecGuide']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of division / controllers",
+                "dialog/title"                      : "Build division / controller list",
+                "dialog/description"                : "Build list of division / controllers to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Metric", "Division"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "device",
+            "label"     : "Devices",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['SpecGuide']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of devices",
+                "dialog/title"                      : "Build device list",
+                "dialog/description"                : "Build list of devices to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Metric", "Device"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "version",
+            "label"     : "Versions",
+            "dependent" : ["specguide.device"],
+            "enable"    : "return helper.isSet(${specguide.device})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of device-dependent versions",
+                "dialog/title"                      : "Build version list",
+                "dialog/description"                : "Build list of versions to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Metric", "Version"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "conn",
+            "label"     : "Connections",
+            "dependent" : ["specguide.device"],
+            "enable"    : "return helper.isSet(${specguide.device})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of device-dependent connection methods",
+                "dialog/title"                      : "Build connection method list",
+                "dialog/description"                : "Build list of connection methods to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Metric", "Connection"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "deviceandversion",
+            "label"     : "Device and Versions",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['SpecGuide']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of device and version combinations",
+                "dialog/title"                      : "Build device and version list",
+                "dialog/description"                : "Build list of device and version combinations to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Metric", "DeviceandVersion"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "msgcat",
+            "label"     : "API Categories",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['SpecGuide']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of API categories",
+                "dialog/title"                      : "Build API category list",
+                "dialog/description"                : "Build list of API categories to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Metric", "APICategory"]
+                }
+            },
+            "default" : []
+            },{
+            "name"      : "response",
+            "label"     : "Response Codes",
+            "dependent" : ["specguide.api"],
+            "enable"    : "return helper.has(${data.svc}, ['SpecGuide']) && helper.isSet(${specguide.api})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of API-dependent response codes",
+                "dialog/title"                      : "Build response code list",
+                "dialog/description"                : "Build list of response codes to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Metric", "Response"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "stream",
+            "label"     : "Stream Types",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['SpecGuide']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of stream types",
+                "dialog/title"                      : "Build stream type list",
+                "dialog/description"                : "Build list of stream types to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Metric", "Stream"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "region",
+            "label"     : "Region",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['SpecGuide']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of regions",
+                "dialog/title"                      : "Build region list",
+                "dialog/description"                : "Build list of regions to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Metric", "Region"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "city",
+            "label"     : "Cities",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['SpecGuide']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of cities",
+                "dialog/title"                      : "Build city list",
+                "dialog/description"                : "Build list of citiess to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Metric", "City"]
+                }
+            },
+            "default" : []
+            }, {
+            "name"      : "company",
+            "label"     : "Companies",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['SpecGuide']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of companies",
+                "dialog/title"                      : "Build company name list",
+                "dialog/description"                : "Build list of companies to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Metric", "Company"]
+                }
+            },
+            "default" : []
+        }]
+    }, 
+    {
+        "name" : "specguide_calls",
+        "label" : "SpecGuide Customer Call Dimensions",
+        "name-style" : "padding-left:0px;width:0px;",
+        "value-style" : "padding:0px;width:100%;",
+        "display" : "return helper.has(${data.svc}, ['SpecGuide']);",
+        "dimensions" : [{
+            "name" : "cmts",
+            "label" : "CMTS",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['SpecGuide']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of CMTS",
+                "dialog/title" : "Build CMTS list",
+                "dialog/description" : "Build list of CMTS to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Call", "CMTS"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "controller",
+            "label" : "Controllers",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['SpecGuide']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of controllers",
+                "dialog/title" : "Build controller list",
+                "dialog/description" : "Build list of controllers to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Call", "Controller"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "state",
+            "label" : "States",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['SpecGuide']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of states",
+                "dialog/title" : "Build state list",
+                "dialog/description" : "Build list of states to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Call", "State"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "city",
+            "label" : "Cities",
+            "dependent" : ["specguide_calls.state"],
+            "enable" : "return helper.isSet(${specguide_calls.state})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of state-dependent cities",
+                "dialog/title" : "Build city list",
+                "dialog/description" : "Build list of cities to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Call", "City"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "issue",
+            "label" : "Issues",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['SpecGuide']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of issues",
+                "dialog/title" : "Build issue list",
+                "dialog/description" : "Build list of issues to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Call", "Issue"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "cause",
+            "label" : "Causes",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['SpecGuide']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of causes",
+                "dialog/title" : "Build cause list",
+                "dialog/description" : "Build list of causes to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Call", "Cause"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "resolution",
+            "label" : "Resolutions",
+            "dependent" : ["specguide_calls.cause"],
+            "enable" : "return helper.isSet(${specguide_calls.cause})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of cause-dependent resolutions",
+                "dialog/title" : "Build resolution list",
+                "dialog/description" : "Build list of resolutions to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Call", "Resolution"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "company",
+            "label" : "Companies",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['SpecGuide']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of companies",
+                "dialog/title" : "Build company list",
+                "dialog/description" : "Build list of companies to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Call", "Company"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "market",
+            "label" : "Markets",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['SpecGuide']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of markets",
+                "dialog/title" : "Build market list",
+                "dialog/description" : "Build list of markets to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Call", "Market"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "cust_type",
+            "label" : "Customer Types",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['SpecGuide']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of customer types",
+                "dialog/title" : "Build customer type list",
+                "dialog/description" : "Build list of customer types to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Call", "Customer Type"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "call_type",
+            "label" : "Call Types",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['SpecGuide']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of call types",
+                "dialog/title" : "Build call type list",
+                "dialog/description" : "Build list of call types to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Call", "Call Type"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "headend",
+            "label" : "Headends",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['SpecGuide']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of headends",
+                "dialog/title" : "Build headend list",
+                "dialog/description" : "Build list of headends to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Call", "Headend"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "node",
+            "label" : "Nodes",
+            "dependent" : ["specguide_calls.headend"],
+            "enable"    : "return helper.isSet(${specguide_calls.headend})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of headend-dependent nodes",
+                "dialog/title" : "Build node list",
+                "dialog/description" : "Build list of nodes to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["SpecGuide"],
+                    "module-context"  : ["Call", "Node"]
+                }
+            },
+            "default": []
+        }]
+    }]

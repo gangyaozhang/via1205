@@ -1,0 +1,6 @@
+{
+    "data-source" : {
+        "metric-info" : "charter_ref_db"
+    },
+    "dependent-plugin-manifest":"/app/dbp/user/charter_admin/dbpm/Charter - Manifest/DependentPluginManifest"
+}

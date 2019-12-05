@@ -1,0 +1,15 @@
+Select 
+    change_id, service, sub_service, scheduled_start_date, scheduled_end_date, actual_start_date, actual_end_date 
+from 
+    viaops_planned_maintenance
+WHERE  ${fromEpoch} BETWEEN actual_start_date AND actual_end_date
+    ${serviceWhereClause}
+    ${subServiceWhereClause}
+    AND  actual_start_date > 0
+
+group by change_id, service, sub_service, scheduled_start_date, scheduled_end_date, actual_start_date, actual_end_date
+
+order by 
+    scheduled_start_date desc, 
+    actual_start_date desc
+ 

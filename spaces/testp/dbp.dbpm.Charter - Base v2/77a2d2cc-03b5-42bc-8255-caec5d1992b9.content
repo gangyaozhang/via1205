@@ -1,0 +1,21 @@
+{
+    "name":"DHCP_LL",
+    "label":"DHCP",
+    "items":[
+        {
+            "name": "Leases Released",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Leases Granted",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Leases Renewed",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ]
+}

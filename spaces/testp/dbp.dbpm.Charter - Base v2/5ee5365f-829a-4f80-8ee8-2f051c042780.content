@@ -1,0 +1,36 @@
+{
+    "name":"FedAuth",
+    "label":"FedAuth Middle",
+    "items":[
+        {
+            "name": "LeaseLogger Timeout",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Spectrum Core Timeout",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "DSB Timeout",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "NetSrv Timeout",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "CCIM Timeout",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Whitelist Timeout",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ]
+}

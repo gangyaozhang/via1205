@@ -1,0 +1,34 @@
+{
+    "name":"mss",
+    "label":"MSS",
+    "items":[
+        {
+        	"name": "Log Ms Limit Total Size",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Ms Msg Created",
+        	"uom" : "Count",
+        	"aggr": "sum",
+        	"meta": {
+                "quick-access":true
+            }
+        },
+        {
+        	"name": "Log Ms Msg Deleted",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Ms Querying COS",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Proc Assert Fail",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        }
+    ]
+}

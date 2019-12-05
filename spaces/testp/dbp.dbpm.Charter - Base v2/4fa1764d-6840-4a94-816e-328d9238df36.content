@@ -1,0 +1,334 @@
+{
+    "comment-01":"score_method     = zscore | mzscore | cscore",
+    "comment-02":"stat_seasonality = hourly | weekly | none",
+    "comment-03":"anomaly_trigger  = upper | lower | both",
+    "comment-04":"seasonality      = dow (Day of Week) | ww (Weekday-Weekend)",
+
+    "*": {
+        "anomaly-windows":[
+            "5/5",
+            "30/5"
+        ],
+        "window-config":{
+            "window_size":300,
+            "anomaly_step_size":300,
+            "value_field":"metric_value",
+            "source_table":null,
+            "timezone":"GMT"
+        },
+        "window-config[5/5]":{
+            "window_size":300,
+            "anomaly_step_size":300,
+            "value_field":"metric_value",
+            "source_table":null,
+            "timezone":"GMT"
+        },
+        "window-config[30/5]":{
+            "window_size":1800,
+            "anomaly_step_size":300,
+            "value_field":"metric_value",
+            "source_table":null,
+            "timezone":"GMT"
+        },
+        "anomaly-config":{
+            "score_method":"zscore",
+            "stat_seasonality":"weekly",
+            "anomaly_trigger":"upper",
+            "lower_scale":1,
+            "upper_scale":1,
+            "enabled":1
+        },
+        "baseline-config":{
+            "algorithm":"baseline",
+            "fill_policy":0,
+            "seasonality":"dow",
+            "ignore_baseline":0,
+            "ignore_anomaly":0,
+            "enabled":1
+        },
+        "incident-config":{
+            "dim_keys":"app|metricname"
+        },
+        "incident-config[5/5]":{
+            "algorithm":"score",
+            "median_baseline":100,
+            "threshold_high":999999,
+            "threshold_med":999999,
+            "threshold_low":100,
+            "above":"y",
+            "below":"n",
+            "expire_after":86400,
+            "emit_notification":"none",
+            "generate":"n",
+            "warmup_threshold":75,
+            "warmup_period":900,
+            "cool_down_period":900,
+            "min_metric_vol":50,
+            "min_metric_deviation":1,
+            "min_call_vol":20,
+            "min_call_deviation":1,
+            "med_threshold_period":86400,
+            "med_call_vol_pct":1,
+            "high_threshold_period":900,
+            "high_call_vol_pct":2,
+            "causation_measure":"_diffPct",
+            "causation_top_count":5,
+            "causation_min_measure":0,
+            "causation_rule_name":"TopN",
+            "causation_suppl_measure":"_diff",
+            "metric_time_skew":300,
+            "call_time_skew":1500,
+            "call_metric_time_skew":1500,
+            "metric_hist_per":0,
+            "max_low_per":0,
+            "max_med_per":0,
+            "tot_max_low_per":86400,
+            "tot_max_med_per":86400
+        },
+        "incident-config[30/5]":{
+            "algorithm":"score",
+            "median_baseline":100,
+            "threshold_high":999999,
+            "threshold_med":999999,
+            "threshold_low":100,
+            "above":"y",
+            "below":"n",
+            "expire_after":86400,
+            "emit_notification":"none",
+            "generate":"n",
+            "warmup_threshold":75,
+            "warmup_period":900,
+            "cool_down_period":900,
+            "min_metric_vol":50,
+            "min_metric_deviation":1,
+            "min_call_vol":20,
+            "min_call_deviation":1,
+            "med_threshold_period":86400,
+            "med_call_vol_pct":1,
+            "high_threshold_period":900,
+            "high_call_vol_pct":2,
+            "causation_measure":"_diffPct",
+            "causation_top_count":5,
+            "causation_min_measure":0,
+            "causation_rule_name":"TopN",
+            "causation_suppl_measure":"_diff",
+            "metric_time_skew":300,
+            "call_time_skew":1500,
+            "call_metric_time_skew":1500,
+            "metric_hist_per":0,
+            "max_low_per":0,
+            "max_med_per":0,
+            "tot_max_low_per":86400,
+            "tot_max_med_per":86400
+        }
+    },
+    "E-Mail": {
+    },
+    "CHTR_E-Mail": {
+    },
+    "Video": {
+    },
+    "cDVR": {
+    },
+    "SpecGuide": {
+        "baseline-config":{
+            "score_method":"cscore",
+            "stat_seasonality":"weekly",
+            "anomaly_trigger":"both",
+            "lower_scale":false,
+            "upper_scale":true,
+            "enabled":true
+        },
+        "algorithm-config":{
+            "algorithm":"baseline",
+            "fill_policy":true,
+            "seasonality":"dow",
+            "ignore_baseline":false,
+            "ignore_anomaly":false,
+            "enabled":true
+        }
+    },
+    
+    "E-Mail|*|*" : {
+        "Customer Call Volume":{
+            "incident-config[5/5]":{
+                "median_baseline": 30
+            }
+        }
+    },
+    "Video|*|*" : {
+        "Customer Call Volume":{
+            "incident-config[5/5]":{
+                "median_baseline": 32
+            }
+        }
+    },
+    "SpecGuide|*|*" : {
+        "Customer Call Volume":{
+            "incident-config[5/5]":{
+                "median_baseline": 32
+            }
+        }
+    },
+    "cDVR|*|*" : {
+        "Customer Call Volume":{
+            "incident-config[5/5]":{
+                "median_baseline": 30
+            }
+        }
+    },
+    "CHTR_E-Mail|*|*" : {
+        "Customer Call Volume":{
+            "incident-config[5/5]":{
+                "median_baseline": 30
+            }
+        }
+    },
+
+    "Video|*|load balancer": {
+    },
+    "cDVR|*|load balancer": {
+    },
+    "Video|*|switch": {
+    },
+    "cDVR|*|switch": {
+    },
+    "Video|*|ipvideoauth": {
+    },
+    "SpecGuide|*|Quantum": {
+    },
+    "cDVR|*|ipvideoauth": {
+    },
+    "E-Mail|*|mss": {
+    },
+    "CHTR_E-Mail|*|mss": {
+    },
+    "E-Mail|*|cm": {
+    },
+    "CHTR_E-Mail|*|cm": {
+    },
+    
+    "*|*|imapserv": {
+        "Log Connections Made":{
+            "incident-config[5/5]":{
+                "median_baseline": 584036
+            }
+        }
+    },
+    "*|*|cm": {
+        "Outbound Log Delivered":{
+            "incident-config[5/5]":{
+                "median_baseline": 17068
+            }
+        }
+    },
+    "*|*|popserv": {
+        "Log Connections Made":{
+            "incident-config[5/5]":{
+                "median_baseline": 195829
+            }
+        }
+    },
+    "*|*|mss.1": {
+        "Log Ms Msg Created":{
+            "incident-config[5/5]":{
+                "median_baseline": 155590
+            }
+        }
+    },
+    "*|*|load balancer": {
+    },
+    "*|*|mss": {
+    },
+    "*|*|switch": {
+    },
+    "*|*|mta": {
+    },
+    "*|*|ipvideoauth": {
+    },
+    "*|*|Quantum": {
+    },
+    
+    "*|STVA Entry|ipvideoauth|Stat Login Failures":{
+        "incident-config[5/5]":{
+            "median_baseline": 546
+        }
+    },
+    "*|STVA Entry|ipvideoauth|Failed API Attempt":{
+        "incident-config[5/5]":{
+            "median_baseline": 80
+        }
+    },
+    "*|STVA Initialize|ipvideoauth|Failed API Attempt":{
+        "incident-config[5/5]":{
+            "median_baseline": 358
+        }
+    },
+    "*|STVA Initialize|ipvideoauth|Failed Stream Start":{
+        "incident-config[5/5]":{
+            "median_baseline": 330
+        }
+    },
+    "*|STVA Browse|ipvideoauth|Failed API Attempt":{
+        "incident-config[5/5]":{
+            "median_baseline": 80
+        }
+    },
+    "*|STVA Watch|ipvideoauth|Failed API Attempt":{
+        "incident-config[5/5]":{
+            "median_baseline": 49
+        }
+    },
+    "*|STVA Watch|ipvideoauth|Bitrate Downshifts":{
+        "incident-config[5/5]":{
+            "median_baseline": 110343
+        }
+    },
+    "*|STVA Watch|ipvideoauth|Broken Stream Streams":{
+        "incident-config[5/5]":{
+            "median_baseline": 204
+        }
+    },
+    "*|STVA Watch|ipvideoauth|Buffering Events":{
+        "incident-config[5/5]":{
+            "median_baseline": 13083
+        }
+    },
+    
+    "*|DVR|Quantum|Failed API Attempt":{
+        "incident-config[5/5]":{
+            "median_baseline": 80
+        }
+    },
+    "*|Channel Tune|Quantum|Failed API Attempt":{
+        "incident-config[5/5]":{
+            "median_baseline": 358
+        }
+    },
+    
+    "*|cDVR Play|ipvideoauth|Failed API Attempt":{
+        "incident-config[5/5]":{
+            "median_baseline": 30
+        }
+    },
+    "*|cDVR Play|ipvideoauth|Bitrate Downshifts":{
+        "incident-config[5/5]":{
+            "median_baseline": 30
+        }
+    },
+    "*|cDVR Play|ipvideoauth|Broken Stream Streams":{
+        "incident-config[5/5]":{
+            "median_baseline": 30
+        }
+    },
+    "*|cDVR Play|ipvideoauth|Successful API Attempt":{
+        "incident-config[5/5]":{
+            "median_baseline": 333
+        }
+    },
+    "*|cDVR Play|ipvideoauth|Buffering Events":{
+        "incident-config[5/5]":{
+            "median_baseline": 30
+        }
+    }
+}

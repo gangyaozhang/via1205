@@ -1,0 +1,19 @@
+<DashboardPluginModel is_init="false" name="Charter - Anomaly Viewer Service v2" description="">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services/>
+    <Resources>
+      <Resource uuid="18361251-0cc5-46d3-8f14-b597a3d950e0" name="QueryConfig" type="application/json" size="1151" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/user/viaops_admin/dbpm/VIAOps - Anomaly Viewer Service"/>
+      <Plugin uri="/app/dbp/space/testp/dbpm/Charter - Base v2"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

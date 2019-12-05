@@ -1,0 +1,9 @@
+INSERT INTO charter_customer_call_metadata (
+    issue,
+    cust_type,
+    company,
+    cause,
+    service_name,
+    service
+)
+VALUES (?, ?, ?, ?, ?, ?)

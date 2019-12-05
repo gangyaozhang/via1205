@@ -1,0 +1,3136 @@
+{
+    "module-name":"TrendAnalysis",
+    "mark-time-by":"StartTime",
+    "#mark-time-by":"EndTime",
+    "round-time-to":"StartTime",
+    "#round-time-to":"EndTime",
+    "aggregate-timezone":"(local)",
+    "baseline-weeks":5,
+    "evaluate-nested-sql":false,
+    "thread-pool-size": 4,
+    "query-time-out": 1200,
+    "query-delay-tolerance" : 2,
+    "#print-query-timestamp" : false,
+    "enable-dst" : true,
+    "week-start-day": 1,
+    "enable-baseline-options" : true,
+    "baseline-history-table" : "viaops_history_baseline",
+    "#metric-baseline-trend" : "none",
+    "#calls-baseline-trend" : "none",
+    "chunked-epoch-where-clause" : false,
+    "data-source" : {
+        "metric-info" : "charter_ref_db",
+        "analysis-cache" : "charter_ref_db",
+        "config-property":"charter_ref_db"
+    },
+    "cache-analysis-results" : true,
+    "cache-empty-results" : false,
+    "aggregation-interval":[
+        { "seconds": "12*H",  "interval": "5*M"  },
+        { "seconds": "25*H",  "interval": "15*M" },
+        { "seconds": "10*D",  "interval": "1*H"  },
+        { "seconds": "31*D",  "interval": "4*H"  },
+        { "seconds": "180*D", "interval": "1*D"  },
+        { "seconds": null,    "interval": "7*D"  }
+    ],
+    "default-column-names" : {
+        "metric-date-key" : "date_key",
+        "metric-app"      : "app",
+        "metric-name"     : "metric_name",
+        "metric-value"    : "metric_value",
+        "metric-epoch"    : "aggr_start_tm",
+        "calls-date-key"  : "date_key",
+        "calls-count"     : "metric_value",
+        "calls-epoch"     : "aggr_start_tm"
+    },
+    "sql-query-config" : {
+        "debug" : {
+            "*" : true
+        }
+    },
+    "service-queries":{
+        "Legacy_VOD":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_legacy_vod",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"legacy_vod.host",           "column":"host",        "group":false},
+                    { "filter":"legacy_vod.region",         "column":"region",      "group":false},
+                    { "filter":"legacy_vod.market",         "column":"market",      "group":false},
+                    { "filter":"legacy_vod.market_alias",   "column":"market_alias","group":false},
+                    { "filter":"legacy_vod.source_type",    "column":"source_type", "group":false},
+                    { "filter":"legacy_vod.reason",         "column":"reason",      "group":false}
+                 ],
+                "metric-where-clause":[ ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"legacy_vod_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"legacy_vod_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"legacy_vod_calls.state",      "column":"state",       "group":false},
+                    { "filter":"legacy_vod_calls.city",       "column":"city",        "group":false},
+                    { "filter":"legacy_vod_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"legacy_vod_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"legacy_vod_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"legacy_vod_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"legacy_vod_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"legacy_vod_calls.node",       "column":"node",        "group":false},
+                    { "filter":"legacy_vod_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"legacy_vod_calls.company",    "column":"company",     "group":false},
+                    { "filter":"legacy_vod_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Connectivity":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_connectivity",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"connectivity.company",          "column":"company",     "group":false},
+                    { "filter":"connectivity.location",         "column":"location",    "group":false},
+                    { "filter":"connectivity.host",             "column":"host",        "group":true},
+                    { "filter":"connectivity.interface",        "column":"interface_name","group":false},
+                    { "filter":"connectivity.cmts",             "column":"cmts",        "group":true}
+                 ],
+                "metric-where-clause":[ ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"connectivity_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"connectivity_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"connectivity_calls.state",      "column":"state",       "group":false},
+                    { "filter":"connectivity_calls.city",       "column":"city",        "group":false},
+                    { "filter":"connectivity_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"connectivity_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"connectivity_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"connectivity_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"connectivity_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"connectivity_calls.node",       "column":"node",        "group":false},
+                    { "filter":"connectivity_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"connectivity_calls.company",    "column":"company",     "group":false},
+                    { "filter":"connectivity_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Customer":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_customer_calls_view",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                 ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[ ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"customer_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"customer_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"customer_calls.state",      "column":"state",       "group":false},
+                    { "filter":"customer_calls.city",       "column":"city",        "group":false},
+                    { "filter":"customer_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"customer_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"customer_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"customer_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"customer_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"customer_calls.node",       "column":"node",        "group":false},
+                    { "filter":"customer_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"customer_calls.company",    "column":"company",     "group":false},
+                    { "filter":"customer_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Customer|*|DOJ":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_customer",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"customer.company",      "column":"company",       "group":false},
+                    { "filter":"customer.cust_type",       "column":"cust_type",        "group":false}
+                 ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[ 
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"customer_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"customer_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"customer_calls.state",      "column":"state",       "group":false},
+                    { "filter":"customer_calls.city",       "column":"city",        "group":false},
+                    { "filter":"customer_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"customer_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"customer_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"customer_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"customer_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"customer_calls.node",       "column":"node",        "group":false},
+                    { "filter":"customer_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"customer_calls.company",    "column":"company",     "group":false},
+                    { "filter":"customer_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "HSD":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_customer_calls_view",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                 ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[ 
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"hsd_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"hsd_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"hsd_calls.state",      "column":"state",       "group":false},
+                    { "filter":"hsd_calls.city",       "column":"city",        "group":false},
+                    { "filter":"hsd_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"hsd_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"hsd_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"hsd_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"hsd_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"hsd_calls.node",       "column":"node",        "group":false},
+                    { "filter":"hsd_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"hsd_calls.company",    "column":"company",     "group":false},
+                    { "filter":"hsd_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[]
+            }
+        },
+        "Cable":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_customer_calls_view",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                 ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[ 
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"cable_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"cable_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"cable_calls.state",      "column":"state",       "group":false},
+                    { "filter":"cable_calls.city",       "column":"city",        "group":false},
+                    { "filter":"cable_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"cable_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"cable_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"cable_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"cable_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"cable_calls.node",       "column":"node",        "group":false},
+                    { "filter":"cable_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"cable_calls.company",    "column":"company",     "group":false},
+                    { "filter":"cable_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Voice|*|MetaSwitch":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_voice",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"voice.agc_name",      "column":"agc_name",            "group":false },
+                    { "filter":"voice.agc_id",        "column":"agc_id",              "group":false },
+                    { "filter":"voice.meta_name",     "column":"meta_name",           "group":false },
+                    { "filter":"voice.location",      "column":"location",            "group":false }
+                 ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[ 
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"voice_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"voice_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"voice_calls.state",      "column":"state",       "group":false},
+                    { "filter":"voice_calls.city",       "column":"city",        "group":false},
+                    { "filter":"voice_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"voice_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"voice_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"voice_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"voice_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"voice_calls.node",       "column":"node",        "group":false},
+                    { "filter":"voice_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"voice_calls.company",    "column":"company",     "group":false},
+                    { "filter":"voice_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Voice|*|IMS":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_voice",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"voice.device_name",                     "column":"device_name",             "group":false },
+                    { "filter":"voice.client_site_name",                "column":"client_site_name",        "group":false },
+                    { "filter":"voice.server_site_name",                "column":"server_site_name",        "group":false },
+                    { "filter":"voice.application_protocol_type_code",  "column":"app_protocol_type",       "group":false },
+                    { "filter":"voice.message_protocol_type_code",      "column":"message_protocol_type",   "group":false },
+                    { "filter":"voice.message_name",                    "column":"message_name",            "group":false },
+                    { "filter":"voice.response_code",                   "column":"response_code",           "group":false },
+                    { "filter":"voice.response_description",            "column":"response_description",    "group":false },
+                    { "filter":"voice.legacy_company",                  "column":"company",                 "group":false },
+                    { "filter":"voice.service_type",                    "column":"service_type",            "group":false },
+                    { "filter":"voice.application_name",                "column":"app_name",                "group":false }
+                 ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[ 
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"voice_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"voice_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"voice_calls.state",      "column":"state",       "group":false},
+                    { "filter":"voice_calls.city",       "column":"city",        "group":false},
+                    { "filter":"voice_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"voice_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"voice_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"voice_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"voice_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"voice_calls.node",       "column":"node",        "group":false},
+                    { "filter":"voice_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"voice_calls.company",    "column":"company",     "group":false},
+                    { "filter":"voice_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Voice":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_voice",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"voice.agc_name",      "column":"agc_name",            "group":false },
+                    { "filter":"voice.agc_id",        "column":"agc_id",              "group":false },
+                    { "filter":"voice.meta_name",     "column":"meta_name",           "group":false },
+                    { "filter":"voice.location",      "column":"location",            "group":false }
+                 ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[ 
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"voice_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"voice_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"voice_calls.state",      "column":"state",       "group":false},
+                    { "filter":"voice_calls.city",       "column":"city",        "group":false},
+                    { "filter":"voice_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"voice_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"voice_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"voice_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"voice_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"voice_calls.node",       "column":"node",        "group":false},
+                    { "filter":"voice_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"voice_calls.company",    "column":"company",     "group":false},
+                    { "filter":"voice_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Network":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"network.host",      "column":"host",            "group":true },
+                    { "filter":"network.node",      "column":"node",            "group":true },
+                    { "filter":"network.location",  "column":"location",        "group":true},
+                    { "filter":"network.ip",        "column":"ip",              "group":true},
+                    { "filter":"network.usr",       "column":"usr",             "group":true}
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ]
+            }
+        },
+        "Network|*|Syslog":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"network.host",   "column":"host",       "group":true },
+                    { "filter":"network.node",   "column":"node",       "group":true },
+                    { "filter":"data.comp",      "column":"location",   "group":false }
+
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "metric-value-map" : {
+                    "location" : {
+                        "Other" : [
+                            "location not in ('Billerica','Columbus','Dallas','Irvine','Madison','NCE','NCW','Spartanburg','StLouis','Tampa')",
+                            {
+                                "column" : "location",
+                                "filter" : "network.location"
+                            }
+                        ]
+                    }
+                },
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"network_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"network_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"network_calls.state",      "column":"state",       "group":false},
+                    { "filter":"network_calls.city",       "column":"city",        "group":false},
+                    { "filter":"network_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"network_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"network_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"network_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"network_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"network_calls.node",       "column":"node",        "group":false},
+                    { "filter":"network_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"network_calls.company",    "column":"company",     "group":false},
+                    { "filter":"network_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Network|*|CAPM_LB_A10":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"network.host",   "column":"host",       "group":true },
+                    { "filter":"network.node",   "column":"node",       "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "metric-value-map" : {
+                    "location" : {
+                        "Other" : [
+                            "location not in ('Billerica','Columbus','Dallas','Irvine','Madison','NCE','NCW','Spartanburg','StLouis','Tampa')",
+                            {
+                                "column" : "location",
+                                "filter" : "network.location"
+                            }
+                        ]
+                    }
+                },
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"network_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"network_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"network_calls.state",      "column":"state",       "group":false},
+                    { "filter":"network_calls.city",       "column":"city",        "group":false},
+                    { "filter":"network_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"network_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"network_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"network_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"network_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"network_calls.node",       "column":"node",        "group":false},
+                    { "filter":"network_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"network_calls.company",    "column":"company",     "group":false},
+                    { "filter":"network_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Network|*|CAPM_LB_F5":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"network.host",   "column":"host",   "group":true },
+                    { "filter":"network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"network_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"network_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"network_calls.state",      "column":"state",       "group":false},
+                    { "filter":"network_calls.city",       "column":"city",        "group":false},
+                    { "filter":"network_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"network_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"network_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"network_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"network_calls.headend",    "column":"headend",      "group":false},
+                    { "filter":"network_calls.node",       "column":"node",        "group":false},
+                    { "filter":"network_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"network_calls.company",    "column":"company",     "group":false},
+                    { "filter":"network_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Network|*|CAPM_SR":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"network.host",   "column":"host",       "group":true },
+                    { "filter":"network.node",   "column":"node",       "group":true },
+                    { "filter":"data.comp",      "column":"location",   "group":false }
+
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "metric-value-map" : {
+                    "location" : {
+                        "Other" : [
+                            "location not in ('Billerica','Columbus','Dallas','Irvine','Madison','NCE','NCW','Spartanburg','StLouis','Tampa')",
+                            {
+                                "column" : "location",
+                                "filter" : "network.location"
+                            }
+                        ]
+                    }
+                },
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"network_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"network_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"network_calls.state",      "column":"state",       "group":false},
+                    { "filter":"network_calls.city",       "column":"city",        "group":false},
+                    { "filter":"network_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"network_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"network_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"network_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"network_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"network_calls.node",       "column":"node",        "group":false},
+                    { "filter":"network_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"network_calls.company",    "column":"company",     "group":false},
+                    { "filter":"network_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Network|*|CAPM_FW":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"network.host",   "column":"host",       "group":true },
+                    { "filter":"network.node",   "column":"node",       "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "metric-value-map" : {
+                    "location" : {
+                        "Other" : [
+                            "location not in ('Billerica','Columbus','Dallas','Irvine','Madison','NCE','NCW','Spartanburg','StLouis','Tampa')",
+                            {
+                                "column" : "location",
+                                "filter" : "network.location"
+                            }
+                        ]
+                    }
+                },
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"network_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"network_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"network_calls.state",      "column":"state",       "group":false},
+                    { "filter":"network_calls.city",       "column":"city",        "group":false},
+                    { "filter":"network_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"network_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"network_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"network_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"network_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"network_calls.node",       "column":"node",        "group":false},
+                    { "filter":"network_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"network_calls.company",    "column":"company",     "group":false},
+                    { "filter":"network_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Video":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_stva",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"video.device",    "column":"device",          "group":false},
+                    { "filter":"video.conn",      "column":"connection",      "group":false},
+                    { "filter":"video.auth",      "column":"authentication",  "group":false},
+                    { "filter":"video.version",   "column":"version",         "group":false},
+                    { "filter":"video.state",     "column":"state",           "group":false},
+                    { "filter":"video.msgcat",    "column":"msgcat",          "group":false},
+                    { "filter":"video.api",       "column":"api",             "group":false},
+                    { "filter":"video.company",   "column":"company",         "group":false},
+                    { "filter":"video.response",  "column":"response",        "group":false},
+                    { "filter":"video.channel",   "column":"channel",         "group":false},
+                    { "filter":"video.content",   "column":"content",         "group":false},
+                    { "filter":"video.stream",    "column":"stream",          "group":false}
+                ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"video_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"video_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"video_calls.state",      "column":"state",       "group":false},
+                    { "filter":"video_calls.city",       "column":"city",        "group":false},
+                    { "filter":"video_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"video_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"video_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"video_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"video_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"video_calls.node",       "column":"node",        "group":false},
+                    { "filter":"video_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"video_calls.company",    "column":"company",     "group":false},
+                    { "filter":"video_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Video|*|Quantum":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp"     :[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_stva",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"video.device",    "column":"device",          "group":false},
+                    { "filter":"video.conn",      "column":"connection",      "group":false},
+                    { "filter":"video.auth",      "column":"authentication",  "group":false},
+                    { "filter":"video.version",   "column":"version",         "group":false},
+                    { "filter":"video.state",     "column":"state",           "group":false},
+                    { "filter":"video.msgcat",    "column":"msgcat",          "group":false},
+                    { "filter":"video.api",       "column":"api",             "group":false},
+                    { "filter":"video.company",   "column":"company",         "group":false},
+                    { "filter":"video.response",  "column":"response",        "group":false},
+                    { "filter":"video.channel",   "column":"channel",         "group":false},
+                    { "filter":"video.content",   "column":"content",         "group":false},
+                    { "filter":"video.stream",    "column":"stream",          "group":false}
+                ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql"  :"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"video_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"video_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"video_calls.state",      "column":"state",       "group":false},
+                    { "filter":"video_calls.city",       "column":"city",        "group":false},
+                    { "filter":"video_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"video_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"video_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"video_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"video_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"video_calls.node",       "column":"node",        "group":false},
+                    { "filter":"video_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"video_calls.company",    "column":"company",     "group":false},
+                    { "filter":"video_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Video|*|IP2MAC":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp"     :[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_stva_application",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"video_apps.app_cluster",   "column":"cluster",         "group":false},
+                    { "filter":"video_apps.app_location",  "column":"location",        "group":false}
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql"  :"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"video_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"video_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"video_calls.state",      "column":"state",       "group":false},
+                    { "filter":"video_calls.city",       "column":"city",        "group":false},
+                    { "filter":"video_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"video_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"video_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"video_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"video_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"video_calls.node",       "column":"node",        "group":false},
+                    { "filter":"video_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"video_calls.company",    "column":"company",     "group":false},
+                    { "filter":"video_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Video|*|FedAuth":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp"     :[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_stva_application",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql"  :"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"video_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"video_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"video_calls.state",      "column":"state",       "group":false},
+                    { "filter":"video_calls.city",       "column":"city",        "group":false},
+                    { "filter":"video_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"video_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"video_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"video_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"video_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"video_calls.node",       "column":"node",        "group":false},
+                    { "filter":"video_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"video_calls.company",    "column":"company",     "group":false},
+                    { "filter":"video_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Video|*|NetServ":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp"     :[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_provisioning",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"video_apps.netserv_host",           "column":"host",        "group":false},
+                    { "filter":"video_apps.netserv_company",        "column":"company",     "group":false},
+                    { "filter":"video_apps.netserv_service",        "column":"service",     "group":false},
+                    { "filter":"video_apps.netserv_customer_type",  "column":"cust_type",   "group":false}
+
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql"  :"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"video_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"video_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"video_calls.state",      "column":"state",       "group":false},
+                    { "filter":"video_calls.city",       "column":"city",        "group":false},
+                    { "filter":"video_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"video_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"video_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"video_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"video_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"video_calls.node",       "column":"node",        "group":false},
+                    { "filter":"video_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"video_calls.company",    "column":"company",     "group":false},
+                    { "filter":"video_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Video|*|Syslog":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"video_network.host",    "column":"host",    "group":true },
+                    { "filter":"video_network.node",    "column":"node",    "group":true },
+                    { "filter":"video_network.location","column":"location","group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"video_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"video_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"video_calls.state",      "column":"state",       "group":false},
+                    { "filter":"video_calls.city",       "column":"city",        "group":false},
+                    { "filter":"video_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"video_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"video_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"video_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"video_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"video_calls.node",       "column":"node",        "group":false},
+                    { "filter":"video_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"video_calls.company",    "column":"company",     "group":false},
+                    { "filter":"video_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Video|*|CAPM_LB_A10":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"video_network.host",    "column":"host",    "group":true },
+                    { "filter":"video_network.node",    "column":"node",    "group":true },
+                    { "filter":"video_network.location","column":"location","group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"video_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"video_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"video_calls.state",      "column":"state",       "group":false},
+                    { "filter":"video_calls.city",       "column":"city",        "group":false},
+                    { "filter":"video_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"video_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"video_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"video_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"video_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"video_calls.node",       "column":"node",        "group":false},
+                    { "filter":"video_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"video_calls.company",    "column":"company",     "group":false},
+                    { "filter":"video_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Video|*|CAPM_LB_F5":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"video_network.host",   "column":"host",   "group":true },
+                    { "filter":"video_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"video_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"video_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"video_calls.state",      "column":"state",       "group":false},
+                    { "filter":"video_calls.city",       "column":"city",        "group":false},
+                    { "filter":"video_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"video_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"video_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"video_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"video_calls.headend",    "column":"headend",      "group":false},
+                    { "filter":"video_calls.node",       "column":"node",        "group":false},
+                    { "filter":"video_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"video_calls.company",    "column":"company",     "group":false},
+                    { "filter":"video_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Video|*|CAPM_SR":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"video_network.host",    "column":"host",    "group":true },
+                    { "filter":"video_network.node",    "column":"node",    "group":true },
+                    { "filter":"video_network.location","column":"location","group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"video_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"video_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"video_calls.state",      "column":"state",       "group":false},
+                    { "filter":"video_calls.city",       "column":"city",        "group":false},
+                    { "filter":"video_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"video_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"video_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"video_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"video_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"video_calls.node",       "column":"node",        "group":false},
+                    { "filter":"video_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"video_calls.company",    "column":"company",     "group":false},
+                    { "filter":"video_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Video|*|CAPM_FW":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"video_network.host",    "column":"host",    "group":true },
+                    { "filter":"video_network.node",    "column":"node",    "group":true },
+                    { "filter":"video_network.location","column":"location","group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"video_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"video_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"video_calls.state",      "column":"state",       "group":false},
+                    { "filter":"video_calls.city",       "column":"city",        "group":false},
+                    { "filter":"video_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"video_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"video_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"video_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"video_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"video_calls.node",       "column":"node",        "group":false},
+                    { "filter":"video_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"video_calls.company",    "column":"company",     "group":false},
+                    { "filter":"video_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "SMB":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_portals",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"smb.api",             "column":"api",             "group":false},
+                    { "filter":"smb.browser",         "column":"browser",         "group":false},
+                    { "filter":"smb.company",         "column":"company",         "group":false},
+                    { "filter":"smb.device",          "column":"device",          "group":false},
+                    { "filter":"smb.deviceandversion","column":"deviceandversion","group":false},
+                    { "filter":"smb.msgcat",          "column":"msgcat",          "group":false},
+                    { "filter":"smb.page",            "column":"page",            "group":false},
+                    { "filter":"smb.platform",        "column":"platform",        "group":false},
+                    { "filter":"smb.response",        "column":"response",        "group":false},
+                    { "filter":"smb.state",           "column":"state",           "group":false},
+                    { "filter":"smb.version",         "column":"version",         "group":false}
+                ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"smb_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"smb_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"smb_calls.state",      "column":"state",       "group":false},
+                    { "filter":"smb_calls.city",       "column":"city",        "group":false},
+                    { "filter":"smb_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"smb_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"smb_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"smb_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"smb_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"smb_calls.node",       "column":"node",        "group":false},
+                    { "filter":"smb_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"smb_calls.company",    "column":"company",     "group":false},
+                    { "filter":"smb_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "SMB|*|Quantum":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_portals",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"smb.api",             "column":"api",             "group":false},
+                    { "filter":"smb.browser",         "column":"browser",         "group":false},
+                    { "filter":"smb.company",         "column":"company",         "group":false},
+                    { "filter":"smb.device",          "column":"device",          "group":false},
+                    { "filter":"smb.deviceandversion","column":"deviceandversion","group":false},
+                    { "filter":"smb.msgcat",          "column":"msgcat",          "group":false},
+                    { "filter":"smb.page",            "column":"page",            "group":false},
+                    { "filter":"smb.platform",        "column":"platform",        "group":false},
+                    { "filter":"smb.response",        "column":"response",        "group":false},
+                    { "filter":"smb.state",           "column":"state",           "group":false},
+                    { "filter":"smb.version",         "column":"version",         "group":false}
+                ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"smb_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"smb_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"smb_calls.state",      "column":"state",       "group":false},
+                    { "filter":"smb_calls.city",       "column":"city",        "group":false},
+                    { "filter":"smb_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"smb_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"smb_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"smb_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"smb_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"smb_calls.node",       "column":"node",        "group":false},
+                    { "filter":"smb_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"smb_calls.company",    "column":"company",     "group":false},
+                    { "filter":"smb_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "SpecMobile":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_portals",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"specmobile.api",             "column":"api",             "group":false},
+                    { "filter":"specmobile.browser",         "column":"browser",         "group":false},
+                    { "filter":"specmobile.company",         "column":"company",         "group":false},
+                    { "filter":"specmobile.device",          "column":"device",          "group":false},
+                    { "filter":"specmobile.deviceandversion","column":"deviceandversion","group":false},
+                    { "filter":"specmobile.msgcat",          "column":"msgcat",          "group":false},
+                    { "filter":"specmobile.page",            "column":"page",            "group":false},
+                    { "filter":"specmobile.platform",        "column":"platform",        "group":false},
+                    { "filter":"specmobile.response",        "column":"response",        "group":false},
+                    { "filter":"specmobile.state",           "column":"state",           "group":false},
+                    { "filter":"specmobile.version",         "column":"version",         "group":false}
+                ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"specmobile_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"specmobile_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"specmobile_calls.state",      "column":"state",       "group":false},
+                    { "filter":"specmobile_calls.city",       "column":"city",        "group":false},
+                    { "filter":"specmobile_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"specmobile_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"specmobile_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"specmobile_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"specmobile_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"specmobile_calls.node",       "column":"node",        "group":false},
+                    { "filter":"specmobile_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"specmobile_calls.company",    "column":"company",     "group":false},
+                    { "filter":"specmobile_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "SpecMobile|*|Quantum":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_portals",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"specmobile.api",             "column":"api",             "group":false},
+                    { "filter":"specmobile.browser",         "column":"browser",         "group":false},
+                    { "filter":"specmobile.company",         "column":"company",         "group":false},
+                    { "filter":"specmobile.device",          "column":"device",          "group":false},
+                    { "filter":"specmobile.deviceandversion","column":"deviceandversion","group":false},
+                    { "filter":"specmobile.msgcat",          "column":"msgcat",          "group":false},
+                    { "filter":"specmobile.page",            "column":"page",           "group":false},
+                    { "filter":"specmobile.platform",        "column":"platform",        "group":false},
+                    { "filter":"specmobile.response",        "column":"response",        "group":false},
+                    { "filter":"specmobile.state",           "column":"state",           "group":false},
+                    { "filter":"specmobile.version",         "column":"version",         "group":false}
+                ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"specmobile_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"specmobile_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"specmobile_calls.state",      "column":"state",       "group":false},
+                    { "filter":"specmobile_calls.city",       "column":"city",        "group":false},
+                    { "filter":"specmobile_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"specmobile_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"specmobile_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"specmobile_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"specmobile_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"specmobile_calls.node",       "column":"node",        "group":false},
+                    { "filter":"specmobile_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"specmobile_calls.company",    "column":"company",     "group":false},
+                    { "filter":"specmobile_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "SpecNet":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_portals",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"specnet.api",             "column":"api",             "group":false},
+                    { "filter":"specnet.browser",         "column":"browser",         "group":false},
+                    { "filter":"specnet.company",         "column":"company",         "group":false},
+                    { "filter":"specnet.device",          "column":"device",          "group":false},
+                    { "filter":"specnet.deviceandversion","column":"deviceandversion","group":false},
+                    { "filter":"specnet.msgcat",          "column":"msgcat",          "group":false},
+                    { "filter":"specnet.page",            "column":"page",            "group":false},
+                    { "filter":"specnet.platform",        "column":"platform",        "group":false},
+                    { "filter":"specnet.response",        "column":"response",        "group":false},
+                    { "filter":"specnet.state",           "column":"state",           "group":false},
+                    { "filter":"specnet.version",         "column":"version",         "group":false}
+                ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"specnet_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"specnet_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"specnet_calls.state",      "column":"state",       "group":false},
+                    { "filter":"specnet_calls.city",       "column":"city",        "group":false},
+                    { "filter":"specnet_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"specnet_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"specnet_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"specnet_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"specnet_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"specnet_calls.node",       "column":"node",        "group":false},
+                    { "filter":"specnet_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"specnet_calls.company",    "column":"company",     "group":false},
+                    { "filter":"specnet_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "SpecNet|*|Quantum":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_portals",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"specnet.api",             "column":"api",             "group":false},
+                    { "filter":"specnet.browser",         "column":"browser",         "group":false},
+                    { "filter":"specnet.company",         "column":"company",         "group":false},
+                    { "filter":"specnet.device",          "column":"device",          "group":false},
+                    { "filter":"specnet.deviceandversion","column":"deviceandversion","group":false},
+                    { "filter":"specnet.msgcat",          "column":"msgcat",          "group":false},
+                    { "filter":"specnet.page",            "column":"page",            "group":false},
+                    { "filter":"specnet.platform",        "column":"platform",        "group":false},
+                    { "filter":"specnet.response",        "column":"response",        "group":false},
+                    { "filter":"specnet.state",           "column":"state",           "group":false},
+                    { "filter":"specnet.version",         "column":"version",         "group":false}
+                ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"specnet_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"specnet_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"specnet_calls.state",      "column":"state",       "group":false},
+                    { "filter":"specnet_calls.city",       "column":"city",        "group":false},
+                    { "filter":"specnet_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"specnet_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"specnet_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"specnet_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"specnet_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"specnet_calls.node",       "column":"node",        "group":false},
+                    { "filter":"specnet_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"specnet_calls.company",    "column":"company",     "group":false},
+                    { "filter":"specnet_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "MySpectrum":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_portals",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"myspectrum.api",             "column":"api",             "group":false},
+                    { "filter":"myspectrum.browser",         "column":"browser",         "group":false},
+                    { "filter":"myspectrum.company",         "column":"company",         "group":false},
+                    { "filter":"myspectrum.device",          "column":"device",          "group":false},
+                    { "filter":"myspectrum.deviceandversion","column":"deviceandversion","group":false},
+                    { "filter":"myspectrum.msgcat",          "column":"msgcat",          "group":false},
+                    { "filter":"myspectrum.page",            "column":"page",            "group":false},
+                    { "filter":"myspectrum.platform",        "column":"platform",        "group":false},
+                    { "filter":"myspectrum.response",        "column":"response",        "group":false},
+                    { "filter":"myspectrum.state",           "column":"state",           "group":false},
+                    { "filter":"myspectrum.version",         "column":"version",         "group":false}
+                ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"myspectrum_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"myspectrum_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"myspectrum_calls.state",      "column":"state",       "group":false},
+                    { "filter":"myspectrum_calls.city",       "column":"city",        "group":false},
+                    { "filter":"myspectrum_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"myspectrum_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"myspectrum_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"myspectrum_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"myspectrum_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"myspectrum_calls.node",       "column":"node",        "group":false},
+                    { "filter":"myspectrum_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"myspectrum_calls.company",    "column":"company",     "group":false},
+                    { "filter":"myspectrum_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "MySpectrum|*|Quantum":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_portals",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"myspectrum.api",             "column":"api",             "group":false},
+                    { "filter":"myspectrum.browser",         "column":"browser",         "group":false},
+                    { "filter":"myspectrum.company",         "column":"company",         "group":false},
+                    { "filter":"myspectrum.device",          "column":"device",          "group":false},
+                    { "filter":"myspectrum.deviceandversion","column":"deviceandversion","group":false},
+                    { "filter":"myspectrum.msgcat",          "column":"msgcat",          "group":false},
+                    { "filter":"myspectrum.page",            "column":"page",            "group":false},
+                    { "filter":"myspectrum.platform",        "column":"platform",        "group":false},
+                    { "filter":"myspectrum.response",        "column":"response",        "group":false},
+                    { "filter":"myspectrum.state",           "column":"state",           "group":false},
+                    { "filter":"myspectrum.version",         "column":"version",         "group":false}
+                ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"myspectrum_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"myspectrum_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"myspectrum_calls.state",      "column":"state",       "group":false},
+                    { "filter":"myspectrum_calls.city",       "column":"city",        "group":false},
+                    { "filter":"myspectrum_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"myspectrum_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"myspectrum_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"myspectrum_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"myspectrum_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"myspectrum_calls.node",       "column":"node",        "group":false},
+                    { "filter":"myspectrum_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"myspectrum_calls.company",    "column":"company",     "group":false},
+                    { "filter":"myspectrum_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "SpecGuide":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_specguide",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"specguide.api",             "column":"api",             "group":false},
+                    { "filter":"specguide.division",        "column":"division",        "group":false},
+                    { "filter":"specguide.company",         "column":"company",         "group":false},
+                    { "filter":"specguide.region",          "column":"region",          "group":false},
+                    { "filter":"specguide.city",            "column":"city",            "group":false},
+                    { "filter":"specguide.msgcat",          "column":"msgcat",          "group":false},
+                    { "filter":"specguide.device",          "column":"device",          "group":false},
+                    { "filter":"specguide.conn",            "column":"connection",      "group":false},
+                    { "filter":"specguide.deviceandversion","column":"deviceandversion","group":false},
+                    { "filter":"specguide.version",         "column":"version",         "group":false},
+                    { "filter":"specguide.response",        "column":"response",        "group":false},
+                    { "filter":"specguide.stream",          "column":"stream",          "group":false}
+                ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"specguide_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"specguide_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"specguide_calls.state",      "column":"state",       "group":false},
+                    { "filter":"specguide_calls.city",       "column":"city",        "group":false},
+                    { "filter":"specguide_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"specguide_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"specguide_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"specguide_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"specguide_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"specguide_calls.node",       "column":"node",        "group":false},
+                    { "filter":"specguide_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"specguide_calls.company",    "column":"company",     "group":false},
+                    { "filter":"specguide_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "SpecGuide|*|Quantum":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_specguide",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"specguide.api",             "column":"api",             "group":false},
+                    { "filter":"specguide.division",        "column":"division",        "group":false},
+                    { "filter":"specguide.company",         "column":"company",         "group":false},
+                    { "filter":"specguide.region",          "column":"region",          "group":false},
+                    { "filter":"specguide.city",            "column":"city",            "group":false},
+                    { "filter":"specguide.msgcat",          "column":"msgcat",          "group":false},
+                    { "filter":"specguide.device",          "column":"device",          "group":false},
+                    { "filter":"specguide.conn",            "column":"connection",      "group":false},
+                    { "filter":"specguide.deviceandversion","column":"deviceandversion","group":false},
+                    { "filter":"specguide.version",         "column":"version",         "group":false},
+                    { "filter":"specguide.response",        "column":"response",        "group":false},
+                    { "filter":"specguide.stream",          "column":"stream",          "group":false}
+                ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"specguide_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"specguide_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"specguide_calls.state",      "column":"state",       "group":false},
+                    { "filter":"specguide_calls.city",       "column":"city",        "group":false},
+                    { "filter":"specguide_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"specguide_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"specguide_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"specguide_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"specguide_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"specguide_calls.node",       "column":"node",        "group":false},
+                    { "filter":"specguide_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"specguide_calls.company",    "column":"company",     "group":false},
+                    { "filter":"specguide_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "SpecGuide|*|MicroServices":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_specguide",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"specguide.api",             "column":"api",             "group":false},
+                    { "filter":"specguide.response",        "column":"response",        "group":false}
+                ],
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"specguide_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"specguide_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"specguide_calls.state",      "column":"state",       "group":false},
+                    { "filter":"specguide_calls.city",       "column":"city",        "group":false},
+                    { "filter":"specguide_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"specguide_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"specguide_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"specguide_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"specguide_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"specguide_calls.node",       "column":"node",        "group":false},
+                    { "filter":"specguide_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"specguide_calls.company",    "column":"company",     "group":false},
+                    { "filter":"specguide_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "SpecGuide|*|Syslog":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"specguide_network.host",   "column":"host",   "group":true },
+                    { "filter":"specguide_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"specguide_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"specguide_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"specguide_calls.state",      "column":"state",       "group":false},
+                    { "filter":"specguide_calls.city",       "column":"city",        "group":false},
+                    { "filter":"specguide_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"specguide_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"specguide_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"specguide_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"specguide_calls.headend",    "column":"headend",      "group":false},
+                    { "filter":"specguide_calls.node",       "column":"node",        "group":false},
+                    { "filter":"specguide_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"specguide_calls.company",    "column":"company",     "group":false},
+                    { "filter":"specguide_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "SpecGuide|*|CAPM_LB_A10":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"specguide_network.host",   "column":"host",   "group":true },
+                    { "filter":"specguide_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"specguide_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"specguide_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"specguide_calls.state",      "column":"state",       "group":false},
+                    { "filter":"specguide_calls.city",       "column":"city",        "group":false},
+                    { "filter":"specguide_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"specguide_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"specguide_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"specguide_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"specguide_calls.headend",    "column":"headend",      "group":false},
+                    { "filter":"specguide_calls.node",       "column":"node",        "group":false},
+                    { "filter":"specguide_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"specguide_calls.company",    "column":"company",     "group":false},
+                    { "filter":"specguide_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "SpecGuide|*|CAPM_LB_F5":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"specguide_network.host",   "column":"host",   "group":true },
+                    { "filter":"specguide_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"specguide_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"specguide_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"specguide_calls.state",      "column":"state",       "group":false},
+                    { "filter":"specguide_calls.city",       "column":"city",        "group":false},
+                    { "filter":"specguide_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"specguide_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"specguide_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"specguide_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"specguide_calls.headend",    "column":"headend",      "group":false},
+                    { "filter":"specguide_calls.node",       "column":"node",        "group":false},
+                    { "filter":"specguide_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"specguide_calls.company",    "column":"company",     "group":false},
+                    { "filter":"specguide_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "SpecGuide|*|CAPM_SR":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"specguide_network.host",   "column":"host",   "group":true },
+                    { "filter":"specguide_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"specguide_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"specguide_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"specguide_calls.state",      "column":"state",       "group":false},
+                    { "filter":"specguide_calls.city",       "column":"city",        "group":false},
+                    { "filter":"specguide_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"specguide_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"specguide_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"specguide_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"specguide_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"specguide_calls.node",       "column":"node",        "group":false},
+                    { "filter":"specguide_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"specguide_calls.company",    "column":"company",     "group":false},
+                    { "filter":"specguide_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "SpecGuide|*|CAPM_FW":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"specguide_network.host",   "column":"host",   "group":true },
+                    { "filter":"specguide_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"specguide_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"specguide_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"specguide_calls.state",      "column":"state",       "group":false},
+                    { "filter":"specguide_calls.city",       "column":"city",        "group":false},
+                    { "filter":"specguide_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"specguide_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"specguide_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"specguide_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"specguide_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"specguide_calls.node",       "column":"node",        "group":false},
+                    { "filter":"specguide_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"specguide_calls.company",    "column":"company",     "group":false},
+                    { "filter":"specguide_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[]
+            }
+        },
+        "E-Mail":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql":"METRIC_SQL",
+                "metric-table":"viaops_metric_twc_email",
+                "metric-epoch":"aggr_start_tm",
+                "metric-dimension-list":[
+                    { "filter":"email.host",   "column":"host",   "group":true },
+                    { "filter":"email.dom",    "column":"dom",    "group":true },
+                    { "filter":"email.dhost",  "column":"dhost",  "group":true }
+                ],
+                "metric-where-clause":[
+                 ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"email_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"email_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"email_calls.state",      "column":"state",       "group":false},
+                    { "filter":"email_calls.city",       "column":"city",        "group":false},
+                    { "filter":"email_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"email_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"email_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"email_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"email_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"email_calls.node",       "column":"node",        "group":false},
+                    { "filter":"email_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"email_calls.company",    "column":"company",     "group":false},
+                    { "filter":"email_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "E-Mail|*|Syslog":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"email_network.host",   "column":"host",   "group":true},
+                    { "filter":"email_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"email_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"email_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"email_calls.state",      "column":"state",       "group":false},
+                    { "filter":"email_calls.city",       "column":"city",        "group":false},
+                    { "filter":"email_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"email_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"email_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"email_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"email_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"email_calls.node",       "column":"node",        "group":false},
+                    { "filter":"email_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"email_calls.company",    "column":"company",     "group":false},
+                    { "filter":"email_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "E-Mail|*|CAPM_LB_A10":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"email_network.host",   "column":"host",   "group":true},
+                    { "filter":"email_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"email_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"email_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"email_calls.state",      "column":"state",       "group":false},
+                    { "filter":"email_calls.city",       "column":"city",        "group":false},
+                    { "filter":"email_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"email_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"email_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"email_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"email_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"email_calls.node",       "column":"node",        "group":false},
+                    { "filter":"email_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"email_calls.company",    "column":"company",     "group":false},
+                    { "filter":"email_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "E-Mail|*|CAPM_LB_F5":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"email_network.host",   "column":"host",   "group":true },
+                    { "filter":"email_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"email_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"email_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"email_calls.state",      "column":"state",       "group":false},
+                    { "filter":"email_calls.city",       "column":"city",        "group":false},
+                    { "filter":"email_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"email_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"email_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"email_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"email_calls.headend",    "column":"headend",      "group":false},
+                    { "filter":"email_calls.node",       "column":"node",        "group":false},
+                    { "filter":"email_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"email_calls.company",    "column":"company",     "group":false},
+                    { "filter":"email_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "E-Mail|*|CAPM_SR":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"email_network.host",   "column":"host",   "group":true},
+                    { "filter":"email_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"email_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"email_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"email_calls.state",      "column":"state",       "group":false},
+                    { "filter":"email_calls.city",       "column":"city",        "group":false},
+                    { "filter":"email_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"email_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"email_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"email_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"email_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"email_calls.node",       "column":"node",        "group":false},
+                    { "filter":"email_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"email_calls.company",    "column":"company",     "group":false},
+                    { "filter":"email_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "E-Mail|*|CAPM_FW":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"email_network.host",   "column":"host",   "group":true},
+                    { "filter":"email_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"email_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"email_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"email_calls.state",      "column":"state",       "group":false},
+                    { "filter":"email_calls.city",       "column":"city",        "group":false},
+                    { "filter":"email_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"email_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"email_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"email_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"email_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"email_calls.node",       "column":"node",        "group":false},
+                    { "filter":"email_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"email_calls.company",    "column":"company",     "group":false},
+                    { "filter":"email_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "CHTR_E-Mail":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql":"METRIC_SQL",
+                "metric-table":"viaops_metric_chtr_email",
+                "metric-epoch":"aggr_start_tm",
+                "metric-dimension-list":[
+                    { "filter":"chtremail.host",   "column":"host",   "group":true },
+                    { "filter":"chtremail.dom",    "column":"dom",    "group":true },
+                    { "filter":"chtremail.dhost",  "column":"dhost",  "group":true }
+                ],
+                "metric-where-clause":[
+                 ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"chtremail_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"chtremail_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"chtremail_calls.state",      "column":"state",       "group":false},
+                    { "filter":"chtremail_calls.city",       "column":"city",        "group":false},
+                    { "filter":"chtremail_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"chtremail_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"chtremail_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"chtremail_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"chtremail_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"chtremail_calls.node",       "column":"node",        "group":false},
+                    { "filter":"chtremail_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"chtremail_calls.company",    "column":"company",     "group":false},
+                    { "filter":"chtremail_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "CHTR_E-Mail|*|Syslog":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"chtremail_network.host",   "column":"host",   "group":true },
+                    { "filter":"chtremail_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"chtremail_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"chtremail_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"chtremail_calls.state",      "column":"state",       "group":false},
+                    { "filter":"chtremail_calls.city",       "column":"city",        "group":false},
+                    { "filter":"chtremail_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"chtremail_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"chtremail_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"chtremail_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"chtremail_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"chtremail_calls.node",       "column":"node",        "group":false},
+                    { "filter":"chtremail_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"chtremail_calls.company",    "column":"company",     "group":false},
+                    { "filter":"chtremail_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "CHTR_E-Mail|*|CAPM_LB_A10":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"chtremail_network.host",   "column":"host",   "group":true },
+                    { "filter":"chtremail_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"chtremail_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"chtremail_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"chtremail_calls.state",      "column":"state",       "group":false},
+                    { "filter":"chtremail_calls.city",       "column":"city",        "group":false},
+                    { "filter":"chtremail_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"chtremail_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"chtremail_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"chtremail_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"chtremail_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"chtremail_calls.node",       "column":"node",        "group":false},
+                    { "filter":"chtremail_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"chtremail_calls.company",    "column":"company",     "group":false},
+                    { "filter":"chtremail_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+           }
+        },
+        "CHTR_E-Mail|*|CAPM_LB_F5":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"chtremail_network.host",   "column":"host",   "group":true },
+                    { "filter":"chtremail_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"chtremail_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"chtremail_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"chtremail_calls.state",      "column":"state",       "group":false},
+                    { "filter":"chtremail_calls.city",       "column":"city",        "group":false},
+                    { "filter":"chtremail_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"chtremail_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"chtremail_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"chtremail_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"chtremail_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"chtremail_calls.node",       "column":"node",        "group":false},
+                    { "filter":"chtremail_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"chtremail_calls.company",    "column":"company",     "group":false},
+                    { "filter":"chtremail_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "CHTR_E-Mail|*|CAPM_SR":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"chtremail_network.host",   "column":"host",   "group":true },
+                    { "filter":"chtremail_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"chtremail_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"chtremail_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"chtremail_calls.state",      "column":"state",       "group":false},
+                    { "filter":"chtremail_calls.city",       "column":"city",        "group":false},
+                    { "filter":"chtremail_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"chtremail_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"chtremail_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"chtremail_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"chtremail_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"chtremail_calls.node",       "column":"node",        "group":false},
+                    { "filter":"chtremail_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"chtremail_calls.company",    "column":"company",     "group":false},
+                    { "filter":"chtremail_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "CHTR_E-Mail|*|CAPM_FW":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"chtremail_network.host",   "column":"host",   "group":true },
+                    { "filter":"chtremail_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"chtremail_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"chtremail_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"chtremail_calls.state",      "column":"state",       "group":false},
+                    { "filter":"chtremail_calls.city",       "column":"city",        "group":false},
+                    { "filter":"chtremail_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"chtremail_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"chtremail_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"chtremail_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"chtremail_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"chtremail_calls.node",       "column":"node",        "group":false},
+                    { "filter":"chtremail_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"chtremail_calls.company",    "column":"company",     "group":false},
+                    { "filter":"chtremail_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "cDVR|*|Quantum":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_stva",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"cdvr.device",    "column":"device",          "group":false},
+                    { "filter":"cdvr.conn",      "column":"connection",      "group":false},
+                    { "filter":"cdvr.auth",      "column":"authentication",  "group":false},
+                    { "filter":"cdvr.version",   "column":"version",         "group":false},
+                    { "filter":"cdvr.state",     "column":"state",           "group":false},
+                    { "filter":"cdvr.msgcat",    "column":"msgcat",          "group":false},
+                    { "filter":"cdvr.api",       "column":"api",             "group":false},
+                    { "filter":"cdvr.response",  "column":"response",        "group":false},
+                    { "filter":"cdvr.channel",   "column":"channel",         "group":false},
+                    { "filter":"cdvr.content",   "column":"content",         "group":false},
+                    { "filter":"cdvr.stream",    "column":"stream",          "group":false}
+                ],
+                "metric-dimension-columns":{
+                    "#api":"api",
+                    "#msgcat":"msgcat",
+                    "#stream" : "stream"
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"cdvr_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"cdvr_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"cdvr_calls.state",      "column":"state",       "group":false},
+                    { "filter":"cdvr_calls.city",       "column":"city",        "group":false},
+                    { "filter":"cdvr_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"cdvr_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"cdvr_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"cdvr_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"cdvr_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"cdvr_calls.node",       "column":"node",        "group":false},
+                    { "filter":"cdvr_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"cdvr_calls.company",    "column":"company",     "group":false},
+                    { "filter":"cdvr_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "cDVR":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "reserved-comp":[],
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_cdvr_application",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"cdvr_application.host",             "column":"host",            "group":false},
+                    { "filter":"cdvr_application.location",         "column":"location",        "group":false},
+                    { "filter":"cdvr_application.vmr_name",         "column":"vmr_name",        "group":false},
+                    { "filter":"cdvr_application.http_response",    "column":"http_response",   "group":false},
+                    { "filter":"cdvr_application.error_code",       "column":"error_code",      "group":false},
+                    { "filter":"cdvr_application.event_name",       "column":"event_name",      "group":false},
+                    { "filter":"cdvr_application.response_msg",     "column":"response_msg",    "group":false}
+                ],
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"cdvr_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"cdvr_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"cdvr_calls.state",      "column":"state",       "group":false},
+                    { "filter":"cdvr_calls.city",       "column":"city",        "group":false},
+                    { "filter":"cdvr_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"cdvr_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"cdvr_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"cdvr_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"cdvr_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"cdvr_calls.node",       "column":"node",        "group":false},
+                    { "filter":"cdvr_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"cdvr_calls.company",    "column":"company",     "group":false},
+                    { "filter":"cdvr_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "cDVR|*|Syslog":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"cdvr_network.host",   "column":"host",   "group":true },
+                    { "filter":"cdvr_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"cdvr_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"cdvr_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"cdvr_calls.state",      "column":"state",       "group":false},
+                    { "filter":"cdvr_calls.city",       "column":"city",        "group":false},
+                    { "filter":"cdvr_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"cdvr_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"cdvr_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"cdvr_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"cdvr_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"cdvr_calls.node",       "column":"node",        "group":false},
+                    { "filter":"cdvr_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"cdvr_calls.company",    "column":"company",     "group":false},
+                    { "filter":"cdvr_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "cDVR|*|CAPM_LB_A10":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"cdvr_network.host",   "column":"host",   "group":true },
+                    { "filter":"cdvr_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"cdvr_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"cdvr_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"cdvr_calls.state",      "column":"state",       "group":false},
+                    { "filter":"cdvr_calls.city",       "column":"city",        "group":false},
+                    { "filter":"cdvr_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"cdvr_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"cdvr_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"cdvr_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"cdvr_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"cdvr_calls.node",       "column":"node",        "group":false},
+                    { "filter":"cdvr_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"cdvr_calls.company",    "column":"company",     "group":false},
+                    { "filter":"cdvr_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "cDVR|*|CAPM_LB_F5":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"cdvr_network.host",   "column":"host",   "group":true },
+                    { "filter":"cdvr_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"cdvr_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"cdvr_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"cdvr_calls.state",      "column":"state",       "group":false},
+                    { "filter":"cdvr_calls.city",       "column":"city",        "group":false},
+                    { "filter":"cdvr_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"cdvr_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"cdvr_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"cdvr_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"cdvr_calls.headend",    "column":"headend",      "group":false},
+                    { "filter":"cdvr_calls.node",       "column":"node",        "group":false},
+                    { "filter":"cdvr_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"cdvr_calls.company",    "column":"company",     "group":false},
+                    { "filter":"cdvr_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "cDVR|*|CAPM_SR":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"cdvr_network.host",   "column":"host",   "group":true },
+                    { "filter":"cdvr_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"cdvr_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"cdvr_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"cdvr_calls.state",      "column":"state",       "group":false},
+                    { "filter":"cdvr_calls.city",       "column":"city",        "group":false},
+                    { "filter":"cdvr_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"cdvr_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"cdvr_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"cdvr_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"cdvr_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"cdvr_calls.node",       "column":"node",        "group":false},
+                    { "filter":"cdvr_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"cdvr_calls.company",    "column":"company",     "group":false},
+                    { "filter":"cdvr_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "cDVR|*|CAPM_FW":{
+            "function":"_getTrendDataImpl",
+            "params":{
+                "metric-sql"        :"METRIC_SQL",
+                "metric-table"      :"viaops_metric_network",
+                "metric-epoch"      :"aggr_start_tm",
+                "metric-name"       :"metric_name",
+                "metric-value"      :"metric_value",
+                "metric-app"        :"app",
+                "metric-date-key"   :"date_key",
+                "metric-dimension-list":[
+                    { "filter":"cdvr_network.host",   "column":"host",   "group":true },
+                    { "filter":"cdvr_network.node",   "column":"node",   "group":true }
+                ],
+                "metric-dimension-columns":{
+                },
+                "metric-where-clause":[
+                ],
+                "calls-sql":"CALLS_SQL",
+                "calls-table":"viaops_metric_customer_calls_view",
+                "calls-epoch":"aggr_start_tm",
+                "calls-dimension-list":[
+                    { "filter":"cdvr_calls.cmts",       "column":"cmts",        "group":true},
+                    { "filter":"cdvr_calls.controller", "column":"controller",  "group":true},
+                    { "filter":"cdvr_calls.state",      "column":"state",       "group":false},
+                    { "filter":"cdvr_calls.city",       "column":"city",        "group":false},
+                    { "filter":"cdvr_calls.issue",      "column":"issue",       "group":false},
+                    { "filter":"cdvr_calls.cause",      "column":"cause",       "group":false},
+                    { "filter":"cdvr_calls.resolution", "column":"resolution",  "group":false},
+                    { "filter":"cdvr_calls.market",     "column":"kma",         "group":false},
+                    { "filter":"cdvr_calls.headend",    "column":"headend",     "group":false},
+                    { "filter":"cdvr_calls.node",       "column":"node",        "group":false},
+                    { "filter":"cdvr_calls.cust_type",  "column":"cust_type",   "group":false},
+                    { "filter":"cdvr_calls.company",    "column":"company",     "group":false},
+                    { "filter":"cdvr_calls.call_type",  "column":"category",    "group":false}
+                ],
+                "calls-where-clause":[
+                ]
+            }
+        },
+        "Digital Operations|*|Client": {
+            "function": "_getTrendDataImpl",
+            "params": {
+                "reserved-comp": [],
+                "metric-sql": "METRIC_SQL",
+                "metric-table": "viaops_metric_monitoring_view",
+                "metric-epoch": "aggr_start_tm",
+                "metric-name": "metric_name",
+                "metric-value": "metric_value",
+                "metric-app": "app",
+                "metric-date-key": "date_key",
+                "metric-dimension-list": [
+                    { "filter":"digital_operations.source",     "column":"data_source", "group":false},
+                    { "filter":"digital_operations.host",       "column":"host",        "group":false},
+                    { "filter":"digital_operations.function",   "column":"function",    "group":false},
+                    { "filter":"digital_operations.context",    "column":"context",     "group":false},
+                    { "filter":"digital_operations.user",       "column":"user",        "group":false},
+                    { "filter":"digital_operations.server",     "column":"server",      "group":false}
+                ],
+                "metric-dimension-columns": {
+                },
+                "metric-where-clause": []
+            }
+        },
+        "Digital Operations|*|Data Source": {
+            "function": "_getTrendDataImpl",
+            "params": {
+                "reserved-comp": [],
+                "metric-sql": "METRIC_SQL",
+                "metric-table": "viaops_metric_monitoring",
+                "metric-epoch": "aggr_start_tm",
+                "metric-name": "metric_name",
+                "metric-value": "metric_value",
+                "metric-app": "app",
+                "metric-date-key": "date_key",
+                "metric-dimension-list": [
+                    { "filter":"digital_operations.source",     "column":"data_source", "group":false},
+                    { "filter":"digital_operations.host",       "column":"host",        "group":false},
+                    { "filter":"digital_operations.function",   "column":"function",    "group":false},
+                    { "filter":"digital_operations.context",    "column":"context",     "group":false},
+                    { "filter":"digital_operations.user",       "column":"user",        "group":false},
+                    { "filter":"digital_operations.server",     "column":"server",      "group":false}
+                ],
+                "metric-dimension-columns": {
+                },
+                "metric-where-clause": []
+            }
+        }
+    },
+    "metric-conditional-where-clause":[
+        {
+            "#if-match":{
+                "svc":"Example",
+                "comp":"Example"
+            },
+            "where-clause":[
+                "and (api in ('', 'oauthToken','oauthAuthorize','oauthRequest','oauthDeauthorize','autoAuth','ssoTokenExchange','capabilitiesV3','location','behindModemV1'))",
+                "and (msgcat in ('', 'authentication','authorization'))"
+            ]
+        }
+    ],
+    "calls-conditional-where-clause":[
+    ],
+    "dimension-mappings": {
+        "Connectivity|*|*|Customer Call Volume" : {
+            "connectivity_calls.cmts"       : { "name":"cmts",      "label":"CMTS" },
+            "connectivity_calls.controller" : { "name":"controller","label":"Controller" },
+            "connectivity_calls.state"      : { "name":"state",     "label":"State" },
+            "connectivity_calls.city"       : { "name":"city",      "label":"City" },
+            "connectivity_calls.issue"      : { "name":"issue",     "label":"Issue" },
+            "connectivity_calls.cause"      : { "name":"cause",     "label":"Cause" },
+            "connectivity_calls.resolution" : { "name":"resolution","label":"Resolution" },
+            "connectivity_calls.market"     : { "name":"kma",       "label":"Market" },
+            "connectivity_calls.headend"    : { "name":"headend",   "label":"Headend" },
+            "connectivity_calls.node"       : { "name":"node",      "label":"Node" },
+            "connectivity_calls.cust_type"  : { "name":"cust_type", "label":"Customer Type" },
+            "connectivity_calls.company"    : { "name":"company",   "label":"Company" },
+            "connectivity_calls.call_type"  : { "name":"call_type", "label":"Call Type" }            
+        },
+        "Customer|*|*|Customer Call Volume" : {
+            "customer_calls.cmts"       : { "name":"cmts",      "label":"CMTS" },
+            "customer_calls.controller" : { "name":"controller","label":"Controller" },
+            "customer_calls.state"      : { "name":"state",     "label":"State" },
+            "customer_calls.city"       : { "name":"city",      "label":"City" },
+            "customer_calls.issue"      : { "name":"issue",     "label":"Issue" },
+            "customer_calls.cause"      : { "name":"cause",     "label":"Cause" },
+            "customer_calls.resolution" : { "name":"resolution","label":"Resolution" },
+            "customer_calls.market"     : { "name":"kma",       "label":"Market" },
+            "customer_calls.headend"    : { "name":"headend",   "label":"Headend" },
+            "customer_calls.node"       : { "name":"node",      "label":"Node" },
+            "customer_calls.cust_type"  : { "name":"cust_type", "label":"Customer Type" },
+            "customer_calls.company"    : { "name":"company",   "label":"Company" },
+            "customer_calls.call_type"  : { "name":"call_type", "label":"Call Type" }            
+        },
+        "HSD|*|*|Customer Call Volume" : {
+            "hsd_calls.cmts"       : { "name":"cmts",      "label":"CMTS" },
+            "hsd_calls.controller" : { "name":"controller","label":"Controller" },
+            "hsd_calls.state"      : { "name":"state",     "label":"State" },
+            "hsd_calls.city"       : { "name":"city",      "label":"City" },
+            "hsd_calls.issue"      : { "name":"issue",     "label":"Issue" },
+            "hsd_calls.cause"      : { "name":"cause",     "label":"Cause" },
+            "hsd_calls.resolution" : { "name":"resolution","label":"Resolution" },
+            "hsd_calls.market"     : { "name":"kma",       "label":"Market" },
+            "hsd_calls.headend"    : { "name":"headend",   "label":"Headend" },
+            "hsd_calls.node"       : { "name":"node",      "label":"Node" },
+            "hsd_calls.cust_type"  : { "name":"cust_type", "label":"Customer Type" },
+            "hsd_calls.company"    : { "name":"company",   "label":"Company" },
+            "hsd_calls.call_type"  : { "name":"call_type", "label":"Call Type" }            
+        },
+        "Cable|*|*|Customer Call Volume" : {
+            "cable_calls.cmts"       : { "name":"cmts",      "label":"CMTS" },
+            "cable_calls.controller" : { "name":"controller","label":"Controller" },
+            "cable_calls.state"      : { "name":"state",     "label":"State" },
+            "cable_calls.city"       : { "name":"city",      "label":"City" },
+            "cable_calls.issue"      : { "name":"issue",     "label":"Issue" },
+            "cable_calls.cause"      : { "name":"cause",     "label":"Cause" },
+            "cable_calls.resolution" : { "name":"resolution","label":"Resolution" },
+            "cable_calls.market"     : { "name":"kma",       "label":"Market" },
+            "cable_calls.headend"    : { "name":"headend",   "label":"Headend" },
+            "cable_calls.node"       : { "name":"node",      "label":"Node" },
+            "cable_calls.cust_type"  : { "name":"cust_type", "label":"Customer Type" },
+            "cable_calls.company"    : { "name":"company",   "label":"Company" },
+            "cable_calls.call_type"  : { "name":"call_type", "label":"Call Type" }            
+        },
+        "Voice|*|*|Customer Call Volume" : {
+            "voice_calls.cmts"       : { "name":"cmts",      "label":"CMTS" },
+            "voice_calls.controller" : { "name":"controller","label":"Controller" },
+            "voice_calls.state"      : { "name":"state",     "label":"State" },
+            "voice_calls.city"       : { "name":"city",      "label":"City" },
+            "voice_calls.issue"      : { "name":"issue",     "label":"Issue" },
+            "voice_calls.cause"      : { "name":"cause",     "label":"Cause" },
+            "voice_calls.resolution" : { "name":"resolution","label":"Resolution" },
+            "voice_calls.market"     : { "name":"kma",       "label":"Market" },
+            "voice_calls.headend"    : { "name":"headend",   "label":"Headend" },
+            "voice_calls.node"       : { "name":"node",      "label":"Node" },
+            "voice_calls.cust_type"  : { "name":"cust_type", "label":"Customer Type" },
+            "voice_calls.company"    : { "name":"company",   "label":"Company" },
+            "voice_calls.call_type"  : { "name":"call_type", "label":"Call Type" }            
+        },
+        "E-Mail" : {
+            "email.host"  : { "name":"host",  "label":"Host" },
+            "email.dom"   : { "name":"dom",   "label":"Domain" },
+            "email.dhost" : { "name":"dhost", "label":"Target" }
+        },
+        "E-Mail|*|Syslog" : {
+            "email_network.host"  : { "name":"host", "label":"Host" },
+            "email_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "E-Mail|*|CAPM_LB_A10" : {
+            "email_network.host"  : { "name":"host", "label":"Host" },
+            "email_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "E-Mail|*|CAPM_LB_F5" : {
+            "email_network.host"  : { "name":"host", "label":"Host" },
+            "email_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "E-Mail|*|CAPM_SR" : {
+            "email_network.host"  : { "name":"host", "label":"Host" },
+            "email_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "E-Mail|*|CAPM_FW" : {
+            "email_network.host"  : { "name":"host", "label":"Host" },
+            "email_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "E-Mail|*|*|Customer Call Volume" : {
+            "email_calls.market" : { "name":"region1", "label":"Market" },
+            "email_calls.system" : { "name":"region2", "label":"System" }
+		},
+        "CHTR_E-Mail" : {
+            "chtremail.host"   : { "name":"host",   "label":"Host" },
+            "chtremail.dom"    : { "name":"dom",    "label":"Domain" },
+            "chtremail.dhost"  : { "name":"dhost",  "label":"Target" },
+            "chtremail.reason" : { "name":"reason", "label":"Reason" }
+        },
+        "CHTR_E-Mail|*|Syslog" : {
+            "chtremail_network.host"  : { "name":"host", "label":"Host" },
+            "chtremail_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "CHTR_E-Mail|*|CAPM_LB_A10" : {
+            "chtremail_network.host"  : { "name":"host", "label":"Host" },
+            "chtremail_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "CHTR_E-Mail|*|CAPM_LB_F5" : {
+            "chtremail_network.host"  : { "name":"host", "label":"Host" },
+            "chtremail_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "CHTR_E-Mail|*|CAPM_SR" : {
+            "chtremail_network.host"  : { "name":"host", "label":"Host" },
+            "chtremail_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "CHTR_E-Mail|*|CAPM_FW" : {
+            "chtremail_network.host"  : { "name":"host", "label":"Host" },
+            "chtremail_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "CHTR_E-Mail|*|*|Customer Call Volume" : {
+            "chtremail_calls.market" : { "name":"region1", "label":"Market" },
+            "chtremail_calls.system" : { "name":"region2", "label":"System" }
+        }, 
+        "Network" : {
+            "network.ip"        : { "name":"ip",        "label":"IP Address" },
+            "network.location"  : { "name":"location",  "label":"Location" },
+            "network.usr"       : { "name":"usr",       "label":"User" }
+        },
+        "Network|*|Syslog" : {
+            "network.host"  : { "name":"host", "label":"Host" },
+            "network.node"  : { "name":"node", "label":"Node" }
+        },
+        "Network|*|CAPM_LB_A10" : {
+            "network.host"  : { "name":"host", "label":"Host" },
+            "network.node"  : { "name":"node", "label":"Node" }
+        },
+        "Network|*|CAPM_LB_F5" : {
+            "network.host"  : { "name":"host", "label":"Host" },
+            "network.node"  : { "name":"node", "label":"Node" }
+        },
+        "Network|*|CAPM_SR" : {
+            "network.host"  : { "name":"host", "label":"Host" },
+            "network.node"  : { "name":"node", "label":"Node" }
+        },
+        "Network|*|CAPM_FW" : {
+            "network.host"  : { "name":"host", "label":"Host" },
+            "network.node"  : { "name":"node", "label":"Node" }
+        },
+        "Video" : {
+            "video.device"       : { "name":"device",         "label":"Device" },
+            "video.conn"         : { "name":"connection",     "label":"Connection" },
+            "video.auth"         : { "name":"authentication", "label":"Authentication" },
+            "video.msgcat"       : { "name":"msgcat",         "label":"API Category" },
+            "video.api"          : { "name":"api",            "label":"API Name" },
+            "video.response"     : { "name":"response",       "label":"Response" },
+            "video.version"      : { "name":"version",        "label":"Version" },
+            "video.platform"     : { "name":"platform",       "label":"Platform" },
+            "video.netstatus"    : { "name":"netstatus",      "label":"Network Status" },
+            "video.streamformat" : { "name":"streamformat",   "label":"Stream Format" },
+            "video.stream"       : { "name":"stream",         "label":"Stream Type" },
+            "video.channel"      : { "name":"channel",        "label":"Channel" },
+            "video.content"      : { "name":"content",        "label":"Content" },
+            "video.company"      : { "name":"company",        "label":"Company" },
+            "video.state"        : { "name":"state",          "label":"State" }
+        },
+        "Video|*|*|Customer Call Volume" : {
+            "video_calls.cmts"       : { "name":"cmts",      "label":"CMTS" },
+            "video_calls.controller" : { "name":"controller","label":"Controller" },
+            "video_calls.state"      : { "name":"state",     "label":"State" },
+            "video_calls.city"       : { "name":"city",      "label":"City" },
+            "video_calls.issue"      : { "name":"issue",     "label":"Issue" },
+            "video_calls.cause"      : { "name":"cause",     "label":"Cause" },
+            "video_calls.resolution" : { "name":"resolution","label":"Resolution" },
+            "video_calls.market"     : { "name":"kma",       "label":"Market" },
+            "video_calls.headend"    : { "name":"headend",   "label":"Headend" },
+            "video_calls.node"       : { "name":"node",      "label":"Node" },
+            "video_calls.cust_type"  : { "name":"cust_type", "label":"Customer Type" },
+            "video_calls.company"    : { "name":"company",   "label":"Company" },
+            "video_calls.call_type"  : { "name":"call_type", "label":"Call Type" }            
+
+        },
+        "Video|*|Syslog" : {
+            "video_network.host"  : { "name":"host", "label":"Host" },
+            "video_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "Video|*|CAPM_LB_A10" : {
+            "video_network.host"  : { "name":"host", "label":"Host" },
+            "video_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "Video|*|CAPM_LB_F5" : {
+            "video_network.host"  : { "name":"host", "label":"Host" },
+            "video_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "Video|*|CAPM_SR" : {
+            "video_network.host"  : { "name":"host", "label":"Host" },
+            "video_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "Video|*|CAPM_FW" : {
+            "video_network.host"  : { "name":"host", "label":"Host" },
+            "video_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "SMB" : {
+            "smb.api"             : { "name":"api",              "label":"API Name" },
+            "smb.browser"         : { "name":"browser",          "label":"Browser" },
+            "smb.company"         : { "name":"company",          "label":"Company" },
+            "smb.device"          : { "name":"device",           "label":"Device" },
+            "smb.deviceandversion": { "name":"deviceandversion", "label":"Device and Version" },
+            "smb.msgcat"          : { "name":"msgcat",           "label":"Category" },
+            "smb.platform"        : { "name":"platform",         "label":"Platform" },
+            "smb.page"            : { "name":"page",             "label":"Page" },
+            "smb.response"        : { "name":"response",         "label":"Response" },
+            "smb.state"           : { "name":"state",            "label":"State" },
+            "smb.version"         : { "name":"version",          "label":"Version" }
+        },
+        "SpecMobile" : {
+            "specmobile.api"             : { "name":"api",              "label":"API Name" },
+            "specmobile.browser"         : { "name":"browser",          "label":"Browser" },
+            "specmobile.company"         : { "name":"company",          "label":"Company" },
+            "specmobile.device"          : { "name":"device",           "label":"Device" },
+            "specmobile.deviceandversion": { "name":"deviceandversion", "label":"Device and Version" },
+            "specmobile.msgcat"          : { "name":"msgcat",           "label":"Category" },
+            "specmobile.platform"        : { "name":"platform",         "label":"Platform" },
+            "specmobile.page"            : { "name":"page",             "label":"Page" },
+            "specmobile.response"        : { "name":"response",         "label":"Response" },
+            "specmobile.state"           : { "name":"state",            "label":"State" },
+            "specmobile.version"         : { "name":"version",          "label":"Version" }
+        },
+        "SpecNet" : {
+            "specnet.api"             : { "name":"api",              "label":"API Name" },
+            "specnet.browser"         : { "name":"browser",          "label":"Browser" },
+            "specnet.company"         : { "name":"company",          "label":"Company" },
+            "specnet.device"          : { "name":"device",           "label":"Device" },
+            "specnet.deviceandversion": { "name":"deviceandversion", "label":"Device and Version" },
+            "specnet.msgcat"          : { "name":"msgcat",           "label":"Category" },
+            "specnet.platform"        : { "name":"platform",         "label":"Platform" },
+            "specnet.page"            : { "name":"page",             "label":"Page" },
+            "specnet.response"        : { "name":"response",         "label":"Response" },
+            "specnet.state"           : { "name":"state",            "label":"State" },
+            "specnet.version"         : { "name":"version",          "label":"Version" }
+        },
+        "MySpectrum" : {
+            "myspectrum.api"             : { "name":"api",              "label":"API Name" },
+            "myspectrum.browser"         : { "name":"browser",          "label":"Browser" },
+            "myspectrum.company"         : { "name":"company",          "label":"Company" },
+            "myspectrum.device"          : { "name":"device",           "label":"Device" },
+            "myspectrum.deviceandversion": { "name":"deviceandversion", "label":"Device and Version" },
+            "myspectrum.msgcat"          : { "name":"msgcat",           "label":"Category" },
+            "myspectrum.platform"        : { "name":"platform",         "label":"Platform" },
+            "myspectrum.page"            : { "name":"page",           "label":"Page" },
+            "myspectrum.response"        : { "name":"response",         "label":"Response" },
+            "myspectrum.state"           : { "name":"state",            "label":"State" },
+            "myspectrum.version"         : { "name":"version",          "label":"Version" }
+        },
+        "SpecGuide" : {
+            "specguide.api"          : { "name":"api",              "label":"API Name" },
+            "specguide.msgcat"       : { "name":"msgcat",           "label":"Category" },
+            "specguide.device"       : { "name":"device",           "label":"Device" },
+            "specguide.conn"         : { "name":"connection",       "label":"Connection" },
+            "specguide.auth"         : { "name":"deviceandversion", "label":"Device and Version" },
+            "specguide.division"     : { "name":"division",         "label":"Division" },
+            "specguide.region"       : { "name":"region",           "label":"Region" },
+            "specguide.city"         : { "name":"city",             "label":"City" },
+            "specguide.response"     : { "name":"response",         "label":"Response" },
+            "specguide.version"      : { "name":"version",          "label":"Version" },
+            "specguide.platform"     : { "name":"platform",         "label":"Platform" },
+            "specguide.netstatus"    : { "name":"netstatus",        "label":"Network Status" },
+            "specguide.streamformat" : { "name":"streamformat",     "label":"Stream Format" },
+            "specguide.stream"       : { "name":"stream",           "label":"Stream Type" },
+            "specguide.company"      : { "name":"company",          "label":"Company" }
+        },
+        "SpecGuide|*|*|Customer Call Volume" : {
+            "specguide_calls.cmts"       : { "name":"cmts",      "label":"CMTS" },
+            "specguide_calls.controller" : { "name":"controller","label":"Controller" },
+            "specguide_calls.state"      : { "name":"state",     "label":"State" },
+            "specguide_calls.city"       : { "name":"city",      "label":"City" },
+            "specguide_calls.issue"      : { "name":"issue",     "label":"Issue" },
+            "specguide_calls.cause"      : { "name":"cause",     "label":"Cause" },
+            "specguide_calls.resolution" : { "name":"resolution","label":"Resolution" },
+            "specguide_calls.market"     : { "name":"kma",       "label":"Market" },
+            "specguide_calls.headend"    : { "name":"headend",   "label":"Headend" },
+            "specguide_calls.node"       : { "name":"node",      "label":"Node" },
+            "specguide_calls.cust_type"  : { "name":"cust_type", "label":"Customer Type" },
+            "specguide_calls.company"    : { "name":"company",   "label":"Company" },
+            "specguide_calls.call_type"  : { "name":"call_type", "label":"Call Type" }            
+        },
+        "SpecGuide|*|Syslog" : {
+            "specguide_network.host"  : { "name":"host", "label":"Host" },
+            "specguide_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "SpecGuide|*|CAPM_LB_A10" : {
+            "specguide_network.host"  : { "name":"host", "label":"Host" },
+            "specguide_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "SpecGuide|*|CAPM_LB_F5" : {
+            "specguide_network.host"  : { "name":"host", "label":"Host" },
+            "specguide_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "SpecGuide|*|CAPM_SR" : {
+            "specguide_network.host"  : { "name":"host", "label":"Host" },
+            "specguide_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "SpecGuide|*|CAPM_FW" : {
+            "specguide_network.host"  : { "name":"host", "label":"Host" },
+            "specguide_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "cDVR" : {
+            "cdvr_application.host"            : {"name":"host",            "label":"Host"},
+            "cdvr_application.location"        : {"name":"location",        "label":"Location"},
+            "cdvr_application.vmr_name"        : {"name":"vmr_name",        "label":"VMR"},
+            "cdvr_application.http_response"   : {"name":"http_response",   "label":"HTTP Response"},
+            "cdvr_application.error_code"      : {"name":"error_code",      "label":"Error Code"},
+            "cdvr_application.event_name"      : {"name":"event_name",      "label":"Event"},
+            "cdvr_application.response_msg"    : {"name":"response_msg",    "label":"Response"}
+        },
+        "cDVR|*|Quantum" : {
+            "cdvr.device"       : { "name":"device",         "label":"Device" },
+            "cdvr.conn"         : { "name":"connection",     "label":"Connection" },
+            "cdvr.auth"         : { "name":"authentication", "label":"Authentication" },
+            "cdvr.msgcat"       : { "name":"msgcat",         "label":"API Category" },
+            "cdvr.api"          : { "name":"api",            "label":"API Name" },
+            "cdvr.response"     : { "name":"response",       "label":"Response" },
+            "cdvr.version"      : { "name":"version",        "label":"Version" },
+            "cdvr.platform"     : { "name":"platform",       "label":"Platform" },
+            "cdvr.netstatus"    : { "name":"netstatus",      "label":"Network Status" },
+            "cdvr.streamformat" : { "name":"streamformat",   "label":"Stream Format" },
+            "cdvr.stream"       : { "name":"stream",         "label":"Stream Type" },
+            "cdvr.channel"      : { "name":"channel",        "label":"Channel" },
+            "cdvr.content"      : { "name":"content",        "label":"Content" },
+            "cdvr.company"      : { "name":"company",        "label":"Company" },
+            "cdvr.state"        : { "name":"state",          "label":"State" }
+        },
+        "cDVR|*|*|Customer Call Volume" : {
+            "cdvr_calls.cmts"       : { "name":"cmts",      "label":"CMTS" },
+            "cdvr_calls.controller" : { "name":"controller","label":"Controller" },
+            "cdvr_calls.state"      : { "name":"state",     "label":"State" },
+            "cdvr_calls.city"       : { "name":"city",      "label":"City" },
+            "cdvr_calls.issue"      : { "name":"issue",     "label":"Issue" },
+            "cdvr_calls.cause"      : { "name":"cause",     "label":"Cause" },
+            "cdvr_calls.resolution" : { "name":"resolution","label":"Resolution" },
+            "cdvr_calls.market"     : { "name":"kma",       "label":"Market" },
+            "cdvr_calls.headend"    : { "name":"headend",   "label":"Headend" },
+            "cdvr_calls.node"       : { "name":"node",      "label":"Node" },
+            "cdvr_calls.cust_type"  : { "name":"cust_type", "label":"Customer Type" },
+            "cdvr_calls.company"    : { "name":"company",   "label":"Company" },
+            "cdvr_calls.call_type"  : { "name":"category", "label":"Call Type" }            
+        },
+        "cDVR|*|Syslog" : {
+            "cdvr_network.host"  : { "name":"host", "label":"Host" },
+            "cdvr_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "cDVR|*|CAPM_LB_A10" : {
+            "cdvr_network.host"  : { "name":"host", "label":"Host" },
+            "cdvr_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "cDVR|*|CAPM_LB_F5" : {
+            "cdvr_network.host"  : { "name":"host", "label":"Host" },
+            "cdvr_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "cDVR|*|CAPM_SR" : {
+            "cdvr_network.host"  : { "name":"host", "label":"Host" },
+            "cdvr_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "cDVR|*|CAPM_FW" : {
+            "cdvr_network.host"  : { "name":"host", "label":"Host" },
+            "cdvr_network.node"  : { "name":"node", "label":"Node" }
+        },
+        "Digital Operations|*|Client": {
+            "digital_operations.source"     : { "name":"data_source",   "label":"Data Source" },
+            "digital_operations.host"       : { "name":"host",          "label":"Host" },
+            "digital_operations.function"   : { "name":"function",      "label":"Function" },
+            "digital_operations.context"    : { "name":"context",       "label":"Context" },
+            "digital_operations.user"       : { "name":"user",          "label":"User" },
+            "digital_operations.server"     : { "name":"server",        "label":"Server" }
+        },
+        "Digital Operations|*|Data Source": {
+            "digital_operations.source"     : { "name":"data_source",   "label":"Data Source" },
+            "digital_operations.host"       : { "name":"host",          "label":"Host" },
+            "digital_operations.function"   : { "name":"function",      "label":"Function" },
+            "digital_operations.context"    : { "name":"context",       "label":"Context" },
+            "digital_operations.user"       : { "name":"user",          "label":"User" },
+            "digital_operations.server"     : { "name":"server",        "label":"Server" }
+        },
+        "*" : {
+            "data.app"    : { "name":"app",        "label":"Component" },
+            "data.metric" : { "name":"metric_name", "label":"Metric" }
+        }
+    }
+}

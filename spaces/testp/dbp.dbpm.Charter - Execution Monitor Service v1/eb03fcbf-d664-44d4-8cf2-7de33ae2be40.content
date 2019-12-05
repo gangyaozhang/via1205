@@ -1,0 +1,23 @@
+select
+    m.id as id,
+    round(m.tsepoch/1000) as epochtime,
+    ${timestampSQL} as timestamp,
+    floor(m.start_time/1000) as startepoch,
+    ceil(m.end_time/1000) as endepoch,
+    m.ip as ip,
+    m.location as location,
+    m.host as host,
+    m.component as component,
+    m.user as user,
+    m.ticket as ticket,
+    a.ackuser as ackuser,
+    round(a.ackepoch/1000) as ackepoch,
+    ${ackTimestampSQL} as acktimestamp,
+    a.ackvalue as ackvalue,
+    a.acknotes as acknotes
+from charter_change_mgmt m
+left join charter_change_acks a
+on m.id = a.id
+where round(m.tsepoch/1000) >= ${fromEpoch} and round(m.tsepoch/1000) < ${toEpoch}
+${userWhereClause}
+order by epochtime desc

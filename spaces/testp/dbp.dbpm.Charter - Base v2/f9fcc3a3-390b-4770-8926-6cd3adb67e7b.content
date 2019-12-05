@@ -1,0 +1,2517 @@
+{
+    "Legacy_VOD|*|*" : {
+        "metric-list" : {
+            "Customer Call Volume": {
+                "source-group" : "connectivity_call",
+                "target-group" : "viaops_metric_customer_calls_view",
+                "name": "phone call",
+                "aggr": "count"
+            }
+        }
+    },
+    "Legacy_VOD|*|VBO" : {
+        "metric-list" : {
+            "Session Setup Success": {
+                "source-group" : "legacy_vod.VBO",
+                "target-group" : "viaops_metric_legacy_vod",
+                "name": "Session Setup Success",
+                "aggr": "count"
+            },
+            "Session Setup Error": {
+                "source-group" : "legacy_vod.VBO",
+                "target-group" : "viaops_metric_legacy_vod",
+                "name": "Session Setup Error",
+                "aggr": "count"
+            },
+            "Duration - BO to Video Pump": {
+                "source-group" : "legacy_vod.VBO",
+                "target-group" : "viaops_metric_legacy_vod",
+                "name": "Duration - BO to Video Pump",
+                "aggr": "avg"
+            },
+            "Session Setup Queue Size": {
+                "source-group" : "legacy_vod.VBO",
+                "target-group" : "viaops_metric_legacy_vod",
+                "name": "Session Setup Queue Size",
+                "aggr": "avg"
+            },
+            "Destroyed Sessions": {
+                "source-group" : "legacy_vod.VBO",
+                "target-group" : "viaops_metric_legacy_vod",
+                "name": "Destroyed Sessions",
+                "aggr": "count"
+            },
+            "Stream Release Success": {
+                "source-group" : "legacy_vod.VBO",
+                "target-group" : "viaops_metric_legacy_vod",
+                "name": "Stream Release Success",
+                "aggr": "count"
+            },
+            "Stream Release Error": {
+                "source-group" : "legacy_vod.VBO",
+                "target-group" : "viaops_metric_legacy_vod",
+                "name": "Stream Release Error",
+                "aggr": "count"
+            },
+            "Stream Release Orphan Clean-up": {
+                "source-group" : "legacy_vod.VBO",
+                "target-group" : "viaops_metric_legacy_vod",
+                "name": "Stream Release Orphan Clean-up",
+                "aggr": "count"
+            }
+        }
+    },
+    "Connectivity|*|*" : {
+        "metric-list" : {
+            "Customer Call Volume": {
+                "source-group" : "connectivity_call",
+                "target-group" : "viaops_metric_customer_calls_view",
+                "name": "phone call",
+                "aggr": "count"
+            }
+        }
+    },
+    "Cable|*|*" : {
+        "metric-list" : {
+            "Customer Call Volume": {
+                "source-group" : "cable_call",
+                "target-group" : "viaops_metric_customer_calls_view",
+                "name": "phone call",
+                "aggr": "count"
+            }
+        }
+    },
+    "Voice|*|*" : {
+        "metric-list" : {
+            "Customer Call Volume": {
+                "source-group" : "voice_call",
+                "target-group" : "viaops_metric_customer_calls_view",
+                "name": "phone call",
+                "aggr": "count"
+            }
+        }
+    },
+    "HSD|*|*" : {
+        "metric-list" : {
+            "Customer Call Volume": {
+                "source-group" : "hsd_call",
+                "target-group" : "viaops_metric_customer_calls_view",
+                "name": "phone call",
+                "aggr": "count"
+            }
+        }
+    },
+    "Customer|*|*" : {
+        "metric-list" : {
+            "Customer Call Volume": {
+                "source-group" : "customer_call",
+                "target-group" : "viaops_metric_customer_calls_view",
+                "name": "phone call",
+                "aggr": "count"
+            }
+        }
+    },
+    "*|*|DOJ" : {
+        "metric-list" : {
+            "Queue Depth": {
+                "source-group" : "customer.DOJ",
+                "target-group" : "viaops_metric_customer",
+                "name": "Queue Depth",
+                "aggr": "avg"
+            }
+        }
+    },
+    "E-Mail|*|*" : {
+        "metric-list" : {
+            "Customer Call Volume": {
+                "source-group" : "twc_email_call",
+                "target-group" : "viaops_metric_customer_calls_view",
+                "name": "phone call",
+                "aggr": "count"
+            }
+        }
+    },
+    "Video|*|*" : {
+        "metric-list" : {
+            "Customer Call Volume": {
+                "source-group" : "stva_video_call",
+                "target-group" : "viaops_metric_customer_calls_view",
+                "name": "phone call",
+                "aggr": "count"
+            }
+        }
+    },
+    "SpecGuide|*|*" : {
+        "metric-list" : {
+            "Customer Call Volume": {
+                "source-group" : "specguide_call",
+                "target-group" : "viaops_metric_customer_calls_view",
+                "name": "phone call",
+                "aggr": "count"
+            }
+        }
+    },
+    "SpecNet|*|*" : {        
+        "metric-list" : {
+            "Customer Call Volume": {
+                "source-group" : "portals_call",
+                "target-group" : "viaops_metric_customer_calls_view",
+                "name": "phone call",
+                "aggr": "count"
+            }
+        }
+    },
+    "SMB|*|*" : {        
+        "metric-list" : {
+            "Customer Call Volume": {
+                "source-group" : "portals_call",
+                "target-group" : "viaops_metric_customer_calls_view",
+                "name": "phone call",
+                "aggr": "count"
+            }
+        }
+    },
+    "MySpectrum|*|*" : {        
+        "metric-list" : {
+            "Customer Call Volume": {
+                "source-group" : "portals_call",
+                "target-group" : "viaops_metric_customer_calls_view",
+                "name": "phone call",
+                "aggr": "count"
+            }
+        }
+    },
+    "SpecMobile|*|*" : {        
+        "metric-list" : {
+            "Customer Call Volume": {
+                "source-group" : "portals_call",
+                "target-group" : "viaops_metric_customer_calls_view",
+                "name": "phone call",
+                "aggr": "count"
+            }
+        }
+    },
+    "cDVR|*|*" : {
+        "metric-list" : {
+            "Customer Call Volume": {
+                "source-group" : "cdvr_call",
+                "target-group" : "viaops_metric_customer_calls_view",
+                "name": "phone call",
+                "aggr": "count"
+            }
+        }
+    },
+    "SpecNet|*|Quantum": {
+        "source-group" : "portals",
+        "target-group" : "viaops_metric_portals"
+    },
+    "SMB|*|Quantum": {
+        "source-group" : "portals",
+        "target-group" : "viaops_metric_portals"
+    },
+    "MySpectrum|*|Quantum": {
+        "source-group" : "portals",
+        "target-group" : "viaops_metric_portals"
+    },
+    "SpecMobile|*|Quantum": {
+        "source-group" : "portals",
+        "target-group" : "viaops_metric_portals"
+    },
+    "CHTR_E-Mail|*|*" : {
+        "metric-list" : {
+            "Customer Call Volume": {
+                "source-group" : "chtr_email_call",
+                "target-group" : "viaops_metric_customer_calls_view",
+                "name": "phone call",
+                "aggr": "count"
+            }
+        }
+    },
+    "E-Mail": {
+        "source-group" : "twc_email",
+        "target-group" : "viaops_metric_twc_email"
+    },
+    "CHTR_E-Mail": {
+        "source-group" : "chtr_email",
+        "target-group" : "viaops_metric_chtr_email"
+    },
+    "Network|*|Syslog": {
+        "source-group" : "Syslog",
+        "target-group" : "viaops_metric_network"
+    },
+    "Network|*|CAPM_FW": {
+        "source-group" : "network.CAPM_FW",
+        "target-group" : "viaops_metric_network"
+    },
+    "Network|*|CAPM_SR": {
+        "source-group" : "network.CAPM_SR",
+        "target-group" : "viaops_metric_network"
+    },
+    "Network|*|CAPM_LB_A10": {
+        "source-group" : "network.CAPM_LB_A10",
+        "target-group" : "viaops_metric_network"
+    },
+    "Network|*|CAPM_LB_F5": {
+        "source-group" : "network.CAPM_LB_F5",
+        "target-group" : "viaops_metric_network"
+    },
+    "Video|*|Syslog": {
+        "source-group" : "Syslog",
+        "target-group" : "viaops_metric_network"
+    },
+    "Video|*|CAPM_LB_A10": {
+        "source-group" : "network.CAPM_LB_A10",
+        "target-group" : "viaops_metric_network"
+    },
+    "Video|*|CAPM_LB_F5": {
+        "source-group" : "network.CAPM_LB_F5",
+        "target-group" : "viaops_metric_network"
+    },
+    "Video|*|CAPM_SR": {
+        "source-group" : "network.CAPM_SR",
+        "target-group" : "viaops_metric_network"
+    },
+    "Video|*|CAPM_FW": {
+        "source-group" : "network.CAPM_FW",
+        "target-group" : "viaops_metric_network"
+    },
+    "Video|*|Quantum": {
+        "source-group" : "stva_video",
+        "target-group" : "viaops_metric_stva"
+    },
+    "cDVR|*|Syslog": {
+        "source-group" : "Syslog",
+        "target-group" : "viaops_metric_network"
+    },
+    "cDVR|*|CAPM_LB_A10": {
+        "source-group" : "network.CAPM_LB_A10",
+        "target-group" : "viaops_metric_network"
+    },
+    "cDVR|*|CAPM_LB_F5": {
+        "source-group" : "network.CAPM_LB_F5",
+        "target-group" : "viaops_metric_network"
+    },
+    "cDVR|*|CAPM_SR": {
+        "source-group" : "network.CAPM_SR",
+        "target-group" : "viaops_metric_network"
+    },
+    "cDVR|*|CAPM_FW": {
+        "source-group" : "network.CAPM_FW",
+        "target-group" : "viaops_metric_network"
+    },
+    "cDVR|*|Quantum": {
+        "source-group" : "cdvr_video",
+        "target-group" : "viaops_metric_stva"
+    },
+    "SpecGuide|*|Quantum": {
+        "source-group" : "specguide.quantum",
+        "target-group" : "viaops_metric_specguide"
+    },
+    "SpecGuide|*|MicroServices": {
+        "source-group" : "specguide.MicroServices",
+        "target-group" : "viaops_metric_specguide",
+        "metric-list" : {
+            "Failed API Attempt": {
+                "name": "Failed API Attempt",
+                "aggr": "sum"
+            }
+        }    
+    },    
+    "SpecGuide|*|Syslog": {
+        "source-group" : "Syslog",
+        "target-group" : "viaops_metric_network"
+    },
+    "SpecGuide|*|CAPM_LB_A10": {
+        "source-group" : "network.CAPM_LB_A10",
+        "target-group" : "viaops_metric_network"
+    },
+    "SpecGuide|*|CAPM_LB_F5": {
+        "source-group" : "network.CAPM_LB_F5",
+        "target-group" : "viaops_metric_network"
+    },
+    "SpecGuide|*|CAPM_SR": {
+        "source-group" : "network.CAPM_SR",
+        "target-group" : "viaops_metric_network"
+    },
+    "SpecGuide|*|CAPM_FW": {
+        "source-group" : "network.CAPM_FW",
+        "target-group" : "viaops_metric_network"
+    },
+    "Digital Operations|*|*": {
+        "source-group" : "viaops_monitoring",
+        "target-group" : "viaops_metric_monitoring"
+    },
+    "E-Mail|*|Syslog": {
+        "source-group" : "Syslog",
+        "target-group" : "viaops_metric_network"
+    },
+    "E-Mail|*|CAPM_LB_A10": {
+        "source-group" : "network.CAPM_LB_A10",
+        "target-group" : "viaops_metric_network"
+    },
+    "E-Mail|*|CAPM_LB_F5": {
+        "source-group" : "network.CAPM_LB_F5",
+        "target-group" : "viaops_metric_network"
+    },
+    "E-Mail|*|CAPM_SR": {
+        "source-group" : "network.CAPM_SR",
+        "target-group" : "viaops_metric_network"
+    },
+    "E-Mail|*|CAPM_FW": {
+        "source-group" : "network.CAPM_FW",
+        "target-group" : "viaops_metric_network"
+    },
+    "CHTR_E-Mail|*|Syslog": {
+        "source-group" : "Syslog",
+        "target-group" : "viaops_metric_network"
+    },
+    "CHTR_E-Mail|*|CAPM_LB_A10": {
+        "source-group" : "network.CAPM_LB_A10",
+        "target-group" : "viaops_metric_network"
+    },
+    "CHTR_E-Mail|*|CAPM_LB_F5": {
+        "source-group" : "network.CAPM_LB_F5",
+        "target-group" : "viaops_metric_network"
+    },
+    "CHTR_E-Mail|*|CAPM_SR": {
+        "source-group" : "network.CAPM_SR",
+        "target-group" : "viaops_metric_network"
+    },
+    "CHTR_E-Mail|*|CAPM_FW": {
+        "source-group" : "network.CAPM_FW",
+        "target-group" : "viaops_metric_network"
+    },
+    "E-Mail|*|mss": {
+        "metric-list" : {
+            "Log Ms Limit Total Size": {
+                "name": "MsLimitTotalSize",
+                "aggr": "sum"
+            },
+            "Log Ms Msg Created": {
+                "name": "MsMsgCreated",
+                "aggr": "sum"
+            },
+            "Log Ms Msg Deleted": {
+                "name": "MsMsgDeleted",
+                "aggr": "sum"
+            },
+            "Log Ms Querying COS": {
+                "name": "MsQueryingCOS",
+                "aggr": "sum"
+            },
+            "Log Proc Assert Fail": {
+                "name": "ProcAssertFail",
+                "aggr": "sum"
+            },
+            "Stat Connection Count": {
+                "name": "StatConnections",
+                "aggr": "sum"
+            },
+            "Stat Create Message Time (ms) per Event": {
+                "name": "StatMsCreateMessage",
+                "aggr": "avg"
+            },
+            "Stat Create Message Total Events": {
+                "name": "StatMsCreateMessage",
+                "aggr": "sum"
+            },
+            "Stat Create Message Total Time (ms)": {
+                "name": "StatMsCreateMessage",
+                "aggr": "sum"
+            },
+            "Stat HTTP Get Time (ms) per Event": {
+                "name": "StatHttpGet",
+                "aggr": "avg"
+            },
+            "Stat HTTP Get Total Events": {
+                "name": "StatHttpGet",
+                "aggr": "sum"
+            },
+            "Stat HTTP Get Total Time (ms)": {
+                "name": "StatHttpGet",
+                "aggr": "sum"
+            },
+            "Stat MSS Find or Make MS Time (ms) per Event": {
+                "name": "StatMssFindOrMakeMSTime",
+                "aggr": "avg"
+            },
+            "Stat MSS Find or Make MS Total Events": {
+                "name": "StatMssFindOrMakeMSTime",
+                "aggr": "sum"
+            },
+            "Stat MSS Find or Make MS Total Time (ms)": {
+                "name": "StatMssFindOrMakeMSTime",
+                "aggr": "sum"
+            },
+            "Stat MSS RME Create Message Time (ms) per Event": {
+                "name": "StatMssRmeCreateMessageTime",
+                "aggr": "avg"
+            },
+            "Stat MSS RME Create Message Total Events": {
+                "name": "StatMssRmeCreateMessageTime",
+                "aggr": "sum"
+            },
+            "Stat MSS RME Create Message Total Time (ms)": {
+                "name": "StatMssRmeCreateMessageTime",
+                "aggr": "sum"
+            },
+            "Stat MSS RME Resolve Time (ms) per Event": {
+                "name": "StatMssRmeResolveMSTime",
+                "aggr": "avg"
+            },
+            "Stat MSS RME Resolve Total Events": {
+                "name": "StatMssRmeResolveMSTime",
+                "aggr": "sum"
+            },
+            "Stat MSS RME Resolve Total Time (ms)": {
+                "name": "StatMssRmeResolveMSTime",
+                "aggr": "sum"
+            },
+            "Stat Received Messages Count": {
+                "name": "StatReceivedMessages",
+                "aggr": "sum"
+            },
+            "Stat S3 Acquire Object Total Time (ms)": {
+                "name": "StatS3AcquireObjTime",
+                "aggr": "sum"
+            },
+            "Stat S3 Acquire Object Time (ms) per Event": {
+                "name": "StatS3AcquireObjTime",
+                "aggr": "avg"
+            },
+            "Stat S3 Acquire Object Total Events": {
+                "name": "StatS3AcquireObjTime",
+                "aggr": "sum"
+            }
+        }
+    },
+    "CHTR_E-Mail|*|mss": {
+        "metric-list" : {
+        	"Log Account Lookup Fail": {
+        		"name": "AcctLookupFail",
+                "aggr": "sum"
+            },
+           	"Log Account Unknown User": {
+        		"name" : "AcctUnknownUser",
+                "aggr": "sum"
+            },
+        	"Log Cassdb Application Error": {
+        		"name" : "CassdbApplicationError",
+                "aggr": "sum"
+           },
+        	"Log Cassdb Database Error": {
+        		"name" : "CassdbDatabaseError",
+                "aggr": "sum"
+            },
+        	"Log Cassdb Folder Initial UID": {
+        		"name" : "CassdbFolderInitialUID",
+                "aggr": "sum"
+            },
+        	"Log Cassdb Invalid Request Error": {
+        		"name" : "CassdbInvalidRequestError",
+                "aggr": "sum"
+            },
+        	"Log Cassdb MSLoad Failed": {
+        		"name" : "CassdbMSLoadFailed",
+                "aggr": "sum"
+            },
+        	"Log Cassdb Stats Audit Failed": {
+        		"name" : "CassdbStatsAuditFailed",
+                "aggr": "sum"
+            },
+        	"Log Cassdb TimedOut Error": {
+        		"name" : "CassdbTimedOutError",
+                "aggr": "sum"
+            },
+        	"Log Conf End Update": {
+        		"name" : "ConfEndUpdate",
+                "aggr": "sum"
+            },
+        	"Log Conf Server Lock": {
+        		"name" : "ConfServerLock",
+                "aggr": "sum"
+            },
+        	"Log Conf Start Update": {
+        		"name" : "ConfStartUpdate",
+                "aggr": "sum"
+            },        
+        	"Log Fio Close Fail": {
+        	    "name" : "FioCloseFail",
+                "aggr": "sum"
+            },
+        	"Log Http Client Retry On Failure": {
+          		"name" : "HttpClientRetryOnFailure",
+             	"aggr": "sum"
+            },        
+        	"Log Ms Already Exists": {
+        		"name" : "MsAlreadyExists",
+              	"aggr": "sum"
+            },
+        	"Log Ms Delete MS Fail": {
+        		"name" : "MsDeleteMSFail",
+            	"aggr": "sum"
+            },
+        	"Log Ms Failed Create Message": {
+        		"name" : "MsFailedCreateMessage",
+               	"aggr": "sum"
+            },
+        	"Log Ms Limit Num Msgs": {
+        		"name" : "MsLimitNumMsgs",
+            	"aggr": "sum"
+            },
+        	"Log Ms Mailbox Cache Unusable": {
+        		"name" : "MsMailboxCacheUnusable",
+            	"aggr": "sum"
+            },
+        	"Log Ms Mailbox Created": {
+        		"name" : "MsMailboxCreated",
+            	"aggr": "sum"
+            },        
+        	"Log Ms Mbox Reloaded": {
+        		"name" : "MsMboxReloaded",
+              	"aggr": "sum"
+            },
+            "Log Ms Msg Created": {
+                "name":"MsMsgCreated", 
+        		"aggr":"sum"
+            },
+        	"Log Ms Message Creation Failed": {
+        		"name" : "MsMessageCreationFailed",
+            	"aggr": "sum"
+            },
+        	"Log Ms Message Read Fail": {
+        		"name" : "MsMessageReadFail",
+               	"aggr": "sum"
+            },
+        	"Log Ms Message UUID Already Existed": {
+        		"name" : "MsMessageUUIDAlreadyExisted",
+              	"aggr": "sum"
+               },
+        	"Log Ms Msg Deleted": {
+        		"name" : "MsMsgDeleted",
+               	"aggr": "sum"
+            },
+        	"Log Ms No Welcome Msg": {
+        		"name" : "MsNoWelcomeMsg",
+               	"aggr": "sum"
+            },
+        	"Log Ms Not Found": {
+        		"name" : "MsNotFound",
+            	"aggr": "sum"
+            },
+        	"Log Ms Operation Timeout": {
+        		"name" : "MsOperationTimeout",
+               	"aggr": "sum"
+            },
+        	"Log Ms Querying COS": {
+        		"name" : "MsQueryingCOS",
+               	"aggr": "sum"
+            },
+        	"Log Nio Conn Timeout": {
+        		"name" : "NioConnTimeout",
+               	"aggr": "sum"
+            },
+        	"Log Nio TimeOut Read": {
+        		"name" : "NioTimeOutRead",
+            	"aggr": "sum"
+            },
+        	"Log S3db S3 Store Access Exception": {
+        		"name" : "S3dbS3StoreAccessException",
+            	"aggr": "sum"
+            },
+        	"Log User Data Exception": {
+        		"name" : "UserDataException",
+              	"aggr": "sum"
+            }
+        }
+    },
+    "E-Mail|*|cm": {
+        "metric-list" : {
+            "Inbound Log Auth Info": {
+                "name": "inbound.authinfo",
+                "aggr": "sum"
+            },
+            "Inbound Log Client Perm Fail": {
+                "name": "inbound.clientpermfail",
+                "aggr": "sum"
+            },
+            "Inbound Log Client Temp Fail": {
+                "name": "inbound.clienttempfail",
+                "aggr": "sum"
+            },
+            "Inbound Log Defer": {
+                "name": "inbound.defer",
+                "aggr": "sum"
+            },
+            "Inbound Log Delivered": {
+                "name": "inbound.delivered",
+                "aggr": "sum"
+            },
+            "Inbound Log Drop": {
+                "name": "inbound.drop",
+                "aggr": "sum"
+            },
+            "Inbound Log Info": {
+                "name": "inbound.info",
+                "aggr": "sum"
+            },
+            "Inbound Log Queue": {
+                "name": "inbound.queue",
+                "aggr": "sum"
+            },
+            "Inbound Log Reject": {
+                "name": "inbound.reject",
+                "aggr": "sum"
+            },
+            "Inbound Log Suspect": {
+                "name": ["inbound.flag_suspect", "inbound.suspect"],
+                "aggr": "sum"
+            },
+            "Outbound Log Auth Info": {
+                "name": "outbound.authinfo",
+                "aggr": "sum"
+            },
+            "Outbound Log Client Perm Fail": {
+                "name": "outbound.clientpermfail",
+                "aggr": "sum"
+            },
+            "Outbound Log Client Temp Fail": {
+                "name": "outbound.clienttempfail",
+                "aggr": "sum"
+            },
+            "Outbound Log Defer": {
+                "name": "outbound.defer",
+                "aggr": "sum"
+            },
+            "Outbound Log Delivered": {
+                "name": "outbound.delivered",
+                "aggr": "sum"
+            },
+            "Outbound Log Drop": {
+                "name": "outbound.drop",
+                "aggr": "sum"
+            },
+            "Outbound Log Info": {
+                "name": "outbound.info",
+                "aggr": "sum"
+            },
+            "Outbound Log Queue": {
+                "name": "outbound.queue",
+                "aggr": "sum"
+            },
+            "Outbound Log Reject": {
+                "name": "outbound.reject",
+                "aggr": "sum"
+            },
+            "Outbound Log Suspect": {
+                "name": "outbound.suspect",
+                "aggr": "sum"
+            },
+            "Outbound Log Generate NDR": {
+                "name": "outbound.generate_ndr",
+                "aggr": "sum"
+            }
+        }
+    },
+    "CHTR_E-Mail|*|cm": {
+        "metric-list" : {
+            "Inbound Log Auth Info": {
+                "name": "inbound.authinfo",
+                "aggr": "sum"
+            },
+            "Inbound Log Client Perm Fail": {
+                "name": "inbound.clientpermfail",
+                "aggr": "sum"
+            },
+            "Inbound Log Client Temp Fail": {
+                "name": "inbound.clienttempfail",
+                "aggr": "sum"
+            },
+            "Inbound Log Defer": {
+                "name": "inbound.defer",
+                "aggr": "sum"
+            },
+            "Inbound Log Delivered": {
+                "name": "inbound.delivered",
+                "aggr": "sum"
+            },
+            "Inbound Log Drop": {
+                "name": "inbound.drop",
+                "aggr": "sum"
+            },
+            "Inbound Log Info": {
+                "name": "inbound.info",
+                "aggr": "sum"
+            },
+            "Inbound Log Queue": {
+                "name": "inbound.queue",
+                "aggr": "sum"
+            },
+            "Inbound Log Reject": {
+                "name": "inbound.reject",
+                "aggr": "sum"
+            },
+            "Inbound Log Suspect": {
+                "name": "inbound.suspect",
+                "aggr": "sum"
+            },
+            "Outbound Log Auth Info": {
+                "name": "outbound.authinfo",
+                "aggr": "sum"
+            },
+            "Outbound Log Client Perm Fail": {
+                "name": "outbound.clientpermfail",
+                "aggr": "sum"
+            },
+            "Outbound Log Client Temp Fail": {
+                "name": "outbound.clienttempfail",
+                "aggr": "sum"
+            },
+            "Outbound Log Defer": {
+                "name": "outbound.defer",
+                "aggr": "sum"
+            },
+            "Outbound Log Delivered": {
+                "name": "outbound.delivered",
+                "aggr": "sum"
+            },
+            "Outbound Log Drop": {
+                "name": "outbound.drop",
+                "aggr": "sum"
+            },
+            "Outbound Log Info": {
+                "name": "outbound.info",
+                "aggr": "sum"
+            },
+            "Outbound Log Queue": {
+                "name": "outbound.queue",
+                "aggr": "sum"
+            },
+            "Outbound Log Reject": {
+                "name": "outbound.reject",
+                "aggr": "sum"
+            },
+            "Outbound Log Suspect": {
+                "name": "outbound.suspect",
+                "aggr": "sum"
+            },
+            "Outbound Log Generate NDR": {
+                "name": "outbound.generate_ndr",
+                "aggr": "sum"
+            }
+        }
+    },
+    "*|*|imapserv": {
+        "metric-list" : {
+            "Log Account Bad Password Max Address": {
+                "name": "AcctBadPswdMaxAddrs",
+                "aggr": "sum"
+            },
+            "Log Account Bad Password Max Users": {
+                "name": "AcctBadPswdMaxUsers",
+                "aggr": "sum"
+            },
+            "Log Account Bad Password Max": {
+                "name": "AcctBadPswdMax",
+                "aggr": "sum"
+            },
+            "Log Account Bad Password": {
+                "name": "AcctBadPswd",
+                "aggr": "sum"
+            },
+            "Log Account Mainenance": {
+                "name": "AcctMaintenance",
+                "aggr": "sum"
+            },
+            "Log Account MX OS Comm Error": {
+                "name": "AcctMxOSCommError",
+                "aggr": "sum"
+            },
+            "Log Account Unknown User": {
+                "name": "AcctUnknownUser",
+                "aggr": "sum"
+            },
+            "Log Command Failed Reason": {
+                "name": "ImapCommandFailedReason",
+                "aggr": "sum"
+            },
+            "Log Conf Connected To Config Server": {
+                "name": "ConfConnectedToConfigServer",
+                "aggr": "sum"
+            },
+            "Log Conf Disconnect Config Server": {
+                "name": "ConfDisconnectConfigServer",
+                "aggr": "sum"
+            },
+            "Log Conf End Update": {
+                "name": "ConfEndUpdate",
+                "aggr": "sum"
+            },
+            "Log Conf Other Host Has Locked": {
+                "name": "ConfOtherHostHasLocked",
+                "aggr": "sum"
+            },
+            "Log Conf Server Lock": {
+                "name": "ConfServerLock",
+                "aggr": "sum"
+            },
+            "Log Conf Start Update": {
+                "name": "ConfStartUpdate",
+                "aggr": "sum"
+            },
+            "Log Conn Timed Out": {
+                "name": "ImapConnTimedOut",
+                "aggr": "sum"
+            },
+            "Log Connections Made": {
+                "name": "ImapConnMade",
+                "aggr": "sum"
+            },
+            "Log Disconnected": {
+                "name": "ImapDisconnected",
+                "aggr": "sum"
+            },
+            "Log Http Client Retry On Failure": {
+                "name": "HttpClientRetryOnFailure",
+                "aggr": "sum"
+            },
+            "Log Imap Command Failed Reason": {
+                "name": "ImapCommandFailedReason",
+                "aggr": "sum"
+            },
+            "Log Imap Conn Timed Out": {
+                "name": "ImapConnTimedOut",
+                "aggr": "sum"
+            },
+            "Log Imap Protocol Error": {
+                "name": "ImapProtocolErr",
+                "aggr": "sum"
+            },
+            "Log Logout": {
+                "name": "ImapLogout",
+                "aggr": "sum"
+            },
+            "Log Ms Mailbox Created": {
+                "name": "MsMailboxCreated",
+                "aggr": "sum"
+            },
+            "Log Nio Conn Server Fail": {
+                "name": "NioConnServerFail",
+                "aggr": "sum"
+            },
+            "Log Nio Recv Fail": {
+                "name": "NioRecvFail",
+                "aggr": "sum"
+            },
+            "Log Nio Send Error": {
+                "name": "NioSendError",
+                "aggr": "sum"
+            },
+            "Log Nio TimeOut Read": {
+                "name": "NioTimeOutRead",
+                "aggr": "sum"
+            },
+            "Log Notification Error": {
+                "name": "ImapNotificationError",
+                "aggr": "sum"
+            },
+            "Log Notification Info": {
+                "name": "ImapNotificationInfo",
+                "aggr": "sum"
+            },
+            "Log Proc Assert Fail": {
+                "name": "ProcAssertFail",
+                "aggr": "sum"
+            },
+            "Log Proc Launch Report": {
+                "name": "ProcLaunchReport",
+                "aggr": "sum"
+            },
+            "Log Proc ReExecing Prog": {
+                "name": "ProcReExecingProg",
+                "aggr": "sum"
+            },
+            "Log Proc Scheduler Report": {
+                "name": "ProcSchedulerReport",
+                "aggr": "sum"
+            },
+            "Log Proc Setuid Succeed": {
+                "name": "ProcSetuidSucceed",
+                "aggr": "sum"
+            },
+            "Log Proc ThreadPool Status": {
+                "name": "ProcThreadPoolStatus",
+                "aggr": "sum"
+            },
+            "Log Protocol Error": {
+                "name": "ImapProtocolErr",
+                "aggr": "sum"
+            },
+            "Log Proxy Connections Made": {
+                "name": "ImapProxyConnMade",
+                "aggr": "sum"
+            },
+            "Log Proxy Greeting Failed": {
+                "name": "ImapProxyGreetingFailed",
+                "aggr": "sum"
+            },
+            "Log User Data Exception": {
+                "name": "UserDataException",
+                "aggr": "sum"
+            },
+            "Stat Connection Count Avg": {
+                "name": "StatConnections",
+                "aggr": "avg"
+            },
+            "Stat Connection Count": {
+                "name": "StatAccumulatedConnections",
+                "aggr": "sum"
+            },
+            "Stat Expunged Messages Count": {
+                "name": "StatExpungedMessages",
+                "aggr": "sum"
+            },
+            "Stat Fetch Requests Count": {
+                "name": "StatFetchRequests",
+                "aggr": "sum"
+            },
+            "Stat Fetched Message Volume": {
+                "name": "StatFetchedVolume",
+                "aggr": "sum"
+            },
+            "Stat Rejected Connections Count": {
+                "name": "StatRejectedConnections",
+                "aggr": "sum"
+            },
+            "Stat Search Requests Count": {
+                "name": "StatSearchRequests",
+                "aggr": "sum"
+            },
+            "Stat Timed Out Connections Count": {
+                "name": "StatTimedOutConnections",
+                "aggr": "sum"
+            }
+        }
+    },
+    "*|*|popserv": {
+        "metric-list" : {
+            "Log Account Bad Password Max Address": {
+                "name": "AcctBadPswdMaxAddrs",
+                "aggr": "sum"
+            },
+            "Log Account Bad Password Max Delay": {
+                "name": "AcctBadPswdMaxDelay",
+                "aggr": "sum"
+            },
+            "Log Account Bad Password Max Users": {
+                "name": "AcctBadPswdMaxUsers",
+                "aggr": "sum"
+            },
+            "Log Account Bad Password Max": {
+                "name": "AcctBadPswdMax",
+                "aggr": "sum"
+            },
+            "Log Account Bad Password": {
+                "name": "AcctBadPswd",
+                "aggr": "sum"
+            },
+            "Log Account Unknown User": {
+                "name": "AcctUnknownUser",
+                "aggr": "sum"
+            },
+            "Log Conf End Update": {
+                "name": "ConfEndUpdate",
+                "aggr": "sum"
+            },
+            "Log Conf Server Lock": {
+                "name": "ConfServerLock",
+                "aggr": "sum"
+            },
+            "Log Conf Start Update": {
+                "name": "ConfStartUpdate",
+                "aggr": "sum"
+            },
+            "Log Connections Made": {
+                "name": "PopConnMade",
+                "aggr": "sum"
+            },
+            "Log Connections Quit": {
+                "name": "PopConnQuit",
+                "aggr": "sum"
+            },
+            "Log Connections TimedOut": {
+                "name": "PopConnTimedOut",
+                "aggr": "sum"
+            },
+            "Log Ms Already Pop Locked": {
+                "name": "MsAlreadyPopLocked",
+                "aggr": "sum"
+            },
+            "Log Ms Mailbox Created": {
+                "name": "MsMailboxCreated",
+                "aggr": "sum"
+            },
+            "Log Ms Message Read Fail": {
+                "name": "MsMessageReadFail",
+                "aggr": "sum"
+            },
+            "Log Nio Conn Timeout": {
+                "name": "NioConnTimeout",
+                "aggr": "sum"
+            },
+            "Log Nio Get Sock Name Fail": {
+                "name": "NioGetSockNameFail",
+                "aggr": "sum"
+            },
+            "Log Nio Recv Error": {
+                "name": "NioRecvError",
+                "aggr": "sum"
+            },
+            "Log Nio Recv Fail": {
+                "name": "NioRecvFail",
+                "aggr": "sum"
+            },
+            "Log Nio Send Error": {
+                "name": "NioSendError",
+                "aggr": "sum"
+            },
+            "Log Nio TimeOut Read": {
+                "name": "NioTimeOutRead",
+                "aggr": "sum"
+            },
+            "Log Pop Protocol Error": {
+                "name": "PopProtocolErr",
+                "aggr": "sum"
+            },
+            "Log Pop Server Too Many Bad Commands": {
+                "name": "PopServerTooManyBadCommands",
+                "aggr": "sum"
+            },
+            "Log Protocol Error": {
+                "name": "PopProtocolErr",
+                "aggr": "sum"
+            },
+            "Log Proxy Connections Made": {
+                "name": "PopProxyConnMade",
+                "aggr": "sum"
+            },
+            "Log Proxy Greeting Failed": {
+                "name": "PopProxyGreetingFailed",
+                "aggr": "sum"
+            },
+            "Log Proxy User Failed": {
+                "name": "PopProxyUserFailed",
+                "aggr": "sum"
+            },
+            "Log Server Too Many Bad Commands": {
+                "name": "PopServerTooManyBadCommands",
+                "aggr": "sum"
+            },
+            "Log User Data Exception": {
+                "name": "UserDataException",
+                "aggr": "sum"
+            },
+            "Stat Connection Count Avg": {
+                "name": "StatConnections",
+                "aggr": "avg"
+            },
+            "Stat Connection Count": {
+                "name": "StatAccumulatedConnections",
+                "aggr": "sum"
+            },
+            "Stat MSS Connection Count": {
+                "name": "StatMSSConnections",
+                "aggr": "sum"
+            },
+            "Stat Rejected Connections Count": {
+                "name": "StatRejectedConnections",
+                "aggr": "sum"
+            },
+            "Stat Retrieved Messages Count": {
+                "name": "StatRetrievedMessages",
+                "aggr": "sum"
+            },
+            "Stat Retrived Messages Volume": {
+                "name": "StatRetrievedVolume",
+                "aggr": "sum"
+            },
+            "Stat Timed Out Connections Count": {
+                "name": "StatTimedOutConnections",
+                "aggr": "sum"
+            }
+        }
+    },
+    "*|*|webmail_imap": {
+        "metric-list" : {
+            "Log Connections Made": {
+                "name": "ImapConnMade",
+                "aggr": "sum"
+            }
+        }
+    },    
+    "*|*|Splunk": {
+        "metric-list" : {
+            "Latency": {
+                "name": "Latency",
+                "aggr": "avg"
+            },
+            "Record Count": {
+                "name": "Record Count",
+                "aggr": "sum"
+            }
+
+        }
+    },    
+    "*|*|Syslog": {
+        "metric-list" : {
+            "Configuration Change": {
+                "name": "commits",
+                "aggr": "sum"
+            }
+        }
+    },
+    "*|*|CAPM_LB_F5": {
+        "metric-list" : {
+            "CPU Utilization Max": {
+                "name": "cpumfs/max_im_Utilization",
+                "aggr": "avg"
+            },
+            "Memory Utilization Max": {
+                "name": "memorymfs/max_im_Utilization",
+                "aggr": "avg"
+            },
+            "Active Sessions": {
+                "name": "serversslprofilesmfs/im_ActiveSessions",
+                "aggr": "sum"
+            },
+            "Connections SSL v2": {
+                "name": "serversslprofilesmfs/im_ConnectionsforSSLProtocolv2",
+                "aggr": "sum"
+            },
+            "Connections SSL v3": {
+                "name": "serversslprofilesmfs/im_ConnectionsforSSLProtocolv3",
+                "aggr": "sum"
+            },
+            "Connections SSL TLS v1": {
+                "name": "serversslprofilesmfs/im_ConnectionsforSSLTLSv1",
+                "aggr": "sum"
+            },
+            "Current Compact Connections": {
+                "name": "serversslprofilesmfs/im_CurrentCompatConnections",
+                "aggr": "sum"
+            },
+            "Current Connections": {
+                "name": "serversslprofilesmfs/im_CurrentConnections",
+                "aggr": "sum"
+            },
+            "Hand Shake Failures": {
+                "name": "serversslprofilesmfs/im_HandshakeFailure",
+                "aggr": "sum"
+            },
+            "Maximum Compact Connections": {
+                "name": "serversslprofilesmfs/im_MaximumCompatConnections",
+                "aggr": "sum"
+            },
+            "Maximum Connections": {
+                "name": "serversslprofilesmfs/im_MaximumConnections",
+                "aggr": "sum"
+            },
+            "SSL Transactions": {
+                "name": "serversslprofilesmfs/im_SSLTransactions",
+                "aggr": "sum"
+            },
+            "Fatal Alerts": {
+                "name": "serversslprofilesmfs/im_FatalAlerts",
+                "aggr": "sum"
+            },
+            "Port Utilization In Max": {
+                "name": "portmfs/max_im_UtilizationIn",
+                "aggr": "avg"
+            },
+            "Port Utilization Out Max": {
+                "name": "portmfs/max_im_UtilizationOut",
+                "aggr": "avg"
+            },
+            "Port Discards In Max": {
+                "name": "portmfs/max_im_DiscardsIn",
+                "aggr": "sum"
+            },
+            "Port Discards Out Max": {
+                "name": "portmfs/max_im_DiscardsOut",
+                "aggr": "sum"
+            },
+            "Port Errors In Max": {
+                "name": "portmfs/max_im_ErrorsIn",
+                "aggr": "sum"
+            },
+            "Port Errors Out Max": {
+                "name": "portmfs/max_im_ErrorsOut",
+                "aggr": "sum"
+            },
+            "Port Discards In Pct": {
+                "name": "portmfs/max_im_PctDiscardsIn",
+                "aggr": "avg"
+            },
+            "Port Discards Out Pct": {
+                "name": "portmfs/max_im_PctDiscardsOut",
+                "aggr": "avg"
+            },
+            "Port Discards": {
+                "name": "portmfs/im_Discards",
+                "aggr": "sum"
+            },
+            "Port Discards In": {
+                "name": "portmfs/im_DiscardsIn",
+                "aggr": "sum"
+            },
+            "Port Discards Out": {
+                "name": "portmfs/im_DiscardsOut",
+                "aggr": "sum"
+            },
+            "Port Errors": {
+                "name": "portmfs/im_Errors",
+                "aggr": "sum"
+            },
+            "Port Errors In": {
+                "name": "portmfs/im_ErrorsIn",
+                "aggr": "sum"
+            },
+            "Port Errors Out": {
+                "name": "portmfs/im_ErrorsOut",
+                "aggr": "sum"
+            },
+            "Port Utilization": {
+                "name": "portmfs/im_Utilization",
+                "aggr": "avg"
+            },
+            "Port Utilization In": {
+                "name": "portmfs/im_UtilizationIn",
+                "aggr": "avg"
+            },
+            "Port Utilization Out": {
+                "name": "portmfs/im_UtilizationOut",
+                "aggr": "avg"
+            }
+        }
+    },
+    "*|*|CAPM_SR": {
+        "metric-list" : {
+            "CPU Utilization Max": {
+                "name": "cpumfs/max_im_Utilization",
+                "aggr": "avg"
+            },
+            "Memory Utilization Max": {
+                "name": "memorymfs/max_im_Utilization",
+                "aggr": "avg"
+            },
+            "Port Utilization In Max": {
+                "name": "portmfs/max_im_UtilizationIn",
+                "aggr": "avg"
+            },
+            "Port Utilization Out Max": {
+                "name": "portmfs/max_im_UtilizationOut",
+                "aggr": "avg"
+            },
+            "Port Discards In Max": {
+                "name": "portmfs/max_im_DiscardsIn",
+                "aggr": "sum"
+            },
+            "Port Discards Out Max": {
+                "name": "portmfs/max_im_DiscardsOut",
+                "aggr": "sum"
+            },
+            "Port Errors In Max": {
+                "name": "portmfs/max_im_ErrorsIn",
+                "aggr": "sum"
+            },
+            "Port Errors Out Max": {
+                "name": "portmfs/max_im_ErrorsOut",
+                "aggr": "sum"
+            },
+            "Port Discards In Pct": {
+                "name": "portmfs/max_im_PctDiscardsIn",
+                "aggr": "avg"
+            },
+            "Port Discards Out Pct": {
+                "name": "portmfs/max_im_PctDiscardsOut",
+                "aggr": "avg"
+            },
+            "Port Discards": {
+                "name": "portmfs/im_Discards",
+                "aggr": "sum"
+            },
+            "Port Discards In": {
+                "name": "portmfs/im_DiscardsIn",
+                "aggr": "sum"
+            },
+            "Port Discards Out": {
+                "name": "portmfs/im_DiscardsOut",
+                "aggr": "sum"
+            },
+            "Port Errors": {
+                "name": "portmfs/im_Errors",
+                "aggr": "sum"
+            },
+            "Port Errors In": {
+                "name": "portmfs/im_ErrorsIn",
+                "aggr": "sum"
+            },
+            "Port Errors Out": {
+                "name": "portmfs/im_ErrorsOut",
+                "aggr": "sum"
+            },
+            "Port Utilization": {
+                "name": "portmfs/im_Utilization",
+                "aggr": "avg"
+            },
+            "Port Utilization In": {
+                "name": "portmfs/im_UtilizationIn",
+                "aggr": "avg"
+            },
+            "Port Utilization Out": {
+                "name": "portmfs/im_UtilizationOut",
+                "aggr": "avg"
+            }
+        }
+    },
+    "*|*|CAPM_LB_A10": {
+        "metric-list" : {
+    	    "CPU Utilization Max": {
+                "name" : "cpumfs/max_im_Utilization",
+                "aggr": "avg"
+            },
+            "Server Status": {
+                "name" : "chtr_a10serverstatsmfs/im_ServerStatus",
+                "aggr": "avg"
+            },
+            "Virtual Port Bytes In": {
+                "name" : "chtr_a10portstatsmfs/im_BytesIn",
+                "aggr": "sum"
+            },
+            "Virtual Port Bytes Out": {
+                "name" : "chtr_a10portstatsmfs/im_BytesOut",
+                "aggr": "sum"
+            },
+            "Virtual Port Current Connections": {
+                "name" : "chtr_a10portstatsmfs/im_CurrConns",
+                "aggr": "sum"
+            },
+            "Virtual Port Packets In": {
+                "name" : "chtr_a10portstatsmfs/im_PacketsIn",
+                "aggr": "sum"
+            },
+            "Virtual Port Packets Out": {
+                "name" : "chtr_a10portstatsmfs/im_PacketsOut",
+                "aggr": "sum"
+            },
+            "Virtual Port Total Connections": {
+                "name" : "chtr_a10portstatsmfs/im_TotalConns",
+                "aggr": "sum"
+            },
+            "Memory Utilization Max": {
+                "name" : "memorymfs/max_im_Utilization",
+                "aggr": "avg"
+            },
+            "Cert Validation Errors": {
+                "name" : "chtr_a10globalmfs/im_CertValidationErrors",
+                "aggr": "sum"
+            },
+            "Current Connections": {
+                "name" : "chtr_a10globalmfs/im_CurrConns",
+                "aggr": "sum"
+            },
+            "L4 Sessions": {
+                "name" : "chtr_a10globalmfs/im_L4Sessions",
+                "aggr": "sum"
+            },
+            "L7 Requests": {
+                "name" : "chtr_a10globalmfs/im_L7Reqs",
+                "aggr": "sum"
+            },
+            "New Connections": {
+                "name" : "chtr_a10globalmfs/im_NewConns",
+                "aggr": "sum"
+            },
+            "New L4 Connections": {
+                "name" : "chtr_a10globalmfs/im_NewL4Conns",
+                "aggr": "sum"
+            },
+            "New L7 Connections": {
+                "name" : "chtr_a10globalmfs/im_NewL7Conns",
+                "aggr": "sum"
+            },
+            "New NAT Connections": {
+                "name" : "chtr_a10globalmfs/im_NewNATConns",
+                "aggr": "sum"
+            },
+            "Packet Drops": {
+                "name" : "chtr_a10globalmfs/im_PacketDrops",
+                "aggr": "sum"
+            },
+            "SSL Connections": {
+                "name" : "chtr_a10globalmfs/im_SSLConns",
+                "aggr": "sum"
+            },
+            "Total Bandwidth": {
+                "name" : "chtr_a10globalmfs/im_TotalBandwidth",
+                "aggr": "avg"
+            },
+        	"Total Request Errors": {
+                "name" : "chtr_a10globalmfs/im_TotalRequestErrors",
+                "aggr": "sum"
+            },
+        	"Total SSL Throughput": {
+                "name" : "chtr_a10globalmfs/im_TotalSSLThroughput",
+                "aggr": "avg"
+            },
+        	"Total Throughput": {
+                "name" : "chtr_a10globalmfs/im_TotalThroughput",
+                "aggr": "avg"
+            },
+        	"Current Packet Drops Max": {
+                "name" : "chtr_a10globalmfs/max_im_CurrPacketDrops",
+                "aggr": "sum"
+            },
+        	"Current Connections Max": {
+                "name" : "chtr_a10globalmfs/max_im_CurrConns",
+                "aggr": "sum"
+            },
+        	"L4 Sessions Max": {
+                "name" : "chtr_a10globalmfs/max_im_L4Sessions",
+                "aggr": "sum"
+            },
+            "L7 Requests Max": {
+                "name" : "chtr_a10globalmfs/max_im_L7Reqs",
+                "aggr": "sum"
+            },
+            "New Connections Max": {
+                "name" : "chtr_a10globalmfs/max_im_NewConns",
+                "aggr": "sum"
+            },
+            "New L4 Connections Max": {
+                "name" : "chtr_a10globalmfs/max_im_NewL4Conns",
+                "aggr": "sum"
+            },
+            "New L7 Connections Max": {
+                "name" : "chtr_a10globalmfs/max_im_NewL7Conns",
+                "aggr": "sum"
+            },
+            "New NAT Connections Max": {
+                "name" : "chtr_a10globalmfs/max_im_NewNATConns",
+                "aggr": "sum"
+            },
+            "Packet Drops Max": {
+                "name" : "chtr_a10globalmfs/max_im_PacketDrops",
+                "aggr": "sum"
+            },
+               "SSL Connections Max": {
+                "name" : "chtr_a10globalmfs/max_im_SSLConns",
+                "aggr": "sum"
+            },
+        	"Total Bandwidth Max": {
+                "name" : "chtr_a10globalmfs/max_im_TotalBandwidth",
+                "aggr": "avg"
+            },
+            "Total Request Errors Max": {
+                "name" : "chtr_a10globalmfs/max_im_TotalRequestErrors",
+                "aggr": "sum"
+            },
+            "Total SSL Throughput Max": {
+                "name" : "chtr_a10globalmfs/max_im_TotalSSLThroughput",
+                "aggr": "avg"
+            },
+            "Total Throughput Max": {
+                "name" : "chtr_a10globalmfs/max_im_TotalThroughput",
+                "aggr": "avg"
+            },
+            "Cert Validation Errors Max": {
+                "name" : "chtr_a10globalmfs/max_im_CertValidationErrors",
+                "aggr": "sum"
+            },
+            "Port Utilization In Max": {
+                "name": "portmfs/max_im_UtilizationIn",
+                "aggr": "avg"
+            },
+            "Port Utilization Out Max": {
+                "name": "portmfs/max_im_UtilizationOut",
+                "aggr": "avg"
+            },
+            "Port Discards In Max": {
+                "name": "portmfs/max_im_DiscardsIn",
+                "aggr": "sum"
+            },
+            "Port Discards Out Max": {
+                "name": "portmfs/max_im_DiscardsOut",
+                "aggr": "sum"
+            },
+            "Port Errors In Max": {
+                "name": "portmfs/max_im_ErrorsIn",
+                "aggr": "sum"
+            },
+            "Port Errors Out Max": {
+                "name": "portmfs/max_im_ErrorsOut",
+                "aggr": "sum"
+            },
+            "Port Discards In Pct Max": {
+                "name": "portmfs/max_im_PctDiscardsIn",
+                "aggr": "avg"
+            },
+            "Port Discards Out Pct Max": {
+                "name": "portmfs/max_im_PctDiscardsOut",
+                "aggr": "avg"
+            },
+            "Port Discards": {
+                "name": "portmfs/im_Discards",
+                "aggr": "sum"
+            },
+            "Port Discards In": {
+                "name": "portmfs/im_DiscardsIn",
+                "aggr": "sum"
+            },
+            "Port Discards Out": {
+                "name": "portmfs/im_DiscardsOut",
+                "aggr": "sum"
+            },
+            "Port Errors": {
+                "name": "portmfs/im_Errors",
+                "aggr": "sum"
+            },
+            "Port Errors In": {
+                "name": "portmfs/im_ErrorsIn",
+                "aggr": "sum"
+            },
+            "Port Errors Out": {
+                "name": "portmfs/im_ErrorsOut",
+                "aggr": "sum"
+            },
+            "Port Utilization": {
+                "name": "portmfs/im_Utilization",
+                "aggr": "avg"
+            },
+            "Port Utilization In": {
+                "name": "portmfs/im_UtilizationIn",
+                "aggr": "avg"
+            },
+            "Port Utilization Out": {
+                "name": "portmfs/im_UtilizationOut",
+                "aggr": "avg"
+            }
+        }
+    },
+    "*|*|CAPM_FW": {
+        "metric-list" : {
+            "CPU Utilization Max": {
+                "name": "cpumfs/max_im_Utilization",
+                "aggr": "avg"
+            },
+            "Memory Utilization Max": {
+                "name": "memorymfs/max_im_Utilization",
+                "aggr": "avg"
+            },
+            "Port Utilization In Max": {
+                "name": "portmfs/max_im_UtilizationIn",
+                "aggr": "avg"
+            },
+            "Port Utilization Out Max": {
+                "name": "portmfs/max_im_UtilizationOut",
+                "aggr": "avg"
+            },
+            "Port Discards In Max": {
+                "name": "portmfs/max_im_DiscardsIn",
+                "aggr": "sum"
+            },
+            "Port Discards Out Max": {
+                "name": "portmfs/max_im_DiscardsOut",
+                "aggr": "sum"
+            },
+            "Port Errors In Max": {
+                "name": "portmfs/max_im_ErrorsIn",
+                "aggr": "sum"
+            },
+            "Port Errors Out Max": {
+                "name": "portmfs/max_im_ErrorsOut",
+                "aggr": "sum"
+            },
+            "Port Discards In Pct": {
+                "name": "portmfs/max_im_PctDiscardsIn",
+                "aggr": "avg"
+            },
+            "Port Discards Out Pct": {
+                "name": "portmfs/max_im_PctDiscardsOut",
+                "aggr": "avg"
+            },
+            "Port Discards": {
+                "name": "portmfs/im_Discards",
+                "aggr": "sum"
+            },
+            "Port Discards In": {
+                "name": "portmfs/im_DiscardsIn",
+                "aggr": "sum"
+            },
+            "Port Discards Out": {
+                "name": "portmfs/im_DiscardsOut",
+                "aggr": "sum"
+            },
+            "Port Errors": {
+                "name": "portmfs/im_Errors",
+                "aggr": "sum"
+            },
+            "Port Errors In": {
+                "name": "portmfs/im_ErrorsIn",
+                "aggr": "sum"
+            },
+            "Port Errors Out": {
+                "name": "portmfs/im_ErrorsOut",
+                "aggr": "sum"
+            },
+            "Port Utilization": {
+                "name": "portmfs/im_Utilization",
+                "aggr": "avg"
+            },
+            "Port Utilization In": {
+                "name": "portmfs/im_UtilizationIn",
+                "aggr": "avg"
+            },
+            "Port Utilization Out": {
+                "name": "portmfs/im_UtilizationOut",
+                "aggr": "avg"
+            }
+        }
+    },
+    "*|*|mta": {
+        "metric-list" : {
+            "Stat Auto Replied Messages Count": {
+                "name": "StatAutorepliedMessages",
+                "aggr": "sum"
+            },
+            "Stat Bounced Messages Count": {
+                "name": "StatBouncedMessages",
+                "aggr": "sum"
+            },
+            "Stat Connection Count": {
+                "name": "StatAccumulatedConnections",
+                "aggr": "sum"
+            },
+            "Stat Delivered Messages Count": {
+                "name": "StatDeliveredMessages",
+                "aggr": "sum"
+            },
+            "Stat Delivered Recipients Count": {
+                "name": "StatDeliveredRecipients",
+                "aggr": "sum"
+            },
+            "Stat Delivered Volume": {
+                "name": "StatDeliveredVolume",
+                "aggr": "sum"
+            },
+            "Stat Forwarded Messages Count": {
+                "name": "StatForwardedMessages",
+                "aggr": "sum"
+            },
+            "Stat In Delivery Volume": {
+                "name": "StatInDeliveryVolume",
+                "aggr": "sum"
+            },
+            "Stat Received Messages Count": {
+                "name": "StatReceivedMessages",
+                "aggr": "sum"
+            },
+            "Stat Received Recipients Count": {
+                "name": "StatReceivedRecipients",
+                "aggr": "sum"
+            },
+            "Stat Received Volume": {
+                "name": "StatReceivedVolume",
+                "aggr": "sum"
+            },
+            "Stat Transmitted Messages Count": {
+                "name": "StatTransmittedMessages",
+                "aggr": "sum"
+            },
+            "Stat Transmitted Receipients Count": {
+                "name": "StatTransmittedRecipients",
+                "aggr": "sum"
+            },
+            "Stat Transmitted Volume": {
+                "name": "StatTransmittedVolume",
+                "aggr": "sum"
+            }
+        }
+    },
+    "#*|*|Quantum": {
+        "metric-list" : {
+            "Stat Active Device Count": {
+                "name": "ACTIVE_DEVICES",
+                "aggr": "sum"
+            },
+            "Stat Active User Count": {
+                "name": "ACTIVE_USERS",
+                "aggr": "sum"
+            },
+            "Stat Avg Login Duration": {
+                "name": "AVG_LOGIN_DURATION",
+                "aggr": "avg"
+            },
+            "Login Duration": {
+                "name": "LOGIN_DURATION",
+                "aggr": "avg"
+            },
+            "Stat Login Attempts": {
+                "name": "LOGIN_ATTEMPTS",
+                "aggr": "sum"
+            },
+            "Stat Login Failures": {
+                "name": "LOGIN_FAILURES",
+                "aggr": "sum"
+            },
+            "Stat Login Success Ratio": {
+                "name": "LOGIN_SUCCESS_RATIO",
+                "aggr": "avg"
+            },
+            "Stat Login Successes": {
+                "name": "LOGIN_SUCCESSES",
+                "aggr": "sum"
+            },
+            "Failed API Attempt": {
+                "name": "API_FAILURE",
+                "aggr": "sum"
+            },
+            "Failed API Response Time": {
+                "name": "API_FAILURE_TIME",
+                "aggr": "avg"
+            },
+            "Successful API Attempt": {
+                "name": "API_SUCCESS",
+                "aggr": "sum"
+            },
+            "Successful API Response Time": {
+                "name": "API_SUCCESS_TIME",
+                "aggr": "avg"
+            },
+            "Bitrate Downshifts": {
+                "name": "BITRATE_DOWNSHIFTS",
+                "aggr": "sum"
+            },
+            "Broken Stream Streams": {
+                "name": ["BROKEN_STREAM_STREAMS", "BROKEN_STREAM_STREAMS_VOD", "BROKEN_STREAM_STREAMS_CDVR"],
+                "aggr": "sum"
+            },
+            "Buffering Events": {
+                "name": "BUFFERING_EVENTS",
+                "aggr": "sum"
+            },
+            "Failing Streams": {
+                "name": ["FAILING_STREAMS", "FAILING_STREAMS_VOD", "FAILING_STREAMS_CDVR"],
+                "aggr": "sum"
+            },
+            "Playback Starts": {
+                "name": "PLAYBACK_STARTS",
+                "aggr": "sum"
+            },
+            "Total Buffering Duration": {
+                "name": "TOTAL_BUFFERING_DURATION",
+                "aggr": "sum"
+            },
+            "Avg Startup Time": {
+                "name": "AVG_STARTUP_TIME",
+                "aggr": "avg"
+            },
+            "Failed Stream Start": {
+                "name": ["FAILED_STREAM_STARTS", "FAILED_STREAM_STARTS_VOD", "FAILED_STREAM_STARTS_CDVR"],
+                "aggr": "sum"
+            },
+            "Active Sessions": {
+                "name": "ACTIVE_SESSIONS",
+                "aggr": "sum"
+            },
+            "Bitrate Upshifts": {
+                "name": "BITRATE_UPSHIFTS",
+               "aggr": "sum"
+            },
+            "Active Streams": {
+                "name": ["ACTIVE_STREAMS_LINEAR", "ACTIVE_STREAMS_VOD", "ACTIVE_STREAMS_CDVR"],
+                "aggr": "sum"
+            },
+            "Application Errors": {
+                "name": "ALL_APPLICATION_ERRORS",
+                "aggr": "sum"
+            },
+            "Page Load Duration": {
+                "name": "PAGE_LOAD_STATS",
+                "aggr": "avg"
+            }
+        }
+    },
+    "*|*|Quantum": {
+        "metric-list" : {
+            "Stat Active Device Count": {
+                "name": "ACTIVE_DEVICES",
+                "aggr": "sum"
+            },
+            "Stat Active User Count": {
+                "name": "ACTIVE_USERS",
+                "aggr": "sum"
+            },
+            "Stat Avg Login Duration": {
+                "name": "AVG_LOGIN_DURATION",
+                "aggr": "avg"
+            },
+            "Login Duration": {
+                "name": "LOGIN_DURATION",
+                "aggr": "avg"
+            },
+            "Stat Login Attempts": {
+                "name": "LOGIN_ATTEMPTS",
+                "aggr": "sum"
+            },
+            "Stat Login Failures": {
+                "name": "LOGIN_FAILURES",
+                "aggr": "sum"
+            },
+            "Stat Login Success Ratio": {
+                "name": "LOGIN_SUCCESS_RATIO",
+                "aggr": "avg"
+            },
+            "Stat Login Successes": {
+                "name": "LOGIN_SUCCESSES",
+                "aggr": "sum"
+            },
+            "Failed API Attempt": {
+                "name": "API_FAILURE",
+                "aggr": "sum"
+            },
+            "Failed API Response Time": {
+                "name": "API_FAILURE_TIME",
+                "aggr": "avg"
+            },
+            "Successful API Attempt": {
+                "name": "API_SUCCESS",
+                "aggr": "sum"
+            },
+            "Successful API Response Time": {
+                "name": "API_SUCCESS_TIME",
+                "aggr": "avg"
+            },
+            "Bitrate Downshifts": {
+                "name": "BITRATE_DOWNSHIFTS",
+                "aggr": "sum"
+            },
+            "Broken Stream Streams": {
+                "name": "BROKEN_STREAMS",
+                "aggr": "sum"
+            },
+            "Buffering Events": {
+                "name": "BUFFERING_EVENTS",
+                "aggr": "sum"
+            },
+            "Failing Streams": {
+                "name": "FAILING_STREAMS", 
+                "aggr": "sum"
+            },
+            "Playback Starts": {
+                "name": "PLAYBACK_STARTS",
+                "aggr": "sum"
+            },
+            "Total Buffering Duration": {
+                "name": "BUFFERING_DURATION",
+                "aggr": "sum"
+            },
+            "Avg Startup Time": {
+                "name": "STARTUP_TIME",
+                "aggr": "avg"
+            },
+            "Failed Stream Start": {
+                "name": "FAILED_STREAM_START", 
+                "aggr": "sum"
+            },
+            "Active Sessions": {
+                "name": "ACTIVE_SESSIONS",
+                "aggr": "sum"
+            },
+            "Bitrate Upshifts": {
+                "name": "BITRATE_UPSHIFTS",
+               "aggr": "sum"
+            },
+            "Active Streams": {
+                "name": ["ACTIVE_STREAMS_LINEAR", "ACTIVE_STREAMS_VOD", "ACTIVE_STREAMS_CDVR"],
+                "aggr": "sum"
+            },
+            "Application Errors": {
+                "name": "ALL_APPLICATION_ERRORS",
+                "aggr": "sum"
+            },
+            "Page Load Duration": {
+                "name": "PAGE_LOAD_STATS",
+                "aggr": "avg"
+            }
+        }
+    },
+    "*|*|IP2MAC": {
+        "target-group": "viaops_metric_stva_application",
+        "metric-list" : {
+            "LL Search Delay": {
+                "source-group": "IP2MAC.LL",
+                "name": "SEARCH",
+                "aggr": "pct"
+            },
+            "LL Update Delay": {
+                "source-group": "IP2MAC.LL",
+                "name": "UPDATER",
+                "aggr": "avg"
+            },
+            "LL Receiver": {
+                "source-group": "IP2MAC.LL",
+                "name": "RECEIVER",
+                "aggr": "avg"
+            },
+            "DLN Delay": {
+                "source-group": "IP2MAC.DLN",
+                "name": "DLN delay",
+                "aggr": "avg"
+            },
+            "DLN v4 Delay": {
+                "source-group": "IP2MAC.DLN",
+                "name": "DLN v4Delay",
+                "aggr": "avg"
+            },
+            "DLN v6 Delay": {
+                "source-group": "IP2MAC.DLN",
+                "name": "DLN v6Delay",
+                "aggr": "avg"
+            },
+            "DLN v4 Status": {
+                "source-group": "IP2MAC.DLN",
+                "name": "DLN v4Status",
+                "aggr": "avg"
+            },
+            "DLN v6 Status": {
+                "source-group": "IP2MAC.DLN",
+                "name": "DLN v6Status",
+                "aggr": "avg"
+            }
+        }
+    },
+    "Video|*|DHCP_LL": {
+        "target-group": "viaops_metric_connectivity",
+        "source-group": "connectivity.DHCP_LL",
+        "metric-list" : {
+            "Leases Released": {
+                "name": "Released",
+                "aggr": "sum"
+            },
+            "Leases Granted": {
+                "name": "Granted",
+                "aggr": "sum"
+            },
+            "Leases Renewed": {
+                "name": "Renewed",
+                "aggr": "sum"
+            }
+        }
+    },
+    "Connectivity|*|DHCP_LL": {
+        "target-group": "viaops_metric_connectivity",
+        "source-group": "connectivity.DHCP_LL",
+        "metric-list" : {
+            "Leases Released": {
+                "name": "Released",
+                "aggr": "sum"
+            },
+            "Leases Granted": {
+                "name": "Granted",
+                "aggr": "sum"
+            },
+            "Leases Renewed": {
+                "name": "Renewed",
+                "aggr": "sum"
+            }
+        }
+    },
+    "Connectivity|*|ST_CAST": {
+        "source-group": "connectivity.ST_CAST",
+        "target-group": "viaops_metric_connectivity",
+        "metric-list" : {
+            "Failed Attempts": {
+                "name": "Failed Attempts",
+                "aggr": "sum"
+            },
+            "Successful Attempts": {
+                "name": "Successful Attempts",
+                "aggr": "sum"
+            },
+            "Download Speed": {
+                "name": "download_speed",
+                "aggr": "avg"
+            },
+            "Upload Speed": {
+                "name": "upload_speed",
+                "aggr": "avg"
+            }
+        }
+    },
+    "Connectivity|*|CMTS": {
+        "source-group": "connectivity.CMTS",
+        "target-group": "viaops_metric_connectivity",
+        "metric-list" : {
+            "Online Reg State Events": {
+                "name": "Online Reg State Events",
+                "aggr": "sum"
+            },
+            "Offline Reg State Events": {
+                "name": "Offline Reg State Events",
+                "aggr": "sum"
+            },
+            "Net State Change": {
+                "name": "Net State Change",
+                "aggr": "sum"
+            }
+        }
+    },
+    "*|*|FedAuth": {
+        "target-group": "viaops_metric_stva_application",
+        "metric-list" : {
+            "LeaseLogger Timeout": {
+                "source-group": "stva.FedAuth",
+                "name": "LeaseLogger Timeout",
+                "aggr": "sum"
+            },
+            "Spectrum Core Timeout": {
+                "source-group": "stva.FedAuth",
+                "name": "Spectrum Core Timeout",
+                "aggr": "sum"
+            },
+            "DSB Timeout": {
+                "source-group": "stva.FedAuth",
+                "name": "DSB Timeout",
+                "aggr": "sum"
+            },
+            "NetSrv Timeout": {
+                "source-group": "stva.FedAuth",
+                "name": "NetSrv Timeout",
+                "aggr": "sum"
+            },
+            "CCIM Timeout": {
+                "source-group": "stva.FedAuth",
+                "name": "CCIM Timeout",
+                "aggr": "sum"
+            },
+            "Whitelist Timeout": {
+                "source-group": "stva.FedAuth",
+                "name": "Whitelist Timeout",
+                "aggr": "sum"
+            }
+        }
+    },
+    "*|*|NetServ": {
+        "target-group": "viaops_metric_provisioning",
+        "metric-list" : {
+            "QABIP Requests": {
+                "source-group": "stva.NetServ",
+                "name": "QABIP Requests",
+                "aggr": "sum"
+            },
+            "QABIP Response  AccountNotFoundAutoRepairException": {
+                "source-group": "stva.NetServ",
+                "name": "QABIP Response  AccountNotFoundAutoRepairException",
+                "aggr": "sum"
+            },
+            "QABIP Response  AccountNotFoundException": {
+                "source-group": "stva.NetServ",
+                "name": "QABIP Response  AccountNotFoundException",
+                "aggr": "sum"
+            },
+            "QABIP Response  DHCPLeaseNotFoundException": {
+                "source-group": "stva.NetServ",
+                "name": "QABIP Response  DHCPLeaseNotFoundException",
+                "aggr": "sum"
+            },
+            "QABIP Response  EndpointException": {
+                "source-group": "stva.NetServ",
+                "name": "QABIP Response  EndpointException",
+                "aggr": "sum"
+            },
+            "QABIP Response  InvalidArgumentException": {
+                "source-group": "stva.NetServ",
+                "name": "QABIP Response  InvalidArgumentException",
+                "aggr": "sum"
+            },
+            "QABIP Response  SocketTimeoutException": {
+                "source-group": "stva.NetServ",
+                "name": "QABIP Response  SocketTimeoutException",
+                "aggr": "sum"
+            },
+            "QABIP Response  Success": {
+                "source-group": "stva.NetServ",
+                "name": "QABIP Response  Success",
+                "aggr": "sum"
+            },
+            "QABIP Response Times  95th Pct": {
+                "source-group": "stva.NetServ",
+                "name": "QABIP Response Times  95th Pct",
+                "aggr": "avg"
+            },
+            "QABIP Response Times  99th Pct": {
+                "source-group": "stva.NetServ",
+                "name": "QABIP Response Times  99th Pct",
+                "aggr": "avg"
+            },
+            "QABIP Lease Logger Response Times  95th Pct": {
+                "source-group": "stva.NetServ",
+                "name": "QABIP Lease Logger Response Times  95th Pct",
+                "aggr": "avg"
+            },
+            "QABIP Request  LeaseLogger GT 2 Seconds": {
+                "source-group": "stva.NetServ",
+                "name": "QABIP Request  LeaseLogger GT 2 Seconds",
+                "aggr": "sum"
+            },
+            "QABIP DLN Response Times  95th Pct": {
+                "source-group": "stva.NetServ",
+                "name": "QABIP DLN Response Times  95th Pct",
+                "aggr": "avg"
+            }
+        }
+    },
+    "Digital Operations|*|Data Source": {
+        "source-group" : "viaops_monitoring",
+        "target-group" : "viaops_metric_monitoring",
+        "metric-list" : {
+            "Valid Events": {
+                "name": "VALID_EVENTS",
+                "aggr": "sum"
+            },
+            "Late Events": {
+                "name": "LATE_EVENTS",
+                "aggr": "sum"
+            },
+            "Poorly Formed Events": {
+                "name": "POORLY_FORMED_EVENTS",
+                "aggr": "sum"
+            },
+            "Skew": {
+                "name": "SKEW",
+                "aggr": "avg"
+            },
+            "File Count": {
+                "name": "FILE_COUNT",
+                "aggr": "sum"
+            },
+            "Input Lines": {
+                "name": "INPUT_LINES",
+                "aggr": "sum"
+            },
+            "Ignored Events": {
+                "name": "IGNORED_EVENTS",
+                "aggr": "sum"
+            }
+        }
+    },
+    "Digital Operations|*|Client": {
+        "source-group" : "viaops_monitoring",
+        "target-group" : "viaops_metric_monitoring",
+        "metric-list" : {
+            "Function Invocations": {
+                "name": "FUNCTION_INVOCATIONS",
+                "aggr": "sum"
+            },
+            "Function Response Time": {
+                "name": "FUNCTION_RESPONSE_TIME",
+                "aggr": "avg"
+            },
+            "Function Return Results": {
+                "name": "FUNCTION_RETURN_RESULTS",
+                "aggr": "sum"
+            },
+            "Active Users": {
+                "name": "ACTIVE_USERS",
+                "aggr": "sum"
+            }
+        }
+    },
+    "Voice|*|MetaSwitch": {
+        "target-group": "viaops_metric_voice",
+        "source-group": "voice.MetaSwitch",
+        "metric-list" : {
+            "Out of Service": {
+                "name": "agc.OOS",
+                "aggr": "sum"
+            },
+            "Out of Service Pct": {
+                "name": "agc.Out of Service Pct",
+                "aggr": "avg"
+            },
+            "Total Service": {
+                "name": "agc.Total Service",
+                "aggr": "sum"
+            },
+            "Residential Service": {
+                "name": "agc.Res",
+                "aggr": "sum"
+            },
+            "Business Service": {
+                "name": "agc.Bus",
+                "aggr": "sum"
+            },        
+			"Call Attempts": {
+				"name" : "call attempts total",
+				"aggr": "sum"
+			},
+			"Call Currently Connected":{
+				"name" : "call currently connected",
+				"aggr": "sum"
+			},        
+			"Call Fail":{
+				"name" : "call fail",
+				"aggr": "sum"
+			},        
+			"Call Success":{
+				"name" : "call success",
+				"aggr": "sum"
+			},        
+			"Emergency Call Connected":{
+				"name" : "emg call connected",
+				"aggr": "sum"
+			},        
+			"Emergency Call Connecting":{
+				"name" : "emg call connecting",
+				"aggr": "sum"
+			},        
+			"Call on Switch":{
+				"name" : "call on switch total",
+				"aggr": "sum"
+			},        
+			"Call on Switch Success":{
+				"name" : "call on switch success",
+				"aggr": "sum"
+			},        
+			"Call on Switch Fail":{
+				"name" : "call on switch fail",
+				"aggr": "sum"
+			},        
+			"Call on Switch Connected":{
+				"name" : "call on switch connected",
+				"aggr": "sum"
+			},        
+			"Call from Trunk":{
+				"name" : "call from trunk total",
+				"aggr": "sum"
+			},        
+			"Call from Trunk Success":{
+				"name" : "call from trunk success",
+				"aggr": "sum"
+			},        
+			"Call from Trunk Fail":{
+				"name" : "call from trunk fail",
+				"aggr": "sum"
+			},        
+			"Call from Trunk Connected":{
+				"name" : "call from trunk connected",
+				"aggr": "sum"
+			},        
+			"Device Unavailable Switch Fail":{
+				"name" : "device unavailable switch fail",
+				"aggr": "sum"
+			},        
+			"Device Unavailable Trunk Fail":{
+				"name" : "device unavailable trunk fail",
+				"aggr": "sum"
+			},        
+			"No Citrcuit Switch":{
+				"name" : "no circuit switch",
+				"aggr": "sum"
+			},        
+			"No Citrcuit Trunk":{
+				"name" : "no circuit trunk",
+				"aggr": "sum"
+			},        
+			"Trunk Route Fail":{
+				"name" : "trunk route fail",
+				"aggr": "sum"
+			},        
+			"Switch Congestion Fail":{
+				"name" : "switch congestion fail",
+				"aggr": "sum"
+			},        
+			"Switch Resource Fail":{
+				"name" : "switch resource fail",
+				"aggr": "sum"
+			},        
+			"Switch Media Fail":{
+				"name" : "switch media fail",
+				"aggr": "sum"
+			},        
+			"Switch Signal Fail":{
+				"name" : "switch sig fail",
+				"aggr": "sum"
+			},        
+			"Switch Other Fail":{
+				"name" : "switch other fail",
+				"aggr": "sum"
+			},        
+			"Trunk Congestion Fail":{
+				"name" : "trunk congestion fail",
+				"aggr": "sum"
+			},        
+			"Trunk Resource Fail":{
+				"name" : "trunk resource fail",
+				"aggr": "sum"
+			},        
+			"Trunk Media Fail":{
+				"name" : "trunk media fail",
+				"aggr": "sum"
+			},        
+			"Trunk Signal Fail":{
+				"name" : "trunk sig fail",
+				"aggr": "sum"
+			},        
+			"Trunk Other Fail":{
+				"name" : "trunk other fail",
+				"aggr": "sum"
+			},        
+			"Total Business Group Lines":{
+				"name" : "total bg lines",
+				"aggr": "sum"
+			},        
+			"Total Lines":{
+				"name" : "total lines",
+				"aggr": "sum"
+			},        
+			"Total Multi Line Pilot":{
+				"name" : "total mlhg pilot",
+				"aggr": "sum"
+			},        
+			"Total Multiple Appearance Directory":{
+				"name" : "total madn",
+				"aggr": "sum"
+			},        
+			"Total PBX Configurations":{
+				"name" : "total pbx no",
+				"aggr": "sum"
+			},        
+			"Total ACD Super Business Group":{
+				"name" : "total acd super bg",
+				"aggr": "sum"
+			},        
+			"Total Premium ACD Groups":{
+				"name" : "total prem acd",
+				"aggr": "sum"
+			},        
+			"Total Basic ACD Groups":{
+				"name" : "total basic acd",
+				"aggr": "sum"
+			}
+        }
+    },
+    "Voice|*|IMS": {
+        "target-group": "viaops_metric_voice",
+        "source-group": "voice.IMS",
+        "metric-list" : {
+            "Timeouts": {
+                "name": "KPI Timeouts",
+                "aggr": "sum"
+            },
+            "Request Retries": {
+                "name": "KPI Request Retries",
+                "aggr": "sum"
+            },
+            "Failed Transactions": {
+                "name": "KPI Failed Transactions",
+                "aggr": "sum"
+            },
+            "Successful Transactions": {
+                "name": "KPI Successful Transactions",
+                "aggr": "sum"
+            },        
+			"Key Error Indicators": {
+				"name" : "KEI Key Error Indicators",
+				"aggr": "sum"
+			}
+        }
+    },
+    "Voice|*|VM-IMS": {
+        "target-group": "viaops_metric_voice",
+        "source-group": "voice.VM-IMS",
+        "metric-list" : {
+            "Messages Retreived": {
+                "name": "Messages Retreived",
+                "aggr": "sum"
+            },
+            "Messages Deposited": {
+                "name": "Messages Deposited",
+                "aggr": "sum"
+            },
+            "Traps/Errors": {
+                "name": "Traps/Errors",
+                "aggr": "sum"
+            }
+        }
+    },
+    "cDVR|*|DASH": {
+        "source-group": "cDVR",
+        "target-group": "viaops_metric_cdvr_application",
+        "metric-list" : {
+            "Error Event": {
+                "name": "DASH_ERROR",
+                "aggr": "sum"
+            },
+            "Span Duration": {
+                "name": "DASH_SPAN_DURATION",
+                "aggr": "avg"
+            }
+        }
+    },
+    "cDVR|*|JITP": {
+        "source-group": "cDVR",
+        "target-group": "viaops_metric_cdvr_application",
+        "metric-list" : {
+            "Error Event": {
+                "name": "JITP_ERROR",
+                "aggr": "sum"
+            },
+            "Success Event": {
+                "name": "JITP_SUCCESS",
+                "aggr": "sum"
+            },
+            "Request Response Duration": {
+                "name": "JITP_REQUEST_RESPONSE_TIME",
+                "aggr": "avg"
+            }
+        }
+    },    
+    "cDVR|*|RR": {
+        "source-group": "cDVR",
+        "target-group": "viaops_metric_cdvr_application",
+        "metric-list" : {
+            "Error Event": {
+                "name": "RECORD_ROUTER_ERROR",
+                "aggr": "sum"
+            },
+            "Success Event": {
+                "name": "RECORD_ROUTER_SUCCESS",
+                "aggr": "sum"
+            },
+            "Request Duration": {
+                "name": "RECORD_ROUTER_REQUEST_TIME",
+                "aggr": "avg"
+            }
+        }
+    },    
+    "cDVR|*|RM": {
+        "source-group": "cDVR",
+        "target-group": "viaops_metric_cdvr_application",
+        "metric-list" : {
+            "Error Event": {
+                "name": "RECORD_MGR_ERROR",
+                "aggr": "sum"
+            },
+            "Span Duration": {
+                "name": "RECORD_MGR_SPAN_DURATION",
+                "aggr": "avg"
+            },
+            "Status Duration": {
+                "name": "RECORD_MGR_STATUS_DURATION",
+                "aggr": "avg"
+            }
+        }
+    }
+}

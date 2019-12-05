@@ -1,0 +1,187 @@
+{
+    "name":"imapserv",
+    "label":"FEP-IMAP",
+    "items":[
+        {
+            "name": "Log Account Bad Password",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Account Bad Password Max",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Account Bad Password Max Address",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Account Bad Password Max Users",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Account Mainenance",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Account MX OS Comm Error",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Account Unknown User",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Command Failed Reason",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Conf Connected To Config Server",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Conf Disconnect Config Server",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Conf End Update",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Conf Other Host Has Locked",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Conf Server Lock",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Conf Start Update",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Conn Timed Out",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Connections Made",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },
+        {
+            "name": "Log Disconnected",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Http Client Retry On Failure",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Logout",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Ms Mailbox Created",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Nio Conn Server Fail",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Nio Recv Fail",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Nio Send Error",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Nio TimeOut Read",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Notification Error",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Notification Info",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Proc Launch Report",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Proc ReExecing Prog",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Proc Scheduler Report",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Proc Setuid Succeed",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Proc ThreadPool Status",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Protocol Error",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log Proxy Connections Made",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta": {
+                "quick-access":true
+            }
+        },
+        {
+            "name": "Log Proxy Greeting Failed",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Log User Data Exception",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ]
+}

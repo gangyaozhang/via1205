@@ -1,0 +1,171 @@
+{
+    "name":"mss",
+    "label":"MSS",
+    "items":[
+        {
+        	"name": "Log Account Lookup Fail",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Account Unknown User",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },        {
+        	"name": "Log Cassdb Application Error",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Cassdb Database Error",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },        {
+        	"name": "Log Cassdb Folder Initial UID",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Cassdb Invalid Request Error",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },        {
+        	"name": "Log Cassdb MSLoad Failed",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Cassdb Stats Audit Failed",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Cassdb TimedOut Error",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Conf End Update",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },        {
+        	"name": "Log Conf Server Lock",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Conf Start Update",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },        {
+        	"name": "Log Fio Close Fail",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Http Client Retry On Failure",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },        {
+        	"name": "Log Ms Already Exists",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Ms Delete MS Fail",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Ms Failed Create Message",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Ms Limit Num Msgs",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Ms Mailbox Cache Unusable",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Ms Mailbox Created",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },        {
+        	"name": "Log Ms Mbox Reloaded",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+            "name":"Log Ms Msg Created", 
+            "uom" :"Count", 
+            "aggr":"sum",
+            "meta":{
+                "quick-access":true
+            }
+        },
+        {
+        	"name": "Log Ms Message Creation Failed",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },        {
+        	"name": "Log Ms Message Read Fail",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Ms Message UUID Already Existed",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Ms Msg Deleted",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Ms No Welcome Msg",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Ms Not Found",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Ms Operation Timeout",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Ms Querying COS",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Nio Conn Timeout",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log Nio TimeOut Read",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log S3db S3 Store Access Exception",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        },
+        {
+        	"name": "Log User Data Exception",
+        	"uom" : "Count",
+        	"aggr": "sum"
+        }
+    ]
+}

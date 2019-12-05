@@ -1,0 +1,15 @@
+{
+    "name":"MicroServices",
+    "label":"MicroServices",
+    "items":[
+        {
+            "name": "Failed API Attempt",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ],
+    "meta":{
+        "dimension-values":[
+        ]
+    }
+}

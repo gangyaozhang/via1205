@@ -1,0 +1,42 @@
+{
+    "DimensionAnalysis" : {
+        "url" : "/app/dbp/user/charter_admin/dbpm/Charter - Dimension Analysis Service v5/getCommonalities",
+        "filter-names" : {
+            "svc"    : "data.svc",
+            "comp"   : "data.comp",
+            "app"    : "data.app",
+            "metric" : "data.metric",
+            "time"   : "data.timeRange"
+        }
+    },
+    "TrendAnalysis" : {
+        "url" : "/app/dbp/user/charter_admin/dbpm/Charter - Trend Analysis Service v4/getTrendData",
+        "filter-names" : {
+            "svc"    : "data.svc",
+            "comp"   : "data.comp",
+            "app"    : "data.app",
+            "metric" : "data.metric",
+            "time"   : "data.timeRange"
+        }
+    },
+    "IncidentAnalysis" : {
+        "url" : "/app/dbp/user/charter_admin/dbpm/Charter - Incident Analysis Service v9/getEnrichedIncidentData",
+        "filter-names" : {
+            "svc"    : "data.svc",
+            "comp"   : "data.comp",
+            "app"    : "data.app",
+            "metric" : "data.metric",
+            "time"   : "data.timeRange"
+        }
+    },
+    "KeyDimensions" : {
+        "url" : "/app/dbp/user/charter_admin/dbpm/Charter - Dimension Analysis Service v5/getKeyDimensions",
+        "filter-names" : {
+            "svc"    : "data.svc",
+            "comp"   : "data.comp",
+            "app"    : "data.app",
+            "metric" : "data.metric",
+            "time"   : "data.timeRange"
+        }
+    }
+}

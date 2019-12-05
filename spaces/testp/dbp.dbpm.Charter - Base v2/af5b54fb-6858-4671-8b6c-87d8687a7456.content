@@ -1,0 +1,16 @@
+{
+    "name":"DASH",
+    "label":"DASH Origin",
+    "items":[
+        {
+            "name": "Error Event",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Span Duration",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        }
+    ]
+}

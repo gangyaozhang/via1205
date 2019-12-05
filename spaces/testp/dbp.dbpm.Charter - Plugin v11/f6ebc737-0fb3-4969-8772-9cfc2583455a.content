@@ -1,0 +1,273 @@
+[
+    {
+        "name" : "customer_calls",
+        "label" : "Customer Call Dimensions",
+        "name-style" : "padding-left:0px;width:0px;",
+        "value-style" : "padding:0px;width:100%;",
+        "display" : "return helper.has(${data.svc}, ['Customer']);",
+        "dimensions" : [{
+            "name" : "cmts",
+            "label" : "CMTS",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Customer']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of CMTS",
+                "dialog/title" : "Build CMTS list",
+                "dialog/description" : "Build list of CMTS to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Customer"],
+                    "module-context"  : ["Call", "CMTS"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "controller",
+            "label" : "Controllers",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Customer']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of controllers",
+                "dialog/title" : "Build controller list",
+                "dialog/description" : "Build list of controllers to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Customer"],
+                    "module-context"  : ["Call", "Controller"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "state",
+            "label" : "States",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Customer']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of states",
+                "dialog/title" : "Build state list",
+                "dialog/description" : "Build list of states to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Customer"],
+                    "module-context"  : ["Call", "State"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "city",
+            "label" : "Cities",
+            "dependent" : ["customer_calls.state"],
+            "enable" : "return helper.isSet(${customer_calls.state})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of state-dependent cities",
+                "dialog/title" : "Build city list",
+                "dialog/description" : "Build list of cities to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Customer"],
+                    "module-context"  : ["Call", "City"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "issue",
+            "label" : "Issues",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Customer']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of issues",
+                "dialog/title" : "Build issue list",
+                "dialog/description" : "Build list of issues to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Customer"],
+                    "module-context"  : ["Call", "Issue"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "cause",
+            "label" : "Causes",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Customer']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of causes",
+                "dialog/title" : "Build cause list",
+                "dialog/description" : "Build list of causes to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Customer"],
+                    "module-context"  : ["Call", "Cause"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "resolution",
+            "label" : "Resolutions",
+            "dependent" : ["customer_calls.cause"],
+            "enable" : "return helper.isSet(${customer_calls.cause})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of cause-dependent resolutions",
+                "dialog/title" : "Build resolution list",
+                "dialog/description" : "Build list of resolutions to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Customer"],
+                    "module-context"  : ["Call", "Resolution"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "company",
+            "label" : "Companies",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Customer']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of companies",
+                "dialog/title" : "Build company list",
+                "dialog/description" : "Build list of companies to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Customer"],
+                    "module-context"  : ["Call", "Company"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "market",
+            "label" : "Markets",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Customer']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of markets",
+                "dialog/title" : "Build market list",
+                "dialog/description" : "Build list of markets to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Customer"],
+                    "module-context"  : ["Call", "Market"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "cust_type",
+            "label" : "Customer Types",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Customer']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of customer types",
+                "dialog/title" : "Build customer type list",
+                "dialog/description" : "Build list of customer types to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Customer"],
+                    "module-context"  : ["Call", "Customer Type"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "call_type",
+            "label" : "Call Types",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Customer']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of call types",
+                "dialog/title" : "Build call type list",
+                "dialog/description" : "Build list of call types to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Customer"],
+                    "module-context"  : ["Call", "Call Type"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "headend",
+            "label" : "Headends",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Customer']) && helper.has(${data.metric}, ['Customer Call Volume'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of headends",
+                "dialog/title" : "Build headend list",
+                "dialog/description" : "Build list of headends to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Customer"],
+                    "module-context"  : ["Call", "Headend"]
+                }
+            },
+            "default": []
+       }, {
+            "name" : "node",
+            "label" : "Nodes",
+            "dependent" : ["customer_calls.headend"],
+            "enable"    : "return helper.isSet(${customer_calls.headend})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of headend-dependent nodes",
+                "dialog/title" : "Build node list",
+                "dialog/description" : "Build list of nodes to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Customer"],
+                    "module-context"  : ["Call", "Node"]
+                }
+            },
+            "default": []
+        }]
+    },
+        {
+        "name" : "customer",
+        "label" : "Customer Dimensions",
+        "name-style" : "padding-left:0px;width:0px;",
+        "value-style" : "padding:0px;width:100%;",
+        "display" : "return helper.has(${data.svc}, ['Customer']);",
+        "dimensions" : [{
+            "name" : "company",
+            "label" : "Company",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Customer'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of companies",
+                "dialog/title" : "Build company list",
+                "dialog/description" : "Build list of companies to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Customer"],
+                    "module-context"  : ["Metric", "Company"]
+                }
+            },
+            "default": []
+        }, {
+            "name" : "cust_type",
+            "label" : "Customer Type",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Customer'])",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of customer types",
+                "dialog/title" : "Build customer type list",
+                "dialog/description" : "Build list of customer types to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Customer"],
+                    "module-context"  : ["Metric", "Customer Type"]
+                }
+            },
+            "default": []
+        }]
+    }
+]

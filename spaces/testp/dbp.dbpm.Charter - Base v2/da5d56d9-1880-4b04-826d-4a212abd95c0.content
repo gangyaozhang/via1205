@@ -1,0 +1,36 @@
+{
+    "release-access-list" : {
+        "DEV"   : [
+            "P2859261"
+        ],
+        "ALPHA" : [],
+        "BETA"  : [
+            "P2859261",
+            "P2856403",
+            "P2864904",
+            "P2897611"
+        ],
+        "NuovaStella"  : [
+            "engkee"
+        ]
+    },
+    "role-access-list" : {
+        "Admin" : [
+            "[Administrator_UI]"
+        ],
+        "Admin/Config" : [
+            "[conf_incident]"
+        ],
+        "Admin/Analytics" : [
+            "P2859261",
+            "P2859888",
+            "P2859887"
+        ],
+        "User" : [
+            "*"
+        ],
+        "User/DO"  : [
+            "[AP-OpsIntel-Prod-Analytics-Susers]"
+        ]    
+    }
+}

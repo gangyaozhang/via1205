@@ -1,0 +1,21 @@
+{
+    "name":"RR",
+    "label":"Record Router",
+    "items":[
+        {
+            "name": "Error Event",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Success Event",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Request Duration",
+            "uom" : "Avg Time (ms)",
+            "aggr": "avg"
+        }
+    ]
+}

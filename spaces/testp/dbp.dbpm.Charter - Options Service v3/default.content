@@ -1,0 +1,30 @@
+<DashboardPluginModel is_init="false" name="Charter - Options Service v3" description=" ">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services/>
+    <Resources>
+      <Resource uuid="fe10c0c1-a57c-42f0-8b3a-51008fabcde3" name="DimKeyConfig" type="application/json" size="161074" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="6466ac17-cc4e-4945-8b63-4ee6a63bbd62" name="QueryConfig" type="application/json" size="189030" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="811577fa-53f9-45d3-8ff0-b85aae0c3004" name="DimKeyConfig-OLD" type="application/json" size="161074" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/user/viaops_admin/dbpm/VIAOps - Base Service"/>
+      <Plugin uri="/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Nuova Stella Plugin"/>
+      <Plugin uri="/app/dbp/space/testp/dbpm/Charter - Base v2"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

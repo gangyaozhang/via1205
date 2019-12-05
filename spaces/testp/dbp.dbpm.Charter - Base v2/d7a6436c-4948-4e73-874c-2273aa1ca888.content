@@ -1,0 +1,70 @@
+{
+    "name":"NetServ",
+    "label":"NetServ",
+    "items":[
+        {
+            "name": "QABIP Requests",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "QABIP Response  AccountNotFoundAutoRepairException",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "QABIP Response  AccountNotFoundException",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "QABIP Response  DHCPLeaseNotFoundException",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "QABIP Response  EndpointException",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "QABIP Response  InvalidArgumentException",
+            "uom" : "Count",
+            "aggr": "sum"
+        },        {
+            "name": "QABIP Response  SocketTimeoutException",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "QABIP Response  Success",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "QABIP Response Times  95th Pct",
+            "uom" : "Max",
+            "aggr": "avg"
+        },
+        {
+            "name": "QABIP Response Times  99th Pct",
+            "uom" : "Max",
+            "aggr": "avg"
+        },
+        {
+            "name": "QABIP Lease Logger Response Times  95th Pct",
+            "uom" : "Max",
+            "aggr": "avg"
+        },
+        {
+            "name": "QABIP Request  LeaseLogger GT 2 Seconds",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "QABIP DLN Response Times  95th Pct",
+            "uom" : "Max",
+            "aggr": "avg"
+        }
+    ]
+}

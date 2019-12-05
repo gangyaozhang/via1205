@@ -1,0 +1,2356 @@
+{
+    "comment00":"  IMPORTANT: MASTER copy to be kept in **Charter - Base v1**                         ",
+
+    "comment01":"  Plugin extension implementation on 3.7beta does not support multiple inheritance.  ",
+    "comment02":"  So for this organization structure to work, both the resource **ServiceConfig**    ",
+    "comment03":"  and the API **getServiceConfig** need to be clone to all top level Charter plugin  ",
+
+    "comment04":"  When plugin extension is working (3.7.1)...                                        ",
+    "comment05":"  - add **Charter - Base v1** as extend dependency in each top level plugin          ",
+    "comment06":"  - remove **getServiceConfig** API from top level plugin                            ",
+    "comment07":"  - remove **ServiceConfig** resource from top level plugin                          ",
+
+    "meta":{
+    },
+
+    "groups":[
+        {
+            "name":"Legacy_VOD",
+            "label":"Legacy VOD",
+            "#fa-class":"fa fa-video",
+            "fa-label":"Legacy VOD",
+            "meta":{
+                "#role-tag":{
+                    "allow-else-deny":["User/Network"]
+                },
+                "dimension-values":[]
+            },
+            "items":[
+                {
+                    "name":"Customer Call Volume",
+                    "label":"* Customer Call Volume",
+                    "uom":"Count",
+                    "aggr":"sum",
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"service",
+                            "value":["Legacy_VOD"]
+                        }]
+                    }
+                }
+            ],
+            "groups":[
+                {
+                    "name":"Stream Init",
+                    "label":"Stream Init",
+                    "fa-class":"fas fa-meter",
+                    "#fa-label":"Stream Init",
+                    "meta":{
+                        "dimension-values":[]
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - LEGACY VOD - STREAM INIT"
+                        }
+                    ]
+                },
+                {
+                    "name":"Stream",
+                    "label":"Stream",
+                    "fa-class":"fas fa-globe",
+                    "#fa-label":"Stream",
+                    "meta":{
+                        "dimension-values":[]
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - LEGACY VOD - STREAM"
+                        }
+                    ]
+                },
+                {
+                    "#name":"CDNA",
+                    "label":"CDNA",
+                    "fa-class":"fas fa-sitemap",
+                    "#fa-label":"CDNA",
+                    "meta":{
+                        "dimension-values":[]
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - LEGACY VOD - CDNA"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name":"Connectivity",
+            "label":"Connectivity",
+            "#fa-class":"fa fa-video",
+            "fa-label":"Connectivity",
+            "meta":{
+                "#role-tag":{
+                    "allow-else-deny":["User/Network"]
+                },
+                "dimension-values":[]
+            },
+            "items":[
+                {
+                    "name":"Customer Call Volume",
+                    "label":"* Customer Call Volume",
+                    "uom":"Count",
+                    "aggr":"sum",
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"service",
+                            "value":["HSD"]
+                        }]
+                    }
+                }
+            ],
+            "groups":[
+                {
+                    "name":"Speed",
+                    "label":"Speed",
+                    "fa-class":"fas fa-meter",
+                    "#fa-label":"Speed",
+                    "meta":{
+                        "dimension-values":[]
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - CONNECTIVITY - CAST"
+                        }
+                    ]
+                },
+                {
+                    "name":"Application",
+                    "label":"Application",
+                    "fa-class":"fas fa-globe",
+                    "#fa-label":"Application",
+                    "meta":{
+                        "dimension-values":[]
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - CONNECTIVITY - DHCP"
+                        }
+                    ]
+                },
+                {
+                    "name":"Network",
+                    "label":"Network",
+                    "fa-class":"fas fa-sitemap",
+                    "#fa-label":"Network",
+                    "meta":{
+                        "dimension-values":[]
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - CONNECTIVITY - CMTS"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name":"Cable",
+            "label":"Video",
+            "#fa-class":"fa fa-video",
+            "fa-label":"Video",
+            "meta":{
+                "dimension-values":[]
+            },
+            "items":[
+                {
+                    "name":"Customer Call Volume",
+                    "label":"* Customer Call Volume",
+                    "uom":"Count",
+                    "aggr":"sum",
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"service",
+                            "value":["Cable"]
+                        }]
+                    }
+                }
+            ],
+            "groups":[
+            ]
+        },
+        {
+            "name":"Voice",
+            "label":"Voice",
+            "fa-class":"fas fa-microphone-alt",
+            "fa-label":"Voice",
+            "meta":{
+                "dimension-values":[]
+            },
+            "items":[
+                {
+                    "name":"Customer Call Volume",
+                    "label":"* Customer Call Volume",
+                    "uom":"Count",
+                    "aggr":"sum",
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"service",
+                            "value":["Voice"]
+                        }]
+                    }
+                }
+            ],
+            "groups":[
+                {
+                    "name":"Make",
+                    "label":"Make",
+                    "fa-class":"fas fa-microphone-alt",
+                    "#fa-label":"Make",
+                    "meta":{
+                        "dimension-values":[]
+                    },
+                    "groups":[
+                        {
+                            "name":"MetaSwitch",
+                            "label":"MetaSwitch",
+                            "items":[
+                                {
+                                    "name": "Call Attempts",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },
+                                {
+                                    "name": "Call Currently Connected",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Call Fail",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Call Success",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Emergency Call Connected",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Emergency Call Connecting",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Call on Switch",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Call on Switch Success",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Call on Switch Fail",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Device Unavailable Switch Fail",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "No Citrcuit Switch",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },       
+                                {
+                                    "name": "Switch Congestion Fail",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Switch Media Fail",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Switch Signal Fail",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Switch Other Fail",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                }    
+                            ]
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - VOICE - IMS_KEI"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - VOICE - IMS_KPI"
+                        }
+                    ]
+                },
+                {
+                    "name":"Receive",
+                    "label":"Receive",
+                    "fa-class":"fas fa-microphone-alt",
+                    "#fa-label":"Receive",
+                    "meta":{
+                        "dimension-values":[]
+                    },
+                    "groups":[
+                        {
+                            "name":"MetaSwitch",
+                            "label":"MetaSwitch",
+                            "items":[
+                                {
+                                    "name": "Call Currently Connected",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Call from Trunk",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Call from Trunk Success",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Call from Trunk Fail",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Call from Trunk Connected",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Device Unavailable Trunk Fail",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "No Citrcuit Trunk",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Trunk Route Fail",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },
+                                {
+                                    "name": "Trunk Congestion Fail",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Trunk Resource Fail",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Trunk Media Fail",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Trunk Signal Fail",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                },        
+                                {
+                                    "name": "Trunk Other Fail",
+                                    "uom" : "Count",
+                                    "aggr": "sum"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name":"Register",
+                    "label":"Register",
+                    "fa-class":"fas fa-microphone-alt",
+                    "#fa-label":"Register",
+                    "meta":{
+                        "dimension-values":[]
+                    },
+                    "groups":[
+                        {
+                            "name":"MetaSwitch",
+                            "label":"MetaSwitch",
+                            "items":[
+                                {
+                                    "name":"Out of Service",
+                                    "uom":"Count",
+                                    "aggr":"sum"
+                                },
+                                {
+                                    "name":"Out of Service Pct",
+                                    "uom":"Percent",
+                                    "aggr":"avg"
+                                }
+                            ]
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - VOICE - IMS_KEI"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - VOICE - IMS_KPI"
+                        }
+                    ]
+                },
+                {
+                    "name":"Application",
+                    "label":"Application",
+                    "fa-class":"fas fa-globe",
+                    "#fa-label":"Application",
+                    "meta":{
+                        "dimension-values":[]
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - VOICE - METASWITCH"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - VOICE - IMS_KEI"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - VOICE - VM-IMS"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name":"HSD",
+            "label":"HSD",
+            "#fa-class":"fas fa-stopwatch",
+            "fa-label":"HSD",
+            "meta":{
+                "dimension-values":[]
+            },
+            "items":[
+                {
+                    "name":"Customer Call Volume",
+                    "label":"* Customer Call Volume",
+                    "uom":"Count",
+                    "aggr":"sum",
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"service",
+                            "value":["HSD"]
+                        }]
+                    }
+                }
+            ],
+            "groups":[
+            ]
+        },
+        {
+            "name":"Customer",
+            "label":"Customer",
+            "fa-class":"fas fa-couch",
+            "fa-label":"Customer",
+            "meta":{
+                "dimension-values":[]
+            },
+            "items":[
+                {
+                    "name":"Customer Call Volume",
+                    "label":"* Customer Call Volume",
+                    "uom":"Count",
+                    "aggr":"sum",
+                    "meta":{
+                        "":true,
+                        "category":"*"
+                    }
+                }              
+            ],
+            "groups":[
+                {
+                    "name":"Customer Ops",
+                    "label":"Customer Ops",
+                    "fa-class":"fas fa-sign-in-alt",
+                    "fa-label":"Customer Ops",
+                    "groups":[
+                       {
+                            "name":"DOJ",
+                            "label":"DOJ",
+                            "items":[
+                                {
+                                    "name":"Queue Depth",
+                                    "uom":"Avg 1 Min Interval",
+                                    "aggr":"avg"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name":"E-Mail",
+            "label":"E-Mail - TWC",
+            "fa-class":"fa fa-envelope",
+            "fa-label":"E-Mail - TWC",
+            "group-label":"E-Mail",
+            "meta":{
+                "dimension-values":[]
+            },
+            "items":[
+                {
+                    "name":"Customer Call Volume",
+                    "label":"* Customer Call Volume",
+                    "uom":"Count",
+                    "aggr":"sum",
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"service",
+                            "value":["E-Mail"]
+                        }]
+                    }
+                }
+            ],
+            "groups":[
+                {
+                    "name":"TWC_E-Mail_Login",
+                    "label":"Login",
+                    "fa-class":"fas fa-sign-in-alt",
+                    "fa-label":"Login",
+                    "groups":[
+                        {
+                            "name":"popserv",
+                            "label":"FEP-POP",
+                            "items":[
+                                {
+                                    "name":"Log Connections Made",
+                                    "uom":"Count",
+                                    "aggr":"sum"
+                                }
+                            ]
+                        },
+                        {
+                            "name":"imapserv",
+                            "label":"FEP-IMAP",
+                            "items":[
+                                {
+                                    "name":"Log Connections Made", 
+                                    "uom":"Count", 
+                                    "aggr":"sum"
+                                }
+                            ]
+                        },
+                        {
+                            "name":"webmail_imap",
+                            "label":"Web Mail",
+                            "items":[
+                                {
+                                    "name":"Log Connections Made", 
+                                    "uom":"Count", 
+                                    "aggr":"sum"
+                                }
+                            ]
+                        }                        
+                    ]
+                },
+                {
+                    "name":"TWC_E-Mail_Send",
+                    "label":"Send",
+                    "fa-class":"fas fa-share-square",
+                    "fa-label":"Send",
+                    "groups":[
+                        {
+                            "name":"cm",
+                            "label":"Cloudmark",
+                            "items":[
+                                {
+                                    "name":"Outbound Log Delivered", 
+                                    "uom":"Count", 
+                                    "aggr":"sum"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name":"TWC_E-Mail_Receive",
+                    "label":"Receive",
+                    "fa-class":"fas fa-inbox",
+                    "fa-label":"Receive",
+                    "groups":[
+                        {
+                            "name":"mss",
+                            "label":"MSS",
+                            "items":[
+                                {
+                                    "name":"Log Ms Msg Created", 
+                                    "uom":"Count", 
+                                    "aggr":"sum"
+                                }
+                            ]
+                        }
+                    ]
+                },                
+                {
+                    "name":"TWC_E-Mail_Application",
+                    "label":"Application",
+                    "fa-class":"fas fa-globe",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - TWC_E-MAIL - POP"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - TWC_E-MAIL - IMAP"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - TWC_E-MAIL - CM"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - TWC_E-MAIL - MSS"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - TWC_E-MAIL - Webmail"
+                        }
+                    ]
+                },
+                {
+                    "name":"Splunk",
+                    "label":"Splunk",
+                    "fa-class":"fas fa-globe",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - TWC_E-MAIL - SPLUNK"
+                        }
+                    ]
+                },
+               {
+                    "name":"TWC_E-Mail_Network",
+                    "label":"Network",
+                    "fa-class":"fas fa-sitemap",
+                    "meta":{
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='E-Mail'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='E-Mail'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='E-Mail'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='E-Mail'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='E-Mail'"
+                                    }
+                                 ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name":"CHTR_E-Mail",
+            "label":"E-Mail - CHTR",
+            "fa-class":"fa fa-envelope-open",
+            "fa-label":"E-Mail - CHTR",
+            "group-label":"E-Mail",
+            "meta":{
+                "dimension-values":[]
+            },
+            "items":[
+                {
+                    "name":"Customer Call Volume",
+                    "label":"* Customer Call Volume",
+                    "uom":"Count",
+                    "aggr":"sum",
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"service",
+                            "value":["CHTR_E-Mail"]
+                        }]
+                    }
+                }
+            ],
+            "groups":[
+                {
+                    "name":"CHTR_E-Mail_Login",
+                    "label":"Login",
+                    "fa-class":"fas fa-sign-in-alt",
+                    "fa-label":"Login",
+                    "groups":[
+                        {
+                            "name":"popserv",
+                            "label":"FEP-POP",
+                            "items":[
+                                {
+                                    "name":"Log Connections Made",
+                                    "uom":"Count",
+                                    "aggr":"sum"
+                                }
+                            ]
+                        },
+                        {
+                            "name":"imapserv",
+                            "label":"FEP-IMAP",
+                            "items":[
+                                {
+                                    "name":"Log Connections Made", 
+                                    "uom":"Count", 
+                                    "aggr":"sum"
+                                }
+                            ]
+                        },
+                        {
+                            "name":"webmail_imap",
+                            "label":"Web Mail",
+                            "items":[
+                                {
+                                    "name":"Log Connections Made", 
+                                    "uom":"Count", 
+                                    "aggr":"sum"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name":"CHTR_E-Mail_Send",
+                    "label":"Send",
+                    "fa-class":"fas fa-share-square",
+                    "fa-label":"Send",
+                    "groups":[
+                        {
+                            "name":"cm",
+                            "label":"Cloudmark",
+                            "items":[
+                                {
+                                    "name":"Outbound Log Delivered", 
+                                    "uom":"Count", 
+                                    "aggr":"sum"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name":"CHTR_E-Mail_Receive",
+                    "label":"Receive",
+                    "fa-class":"fas fa-inbox",
+                    "fa-label":"Receive",
+                    "groups":[
+                        {
+                            "name":"mss",
+                            "label":"MSS",
+                            "items":[
+                                {
+                                    "name":"Log Ms Msg Created", 
+                                    "uom":"Count", 
+                                    "aggr":"sum"
+                                }
+                            ]
+                        }
+                    ]
+                },                
+                {
+                    "name":"CHTR_E-Mail_Application",
+                    "label":"Application",
+                    "fa-class":"fas fa-globe",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - CHTR_E-MAIL - POP"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - CHTR_E-MAIL - IMAP"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - CHTR_E-MAIL - CM"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - CHTR_E-MAIL - MSS"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - CHTR_E-MAIL - Webmail"
+                        }
+                    ]
+                },
+                {
+                    "name":"Splunk",
+                    "label":"Splunk",
+                    "fa-class":"fas fa-globe",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - CHTR_E-MAIL - SPLUNK"
+                        }
+                    ]
+                },
+                {
+                    "name":"CHTR_E-Mail_Network",
+                    "label":"Network",
+                    "fa-class":"fas fa-sitemap",
+                    "meta":{
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='CHTR_E-Mail'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='CHTR_E-Mail'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='CHTR_E-Mail'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='CHTR_E-Mail'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='CHTR_E-Mail'"
+                                    }
+                                 ]
+                            }
+                        }
+                    ]
+                }
+
+            ]
+        },
+        {
+            "name":"Video",
+            "label":"STVA",
+            "fa-class":"fa fa-video",
+            "group-label":"Video",
+            "meta":{
+                "dimension-values":[]
+            },
+            "items":[
+                {
+                    "name":"Customer Call Volume",
+                    "label":"* Customer Call Volume",
+                    "uom":"Count",
+                    "aggr":"sum",
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"service",
+                            "value":["Video"]
+                        }]
+                    }
+                }
+            ],
+            "groups":[
+                {
+                    "name":"STVA Entry",
+                    "label":"App Entry",
+                    "fa-class":"fas fa-key",
+                    "fa-label":"Entry",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - VIDEO - ENTRY"
+                        }
+                    ]
+                },
+                {
+                    "name":"STVA Browse",
+                    "label":"Browse",
+                    "fa-class":"fas fa-desktop",
+                    "fa-label":"Browse",
+                    "meta":{
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - VIDEO - BROWSE"
+                        }
+                    ]
+                },
+                {
+                    "name":"STVA Initialize",
+                    "label":"Stream Init",
+                    "fa-class":"fas fa-flag-checkered",
+                    "fa-label":"Initialize",
+                    "fa-tooltip":"Metrics associated with video device initialization.",
+                    "meta":{
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - VIDEO - INIT"
+                        }
+                    ]
+                },
+                {
+                    "name":"STVA Watch",
+                    "label":"Watch (MOS)",
+                    "fa-class":"fab fa-slideshare",
+                    "fa-label":"Watch",
+                    "meta":{
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - VIDEO - WATCH"
+                        }
+                    ]
+                },
+                {
+                    "name":"Application",
+                    "label":"Application",
+                    "fa-class":"fas fa-globe",
+                    "#fa-label":"Application",
+                    "meta":{
+                        "dimension-values":[]
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - VIDEO - IP2MAC"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - VIDEO - FEDAUTH"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - VIDEO - NETSERV"}
+                    ]
+                },
+                {
+                    "#name":"Application",
+                    "label":"Application",
+                    "fa-class":"fas fa-globe",
+                    "fa-label":"IP2MAC",
+                    "meta":{
+                        "release-tag":"DEV",
+                        "dimension-values":[]
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - VIDEO - APP"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - VIDEO - IP2MAC"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - VIDEO - FEDAUTH"
+                        }
+                    ]
+                },
+                {
+                    "name":"STVA Network",
+                    "label":"Network",
+                    "fa-class":"fas fa-sitemap",
+                    "meta":{
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='Video'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='Video'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='Video'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='Video'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='Video'"
+                                    }
+                                 ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name":"SpecGuide",
+            "label":"Spec Guide",
+            "fa-class":"fa fa-book-open",
+            "group-label":"Video",
+            "meta":{
+                "dimension-values":[]
+            },
+            "items":[
+                {
+                    "name":"Customer Call Volume",
+                    "label":"* Customer Call Volume",
+                    "uom":"Count",
+                    "aggr":"sum",
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"service",
+                            "value":["SpecGuide"]
+                        }]
+                    }
+                }
+            ],
+            "groups":[
+                {
+                    "name":"Guide",
+                    "label":"Guide",
+                    "fa-class":"fas fa-map",
+                    "fa-label":"Guide",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - SPECGUIDE - GUIDE"
+                        }
+                    ]
+                },
+                {
+                    "name":"DVR",
+                    "label":"DVR",
+                    "fa-class":"fas fa-camera-retro",
+                    "fa-label":"DVR",
+                    "meta":{
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - SPECGUIDE - DVR"
+                        }
+                    ]
+                },
+                {
+                    "name":"Channel Tune",
+                    "label":"Channel Tune",
+                    "fa-class":"fas fa-tachometer-alt",
+                    "fa-label":"Tune",
+                    "fa-tooltip":"Metrics associated with Spec Guide Channel Tune.",
+                    "meta":{
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - SPECGUIDE - CHANNEL_TUNE"
+                        }
+                    ]
+                },
+                {
+                    "name":"VOD",
+                    "label":"VOD",
+                    "fa-class":"fab fa-slideshare",
+                    "fa-label":"VOD",
+                    "meta":{
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - SPECGUIDE - VOD"
+                        }
+                    ]
+                },
+                {
+                    "name":"Other",
+                    "label":"Other",
+                    "fa-class":"fa fa-umbrella",
+                    "fa-label":"Other",
+                    "meta":{
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - SPECGUIDE - OTHER"
+                        }
+                    ]
+                },
+                {
+                    "name":"Application",
+                    "label":"Application",
+                    "fa-class":"fas fa-globe",
+                    "fa-label":"Application",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - SPECGUIDE - QUANTUM"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - SPECGUIDE - MICROSERVICES"
+                        }
+                    ]
+                },
+                {
+                    "name":"SpecGuide Network",
+                    "label":"Network",
+                    "fa-class":"fas fa-sitemap",
+                    "meta":{
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='SpecGuide'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='SpecGuide'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='SpecGuide'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='SpecGuide'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='SpecGuide'"
+                                    }
+                                 ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SpecNet",
+            "label": "Spectrum.net",
+            "fa-class":"fas fa-eye",
+            "fa-label":"Spec-Net",
+            "group-label":"Portals",
+            "meta":{
+                "dimension-values":[]
+            },
+            "items":[
+                {
+                    "name":"Customer Call Volume",
+                    "label":"* Customer Call Volume",
+                    "uom":"Count",
+                    "aggr":"sum",
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"service",
+                            "value":["Portals"]
+                        }]
+                    }
+                }
+            ],
+            "groups":[
+                                {
+                    "name":"App Entry",
+                    "label":"App Entry",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - ENTRY"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["SpecNet"]
+                        }]
+                    }
+                },
+                {
+                    "name":"Use",
+                    "label":"Use",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - USE"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["SpecNet"]
+                        }
+                    ]}
+                },
+                {
+                    "name":"Billing",
+                    "label":"Billing",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - BILL"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["SpecNet"]
+                        }]
+                    }
+                },
+                {
+                    "name":"Equipment",
+                    "label":"Equipment",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - EQUIPMENT"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["SpecNet"]
+                        },
+                        {
+                            "name":"api",
+                            "value":["","equipmentv1modemreset","equipmentV1routerreset","equipmentv1signalStatus", "equipmentV3Lob" ]
+                        }]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "SpecMobile",
+            "label": "Spectrum Mobile App",
+            "fa-class":"fas fa-eye",
+            "fa-label":"Spec-Mob",
+            "group-label":"Portals",
+            "meta":{
+                "dimension-values":[]
+            },
+            "items":[
+                {
+                    "name":"Customer Call Volume",
+                    "label":"* Customer Call Volume",
+                    "uom":"Count",
+                    "aggr":"sum",
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"service",
+                            "value":["Portals"]
+                        }]
+                    }
+                }
+            ],
+            "groups":[
+                                {
+                    "name":"App Entry",
+                    "label":"App Entry",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - ENTRY"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["SpecMobile"]
+                        }]
+                    }
+                },
+                {
+                    "name":"Use",
+                    "label":"Use",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - USE"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["SpecMobile"]
+                        }]
+                    }
+                },
+                {
+                    "name":"Billing",
+                    "label":"Billing",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - BILL"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["SpecMobile"]
+                        }]
+                    }
+                },
+                {
+                    "name":"Equipment",
+                    "label":"Equipment",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - EQUIPMENT"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["SpecMobile"]
+                        }]
+                    }
+                }
+
+            ]
+        },
+        {
+            "name": "SMB",
+            "label": "SpectrumBusiness.net",
+            "fa-class":"fas fa-eye",
+            "fa-label":"Spec-Bus",
+            "group-label":"Portals",
+            "meta":{
+                "dimension-values":[]
+            },
+            "items":[
+                {
+                    "name":"Customer Call Volume",
+                    "label":"* Customer Call Volume",
+                    "uom":"Count",
+                    "aggr":"sum",
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"service",
+                            "value":["Portals"]
+                        }]
+                    }
+                }
+            ],
+            "groups":[
+                                {
+                    "name":"App Entry",
+                    "label":"App Entry",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - ENTRY"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["SMB"]
+                        }]
+                    }
+                },
+                {
+                    "name":"Use",
+                    "label":"Use",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - USE"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["SMB"]
+                        }]
+                    }
+                },
+                {
+                    "name":"Billing",
+                    "label":"Billing",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - BILL"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["SMB"]
+                        }]
+                    }
+                },
+                {
+                    "name":"Equipment",
+                    "label":"Equipment",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - EQUIPMENT"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["SMB"]
+                        }]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "MySpectrum",
+            "label": "My Spectrum Application",
+            "fa-class":"fas fa-eye",
+            "fa-label":"Spec-My",
+            "group-label":"Portals",
+            "meta":{
+                "dimension-values":[]
+            },
+            "items":[
+                {
+                    "name":"Customer Call Volume",
+                    "label":"* Customer Call Volume",
+                    "uom":"Count",
+                    "aggr":"sum",
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"service",
+                            "value":["Portals"]
+                        }]
+                    }
+                }
+            ],
+            "groups":[
+                                {
+                    "name":"App Entry",
+                    "label":"App Entry",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - ENTRY"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["MySpectrum"]
+                        }]
+                    }
+                },
+                {
+                    "name":"Use",
+                    "label":"Use",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - USE"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["MySpectrum"]
+                        }]
+                    }
+                },
+                {
+                    "name":"Billing",
+                    "label":"Billing",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - BILL"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["MySpectrum"]
+                        }]
+                    }
+                },
+                {
+                    "name":"Equipment",
+                    "label":"Equipment",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - PORTALS - EQUIPMENT"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"portal",
+                            "value":["MySpectrum"]
+                        },
+                        {
+                        "name":"api",
+                        "value":["","equipmentv1modemreset","equipmentv1routerinfo","equipmentV1routerreset","equipmentv1signalStatus","equipmentV2Router","equipmentV3LobInternet","equipmentV3LobTv","equipmentV3LobVoice"]
+                        }]
+                    }
+                }
+            ]
+        },
+        {   
+            "name": "Digital Operations",
+            "label": "Digital Operations",
+            "meta":{
+                "#release-tag":"DO",
+                "role-tag":{
+                    "allow-else-deny":["User/DO"]
+                },
+                "dimension-values":[]
+            },
+            "groups": [
+                {
+                    "name":"Monitoring",
+                    "label":"Monitoring",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - MONITOR - CLIENT"
+                        }
+                    ]
+                },
+                {
+                    "name":"Monitoring",
+                    "label":"Monitoring",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - MONITOR - DS"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name":"cDVR",
+            "label":"cDVR",
+            "fa-class":"far fa-file-video",
+            "group-label":"Video",
+            "meta":{
+                "dimension-values":[]
+            },
+            "items":[ 
+                {
+                    "name":"Customer Call Volume",
+                    "label":"* Customer Call Volume",
+                    "uom":"Count",
+                    "aggr":"sum",
+                    "meta":{
+                        "dimension-values":[{
+                            "name":"service",
+                            "value":["cDVR"]
+                        }]
+                    }
+                }
+            ],
+            "groups":[
+                {
+                    "name":"cDVR Play",
+                    "label":"Play",
+                    "fa-class":"fas fa-play",
+                    "fa-label":"Play",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - CDVR - PLAY"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - CDVR - DASH"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - CDVR - JITP"
+                        }
+                    ]
+                },
+                {
+                    "name":"cDVR Schedule-Usage",
+                    "label":"Use",
+                    "fa-class":"far fa-calendar-alt",
+                    "fa-label":"Use",
+                    "meta":{
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - CDVR - USE"
+                        }
+                    ]
+                },
+                {
+                    "name":"Splunk",
+                    "label":"Splunk",
+                    "fa-class":"fas fa-globe",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - CDVRL - SPLUNK"
+                        }
+                    ]
+                },
+                {
+                    "name":"cDVR Record",
+                    "label":"Record",
+                    "fa-class":"far fa-calendar-alt",
+                    "fa-label":"Record",
+                    "meta":{
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - CDVR - RM"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - CDVR - RR"
+                        }
+                    ]
+                },
+                {
+                    "name":"cDVR Network",
+                    "label":"Network",
+                    "fa-class":"fas fa-sitemap",
+                    "meta":{
+                    },
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='cDVR'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='cDVR'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='cDVR'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='cDVR'"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5",
+                            "meta":{
+                                "dimension-values":[
+                                    {
+                                        "name":"host",
+                                        "sql":true,
+                                        "value":"select distinct host from charter_network_metadata where service='cDVR'"
+                                    }
+                                 ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name":"Network",
+            "label":"Network",
+            "fa-class":"fas fa-random",
+            "meta":{
+                "#role-tag":{
+                    "deny-else-allow":["User/Network"]
+                },
+                "dimension-values":[]
+            },
+            "items":[ 
+            ],
+            "groups":[
+                {
+                    "name":"Billerica",
+                    "label":"Billerica",
+                    "#fa-class":"fas fa-random",
+                    "#fa-label":"Billerica",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[
+                            {
+                                "name":"location",
+                                "value":"Billerica"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name":"Columbus",
+                    "label":"Columbus",
+                    "#fa-class":"fas fa-random",
+                    "#fa-label":"Columbus",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW"
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5"
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[
+                            {
+                                "name":"location",
+                                "value":["Columbus"]
+                            }
+                         ]
+                    }
+                },
+                {
+                    "name":"Dallas",
+                    "label":"Dallas",
+                    "#fa-class":"fas fa-random",
+                    "#fa-label":"Dallas",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR",
+                            "meta":{
+                                "dimension-values":[
+                                ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[
+                            {
+                                "name":"location",
+                                "value":["Dallas"]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name":"Irvine",
+                    "label":"Irvine",
+                    "#fa-class":"fas fa-random",
+                    "#fa-label":"Irvine",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[
+                            {
+                                "name":"location",
+                                "value":["Irvine"]
+                            }
+                         ]
+                    }
+                },
+                {
+                    "name":"Madison",
+                    "label":"Madison",
+                    "#fa-class":"fas fa-random",
+                    "#fa-label":"Madison",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[
+                            {
+                                "name":"location",
+                                "value":["Madison"]
+                            }
+                         ]
+                    }
+
+                },
+                {
+                    "name":"NCE",
+                    "label":"NCE",
+                    "fa-class":"fas fa-random",
+                    "fa-label":"NCE",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[
+                            {
+                                "name":"location",
+                                "value":["NCE"]
+                            }
+                         ]
+                    }
+
+                },
+                {
+                    "name":"NCW",
+                    "label":"NCW",
+                    "fa-class":"fas fa-random",
+                    "fa-label":"NCW",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[
+                            {
+                                "name":"location",
+                                "value":["NCW"]
+                            }
+                         ]
+                    }
+
+                },
+                {
+                    "name":"Spartanburg",
+                    "label":"Spartanburg",
+                    "#fa-class":"fas fa-random",
+                    "#fa-label":"Spartanburg",
+                    "groups":[
+                         {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                       {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[
+                            {
+                                "name":"location",
+                                "value":["Spartanburg"]
+                            }
+                         ]
+                    }
+
+                },
+                {
+                    "name":"St. Louis",
+                    "label":"St. Louis",
+                    "#fa-class":"fas fa-random",
+                    "#fa-label":"St. Louis",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[
+                            {
+                                "name":"location",
+                                "value":["StLouis"]
+                            }
+                         ]
+                    }
+
+                },
+                {
+                    "name":"Tampa",
+                    "label":"Tampa",
+                    "#fa-class":"fas fa-random",
+                    "#fa-label":"Tampa",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[
+                            {
+                                "name":"location",
+                                "value":["Tampa"]
+                            }
+                         ]
+                    }
+
+                },
+                {
+                    "name":"Other",
+                    "label":"Other",
+                    "fa-class":"fas fa-random",
+                    "fa-label":"Other",
+                    "groups":[
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - SYSLOG",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_SR",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_A10",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_FW",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        },
+                        {
+                            "resource-ref":"ServiceConfig - NETWORK - CAPM_LB_F5",
+                            "meta":{
+                                "dimension-values":[
+                                 ]
+                            }
+                        }
+                    ],
+                    "meta":{
+                        "dimension-values":[
+                            {
+                                "name":"location",
+                                "not":true,
+                                "value":["Irvine", "Billerica", "Madison", "NCE", "NCW","Spartanburg","StLouis","Tampa","Dallas","Columbus"]
+                            }
+                         ]
+                    }
+
+                }
+            ]
+        }
+    ]
+}

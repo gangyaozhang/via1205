@@ -1,0 +1,29 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "2e382b30-df1f-4203-86bc-81cf53b18b34"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "5dff3906-01ac-4736-89c8-48cbd4ea9bd9"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "09999b96-f0a3-4850-837b-57f454ab4d4e"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "2e382b30-df1f-4203-86bc-81cf53b18b34,5dff3906-01ac-4736-89c8-48cbd4ea9bd9,09999b96-f0a3-4850-837b-57f454ab4d4e",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "Charter - Manifest"
+  }
+}

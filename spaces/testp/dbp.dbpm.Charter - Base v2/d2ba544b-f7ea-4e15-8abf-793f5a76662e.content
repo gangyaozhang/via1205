@@ -1,0 +1,30 @@
+{
+    "name": "CMTS",
+    "label": "CMTS",
+    "items": [
+        {
+            "name": "Online Reg State Events",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[]
+            }
+        },
+        {
+            "name": "Offline Reg State Events",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[]
+            }
+        },
+        {
+            "name": "Net State Change",
+            "uom" : "Count",
+            "aggr": "sum",
+            "meta":{
+                "dimension-values":[]
+            }
+        }
+   ]
+}

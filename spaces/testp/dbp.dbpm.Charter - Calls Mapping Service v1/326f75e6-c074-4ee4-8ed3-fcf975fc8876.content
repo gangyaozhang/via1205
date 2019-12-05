@@ -1,0 +1,13 @@
+SELECT
+    concat(issue,"|",cust_type,"|",cause) as call_id,
+    issue,
+    cause,
+    cust_type,
+    company,
+    service as service_name,
+    sum(metric_value) as calls
+FROM
+    viaops_metric_customer_calls_view
+where date_key=${dateKey}
+group by 1,2,3,4,5,6
+order by 1,2,3,4,5,6 desc

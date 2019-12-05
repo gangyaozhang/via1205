@@ -1,0 +1,95 @@
+[
+    {
+        "name"          : "network",
+        "label"         : "Network Dimensions",
+        "name-style"    : "padding-left:0px;width:0px;",
+        "value-style"   : "padding:0px;width:100%;",
+        "display"       : "return helper.has(${data.svc}, ['Network']);",
+        "dimensions" : [{
+            "name"      : "location",
+            "label"     : "Locations",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['Network']) && helper.has(${data.comp}, ['Other']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of locations",
+                "dialog/title"                      : "Build location list",
+                "dialog/description"                : "Build list of locations to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Network"],
+                    "module-context"  : ["Metric", "Location"]
+                }
+            },
+            "default": []
+            }, {
+            "name"      : "host",
+            "label"     : "Hosts",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['Network']) && helper.isSet(${data.comp}) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of hosts",
+                "dialog/title"                      : "Build host list",
+                "dialog/description"                : "Build list of hosts to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Network"],
+                    "module-context"  : ["Metric", "Host"]
+                }
+            },
+            "default": []
+            }, {
+            "name"      : "node",
+            "label"     : "Interfaces",
+            "dependent" : ["network.host"],
+            "enable"    : "return helper.has(${data.svc}, ['Network']) && helper.isSet(${data.comp}) && helper.isSet(${network.host})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of host-dependent interfaces",
+                "dialog/title"                      : "Build interface list",
+                "dialog/description"                : "Build list of interfaces to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Network"],
+                    "module-context"  : ["Metric", "Node"]
+                }
+            },
+            "default": []
+            }, {
+            "name"      : "ip",
+            "label"     : "IP",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['Network']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of IP addresses",
+                "dialog/title"                      : "Build IP list",
+                "dialog/description"                : "Build list of IP addresses to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Network"],
+                    "module-context"  : ["Metric", "IP"]
+                }
+            },
+            "default": []
+            }, {
+            "name"      : "usr",
+            "label"     : "Users",
+            "dependent" : ["data.metric"],
+            "enable"    : "return helper.has(${data.svc}, ['Network']) && helper.isSet(${data.metric})",
+            "type"      : "DualListBuilder",
+            "type-params" : {
+                "text/placeholder"                  : "List of users",
+                "dialog/title"                      : "Build user list",
+                "dialog/description"                : "Build list of users to filter on.",
+                "dialog/widget/config/service/url"  : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Network"],
+                    "module-context"  : ["Metric", "User"]
+                }
+            },
+            "default": []
+        }]
+    }
+]

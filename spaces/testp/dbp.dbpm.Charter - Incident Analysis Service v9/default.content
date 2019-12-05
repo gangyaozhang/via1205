@@ -1,0 +1,55 @@
+<DashboardPluginModel is_init="false" name="Charter - Incident Analysis Service v9" description="">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions>
+      <Function name="addDimensionWhereClause" args="filters,selected" private="false">
+        <CodeText>
+          <![CDATA[var dim_keys   = selected["dim_keys"];
+var dim_values = selected["dim_values"];
+if (dim_keys != null && dim_values != null) {
+    if (dim_keys.charAt(0) == "[" && dim_values.charAt(0) == "[") {
+        // new JSON string
+        dim_keys = JSON.parse(dim_keys);
+        dim_values = JSON.parse(dim_values);
+    }
+    else {
+        // *** HACK *** HACK *** HACK *** HACK *** HACK *** HACK *** HACK
+        // to handle additional dimensions appended to dim_values -engkee
+        // OLD '|' separated strings
+        dim_keys = dim_keys.split("|");
+        dim_keys = dim_keys.slice(2, dim_keys.length);
+        dim_values = dim_values.split("|");
+        dim_values = dim_values.slice(2, dim_values.length);
+    }
+}
+if (dim_keys != null && dim_values != null) {
+    if (dim_keys.length > 0 && dim_keys.length == dim_values.length) {
+        var dims = {};
+        for (var i=0; i<dim_keys.length; i++) {
+            dims[dim_keys[i]] = dim_values[i];
+        }
+        filters.push({
+            name  : "$.dimensionWhereClause",
+            value : dims,
+        });
+    }
+}
+]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services/>
+    <Resources>
+      <Resource uuid="00505e6f-829e-4ea9-87a2-5a2a51df8489" name="QueryConfig" type="application/json" size="2281" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/space/testp/dbpm/Charter - Base v2"/>
+      <Plugin uri="/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Incident Analysis Service"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

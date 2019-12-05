@@ -1,0 +1,2355 @@
+{
+    "module-name":"DimensionAnalysis",
+    "round-time-to":"StartTime",
+    "baseline-weeks":5,
+    "baseline-missing-value":"null",
+    "evaluate-nested-sql":false,
+    "thread-pool-size": 4,
+    "query-time-out": 1200,
+    "query-delay-tolerance" : 2,
+    "#print-query-timestamp": false,
+    "#vt-rank-limit": 0,
+    "enable-dst" : true,
+    "data-source" : {
+        "metric-info" : "charter_ref_db",
+        "analysis-cache" : "charter_ref_db",
+        "config-property":"charter_ref_db"
+    },
+    "cache-analysis-results" : true,
+    "cache-empty-results" : false,
+	"sql-query-config" : {
+		"debug" : {
+			"*"             : true,
+			"E-Mail"        : true,
+			"Video"         : true,
+			"cDVR"          : true,
+			"CHTR_E-Mail"   : true,
+			"Portals"       : true,
+			"SpecGuide"     : true,
+			"Network"       : true,
+			"Customer"      : true,
+			"Voice"         : true,
+			"Cable"         : true,
+			"HSD"           : true,
+			"Connectivity"  : true,
+			"Legacy_VOD"    : true			
+		}
+	},
+    "aggregation-interval":[
+        { "seconds": "12*H",  "interval": "5*M"  },
+        { "seconds": "25*H",  "interval": "15*M" },
+        { "seconds": "10*D",  "interval": "1*H"  },
+        { "seconds": "31*D",  "interval": "4*H"  },
+        { "seconds": "180*D", "interval": "1*D"  },
+        { "seconds": null,    "interval": "7*D"  }
+    ],
+    "default-column-names" : {
+        "datekey-column" : "date_key",
+        "value-column"   : "metric_value",
+        "time-column"    : "aggr_start_tm"
+    },
+    "column-names":{
+        "legacy_vod" : {
+            "data.app"                  : "app",
+            "data.metric"               : "metric_name",
+            "legacy_vod.host"           : "host",
+            "legacy_vod.region"         : "region",
+            "legacy_vod.market"         : "market",
+            "legacy_vod.market_alias"   : "market_alias",
+            "legacy_vod.source_type"    : "source_type",
+            "legacy_vod.reason"         : "reason"
+        },
+        "legacy_vod_calls" : {
+            "legacy_vod_calls.cmts"      : "cmts",
+            "legacy_vod_calls.controller": "controller",
+            "legacy_vod_calls.state"     : "state",
+            "legacy_vod_calls.city"      : "city",
+            "legacy_vod_calls.issue"     : "issue",
+            "legacy_vod_calls.cause"     : "cause",
+            "legacy_vod_calls.resolution": "resolution",
+            "legacy_vod_calls.node"      : "node",
+            "legacy_vod_calls.market"    : "kma",
+            "legacy_vod_calls.cust_type" : "cust_type",
+            "legacy_vod_calls.call_type" : "category",
+            "legacy_vod_calls.headend"   : "headend",
+            "legacy_vod_calls.company"   : "company"
+        },        
+        "connectivity" : {
+            "data.app"                      : "app",
+            "data.metric"                   : "metric_name",
+            "connectivity.host"             : "host",
+            "connectivity.cmts"             : "cmts",
+            "connectivity.interface"        : "interface_name"
+        },
+        "connectivity_calls" : {
+            "connectivity_calls.cmts"      : "cmts",
+            "connectivity_calls.controller": "controller",
+            "connectivity_calls.state"     : "state",
+            "connectivity_calls.city"      : "city",
+            "connectivity_calls.issue"     : "issue",
+            "connectivity_calls.cause"     : "cause",
+            "connectivity_calls.resolution": "resolution",
+            "connectivity_calls.node"      : "node",
+            "connectivity_calls.market"    : "kma",
+            "connectivity_calls.cust_type" : "cust_type",
+            "connectivity_calls.call_type" : "category",
+            "connectivity_calls.headend"   : "headend",
+            "connectivity_calls.company"   : "company"
+        },        
+        "connectivity_dhcp" : {
+            "data.app"                      : "app",
+            "data.metric"                   : "metric_name",
+            "connectivity.company"          : "company",
+            "connectivity.host"             : "host",
+            "connectivity.location"         : "location",
+            "connectivity.cmts"             : "cmts"
+        },
+        "voice_calls" : {
+            "voice_calls.cmts"      : "cmts",
+            "voice_calls.controller": "controller",
+            "voice_calls.state"     : "state",
+            "voice_calls.city"      : "city",
+            "voice_calls.issue"     : "issue",
+            "voice_calls.cause"     : "cause",
+            "voice_calls.resolution": "resolution",
+            "voice_calls.node"      : "node",
+            "voice_calls.market"    : "kma",
+            "voice_calls.cust_type" : "cust_type",
+            "voice_calls.call_type" : "category",
+            "voice_calls.headend"   : "headend",
+            "voice_calls.company"   : "company"
+        },        
+        "voice" : {
+            "data.app"                              : "app",
+            "data.metric"                           : "metric_name",
+            "voice.agc_name"                        : "agc_name",
+            "voice.agc_id"                          : "agc_id",
+            "voice.meta_name"                       : "meta_name",
+            "voice.location"                        : "location",
+            "voice.device_name"                     : "device_name",
+            "voice.client_site_name"                : "client_site_name",
+            "voice.server_site_name"                : "server_site_name",
+            "voice.application_protocol_type_code"  : "app_protocol_type",
+            "voice.application_name"                : "app_name",
+            "voice.message_protocol_type_code"      : "message_protocol_type",
+            "voice.message_name"                    : "message_name",
+            "voice.response_code"                   : "response_code",
+            "voice.response_description"            : "response_description",
+            "voice.legacy_company"                  : "company",
+            "voice.service_type"                    : "service_type"
+        },
+        "cable_calls" : {
+            "cable_calls.cmts"      : "cmts",
+            "cable_calls.controller": "controller",
+            "cable_calls.state"     : "state",
+            "cable_calls.city"      : "city",
+            "cable_calls.issue"     : "issue",
+            "cable_calls.cause"     : "cause",
+            "cable_calls.resolution": "resolution",
+            "cable_calls.node"      : "node",
+            "cable_calls.market"    : "kma",
+            "cable_calls.cust_type" : "cust_type",
+            "cable_calls.call_type" : "category",
+            "cable_calls.headend"   : "headend",
+            "cable_calls.company"   : "company"
+        },        
+        "hsd_calls" : {
+            "hsd_calls.cmts"      : "cmts",
+            "hsd_calls.controller": "controller",
+            "hsd_calls.state"     : "state",
+            "hsd_calls.city"      : "city",
+            "hsd_calls.issue"     : "issue",
+            "hsd_calls.cause"     : "cause",
+            "hsd_calls.resolution": "resolution",
+            "hsd_calls.node"      : "node",
+            "hsd_calls.market"    : "kma",
+            "hsd_calls.cust_type" : "cust_type",
+            "hsd_calls.call_type" : "category",
+            "hsd_calls.headend"   : "headend",
+            "hsd_calls.company"   : "company"
+        },        
+        "customer_calls" : {
+            "customer_calls.cmts"      : "cmts",
+            "customer_calls.controller": "controller",
+            "customer_calls.state"     : "state",
+            "customer_calls.city"      : "city",
+            "customer_calls.issue"     : "issue",
+            "customer_calls.cause"     : "cause",
+            "customer_calls.resolution": "resolution",
+            "customer_calls.node"      : "node",
+            "customer_calls.market"    : "kma",
+            "customer_calls.cust_type" : "cust_type",
+            "customer_calls.call_type" : "category",
+            "customer_calls.headend"   : "headend",
+            "customer_calls.company"   : "company"
+        },        
+        "customer" : {
+            "customer.company"          : "company",
+            "customer.cust_type"        : "cust_type"
+        },        
+        "email" : {
+            "data.app"    : "app",
+            "data.metric" : "metric_name",
+            "email.host"  : "host",
+            "email.dom"   : "dom",
+            "email.dhost" : "dhost"
+        },
+        "email_network" : {
+            "data.app"            : "app",
+            "data.metric"         : "metric_name",
+            "email_network.host"  : "host",
+            "email_network.node"  : "node"
+        },
+        "email_calls" : {
+            "email_calls.cmts"      : "cmts",
+            "email_calls.controller": "controller",
+            "email_calls.state"     : "state",
+            "email_calls.city"      : "city",
+            "email_calls.issue"     : "issue",
+            "email_calls.cause"     : "cause",
+            "email_calls.resolution": "resolution",
+            "email_calls.node"      : "node",
+            "email_calls.market"    : "kma",
+            "email_calls.cust_type" : "cust_type",
+            "email_calls.call_type" : "category",
+            "email_calls.headend"   : "headend",
+            "email_calls.company"   : "company"
+        },
+        "chtremail" : {
+            "data.app"          : "app",
+            "data.metric"       : "metric_name",
+            "chtremail.host"    : "host",
+            "chtremail.dom"     : "dom",
+            "chtremail.dhost"   : "dhost",
+            "chtremail.reason"  : "reason"
+        },
+        "chtremail_network" : {
+            "data.app"              : "app",
+            "data.metric"           : "metric_name",
+            "chtremail_network.host": "host",
+            "chtremail_network.node": "node"
+        },
+        "chtremail_calls" : {
+            "chtremail_calls.cmts"      : "cmts",
+            "chtremail_calls.controller": "controller",
+            "chtremail_calls.state"     : "state",
+            "chtremail_calls.city"      : "city",
+            "chtremail_calls.issue"     : "issue",
+            "chtremail_calls.cause"     : "cause",
+            "chtremail_calls.resolution": "resolution",
+            "chtremail_calls.node"      : "node",
+            "chtremail_calls.market"    : "kma",
+            "chtremail_calls.cust_type" : "cust_type",
+            "chtremail_calls.call_type" : "category",
+            "chtremail_calls.headend"   : "headend",
+            "chtremail_calls.company"   : "company"
+        }, 
+        "network" : {
+            "data.comp"             : "location",
+            "data.app"              : "app",
+            "data.metric"           : "metric_name",
+            "network.ip"            : "ip",
+            "#JSN Comment" : "location isn't needed because for the Network Service, the subservice selection maps to location",
+            "#network.location"     : "location",
+            "network.host"          : "host",
+            "network.node"          : "node",
+            "network.usr"           : "usr"
+        }, 
+        "#network_calls" : {
+            "network_calls.state"      : "region1",
+            "network_calls.region"     : "region2",
+            "network_calls.cause"      : "cause_code",
+            "network_calls.resolution" : "resolution_code"
+        },
+        "video" : {
+            "data.app"           : "app",
+            "data.metric"        : "metric_name",
+            "video.api"          : "api",
+            "video.auth"         : "authentication",
+            "video.channel"      : "channel",
+            "video.content"      : "content",
+            "video.conn"         : "connection",
+            "video.company"      : "company",
+            "video.device"       : "device",
+            "video.msgcat"       : "msgcat",
+            "video.netstatus"    : "netstatus",
+            "video.platform"     : "platform",
+            "video.response"     : "response",
+            "video.state"        : "state",
+            "video.stream"       : "stream",
+            "video.streamformat" : "streamformat",
+            "video.version"      : "version"
+        },
+        "video_ip2mac" : {
+            "data.app"                    : "app",
+            "data.metric"                 : "metric_name",
+            "video_apps.app_cluster"      : "cluster",
+            "video_apps.app_company"      : "company",
+            "video_apps.app_host"         : "host",
+            "video_apps.app_location"     : "location"
+        },
+        "video_fedauth" : {
+            "data.app"                    : "app",
+            "data.metric"                 : "metric_name",
+            "video_apps.app_cluster"      : "cluster",
+            "video_apps.app_company"      : "company",
+            "video_apps.app_host"         : "host",
+            "video_apps.app_location"     : "location"
+        },
+        "video_netserv" : {
+            "data.app"                          : "app",
+            "data.metric"                       : "metric_name",
+            "video_apps.netserv_host"           : "host",
+            "video_apps.netserv_company"        : "company",
+            "video_apps.netserv_service"        : "service",
+            "video_apps.netserv_customer_type"  : "cust_type"
+        },
+        "video_calls" : {
+            "video_calls.cmts"      : "cmts",
+            "video_calls.controller": "controller",
+            "video_calls.state"     : "state",
+            "video_calls.city"      : "city",
+            "video_calls.issue"     : "issue",
+            "video_calls.cause"     : "cause",
+            "video_calls.resolution": "resolution",
+            "video_calls.node"      : "node",
+            "video_calls.market"    : "kma",
+            "video_calls.cust_type" : "cust_type",
+            "video_calls.call_type" : "category",
+            "video_calls.headend"   : "headend",
+            "video_calls.company"   : "company"
+        },
+        "video_network" : {
+            "data.app"              : "app",
+            "data.metric"           : "metric_name",
+            "video_network.host"    : "host",
+            "video_network.node"    : "node"
+        },        
+        "smb" : {
+            "data.app"            : "app",
+            "data.metric"         : "metric_name",
+            "smb.api"             : "api",
+            "smb.browser"         : "browser",
+            "smb.company"         : "company",
+            "smb.device"          : "device",
+            "smb.deviceandversion": "deviceandversion",
+            "smb.msgcat"          : "msgcat",
+            "smb.page"            : "page",
+            "smb.platform"        : "platform",
+            "smb.response"        : "response",
+            "smb.state"           : "state",
+            "smb.version"         : "version"
+        },
+        "smb_calls" : {
+            "smb_calls.cmts"      : "cmts",
+            "smb_calls.controller": "controller",
+            "smb_calls.call_type" : "category",
+            "smb_calls.cause"     : "cause",
+            "smb_calls.city"      : "city",
+            "smb_calls.company"   : "company",
+            "smb_calls.cust_type" : "cust_type",
+            "smb_calls.headend"   : "headend",
+            "smb_calls.issue"     : "issue",
+            "smb_calls.market"    : "kma",
+            "smb_calls.node"      : "node",
+            "smb_calls.resolution": "resolution",
+            "smb_calls.state"     : "state"
+        },        
+        "specnet" : {
+            "data.app"                : "app",
+            "data.metric"             : "metric_name",
+            "specnet.api"             : "api",
+            "specnet.browser"         : "browser",
+            "specnet.company"         : "company",
+            "specnet.device"          : "device",
+            "specnet.deviceandversion": "deviceandversion",
+            "specnet.msgcat"          : "msgcat",
+            "specnet.page"            : "page",
+            "specnet.platform"        : "platform",
+            "specnet.response"        : "response",
+            "specnet.state"           : "state",
+            "specnet.version"         : "version"
+        },
+        "specnet_calls" : {
+            "specnet_calls.cmts"      : "cmts",
+            "specnet_calls.controller": "controller",
+            "specnet_calls.call_type" : "category",
+            "specnet_calls.cause"     : "cause",
+            "specnet_calls.city"      : "city",
+            "specnet_calls.company"   : "company",
+            "specnet_calls.cust_type" : "cust_type",
+            "specnet_calls.headend"   : "headend",
+            "specnet_calls.issue"     : "issue",
+            "specnet_calls.market"    : "kma",
+            "specnet_calls.node"      : "node",
+            "specnet_calls.resolution": "resolution",
+            "specnet_calls.state"     : "state"
+        },        
+        "specmobile" : {
+            "data.app"                  : "app",
+            "data.metric"               : "metric_name",
+            "specmobile.api"             : "api",
+            "specmobile.browser"         : "browser",
+            "specmobile.company"         : "company",
+            "specmobile.device"          : "device",
+            "specmobile.deviceandversion": "deviceandversion",
+            "specmobile.msgcat"          : "msgcat",
+            "specmobile.page"            : "page",
+            "specmobile.platform"        : "platform",
+            "specmobile.response"        : "response",
+            "specmobile.state"           : "state",
+            "specmobile.version"         : "version"
+        },
+        "specmobile_calls" : {
+            "specmobile_calls.cmts"      : "cmts",
+            "specmobile_calls.controller": "controller",
+            "specmobile_calls.call_type" : "category",
+            "specmobile_calls.cause"     : "cause",
+            "specmobile_calls.city"      : "city",
+            "specmobile_calls.company"   : "company",
+            "specmobile_calls.cust_type" : "cust_type",
+            "specmobile_calls.headend"   : "headend",
+            "specmobile_calls.issue"     : "issue",
+            "specmobile_calls.market"    : "kma",
+            "specmobile_calls.node"      : "node",
+            "specmobile_calls.resolution": "resolution",
+            "specmobile_calls.state"     : "state"
+        },        
+        "myspectrum" : {
+            "data.app"                   : "app",
+            "data.metric"                : "metric_name",
+            "myspectrum.api"             : "api",
+            "myspectrum.browser"         : "browser",
+            "myspectrum.company"         : "company",
+            "myspectrum.device"          : "device",
+            "myspectrum.deviceandversion": "deviceandversion",
+            "myspectrum.msgcat"          : "msgcat",
+            "myspectrum.page"            : "page",
+            "myspectrum.platform"        : "platform",
+            "myspectrum.response"        : "response",
+            "myspectrum.state"           : "state",
+            "myspectrum.version"         : "version"
+        },
+        "myspectrum_calls" : {
+            "myspectrum_calls.cmts"      : "cmts",
+            "myspectrum_calls.controller": "controller",
+            "myspectrum_calls.call_type" : "category",
+            "myspectrum_calls.cause"     : "cause",
+            "myspectrum_calls.city"      : "city",
+            "myspectrum_calls.company"   : "company",
+            "myspectrum_calls.cust_type" : "cust_type",
+            "myspectrum_calls.headend"   : "headend",
+            "myspectrum_calls.issue"     : "issue",
+            "myspectrum_calls.market"    : "kma",
+            "myspectrum_calls.node"      : "node",
+            "myspectrum_calls.resolution": "resolution",
+            "myspectrum_calls.state"     : "state"
+        },        
+        "specguide" : {
+            "data.app"                  : "app",
+            "data.metric"               : "metric_name",
+            "specguide.api"             : "api",
+            "specguide.msgcat"          : "msgcat",
+            "specguide.region"          : "region",
+            "specguide.city"            : "city",
+            "specguide.device"          : "device",
+            "specguide.conn"            : "connection",
+            "specguide.deviceandversion": "deviceandversion",
+            "specguide.division"        : "division",
+            "specguide.response"        : "response",
+            "specguide.version"         : "version",
+            "specguide.platform"        : "platform",
+            "specguide.netstatus"       : "netstatus",
+            "specguide.streamformat"    : "streamformat",
+            "specguide.stream"          : "stream",
+            "specguide.company"         : "company"
+        },
+        "specguide_microservices" : {
+            "data.app"                  : "app",
+            "data.metric"               : "metric_name",
+            "specguide.api"             : "api",
+            "specguide.response"        : "response"
+        },
+        "specguide_calls" : {
+            "specguide_calls.cmts"      : "cmts",
+            "specguide_calls.controller": "controller",
+            "specguide_calls.state"     : "state",
+            "specguide_calls.city"      : "city",
+            "specguide_calls.issue"     : "issue",
+            "specguide_calls.cause"     : "cause",
+            "specguide_calls.resolution": "resolution",
+            "specguide_calls.node"      : "node",
+            "specguide_calls.market"    : "kma",
+            "specguide_calls.cust_type" : "cust_type",
+            "specguide_calls.call_type" : "category",
+            "specguide_calls.headend"   : "headend",
+            "specguide_calls.company"   : "company"
+        },        
+        "cdvr_quantum" : {
+            "data.app"          : "app",
+            "data.metric"       : "metric_name",
+            "cdvr.device"       : "device",
+            "cdvr.conn"         : "connection",
+            "cdvr.auth"         : "authentication",
+            "cdvr.msgcat"       : "msgcat",
+            "cdvr.api"          : "api",
+            "cdvr.response"     : "response",
+            "cdvr.version"      : "version",
+            "cdvr.platform"     : "platform",
+            "cdvr.netstatus"    : "netstatus",
+            "cdvr.streamformat" : "streamformat",
+            "cdvr.stream"       : "stream",
+            "cdvr.channel"      : "channel",
+            "cdvr.content"      : "content",
+            "cdvr.company"      : "company",
+            "cdvr.state"        : "state"
+        },
+        "cdvr_calls" : {
+            "cdvr_calls.cmts"      : "cmts",
+            "cdvr_calls.controller": "controller",
+            "cdvr_calls.state"     : "state",
+            "cdvr_calls.city"      : "city",
+            "cdvr_calls.issue"     : "issue",
+            "cdvr_calls.cause"     : "cause",
+            "cdvr_calls.resolution": "resolution",
+            "cdvr_calls.node"      : "node",
+            "cdvr_calls.market"    : "kma",
+            "cdvr_calls.cust_type" : "cust_type",
+            "cdvr_calls.call_type" : "category",
+            "cdvr_calls.headend"   : "headend",
+            "cdvr_calls.company"   : "company"
+        },
+        "cdvr_network" : {
+            "data.app"          : "app",
+            "data.metric"       : "metric_name",
+            "cdvr_network.host" : "host",
+            "cdvr_network.node" : "node"
+        },
+        "cdvr_application" : {
+            "data.app"                      : "app",
+            "data.metric"                   : "metric_name",
+            "cdvr_application.host"         : "host",
+            "cdvr_application.location"     : "location",
+            "cdvr_application.vmr_name"     : "vmr_name",
+            "cdvr_application.http_response": "http_response",
+            "cdvr_application.error_code"   : "error_code",
+            "cdvr_application.event_name"   : "event_name",
+            "cdvr_application.response_msg" : "response_msg"
+        },
+        "monitoring": {
+            "data.app"                      : "app",
+            "data.metric"                   : "metric_name",
+            "digital_operations.source"     : "data_source",
+            "digital_operations.host"       : "host",
+            "digital_operations.function"   : "function",
+            "digital_operations.context"    : "context",
+            "digital_operations.user"       : "user",
+            "digital_operations.server"     : "server"
+        },
+        "*" : {
+        }
+    },
+    "column-labels":{
+        "legacy_vod" : {
+            "legacy_vod.host"           : "Host",
+            "legacy_vod.region"         : "Region",
+            "legacy_vod.market"         : "Market",
+            "legacy_vod.market_alias"   : "Market Alias",
+            "legacy_vod.source_type"    : "Source Type",
+            "legacy_vod.reason"         : "Reason"
+        },
+        "legacy_vod_calls" : {
+            "legacy_vod_calls.cmts"      : "CMTS",
+            "legacy_vod_calls.controller": "Controller",
+            "legacy_vod_calls.state"     : "State",
+            "legacy_vod_calls.city"      : "City",
+            "legacy_vod_calls.issue"     : "Issue",
+            "legacy_vod_calls.cause"     : "Cause",
+            "legacy_vod_calls.resolution": "Resolution",
+            "legacy_vod_calls.node"      : "Node",
+            "legacy_vod_calls.market"    : "Market",
+            "legacy_vod_calls.cust_type" : "Customer Type",
+            "legacy_vod_calls.call_type" : "Call Type",
+            "legacy_vod_calls.headend"   : "Headend",
+            "legacy_vod_calls.company"   : "Company"
+        },
+        "connectivity" : {
+            "connectivity.host"             : "Host",
+            "connectivity.cmts"             : "CMTS",
+            "connectivity.interface"        : "Interface Name"
+        },
+        "connectivity_dhcp" : {
+            "connectivity.host"             : "DHCP Server",
+            "connectivity.company"          : "Company",
+            "connectivity.location"         : "Location",
+            "connectivity.cmts"             : "CMTS"        
+        },
+        "connectivity_calls" : {
+            "connectivity_calls.cmts"      : "CMTS",
+            "connectivity_calls.controller": "Controller",
+            "connectivity_calls.state"     : "State",
+            "connectivity_calls.city"      : "City",
+            "connectivity_calls.issue"     : "Issue",
+            "connectivity_calls.cause"     : "Cause",
+            "connectivity_calls.resolution": "Resolution",
+            "connectivity_calls.node"      : "Node",
+            "connectivity_calls.market"    : "Market",
+            "connectivity_calls.cust_type" : "Customer Type",
+            "connectivity_calls.call_type" : "Call Type",
+            "connectivity_calls.headend"   : "Headend",
+            "connectivity_calls.company"   : "Company"
+        },
+        "customer_calls" : {
+            "customer_calls.cmts"      : "CMTS",
+            "customer_calls.controller": "Controller",
+            "customer_calls.state"     : "State",
+            "customer_calls.city"      : "City",
+            "customer_calls.issue"     : "Issue",
+            "customer_calls.cause"     : "Cause",
+            "customer_calls.resolution": "Resolution",
+            "customer_calls.node"      : "Node",
+            "customer_calls.market"    : "Market",
+            "customer_calls.cust_type" : "Customer Type",
+            "customer_calls.call_type" : "Call Type",
+            "customer_calls.headend"   : "Headend",
+            "customer_calls.company"   : "Company"
+        },
+        "customer" : {
+            "customer.company"         : "Company",
+            "customer.cust_type"       : "Customer Type"
+        },
+        "hsd_calls" : {
+            "hsd_calls.cmts"      : "CMTS",
+            "hsd_calls.controller": "Controller",
+            "hsd_calls.state"     : "State",
+            "hsd_calls.city"      : "City",
+            "hsd_calls.issue"     : "Issue",
+            "hsd_calls.cause"     : "Cause",
+            "hsd_calls.resolution": "Resolution",
+            "hsd_calls.node"      : "Node",
+            "hsd_calls.market"    : "Market",
+            "hsd_calls.cust_type" : "Customer Type",
+            "hsd_calls.call_type" : "Call Type",
+            "hsd_calls.headend"   : "Headend",
+            "hsd_calls.company"   : "Company"
+        },
+        "voice" : {
+            "voice.agc_name"                        : "AGC Name",
+            "voice.agc_id"                          : "AGC Id",
+            "voice.meta_name"                       : "Meta Name",
+            "voice.location"                        : "Location",
+            "voice.device_name"                     : "Device Name",
+            "voice.client_site_name"                : "Client Site Name",
+            "voice.server_site_name"                : "Server Site Name",
+            "voice.application_protocol_type_code"  : "Application Protocol Type Code",
+            "voice.application_name"                : "Application Name",
+            "voice.message_protocol_type_code"      : "Message Protocol Type Code",
+            "voice.message_name"                    : "Message Name",
+            "voice.response_code"                   : "Response Code",
+            "voice.response_description"            : "Response Description",
+            "voice.legacy_company"                  : "Legacy Company",
+            "voice.service_type"                    : "Service Type"
+
+        },        
+        "voice_calls" : {
+            "voice_calls.cmts"      : "CMTS",
+            "voice_calls.controller": "Controller",
+            "voice_calls.state"     : "State",
+            "voice_calls.city"      : "City",
+            "voice_calls.issue"     : "Issue",
+            "voice_calls.cause"     : "Cause",
+            "voice_calls.resolution": "Resolution",
+            "voice_calls.node"      : "Node",
+            "voice_calls.market"    : "Market",
+            "voice_calls.cust_type" : "Customer Type",
+            "voice_calls.call_type" : "Call Type",
+            "voice_calls.headend"   : "Headend",
+            "voice_calls.company"   : "Company"
+        },
+        "cable_calls" : {
+            "cable_calls.cmts"      : "CMTS",
+            "cable_calls.controller": "Controller",
+            "cable_calls.state"     : "State",
+            "cable_calls.city"      : "City",
+            "cable_calls.issue"     : "Issue",
+            "cable_calls.cause"     : "Cause",
+            "cable_calls.resolution": "Resolution",
+            "cable_calls.node"      : "Node",
+            "cable_calls.market"    : "Market",
+            "cable_calls.cust_type" : "Customer Type",
+            "cable_calls.call_type" : "Call Type",
+            "cable_calls.headend"   : "Headend",
+            "cable_calls.company"   : "Company"
+        },
+        "email" : {
+            "email.host"  : "Host",
+            "email.dom"   : "Domain",
+            "email.dhost" : "Target"
+        },
+        "email_network" : {
+            "email_network.host"  : "Host",
+            "email_network.node"  : "Interface"
+        },
+        "email_calls" : {
+            "email_calls.cmts"      : "CMTS",
+            "email_calls.controller": "Controller",
+            "email_calls.state"     : "State",
+            "email_calls.city"      : "City",
+            "email_calls.issue"     : "Issue",
+            "email_calls.cause"     : "Cause",
+            "email_calls.resolution": "Resolution",
+            "email_calls.node"      : "Node",
+            "email_calls.market"    : "Market",
+            "email_calls.cust_type" : "Customer Type",
+            "email_calls.call_type" : "Call Type",
+            "email_calls.headend"   : "Headend",
+            "email_calls.company"   : "Company"
+        },
+        "chtremail" : {
+            "chtremail.host"  : "Host",
+            "chtremail.dom"   : "Domain",
+            "chtremail.dhost" : "Target",
+            "chtremail.reason": "Reason"
+        },
+        "chtremail_network" : {
+            "chtremail_network.host"  : "Host",
+            "chtremail_network.node"  : "Interface"
+        },
+        "chtremail_calls" : {
+            "chtremail_calls.cmts"      : "CMTS",
+            "chtremail_calls.controller": "Controller",
+            "chtremail_calls.state"     : "State",
+            "chtremail_calls.city"      : "City",
+            "chtremail_calls.issue"     : "Issue",
+            "chtremail_calls.cause"     : "Cause",
+            "chtremail_calls.resolution": "Resolution",
+            "chtremail_calls.node"      : "Node",
+            "chtremail_calls.market"    : "Market",
+            "chtremail_calls.cust_type" : "Customer Type",
+            "chtremail_calls.call_type" : "Call Type",
+            "chtremail_calls.headend"   : "Headend",
+            "chtremail_calls.company"   : "Company"
+        },
+        "network" : {
+            "#data.comp"         : "Location",
+            "network.ip"        : "IP Address",
+            "network.location"  : "Location",
+            "network.host"      : "Host",
+            "network.node"      : "Interface",
+            "network.usr"       : "User"
+        }, 
+        "#network_calls" : {
+            "network_calls.state"      : "State",
+            "network_calls.region"     : "Region",
+            "network_calls.cause"      : "Cause",
+            "network_calls.resolution" : "Resolution"
+        },
+        "video" : {
+            "video.device"       : "Device",
+            "video.conn"         : "Connection",
+            "video.auth"         : "Authentication",
+            "video.msgcat"       : "API Category",
+            "video.api"          : "API Name",
+            "video.response"     : "Response",
+            "video.version"      : "Version",
+            "video.platform"     : "Platform",
+            "video.netstatus"    : "Network Status",
+            "video.streamformat" : "Stream Format",
+            "video.stream"       : "Stream Type",
+            "video.channel"      : "Channel",
+            "video.content"      : "Content",
+            "video.company"      : "Company",
+            "video.state"        : "State"
+        },
+        "video_network" : {
+            "video_network.host"  : "Host",
+            "video_network.node"  : "Interface"
+        },
+        "video_ip2mac" : {
+            "video_apps.app_cluster"      : "Cluster",
+            "video_apps.app_location"     : "Location",
+            "video_apps.app_host"         : "Host",
+            "video_apps.app_company"      : "Company"
+        },
+        "video_fedauth" : {
+            "video_apps.app_cluster"     : "Cluster",
+            "video_apps.app_host"        : "Host",
+            "video_apps.app_company"     : "Company",
+            "video_apps.app_location"    : "Location"
+        },
+        "video_netserv" : {
+            "video_apps.netserv_host"           : "Host",
+            "video_apps.netserv_company"        : "Company",
+            "video_apps.netserv_service"        : "Service",
+            "video_apps.netserv_customer_type"  : "Customer Type"
+        },
+
+        "video_calls" : {
+            "video_calls.cmts"      : "CMTS",
+            "video_calls.controller": "Controller",
+            "video_calls.state"     : "State",
+            "video_calls.city"      : "City",
+            "video_calls.issue"     : "Issue",
+            "video_calls.cause"     : "Cause",
+            "video_calls.resolution": "Resolution",
+            "video_calls.node"      : "Node",
+            "video_calls.market"    : "Market",
+            "video_calls.cust_type" : "Customer Type",
+            "video_calls.call_type" : "Call Type",
+            "video_calls.headend"   : "Headend",
+            "video_calls.company"   : "Company"
+        },
+        "smb" : {
+            "smb.api"             : "API Name",
+            "smb.browser"         : "Browser",
+            "smb.company"         : "Company",
+            "smb.device"          : "Device",
+            "smb.deviceandversion": "Device and Version",
+            "smb.msgcat"          : "Category",
+            "smb.page"            : "Page",
+            "smb.platform"        : "Platform",
+            "smb.state"           : "State",
+            "smb.response"        : "Response",
+            "smb.version"         : "Version"
+        },
+        "smb_calls" : {
+            "smb_calls.cmts"      : "CMTS",
+            "smb_calls.controller": "Controller",
+            "smb_calls.call_type" : "Call Type",
+            "smb_calls.cause"     : "Cause",
+            "smb_calls.city"      : "City",
+            "smb_calls.company"   : "Company",
+            "smb_calls.cust_type" : "Customer Type",
+            "smb_calls.issue"     : "Issue",
+            "smb_calls.market"    : "Market",
+            "smb_calls.node"      : "Node",
+            "smb_calls.headend"   : "Headend",
+            "smb_calls.resolution": "Resolution",
+            "smb_calls.state"     : "State"
+        },
+        "specnet" : {
+            "specnet.api"             : "API Name",
+            "specnet.browser"         : "Browser",
+            "specnet.company"         : "Company",
+            "specnet.device"          : "Device",
+            "specnet.deviceandversion": "Device and Version",
+            "specnet.msgcat"          : "Category",
+            "specnet.page"            : "Page",
+            "specnet.platform"        : "Platform",
+            "specnet.state"           : "State",
+            "specnet.response"        : "Response",
+            "specnet.version"         : "Version"
+        },
+        "specnet_calls" : {
+            "specnet_calls.cmts"      : "CMTS",
+            "specnet_calls.controller": "Controller",
+            "specnet_calls.call_type" : "Call Type",
+            "specnet_calls.cause"     : "Cause",
+            "specnet_calls.city"      : "City",
+            "specnet_calls.company"   : "Company",
+            "specnet_calls.cust_type" : "Customer Type",
+            "specnet_calls.issue"     : "Issue",
+            "specnet_calls.market"    : "Market",
+            "specnet_calls.node"      : "Node",
+            "specnet_calls.headend"   : "Headend",
+            "specnet_calls.resolution": "Resolution",
+            "specnet_calls.state"     : "State"
+        },
+        "specmobile" : {
+            "specmobile.api"             : "API Name",
+            "specmobile.browser"         : "Browser",
+            "specmobile.company"         : "Company",
+            "specmobile.device"          : "Device",
+            "specmobile.deviceandversion": "Device and Version",
+            "specmobile.msgcat"          : "Category",
+            "specmobile.page"            : "Page",
+            "specmobile.platform"        : "Platform",
+            "specmobile.state"           : "State",
+            "specmobile.response"        : "Response",
+            "specmobile.version"         : "Version"
+        },
+        "specmobile_calls" : {
+            "specmobile_calls.cmts"      : "CMTS",
+            "specmobile_calls.controller": "Controller",
+            "specmobile_calls.call_type" : "Call Type",
+            "specmobile_calls.cause"     : "Cause",
+            "specmobile_calls.city"      : "City",
+            "specmobile_calls.company"   : "Company",
+            "specmobile_calls.cust_type" : "Customer Type",
+            "specmobile_calls.issue"     : "Issue",
+            "specmobile_calls.market"    : "Market",
+            "specmobile_calls.node"      : "Node",
+            "specmobile_calls.headend"   : "Headend",
+            "specmobile_calls.resolution": "Resolution",
+            "specmobile_calls.state"     : "State"
+        },
+        "myspectrum" : {
+            "myspectrum.api"             : "API Name",
+            "myspectrum.browser"         : "Browser",
+            "myspectrum.company"         : "Company",
+            "myspectrum.device"          : "Device",
+            "myspectrum.deviceandversion": "Device and Version",
+            "myspectrum.msgcat"          : "Category",
+            "myspectrum.page"            : "Page",
+            "myspectrum.platform"        : "Platform",
+            "myspectrum.state"           : "State",
+            "myspectrum.response"        : "Response",
+            "myspectrum.version"         : "Version"
+        },
+        "myspectrum_calls" : {
+            "myspectrum_calls.cmts"      : "CMTS",
+            "myspectrum_calls.controller": "Controller",
+            "myspectrum_calls.call_type" : "Call Type",
+            "myspectrum_calls.cause"     : "Cause",
+            "myspectrum_calls.city"      : "City",
+            "myspectrum_calls.company"   : "Company",
+            "myspectrum_calls.cust_type" : "Customer Type",
+            "myspectrum_calls.issue"     : "Issue",
+            "myspectrum_calls.market"    : "Market",
+            "myspectrum_calls.node"      : "Node",
+            "myspectrum_calls.headend"   : "Headend",
+            "myspectrum_calls.resolution": "Resolution",
+            "myspectrum_calls.state"     : "State"
+        },
+       "specguide" : {
+            "specguide.api"             : "API Name",
+            "specguide.msgcat"          : "Category",
+            "specguide.region"          : "Region",
+            "specguide.city"            : "City",
+            "specguide.device"          : "Device",
+            "specguide.conn"            : "Connection",
+            "specguide.deviceandversion": "Device and Version",
+            "specguide.division"        : "Division / Controller",
+            "specguide.response"        : "Response",
+            "specguide.version"         : "Version",
+            "specguide.platform"        : "Platform",
+            "specguide.netstatus"       : "Network Status",
+            "specguide.streamformat"    : "Stream Format",
+            "specguide.stream"          : "Stream Type",
+            "specguide.company"         : "Company"
+        },
+       "specguide_microservices" : {
+            "specguide.api"             : "API Name",
+            "specguide.response"        : "Response"
+        },
+        "specguide_calls" : {
+            "specguide_calls.cmts"      : "CMTS",
+            "specguide_calls.controller": "Controller",
+            "specguide_calls.state"     : "State",
+            "specguide_calls.city"      : "City",
+            "specguide_calls.issue"     : "Issue",
+            "specguide_calls.cause"     : "Cause",
+            "specguide_calls.resolution": "Resolution",
+            "specguide_calls.node"      : "Node",
+            "specguide_calls.market"    : "Market",
+            "specguide_calls.cust_type" : "Customer Type",
+            "specguide_calls.call_type" : "Call Type",
+            "specguide_calls.headend"   : "Headend",
+            "specguide_calls.company"   : "Company"
+        },
+        "cdvr_quantum" : {
+            "cdvr.device"       : "Device",
+            "cdvr.conn"         : "Connection",
+            "cdvr.auth"         : "Authentication",
+            "cdvr.msgcat"       : "API Category",
+            "cdvr.api"          : "API Name",
+            "cdvr.response"     : "Response",
+            "cdvr.version"      : "Version",
+            "cdvr.platform"     : "Platform",
+            "cdvr.netstatus"    : "Network Status",
+            "cdvr.streamformat" : "Stream Format",
+            "cdvr.stream"       : "Stream Type",
+            "cdvr.channel"      : "Channel",
+            "cdvr.content"      : "Content",
+            "cdvr.company"      : "Company",
+            "cdvr.state"        : "State"
+        },
+        "cdvr_network" : {
+            "cdvr_network.host"  : "Host",
+            "cdvr_network.node"  : "Interface"
+        },
+        "cdvr_calls" : {
+            "cdvr_calls.cmts"      : "CMTS",
+            "cdvr_calls.controller": "Controller",
+            "cdvr_calls.state"     : "State",
+            "cdvr_calls.city"      : "City",
+            "cdvr_calls.issue"     : "Issue",
+            "cdvr_calls.cause"     : "Cause",
+            "cdvr_calls.resolution": "Resolution",
+            "cdvr_calls.node"      : "Node",
+            "cdvr_calls.market"    : "Market",
+            "cdvr_calls.cust_type" : "Customer Type",
+            "cdvr_calls.call_type" : "Call Type",
+            "cdvr_calls.headend"   : "Headend",
+            "cdvr_calls.company"   : "Company"
+        },
+        "cdvr_application" : {
+            "cdvr_application.host"         : "Host",
+            "cdvr_application.location"     : "Location",
+            "cdvr_application.vmr_name"     : "VMR",
+            "cdvr_application.http_response": "HTTP Response",
+            "cdvr_application.error_code"   : "Error Code",
+            "cdvr_application.event_name"   : "Event",
+            "cdvr_application.response_msg" : "Response"
+        },
+        "monitoring": {
+            "digital_operations.source"     : "Data Source",
+            "digital_operations.host"       : "Host",
+            "digital_operations.function"   : "Function",
+            "digital_operations.context"    : "Context",
+            "digital_operations.user"       : "User",
+            "digital_operations.server"     : "Server"
+        },
+        "*" : {
+            "data.app"    : "Component",
+            "data.metric" : "Metric"
+        }
+    },
+    "event-type-dimensions":{
+        "legacy_vod" : [
+            "app,metric_name",
+            "host",
+            "region",
+            "market",
+            "market_alias",
+            "source_type",
+            "reason"            
+        ],
+        "legacy_vod_calls" : [
+            "cmts",
+            "controller",
+            "state",
+            "city",
+            "issue",
+            "cause",
+            "resolution",
+            "headend,node",
+            "cust_type",
+            "category",
+            "company",
+            "kma"
+        ],
+        "connectivity" : [
+            "app,metric_name",
+            "host",
+            "cmts",
+            "interface_name"            
+        ],
+        "connectivity_dhcp" : [
+            "app,metric_name",
+            "host",
+            "company",
+            "location",
+            "cmts"
+            ],
+        "connectivity_calls" : [
+            "cmts",
+            "controller",
+            "state",
+            "city",
+            "issue",
+            "cause",
+            "resolution",
+            "headend,node",
+            "cust_type",
+            "category",
+            "company",
+            "kma"
+        ],
+        "customer_calls" : [
+            "cmts",
+            "controller",
+            "state",
+            "city",
+            "issue",
+            "cause",
+            "resolution",
+            "headend,node",
+            "cust_type",
+            "category",
+            "company",
+            "kma"
+        ],
+        "customer" : [
+            "company",
+            "cust_type"
+        ],
+        "cable_calls" : [
+            "cmts",
+            "controller",
+            "state",
+            "city",
+            "issue",
+            "cause",
+            "resolution",
+            "headend,node",
+            "cust_type",
+            "category",
+            "company",
+            "kma"
+        ],
+        "voice" : [
+            "app,metric_name",
+            "agc_name",
+            "agc_id",
+            "meta_name",
+            "location",
+            "device_name",
+            "client_site_name",
+            "server_site_name",
+            "app_protocol_type",
+            "app_name",
+            "message_protocol_type",
+            "message_name",
+            "response_code",
+            "response_description",
+            "company",
+            "service_type"
+        ],
+        "voice_calls" : [
+            "cmts",
+            "controller",
+            "state",
+            "city",
+            "issue",
+            "cause",
+            "resolution",
+            "headend,node",
+            "cust_type",
+            "category",
+            "company",
+            "kma"
+        ],
+        "hsd_calls" : [
+            "cmts",
+            "controller",
+            "state",
+            "city",
+            "issue",
+            "cause",
+            "resolution",
+            "headend,node",
+            "cust_type",
+            "category",
+            "company",
+            "kma"
+        ],
+        "email" : [
+            "app,metric_name",
+            "host,dom,dhost"
+        ],
+        "email_network" : [
+            "app,metric_name",
+            "host,node"
+        ],
+        "email_calls" : [
+            "cmts",
+            "controller",
+            "state",
+            "city",
+            "issue",
+            "cause",
+            "resolution",
+            "headend,node",
+            "cust_type",
+            "category",
+            "company",
+            "kma"
+        ],
+        "chtremail" : [
+            "app,metric_name",
+            "host,dom,dhost,reason"
+        ],
+        "chtremail_network" : [
+            "app,metric_name",
+            "host,node"
+        ],
+        "chtremail_calls" : [
+            "cmts",
+            "controller",
+            "state",
+            "city",
+            "issue",
+            "cause",
+            "resolution",
+            "headend,node",
+            "cust_type",
+            "category",
+            "company",
+            "kma"
+        ],
+        "network" : [
+            "app,metric_name",
+            "host,node",
+            "ip",
+            "location",
+            "usr" 
+        ],
+        "#network_calls" : [
+            "region1", 
+            "region2",
+            "cause_code",
+            "resolution_code"
+        ],
+        "video" : [
+            "app,metric_name",
+            "device",
+            "connection",
+            "authentication",
+            "msgcat",
+            "api",
+            "response",
+            "version",
+            "platform",
+            "netstatus",
+            "streamformat",
+            "stream",
+            "channel",
+            "content",
+            "company",
+            "state"
+        ],
+        "video_ip2mac" : [
+            "app,metric_name",
+            "host",
+            "company",
+            "location",
+            "cluster"
+        ],
+        "video_fedauth" : [
+            "app,metric_name",
+            "host",
+            "company",
+            "location",
+            "cluster"
+        ],
+        "video_netserv" : [
+            "app,metric_name",
+            "host",
+            "company",
+            "service",
+            "cust_type"
+        ],
+        "video_calls" : [
+            "cmts",
+            "controller",
+            "state",
+            "city",
+            "issue",
+            "cause",
+            "resolution",
+            "headend,node",
+            "cust_type",
+            "category",
+            "company",
+            "kma"
+        ],
+        "video_network" : [
+            "app,metric_name",
+            "host,node"
+        ],
+        "smb" : [
+            "app,metric_name",
+            "api",
+            "browser",
+            "company",
+            "device",
+            "deviceandversion",
+            "msgcat",
+            "response",
+            "platform",
+            "state",
+            "version"
+        ],
+        "smb_calls" : [
+            "cmts",
+            "controller",
+            "category",
+            "cause",
+            "city",
+            "company",
+            "cust_type",
+            "headend,node",
+            "issue",
+            "kma",
+            "resolution",
+            "state"
+        ],
+        "specnet" : [
+            "app,metric_name",
+            "api",
+            "browser",
+            "company",
+            "device",
+            "deviceandversion",
+            "msgcat",
+            "response",
+            "platform",
+            "state",
+            "version"
+        ],
+        "specnet_calls" : [
+            "cmts",
+            "controller",
+            "category",
+            "cause",
+            "city",
+            "company",
+            "cust_type",
+            "headend,node",
+            "issue",
+            "kma",
+            "resolution",
+            "state"
+        ],
+        "specmobile" : [
+            "app,metric_name",
+            "api",
+            "browser",
+            "company",
+            "device",
+            "deviceandversion",
+            "msgcat",
+            "response",
+            "platform",
+            "state",
+            "version"
+        ],
+        "specmobile_calls" : [
+            "cmts",
+            "controller",
+            "category",
+            "cause",
+            "city",
+            "company",
+            "cust_type",
+            "headend,node",
+            "issue",
+            "kma",
+            "resolution",
+            "state"
+        ],
+        "myspectrum" : [
+            "app,metric_name",
+            "api",
+            "browser",
+            "company",
+            "device",
+            "deviceandversion",
+            "msgcat",
+            "response",
+            "platform",
+            "state",
+            "version"
+        ],
+        "myspectrum_calls" : [
+            "cmts",
+            "controller",
+            "category",
+            "cause",
+            "city",
+            "company",
+            "cust_type",
+            "headend,node",
+            "issue",
+            "kma",
+            "resolution",
+            "state"
+        ],
+        "specguide" : [
+            "app,metric_name",
+            "api",
+            "msgcat",
+            "region",
+            "city",
+            "device",
+            "connection",
+            "deviceandversion",
+            "division",
+            "response",
+            "version",
+            "platform",
+            "netstatus",
+            "streamformat",
+            "stream",
+            "company"
+        ],
+        "specguide_microservices" : [
+            "app,metric_name",
+            "api",
+            "response"
+        ],
+        "specguide_calls" : [
+            "cmts",
+            "controller",
+            "state",
+            "city",
+            "issue",
+            "cause",
+            "resolution",
+            "headend,node",
+            "cust_type",
+            "category",
+            "company",
+            "kma"
+        ],
+        "cdvr_quantum" : [
+            "app,metric_name",
+            "device",
+            "connection",
+            "authentication",
+            "msgcat",
+            "api",
+            "response",
+            "version",
+            "platform",
+            "netstatus",
+            "streamformat",
+            "stream",
+            "channel",
+            "content",
+            "company",
+            "state"
+        ],
+        "cdvr_calls" : [
+            "cmts",
+            "controller",
+            "state",
+            "city",
+            "issue",
+            "cause",
+            "resolution",
+            "headend,node",
+            "cust_type",
+            "category",
+            "company",
+            "kma"
+        ],
+        "cdvr_network" : [
+            "app,metric_name",
+            "host,node"
+        ],
+        "cdvr_application" : [
+            "app,metric_name",
+            "host",
+            "location",
+            "vmr_name",
+            "http_response",
+            "error_code",
+            "event_name",
+            "response_msg"
+        ],
+        "monitoring": [
+            "app,metric_name",
+            "data_source",
+            "host",
+            "function",
+            "context",
+            "user",
+            "server"
+        ],
+        "*" : []
+    },
+    "exclude-dimensions":{
+        "legacy_vod_calls" : {
+            "node" : true
+        },
+       "connectivity" : {
+            "interface_name" : false
+        },
+        "connectivity_calls" : {
+            "node" : true
+        },
+        "monitoring" : {
+            "server" : true,
+            "function" : true
+        },
+        "voice" : {
+            "agc_id" : true
+        },
+        "voice_calls" : {
+            "node" : true
+        },
+        "cable_calls" : {
+            "node" : true
+        },
+        "hsd_calls" : {
+            "node" : true
+        },
+        "customer_calls" : {
+            "node" : true
+        },
+        "email_calls" : {
+            "node" : true
+        },
+        "chtremail_calls" : {
+            "node" : true
+        },
+        "video_calls" : {
+            "node" : true
+        },
+        "smb_calls" : {
+            "node" : true
+        },
+        "specnet_calls" : {
+            "node" : true
+        },
+        "specmobile_calls" : {
+            "node" : true
+        },
+        "myspectrum_calls" : {
+            "node" : true
+        },
+        "specguide_calls" : {
+            "node" : true
+        },
+        "cdvr_calls" : {
+            "node" : true
+        },
+        "video" : {
+            "content" : true,
+            "connection" : true
+        },
+        "cdvr_quantum" : {
+            "content" : true
+        },
+        "video_network" : {
+            "node" : true
+        },
+        "network" : {
+            "node" : false
+        },
+        "cdvr_network" : {
+            "node" : true
+        },
+        "email_network" : {
+            "node" : true
+        },
+        "chtremail_network" : {
+            "node" : true
+        }
+    },
+    "compound-dimensions":{
+        "legacy_vod_calls" : [
+            ["headend","node"]
+        ],
+        "monitoring" : [
+            ["host","server"],
+            ["context","function"]
+        ],
+        "connectivity" : [
+            ["cmts","interface_name"]
+        ],
+        "connectivity_calls" : [
+            ["headend","node"]
+        ],
+        "voice_calls" : [
+            ["headend","node"]
+        ],
+        "cable_calls" : [
+            ["headend","node"]
+        ],
+        "hsd_calls" : [
+            ["headend","node"]
+        ],
+        "customer_calls" : [
+            ["headend","node"]
+        ],
+        "email_calls" : [
+            ["headend","node"]
+        ],
+        "chtremail_calls" : [
+            ["headend","node"]
+        ],
+        "video_calls" : [
+            ["headend","node"]
+        ],
+        "smb_calls" : [
+            ["headend","node"]
+        ],
+        "specnet_calls" : [
+            ["headend","node"]
+        ],
+        "specmobile_calls" : [
+            ["headend","node"]
+        ],
+        "myspectrum_calls" : [
+            ["headend","node"]
+        ],
+        "specguide_microservices" : [
+            ["api", "response"]
+        ],
+        "specguide_calls" : [
+            ["headend","node"]
+        ],
+        "cdvr_calls" : [
+            ["headend","node"]
+        ],
+        "email_network" : [
+            ["host", "node"]
+        ],
+        "chtremail_network" : [
+            ["host", "node"]
+        ],
+        "network" : [
+            ["host", "node"]
+        ],
+        "video" : [
+            ["api", "response"],
+            ["channel", "content"]
+        ],
+        "video_network" : [
+            ["host", "node"]
+        ],
+        "smb" : [
+            ["api", "response"]
+        ],
+        "specnet" : [
+            ["api", "response"]
+        ],
+        "specmobile" : [
+            ["api", "response"]
+        ],
+        "myspectrum" : [
+            ["api", "response"]
+        ],
+        "cdvr_quantum" : [
+            ["api", "response"],
+            ["channel", "content"]
+        ],
+        "cdvr_network" : [
+            ["host","node"]
+        ]
+    },
+    "service-queries":{
+        "Legacy_VOD":{
+            "params"  : {
+                "calls-event-type"   : "legacy_vod_calls",
+                "calls-where-clause" : [
+                    "and service in ('Legacy_VOD')"
+                ],
+                "metric-event-type"   : "legacy_vod",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "Connectivity":{
+            "params"  : {
+                "calls-event-type"   : "connectivity_calls",
+                "calls-where-clause" : [
+                    "and service in ('HSD')"
+                ],
+                "metric-event-type"   : "connectivity",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "Connectivity|*|DHCP_LL":{
+            "params"  : {
+                "calls-event-type"   : "connectivity_calls",
+                "calls-where-clause" : [
+                    "and service in ('HSD')"
+                ],
+                "metric-event-type"   : "connectivity_dhcp",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "Customer":{
+            "params"  : {
+                "calls-event-type"   : "customer_calls",
+                "calls-where-clause" : [
+                ],
+                "metric-event-type"   : "customer",
+                "metric-where-clause" : [
+                ]
+            }
+        },        
+        "HSD":{
+            "params"  : {
+                "calls-event-type"   : "hsd_calls",
+                "calls-where-clause" : [
+                    "and service in ('HSD')"
+                ],
+                "metric-event-type"   : null,
+                "metric-where-clause" : [
+                ]
+            }
+        },        
+        "Cable":{
+            "params"  : {
+                "calls-event-type"   : "cable_calls",
+                "calls-where-clause" : [
+                    "and service in ('Cable')"
+                ],
+                "metric-event-type"   : null,
+                "metric-where-clause" : [
+                ]
+            }
+        },        
+        "Voice":{
+            "params"  : {
+                "calls-event-type"   : "voice_calls",
+                "calls-where-clause" : [
+                    "and service in ('Voice')"
+                ],
+                "metric-event-type"   : "voice",
+                "metric-where-clause" : [
+                ]
+            }
+        },        
+        "E-Mail":{
+            "params"  : {
+                "calls-event-type"      : "email_calls",
+                "calls-where-clause" : [
+                    "and service in ('E-Mail')"
+                ],
+                "metric-event-type"     : "email",
+                "metric-where-clause"   : [
+                ]
+            }
+        },
+        "E-Mail|*|Syslog":{
+            "params"  : {
+                "calls-event-type"   : "email_calls",
+                "calls-where-clause" : [
+                    "and service in ('E-Mail')"
+                ],
+                "metric-event-type"   : "email_network",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "E-Mail|*|CAPM_LB_A10":{
+            "params"  : {
+                "calls-event-type"   : "email_calls",
+                "calls-where-clause" : [
+                    "and service in ('E-Mail')"
+                ],
+                "metric-event-type"   : "email_network",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "E-Mail|*|CAPM_LB_F5":{
+            "params"  : {
+                "calls-event-type"   : "email_calls",
+                "calls-where-clause" : [
+                    "and service in ('E-Mail')"
+                ],
+                "metric-event-type"   : "email_network",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "E-Mail|*|CAPM_SR":{
+            "params"  : {
+                "calls-event-type"   : "email_calls",
+                "calls-where-clause" : [
+                    "and service in ('E-Mail')"
+                ],
+                "metric-event-type"   : "email_network",
+                "metric-where-clause" : [
+                ]
+            }
+        },        
+        "E-Mail|*|CAPM_FW":{
+            "params"  : {
+                "calls-event-type"   : "email_calls",
+                "calls-where-clause" : [
+                    "and service in ('E-Mail')"
+                ],
+                "metric-event-type"   : "email_network",
+                "metric-where-clause" : [
+                ]
+            }
+        },        
+        "CHTR_E-Mail":{
+            "params"  : {
+                "calls-event-type"   : "chtremail_calls",
+                "calls-where-clause" : [
+                    "and service in ('CHTR_E-Mail')"
+                ],
+                "metric-event-type"   : "chtremail",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "CHTR_E-Mail|*|Syslog":{
+            "params"  : {
+                "calls-event-type"   : "chtremail_calls",
+                "calls-where-clause" : [
+                    "and service in ('CHTR_E-Mail')"
+                ],
+                "metric-event-type"   : "chtremail_network",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "CHTR_E-Mail|*|CAPM_LB_A10":{
+            "params"  : {
+                "calls-event-type"   : "chtremail_calls",
+                "calls-where-clause" : [
+                    "and service in ('CHTR_E-Mail')"
+                ],
+                "metric-event-type"   : "chtremail_network",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "CHTR_E-Mail|*|CAPM_LB_F5":{
+            "params"  : {
+                "calls-event-type"   : "chtremail_calls",
+                "calls-where-clause" : [
+                    "and service in ('CHTR_E-Mail')"
+                ],
+                "metric-event-type"   : "chtremail_network",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "CHTR_E-Mail|*|CAPM_SR":{
+            "params"  : {
+                "calls-event-type"   : "chtremail_calls",
+                "calls-where-clause" : [
+                    "and service in ('CHTR_E-Mail')"
+                ],
+                "metric-event-type"   : "chtremail_network",
+                "metric-where-clause" : [
+                ]
+            }
+        },        
+        "CHTR_E-Mail|*|CAPM_FW":{
+            "params"  : {
+                "calls-event-type"   : "chtremail_calls",
+                "calls-where-clause" : [
+                    "and service in ('CHTR_E-Mail')"
+                ],
+                "metric-event-type"   : "chtremail_network",
+                "metric-where-clause" : [
+                ]
+            }
+        },        
+        "Network":{
+            "params"  : {
+                "calls-event-type"   : "network_calls",
+                "calls-where-clause" : [
+                    "and service in ('Network')"
+                ],
+                "metric-event-type"   : "network",
+                "metric-where-clause" : [
+                ],
+                "metric-value-map" : {
+                    "location" : {
+                        "Other" : [
+                            "location not in ('Billerica','Columbus','Dallas','Irvine','Madison','NCE','NCW','Spartanburg','StLouis','Tampa')",
+                            {
+                                "column" : "location",
+                                "filter" : "network.location"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "Network|*|Syslog":{
+            "params"  : {
+                "calls-event-type"   : "network_calls",
+                "calls-where-clause" : [
+                    "and service in ('Network')"
+                ],
+                "metric-event-type"   : "network",
+                "metric-where-clause" : [
+                ],
+                "metric-value-map" : {
+                    "location" : {
+                        "Other" : [
+                            "location not in ('Billerica','Columbus','Dallas','Irvine','Madison','NCE','NCW','Spartanburg','StLouis','Tampa')",
+                            {
+                                "column" : "location",
+                                "filter" : "network.location"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "Network|*|CAPM_LB_A10":{
+            "params"  : {
+                "calls-event-type"   : "network_calls",
+                "calls-where-clause" : [
+                    "and service in ('Network')"
+                ],
+                "metric-event-type"   : "network",
+                "metric-where-clause" : [
+                ],
+                "metric-value-map" : {
+                    "location" : {
+                        "Other" : [
+                            "location not in ('Billerica','Columbus','Dallas','Irvine','Madison','NCE','NCW','Spartanburg','StLouis','Tampa')",
+                            {
+                                "column" : "location",
+                                "filter" : "network.location"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "Network|*|CAPM_LB_F5":{
+            "params"  : {
+                "calls-event-type"   : "network_calls",
+                "calls-where-clause" : [
+                    "and service in ('Network')"
+                ],
+                "metric-event-type"   : "network",
+                "metric-where-clause" : [
+                ],
+                "metric-value-map" : {
+                    "location" : {
+                        "Other" : [
+                            "location not in ('Billerica','Columbus','Dallas','Irvine','Madison','NCE','NCW','Spartanburg','StLouis','Tampa')",
+                            {
+                                "column" : "location",
+                                "filter" : "network.location"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "Network|*|CAPM_SR":{
+            "params"  : {
+                "calls-event-type"   : "network_calls",
+                "calls-where-clause" : [
+                    "and service in ('Network')"
+                ],
+                "metric-event-type"   : "network",
+                "metric-where-clause" : [
+                ],
+                "metric-value-map" : {
+                    "location" : {
+                        "Other" : [
+                            "location not in ('Billerica','Columbus','Dallas','Irvine','Madison','NCE','NCW','Spartanburg','StLouis','Tampa')",
+                            {
+                                "column" : "location",
+                                "filter" : "network.location"
+                            }
+                        ]
+                    }
+                }
+            }
+        },        
+        "Network|*|CAPM_FW":{
+            "params"  : {
+                "calls-event-type"   : "network_calls",
+                "calls-where-clause" : [
+                    "and service in ('Network')"
+                ],
+                "metric-event-type"   : "network",
+                "metric-where-clause" : [
+                ],
+                "metric-value-map" : {
+                    "location" : {
+                        "Other" : [
+                            "location not in ('Billerica','Columbus','Dallas','Irvine','Madison','NCE','NCW','Spartanburg','StLouis','Tampa')",
+                            {
+                                "column" : "location",
+                                "filter" : "network.location"
+                            }
+                        ]
+                    }
+                }
+            }
+        },        
+        "Video":{
+            "params"  : {
+                "calls-event-type"   : "video_calls",
+                "calls-where-clause" : [
+                    "and service in ('Video')"
+                ],
+                "metric-event-type"   : "video",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "Video|*|IP2MAC":{
+            "params"  : {
+                "calls-event-type"   : "video_calls",
+                "calls-where-clause" : [
+                    "and service in ('Video')"
+                ],
+                "metric-event-type"   : "video_ip2mac",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "Video|*|FedAuth":{
+            "params"  : {
+                "calls-event-type"   : "video_calls",
+                "calls-where-clause" : [
+                    "and service in ('Video')"
+                ],
+                "metric-event-type"   : "video_fedauth",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "Video|*|NetServ":{
+            "params"  : {
+                "calls-event-type"   : "video_calls",
+                "calls-where-clause" : [
+                    "and service in ('Video')"
+                ],
+                "metric-event-type"   : "video_netserv",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "Video|*|Syslog":{
+            "params"  : {
+                "calls-event-type"   : "video_calls",
+                "calls-where-clause" : [
+                    "and service in ('Video')"
+                ],
+                "metric-event-type"   : "video_network",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+         "Video|*|CAPM_LB_A10":{
+            "params"  : {
+                "calls-event-type"   : "video_calls",
+                "calls-where-clause" : [
+                    "and service in ('Video')"
+                ],
+                "metric-event-type"   : "video_network",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+         "Video|*|CAPM_LB_F5":{
+            "params"  : {
+                "calls-event-type"   : "video_calls",
+                "calls-where-clause" : [
+                    "and service in ('Video')"
+                ],
+                "metric-event-type"   : "video_network",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+       "Video|*|CAPM_SR":{
+            "params"  : {
+                "calls-event-type"   : "video_calls",
+                "calls-where-clause" : [
+                    "and service in ('Video')"
+                ],
+                "metric-event-type"   : "video_network",
+                "metric-where-clause" : [
+                ]
+            }
+        },        
+        "Video|*|CAPM_FW":{
+            "params"  : {
+                "calls-event-type"   : "video_calls",
+                "calls-where-clause" : [
+                    "and service in ('Video')"
+                ],
+                "metric-event-type"   : "video_network",
+                "metric-where-clause" : [
+                ]
+            }
+        },        
+        "SMB":{
+            "params"  : {
+                "calls-event-type"   : "smb_calls",
+                "calls-where-clause" : [
+                    "and service in ('Portals')"
+                ],
+                "metric-event-type"   : "smb",
+                "metric-where-clause" : [
+                "and portal in ('SMB')"
+                ]
+            }
+        },        
+        "#SMB|*|Client":{
+            "params"  : {
+                "calls-event-type"   : "smb_calls",
+                "calls-where-clause" : [
+                    "and service in ('Portals')"
+                ],
+                "metric-event-type"   : "smb",
+                "metric-where-clause" : [
+                "and portal in ('SMB')"
+                ]
+            }
+        },
+        "SpecNet":{
+            "params"  : {
+                "calls-event-type"   : "specnet_calls",
+                "calls-where-clause" : [
+                    "and service in ('Portals')"
+                ],
+                "metric-event-type"   : "specnet",
+                "metric-where-clause" : [
+                "and portal in ('SpecNet')"
+                ]
+            }
+        },        
+        "#SpecNet|*|Client":{
+            "params"  : {
+                "calls-event-type"   : "specnet_calls",
+                "calls-where-clause" : [
+                    "and service in ('Portals')"
+                ],
+                "metric-event-type"   : "specnet",
+                "metric-where-clause" : [
+                "and portal in ('SpecNet')"
+                ]
+            }
+        },        
+        "SpecMobile":{
+            "params"  : {
+                "calls-event-type"   : "specmobile_calls",
+                "calls-where-clause" : [
+                    "and service in ('Portals')"
+                ],
+                "metric-event-type"   : "specmobile",
+                "metric-where-clause" : [
+                "and portal in ('SpecMobile')"
+                ]
+            }
+        },        
+        "#SpecMobile|*|Client":{
+            "params"  : {
+                "calls-event-type"   : "specmobile_calls",
+                "calls-where-clause" : [
+                    "and service in ('Portals')"
+                ],
+                "metric-event-type"   : "specmobile",
+                "metric-where-clause" : [
+                "and portal in ('SpecMobile')"
+                ]
+            }
+        },        
+        "MySpectrum":{
+            "params"  : {
+                "calls-event-type"   : "myspectrum_calls",
+                "calls-where-clause" : [
+                    "and service in ('Portals')"
+                ],
+                "metric-event-type"   : "myspectrum",
+                "metric-where-clause" : [
+                "and portal in ('MySpectrum')"
+                ]
+            }
+        },        
+        "#MySpectrum|*|Client":{
+            "params"  : {
+                "calls-event-type"   : "myspectrum_calls",
+                "calls-where-clause" : [
+                    "and service in ('Portals')"
+                ],
+                "metric-event-type"   : "myspectrum",
+                "metric-where-clause" : [
+                "and portal in ('MySpectrum')"
+                ]
+            }
+        },        
+        "SpecGuide":{
+            "params"  : {
+                "calls-event-type"   : "specguide_calls",
+                "calls-where-clause" : [
+                    "and service in ('SpecGuide')"
+                ],
+                "metric-event-type"   : "specguide",
+                "metric-where-clause" : [
+                ]
+            }
+        },        
+        "SpecGuide|*|MicroServices":{
+            "params"  : {
+                "calls-event-type"   : "specguide_calls",
+                "calls-where-clause" : [
+                    "and service in ('SpecGuide')"
+                ],
+                "metric-event-type"   : "specguide_microservices",
+                "metric-where-clause" : [
+                ]
+            }
+        },        
+        "cDVR":{
+            "params"  : {
+                "calls-event-type"   : "cdvr_calls",
+                "calls-where-clause" : [
+                    "and service in ('cDVR')"
+                ],
+                "metric-event-type"   : "cdvr_application",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "cDVR|*|Quantum":{
+            "params"  : {
+                "calls-event-type"   : "cdvr_calls",
+                "calls-where-clause" : [
+                    "and service in ('cDVR')"
+                ],
+                "metric-event-type"   : "cdvr_quantum",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "Digital Operations|*|Client": {
+            "params"  : {
+                "metric-event-type"   : "monitoring",
+                "metric-where-clause" : [
+                ]
+            }
+        },
+        "Digital Operations|*|Data Source": {
+            "params"  : {
+                "metric-event-type"   : "monitoring",
+                "metric-where-clause" : [
+                ]
+            }
+        }
+    },
+    "event-types":{
+        "legacy_vod":{
+            "table-name":"viaops_metric_legacy_vod"
+        },
+        "legacy_vod_calls":{
+            "table-name":"viaops_metric_customer_calls_view"
+        },
+        "connectivity":{
+            "table-name":"viaops_metric_connectivity"
+        },
+        "connectivity_dhcp":{
+            "table-name":"viaops_metric_connectivity"
+        },
+        "connectivity_calls":{
+            "table-name":"viaops_metric_customer_calls_view"
+        },
+        "customer_calls":{
+            "table-name":"viaops_metric_customer_calls_view"
+        },
+        "customer":{
+            "table-name":"viaops_metric_customer"
+        },
+        "hsd_calls":{
+            "table-name":"viaops_metric_customer_calls_view"
+        },
+        "voice_calls":{
+            "table-name":"viaops_metric_customer_calls_view"
+        },
+        "voice":{
+            "table-name":"viaops_metric_voice"
+        },
+        "cable_calls":{
+            "table-name":"viaops_metric_customer_calls_view"
+        },
+       "email":{
+            "table-name":"viaops_metric_twc_email"
+        },
+        "email_network":{
+            "table-name":"viaops_metric_network"
+        },
+        "email_calls":{
+            "table-name":"viaops_metric_customer_calls_view"
+        },
+        "chtremail":{
+            "table-name":"viaops_metric_chtr_email"
+        },
+        "chtremail_network":{
+            "table-name":"viaops_metric_network"
+        },
+        "chtremail_calls":{
+            "table-name":"viaops_metric_customer_calls_view"
+        },
+        "network":{
+            "table-name":"viaops_metric_network"
+        },
+        "video":{
+            "table-name":"viaops_metric_stva"
+        },
+        "video_ip2mac":{
+            "table-name":"viaops_metric_stva_application"
+        },
+        "video_fedauth":{
+            "table-name":"viaops_metric_stva_application"
+        },
+        "video_netserv":{
+            "table-name":"viaops_metric_provisioning"
+        },
+        "video_network":{
+            "table-name":"viaops_metric_network"
+        },        
+        "video_calls":{
+            "table-name":"viaops_metric_customer_calls_view"
+        },
+        "cdvr_quantum":{
+            "table-name":"viaops_metric_stva"
+        },
+        "cdvr_network":{
+            "table-name":"viaops_metric_network"
+        },        
+        "cdvr_calls":{
+            "table-name":"viaops_metric_customer_calls_view"
+        },        
+        "cdvr_application":{
+            "table-name":"viaops_metric_cdvr_application"
+        },
+        "smb":{
+            "table-name":"viaops_metric_portals"
+        },
+        "smb_calls":{
+            "table-name":"viaops_metric_customer_calls_view"
+        },
+        "specnet":{
+            "table-name":"viaops_metric_portals"
+        },
+        "specnet_calls":{
+            "table-name":"viaops_metric_customer_calls_view"
+        },
+        "specmobile":{
+            "table-name":"viaops_metric_portals"
+        },
+        "specmobile_calls":{
+            "table-name":"viaops_metric_customer_calls_view"
+        },
+        "myspectrum":{
+            "table-name":"viaops_metric_portals"
+        },
+        "myspectrum_calls":{
+            "table-name":"viaops_metric_customer_calls_view"
+        },
+        "specguide":{
+            "table-name":"viaops_metric_specguide"
+        },
+        "specguide_microservices":{
+            "table-name":"viaops_metric_specguide"
+        },
+        "specguide_calls":{
+            "table-name":"viaops_metric_customer_calls_view"
+        },
+        "monitoring": {
+            "table-name":"viaops_metric_monitoring_view"
+        }
+    },
+    "conditional-metric-where-clause":[
+        {
+            "#if-match":{
+                "svc":"Example",
+                "comp":"Example"
+            },
+            "where-clause":[
+                "and (api in ('', 'oauthToken','oauthAuthorize','oauthRequest','oauthDeauthorize','autoAuth','ssoTokenExchange','capabilitiesV3','location','behindModemV1'))",
+                "and (msgcat in ('', 'authentication','authorization'))"
+            ]
+        }
+    ],
+    "conditional-calls-where-clause":[
+    ]
+}

@@ -1,0 +1,853 @@
+<AnalyticsExplorerView is_init="false" name="Charter - Group Detail Content" description="">
+  <ModelInfo nextPageId="4" validated="false">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <BackgroundColor color="#ffffff"/>
+      <TileBackgroundColor color="#f5f5f5"/>
+      <TileOpacity opacity="0"/>
+      <NoTileSpacing value="true"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <CustomCSSSetting><![CDATA[/*
+.detailContent .tileContainer.detailContentTile .content{
+    overflow: visible;
+}
+.detailContent .tileContainer.detailContentTile .content .rendererBox {
+    overflow: visible !important;
+}
+.detailContent .tileContainer.detailContentTile .content .rendererBox div:last-child {
+    overflow: visible !important;
+    z-index: 0 !important;
+}
+*/
+
+.detailContent .detailContentTile .contentContainer {
+    top: 0px !important;
+    height: calc( 100% - 20px) !important;
+    position: relative !important;
+    border: none !important;
+}
+
+.detailContent .metricValueSelectorTile .dimension-table-anomaly-metric {
+    width: 230px;
+    border-bottom: 1px solid #148ac4;
+}
+
+.legendOverlay .dgrid {
+    height: 100% !important;
+}
+
+.legendOverlay .ui-widget-content {
+    background: none !important;
+}
+
+.legendOverlay .dgrid-row-even,
+.legendOverlay .dgrid-row-odd {
+    background-color: transparent !important;
+}
+]]></CustomCSSSetting>
+    <Page id="1" name="Group Trend" title="Group Trend" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="detailContent">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageProperties/>
+      <Layout type="10" numRow="1" numCol="1" count="1" templateType="21" screenHeight="1080" renderType="null" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:72,&quot;id&quot;:0}]" unitSize="{&quot;x&quot;:13.033333333333333,&quot;y&quot;:10.958333333333334}" viewRows="72" viewCols="120"/>
+      <Tile name="Tile2" title="Tile2" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="detailContentTile" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:7" name="axflow:localstore:node:7" label="Local Store 0" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="_epoch" label="_epoch" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="_field0" label="_field0" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="_field1" label="_field1" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="_field2" label="_field2" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="_field3" label="_field3" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="_field4" label="_field4" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="_field5" label="_field5" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="_field6" label="_field6" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="_field7" label="_field7" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="_field8" label="_field8" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="_field9" label="_field9" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{"_tileOpacity":"1","_tileBackgroundColor":"#ffffff"}]]></TileThemeSetting>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/space/VIA Common Library/dbpm/VIA - TimeSeriesChart/timeSeriesChart&quot;,&quot;model&quot;:&quot;{\r\n\t\&quot;title\&quot;:          \&quot;\&quot;,\r\n\t\&quot;leftAxisTitle\&quot;:  \&quot;Metric Percent / Baseline\&quot;,\r\n\t\&quot;showlegend\&quot;:     false,\r\n\t\&quot;format\&quot;:         \&quot;%m/%d %H:%M\&quot;, \r\n\t\&quot;showcursor\&quot;:     true, \r\n    \&quot;marginTop\&quot;:      -3,\r\n\t\&quot;marginBottom\&quot;:   50,\r\n\t\&quot;marginLeft\&quot;:     60,\r\n\t\&quot;marginRight\&quot;:    30,\r\n\t\&quot;tickAngle\&quot;:      0,\r\n\t\&quot;dimension\&quot;:      {\r\n\t\t\t\t\t\t\&quot;title\&quot;: \&quot;\&quot;, \r\n\t\t\t\t\t\t\&quot;type\&quot;: \&quot;date\&quot;,\r\n\t\t\t\t\t\t\&quot;dataType\&quot;: \&quot;epoch\&quot;,\r\n\t\t\t\t\t\t\&quot;fieldName\&quot;: \&quot;_epoch\&quot;\r\n\t\t\t\t\t  },\r\n\t\t\t\t\t  \r\n\t\&quot;series\&quot;:         [\r\n                        { \&quot;label\&quot;: \&quot;\&quot;, \&quot;fieldName\&quot;: \&quot;_field0\&quot;, \&quot;type\&quot;: \&quot;line\&quot;, \&quot;visible\&quot;: true, \&quot;color\&quot;:\&quot;#148AC4\&quot;, \&quot;width\&quot;:2,  \&quot;axis\&quot;: \&quot;left\&quot;, \&quot;opacity\&quot;: 1 },\r\n                        { \&quot;label\&quot;: \&quot;\&quot;, \&quot;fieldName\&quot;: \&quot;_field1\&quot;, \&quot;type\&quot;: \&quot;line\&quot;, \&quot;visible\&quot;: true, \&quot;color\&quot;:\&quot;#51AE7D\&quot;, \&quot;width\&quot;:2,  \&quot;axis\&quot;: \&quot;left\&quot;, \&quot;opacity\&quot;: 1 },\r\n                        { \&quot;label\&quot;: \&quot;\&quot;, \&quot;fieldName\&quot;: \&quot;_field2\&quot;, \&quot;type\&quot;: \&quot;line\&quot;, \&quot;visible\&quot;: true, \&quot;color\&quot;:\&quot;#89C4E1\&quot;, \&quot;width\&quot;:2,  \&quot;axis\&quot;: \&quot;left\&quot;, \&quot;opacity\&quot;: 1 },\r\n                        { \&quot;label\&quot;: \&quot;\&quot;, \&quot;fieldName\&quot;: \&quot;_field3\&quot;, \&quot;type\&quot;: \&quot;line\&quot;, \&quot;visible\&quot;: true, \&quot;color\&quot;:\&quot;#ffd200\&quot;, \&quot;width\&quot;:2,  \&quot;axis\&quot;: \&quot;left\&quot;, \&quot;opacity\&quot;: 1 },\r\n                        { \&quot;label\&quot;: \&quot;\&quot;, \&quot;fieldName\&quot;: \&quot;_field4\&quot;, \&quot;type\&quot;: \&quot;line\&quot;, \&quot;visible\&quot;: true, \&quot;color\&quot;:\&quot;#F5A623\&quot;, \&quot;width\&quot;:2,  \&quot;axis\&quot;: \&quot;left\&quot;, \&quot;opacity\&quot;: 1 },\r\n                        { \&quot;label\&quot;: \&quot;\&quot;, \&quot;fieldName\&quot;: \&quot;_field5\&quot;, \&quot;type\&quot;: \&quot;line\&quot;, \&quot;visible\&quot;: true, \&quot;color\&quot;:\&quot;#D0021B\&quot;, \&quot;width\&quot;:2,  \&quot;axis\&quot;: \&quot;left\&quot;, \&quot;opacity\&quot;: 1 },\r\n                        { \&quot;label\&quot;: \&quot;\&quot;, \&quot;fieldName\&quot;: \&quot;_field6\&quot;, \&quot;type\&quot;: \&quot;line\&quot;, \&quot;visible\&quot;: true, \&quot;color\&quot;:\&quot;#FFCB78\&quot;, \&quot;width\&quot;:2,  \&quot;axis\&quot;: \&quot;left\&quot;, \&quot;opacity\&quot;: 1 },\r\n                        { \&quot;label\&quot;: \&quot;\&quot;, \&quot;fieldName\&quot;: \&quot;_field7\&quot;, \&quot;type\&quot;: \&quot;line\&quot;, \&quot;visible\&quot;: true, \&quot;color\&quot;:\&quot;#E7837D\&quot;, \&quot;width\&quot;:2,  \&quot;axis\&quot;: \&quot;left\&quot;, \&quot;opacity\&quot;: 1 },\r\n                        { \&quot;label\&quot;: \&quot;\&quot;, \&quot;fieldName\&quot;: \&quot;_field8\&quot;, \&quot;type\&quot;: \&quot;line\&quot;, \&quot;visible\&quot;: true, \&quot;color\&quot;:\&quot;#74DEA6\&quot;, \&quot;width\&quot;:2,  \&quot;axis\&quot;: \&quot;left\&quot;, \&quot;opacity\&quot;: 1 },\r\n                        { \&quot;label\&quot;: \&quot;\&quot;, \&quot;fieldName\&quot;: \&quot;_field9\&quot;, \&quot;type\&quot;: \&quot;line\&quot;, \&quot;visible\&quot;: true, \&quot;color\&quot;:\&quot;#A1D0E7\&quot;, \&quot;width\&quot;:2,  \&quot;axis\&quot;: \&quot;left\&quot;, \&quot;opacity\&quot;: 1 }\r\n\t\t\t\t\t]\r\n\r\n}&quot;}"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+    </Page>
+    <Page id="2" name="Key Dimensions" title="Key Dimensions" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="detailContent">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<style>
+
+.keyDimsMain {
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+.keyDimsMain .metricPicker {
+    width: 100%;
+    height: 50px;
+}
+
+.keyDimsMain {
+    width: 100%;
+    height: calc( 100% - 50px );
+}
+
+</style>
+
+<div class="keyDimsMain">
+    <div class="metricPicker" data-vitria-type="tile" data-vitria-tile-name="Tile1"></div>
+    <div class="mainContent" style=" height: calc( 100% - 45px ) " data-vitria-type="tile" data-vitria-tile-name="Tile2"></div>
+</div>]]></PageFrameContent>
+      <PageCustomCSS><![CDATA[.detailContent .contentContainer {
+    top: -5px !important;
+}
+
+.detailContent .valueBar {
+    border-radius: 6px;
+}
+
+.demoContent .common-plugin.dimension-filter .category-table {
+    background: none;
+    top: 10px !important;
+    position: relative;
+}]]></PageCustomCSS>
+      <PageProperties/>
+      <Layout type="10" numRow="NaN" numCol="NaN" count="NaN" templateType="7" screenHeight="undefined" renderType="undefined" positions="[]" unitSize="undefined" viewRows="NaN" viewCols="NaN"/>
+      <frame_tile name="METRIC" title="METRIC" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="metricValueSelectorTile" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{"_tileBackgroundColor":"#ffffff","_tileOpacity":"1"}]]></TileThemeSetting>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/space/VIA Common Library/dbpm/VIA - Common/Dimension Filter&quot;,&quot;model&quot;:&quot;{\n\t\&quot;div-style\&quot;: \&quot;overflow:hidden;text-align:right;\&quot;,\n\t\&quot;categories\&quot;: [{\n\t\t\&quot;name\&quot;: \&quot;anomaly\&quot;,\n\t\t\&quot;name-style\&quot;: \&quot;padding-left:0px;width:0px;\&quot;,\n\t\t\&quot;value-style\&quot;: \&quot;padding:0px;width:100%;\&quot;,\n\t\t\&quot;dimensions\&quot;: [{\n\t\t\t\&quot;name\&quot;: \&quot;metric\&quot;,\n\t\t\t\&quot;label\&quot;: \&quot;Dimension Analysis Measure\&quot;,\n\t\t\t\&quot;type\&quot;: \&quot;enumeration\&quot;,\n\t\t\t\&quot;style\&quot;: \&quot;font-family:arial;\&quot;,\n\t\t\t\&quot;default\&quot;: \&quot;_count/value\&quot;,\n\t\t\t\&quot;none\&quot;: false,\n\t\t\t\&quot;enums\&quot;: [{\n\t\t\t\t\&quot;value\&quot;: \&quot;_count/value\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;Number of Associated Events\&quot;\n\t\t\t},\n\t\t\t{\n\t\t\t\t\&quot;value\&quot;: \&quot;_baseline/value\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;Baseline of Associated Events\&quot;\n\t\t\t},\n\t\t\t{\n\t\t\t\t\&quot;value\&quot;: \&quot;_diff/value\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;+/- to Baseline\&quot;\n\t\t\t},\n\t\t\t{\n\t\t\t\t\&quot;value\&quot;: \&quot;_diffPct/percent\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;+/- Percentage to Baseline\&quot;\n\t\t\t},\n\t\t\t{\n\t\t\t\t\&quot;value\&quot;: \&quot;_pTotal/percent\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;Proportion of Total Events\&quot;\n\t\t\t},\n\t\t\t{\n\t\t\t\t\&quot;value\&quot;: \&quot;_pBaseline/percent\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;Baseline Proportion of Total Events\&quot;\n\t\t\t},\n\t\t\t{\n\t\t\t\t\&quot;value\&quot;: \&quot;_pctDev/percent\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;Deviation Proportion of Total Events\&quot;\n\t\t\t},\n\t\t\t{\n\t\t\t\t\&quot;value\&quot;: \&quot;_relDiff/percent\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;Relative Difference over Baseline\&quot;\n\t\t\t}]\n\t\t}]\n\t}]\n}&quot;}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="DImensionTile" title="Dimension Summary" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="detailContentTile" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{"_tileOpacity":"1","_tileBackgroundColor":"#ffffff"}]]></TileThemeSetting>
+        <DataViewer name="ax.DashboardView" label="Dashboard View" optional="false" minimode="false">
+          <Property name="model" value="/app/ax/space/Product Prototyping/axv/Dimension Summary Comp v2"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+    </Page>
+    <DataFlow showFooter="true">
+      <Item id="node:1" type="PortIn" label="Port IN 0" _undefined_title="" originHeight="117" width="130" height="177" x="47" y="46">
+        <dynOut id="dout:0" type="any[]" label="Filters" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="event[]" label="Selection" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="string" label="View" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:2" type="UserScript" label="Script 0" _undefined_title="" originHeight="117" width="130" height="117" x="307" y="40">
+        <dynIn id="din:0" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="string" label="View" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Data" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:3" type="Sort" label="Sort 0" _undefined_title="" _undefined_originHeight="" width="130" height="117" x="493" y="40"/>
+      <Item id="node:4" type="UserScript" label="Script 1" _undefined_title="" originHeight="117" width="140" height="177" x="680" y="160">
+        <dynIn id="din:0" type="any[]" label="dataIn" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any[]" label="selection" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="dataOut" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="legendList" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="integer" label="triggerComplete" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:5" type="Sort" label="Sort 1" _undefined_title="" _undefined_originHeight="" width="130" height="117" x="1931" y="40"/>
+      <Item id="node:6" type="UserScript" label="Script 2" _undefined_title="" originHeight="117" width="130" height="117" x="2120" y="40">
+        <dynIn id="din:0" type="any[]" label="data" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="dataOut" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:7" type="LocalStore" label="Local Store 0" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1108" y="67"/>
+      <Item id="node:9" type="UserScript" label="Script 3" _undefined_title="" originHeight="117" width="130" height="117" x="900" y="67">
+        <dynIn id="din:0" type="any[]" label="In(0)" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:10" type="Tile" label="Tile 0" _undefined_title="" originHeight="177" width="140" height="177" x="1180" y="1113">
+        <dynIn id="din:Selection" type="any[]" label="Selection" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Score Attribute" type="any[]" label="Score Attribute" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Metric Config" type="any" label="Metric Config" _undefined_default="" evaluate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:11" type="UserScript" label="Script 4" _undefined_title="" originHeight="117" width="160" height="177" x="920" y="1133">
+        <dynIn id="din:0" type="any[]" label="Selection" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any[]" label="Score Attribute" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="any" label="Metric Config" evaluate="always" _isArray="true"/>
+        <dynIn id="din:3" type="any" label="trigger" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="Selection" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="Score Attribute" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any" label="Metric Config" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:12" type="Tile" label="Tile 1" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="620" y="933"/>
+      <Item id="node:13" type="UserScript" label="Script 5" _undefined_title="" originHeight="117" width="130" height="117" x="327" y="1033">
+        <dynOut id="dout:0" type="any" label="MetricConf" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:15" type="LocalStore" label="Legend Data" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="910" y="300"/>
+      <Item id="node:16" type="WidgetOverlay" label="Legend Overlay" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1130" y="300"/>
+      <Item id="node:18" type="UserScript" label="Script 6" _undefined_title="" originHeight="117" width="130" height="117" x="352" y="380">
+        <dynIn id="din:0" type="any[]" label="selection" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="integer" label="trigger" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="pmEvents" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:19" type="Tile" label="Tile 2" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1040" y="580"/>
+      <Link srcId="node:13" srcPort="dout:0" tgtId="node:12" tgtPort="in:0"/>
+      <Link srcId="node:12" srcPort="out:1" tgtId="node:11" tgtPort="din:1"/>
+      <Link srcId="node:13" srcPort="dout:0" tgtId="node:11" tgtPort="din:2"/>
+      <Link srcId="node:4" srcPort="dout:0" tgtId="node:9" tgtPort="din:0"/>
+      <Link srcId="node:2" srcPort="dout:0" tgtId="node:3" tgtPort="in:0"/>
+      <Link srcId="node:3" srcPort="out:0" tgtId="node:4" tgtPort="din:0"/>
+      <Link srcId="node:5" srcPort="out:0" tgtId="node:6" tgtPort="din:0"/>
+      <Link srcId="node:1" srcPort="dout:1" tgtId="node:2" tgtPort="din:0"/>
+      <Link srcId="node:1" srcPort="dout:2" tgtId="node:2" tgtPort="din:1"/>
+      <Link srcId="node:1" srcPort="dout:1" tgtId="node:4" tgtPort="din:1"/>
+      <Link srcId="node:9" srcPort="dout:0" tgtId="node:7" tgtPort="in:0"/>
+      <Link srcId="node:1" srcPort="dout:1" tgtId="node:11" tgtPort="din:0"/>
+      <Link srcId="node:11" srcPort="dout:0" tgtId="node:10" tgtPort="din:Selection"/>
+      <Link srcId="node:11" srcPort="dout:1" tgtId="node:10" tgtPort="din:Score Attribute"/>
+      <Link srcId="node:11" srcPort="dout:2" tgtId="node:10" tgtPort="din:Metric Config"/>
+      <Link srcId="node:4" srcPort="dout:1" tgtId="node:15" tgtPort="in:0"/>
+      <Link srcId="node:15" srcPort="out:0" tgtId="node:16" tgtPort="in:0"/>
+      <Link srcId="node:1" srcPort="dout:1" tgtId="node:18" tgtPort="din:0"/>
+      <Link srcId="node:18" srcPort="dout:0" tgtId="node:19" tgtPort="in:0"/>
+      <Input key="node:1/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Filters&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;View&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:1/cfg:schema/default" value="&quot;var fields = \&quot;detect,call_detect,local_detect,local_call_detect,id,dim_values,correlated_count,\&quot;\n           + \&quot;service_label,sub_service_label,component_label,metric_label,\&quot;\n           + \&quot;anomaly_window,anomalies,min_score,max_score,display_max,status,duration,call_duration,\&quot;\n           + \&quot;start_epoch,end_epoch,event_epoch,cust_call_start_tm,cust_call_end_tm,\&quot;\n           + \&quot;start_date,end_date,event_date,call_date,\&quot;\n           + \&quot;metric_measure,metric_baseline,cust_call_count,cust_call_baseline,\&quot;\n           + \&quot;service,sub_service,sub_service_label,severity,\&quot;\n           + \&quot;score_min_max,metric_value_bl,call_count_bl,causation,type,notification,score_level\&quot;;\nvar schema = fields.split(\&quot;,\&quot;);\nfor (var i=0; i&lt;schema.length; i++) {\n    schema[i] = {\n        name  : schema[i],\n        label : schema[i],\n        type  : \&quot;string\&quot;\n    };\n}\nsetOutputSchema(\&quot;dout:1\&quot;, schema);\n&quot;"/>
+      <Input key="node:2/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;View&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:2/cfg:schema/default" value="&quot;setOutputSchema(\&quot;dout:0\&quot;, [{\n    name  : \&quot;incident_key\&quot;,\n    label : \&quot;Incident Key\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_group_\&quot;,\n    label : \&quot;Group\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_epoch_\&quot;,\n    label : \&quot;Epoch Time\&quot;,\n    type  : \&quot;number\&quot;\n}, {\n    name  : \&quot;_time_\&quot;,\n    label : \&quot;GMT\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_localtime_\&quot;,\n    label : \&quot;Local Time\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_value1_\&quot;,\n    label : \&quot;Metric Value\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_baseline1_\&quot;,\n    label : \&quot;Metric Baseline\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_value2_\&quot;,\n    label : \&quot;Calls Value\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_baseline2_\&quot;,\n    label : \&quot;Calls Baseline\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_scoreval_\&quot;,\n    label : \&quot;+/- Metric over Baseline\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_scorepct_\&quot;,\n    label : \&quot;% +/- Metric over Baseline\&quot;,\n    type  : \&quot;string\&quot;\n}]);\n&quot;"/>
+      <Input key="node:2/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Data&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:2/cfg:model/default" value="&quot;var CausalPlugin = Plugin(\&quot;Causal\&quot;);\nvar CommonPlugin = Plugin(\&quot;Common\&quot;);\n\nfunction updateTrendAnalysis(selected)\n{\n    CommonPlugin.pbShowProgressBar(\&quot;causal-trend-analysis\&quot;, \&quot;Analyzing trend on all correlated incidents and metrics...\&quot;);\n    CausalPlugin.applyTrendAnalysis(selected, function(response) {\n        \n        if (response.status == \&quot;OK\&quot;) {\n            response.value.forEach(function(record) {\n                record[\&quot;_localtime_\&quot;] = new Date(1000 * record[\&quot;_epoch_\&quot;]);\n            });\n            setOutput(\&quot;dout:0\&quot;, response.value);\n        }\n    });\n}\n\nif (port == \&quot;din:0\&quot; &amp;&amp; getInput(\&quot;din:1\&quot;) == \&quot;HORIZON\&quot;) {\n    setOutput(\&quot;dout:0\&quot;, []);\n   // viewPage(\&quot;HORIZON\&quot;, function() {\n        var selection = getInput(\&quot;din:0\&quot;) || [];\n        if (selection.length == 1) {\n            updateTrendAnalysis(selection[0]);\n        }\n   // });\n}\n&quot;"/>
+      <Input key="node:3/cfg:sort/default" value="[{&quot;sortField&quot;:&quot;_localtime_&quot;,&quot;sortFieldType&quot;:&quot;string&quot;,&quot;sortOrder&quot;:&quot;asc&quot;}]"/>
+      <Input key="node:4/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;dataIn&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:4/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;dataOut&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;legendList&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;integer&quot;,&quot;portLabel&quot;:&quot;triggerComplete&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:4/cfg:model/default" value="&quot;var dataIn          = getInput(\&quot;din:0\&quot;) || [];\nvar selection       = getInput(\&quot;din:1\&quot;) || [];\nvar CausalPlugin    = Plugin(\&quot;Causal\&quot;);\nvar IncidentPlugin  = Plugin(\&quot;Incident\&quot;);\n\nfunction getTimeSpline( start_tm, end_tm, interval, offset ){\n\t\n\tvar start_dt  \t= new Date( start_tm.getTime() - offset );\n\tvar start_rnd\t= new Date( start_dt.getTime() - start_dt.getTime() %interval );\t\t\t\n\tvar end_dt  \t= new Date( end_tm.getTime() + offset );\n\tvar end_rnd\t\t= new Date( end_dt.getTime() - end_dt.getTime() %interval );\t\t\t\n\tvar x \t\t\t= start_rnd.getTime();\n\tvar dtArr\t\t= [];\n\twhile( x &lt;= end_rnd ){\n\t\tdtArr.push( { date: new Date(x), _time_: new Date(x), _epoch_: (new Date(x).getTime() / 1000) } );\n\t\tx += interval;\n\t}\t\t\t\n\treturn dtArr;\n}\n\nfunction processData( ts, data ){\n\tvar matched\t    = 0;\n\tvar dataOut     = [];\n\tvar tmpArr\t    = [];\n\tvar legendList  = [];\n\tvar keys = getUniqueKeys( data );\n\t\n\tfor ( var k=0, len=keys.length; k &lt; len; k++ ){\n\t    var keyObj = { \&quot;index\&quot;: k, \&quot;key\&quot;: keys[k] };\n\t    legendList.push( keyObj );\n\t\tvar group\t= keys[k];\n\t\tvar kts = JSON.parse( JSON.stringify( ts ) );\n\t\tfor( var tc=0, tcl=kts.length; tc &lt; tcl; tc++ ){\n\t\t\t\n\t\t\tkts[tc][&apos;_group_&apos;] = group;\n\t\t\tkts[tc][\&quot;_scorepct_\&quot;]\t= 0;\n\t\t\tkts[tc][\&quot;_scoreval_\&quot;]\t= 0;\n\t\t\tkts[tc][\&quot;incident_key\&quot;]\t= group;\n\t\t\tkts[tc][\&quot;_data_\&quot;]\t\t= \&quot;\&quot;;\n\t\t\tkts[tc][\&quot;_value1_\&quot;]\t\t= 0;\n\t\t\tkts[tc][\&quot;_baseline1_\&quot;]\t= 0;\n\t\t\t\n\t\t\tvar tsObj \t= kts[tc];\t\t\t\t\t\n\t\t\tvar dtL\t\t= new Date( tsObj[&apos;date&apos;] ).getTime() / 1000;\n\t\t\tif( tc &gt; 0 ){\n\t\t\t\tdtL\t\t= new Date( kts[tc-1][&apos;date&apos;] ).getTime() / 1000;\n\t\t\t}\t\t\t\t\t\n\t\t\tvar dtH\t\t= new Date( tsObj[&apos;date&apos;] ).getTime() / 1000;\n\t\t\t\n\t\t\tfor( var dc=0, dcl=data.length; dc &lt; dcl; dc++ ){\n\t\t\t\tvar dObj = data[dc];\n\t\t\t\tif( dObj[\&quot;incident_key\&quot;] == group ){\n\t\t\t\t\tif( dtL &lt; dObj[\&quot;_epoch_\&quot;] &amp;&amp; dObj[\&quot;_epoch_\&quot;] &lt;= dtH ){\n\t\t\t\t\t\t\n\t\t\t\t\t\tkts[tc][\&quot;_scorepct_\&quot;]\t= dObj[\&quot;_scorepct_\&quot;] || 0;\n\t\t\t\t\t\tkts[tc][\&quot;_scoreval_\&quot;]\t= dObj[\&quot;_scoreval_\&quot;] || 0;\n\t\t\t\t\t\tkts[tc][\&quot;incident_key\&quot;]\t= dObj[\&quot;incident_key\&quot;] || 0;\n\t\t\t\t\t\tkts[tc][\&quot;_data_\&quot;]\t\t= dObj[\&quot;_data_\&quot;] || 0;\n\t\t\t\t\t\tkts[tc][\&quot;_value1_\&quot;]\t\t= dObj[\&quot;_value1_\&quot;] || 0;\n\t\t\t\t\t\tkts[tc][\&quot;_baseline1_\&quot;]\t= dObj[\&quot;_baseline1_\&quot;] || 0;\t\n\t\t\t\t\t\t\n\t\t\t\t\t\tmatched++;\n\t\t\t\t\t}\n\t\t\t\t}\t\t\t\t\t\t\n\t\t\t}\n\t\t\ttmpArr.push(kts[tc]);\n\t\t}\n\t\t\n\t}\n\t\n\tconsole.log(\&quot;Matched: \&quot; + matched );\n\tlegendList.push( { \&quot;index\&quot;: 99, \&quot;key\&quot;: \&quot;Planned Maintenance\&quot; } );\n\tsetOutput( \&quot;dout:1\&quot;, legendList );\n\treturn tmpArr;\n\tfor( var x=0, xl=tmpArr.length; x&lt;xl; x++ ){\n\t\t//console.log(tmpArr[x]);\n\t}\n}\t\t\n\nfunction getUniqueKeys( data ){\n\tvar keys = [];\n\tfor( var i=0, len=data.length; i&lt;len; i++ ){\n\t\tif( keys.indexOf( data[i][&apos;incident_key&apos;] ) &lt; 0 ){\n\t\t\tkeys.push(data[i][&apos;incident_key&apos;] );   \n\t\t} \n\t}\n\n\treturn keys;\n\t\n}\n\n\n\nif( selection.length &gt; 0 &amp;&amp; dataIn.length &gt; 0 ){\n    \n    var groupId = selection[0][\&quot;id\&quot;];\n    if(groupId == null || groupId == \&quot;\&quot; ) return;\n    CausalPlugin.getIncidentGroupTimeRange( groupId, function(response){\n        if( response.status == \&quot;OK\&quot;){\n            var timeObj     = response.value || [];\n            var tmObj       = timeObj[0];\n            var padTime     = 3600; // define 1 hour pad in seconds\n            var tmStart     = new Date( new Date( tmObj[\&quot;group_create_tm\&quot;] * 1000 ).getTime() - (padTime * 1000) );\n            var tmEnd       = new Date( new Date( tmObj[\&quot;group_end_tm\&quot;] * 1000 ).getTime() + (padTime * 1000) );\n            \n            var co \t\t= 1000 * 60 * 5;\n\t\t\tvar os \t\t= 12 * co;\n\t\t\tvar spl \t= getTimeSpline( tmStart, tmEnd, co, os ) || [];\n\t\t\tvar spline  = processData( spl, dataIn ) || [];\n\t\t\t\n\t\t\tif( spline ){ \n\t\t\t    setOutput( \&quot;dout:0\&quot;, spline );\n\t\t\t    setOutput( \&quot;dout:2\&quot;, new Date().getTime() );   \n\t\t\t}\n        }\n    });\n    \n}\n\n\n\n&quot;"/>
+      <Input key="node:4/cfg:schema/default" value="&quot;setOutputSchema(\&quot;dout:0\&quot;, [{\n    name  : \&quot;incident_key\&quot;,\n    label : \&quot;Incident Key\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_group_\&quot;,\n    label : \&quot;Group\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_epoch_\&quot;,\n    label : \&quot;Epoch Time\&quot;,\n    type  : \&quot;number\&quot;\n}, {\n    name  : \&quot;_time_\&quot;,\n    label : \&quot;GMT\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_localtime_\&quot;,\n    label : \&quot;Local Time\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_value1_\&quot;,\n    label : \&quot;Metric Value\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_baseline1_\&quot;,\n    label : \&quot;Metric Baseline\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_value2_\&quot;,\n    label : \&quot;Calls Value\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_baseline2_\&quot;,\n    label : \&quot;Calls Baseline\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_scoreval_\&quot;,\n    label : \&quot;+/- Metric over Baseline\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_scorepct_\&quot;,\n    label : \&quot;% +/- Metric over Baseline\&quot;,\n    type  : \&quot;string\&quot;\n}]);\n\n\n\nsetOutputSchema(\&quot;dout:1\&quot;, [{\n    name  : \&quot;index\&quot;,\n    label : \&quot;Index\&quot;,\n    type  : \&quot;number\&quot;\n}, {\n    name  : \&quot;key\&quot;,\n    label : \&quot;Key\&quot;,\n    type  : \&quot;string\&quot;\n} ]);&quot;"/>
+      <Input key="node:5/cfg:sort/default" value="[{&quot;sortField&quot;:&quot;_group_&quot;,&quot;sortFieldType&quot;:&quot;string&quot;,&quot;sortOrder&quot;:&quot;asc&quot;},{&quot;sortField&quot;:&quot;_epoch_&quot;,&quot;sortFieldType&quot;:&quot;number&quot;,&quot;sortOrder&quot;:&quot;asc&quot;}]"/>
+      <Input key="node:6/cfg:model/default" value="&quot;function getMeasureValue(data, measure, values)\n{\n    var hasValue = false;\n    for ( var d=0, dlen=data.length; d &lt; dlen; d++ ){\n        if( data[d][dimension] == iKeys[k] ){\n            var value = data[d][measure];\n            if (value != null) hasValue = true;\n            values.push( value );   \n        }\n    }\n    return hasValue;\n}\n\nif( port != null ){\n    \n    var dimension  = \&quot;incident_key\&quot;;\n\n    var data = getInput( \&quot;din:0\&quot; ) || [];\n    \n    var iKeys = [];\n    if( data.length &gt; 0 ){\n        for ( var i=0, ilen = data.length; i &lt; ilen; i++ ){\n            var obj = data[i];\n            if( iKeys.indexOf( data[i][dimension] ) == -1 ){\n                iKeys.push( data[i][dimension] );\n            }\n        }\n        \n    }\n    var arrOut = [];\n    if( iKeys.length &gt; 0 ){\n        \n        for ( var k=0, klen=iKeys.length; k &lt; klen; k++ ){\n            var measArr = [];\n            var ok = getMeasureValue(data, \&quot;_scorepct_\&quot;, measArr);\n            if (!ok) {\n                measArr = [];\n                ok = getMeasureValue(data, \&quot;_value1_\&quot;, measArr);\n            }\n            if (!ok) {\n                measArr = [];\n                ok = getMeasureValue(data, \&quot;_value2_\&quot;, measArr);\n            }\n            if (!ok) {\n                measArr = [];\n            }\n            arrOut.push( { \&quot;incident_key\&quot;: iKeys[k], \&quot;measures\&quot;: measArr.join(\&quot;,\&quot;) });   \n            \n        }\n        \n    }\n    setOutput( \&quot;dout:0\&quot;, arrOut )\n}&quot;"/>
+      <Input key="node:6/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;data&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:6/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;dataOut&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:6/cfg:schema/default" value="&quot;setOutputSchema(\&quot;dout:0\&quot;, [{\n    name  : \&quot;incident_key\&quot;,\n    label : \&quot;Incident Key\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;measures\&quot;,\n    label : \&quot;Measures\&quot;,\n    type  : \&quot;string\&quot;\n}\n]);&quot;"/>
+      <Input key="node:9/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;In(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:9/cfg:schema/default" value="&quot;var fields = \&quot;_epoch,_field0,_field1,_field2,_field3,_field4,_field5,_field6,_field7,_field8,_field9\&quot;;\nvar schema=[];\n\nvar fieldList = fields.split(&apos;,&apos;);\n\nfor( var i=0, len=fieldList.length; i &lt; len; i++ ){\n    schema.push({\n        name:fieldList[i],\n        label:fieldList[i],\n        type:\&quot;string\&quot;\n    });    \n    \n}\n\nsetOutputSchema( \&quot;dout:0\&quot;, schema );&quot;"/>
+      <Input key="node:9/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:9/cfg:model/default" value="&quot;var CommonPlugin    = Plugin(&apos;Common&apos;);\nvar dataIn          = getInput(&apos;din:0&apos;) || [];\nvar spline          = [];\nvar keys            = [];\nvar dataOut         = [];\n\nfor( var i=0, len=dataIn.length; i&lt;len; i++ ){\n    if( spline.indexOf(dataIn[i][&apos;_epoch_&apos;]) &lt; 0 ) spline.push(dataIn[i][&apos;_epoch_&apos;]);\n    if( keys.indexOf(dataIn[i][&apos;incident_key&apos;] ) &lt; 0 ) keys.push( dataIn[i][&apos;incident_key&apos;] );\n    \n}\n\nfor( var s=0, slen=spline.length; s&lt;slen; s++ ){\n    var obj = { \&quot;_epoch\&quot;: spline[s] };\n    \n    for( var di=0, dilen=dataIn.length; di&lt;dilen; di++ ){\n        var dObj = dataIn[di];\n        if( dObj[&apos;_epoch_&apos;] == spline[s] ){\n            var idxKey = keys.indexOf(dObj[&apos;incident_key&apos;]);\n            obj[&apos;_field&apos;+idxKey] = dObj[&apos;_scorepct_&apos;];\n        }\n    }\n    \n    dataOut.push(obj);\n}\n\nsetOutput(\&quot;dout:0\&quot;, dataOut);\n\nCommonPlugin.pbHideProgressBar(\&quot;causal-trend-analysis\&quot;);\n&quot;"/>
+      <Input key="node:10/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#2#DImensionTile&quot;,&quot;path&quot;:[&quot;Key Dimensions&quot;],&quot;name&quot;:&quot;DImensionTile&quot;}]"/>
+      <Input key="node:11/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Score Attribute&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Metric Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:3&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;trigger&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:11/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Score Attribute&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Metric Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:11/cfg:model/default" value="&quot;//if( port == &apos;din:3&apos;){\n    \n    var selection   = getInput( &apos;din:0&apos; ) || [];\n    var scoreAttrib = getInput( &apos;din:1&apos; ) || [];\n    var metricConf  = getInput( &apos;din:2&apos; );\n    \n    if( selection.length &gt; 0 &amp;&amp; scoreAttrib.length &gt; 0 &amp;&amp; metricConf != null ){\n        setOutput( &apos;dout:0&apos;, selection );\n        setOutput( &apos;dout:1&apos;, scoreAttrib );\n        setOutput( &apos;dout:2&apos;, metricConf );\n        require([(window.vtAppId ||  &apos;/vitria-oi/app/dojoclient&apos;) + \&quot;/html/scripts/Jquery/src/jquery.js\&quot;],function($) {\n            jQuery( &apos;.causationTree&apos; ).css( &apos;opacity&apos;, 1 );\n            jQuery( &apos;.dimension-analysis&apos; ).css( &apos;opacity&apos;, 1 );\n            jQuery( &apos;.dimension-analysis&apos; ).css( &apos;left&apos;, \&quot;calc( 50% - 500px )\&quot; );\n            jQuery(&apos;.dimension-analysis&apos;).draggable(); \n        });\n    }\n    \n//}&quot;"/>
+      <Input key="node:12/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#2#METRIC&quot;,&quot;path&quot;:[&quot;Key Dimensions&quot;],&quot;name&quot;:&quot;METRIC&quot;}]"/>
+      <Input key="node:13/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;MetricConf&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:13/cfg:model/default" value="&quot;var CommonalityPlugin = Plugin(\&quot;Commonality\&quot;);\r\n\r\nvar config = {\r\n    \&quot;hide-computed-measures\&quot; : {\r\n        \&quot;_baseline/value\&quot;    : true,\r\n        \&quot;_pBaseline/percent\&quot; : true,\r\n        \&quot;_pctDev/percent\&quot;    : true\r\n    },\r\n    \&quot;computed-measure-labels\&quot; : {\r\n        \&quot;computed.metric.title\&quot; : \&quot;Dimension Analysis Measure\&quot;,\r\n        \&quot;computed.metric.count\&quot; : \&quot;Value of Associated Events\&quot;,\r\n    },\r\n};\r\nsetOutput(\&quot;dout:0\&quot;, {\r\n    model : CommonalityPlugin.getComputedMeasureConfig(1, \&quot;SUM\&quot;, config, \&quot;en\&quot;)\r\n});\r\n&quot;"/>
+      <Input key="node:16/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#Tile2&quot;,&quot;path&quot;:[&quot;Group Trend&quot;],&quot;name&quot;:&quot;Tile2&quot;}]"/>
+      <Input key="node:16/cfg:frameStyle/default" value="[{&quot;name&quot;:&quot;padding&quot;,&quot;value&quot;:&quot;&quot;},{&quot;name&quot;:&quot;border&quot;,&quot;value&quot;:&quot;none&quot;},{&quot;name&quot;:&quot;border-radius&quot;,&quot;value&quot;:&quot;0&quot;},{&quot;name&quot;:&quot;background-color&quot;,&quot;value&quot;:&quot;transparent&quot;}]"/>
+      <Input key="node:16/cfg:widget/default" value="[{&quot;viewer&quot;:&quot;DataGrid&quot;,&quot;label&quot;:&quot;Data Grid&quot;,&quot;properties&quot;:{&quot;showHeader&quot;:&quot;disable&quot;,&quot;borderType&quot;:&quot;none&quot;,&quot;rowSpacing&quot;:&quot;5&quot;,&quot;columnResize&quot;:&quot;enable&quot;,&quot;columnReorder&quot;:&quot;disable&quot;,&quot;columnSortable&quot;:&quot;enable&quot;,&quot;dataExport&quot;:&quot;enable&quot;,&quot;pagination&quot;:&quot;disable&quot;,&quot;lockedColumns&quot;:&quot;0&quot;,&quot;highlightColor&quot;:&quot;#148AC4&quot;,&quot;hoverColor&quot;:&quot;#148AC4&quot;,&quot;selectionMode&quot;:&quot;single&quot;,&quot;showSummary&quot;:&quot;disable&quot;,&quot;lineWrapping&quot;:&quot;disable&quot;,&quot;autoSelectFirst&quot;:&quot;disable&quot;,&quot;columnDefaultSetting&quot;:&quot;{\&quot;columnFont\&quot;:{\&quot;fontStyle\&quot;:\&quot;normal\&quot;,\&quot;fontSize\&quot;:\&quot;12\&quot;,\&quot;fontWeight\&quot;:\&quot;normal\&quot;,\&quot;color\&quot;:\&quot;#333\&quot;}}&quot;,&quot;columnSetting&quot;:&quot;[{\&quot;name\&quot;:\&quot;index\&quot;,\&quot;label\&quot;:\&quot;\&quot;,\&quot;isKeyField\&quot;:false,\&quot;type\&quot;:\&quot;string\&quot;,\&quot;defaultListId\&quot;:1,\&quot;opened\&quot;:true,\&quot;renderer\&quot;:{\&quot;type\&quot;:\&quot;icon\&quot;,\&quot;checkDisplayField\&quot;:\&quot;false\&quot;,\&quot;labelFieldSelect\&quot;:\&quot;index\&quot;,\&quot;iconType\&quot;:\&quot;signal\&quot;,\&quot;cases\&quot;:[{\&quot;shape\&quot;:\&quot;circle\&quot;,\&quot;value\&quot;:\&quot;0\&quot;,\&quot;color\&quot;:\&quot;#148ac4\&quot;},{\&quot;shape\&quot;:\&quot;circle\&quot;,\&quot;value\&quot;:\&quot;1\&quot;,\&quot;color\&quot;:\&quot;#51ae7d\&quot;},{\&quot;shape\&quot;:\&quot;circle\&quot;,\&quot;value\&quot;:\&quot;2\&quot;,\&quot;color\&quot;:\&quot;#89c4e1\&quot;},{\&quot;shape\&quot;:\&quot;circle\&quot;,\&quot;value\&quot;:\&quot;3\&quot;,\&quot;color\&quot;:\&quot;#ffd200\&quot;},{\&quot;shape\&quot;:\&quot;circle\&quot;,\&quot;value\&quot;:\&quot;4\&quot;,\&quot;color\&quot;:\&quot;#f5a623\&quot;},{\&quot;shape\&quot;:\&quot;circle\&quot;,\&quot;value\&quot;:\&quot;5\&quot;,\&quot;color\&quot;:\&quot;#d0021b\&quot;},{\&quot;shape\&quot;:\&quot;circle\&quot;,\&quot;value\&quot;:\&quot;6\&quot;,\&quot;color\&quot;:\&quot;#ffcb78\&quot;},{\&quot;shape\&quot;:\&quot;circle\&quot;,\&quot;value\&quot;:\&quot;7\&quot;,\&quot;color\&quot;:\&quot;#e7837d\&quot;},{\&quot;shape\&quot;:\&quot;circle\&quot;,\&quot;value\&quot;:\&quot;8\&quot;,\&quot;color\&quot;:\&quot;#74dea6\&quot;},{\&quot;shape\&quot;:\&quot;circle\&quot;,\&quot;value\&quot;:\&quot;9\&quot;,\&quot;color\&quot;:\&quot;#a1d0e7\&quot;},{\&quot;shape\&quot;:\&quot;square\&quot;,\&quot;value\&quot;:\&quot;99\&quot;,\&quot;color\&quot;:\&quot;#d5d7d7\&quot;}]},\&quot;shapeOnly\&quot;:false,\&quot;style\&quot;:{\&quot;width\&quot;:25,\&quot;fontStyle\&quot;:\&quot;normal\&quot;,\&quot;fontWeight\&quot;:\&quot;normal\&quot;,\&quot;fontSize\&quot;:\&quot;12\&quot;,\&quot;color\&quot;:\&quot;#000000\&quot;,\&quot;textAlign\&quot;:\&quot;right\&quot;}},{\&quot;name\&quot;:\&quot;key\&quot;,\&quot;label\&quot;:\&quot;\&quot;,\&quot;isKeyField\&quot;:false,\&quot;type\&quot;:\&quot;string\&quot;,\&quot;defaultListId\&quot;:2,\&quot;opened\&quot;:true,\&quot;style\&quot;:{\&quot;fontStyle\&quot;:\&quot;normal\&quot;,\&quot;fontWeight\&quot;:\&quot;normal\&quot;,\&quot;fontSize\&quot;:\&quot;12\&quot;,\&quot;color\&quot;:\&quot;#000000\&quot;,\&quot;textAlign\&quot;:\&quot;left\&quot;,\&quot;width\&quot;:175}}]&quot;},&quot;schema&quot;:[{&quot;name&quot;:&quot;index&quot;,&quot;label&quot;:&quot;Index&quot;,&quot;type&quot;:&quot;number&quot;},{&quot;name&quot;:&quot;key&quot;,&quot;label&quot;:&quot;Key&quot;,&quot;type&quot;:&quot;string&quot;}]}]"/>
+      <Input key="node:16/cfg:refCorner/default" value="&quot;TopRight&quot;"/>
+      <Input key="node:16/cfg:xOffset/default" value="50"/>
+      <Input key="node:16/cfg:width/default" value="300"/>
+      <Input key="node:16/cfg:height/default" value="300"/>
+      <Input key="node:16/in:1/evaluate" value="&quot;ignore&quot;"/>
+      <Input key="node:16/cfg:customClass/default" value="&quot;legendOverlay&quot;"/>
+      <Input key="node:18/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;integer&quot;,&quot;portLabel&quot;:&quot;trigger&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;}]"/>
+      <Input key="node:18/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;pmEvents&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:18/cfg:model/default" value="&quot;var CommonPlugin        = Plugin(\&quot;Common\&quot;);\nvar ExecutionPlugin     = Plugin(\&quot;Execution\&quot;);\n\nvar changeConfig    = {\n            \t        annotations: []\n            \t\t  } \n//setOutput(&apos;dout:0&apos;, changeConfig );\n\nvar selection = getInput(\&quot;din:0\&quot;) || [];\n\nif( selection.length &gt; 0 ){\n    CommonPlugin.pbShowProgressBar(\&quot;causal-group-maintenance-analysis\&quot;, \&quot;Analyzing associated planned maintenance...\&quot;);\n    var selObj      = selection[0];   \n    var startTm     = selObj[&apos;group_create_tm&apos;];\n    var endTm       = selObj[&apos;group_end_tm&apos;];\n    var service     = selObj[&apos;service&apos;];\n    var subService  = selObj[&apos;subService&apos;];\n    \n    service = \&quot;\&quot;;\n    subService = \&quot;\&quot;;\n    \n    ExecutionPlugin.getPlannedMaintenanceEvents( startTm, endTm, service, subService, function(response){\n        if( response.status == \&quot;OK\&quot;){\n            if( response.value.length &gt; 0 ){\n                setAnnotation( response.value[0] );\n            } else {\n                CommonPlugin.pbHideProgressBar(\&quot;causal-group-maintenance-analysis\&quot;);\n            }\n        } else {\n            CommonPlugin.pbHideProgressBar(\&quot;causal-group-maintenance-analysis\&quot;);\n        }\n    });\n    \n    \n}\n\nfunction setAnnotation( selObj ){\n    \n    var id              = selObj[\&quot;change_id\&quot;];\n    var start           = parseInt( selObj[\&quot;actual_start_date\&quot;] ) - 150;\n    var end             = parseInt( selObj[\&quot;actual_end_date\&quot;] ) + 150;\n    \n    changeConfig.annotations.push({ \n        \&quot;type\&quot;: \&quot;rectangle\&quot;, \n        \&quot;label\&quot;: \&quot;Incident: \&quot; + id, \n        \&quot;axis\&quot;: \&quot;bottom\&quot;, \n        \&quot;value\&quot;: 1, \n        \&quot;range\&quot;: [(start * 1000), (end * 1000)], \n        \&quot;color\&quot;: \&quot;#818688\&quot;, \n        \&quot;fillColor\&quot;: \&quot;rgba(213,214,214,0.3)\&quot;, \n        \&quot;width\&quot;: 0, \n        \&quot;lineStyle\&quot;: \&quot;dot\&quot;\n    });\n\n        setOutput( &apos;dout:0&apos;, changeConfig );\n        CommonPlugin.pbHideProgressBar(\&quot;causal-group-maintenance-analysis\&quot;);\n\n}\n\n&quot;"/>
+      <Input key="node:19/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#Tile2&quot;,&quot;path&quot;:[&quot;Group Trend&quot;],&quot;name&quot;:&quot;Tile2&quot;}]"/>
+      <Output key="node:15/out:0/propagate" value="&quot;change&quot;"/>
+      <Schema id="node:1/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;detect&quot;,&quot;label&quot;:&quot;detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_detect&quot;,&quot;label&quot;:&quot;call_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_detect&quot;,&quot;label&quot;:&quot;local_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_call_detect&quot;,&quot;label&quot;:&quot;local_call_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;correlated_count&quot;,&quot;label&quot;:&quot;correlated_count&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_label&quot;,&quot;label&quot;:&quot;component_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomalies&quot;,&quot;label&quot;:&quot;anomalies&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_score&quot;,&quot;label&quot;:&quot;min_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_score&quot;,&quot;label&quot;:&quot;max_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_max&quot;,&quot;label&quot;:&quot;display_max&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;duration&quot;,&quot;label&quot;:&quot;duration&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_duration&quot;,&quot;label&quot;:&quot;call_duration&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_epoch&quot;,&quot;label&quot;:&quot;event_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_start_tm&quot;,&quot;label&quot;:&quot;cust_call_start_tm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_end_tm&quot;,&quot;label&quot;:&quot;cust_call_end_tm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_date&quot;,&quot;label&quot;:&quot;start_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_date&quot;,&quot;label&quot;:&quot;end_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_date&quot;,&quot;label&quot;:&quot;event_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_date&quot;,&quot;label&quot;:&quot;call_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_measure&quot;,&quot;label&quot;:&quot;metric_measure&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_baseline&quot;,&quot;label&quot;:&quot;metric_baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_count&quot;,&quot;label&quot;:&quot;cust_call_count&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_baseline&quot;,&quot;label&quot;:&quot;cust_call_baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity&quot;,&quot;label&quot;:&quot;severity&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_min_max&quot;,&quot;label&quot;:&quot;score_min_max&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_value_bl&quot;,&quot;label&quot;:&quot;metric_value_bl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_count_bl&quot;,&quot;label&quot;:&quot;call_count_bl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation&quot;,&quot;label&quot;:&quot;causation&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;notification&quot;,&quot;label&quot;:&quot;notification&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_level&quot;,&quot;label&quot;:&quot;score_level&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:2/din:0">
+        <JSON value="{&quot;name&quot;:&quot;detect&quot;,&quot;label&quot;:&quot;detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_detect&quot;,&quot;label&quot;:&quot;call_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_detect&quot;,&quot;label&quot;:&quot;local_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_call_detect&quot;,&quot;label&quot;:&quot;local_call_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;correlated_count&quot;,&quot;label&quot;:&quot;correlated_count&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_label&quot;,&quot;label&quot;:&quot;component_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomalies&quot;,&quot;label&quot;:&quot;anomalies&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_score&quot;,&quot;label&quot;:&quot;min_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_score&quot;,&quot;label&quot;:&quot;max_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_max&quot;,&quot;label&quot;:&quot;display_max&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;duration&quot;,&quot;label&quot;:&quot;duration&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_duration&quot;,&quot;label&quot;:&quot;call_duration&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_epoch&quot;,&quot;label&quot;:&quot;event_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_start_tm&quot;,&quot;label&quot;:&quot;cust_call_start_tm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_end_tm&quot;,&quot;label&quot;:&quot;cust_call_end_tm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_date&quot;,&quot;label&quot;:&quot;start_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_date&quot;,&quot;label&quot;:&quot;end_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_date&quot;,&quot;label&quot;:&quot;event_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_date&quot;,&quot;label&quot;:&quot;call_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_measure&quot;,&quot;label&quot;:&quot;metric_measure&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_baseline&quot;,&quot;label&quot;:&quot;metric_baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_count&quot;,&quot;label&quot;:&quot;cust_call_count&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_baseline&quot;,&quot;label&quot;:&quot;cust_call_baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity&quot;,&quot;label&quot;:&quot;severity&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_min_max&quot;,&quot;label&quot;:&quot;score_min_max&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_value_bl&quot;,&quot;label&quot;:&quot;metric_value_bl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_count_bl&quot;,&quot;label&quot;:&quot;call_count_bl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation&quot;,&quot;label&quot;:&quot;causation&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;notification&quot;,&quot;label&quot;:&quot;notification&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_level&quot;,&quot;label&quot;:&quot;score_level&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:2/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;incident_key&quot;,&quot;label&quot;:&quot;Incident Key&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;GMT&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_localtime_&quot;,&quot;label&quot;:&quot;Local Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_scoreval_&quot;,&quot;label&quot;:&quot;+/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_scorepct_&quot;,&quot;label&quot;:&quot;% +/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:2/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;incident_dim_values&quot;,&quot;label&quot;:&quot;Dim Values&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;incident_dim_labels&quot;,&quot;label&quot;:&quot;Dim Labels&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_name&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_label&quot;,&quot;label&quot;:&quot;Dimension Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_score&quot;,&quot;label&quot;:&quot;Dimension Score&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_score_text&quot;,&quot;label&quot;:&quot;Dimension Score Text&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:2/din:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:2/dout:3">
+        <JSON value="{&quot;name&quot;:&quot;incident_key&quot;,&quot;label&quot;:&quot;Incident Key&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;GMT&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_localtime_&quot;,&quot;label&quot;:&quot;Local Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_scoreval_&quot;,&quot;label&quot;:&quot;+/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_scorepct_&quot;,&quot;label&quot;:&quot;% +/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:3/in:0">
+        <JSON value="{&quot;name&quot;:&quot;incident_key&quot;,&quot;label&quot;:&quot;Incident Key&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;GMT&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_localtime_&quot;,&quot;label&quot;:&quot;Local Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_scoreval_&quot;,&quot;label&quot;:&quot;+/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_scorepct_&quot;,&quot;label&quot;:&quot;% +/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:3/out:0">
+        <JSON value="{&quot;name&quot;:&quot;incident_key&quot;,&quot;label&quot;:&quot;Incident Key&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;GMT&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_localtime_&quot;,&quot;label&quot;:&quot;Local Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_scoreval_&quot;,&quot;label&quot;:&quot;+/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_scorepct_&quot;,&quot;label&quot;:&quot;% +/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:4/din:0">
+        <JSON value="{&quot;name&quot;:&quot;incident_key&quot;,&quot;label&quot;:&quot;Incident Key&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;GMT&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_localtime_&quot;,&quot;label&quot;:&quot;Local Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_scoreval_&quot;,&quot;label&quot;:&quot;+/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_scorepct_&quot;,&quot;label&quot;:&quot;% +/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:4/din:1">
+        <JSON value="{&quot;name&quot;:&quot;detect&quot;,&quot;label&quot;:&quot;detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_detect&quot;,&quot;label&quot;:&quot;call_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_detect&quot;,&quot;label&quot;:&quot;local_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_call_detect&quot;,&quot;label&quot;:&quot;local_call_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;correlated_count&quot;,&quot;label&quot;:&quot;correlated_count&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_label&quot;,&quot;label&quot;:&quot;component_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomalies&quot;,&quot;label&quot;:&quot;anomalies&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_score&quot;,&quot;label&quot;:&quot;min_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_score&quot;,&quot;label&quot;:&quot;max_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_max&quot;,&quot;label&quot;:&quot;display_max&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;duration&quot;,&quot;label&quot;:&quot;duration&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_duration&quot;,&quot;label&quot;:&quot;call_duration&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_epoch&quot;,&quot;label&quot;:&quot;event_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_start_tm&quot;,&quot;label&quot;:&quot;cust_call_start_tm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_end_tm&quot;,&quot;label&quot;:&quot;cust_call_end_tm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_date&quot;,&quot;label&quot;:&quot;start_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_date&quot;,&quot;label&quot;:&quot;end_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_date&quot;,&quot;label&quot;:&quot;event_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_date&quot;,&quot;label&quot;:&quot;call_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_measure&quot;,&quot;label&quot;:&quot;metric_measure&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_baseline&quot;,&quot;label&quot;:&quot;metric_baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_count&quot;,&quot;label&quot;:&quot;cust_call_count&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_baseline&quot;,&quot;label&quot;:&quot;cust_call_baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity&quot;,&quot;label&quot;:&quot;severity&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_min_max&quot;,&quot;label&quot;:&quot;score_min_max&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_value_bl&quot;,&quot;label&quot;:&quot;metric_value_bl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_count_bl&quot;,&quot;label&quot;:&quot;call_count_bl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation&quot;,&quot;label&quot;:&quot;causation&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;notification&quot;,&quot;label&quot;:&quot;notification&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_level&quot;,&quot;label&quot;:&quot;score_level&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:4/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;incident_key&quot;,&quot;label&quot;:&quot;Incident Key&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;GMT&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_localtime_&quot;,&quot;label&quot;:&quot;Local Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_scoreval_&quot;,&quot;label&quot;:&quot;+/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_scorepct_&quot;,&quot;label&quot;:&quot;% +/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:6/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;incident_key&quot;,&quot;label&quot;:&quot;Incident Key&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;measures&quot;,&quot;label&quot;:&quot;Measures&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:7/out:0">
+        <JSON value="{&quot;name&quot;:&quot;_epoch&quot;,&quot;label&quot;:&quot;_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field0&quot;,&quot;label&quot;:&quot;_field0&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field1&quot;,&quot;label&quot;:&quot;_field1&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field2&quot;,&quot;label&quot;:&quot;_field2&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field3&quot;,&quot;label&quot;:&quot;_field3&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field4&quot;,&quot;label&quot;:&quot;_field4&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field5&quot;,&quot;label&quot;:&quot;_field5&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field6&quot;,&quot;label&quot;:&quot;_field6&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field7&quot;,&quot;label&quot;:&quot;_field7&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field8&quot;,&quot;label&quot;:&quot;_field8&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field9&quot;,&quot;label&quot;:&quot;_field9&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:9/din:0">
+        <JSON value="{&quot;name&quot;:&quot;incident_key&quot;,&quot;label&quot;:&quot;Incident Key&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;GMT&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_localtime_&quot;,&quot;label&quot;:&quot;Local Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_scoreval_&quot;,&quot;label&quot;:&quot;+/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_scorepct_&quot;,&quot;label&quot;:&quot;% +/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:9/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;_epoch&quot;,&quot;label&quot;:&quot;_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field0&quot;,&quot;label&quot;:&quot;_field0&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field1&quot;,&quot;label&quot;:&quot;_field1&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field2&quot;,&quot;label&quot;:&quot;_field2&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field3&quot;,&quot;label&quot;:&quot;_field3&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field4&quot;,&quot;label&quot;:&quot;_field4&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field5&quot;,&quot;label&quot;:&quot;_field5&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field6&quot;,&quot;label&quot;:&quot;_field6&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field7&quot;,&quot;label&quot;:&quot;_field7&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field8&quot;,&quot;label&quot;:&quot;_field8&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field9&quot;,&quot;label&quot;:&quot;_field9&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:7/in:0">
+        <JSON value="{&quot;name&quot;:&quot;_epoch&quot;,&quot;label&quot;:&quot;_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field0&quot;,&quot;label&quot;:&quot;_field0&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field1&quot;,&quot;label&quot;:&quot;_field1&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field2&quot;,&quot;label&quot;:&quot;_field2&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field3&quot;,&quot;label&quot;:&quot;_field3&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field4&quot;,&quot;label&quot;:&quot;_field4&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field5&quot;,&quot;label&quot;:&quot;_field5&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field6&quot;,&quot;label&quot;:&quot;_field6&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field7&quot;,&quot;label&quot;:&quot;_field7&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field8&quot;,&quot;label&quot;:&quot;_field8&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field9&quot;,&quot;label&quot;:&quot;_field9&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:11/din:0">
+        <JSON value="{&quot;name&quot;:&quot;detect&quot;,&quot;label&quot;:&quot;detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_detect&quot;,&quot;label&quot;:&quot;call_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_detect&quot;,&quot;label&quot;:&quot;local_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_call_detect&quot;,&quot;label&quot;:&quot;local_call_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;correlated_count&quot;,&quot;label&quot;:&quot;correlated_count&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_label&quot;,&quot;label&quot;:&quot;component_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomalies&quot;,&quot;label&quot;:&quot;anomalies&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_score&quot;,&quot;label&quot;:&quot;min_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_score&quot;,&quot;label&quot;:&quot;max_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_max&quot;,&quot;label&quot;:&quot;display_max&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;duration&quot;,&quot;label&quot;:&quot;duration&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_duration&quot;,&quot;label&quot;:&quot;call_duration&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_epoch&quot;,&quot;label&quot;:&quot;event_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_start_tm&quot;,&quot;label&quot;:&quot;cust_call_start_tm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_end_tm&quot;,&quot;label&quot;:&quot;cust_call_end_tm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_date&quot;,&quot;label&quot;:&quot;start_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_date&quot;,&quot;label&quot;:&quot;end_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_date&quot;,&quot;label&quot;:&quot;event_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_date&quot;,&quot;label&quot;:&quot;call_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_measure&quot;,&quot;label&quot;:&quot;metric_measure&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_baseline&quot;,&quot;label&quot;:&quot;metric_baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_count&quot;,&quot;label&quot;:&quot;cust_call_count&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_baseline&quot;,&quot;label&quot;:&quot;cust_call_baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity&quot;,&quot;label&quot;:&quot;severity&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_min_max&quot;,&quot;label&quot;:&quot;score_min_max&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_value_bl&quot;,&quot;label&quot;:&quot;metric_value_bl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_count_bl&quot;,&quot;label&quot;:&quot;call_count_bl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation&quot;,&quot;label&quot;:&quot;causation&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;notification&quot;,&quot;label&quot;:&quot;notification&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_level&quot;,&quot;label&quot;:&quot;score_level&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:12/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:12/out:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:11/din:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:12/out:2">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:12/out:3">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:4/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;index&quot;,&quot;label&quot;:&quot;Index&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;key&quot;,&quot;label&quot;:&quot;Key&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:15/in:0">
+        <JSON value="{&quot;name&quot;:&quot;index&quot;,&quot;label&quot;:&quot;Index&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;key&quot;,&quot;label&quot;:&quot;Key&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:15/out:0">
+        <JSON value="{&quot;name&quot;:&quot;index&quot;,&quot;label&quot;:&quot;Index&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;key&quot;,&quot;label&quot;:&quot;Key&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:16/in:0">
+        <JSON value="{&quot;name&quot;:&quot;index&quot;,&quot;label&quot;:&quot;Index&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;key&quot;,&quot;label&quot;:&quot;Key&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:16/out:0">
+        <JSON value="{&quot;name&quot;:&quot;index&quot;,&quot;label&quot;:&quot;Index&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;key&quot;,&quot;label&quot;:&quot;Key&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:16/out:1">
+        <JSON value="{&quot;name&quot;:&quot;index&quot;,&quot;label&quot;:&quot;Index&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;key&quot;,&quot;label&quot;:&quot;Key&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:18/din:0">
+        <JSON value="{&quot;name&quot;:&quot;detect&quot;,&quot;label&quot;:&quot;detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_detect&quot;,&quot;label&quot;:&quot;call_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_detect&quot;,&quot;label&quot;:&quot;local_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_call_detect&quot;,&quot;label&quot;:&quot;local_call_detect&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;correlated_count&quot;,&quot;label&quot;:&quot;correlated_count&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_label&quot;,&quot;label&quot;:&quot;component_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomalies&quot;,&quot;label&quot;:&quot;anomalies&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_score&quot;,&quot;label&quot;:&quot;min_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_score&quot;,&quot;label&quot;:&quot;max_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_max&quot;,&quot;label&quot;:&quot;display_max&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;duration&quot;,&quot;label&quot;:&quot;duration&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_duration&quot;,&quot;label&quot;:&quot;call_duration&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_epoch&quot;,&quot;label&quot;:&quot;event_epoch&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_start_tm&quot;,&quot;label&quot;:&quot;cust_call_start_tm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_end_tm&quot;,&quot;label&quot;:&quot;cust_call_end_tm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_date&quot;,&quot;label&quot;:&quot;start_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_date&quot;,&quot;label&quot;:&quot;end_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_date&quot;,&quot;label&quot;:&quot;event_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_date&quot;,&quot;label&quot;:&quot;call_date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_measure&quot;,&quot;label&quot;:&quot;metric_measure&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_baseline&quot;,&quot;label&quot;:&quot;metric_baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_count&quot;,&quot;label&quot;:&quot;cust_call_count&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_baseline&quot;,&quot;label&quot;:&quot;cust_call_baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity&quot;,&quot;label&quot;:&quot;severity&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_min_max&quot;,&quot;label&quot;:&quot;score_min_max&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_value_bl&quot;,&quot;label&quot;:&quot;metric_value_bl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_count_bl&quot;,&quot;label&quot;:&quot;call_count_bl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation&quot;,&quot;label&quot;:&quot;causation&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;notification&quot;,&quot;label&quot;:&quot;notification&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_level&quot;,&quot;label&quot;:&quot;score_level&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:19/out:0">
+        <JSON value="{&quot;name&quot;:&quot;_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field0&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field0&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field1&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field1&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field2&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field2&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field3&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field3&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field4&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field4&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field5&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field5&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field6&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field6&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field7&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field7&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field8&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field8&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field9&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field9&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:19/out:1">
+        <JSON value="{&quot;name&quot;:&quot;_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field0&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field0&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field1&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field1&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field2&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field2&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field3&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field3&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field4&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field4&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field5&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field5&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field6&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field6&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field7&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field7&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field8&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field8&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field9&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field9&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:19/out:2">
+        <JSON value="{&quot;name&quot;:&quot;_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field0&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field0&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field1&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field1&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field2&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field2&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field3&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field3&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field4&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field4&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field5&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field5&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field6&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field6&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field7&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field7&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field8&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field8&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field9&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field9&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:19/out:3">
+        <JSON value="{&quot;name&quot;:&quot;_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field0&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field0&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field1&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field1&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field2&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field2&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field3&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field3&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field4&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field4&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field5&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field5&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field6&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field6&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field7&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field7&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field8&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field8&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_field9&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_field9&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <DynInput id="node:2">
+        <Port id="din:0" type="event[]" label="Selection" evaluate="always"/>
+        <Port id="din:1" type="string" label="View" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:4">
+        <Port id="din:0" type="any[]" label="dataIn" evaluate="always"/>
+        <Port id="din:1" type="any[]" label="selection" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:6">
+        <Port id="din:0" type="any[]" label="data" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:9">
+        <Port id="din:0" type="any[]" label="In(0)" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:11">
+        <Port id="din:0" type="any[]" label="Selection" evaluate="always"/>
+        <Port id="din:1" type="any[]" label="Score Attribute" evaluate="always"/>
+        <Port id="din:2" type="any" label="Metric Config" evaluate="always"/>
+        <Port id="din:3" type="any" label="trigger" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:10">
+        <Port id="din:Selection" type="any[]" label="Selection" _undefined_default="" evaluate="always"/>
+        <Port id="din:Score Attribute" type="any[]" label="Score Attribute" _undefined_default="" evaluate="always"/>
+        <Port id="din:Metric Config" type="any" label="Metric Config" _undefined_default="" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:18">
+        <Port id="din:0" type="any[]" label="selection" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="integer" label="trigger" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynOutput id="node:1">
+        <Port id="dout:0" type="any[]" label="Filters" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="event[]" label="Selection" propagate="always" _isArray="true"/>
+        <Port id="dout:2" type="string" label="View" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:2">
+        <Port id="dout:0" type="event[]" label="Data" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:4">
+        <Port id="dout:0" type="any[]" label="dataOut" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="any[]" label="legendList" propagate="always" _isArray="true"/>
+        <Port id="dout:2" type="integer" label="triggerComplete" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:6">
+        <Port id="dout:0" type="any[]" label="dataOut" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:9">
+        <Port id="dout:0" type="any[]" label="Out(0)" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:11">
+        <Port id="dout:0" type="any[]" label="Selection" propagate="always"/>
+        <Port id="dout:1" type="any[]" label="Score Attribute" propagate="always"/>
+        <Port id="dout:2" type="any" label="Metric Config" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:13">
+        <Port id="dout:0" type="any" label="MetricConf" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:18">
+        <Port id="dout:0" type="any[]" label="pmEvents" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <Version id="node:1" version="1"/>
+      <Version id="node:2" version="2"/>
+      <Version id="node:3" version="1"/>
+      <Version id="node:4" version="2"/>
+      <Version id="node:5" version="1"/>
+      <Version id="node:6" version="2"/>
+      <Version id="node:7" version="2"/>
+      <Version id="node:9" version="2"/>
+      <Version id="node:10" version="1"/>
+      <Version id="node:11" version="2"/>
+      <Version id="node:12" version="1"/>
+      <Version id="node:13" version="2"/>
+      <Version id="node:15" version="2"/>
+      <Version id="node:16" version="1"/>
+      <Version id="node:18" version="2"/>
+      <Version id="node:19" version="1"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/space/testp/dbpm/Charter - Causal Analysis Service v3" alias="Causal"/>
+      <DashboardPlugin uri="/app/dbp/space/testp/dbpm/Charter - Incident Analysis Service v9" alias="Incident"/>
+      <DashboardPlugin uri="/app/dbp/space/VIA Common Library/dbpm/VIA - Common" alias="Common"/>
+      <DashboardPlugin uri="/app/dbp/space/testp/dbpm/Charter - Trend Analysis Service v4" alias="Trend"/>
+      <DashboardPlugin uri="/app/dbp/space/testp/dbpm/Charter - Execution Monitor Service v1" alias="Execution"/>
+      <DashboardPlugin uri="/app/dbp/space/VIA Common Library/dbpm/VIA - TimeSeriesChart" alias=""/>
+      <DashboardPlugin uri="/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Commonality Plugin" alias="Commonality"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

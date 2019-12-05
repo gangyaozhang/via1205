@@ -1,0 +1,42 @@
+<DashboardPluginModel is_init="false" name="Charter - Config Service v2" description="">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services>
+      <Service name="getConfigModules" args="" private="false">
+        <CodeText>
+          <![CDATA[var modules = this.getBaseConfigModules();
+modules.push({
+	"value" : "calls-mapping",
+	"label" : "Calls Mapping",
+	"path"  : "/app/ax/user/charter_admin/axv/Charter - Calls Mapping Comp v1",
+});
+
+var queryConfig = this.getQueryConfig();
+if (queryConfig["enable-config-audit"] == true) {
+    modules.push({
+    	"value" : "config-audit",
+    	"label" : "Config Audit Log",
+    	"path"  : "/app/ax/user/viaops_admin/axv/VIAOps - Config - Audit",
+    });
+}
+return modules;
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="ec2c3452-5092-4ba0-8169-6adba9fed850" name="QueryConfig" type="application/json" size="4560" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/user/viaops_admin/dbpm/VIAOps - Config Service"/>
+      <Plugin uri="/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Property"/>
+      <Plugin uri="/app/dbp/space/testp/dbpm/Charter - Base v2"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

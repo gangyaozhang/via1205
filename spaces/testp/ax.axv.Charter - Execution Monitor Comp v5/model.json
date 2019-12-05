@@ -1,0 +1,20 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "locale"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "axv",
+    "__references__": "/app/dbp/space/testp/dbpm/Charter - Execution Monitor Service v2,/app/dbp/space/testp/dbpm/Charter - Incident Analysis Service v9,/app/dbp/space/VIA Common Library/dbpm/VIA - Common,/app/dbp/space/testp/dbpm/Charter - Causal Analysis Service v3",
+    "modelStatus": "valid",
+    "name": "Charter - Execution Monitor Comp v5"
+  }
+}

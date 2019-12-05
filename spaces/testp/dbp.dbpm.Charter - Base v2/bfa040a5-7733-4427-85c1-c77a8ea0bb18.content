@@ -1,0 +1,16 @@
+{
+    "name": "Quantum",
+    "label": "Client",
+    "items": [
+        {
+            "name": "Failed API Attempt",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Successful API Attempt",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ]
+}

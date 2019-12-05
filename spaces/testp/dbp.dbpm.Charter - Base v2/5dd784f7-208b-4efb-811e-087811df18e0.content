@@ -1,0 +1,35 @@
+{
+    "name": "VBO",
+    "label": "VBO",
+    "items": [
+        {
+            "name": "Session Setup Success",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Session Setup Error",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Duration - BO to Video Pump",
+            "uom" : "Average",
+            "aggr": "avg"
+        },
+        {
+            "name": "Session Setup Queue Size",
+            "uom" : "Average",
+            "aggr": "avg"
+        },
+        {
+            "name": "Destroyed Sessions",
+            "uom" : "Count",
+            "aggr": "sum"
+        }
+    ],
+    "meta":{
+        "dimension-values":[
+        ]
+    }
+}

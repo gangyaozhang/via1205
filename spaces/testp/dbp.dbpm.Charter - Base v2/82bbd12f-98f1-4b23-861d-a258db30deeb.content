@@ -1,0 +1,55 @@
+{
+    "name": "Quantum",
+    "label": "Client",
+    "items": [
+        {
+            "name": "Stat Active Device Count",
+            "uom" : "Count",
+            "aggr": "sum"
+                    
+        }, 
+        {
+            "name": "Stat Active User Count",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Stat Login Attempts",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Stat Login Failures",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Stat Login Successes",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Failed API Attempt",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Successful API Attempt",
+            "uom" : "Count",
+            "aggr": "sum"
+        },
+        {
+            "name": "Login Duration",
+            "uom" : "Avg",
+            "aggr": "avg"
+        }
+    ],
+    "meta":{
+        "dimension-values":[
+            {
+                "name":"api",
+                "value":["","reauth","authnV1Authenticate","federatedEdgeV1AuthComm","login","mobileAuthV1Authenticate","mobileAuthV1Profile","mobileAuthV1Version","mobileAuthV2Version","ssoTokenAuthorize"]
+            }
+        ]
+    }
+}

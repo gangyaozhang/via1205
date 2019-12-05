@@ -1,0 +1,111 @@
+[
+    {
+        "name" : "digital_operations",
+        "label" : "Digital Operations Dimensions",
+        "name-style" : "padding-left:0px;width:0px;",
+        "value-style" : "padding:0px;width:100%;",
+        "display" : "return helper.has(${data.svc}, ['Digital Operations']);",
+        "dimensions" : [{
+            "name" : "source",
+            "label" : "Data Source",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Digital Operations']) && helper.isSet(${data.metric})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of data sources",
+                "dialog/title" : "Build data source list",
+                "dialog/description" : "Build list of data sources to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Digital Operations"],
+                    "module-context"  : ["Metric", "Data Source"]
+                }
+            },
+            "default": []
+            },{
+            "name" : "server",
+            "label" : "Server",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Digital Operations']) && helper.isSet(${data.metric})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of servers",
+                "dialog/title" : "Build server list",
+                "dialog/description" : "Build list of servers to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Digital Operations"],
+                    "module-context"  : ["Metric", "Server"]
+                }
+            },
+            "default": []
+            },{
+            "name" : "host",
+            "label" : "Host",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Digital Operations']) && helper.isSet(${data.metric})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of hosts",
+                "dialog/title" : "Build host list",
+                "dialog/description" : "Build list of hosts to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Digital Operations"],
+                    "module-context"  : ["Metric", "Host"]
+                }
+            },
+            "default": []        
+            },{
+            "name" : "function",
+            "label" : "Function",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Digital Operations']) && helper.isSet(${data.metric})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of functions",
+                "dialog/title" : "Build function list",
+                "dialog/description" : "Build list of functions to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Digital Operations"],
+                    "module-context"  : ["Metric", "Function"]
+                }
+            },
+            "default": []
+            },{
+            "name" : "context",
+            "label" : "Context",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Digital Operations']) && helper.isSet(${data.metric})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of contexts",
+                "dialog/title" : "Build data context list",
+                "dialog/description" : "Build list of contexts to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Digital Operations"],
+                    "module-context"  : ["Metric", "Context"]
+                }
+            },
+            "default": []        }, {
+            "name" : "user",
+            "label" : "User",
+            "dependent" : ["data.metric"],
+            "enable" : "return helper.has(${data.svc}, ['Digital Operations']) && helper.isSet(${data.metric})",
+            "type": "DualListBuilder",
+            "type-params" : {
+                "text/placeholder" : "List of users",
+                "dialog/title" : "Build user list",
+                "dialog/description" : "Build list of users to filter on.",
+                "dialog/widget/config/service/url" : "__OPTIONS_SERVICE__/getOptions",
+                "dialog/widget/config/service/context" : {
+                    "execute-context" : ["Digital Operations"],
+                    "module-context"  : ["Metric", "User"]
+                }
+            },
+            "default": []
+        }]
+    }
+]

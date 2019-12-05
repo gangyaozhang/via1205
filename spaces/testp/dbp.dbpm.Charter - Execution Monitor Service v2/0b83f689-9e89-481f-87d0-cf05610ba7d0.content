@@ -1,0 +1,23 @@
+{
+    "module-name":"ExecutionMonitor",
+	"sql-query-config" : {
+		"debug" : {
+			"ExecutionMonitor" : true
+		}
+	},
+    "debug-print" : {
+		"addChangeMgmtAcknowledgment" : true,
+		"getChangeMgmtData" : true,
+		"updateChangeMgmtAcknowledgment" : true
+    },
+    "data-source" : {
+        "change-mgmt"      : "charter_ref_db",
+        "network-metadata" : "charter_ref_db"
+    },
+    "network-metadata" : {
+        "table-name"     : "charter_network_metadata",
+        "host-column"    : "host",
+        "address-column" : "primary_ip",
+        "service-column" : "service"
+    }
+}
