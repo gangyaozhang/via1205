@@ -1,0 +1,17 @@
+{
+  "contents": [{
+    "fileref": "ModelContentFile0",
+    "name": "default"
+  }],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Type": "drm",
+    "drd.dimension": "app,ts_key,ts_value,process_type,aggr_type,source_fmt,source_tz,metric_name,metric_uom,env,mac_addr,status,host,cmts,prov_speed,ip_addr,node,device_type,firmware_version,manufacturer",
+    "drd.key": "",
+    "drd.measure": "aggr_start_tm,aggr_end_tm,system_tm,date_key,metric_value",
+    "drd.timestamp": "",
+    "drd.type": "resource.table",
+    "modelStatus": "update",
+    "name": "SPEED_TEST_LOG_TABLE"
+  }
+}
