@@ -1,0 +1,195 @@
+<DashboardPluginModel is_init="false" name="VIAOps - Config Property" description="">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions>
+      <Function name="editConfigProperty" args="CommonPlugin,controller,items,description,callback,buttonDefs" private="false">
+        <CodeText>
+          <![CDATA[var title  = "Edit Configuration Property";
+var width  = 700;
+var height = 500;
+var values = {};
+items.forEach(function(item) {
+    values[item.name] = item.value;
+});
+CommonPlugin.popupEditForm(controller, values, title, width, height, description, items, buttonDefs, callback, null);
+]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services>
+      <Service name="_getConfigProperty" args="queryConfig,propertyName,nameValueOnly" private="true">
+        <CodeText>
+          <![CDATA[var propertyList = queryConfig["config-properties"];
+var DATASOURCE = queryConfig["data-source"]["config-property"];
+if (propertyList != null && propertyList.length > 0 && DATASOURCE != null) {
+    // make a copy
+    propertyList = JSON.parse(JSON.stringify(propertyList));
+    var SELECT = Context.getLocalResource("CONFIG_PROPERTY_SELECT_SQL");
+    var result = this.executeSQLQuery(queryConfig, [], ["ConfigProperty", "Select"], DATASOURCE, SELECT, null);
+    if (result != null && result.items != null) {
+        var values = {};
+        for (var i=0; i<result.items.length; i++) {
+            var item = result.items[i];
+            values[item.name] = item.value;
+        }
+        for (var i=0; i<propertyList.length; i++) {
+            var value = values[propertyList[i]["name"]];
+            if (value != null) {
+                propertyList[i]["value"] = value;
+            }
+        }
+        if (propertyName != null) {
+            // value only retrieving for a specific property
+            for (var i=0; i<propertyList.length; i++) {
+                if (propertyList[i]["name"] == propertyName) {
+                    return propertyList[i]["value"];
+                }
+            }
+            return null;
+        }
+        else if (nameValueOnly) {
+            var propertyNameValueList = [];
+            for (var i=0; i<propertyList.length; i++) {
+                propertyNameValueList.push({
+                    name  : propertyList[i]["name"],
+                    value : propertyList[i]["value"]
+                });
+            }
+            return propertyNameValueList;
+        }
+        // if returning the WHOLE list, need to resolve certain BUILTIN
+        for (var i=0; i<propertyList.length; i++) {
+            var enums = propertyList[i]["enums"];
+            if (enums != null && enums == "${TIMEZONES}") {
+                var tzList = this.getTimezonesAndOffsets();
+                enums = [];
+                tzList.forEach(function(tz) {
+                    enums.push(tz.timezone + "=" + tz.timezone + " (" + tz.offset + ")");
+                });
+                propertyList[i]["enums"] = enums;
+            }
+        }
+        return propertyList;
+    }
+}
+return propertyName != null ? null : [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_resetConfigProperty" args="queryConfig" private="true">
+        <CodeText>
+          <![CDATA[var propertyList = queryConfig["config-properties"];
+var DATASOURCE = queryConfig["data-source"]["config-property"];
+if (propertyList != null && propertyList.length > 0 && DATASOURCE != null) {
+    var properties = [];
+    for (var i=0; i<propertyList.length; i++) {
+        if (propertyList[i]["value"] != null) {
+            properties.push({
+                name  : propertyList[i]["name"],
+                value : propertyList[i]["value"],
+            });
+        }
+    }
+    if (this._setConfigProperty(queryConfig, properties)) {
+        var values = {};
+        properties.forEach(function(property) {
+            values[property.name] = property.value;
+        });
+        return values;
+    }
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_setConfigProperty" args="queryConfig,properties" private="true">
+        <CodeText>
+          <![CDATA[print("__setConfigProperty: properties="+__prettyPrintJSON(properties));
+var DATASOURCE = queryConfig["data-source"]["config-property"];
+if (DATASOURCE != null) {
+    var sql = Context.getLocalResource("CONFIG_PROPERTY_DELETE_SQL");
+    var status = this.executeSQLUpdate(queryConfig, [], ["ConfigProperty", "Set", "Delete"], DATASOURCE, sql, null);
+
+    var sql = Context.getLocalResource("CONFIG_PROPERTY_INSERT_SQL");
+    var args = [];
+    for (var i=0; i<properties.length; i++) {
+        if (properties[i]["value"] != null) {
+            args.push([ properties[i]["name"], properties[i]["value"] ]);
+        }
+    }
+    this.executeSQLUpdate(queryConfig, [], ["ConfigProperty", "Set", "Insert"], DATASOURCE, sql, args);
+    this.configPropertyAudit(args);
+    return true;
+}
+return false;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getConfigProperty" args="propertyName,nameValueOnly" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+var CacheUtil = com.vitria.util.CacheUtil;
+var cache = CacheUtil.getCache("VIAOPS.Config.Property", 60 * 24);
+if (propertyName != null && cache.get(propertyName) != null) {
+    return cache.get(propertyName);
+} else {
+    var result = this._getConfigProperty(queryConfig, propertyName, nameValueOnly);
+    if (propertyName != null) {
+        cache.put(propertyName, result);
+    }
+    return result;
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="resetConfigProperty" args="" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+var CacheUtil = com.vitria.util.CacheUtil;
+CacheUtil.removeCache("VIAOPS.Config.Property");
+return this._resetConfigProperty(queryConfig);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="setConfigProperty" args="properties" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+var CacheUtil = com.vitria.util.CacheUtil;
+CacheUtil.removeCache("VIAOPS.Config.Property");
+return this._setConfigProperty(queryConfig, properties);
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="09f69f18-270e-4b01-8995-078e1c892da4" name="CONFIG_PROPERTY_DELETE_SQL" type="application/sql" size="34" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="b0613b6d-5040-4b4c-820d-8da4b99487b7" name="CONFIG_PROPERTY_INSERT_SQL" type="application/sql" size="64" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="6dfdf6cc-b4cb-48fb-8006-a7d2775a43e7" name="CONFIG_PROPERTY_SELECT_SQL" type="application/sql" size="85" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="ffceee2a-ebdf-40e8-8e25-4c74117c3da9" name="SQL Scripts" type="application/sql" size="278" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/space/another/dbpm/VIAOps - Base Service"/>
+      <Plugin uri="/app/dbp/space/another/dbpm/VIAOps - Config Audit Service"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

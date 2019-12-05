@@ -1,0 +1,2 @@
+SELECT *
+FROM viaops_parse_table

@@ -1,0 +1,23 @@
+-- NOTIFICATION_METRIC_SELECT_SQL
+SELECT
+    id,
+    metric_id,
+    dimensions,
+    noc_severity,
+    cust_call_impact,
+    anomaly_weight,
+    alarm_name,
+    r_assigned_group,
+    r_summary,
+    r_cat_tier_1,
+    r_cat_tier_2,
+    r_cat_tier_3,
+    r_product_cat_tier_1,
+    r_product_cat_tier_2,
+    r_product_cat_tier_3,
+    r_service_type,
+    r_reported_source,
+    r_corporate_id,
+    r_work_info_type
+FROM metric_dim
+ORDER BY 1

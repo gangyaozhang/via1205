@@ -1,0 +1,33 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "9c7a8c20-7897-4e5d-8118-99ab81a10f90"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "afa2ad66-b88c-4914-8d3b-589445dcdad4"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "abd45719-aba1-4b48-8bdd-f4174d9d13db"
+    },
+    {
+      "fileref": "ModelContentFile4",
+      "name": "45ed622a-1fb0-42a1-86cb-131965724958"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "afa2ad66-b88c-4914-8d3b-589445dcdad4,9c7a8c20-7897-4e5d-8118-99ab81a10f90,abd45719-aba1-4b48-8bdd-f4174d9d13db,45ed622a-1fb0-42a1-86cb-131965724958",
+    "__references__": "/app/dbp/user/via_common/dbpm/VIA - File Service,/app/dbp/space/another/dbpm/VIAOps - Base Service",
+    "modelStatus": "valid",
+    "name": "VIAOps - Maintenance Scheduler Service"
+  }
+}

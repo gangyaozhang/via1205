@@ -1,0 +1,656 @@
+<AnalyticsExplorerView is_init="false" name="VIAOps - Commonality Detail" description=" ">
+  <ModelInfo nextPageId="6" validated="true">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;value&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;,&quot;selected&quot;:true}"/>
+      <BackgroundColor color="#ffffff"/>
+      <TileBackgroundColor color="#ffffff"/>
+      <TileOpacity opacity="0.8"/>
+      <TileFontColor color="#555555"/>
+      <NoTileSpacing value="true"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <CustomCSSSetting><![CDATA[@import '/vitria-oi/rest/app/dbp/user/via_common/dbpm/VIA - Common/VIA-CSS';
+
+.app .smallTile .tileContainer.digiops-filter  {
+    margin-top: -3px;
+    margin-left: -3px;
+    padding: 0px;
+    height: 57px !important;
+}
+]]></CustomCSSSetting>
+    <Page className="digiops-commonality" panelstatus="closed" panelposition="right" tabNavVisible="true" desc="New Page1" title="Default" name="Default" id="3">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<div style="width:100%;height:100%;border:none;overflow:hidden;">
+    <div style="width:100%;height:54px;border:none;">
+        <div style="width:400px;height:54px;background-color:white;display:inline-block;" data-vitria-type="tile" data-vitria-tile-name="MetricFilter"></div>
+        <div style="width:220px;height:54px;background-color:white;display:inline-block;" data-vitria-type="tile" data-vitria-tile-name="TimeClause"></div>
+        <div style="width:calc(100% - 620px);height:54px;background-color:white;display:inline-block;" data-vitria-type="tile" data-vitria-tile-name="WhereClause"></div>
+    </div>
+    <div data-vitria-type="layout" style="width:100%;height:calc(100% - 58px);margin-top:3px;border:none;"></div>
+</div>
+]]></PageFrameContent>
+      <PageProperties/>
+      <Layout type="10" numRow="57" numCol="68" count="4" templateType="21" screenHeight="1080" renderType="undefined" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:67,&quot;data_sizey&quot;:56,&quot;id&quot;:0,&quot;title&quot;:&quot;Items&quot;},{&quot;data_col&quot;:68,&quot;data_row&quot;:1,&quot;data_sizex&quot;:53,&quot;data_sizey&quot;:27,&quot;id&quot;:1,&quot;title&quot;:&quot;Info&quot;},{&quot;data_col&quot;:68,&quot;data_row&quot;:28,&quot;data_sizex&quot;:53,&quot;data_sizey&quot;:45,&quot;id&quot;:2,&quot;title&quot;:&quot;Breakdown&quot;},{&quot;data_col&quot;:1,&quot;data_row&quot;:57,&quot;data_sizex&quot;:67,&quot;data_sizey&quot;:16,&quot;id&quot;:3,&quot;title&quot;:&quot;APEX&quot;}]" unitSize="{&quot;x&quot;:11.616666666666667,&quot;y&quot;:10.166666666666666}" viewRows="72" viewCols="120"/>
+      <Tile allowFullscreen="false" advancedDisable="true" advancedConfig="false" parentSelect="false" className="via-scroller" sampleData="undefined" style="small" type="Independent" previewSize="15" hideEmptyTile="false" desc="" title="Items" name="Items">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer minimode="false" optional="false" label="Dashboard View" name="ax.DashboardView">
+          <Property value="/app/ax/space/another/axv/VIAOps - Commonality View - Items" name="model"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <Tile allowFullscreen="false" advancedDisable="true" advancedConfig="false" parentSelect="false" className="via-scroller" sampleData="false" style="small" type="Independent" previewSize="15" hideEmptyTile="false" desc="" title="Info" name="Info">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer minimode="false" optional="false" label="Dashboard View" name="ax.DashboardView">
+          <Property value="/app/ax/space/another/axv/VIAOps - Commonality View - Info" name="model"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <Tile allowFullscreen="false" advancedDisable="true" advancedConfig="false" parentSelect="false" className="digiops-commonality-breakdown via-scroller" sampleData="false" style="small" type="Independent" previewSize="15" hideEmptyTile="false" desc="" title="Breakdown" name="Breakdown">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer minimode="false" optional="false" label="Dashboard View" name="ax.DashboardView">
+          <Property value="/app/ax/space/another/axv/VIAOps - Commonality View - Breakdown" name="model"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <Tile allowFullscreen="false" advancedDisable="true" advancedConfig="false" parentSelect="false" className="via-scroller" sampleData="false" style="small" type="Independent" previewSize="15" hideEmptyTile="false" desc="" title="APEX" name="APEX">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer minimode="false" optional="false" label="Dashboard View" name="ax.DashboardView">
+          <Property value="/app/ax/space/another/axv/VIAOps - Commonality View - Apex" name="model"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <frame_tile name="MetricFilter" title="MetricFilter" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="digiops-filter digiops-detail-filter digiops-commonality-metric-filter" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/user/via_common/dbpm/VIA - Common/Dimension Filter&quot;,&quot;model&quot;:&quot;{\r\n    \&quot;div-style\&quot; : \&quot;overflow:hidden;\&quot;,\r\n    \&quot;categories\&quot; : [{\r\n        \&quot;name\&quot; : \&quot;anomaly\&quot;,\r\n        \&quot;name-style\&quot; : \&quot;padding-left:0px;width:0px;\&quot;,\r\n        \&quot;value-style\&quot; : \&quot;padding:0px;width:100%;\&quot;,\r\n        \&quot;dimensions\&quot; : [{\r\n            \&quot;name\&quot; : \&quot;metric\&quot;,\r\n            \&quot;label\&quot; : \&quot;Computed Measure\&quot;,\r\n            \&quot;type\&quot; : \&quot;enumeration\&quot;,\r\n            \&quot;style\&quot; : \&quot;font-family:arial;\&quot;,\r\n            \&quot;default\&quot; : \&quot;_count/value\&quot;,\r\n            \&quot;none\&quot; : false,\r\n            \&quot;enums\&quot; : [\r\n                { \&quot;value\&quot; : \&quot;_count/value\&quot;,       \&quot;label\&quot; : \&quot;Number of Associated Events\&quot; },\r\n                { \&quot;value\&quot; : \&quot;_baseline/value\&quot;,    \&quot;label\&quot; : \&quot;Baseline of Associated Events\&quot; },\r\n                { \&quot;value\&quot; : \&quot;_diff/value\&quot;,        \&quot;label\&quot; : \&quot;+/- to Baseline\&quot; },\r\n                { \&quot;value\&quot; : \&quot;_diffPct/percent\&quot;,   \&quot;label\&quot; : \&quot;+/- Percentage to Baseline\&quot; },\r\n                { \&quot;value\&quot; : \&quot;_pTotal/percent\&quot;,    \&quot;label\&quot; : \&quot;Proportion of Total Events\&quot; },\r\n                { \&quot;value\&quot; : \&quot;_pBaseline/percent\&quot;, \&quot;label\&quot; : \&quot;Baseline Proportion of Total Events\&quot; },\r\n                { \&quot;value\&quot; : \&quot;_pctDev/percent\&quot;,    \&quot;label\&quot; : \&quot;Deviation Proportion of Total Events\&quot; },\r\n                { \&quot;value\&quot; : \&quot;_relDiff/percent\&quot;,   \&quot;label\&quot; : \&quot;Relative Difference over Baseline\&quot; }\r\n            ]\r\n        }]\r\n    }]\r\n}\r\n&quot;}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="TimeClause" title="TimeClause" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="digiops-detail-filter" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:294" name="axflow:localstore:node:294" label="Commonality Time" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="name" label="Name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="value" label="Value" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="SimpleText" label="HTML Composition" optional="false" minimode="false">
+          <Property name="text" value="{&quot;value&quot;:&quot;&amp;lt;!DOCTYPE html&amp;gt;\r\n&amp;lt;html&amp;gt;\r\n&amp;lt;head&amp;gt;\r\n&amp;lt;/head&amp;gt;\r\n&amp;lt;body&amp;gt;\r\n&amp;lt;div style=\&quot;font-family: monospace; width: 100%; vertical-align: top; padding-top: 3px;\&quot;&amp;gt;\r\n&amp;lt;table style=\&quot;width: 100%;\&quot;&amp;gt;\r\n&amp;lt;tbody&amp;gt;&amp;lt;!-- OUTER-BEGIN --&amp;gt;\r\n&amp;lt;tr&amp;gt;\r\n&amp;lt;td style=\&quot;width: 1%; white-space: nowrap; font-style: italic; padding-right: 0px;\&quot;&amp;gt;${name}&amp;lt;/td&amp;gt;\r\n&amp;lt;td style=\&quot;width: 99%; white-space: nowrap; font-weight: bold;\&quot;&amp;gt;${value}&amp;lt;/td&amp;gt;\r\n&amp;lt;/tr&amp;gt;\r\n&amp;lt;!-- OUTER-END --&amp;gt;&amp;lt;/tbody&amp;gt;\r\n&amp;lt;/table&amp;gt;\r\n&amp;lt;/div&amp;gt;\r\n&amp;lt;/body&amp;gt;\r\n&amp;lt;/html&amp;gt;&quot;,&quot;editBySource&quot;:true}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="WhereClause" title="WhereClause" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="digiops-detail-filter digiops-commonality-where-clause" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:224" name="axflow:localstore:node:224" label="Commonality Where" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="name" label="Name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="value" label="Value" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="SimpleText" label="HTML Composition" optional="false" minimode="false">
+          <Property name="text" value="{&quot;value&quot;:&quot;&amp;lt;!DOCTYPE html&amp;gt;\r\n&amp;lt;html&amp;gt;\r\n&amp;lt;head&amp;gt;\r\n&amp;lt;/head&amp;gt;\r\n&amp;lt;body&amp;gt;\r\n&amp;lt;div class=\&quot;via-scroller\&quot; style=\&quot;font-family: monospace; width: calc(100% - 3px); height: calc(100% - 3px); vertical-align: top; padding-top: 3px; overflow-y: auto;\&quot;&amp;gt;\r\n&amp;lt;table style=\&quot;width: 100%;\&quot;&amp;gt;\r\n&amp;lt;tbody&amp;gt;&amp;lt;!-- OUTER-BEGIN --&amp;gt;\r\n&amp;lt;tr style=\&quot;vertical-align:top;\&quot;&amp;gt;\r\n&amp;lt;td style=\&quot;width: 1%; white-space: nowrap; font-style: italic; padding-right: 3px;\&quot;&amp;gt;${name}&amp;lt;/td&amp;gt;\r\n&amp;lt;td style=\&quot;width: 99%; white-space: normal; font-weight: bold;\&quot;&amp;gt;${value}&amp;lt;/td&amp;gt;\r\n&amp;lt;/tr&amp;gt;\r\n&amp;lt;!-- OUTER-END --&amp;gt;&amp;lt;/tbody&amp;gt;\r\n&amp;lt;/table&amp;gt;\r\n&amp;lt;/div&amp;gt;\r\n&amp;lt;/body&amp;gt;\r\n&amp;lt;/html&amp;gt;&quot;,&quot;editBySource&quot;:true}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+    </Page>
+    <Script>
+      <Properties>
+        <Property name="toTime" label="To Time" type="string" value="2017-07-21T04:00:00.000Z" constraints="" runtimeControl="true"/>
+        <Property name="fromTime" label="From Time" type="string" value="2017-07-20T04:00:00.000Z" constraints="" runtimeControl="true"/>
+        <Property name="eventType" label="Event Type" type="string" value="" constraints="" runtimeControl="true"/>
+        <Property name="tableName" label="Table Name" type="string" value="cc_enriched_call" constraints="" runtimeControl="true"/>
+        <Property name="timeColumn" label="Time Column" type="string" value="CALL_DATE" constraints="" runtimeControl="true"/>
+        <Property name="whereClause" label="Where Clause" type="string" value="[{&quot;name&quot;:&quot;LOB&quot;,&quot;value&quot;:[&quot;2&quot;]},{&quot;name&quot;:&quot;IS_DEFLECTED&quot;,&quot;value&quot;:[&quot;f&quot;]},{&quot;name&quot;:&quot;REGION_NAME&quot;,&quot;value&quot;:[&quot;freedom&quot;]},{&quot;name&quot;:&quot;DIVISION_NAME&quot;,&quot;value&quot;:[&quot;northeast&quot;]}]" constraints="" runtimeControl="true"/>
+      </Properties>
+      <Stores/>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id="node:171" type="Tile" label="Metric Filter" _undefined_title="" _undefined_originHeight="" width="130" height="160" x="727" y="400"/>
+      <Item id="node:224" type="LocalStore" label="Commonality Where" _undefined_title="" _undefined_originHeight="" width="130" height="160" x="760" y="1140"/>
+      <Item id="node:294" type="LocalStore" label="Commonality Time" _undefined_title="" _undefined_originHeight="" width="130" height="160" x="940" y="1080"/>
+      <Item id="node:297" type="UserScript" label="Script 83" _undefined_title="" originHeight="100" width="200" height="267" x="392" y="280">
+        <dynIn id="din:0" type="any" label="Config" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any[]" label="Primary Filter" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="any[]" label="Secondary Filter" evaluate="always" _isArray="true"/>
+        <dynIn id="din:3" type="string" label="Language" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Items" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="event[]" label="Time Text" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="event[]" label="Where Clause" propagate="always" _isArray="true"/>
+        <dynOut id="dout:3" type="any[]" label="Filters" propagate="always" _isArray="true"/>
+        <dynOut id="dout:4" type="event[]" label="APEX" propagate="always" _isArray="true"/>
+        <dynOut id="dout:5" type="string" label="Metric Aggregation" propagate="always" _isArray="true"/>
+        <dynOut id="dout:6" type="any" label="Metric Filter Config" propagate="always" _isArray="true"/>
+        <dynOut id="dout:7" type="any" label="Truncate Notify" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:367" type="PortOut" label="Port OUT" _undefined_title="" _undefined_originHeight="" width="130" height="160" x="1560" y="188"/>
+      <Item id="node:369" type="UserScript" label="Script 91" _undefined_title="" originHeight="100" width="130" height="100" x="1300" y="100">
+        <dynIn id="din:0" type="any[]" label="Filter" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:375" type="PortIn" label="Port IN" _undefined_title="" originHeight="117" width="130" height="177" x="92" y="260">
+        <dynOut id="dout:0" type="any" label="Config" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="Primary Filter" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any[]" label="Secondary Filter" propagate="always" _isArray="true"/>
+        <dynOut id="dout:6" type="string" label="Language" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:377" type="Tile" label="Items" _undefined_title="" originHeight="177" width="160" height="267" x="987" y="188">
+        <dynIn id="din:Config" type="any" label="Config" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Language" type="string" label="Language" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Items" type="event[]" label="Items" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:APEX" type="event[]" label="APEX" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Metric Type" type="any[]" label="Metric Type" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Metric Aggregation" type="string" label="Metric Aggregation" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Filters" type="any[]" label="Filters" _undefined_default="" evaluate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:378" type="Tile" label="APEX" _undefined_title="" originHeight="177" width="160" height="177" x="987" y="534">
+        <dynIn id="din:Config" type="any" label="Config" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Language" type="string" label="Language" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:APEX" type="event[]" label="APEX" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Metric Aggregation" type="string" label="Metric Aggregation" _undefined_default="" evaluate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:379" type="Tile" label="Info" _undefined_title="" originHeight="177" width="160" height="217" x="1268" y="694">
+        <dynIn id="din:Config" type="any" label="Config" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Language" type="string" label="Language" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Selected Item" type="event[]" label="Selected Item" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Metric Aggregation" type="string" label="Metric Aggregation" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Metric Type" type="any[]" label="Metric Type" _undefined_default="" evaluate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:380" type="Tile" label="Breakdown" _undefined_title="" originHeight="177" width="160" height="217" x="1267" y="920">
+        <dynIn id="din:Config" type="any" label="Config" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Language" type="string" label="Language" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Items" type="event[]" label="Items" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Metric Type" type="any[]" label="Metric Type" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Metric Aggregation" type="string" label="Metric Aggregation" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Selected Item" type="event[]" label="Selected Item" _undefined_default="" evaluate="always" _isArray="true"/>
+      </Item>
+      <Link srcId="node:375" srcPort="dout:6" tgtId="node:297" tgtPort="din:3"/>
+      <Link srcId="node:369" srcPort="dout:0" tgtId="node:367" tgtPort="in:0"/>
+      <Link srcId="node:297" srcPort="dout:3" tgtId="node:369" tgtPort="din:0"/>
+      <Link srcId="node:297" srcPort="dout:1" tgtId="node:294" tgtPort="in:0"/>
+      <Link srcId="node:297" srcPort="dout:2" tgtId="node:224" tgtPort="in:0"/>
+      <Link srcId="node:375" srcPort="dout:0" tgtId="node:297" tgtPort="din:0"/>
+      <Link srcId="node:375" srcPort="dout:1" tgtId="node:297" tgtPort="din:1"/>
+      <Link srcId="node:375" srcPort="dout:2" tgtId="node:297" tgtPort="din:2"/>
+      <Link srcId="node:297" srcPort="dout:6" tgtId="node:171" tgtPort="in:0"/>
+      <Link srcId="node:375" srcPort="dout:0" tgtId="node:377" tgtPort="din:Config"/>
+      <Link srcId="node:375" srcPort="dout:6" tgtId="node:377" tgtPort="din:Language"/>
+      <Link srcId="node:297" srcPort="dout:0" tgtId="node:377" tgtPort="din:Items"/>
+      <Link srcId="node:297" srcPort="dout:4" tgtId="node:377" tgtPort="din:APEX"/>
+      <Link srcId="node:171" srcPort="out:1" tgtId="node:377" tgtPort="din:Metric Type"/>
+      <Link srcId="node:297" srcPort="dout:5" tgtId="node:377" tgtPort="din:Metric Aggregation"/>
+      <Link srcId="node:297" srcPort="dout:3" tgtId="node:377" tgtPort="din:Filters"/>
+      <Link srcId="node:375" srcPort="dout:0" tgtId="node:378" tgtPort="din:Config"/>
+      <Link srcId="node:375" srcPort="dout:6" tgtId="node:378" tgtPort="din:Language"/>
+      <Link srcId="node:297" srcPort="dout:4" tgtId="node:378" tgtPort="din:APEX"/>
+      <Link srcId="node:297" srcPort="dout:5" tgtId="node:378" tgtPort="din:Metric Aggregation"/>
+      <Link srcId="node:375" srcPort="dout:0" tgtId="node:379" tgtPort="din:Config"/>
+      <Link srcId="node:375" srcPort="dout:6" tgtId="node:379" tgtPort="din:Language"/>
+      <Link srcId="node:375" srcPort="dout:0" tgtId="node:380" tgtPort="din:Config"/>
+      <Link srcId="node:375" srcPort="dout:6" tgtId="node:380" tgtPort="din:Language"/>
+      <Link srcId="node:297" srcPort="dout:5" tgtId="node:379" tgtPort="din:Metric Aggregation"/>
+      <Link srcId="node:297" srcPort="dout:5" tgtId="node:380" tgtPort="din:Metric Aggregation"/>
+      <Link srcId="node:171" srcPort="out:1" tgtId="node:380" tgtPort="din:Metric Type"/>
+      <Link srcId="node:297" srcPort="dout:0" tgtId="node:380" tgtPort="din:Items"/>
+      <Link srcId="node:377" srcPort="out:0" tgtId="node:379" tgtPort="din:Selected Item"/>
+      <Link srcId="node:377" srcPort="out:0" tgtId="node:380" tgtPort="din:Selected Item"/>
+      <Link srcId="node:377" srcPort="out:0" tgtId="node:369" tgtPort="din:1"/>
+      <Link srcId="node:377" srcPort="out:1" tgtId="node:367" tgtPort="in:1"/>
+      <Link srcId="node:377" srcPort="out:2" tgtId="node:367" tgtPort="in:2"/>
+      <Link srcId="node:377" srcPort="out:3" tgtId="node:367" tgtPort="in:3"/>
+      <Link srcId="node:297" srcPort="dout:7" tgtId="node:377" tgtPort="in:0"/>
+      <Link srcId="node:297" srcPort="dout:7" tgtId="node:378" tgtPort="in:0"/>
+      <Link srcId="node:297" srcPort="dout:7" tgtId="node:379" tgtPort="in:0"/>
+      <Link srcId="node:297" srcPort="dout:7" tgtId="node:380" tgtPort="in:0"/>
+      <Link srcId="node:171" srcPort="out:1" tgtId="node:379" tgtPort="din:Metric Type"/>
+      <Input key="node:171/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#3#MetricFilter&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;MetricFilter&quot;}]"/>
+      <Input key="node:297/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Primary Filter&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Secondary Filter&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:3&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Language&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:297/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Items&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Time Text&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Where Clause&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:3&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Filters&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:4&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;APEX&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:5&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Metric Aggregation&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:6&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Metric Filter Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:7&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Truncate Notify&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:297/cfg:schema/default" value="&quot;var schema = [];\r\nschema.push({\r\n    name:\&quot;_eventType\&quot;,\r\n    label:\&quot;Event Type\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_eventLabel\&quot;,\r\n    label:\&quot;Event Label\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_name\&quot;,\r\n    label:\&quot;Column Name\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_label\&quot;,\r\n    label:\&quot;Dimension Name\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_value\&quot;,\r\n    label:\&quot;Dimension Value\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_count\&quot;,\r\n    label:\&quot;Count\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_baseline\&quot;,\r\n    label:\&quot;Baseline\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_diff\&quot;,\r\n    label:\&quot;Difference\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_diffPct\&quot;,\r\n    label:\&quot;Percentage Difference\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_pBaseline\&quot;,\r\n    label:\&quot;Baseline Proportion\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_pTotal\&quot;,\r\n    label:\&quot;Total Proportion\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_relDiff\&quot;,\r\n    label:\&quot;Relative Difference\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_pctDev\&quot;,\r\n    label:\&quot;Deviation Proportion\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nsetOutputSchema(\&quot;dout:0\&quot;, schema);\r\n\r\nschema = [];\r\nschema.push({\r\n    name:\&quot;name\&quot;,\r\n    label:\&quot;Name\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;value\&quot;,\r\n    label:\&quot;Value\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nsetOutputSchema(\&quot;dout:1\&quot;, schema);\r\nsetOutputSchema(\&quot;dout:2\&quot;, schema);\r\n\r\nschema = [];\r\nschema.push({\r\n    name:\&quot;_eventType\&quot;,\r\n    label:\&quot;Event Type\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_eventLabel\&quot;,\r\n    label:\&quot;Event Label\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_count\&quot;,\r\n    label:\&quot;Count\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_baseline\&quot;,\r\n    label:\&quot;Baseline\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_diff\&quot;,\r\n    label:\&quot;Difference\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_diffPct\&quot;,\r\n    label:\&quot;Pct Difference\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nsetOutputSchema(\&quot;dout:4\&quot;, schema);\r\n&quot;"/>
+      <Input key="node:297/cfg:model/default" value="&quot;var CommonPlugin = Plugin(\&quot;Common\&quot;);\nvar HelperPlugin = Plugin(\&quot;Helper\&quot;);\n\nvar config = getInput(\&quot;din:0\&quot;);\nvar primary = getInput(\&quot;din:1\&quot;);\nvar secondary = getInput(\&quot;din:2\&quot;);\nvar language = getInput(\&quot;din:3\&quot;) || \&quot;en\&quot;;\n\nfunction addMaxRowControl(model, items)\n{\n    if (items.length &lt; 1000) return;\n    \n    var maxrows = {\n        \&quot;name\&quot; : \&quot;maxrows\&quot;,\n        \&quot;label\&quot; : \&quot;Display Max Rows\&quot;,\n        \&quot;type\&quot; : \&quot;enumeration\&quot;,\n        \&quot;style\&quot; : \&quot;font-family:arial;\&quot;,\n        \&quot;default\&quot; : \&quot;1000\&quot;,\n        \&quot;none\&quot; : false,\n        \&quot;enums\&quot; : []\n    };\n    [1000, 2000, 3000, 4000, 5000].forEach(function(count) {\n        if (count &lt; items.length) {\n            maxrows.enums.push({\n                value : String(count),\n                label : \&quot;up to \&quot; + count + \&quot; of \&quot; + items.length,\n            });\n        }\n    });\n    maxrows.enums.push({ value:\&quot;0\&quot;, label:\&quot;all \&quot;+items.length });\n    model.categories[0].dimensions.push(maxrows);\n}\n\nif (config != null &amp;&amp; getOutput(\&quot;dout:6\&quot;) == null) {\n    setOutput(\&quot;dout:6\&quot;, {\n        model : HelperPlugin.getComputedMeasureConfig(1, \&quot;SUM\&quot;, config, language)\n    });\n}\n\nHelperPlugin.getCommonalities(CommonPlugin, config, language, primary, secondary, getLocal, setLocal, function(name, value) {\n    switch (name) {\n        case \&quot;result\&quot;:\n            var model = HelperPlugin.getComputedMeasureConfig(value.apex.length, value.aggr, config, language);\n            addMaxRowControl(model, value.items);\n            setOutput(\&quot;dout:0\&quot;, value.items);\n            setOutput(\&quot;dout:4\&quot;, value.apex);\n            setOutput(\&quot;dout:5\&quot;, value.aggr);\n            setOutput(\&quot;dout:6\&quot;, {\n                model : model\n            });\n            break;\n        case \&quot;filters\&quot;:\n            setOutput(\&quot;dout:0\&quot;, []);\n            setOutput(\&quot;dout:4\&quot;, []);\n            setOutput(\&quot;dout:3\&quot;, value);\n            setOutput(\&quot;dout:7\&quot;, {\n                notify : {\n                    actions : [{\n                        command : \&quot;truncate\&quot;\n                    }]\n                }\n            });\n            break;\n        case \&quot;time-range\&quot;:\n            setOutput(\&quot;dout:1\&quot;, value);\n            break;\n        case \&quot;where-clause\&quot;:\n            setOutput(\&quot;dout:2\&quot;, value);\n            break;\n    }\n});\n&quot;"/>
+      <Input key="node:369/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Filter&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:369/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:369/cfg:model/default" value="&quot;if (port) {\n    var selection = getInput(\&quot;din:1\&quot;) || [];\n    if (selection.length &gt; 0) {\n        var filters = getInput(\&quot;din:0\&quot;) || [];\n        if (filters.length &gt; 0) {\n            selection[0][\&quot;__FILTERS__\&quot;] = filters;\n        }\n    }\n    setOutput(\&quot;dout:0\&quot;, selection);\n}\n&quot;"/>
+      <Input key="node:369/cfg:schema/default" value="&quot;setOutputSchema(\&quot;dout:0\&quot;, getInputSchema(\&quot;din:1\&quot;));&quot;"/>
+      <Input key="node:375/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Primary Filter&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Secondary Filter&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:6&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Language&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:171/in:0/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:377/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#3#Items&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Items&quot;}]"/>
+      <Input key="node:378/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#3#APEX&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;APEX&quot;}]"/>
+      <Input key="node:379/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#3#Info&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Info&quot;}]"/>
+      <Input key="node:380/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#3#Breakdown&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Breakdown&quot;}]"/>
+      <Input key="node:377/in:0/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:378/in:0/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:379/in:0/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:380/in:0/evaluate" value="&quot;always&quot;"/>
+      <Output key="node:375/out:0/propagate" value="&quot;always&quot;"/>
+      <Schema id="node:224/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:224/in:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:294/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:297/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:297/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:294/in:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:297/dout:2">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:297/dout:4">
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Pct Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:377/out:0">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;label&quot;:&quot;ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metric&quot;,&quot;label&quot;:&quot;Metric&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metricText&quot;,&quot;label&quot;:&quot;Metric Text&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:377/out:1">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;label&quot;:&quot;ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metric&quot;,&quot;label&quot;:&quot;Metric&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metricText&quot;,&quot;label&quot;:&quot;Metric Text&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:377/out:2">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;label&quot;:&quot;ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metric&quot;,&quot;label&quot;:&quot;Metric&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metricText&quot;,&quot;label&quot;:&quot;Metric Text&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:377/din:Items">
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:377/din:APEX">
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Pct Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:378/din:APEX">
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Pct Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:380/din:Items">
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:379/din:Selected Item">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;label&quot;:&quot;ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metric&quot;,&quot;label&quot;:&quot;Metric&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metricText&quot;,&quot;label&quot;:&quot;Metric Text&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:380/din:Selected Item">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;label&quot;:&quot;ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metric&quot;,&quot;label&quot;:&quot;Metric&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metricText&quot;,&quot;label&quot;:&quot;Metric Text&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:369/din:1">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;label&quot;:&quot;ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metric&quot;,&quot;label&quot;:&quot;Metric&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metricText&quot;,&quot;label&quot;:&quot;Metric Text&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:369/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;label&quot;:&quot;ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metric&quot;,&quot;label&quot;:&quot;Metric&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metricText&quot;,&quot;label&quot;:&quot;Metric Text&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:367/in:0">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;label&quot;:&quot;ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metric&quot;,&quot;label&quot;:&quot;Metric&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metricText&quot;,&quot;label&quot;:&quot;Metric Text&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:171/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:171/out:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:377/din:Metric Type">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:380/din:Metric Type">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:171/out:2">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:171/out:3">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:367/in:1">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;label&quot;:&quot;ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metric&quot;,&quot;label&quot;:&quot;Metric&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metricText&quot;,&quot;label&quot;:&quot;Metric Text&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:367/in:2">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;label&quot;:&quot;ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metric&quot;,&quot;label&quot;:&quot;Metric&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metricText&quot;,&quot;label&quot;:&quot;Metric Text&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:379/din:Metric Type">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <DynInput id="node:297">
+        <Port id="din:0" type="any" label="Config" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="any[]" label="Primary Filter" evaluate="always" _isArray="true"/>
+        <Port id="din:2" type="any[]" label="Secondary Filter" evaluate="always" _isArray="true"/>
+        <Port id="din:3" type="string" label="Language" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:369">
+        <Port id="din:0" type="any[]" label="Filter" evaluate="always"/>
+        <Port id="din:1" type="event[]" label="Selection" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:377">
+        <Port id="din:Config" type="any" label="Config" _undefined_default="" evaluate="always"/>
+        <Port id="din:Language" type="string" label="Language" _undefined_default="" evaluate="always"/>
+        <Port id="din:Items" type="event[]" label="Items" _undefined_default="" evaluate="always"/>
+        <Port id="din:APEX" type="event[]" label="APEX" _undefined_default="" evaluate="always"/>
+        <Port id="din:Metric Type" type="any[]" label="Metric Type" _undefined_default="" evaluate="always"/>
+        <Port id="din:Metric Aggregation" type="string" label="Metric Aggregation" _undefined_default="" evaluate="always"/>
+        <Port id="din:Filters" type="any[]" label="Filters" _undefined_default="" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:378">
+        <Port id="din:Config" type="any" label="Config" _undefined_default="" evaluate="always"/>
+        <Port id="din:Language" type="string" label="Language" _undefined_default="" evaluate="always"/>
+        <Port id="din:APEX" type="event[]" label="APEX" _undefined_default="" evaluate="always"/>
+        <Port id="din:Metric Aggregation" type="string" label="Metric Aggregation" _undefined_default="" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:379">
+        <Port id="din:Config" type="any" label="Config" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:Language" type="string" label="Language" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:Selected Item" type="event[]" label="Selected Item" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:Metric Aggregation" type="string" label="Metric Aggregation" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:Metric Type" type="any[]" label="Metric Type" _undefined_default="" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:380">
+        <Port id="din:Config" type="any" label="Config" _undefined_default="" evaluate="always"/>
+        <Port id="din:Language" type="string" label="Language" _undefined_default="" evaluate="always"/>
+        <Port id="din:Items" type="event[]" label="Items" _undefined_default="" evaluate="always"/>
+        <Port id="din:Metric Type" type="any[]" label="Metric Type" _undefined_default="" evaluate="always"/>
+        <Port id="din:Metric Aggregation" type="string" label="Metric Aggregation" _undefined_default="" evaluate="always"/>
+        <Port id="din:Selected Item" type="event[]" label="Selected Item" _undefined_default="" evaluate="always"/>
+      </DynInput>
+      <DynOutput id="node:297">
+        <Port id="dout:0" type="event[]" label="Items" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="event[]" label="Time Text" propagate="always" _isArray="true"/>
+        <Port id="dout:2" type="event[]" label="Where Clause" propagate="always" _isArray="true"/>
+        <Port id="dout:3" type="any[]" label="Filters" propagate="always" _isArray="true"/>
+        <Port id="dout:4" type="event[]" label="APEX" propagate="always" _isArray="true"/>
+        <Port id="dout:5" type="string" label="Metric Aggregation" propagate="always" _isArray="true"/>
+        <Port id="dout:6" type="any" label="Metric Filter Config" propagate="always" _isArray="true"/>
+        <Port id="dout:7" type="any" label="Truncate Notify" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:369">
+        <Port id="dout:0" type="any[]" label="Out(0)" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:375">
+        <Port id="dout:0" type="any" label="Config" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="any[]" label="Primary Filter" propagate="always" _isArray="true"/>
+        <Port id="dout:2" type="any[]" label="Secondary Filter" propagate="always" _isArray="true"/>
+        <Port id="dout:6" type="string" label="Language" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <Version id="node:171" version="1"/>
+      <Version id="node:224" version="2"/>
+      <Version id="node:294" version="2"/>
+      <Version id="node:297" version="2"/>
+      <Version id="node:367" version="1"/>
+      <Version id="node:369" version="2"/>
+      <Version id="node:375" version="1"/>
+      <Version id="node:377" version="1"/>
+      <Version id="node:378" version="1"/>
+      <Version id="node:379" version="1"/>
+      <Version id="node:380" version="1"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/user/via_common/dbpm/VIA - Common" alias="Common"/>
+      <DashboardPlugin uri="/app/dbp/space/another/dbpm/VIAOps - Commonality Plugin" alias="Helper"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

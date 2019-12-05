@@ -1,0 +1,4 @@
+select
+    *
+FROM viaops_incident_table
+WHERE metric_id = '${config_metric_id}'

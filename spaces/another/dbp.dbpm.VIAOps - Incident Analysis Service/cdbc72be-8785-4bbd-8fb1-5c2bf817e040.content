@@ -1,0 +1,6 @@
+SELECT id, metricname, event_tm, service, sub_service, target_name, target_interface, target_addr, audit_ts, date_key
+FROM viaops_notification_archive
+WHERE date_key in (${dateKeys}) AND event_tm BETWEEN ${fromEpoch} AND ${toEpoch}
+${notificationIdWhereClause}
+ORDER BY event_tm ASC
+

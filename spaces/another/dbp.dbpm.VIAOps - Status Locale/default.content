@@ -1,0 +1,40 @@
+<DashboardPluginModel description=" " name="DynPop V4 - Locale" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services/>
+    <Resources>
+      <Resource uuid="6e91b391-a52d-445f-82f2-adadc231847b" name="de" type="application/json" size="705" private="false">
+        <Description>
+          <![CDATA[Locale string for German language]]>
+        </Description>
+      </Resource>
+      <Resource uuid="cdaf1085-8a19-4aec-86b2-d65f56d988f7" name="en" type="application/json" size="687" private="false">
+        <Description>
+          <![CDATA[Locale string for English language]]>
+        </Description>
+      </Resource>
+      <Resource uuid="8a5398c5-cf38-435f-802a-5c1999f27abb" name="fr" type="application/json" size="722" private="false">
+        <Description>
+          <![CDATA[Locale string for French language]]>
+        </Description>
+      </Resource>
+      <Resource uuid="a7ea1663-6360-48c6-83ce-2def3f33c425" name="ko" type="application/json" size="619" private="false">
+        <Description>
+          <![CDATA[Locale string for Koreanlanguage]]>
+        </Description>
+      </Resource>
+      <Resource uuid="539664b7-8c2a-405a-8034-f7b6848fe315" name="ru" type="application/json" size="712" private="false">
+        <Description>
+          <![CDATA[Locale string for Russian language]]>
+        </Description>
+      </Resource>
+      <Resource uuid="ae719db6-4b70-4de1-8ebc-e1218588ff80" name="zh" type="application/json" size="606" private="false">
+        <Description>
+          <![CDATA[Locale string for Chinese language]]>
+        </Description>
+      </Resource>
+    </Resources>
+  </ModelInfo>
+</DashboardPluginModel>

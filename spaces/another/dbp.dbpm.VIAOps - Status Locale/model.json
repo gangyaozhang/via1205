@@ -1,0 +1,45 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile1",
+      "name": "ae719db6-4b70-4de1-8ebc-e1218588ff80"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile2",
+      "name": "539664b7-8c2a-405a-8034-f7b6848fe315"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile3",
+      "name": "a7ea1663-6360-48c6-83ce-2def3f33c425"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile4",
+      "name": "8a5398c5-cf38-435f-802a-5c1999f27abb"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile5",
+      "name": "6e91b391-a52d-445f-82f2-adadc231847b"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile6",
+      "name": "cdaf1085-8a19-4aec-86b2-d65f56d988f7"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": " ",
+    "_RESOURCE_Type": "dbpm",
+    "modelStatus": "valid",
+    "name": "VIAOps - Status Locale"
+  }
+}

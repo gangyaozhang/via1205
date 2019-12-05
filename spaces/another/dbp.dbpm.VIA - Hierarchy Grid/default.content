@@ -1,0 +1,463 @@
+<DashboardPluginModel description="Description of New Model 0" name="VIA - Hierarchy Grid" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets>
+      <Widget name="HierarchicalDataGridRenderer" private="false">
+        <PropertyText>
+          <![CDATA[[
+    {
+        "name": "showHeader",
+        "label": "Header Visibility",
+        "type": "enums",
+        "value": "enable",
+        "options": [
+			{ "value": "enable", "label":"Visible"},
+			{ "value": "disable", "label":"Invisible"}
+		] 
+    }, 
+    {
+        "name": "borderType",
+        "label": "Border Type",
+        "type": "enums",
+        "value": "all",
+        "options": [
+			{ "value": "none", "label":"No borders"},
+			{ "value": "all", "label":"All borders"}
+		] 
+    },
+    {
+        "name": "rowSpacing",
+        "label": "Row Spacing",
+        "type": "enums",
+        "value": "5",
+        "options": [
+			{ "value": "0", "label": "0" },{ "value": "1", "label": "1" },{ "value": "2", "label": "2" },{ "value": "3", "label": "3" },{ "value": "4", "label": "4" },{ "value": "5", "label": "5" },
+            { "value": "6", "label": "6" },{ "value": "7", "label": "7" },{ "value": "8", "label": "8" },{ "value": "9", "label": "9" },{ "value": "10", "label": "10" }
+		] 
+    },
+    {
+        "name": "columnResize",
+        "label": "Column Resizable",
+        "type": "enums",
+        "value": "enable",
+        "options": [
+			{ "value": "enable", "label":"Enable"},
+			{ "value": "disable", "label":"Disable"}
+		]
+    },
+    {
+        "name": "highlightColor",
+        "label": "Highlight Color",
+        "type": "string",
+        "value": "#148AC4"
+    },
+    {
+        "name": "hoverColor",
+        "label": "Hover Color",
+        "type": "string",
+        "value": "#148AC4"
+    },
+    {
+        "name": "selectionMode",
+        "label": "Selection Mode",
+        "type": "enums",
+        "value": "single",
+        "options": [
+			{ "value": "none", "label":"None"},
+			{ "value": "single", "label":"Single"},
+			{ "value": "singleEx", "label":"Single Extended"},
+			{ "value": "multiple", "label":"Multiple"}
+		] 
+    },
+    {
+        "name": "gridClass",
+        "label": "Custom CSS",
+        "type": "json"
+    },
+    {
+        "name": "columnSetting",
+        "label": "ColumnSetting",
+        "type": "json"
+    }
+
+]]]>
+        </PropertyText>
+        <CodeText segment="#methods">
+          <![CDATA[        _loadTreeGridWidget : function(selectionItemList, noSelection){
+            var me = this;
+            require([
+                "widgetcore/renderers/hierarchicalGrid/HierarchicalDataGridRenderer"
+            ], function(HierarchicalDataGridRenderer){
+                me._TreeGridWidgetClass = HierarchicalDataGridRenderer;
+                me._createWidget();
+                var gridSetting = {};
+                if (me._metadata.gridSetting){
+                    for (var i=0; i<me._metadata.gridSetting.length; i++){
+                        var gs = me._metadata.gridSetting[i];
+                        gridSetting[gs.name] = gs.value;
+                    }
+                }
+                if(selectionItemList && selectionItemList.length > 0){
+                    var itemList = {};
+                    if(gridSetting.selectionMode == "multiple" || gridSetting.selectionMode == "none"){
+                        for(var i =0; i < selectionItemList.length; i++){
+                            var item = selectionItemList[i];
+                            var path = "";
+                            for(var j = 0; j < item.path.length; j++){
+                                path = path + "." + item.path[j];
+                            }
+                            var items = [];
+                            for(var j = 0; j < item.ids.length; j++){
+                                items.push({_id:item.ids[j]});
+                            }
+                            itemList[path] = items;
+                        }
+                    } else if(gridSetting.selectionMode == "singleEx" || gridSetting.selectionMode == "single"){
+                        var item = selectionItemList[selectionItemList.length - 1];
+                        var path = "";
+                        for(var j = 0; j < item.path.length; j++){
+                            path = path + "." + item.path[j];
+                        }
+                        var items = [];
+                        items.push({_id:item.ids[item.ids.length - 1]});
+                        itemList[path] = items ;
+                    }
+                    
+                    me._widget._widget.renderer._selectionItemList = itemList;
+                }
+                //window.setTimeout(lang.hitch(me, "doRefresh"), 0);
+                me._noSelection = noSelection;
+                me.doRefresh();
+                me._noSelection = false;
+           }); 
+        },
+        
+        _createWidget : function() {
+            AppUtil.removeAllChildrenOf(this.domNode);
+            this.gridDiv = domConstruct.create("div", {
+                style: "width:100%;height:100%;"
+            });
+            this.domNode.appendChild(this.gridDiv);
+            //debugger;
+            this._widget = new this._TreeGridWidgetClass({
+            	properties: this._metadata,
+            	vtWidthInfo : {},
+                vtHeightInfo: {},
+            	renderer: this,
+            	//"class":"voiTreeGrid"
+            },this.gridDiv);
+            this._widget.tile = this.renderer.tile;
+            this._widget.updateWidthAndHeight(this.vtWidth, this.vtHeight);
+        },
+
+        showHoverDetailOnSelection : function(tileInfoModel, selection, targetDom){
+            if (this.renderer.tile != null) {
+                this.renderer.tile.showHoverDetailOnSelection(tileInfoModel, selection, targetDom);
+            }
+        },
+        
+        hideHoverDetail  : function(tileInfoModel){
+            if (this.renderer.tile != null) {
+                this.renderer.tile.hideHoverDetail(tileInfoModel);
+            }
+        },
+        
+        updateUIEvent : function(selection) {
+            if (this.renderer.tile != null) {
+                this.renderer.tile.updateUIEvent(selection);
+            }
+        },        
+        
+        updateSelection : function(selection) {
+            if (this.renderer.tile != null) {
+                this.renderer.tile.updateSelection(selection);
+            }
+        },
+        
+        drillDownOnSelection : function(tileInfoModel, selection) {
+            if (this.renderer.tile != null) {
+                this.renderer.tile.drillDownOnSelection(tileInfoModel, selection);
+            }
+        },
+        
+        _getDefaultColumnSetting : function(){
+            var schema = this.renderer.schema;
+            if(this.renderer.schema == null) return [];
+            var columnSetting = [];
+            for (var i=0; i<schema.length; i++){
+                var field = schema[i];
+                var align = getDefaultAlignmentStyle(field.type);
+                columnSetting.push({
+                    field: field.name,
+                    label: field.label,
+                    headerAlign: align,
+                    style:{
+                        textAlign:align
+                    }
+                })
+            }
+            return columnSetting;
+        },
+        
+        _fixColumnSettings : function(columnSetting){
+            for (var i=0; i<columnSetting.length; i++){
+                var cs = columnSetting[i];
+                if (cs.headerAlign == null){
+                    if (cs.style && cs.style.textAlign)
+                        cs.headerAlign = cs.style.textAlign;
+                    else
+                        cs.headerAlign = "left"
+                }
+            }
+        },
+        
+        _getAttributes : function(columnSetting){
+            var attrib = [];
+            for (var i=0; i<columnSetting.length; i++){
+                var cs = columnSetting[i];
+                attrib.push({
+                    "name":cs.name,
+                    "label":cs.label,
+                    "isKey":cs.isKey || false,
+                    "isVisible":false,
+                    "isName":cs.isName
+                })
+            }
+            return attrib;
+        },
+        
+        _destroyGrid : function(){
+            if(this._widget)
+                this._widget.destroy();
+        },
+        
+        _parseColumnSetting : function(){
+            var hierarchicalColumnSetting = null;
+            if (this.initialConfig.properties != null && this.initialConfig.properties.columnSetting != null){
+                try{
+                    hierarchicalColumnSetting = JSON.parse(this.initialConfig.properties.columnSetting);
+                }catch (e){}
+            }
+            
+            if (this._metadataChangedConfig && this._metadataChangedConfig.columnSetting != undefined){
+                for (var level in this._metadataChangedConfig.columnSetting) {
+                    var columnSetting = hierarchicalColumnSetting[level];
+                    var changedColumnSetting = this._metadataChangedConfig.columnSetting[level];
+                    for (var idx = 0; idx < columnSetting.length; idx++) {
+                        var setting = columnSetting[idx];
+                        for(var i = 0; i < changedColumnSetting.length; i++ ){
+                            if(setting.field == changedColumnSetting[i].field){
+                                AppUtil.mixinDeep(setting, changedColumnSetting[i]);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return hierarchicalColumnSetting;
+        }
+    //});        ]]>
+        </CodeText>
+        <CodeText segment="#doRefresh">
+          <![CDATA[            var result = this.renderer.result;
+            //if(!result) return;
+            //debugger;
+            if (this._widget != null && this._widget._widget) {
+                this._widget._widget.refresh(result, this._noSelection);
+            }]]>
+        </CodeText>
+        <CodeText segment="#postCreate">
+          <![CDATA[            this._loadTreeGridWidget();]]>
+        </CodeText>
+        <CodeText segment="#functions">
+          <![CDATA[    function updateGridSetting(gridSetting, property, value){
+        for (var i=0; i<gridSetting.length; i++){
+            if(gridSetting[i].name == property){
+                gridSetting[i].value = value;
+                break;
+            }
+        }
+    }
+    
+    function getDefaultAlignmentStyle(type){
+	    type = String(type).toLowerCase();
+        var style = "left";
+        switch (type) {
+            case "time":
+            case "dateTime":
+            case "date":
+            case "timestamp":
+            case "datetime":
+                style = "left";
+                break;
+            case "number":
+            case "float":
+            case "int":
+            case "integer":
+            case "double":
+            case "long":
+            case "short":
+            case "byte":
+            	style = "right";
+            	break;
+            case "string":
+                style = "left";
+                break;
+            default:
+                style = "left";
+        }
+        return style;
+    }]]>
+        </CodeText>
+        <CodeText segment="#buildRendering">
+          <![CDATA[            this.model = this.renderer.model;
+
+            //debugger;
+            var columnSetting = this._parseColumnSetting();
+            var attributes = [];
+            //attributes = this._getAttributes(columnSettings);
+            //debugger;
+            var gridClass = (this.initialConfig.properties.gridClass && this.initialConfig.properties.gridClass != "")
+            ? JSON.parse(this.initialConfig.properties.gridClass) : {};
+            var gridSetting = [
+        		{name: "showHeader", value: "enable"},
+                {name: "borderType", value: "all"},
+                {name: "rowSpacing", value: "5"},
+                {name: "columnResize", value: "enable"},
+                {name: "columnSortable", value: "enable"},
+                {name: "highlightColor", value: "#148AC4"},
+                {name: "hoverColor", value: "#148AC4"},
+                {name: "selectionMode", value: "single"},
+                {name : "gridClass", value : gridClass},
+                {name: "columnSetting", value: JSON.stringify(columnSetting)}
+            ];
+            if (this.initialConfig.properties != null){
+                if(this.initialConfig.properties.showHeader != null){
+                    updateGridSetting(gridSetting, "showHeader", this.initialConfig.properties.showHeader);
+                }
+                if(this.initialConfig.properties.borderType != null){
+                    updateGridSetting(gridSetting, "borderType", this.initialConfig.properties.borderType);
+                }
+                if(this.initialConfig.properties.rowSpacing != null){
+                    updateGridSetting(gridSetting, "rowSpacing", this.initialConfig.properties.rowSpacing);
+                }
+                if(this.initialConfig.properties.columnResize != null){
+                    updateGridSetting(gridSetting, "columnResize", this.initialConfig.properties.columnResize);
+                }
+                if(this.initialConfig.properties.highlightColor != null){
+                    updateGridSetting(gridSetting, "highlightColor", this.initialConfig.properties.highlightColor);
+                }
+                if(this.initialConfig.properties.hoverColor != null){
+                    updateGridSetting(gridSetting, "hoverColor", this.initialConfig.properties.hoverColor);
+                }
+                if(this.initialConfig.properties.selectionMode != null){
+                    updateGridSetting(gridSetting, "selectionMode", this.initialConfig.properties.selectionMode);
+                }
+            }
+            
+            this._metadata = {
+            	gridSetting : gridSetting
+            	
+            };
+        
+            ]]>
+        </CodeText>
+        <CodeText segment="#onNotify">
+          <![CDATA[            if (evt.grid != null) {
+                var recreateGrid = false;
+                this._metadataChangedConfig = evt.grid;
+                if (evt.grid.columnSetting != null){
+                    recreateGrid = true;
+                    var columnSettings = this._parseColumnSetting();
+                    if (this._metadata && this._metadata.gridSetting){
+                        
+                        for (var i=0; i<this._metadata.gridSetting.length; i++){
+                            if(this._metadata.gridSetting[i].name == "columnSetting"){
+                                this._metadata.gridSetting[i].value =  JSON.stringify(columnSettings);
+                            }
+                        }
+                    }
+                }
+                var gridSetting = this._metadata.gridSetting;
+                if(evt.grid.showHeader != null){
+                    updateGridSetting(gridSetting, "showHeader", evt.grid.showHeader);
+                }
+                if(evt.grid.borderType != null){
+                    updateGridSetting(gridSetting, "borderType", evt.grid.borderType);
+                }
+                if(evt.grid.rowSpacing != null){
+                    updateGridSetting(gridSetting, "rowSpacing", evt.grid.rowSpacing);
+                }
+                if(evt.grid.columnResize != null){
+                    updateGridSetting(gridSetting, "columnResize", evt.grid.columnResize);
+                }
+                if(evt.grid.highlightColor != null){
+                    updateGridSetting(gridSetting, "highlightColor", evt.grid.highlightColor);
+                }
+                if(evt.grid.hoverColor != null){
+                    updateGridSetting(gridSetting, "hoverColor", evt.grid.hoverColor);
+                }
+                if(evt.grid.selectionMode != null){
+                    updateGridSetting(gridSetting, "selectionMode", evt.grid.selectionMode);
+                }
+            
+                if (recreateGrid && this._widget){
+                    this._destroyGrid();
+                    var noSelection = true;
+                    var itemList;
+                    if(evt.grid.selectionItemList) {
+                        itemList = evt.grid.selectionItemList;
+                        noSelection = false;
+                    } else if(evt.grid.openItemList) {
+                        itemList = evt.grid.openItemList;
+                        noSelection = true;
+                    }
+                    this._loadTreeGridWidget(itemList, noSelection);
+                }
+            }]]>
+        </CodeText>
+        <CodeText segment="#destroy">
+          <![CDATA[            this._destroyGrid();]]>
+        </CodeText>
+        <CodeText segment="#constructor">
+          <![CDATA[            ]]>
+        </CodeText>
+        <CodeText segment="#updateWidthAndHeight">
+          <![CDATA[            this.vtWidth = w;
+            this.vtHeight = h;
+            if(this._widget) this._widget.updateWidthAndHeight(this.vtWidth, this.vtHeight);]]>
+        </CodeText>
+        <HtmlText>
+          <![CDATA[<div style="width:100%;height:100%;">
+</div>
+]]>
+        </HtmlText>
+      </Widget>
+    </Widgets>
+    <Functions/>
+    <Services/>
+    <Resources>
+      <Resource uuid="7f36173f-23fb-4e5d-81ce-7d5a6adea971" name="__Configs (private)" type="text/plain" size="3067" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="abab7ab4-6f72-41b8-87b7-2906bf03912f" name="_ColumnSettingReadme (private)" type="text/plain" size="4414" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="86f404cf-f55a-44c0-80d7-0dc669791c19" name="_CustomCSSReadme" type="text/plain" size="0" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="8d80c568-a370-46f7-8272-12f994e40ccb" name="hierarchySampleData (public)" type="text/plain" size="1365" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

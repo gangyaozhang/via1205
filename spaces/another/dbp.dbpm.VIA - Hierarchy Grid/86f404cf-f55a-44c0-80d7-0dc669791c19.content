@@ -1,0 +1,6 @@
+//leveln is the key for each level.
+{
+    "level0" : "customeClass0",
+    "level1" : "customeClass1",
+    "level2" : "customeClass2",
+}

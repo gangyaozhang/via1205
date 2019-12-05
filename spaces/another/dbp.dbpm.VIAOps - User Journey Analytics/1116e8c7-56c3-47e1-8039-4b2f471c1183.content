@@ -1,0 +1,7 @@
+INSERT INTO viaops_user_journey_event
+(
+    user_id, user_full_name, event_ts, 
+    from_viewer, to_viewer, 
+    ip, browser, device, os
+)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)

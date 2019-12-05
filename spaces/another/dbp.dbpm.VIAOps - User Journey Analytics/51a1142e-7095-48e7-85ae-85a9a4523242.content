@@ -1,0 +1,210 @@
+{
+    "sql-query-config" : {
+		"debug" : {
+			"*"     : true
+		}
+    },
+    "usageAnalytics": {
+        "record": false
+    },
+    "data-source":{
+        "user-journey":"charter_ref_db"
+    },
+    "event-field": {
+        "mouse-event": ["user_id", "user_full_name", "current_viewer", "event_ts", "event_type", "event_x", "event_y", "resolution_x", "resolution_y", "percent_x", "percent_y",  "ip", "browser", "device", "os"],
+        "journey-event": ["user_id", "user_full_name", "event_ts", "from_viewer", "to_viewer", "ip", "browser", "device", "os"]
+    },
+    "position-convert-config": {
+        "landingPage": [
+            [
+                {
+                    "relative": "y",
+                    "range": [0, 40]
+                }
+            ]
+        ],
+        "incidentAnalysis": [
+            [
+                {
+                    "relative": "y",
+                    "range": [0, 40]
+                }
+            ], [
+                {
+                    "relative": "y",
+                    "range": [77, 130]
+                },
+                {
+                    "relative": "x",
+                    "range": [0, -250]
+                }
+            ], [
+                {
+                    "relative": "y",
+                    "range": [77, 130]
+                },
+                {
+                    "relative": "x",
+                    "range": [-250, 1]
+                }
+            ]
+        ],
+        "executionMonitor": [
+            [
+                {
+                    "relative": "y",
+                    "range": [0, 40]
+                }
+            ]
+        ],
+        "trendAnalysis": [
+            [
+                {
+                    "relative": "y",
+                    "range": [0, 40]
+                }
+            ], [
+                {
+                    "relative": "y",
+                    "range": [40, 97]
+                },
+                {
+                    "relative": "x",
+                    "range": [0, 200]
+                }
+            ], [
+                {
+                    "relative": "y",
+                    "range": [40, 97]
+                },
+                {
+                    "relative": "x",
+                    "range": [-160, 1]
+                }
+            ], [
+                {
+                    "relative": "y",
+                    "range": [40, 97]
+                },
+                {
+                    "relative": "x",
+                    "range": [0.5, 500]
+                }
+            ], [
+                {
+                    "relative": "y",
+                    "range": [40, 97]
+                },
+                {
+                    "relative": "x",
+                    "range": [0.5, -460]
+                }
+            ]
+        ],
+        "dimensionAnalysis": [
+            [
+                {
+                    "relative": "y",
+                    "range": [0, 40]
+                }
+            ], [
+                {
+                    "relative": "y",
+                    "range": [40, 97]
+                },
+                {
+                    "relative": "x",
+                    "range": [-160, 1]
+                }
+            ], [
+                {
+                    "relative": "y",
+                    "range": [40, 97]
+                },
+                {
+                    "relative": "x",
+                    "range": [0.5, 500]
+                }
+            ], [
+                {
+                    "relative": "y",
+                    "range": [40, 97]
+                },
+                {
+                    "relative": "x",
+                    "range": [0.5, -460]
+                }
+            ]
+        ],
+        "anomalyAnalysis": [
+            [
+                {
+                    "relative": "y",
+                    "range": [0, 40]
+                }
+            ], [
+                {
+                    "relative": "y",
+                    "range": [40, 97]
+                },
+                {
+                    "relative": "x",
+                    "range": [0, 200]
+                }
+            ], [
+                {
+                    "relative": "y",
+                    "range": [40, 97]
+                },
+                {
+                    "relative": "x",
+                    "range": [-160, 1]
+                }
+            ], [
+                {
+                    "relative": "y",
+                    "range": [40, 97]
+                },
+                {
+                    "relative": "x",
+                    "range": [0.5, 500]
+                }
+            ], [
+                {
+                    "relative": "y",
+                    "range": [40, 97]
+                },
+                {
+                    "relative": "x",
+                    "range": [0.5, -460]
+                }
+            ]
+        ],
+        "causalAnalysis": [
+            [
+                {
+                    "relative": "y",
+                    "range": [0, 40]
+                }
+            ], [
+                {
+                    "relative": "y",
+                    "range": [40, 100]
+                },
+                {
+                    "relative": "x",
+                    "range": [0, -300]
+                }
+            ], [
+                {
+                    "relative": "y",
+                    "range": [40, 100]
+                },
+                {
+                    "relative": "x",
+                    "range": [-300, 1]
+                }
+            ]
+        ]
+    }
+}

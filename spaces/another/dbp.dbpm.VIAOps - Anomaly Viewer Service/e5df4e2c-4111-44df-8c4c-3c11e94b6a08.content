@@ -1,0 +1,2 @@
+INSERT INTO viaops_anomaly_config (config_name, metric_id, owner_id, config_json)
+VALUES (?, ?, ?, ?)

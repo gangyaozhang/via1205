@@ -1,0 +1,169 @@
+<AnalyticsExplorerView description="" name="TEST - Digital Operations Solution" is_init="false">
+  <ModelInfo validated="true" nextPageId="2">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="0"/>
+      <NoTileSpacing value="true"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <Page id="1" name="Default" title="Default" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<div class="contentMain" data-vitria-type="tile" data-vitria-tile-name="containerMain">
+</div>]]></PageFrameContent>
+      <PageCustomCSS><![CDATA[.contentMain {
+    width: 100%;
+    height: 100%;
+    background-color: #111111;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.containerTile {
+    background-color: #111111;
+}
+]]></PageCustomCSS>
+      <PageProperties/>
+      <Layout type="10" numRow="NaN" numCol="NaN" count="NaN" templateType="21" screenHeight="undefined" renderType="undefined" positions="[]" unitSize="undefined" viewRows="NaN" viewCols="NaN"/>
+      <frame_tile name="containerMain" title="containerMain" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="contentMain" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="ax.DashboardView" label="Dashboard View" optional="false" minimode="false">
+          <Property name="model" value="/app/ax/user/viaops_admin/axv/VIAOps - Solution Frame"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+    </Page>
+    <Script>
+      <Stores/>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id="node:1" type="UserScript" label="Init" _undefined_title="" originHeight="100" width="110.02778" height="267" x="160" y="160">
+        <dynOut id="dout:0" type="string" label="Template" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="Base Config" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="string" label="Time Zone" propagate="always" _isArray="true"/>
+        <dynOut id="dout:3" type="string" label="Locale" propagate="always" _isArray="true"/>
+        <dynOut id="dout:4" type="string" label="Interval" propagate="always" _isArray="true"/>
+        <dynOut id="dout:5" type="any,string" label="solutionName" propagate="always" _isArray="true"/>
+        <dynOut id="dout:6" type="string" label="Logo" propagate="always" _isArray="true"/>
+        <dynOut id="dout:7" type="string" label="opsJNDIName" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:9" type="Tile" label="Solution Frame" _undefined_title="" originHeight="160" width="140" height="337" x="540" y="160">
+        <dynIn id="din:BaseConfig" type="any[]" label="BaseConfig" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Time Zone" type="string" label="Time Zone" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Locale" type="string" label="Locale" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Interval" type="string" label="Interval" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:FilterObj" type="any" label="FilterObj" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Visualization" type="string" label="Visualization" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:result" type="any" label="result" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:solutionName" type="any,string" label="solutionName" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Logo" type="string" label="Logo" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:opsJNDIName" type="string" label="opsJNDIName" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:usageAnalytics" type="any" label="usageAnalytics" _undefined_default="" evaluate="always" _isArray="true"/>
+      </Item>
+      <Link srcId="node:1" srcPort="dout:0" tgtId="node:9" tgtPort="in:0"/>
+      <Link srcId="node:1" srcPort="dout:1" tgtId="node:9" tgtPort="din:BaseConfig"/>
+      <Link srcId="node:1" srcPort="dout:2" tgtId="node:9" tgtPort="din:Time Zone"/>
+      <Link srcId="node:1" srcPort="dout:3" tgtId="node:9" tgtPort="din:Locale"/>
+      <Link srcId="node:1" srcPort="dout:4" tgtId="node:9" tgtPort="din:Interval"/>
+      <Link srcId="node:1" srcPort="dout:5" tgtId="node:9" tgtPort="din:solutionName"/>
+      <Link srcId="node:1" srcPort="dout:6" tgtId="node:9" tgtPort="din:Logo"/>
+      <Link srcId="node:1" srcPort="dout:7" tgtId="node:9" tgtPort="din:opsJNDIName"/>
+      <Input key="node:1/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Template&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Base Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Time Zone&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:3&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Locale&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:4&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Interval&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:5&quot;,&quot;portType&quot;:&quot;any,string&quot;,&quot;portLabel&quot;:&quot;solutionName&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:6&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Logo&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:7&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;opsJNDIName&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:1/cfg:model/default" value="&quot;var CharterPlugin = Plugin(\&quot;Charter\&quot;);\n\nvar frameConfig = {\n    \&quot;logo\&quot;: \&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABLAAAAFoCAMAAABwqvIYAAAANlBMVEUAAAD////////////////////////////////////////////////////////////////////xY8b8AAAAEXRSTlMAABAgMEBQYHCAj5+vv8/f7/4ucL8AACaXSURBVHja7Z3bmqQqEkYHFBURhfd/2bmo7t2ZpocIzlb+62rm212ZpsIigDD43/8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAZ4tfj/0MAANIDYVFR2ljrvffeWTtPCsICAMJqkm6y/oNV9xAWABBWY4wHtvphmySEBQCE1ZCuNn+BM137wlL/gQYPIKzfLKzhUlfee+9088JC4AcgrG8QlrSewKYgLAAgrOrhlfM0NIQFAIRVF+3JWAlhAQBhVcR4BmsPYQEAYbW9fPWy9t5DWABAWJX49JVbtFJSCKXGef0MsSSEBQCE1cZ80Jn3tHa5yyZdJaaEAEBYddD7XCv5+W96s/cVhAUAhFUe9e6rWZ78s/XdVxAWABBWceRb/pVTd5HYX19BWABAWMVZPlenzujd67+AsACAsAozHKSEnkdj9sVoEBYAEFbhCeHr+84r4d83bwYIC0BYv1ZYmjwffIoZICwAYf1WYb2uuLsu3gxq0tZaa+2sFV1/SqlBa6VUF/ATeqV+/vLnf7zseaoPji6pG/VirbXW6CHg+zultB6DrhwACCs8wBoiQxk5Lrt8+Pm2G8thtm+7lHYejqyi9F9edzHlaNZ/JSQIrxd9bIEO5r0E2GaO78Lx93fTfxev0bsAhJWdl+66xM29pD4qT2Ovyn72By/9eO/9MlyI9Z8Z3vwYIiw5bYRK0Offvx7U3AEAwsrGGD4h3AlLn1XTsief200X5U238VYYu2LOAcIazy7ZjQRhTe6wSBgAEFY2lpge9yKsbr2o7DAdTbHuytnY/lIYavusKsgTVr9efXt3I6yj7wcAwsqKfNGKjBCWui5Waj5WjghueQ9z3oUh56MyqCxhjTffPlwKaz4twwoAhFVgRjiLCGHdsTMWsVjgfCaMo+CIKaz7SxjPhSVXD2EBCKvmjLDLKaydsUbPNtarMHrnY4VFUeZphHc4mYSwAISVm38934qswtr1Z+pxF+ORMA59xROWYX477fsBgLByos4mQHHCstbe7M9RD7xw/edfLM7HCuvTV87a9fKa/33/vHkIC0BYFZiiZoRHwtrmP8nkcjDvYtle/7Lb2WLWk1Jq0mZvDUtWHENY47686p9U1W6f+PqyEaF5ISQAEFZyzLFOgoX1nj21yyTVx9+8TG/5C/vsrPFOGFYPf9+4Ib6a019sRsr371nuhbXOo8J7OQDCKsB6nngQIqyPIOMtO+stb0JdJJW/5XNul8JYR3l1WXe/2nu/7D/gfUV9uBbWNkFVAMIqxb+eN8UL67BUqTnbddsuXtt5yxoYzoWxqpvLupsHHy7dyeVoIqsp6fgAQFj5kBcvBbOF5fo797wV2xqv3jJ8/avlVBj69rIOP9v5u60GS5uSzhIdCkBY5XhZ7ZHRwjop9fC6vP46fZKXiuzc3jr6fAORJyx966u3mobnU1KEVwDCqiUsESus00R5HTTv1PvgT5N9dS2s1wDrdOGuv5+SXnw/ABBWDv5t77tYYZ2/iSiD6te8eEUfCePKF5fCelnB2s7DSvNhtb2wBnQmAGGVRUflub8J6yILKSx3wuw0p28K8VGFtZLmdK8TWXn0/RP6EoCwnissSYnjOBPPcXdtmp6lefV9nafp0+xjKX2czwoAhPU8YV1N9rqgvchup503YWwyVFgTcdG836/OvX2/Q/YVgLAeLKzLGZK7FpZU+s+5FT8HQWjVH2hH0zforoRlqct22y4bQ+M1HABhtSKsNVJYl6GTPf9ncn8GxN/rWfSFsDYRLCxPze2fL77fIQELQFjlGZKlNYggYfWGVGbmQxhj8GX15A8ZdjbWnuw6ACCsHKiqwuqtp/EhLBl8WQO5PEW3W3V//X6kYAEIq66wVGlhHVRlpwprCb8s7QPQu7/c0I8AhFUBGZkHGSGsfvPBwprCL2tOISzMCAGEVYWoIyhihNU7Hy6sPvyybIiwlt334yVCAGFVwcblNQQLi+WrD2GJwsKyTGECAGFlwcSVawgVVsfy1V5Ytraw0I0AhFWFMW4RK1RYn8c9bH/zRl37wlrRjQCEVYU+biU5UFjTLkl0etuilGrUdrsQli4tLMMUJgAQVh5c1JwwTFhvJT+9Oc6H6oatGWFpCAtAWK0tYo2lhPV6yNamCH+VUFgawgIQVnphdUfHU2VgiEqHDBPWa5V3KaoJS5PZvZozoxsBCOvv8o2xZ9OW1Ro9JjbX6/RsLCOsjlilJYuwVPDJsYzvB+DXC0tNhri+4qwe0pVjMjEhVpCwBmKVlizC6oJrhkJYAML6iXKGeeUuq2xmTCMtFVPlKUhYmrjOn0VYL7sMC4QFICyusPopaOPKe+9XnSLleouooxkkrIW4ep0lreHl25lzQggLfL2wOr35KNb4k9Jf9+zWEsKytNSvPo+wxtCAEsICXy6s0foELCrylmzhlekihXXZ8+c8wuoYdUOlzCcse4DWCqVMQZvCktr5RKxx1QPG8NOMI4V1tYokXR5hvc4J7/IT1rXPJqzT8QfnHYL2hNUZn5ItSlmWZaz+5csi17A2WoCVVlgj8XBDIczbca2FhHWZSwsgrBrCShhd/bd+HdHKe88w1uBe/knsLuH5poHyuYRF3mUw3nvvxuLCQmYqaEtYY3Jdee/9HL78oT9f9b0OfMYYYY2E40jf62WFC6u/CbHOM+3lshN4QWGhpCloR1id9Xlw4asf72lg62nc0a/vvTg20/0snNvV9+MKY7tODt0Iv7Vf9/FOSWHBWKAVYU3OZyN4KrEvAKoPA4/XYyPGcGG96XG8j/j4wrKnJ0R3k3hLtT/T/NtTMuWFxU3DBxBWFmHJxedkDc3KGvbR2qeyutl9LHWFCeutHJb5+CK1+khhnZ0X0Zmfz3p/CMvHTVPvQfDPvLGssFyHvgqqC6tffV5caO77+Lm/Pr6opJ8+rnwUaephOd29hUDbbcXRW2G8rtivf3cj5E/amxBCyN13mNcdCznufuqfdK2ywsKkENQXVu98blxogsPR+Veb1VprvRytum29SFVx1K/zqJRSajIrpab7vTDehLQtWuvZvn7Wx4NwRv9cwedbnX/HgMLC8gixQGVhDfl9FXEGFa+03c80KbSmO3PfgS0MffNZBwHlbcxaWljIbQB1hTX6MoRuFnKuz0oRIyzp8grr4vOZP/bfHLu0sHC8NKgqrL6Qr8LXsRRZI/NHr+MJK+5cQh0jX56eX/K0SgsLpx+CmsLqnW/eWMQUsX+ZAMHCItwOt0UIS5g7YZH0/LqFWVxYOF8a1BOWLOer60rp11CyxBYp4oUluvUuQ8PGCEuud8K61/P7BkZxYWERC9QT1upLsgTfn9u3st9ezY0Q1vUqv9MxFUeFEEKaO2Hd6XmXIVZcWDicB1QT1uzLEtGnLpW1q2QTJayLbzKdiBXWiY7eLSBnR36bHMICXyMs5UsTs2Irp+N40Jn+tNeFCOsje/7P18zd7q8ChfFRFOPzBwh5WPP17yVAWOAbhSW34sLa4kpXdtOy6+xWHxSw+Xds4uWn9RenK+4O4Fjn4fOvfi7pv//LSKl8+fTVDMf3pNf2/pcGfj+EBR4orNmXJ37JVqrxz0Gio8qbdq2GPweWZildJwnn0Pbq5womVSqZAMICrQqr9zVAGk/TQFigVWHZKsJCe4ewAITFF5bydUDiIYQFICy2sGwlYeFlNAgLQFhcYbEDrNXo4XXtt1eDNhYhFoQFIKz8wmId6LXNpxtl/bQgxIKwAISVVViS8dKyudnZk+OCEAvCAhBWPmFNZF1pSq5nxznSEE0ewgIQFktY1LeeLTU3k3MKK3KxICwAYTGE1RHVwjnWiX6yISqUQFgAwmIIizYj5J6BSp1nOjxwCAtAWHRh0VbJ2e/QUeuXDnjiEBaAsMjCyrWbRzQWTreDsACERRYWKWs0qD4ozVhIxYKwAIRFFhZlscmFla7qsU8IYQEIK6mwKGnuoQUsp9S7jwQ6hQOJIaxWkCp1c1RKqf6bhWWzBViCtqC/pGgWg9bWvv4Ua40eVcnn1imltdaztdZqrfX765bF+seotdbW2uWnrqGCsMrTK62Xt+borbUx5R/VqI3dJUw6a63Wg5LfJays6+Kdy5zYINX1W9fbovNbqxu0PSkx7azRRVpUP2p7kgEcegkQVlB7XC4TsZ2dR944pvRyV798XfTQfYmwuryZB5rw8aG3up8WWiV6q/OFOp+l5Y+0aaaM7UkO832YvJpRQlh5ZTUY8ksjeiA+Wfrhe67E2FxfWJRNwpiH6PL4UI6Gde7rNudwVj9vjCsY8giTXtZn5WmT8IHqgJh4sleD1nqx1tqfmPXff7H3RMWny8EH9pznwD3Xc7kZQfop4KRQO/UQVtQ4SjjdQvNttfAfpd902iin09yThlxqa/J7ycqIswKrMgYN82rUi70aKzMOrOcPUpEbZNgpxMtw/mSDj7HKMzY3IyydQShvdz75qvuwhD5Kb9LFzMoEXcE6plvQUkE3wpmuLWH108VMqoCwdOxP6XjB/rtdDtuDCm/if5zVfbOw4vIO1qQRnJziDlC0aZSlwotK02r03DOG3wiisgoI63Zmn11Y3Rr5U1RkfXE3pf7En4Y+fq+w4vr4/RfQtwk5dWsyKquLa1EplDXGeZukrNzCoszscwvr+m2M+5/SJ5DLNiTXVcqR8duEpZI1tBS68t77JS5elvGHzrrI4U+t0ZdAaM15hUVbh8wsrJs9obufIk0at/yrNCdTnmhcSFm/TFiEAsw0gQxbugcZ8XvSXIaNWBhN0022oaKwupk49mQW1hr1UwaXrEVOqT+xoLKaE1bkdnyiJp70KLK1rxdexW5lJGvURlYSFmNNOa+wdMxPkUvKFrlI2pZ66WD+63YJKavuBGGNiYeewJ2Efk0oza6uMb3f+hrCYi3SZBXWbZKgCl79CnkYcvU5sP23CWuN+z02Xlip1go+hrRawc3P4BcQunZpG/VYXFjMVeqswtIRP2VMHws5nwn9ZcLycYvUo76jKxjXkOOLA6bUl8AO81IP65eviWYQFnvkySms+7cwzn+K8U/Cdt8lrMpFQftMQw83wsnQSJl3dszQlmVBYfEn9jmFNYb/lGf5ynunvkpYXtX01ZgtVOYVfs7SSI2s6yvvV1lKWCH7JjmFtQT/lKf5yievOldPWKROsFUsuTPmfIxjZV9d+aLUnTi9gsTCCloAzCms4J/yQF/lnCa1V60het29VV8xjJWtka7V78SZsdIKK2x3M6OwVOhPeaSvMhqrrLBoddevljryrl/lfoxEY+nqDSnjnTgxVkphycA0uozCmgJ/yuQ9jFVPWNRmuVapaNi77I9RVY/zSLvOXc47seQWVnCKUUZhBb7jofxjmX+FsKhvmrgKJ55mSqV7/11ddW8O1e/EnFdYffDrTM0JS7rnCsuPv0FY9BcMluJB1lLiKd5Xt5FbZmfez7dNhaacTFgRvm9OWPbBviINzs0Li7M6o8uuZBVaLdDVvXnrzCF7U+7zCSvG960Ja/KPxv4CYbHm5K5kKcOuVPTdV/fmFJuTnWPhPZGwomazjQnr0RPCXJPCwsKSzJ9siq1lFYu+1+revInVS0yN51zCinqMjQnLPNxXWfKTCgtLsAfAQlXux3KPcaruTVt1QnjcO9N8Tlwfb0tYyj+e/0bGrnuqsEJSjAo4K/dKN3XVu4wtLrMrytyJLYuwIoedtoRlny+s/36SSvZ+YWlhBWYkOjNmXYLXJR+jqe7Nrf6d0BmEFTufbkpYvyDAehFWsrIzpYUVMYCv85BLWoWXN7vq3hyr34n9QloKYcWmjzUlLOZS4rporZRSSt8cX09fODD/faKx8cJK9P5KcWHF1bBc8xyQrcsOPCaZLbY/pwZz//B0Wsq/E3+uYI28CQmEFf0UWxJWx3maZj+UqzkuVt/mfT/rpyVSWGnKzhQXVhfbqtwydQ0EWM5aaxZrg8aeLoEtnBlfl/aUZl2JTnEnVv16VHw3aJa1+sTCim5ZTQmLPrAfH48aeviu994vx2bp2AdJqd0N1Q8UVpK1xM0knR1yc5/eO6pUmhtemGhbHOV7cM593aKVuR3VbuVcgk0sLPurhEVtC+580znwKJWLszSljhNWgmlheWGlSiBIODtkhc+HHbVjnhHdxdni9GhS+pGnY9ydOD8fhX7sQ59UWAk2WBsSFvXXXJcJmAKmDtdpxbwC4h/CCigVXl1YCffN3TKmmB1y9mPOOyrreOTD2Jjauq6KZpPPudmistEua5dSq7aapMLafpWwTMAtPPILe3HzTiis88bUwQ2dHiestDmaW/zeIWOyP8s045mLsMXNE6fW2lThSe53x89R34/pEgorRatqSFguia/YxnJ90u5yJKygE6SqCit9aqKdYgJN+tLRXdEbxrFYY2iS+33hnT64sXfJWjWtUeuEwtp+lbBoM8KF8MUsYzlSP1rjhBU3LawhrBzp3BGZpeSxeevTjT5LoC0oTYrYRmXg5gOpVZNuhEsnrCRhezvCIk3saYcfcO7MmHiEVyc3dHyWsHK9dLDOQcvw1Ek56QQHsrG6sCV30i/sA1vnmm4Upt3VIZmwtt8lrC1ZW2DVoEs9xJ8Ji3d+U31h5StJELIMT7wYYj0yqrGmoA064oolKVSyYTEecXQkvWW0pBJWmnXRZoRFKmpCrZpOzk+jV9yzscLya/8kYeUt+rRq1s2gTlD7tAHbGhIVLUlblAzRHLlUt+JdAuGOqQNkWMzurJ5UH3XtOYVFapNkvVDHUJ28z5wL63bjpi1h5a65tM30OlrEPADybiz1BWbJnxE6ciBNGlXHgBkh49BIw7qEgIiQOwemj2i1hZX2hHRqiMWYpm3RwgqdFlYSVv6yBI5ak4a258Eo90pM6xr5l8FIYaHYYhevkeYhjIKKHavXRT0Czguqpk/zCHMKixIwMpY+aPEn52CuOYGwwqaFlYRV4kgtv1I2Dmk1UFkF9eeA9kHp3ZtIawvPj/NZZboJ0nRphEVvTLRhvbawCL+HU82TtsLHKe7bpxBW0NlYtYRVptyP07eioU3HWW9t0rZ9HbtNjYltEfC6LWsblnJr+xTCIufJUMf0ysKiDKJT6tHLZdipUnc3dH6OsEoVJTZddEviLB4xflrPjUZYF6HYGl7TDutCCHWPTCEs6qoyedWksrAUt/WkWHJaWL9nSSMs/pHJ9YRVrIz69XFhpPk9tywGP0WB8Bcm+TVY7tw4z9mY0cIizginpLbPKKwx9dcvydu4TiQs9rSworDIb71FTwyH2NiWu59BShAwTFswlyhnZqsndFInmhQWcUGF0SMrC0vH2DtUL7yk6yGVsLjTwprCijhUnMn5+5ZJU/R4q1gb7/lvzGtQzEaqM9yHMsKiZfUZ8RhhEaa4c3K9dMlbF1FYtFdImhAWr1ZFVJClYm48/40f0qqKzGsL5iSJ8CiGNoVFmtVv8jnCIvwgnVwvopqwWLWT6worrMRYEGN4sLzxux/Xgzb4B0StzhnWmlfOGWGMsHzyQad9YY2VhSVSCovj39rCEl2p821N8ErPHND/Nl58Q/jn7HckCX1kZbXApU1h9eFPv1FhJQ/6Fa8plBcWvXZydWGVU5YJnU6E1IAwPBGmHwFpCxesNj21KSzSElYHYaVcxU8uLPK0sAFhFVOWCYyEQvofL208Q4OiRR4954L7NoUV8BYShNWcsKjTwiaEJYTUWx1j+RyqIO4+bhxbLDkc8LKMrvOIu4CwLOt3QlitCotWO7kRYQkhhgI7hjrEK2GHqa2cNq+zXIXjfKrJI+4CwqJsEosnCav/UmGRaie3Iywh5LTmNtYQmaxEh7Ka3zH+cYCwWNuE9/94blNYvKIQTxCW+lZhUZZJWxKWEKLTeZ21r+9LuZFh1VxHzvMkqMVqNqyXc9YcyiwhLBUwTkFYjQrrflrYmLCEEF3WOGtl7zBtYR2Q1Y+sr8TKaICqTWFNGcYcCKuWsG6nhe0JSwghR5Mtn1Rz25HN1gP/XYuvBuNy+zaFpTOMORBWNWHd5cQ2KSwhhOinTGFHx2xHoTOh7VHC6lP30GLCWjKMORBWRWFdVwFqVlg/0lrSZztYZmsPFRbBt3N9YSl6i2pUWDbDI4Swagrrss5i08ISQohu0DZPHyW29tClG0NvJP0ThLU2KizCiucEYT1KWFdH6jQvrJ8ePZp0K/G2jLAYy2OqvrDG5C26lLB8hkcIYdUV1sW08BnCEkIIqfTiknZSmrDkrxbWRL5aCAvCKies02nhc4T1M0Ec5/hQa2EJK/RS1SOEpb9BWD2E9ThhndUJfpiw/iQ9RC7FdxDWrxFW5zM8QgirvrBOXq14oLD+7B8m6KW1heWeJCzdprAUhPVbhXV4pM5DhSWisks3hrDWjMLyEBaEBWGxpoXPFZYQQgyBhbR6urCCZ0ISwoKwIKzIFj7/LmEJIUcb0U1zCks8SlgWwoKwGhTWx5E6TxeWEKLjTw0thMUWloGwIKzywtrXTv4FwgqpVwphsYVlISwIq4KwdrH9rxCWEGLkRVkKwoKwIKxnCOvtSJ3fIiwhNUdZUxOL7iuEBWFBWKxp4a8RlhAdY/nd5O+nz0ochbAgrHaF9TIt/EXC4swLLbmfuu8Q1n0e7gphQVjVhPVf7eRfJSzRk180JAsLr+bE3ggIC8JK0ML/1E7+XcIScm1GWAO9kUgIC8KCsEgLz79MWGRj9WRhZSwvY1hPv7awOggLwqopLL/I3ycsqrEUWVgZC/hxarqvKgtdQIeCsCCsKsLyW//7hCU614awOLXGCXmvW967RpjAjhAWhFVXWN6Pv09YpIPqGMIKfYduZSjA5uh1qZu0hrAgrNrCWksKy96T5Ow7yns6A9kUc7YeyDr5ObOwCOdgLBAWhFVZWHPRKaFnxBxR6Vj0xWab/knSDfCvyo1O3kQzCGODsCCsqsJyg2hNWEmmHTKpsHw+a4qGhOUqx3gQFoR1Nx3sRHPCSvP+B0FD9Clh4BHtM2HAYHWQzPWobGVlQlgQFmVtpugaFqcPxzCTbyVFWGHT1JXTRijzx8z1qExlZUJYENalGf50w8aE5ZOsuuukwgoyheR9cLHgM+ae2a8RVgdhNSas/44pLCksSgH2qT1hBS02E/KaXiOWNUe3qxxUPFhYAsJqS1j/DoIuKSzK0vLSnrCCoj7Da3QmeRvNEVQMEBaEVUFY7mVVpqSwKFFH8Kt7zNYhGcIKycTaeD9V8wKyStuEM4T1D96rlQujOUBYJ9PB0sKiLC0nmRMu5DZMElbAnFAxP5by7zMvYi1ZbsRDhbWlVganLAiEdTIdLC0skckOAa3DcYQVMBmjTPEW7vOXWYVFCfKGbxGWTX0vNggrkF0EU1RYax47RDR+mrDY+4TScZ8E5dbkfftY5bgRTxUWIdzUiX/eCmEdxS/7BeSiwiKd0xw/82G8F0csA88tBTWxzUxIHatfpDhnTay2hKXpTSi9MSCsfzf5Y1ZRVFikfhw/75jpwyNRWNzIgnRMIjsNImS7ctJXDMyogr3wL/UdXZPCIrxY5RIL0EBYlAXtosLqaVFg7FrNRpci9aCdLnVz34/QMoc3b5MVJm5Y6JjP5v4zZZPCUomHj5UzFkBYJ9PB4sIStFNtInfPFUNAVGGx4n+5BYweNr037xf/e24mFteZt3dibXNKKNM2U16SG4T1c0WHg2NZYS20S41bXea8skg+ypAzT9U+QD5Tcm/eL/5vARPZPm2oqdsUVuIasDOrPUBYF6sPZYU10q7VxbxROHA6PllYjLkQceIbMAizt1ANK0agdCveyv9G919jwlpSPgzKprETENbr7Tj7gWWF1fnsxuJlFNAPiyY/UOIpGHPAMgd3DUlRbcExrU4ZYG2N7hKSAl5yk9C8D4OwTqaD5YUl1ljBppgQvvTUgNPtI6Oa06kVbQuVMym8W0vbgpxJnx0Txo6pVWH1Pp01SMeiaAiLNCgWFtaU4pqjdbGJAGERXxqiLWAdLIB0ab1JmNbMYc4kh7+Em9u1KizS/hBxP3thyu/bhXUZrRQWFuOM4zVgWihp4c0cJCySQ8fwz0qdE2botuDkVpCNRXgWi2hWWEuyZ0EbBgSE9bfjX+6Flz7ma+EIgpuQ1RNnnCpMWIT2qakf1YW7ziRytw2ezpIm7MyKOa0Ji/Y0xiSy2E31v1tYN9kipYU1cASxsfIbJNUWmwgU1l3UJ8k6toFb6YQhiOzuIbRzUYLNbuU9iOaERYw2b1to79if883CcncrpMUPUt1YhtjIUZactgCHM4V13VMV/bcNUeGZu7srFHdvwVsW3nt/c4Lk5Li9tDVhUecCNyubI81XbxH3FwvrfiwuLqyRq4iFsivVG0f/xC5CWOdRX8eY7W7hGRl/PmCSV7pyobEBI3Q3521r3Ph3oTlhURvqcvUkZuqHCAjLk14eKH9U/cZ2hF+mq/FcDob1mYuIEZb3bj7oqgNnce5sWNaczzDDYU+R4xLhTHLeiffeL+PRFQzksWNsWliC+jPcGCnu/a34VmE5SmhSXlijD8LOk/rQlhr0whagihSW936bhxdp9SMnvvPn6Z+S9zF+NVqpfxfSq8msQV0kKMT6eSrjvwtQapoZN3QVbQtrpjeHI3NLuq52DeJLhUVLCygvrJAQ6+VX2f8I/Bwr4oX180HWzsbalf+XOnqTMZotKvE2CapxYXWcH7ObBPQTK+KeBYRlaKvVFYQ1+KqoOt2TEGDxQ6xwhrhd+AQsonFhUZM8XgZTo7XWM38M675eWI6aEFBBWHUscfxgqlyKjl/pTXsXorppqLW75oXVlWoQRny7sOhZ4jWE1dUUVlddWFvk6ywZbFEhyptE88Iq5e59FvH3CcvQU8RrCKvgUs1ddFNDWEP9UX1KsZ+fNsRrUViFRlYjvlxYnPzwKsKqNyncv65a4UJsijfPsl5CgZvyGeK5BoVVZmT9WNL8MmFtrJeG6wirc5WEpURtYbm7XF5b/RIKTAqHgJ9dQVhyK9AiJvHVwlp4bwzXEVa5vaib5e7ywrotUpNfF7f5edn3cWfxDGGVaKer+GphcU96rySsIjMfwkOx9S+heCfR1adCa1CaZg1hMbJHQ8Pd/puFtbFrSNUSVrEdmIsFrArCcpRzb/KuepOq0yyFnwNlBKsiLLlmbhGj+GJhLfwT/aoJq7yxjurOlRYWrbxwzluzVu+nx/X/VJvCopaHSTl8fI2wQqoK1xNWaWMd9pPCwqIeZZfv1qzEMS3fcvNZvdJGhZV3hn74OL5EWGHnNlQUVmFjDaK6sOiNYq3sq3yRxWl95bVRYeWcoR8XhX+EsFyssGzYAe81hVXSWCfvKhUVFt0WuaZkjCvIZKzzevC6VWHlM9bJzXiEsGyksAIPmakrrHJ7hWf9pKSwHOeg+SzGMqxBrd9K+uo+rbyasHIZ6+xmPEJYc5Swwo/xqyssMbiqviopLO7hsOnDz5nZNtJL8/Id17VZYeUx1umW/iOENcQIa5XiocIiH3QTt3YkRXVh8Q+zTpwC5EZ245BLqedAsUJFYZFLsyeZnj9CWKRFrBNhzRFPorawkncK3u6pbddXiXtJyDGPiTNI79rp1q6w0s+PL6bnzxCWDhWWG8SThZVl9CL31Hthpbm4tavcS0IHNZXsEu7bqWpYWIkH1stw9xnCorxCdiSssK7QkrBElzHOcTpyr8Om6LKBW7j0U1fulktU9Y5KSWo2DQsr6cB6He4+Q1iUHbMDYc2RT6EFYQkx5EpTNF3s5qxNYI2Ih5QkwtEypomkuISNNA24XuWvLaxk7nZTfKpqA8IibAt9CCtuOtiOsITQOeaF9nbdhlYjIK7Lxj0kGb2MtHSxHTX24TiqMS+NVV1YQqgUW0S3ySVPEdb9LvJeWGELqU0KK75XfDYMwt2hFjWZwi/OyshH1EUlOFiVIraIugTTJekDDQiLc9Rg+M14irDuQ86dsIwUv0dYKRrD66A+k3oJuQpTqE/jY+AoZRmVqKN2oeOJM7wAT7ctLCGGiBVX2s14jLButwrfhBWQV9O4sIRQJk2YtVDvDaNsXIiynJYVfbHpLmFHlSHjyca/Aad2bkRYQvSBrXSdZCq9tCKsmw2zV2ElmA62Jyz6SeuX7YLeT1l1LuXIXMIwKYUxLMzBfBCp6eeNdwkqUI2La1lYQoiB7ax17hPqpRlhXQcZL8IyiYbu1oQlhBDDvIXH3CPrxnAL8zK67JYqurrryEffPae31d8bQJT2FilM9UF/Envek+VOqJk8fLll6tLqpSFhCSGG+eQY9v+ush9T3fYWhSWE6MaZvSGzmpEddQZUEqd1WZPJGP203CWEz2MnciKH2d4+ibyX0ApKLzeNwdl57AUQv1xYP81hOjP3Z6uYwmYfYUcf3Oh0y2Wrv8ZQ02w/r3y1sx5KdY5+0ObzSHZnrR7Vl3WhXmm9WOt2D8POelQShvkiYf1tD5PWdt8gvPfeWjvrScV0EBseKvejXj4uyi56KNZI5ct8qVb7aeEaAITVkLA+e0jC6YaNn9vfLbIAAL5XWGmxWRcjAQAQFoQFAIQFYUFYAEBYEBYAAMKCsACAsCAsCAsACAvCAgBAWBAWABAWhAVhAQBhQVgAAAgLwgIAwoKwAAAQFoQFAICwICwAICwICwAAYUFYAAAIC8ICAMKCsAAAEBaEBQCAsCAsACAsCAsAAGFBWAAACAvCAgDCgrAAABAWhAUAgLAgLAAgLAgLAABhQVgAQFgQFoQFAIQFYQEAICwICwAIC8I6YEYbAQDCeoqwJrQRACCspwirRxsBAMJ6iLA2NBEAIKynCEujiQAAYT1FWB2aCAAQ1kOEhT1CACCspwhrk2ghAEBYDxGWQgMBAMJ6iLBGtA8AIKyHCAu+AgDCeoiwHHwFAIT1EGFZJDQAAGE9Q1gWy+0AQFhPEJazE6IrAL5eWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMvF/5lfnnTIO6XkAAAAASUVORK5CYII=\&quot;,\n    \&quot;solutionName\&quot;  : \&quot;VIA Digital Ops\&quot;,\n    \&quot;timezone\&quot;      : \&quot;UTC\&quot;,\n    \&quot;locale\&quot;        : \&quot;en-US\&quot;,\n    \&quot;interval\&quot;      : \&quot;auto\&quot;,\n    \&quot;template\&quot;      : \&quot;/app/ax/space/Product Prototyping/axv/VIAOps - Solution Frame v2\&quot;,\n    \&quot;opsJNDIName\&quot;   : \&quot;charter_ref_db\&quot;,\n    \&quot;items\&quot;: [\n\n\n    {\n        \&quot;id\&quot;            : \&quot;p88\&quot;,\n        \&quot;name\&quot;          : \&quot;causalAnalysis\&quot;,\n        \&quot;label\&quot;         : \&quot;Causal Analysis\&quot;,\n        \&quot;iconType\&quot;      : \&quot;fas\&quot;,\n        \&quot;icon\&quot;          : \&quot;fa-exclamation-triangle\&quot;,\n        \&quot;selected\&quot;      : false,\n        \&quot;view\&quot;          : \&quot;/app/ax/space/Product Prototyping/axv/Charter - Causal Analysis Comp v4\&quot;,\n        \&quot;initiator\&quot;     : \&quot;click\&quot;,\n        \&quot;displayTools\&quot;  : false,\n        \&quot;showContextBar\&quot;: true,\n        \&quot;#releaseTag\&quot;    : \&quot;BETA\&quot;\n    },\n    {\n        \&quot;id\&quot;            : \&quot;p888\&quot;,\n        \&quot;name\&quot;          : \&quot;Change Monitor\&quot;,\n        \&quot;label\&quot;         : \&quot;Change Monitor\&quot;,\n        \&quot;iconType\&quot;      : \&quot;fas\&quot;,\n        \&quot;icon\&quot;          : \&quot;fa-exclamation-triangle\&quot;,\n        \&quot;selected\&quot;      : false,\n        \&quot;view\&quot;          : \&quot;/app/ax/space/Charter Digital Operations/axv/Commits and Planned Maintenance Wrapper\&quot;,\n        \&quot;initiator\&quot;     : \&quot;click\&quot;,\n        \&quot;displayTools\&quot;  : false,\n        \&quot;showContextBar\&quot;: true,\n        \&quot;#releaseTag\&quot;    : \&quot;BETA\&quot;\n    }\n\n    ]\n}\n\n;\n\n\n\n\n\n\n\n\n\n\nfunction excludeCommentedItems(items)\n{\n    // because JSON does not support comment construct, we iterate thru\n    // items and exclude items without \&quot;id\&quot; attribute... so to comment\n    // and item out, change its \&quot;id\&quot; attribute to something like \&quot;#id\&quot;\n    var list = [];\n    items.forEach(function(item) {\n        if (item[\&quot;id\&quot;] != null) {\n            list.push(item);\n        }\n    });\n    return list;\n}\n\nif (CharterPlugin != null) {\n   // CharterPlugin.getFrameConfig(function(response) {\n       // if (response != null &amp;&amp; response.status == \&quot;OK\&quot;) {\n            //var frameConfig = response.value;\n            if (frameConfig.items &amp;&amp; frameConfig.items.length &gt; 0) {\n                console.log(frameConfig.items);\n                \n                var logo    = frameConfig.logo;\n                if( logo &amp;&amp; logo != \&quot;\&quot; ) {\n                    setOutput(\&quot;dout:6\&quot;, logo);    \n                }\n                \n                var opsJNDIName = frameConfig.opsJNDIName;\n                if( opsJNDIName &amp;&amp; opsJNDIName != \&quot;\&quot; ){\n                    setOutput( \&quot;dout:7\&quot;, opsJNDIName );   \n                }\n                \n                var solutionName    = frameConfig.solutionName;\n                if( solutionName &amp;&amp; solutionName != \&quot;\&quot; ) {\n                    setOutput(\&quot;dout:5\&quot;, solutionName);    \n                }\n                \n                if( solutionName &amp;&amp; solutionName != \&quot;\&quot; ) {\n                    setOutput(\&quot;dout:5\&quot;, solutionName);    \n                }\n                \n                setOutput(\&quot;dout:0\&quot;, {\n                    axflow : {\n                        \&quot;change-nested-component\&quot; : true,\n                        \&quot;cache-nested-component\&quot; : true,\n                    },\n                    widget : {\n                        path : frameConfig.template\n                    }\n                });\n                setTimeout(function(){\n                    setOutput(\&quot;dout:1\&quot;, excludeCommentedItems(frameConfig.items)); \n                    setOutput(\&quot;dout:2\&quot;, frameConfig.timezone); \n                    setOutput(\&quot;dout:3\&quot;, frameConfig.locale); \n                    setOutput(\&quot;dout:4\&quot;, frameConfig.interval); \n                }, 1500)          \n            }\n        //}\n    //});\n}\n&quot;"/>
+      <Input key="node:1/cfg:schema/default" value="&quot;var schema = [];\n\nschema.push({ name: \&quot;id\&quot;, label: \&quot;id\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;name\&quot;, label: \&quot;name\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;label\&quot;, label: \&quot;label\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;iconType\&quot;, label: \&quot;iconType\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;icon\&quot;, label: \&quot;icon\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;selected\&quot;, label: \&quot;selected\&quot;, type: \&quot;boolean\&quot; });\nschema.push({ name: \&quot;view\&quot;, label: \&quot;view\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;service\&quot;, label: \&quot;service\&quot;, type: \&quot;object\&quot; });\nschema.push({ name: \&quot;props\&quot;, label: \&quot;props\&quot;, type: \&quot;object\&quot; });\nsetOutputSchema( \&quot;dout:0\&quot;, schema );&quot;"/>
+      <Input key="node:1/cfg:inPorts/default" value="[]"/>
+      <Input key="node:9/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#containerMain&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;containerMain&quot;}]"/>
+      <Schema id="node:1/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;props&quot;,&quot;label&quot;:&quot;props&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <Schema id="node:9/in:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;props&quot;,&quot;label&quot;:&quot;props&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <DynInput id="node:9">
+        <Port id="din:BaseConfig" type="any[]" label="BaseConfig" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:Time Zone" type="string" label="Time Zone" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:Locale" type="string" label="Locale" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:Interval" type="string" label="Interval" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:FilterObj" type="any" label="FilterObj" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:Visualization" type="string" label="Visualization" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:result" type="any" label="result" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:solutionName" type="any,string" label="solutionName" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:Logo" type="string" label="Logo" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:opsJNDIName" type="string" label="opsJNDIName" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:usageAnalytics" type="any" label="usageAnalytics" _undefined_default="" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynOutput id="node:1">
+        <Port id="dout:0" type="string" label="Template" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="any[]" label="Base Config" propagate="always" _isArray="true"/>
+        <Port id="dout:2" type="string" label="Time Zone" propagate="always" _isArray="true"/>
+        <Port id="dout:3" type="string" label="Locale" propagate="always" _isArray="true"/>
+        <Port id="dout:4" type="string" label="Interval" propagate="always" _isArray="true"/>
+        <Port id="dout:5" type="any,string" label="solutionName" propagate="always" _isArray="true"/>
+        <Port id="dout:6" type="string" label="Logo" propagate="always" _isArray="true"/>
+        <Port id="dout:7" type="string" label="opsJNDIName" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <Version id="node:1" version="2"/>
+      <Version id="node:9" version="1"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/space/Charter Digital Operations/dbpm/Charter - Plugin v11" alias="Charter"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

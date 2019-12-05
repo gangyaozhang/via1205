@@ -1,0 +1,12 @@
+UPDATE
+    metric_severity_dim
+SET
+    action="${action}",
+    vendor_netcool_sev="${vendor_netcool_sev}",
+    network_condition="${network_condition}",
+    remedy_sev="${remedy_sev}",
+    metric_message_desc="${metric_message_desc}",
+    key_dimensions="${key_dimensions}",
+    contact_groups="${contact_groups}"
+WHERE metric_id="${_id_}"
+  AND vitria_sev="${vitria_sev}"

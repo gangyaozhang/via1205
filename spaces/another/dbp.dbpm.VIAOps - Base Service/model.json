@@ -1,0 +1,29 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "e7ad0afd-5240-433e-8fa8-3954ddc76d38"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "48639379-e854-4da3-8f0b-ea5ec00a4f4e"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "4fa80cae-ab79-41c0-850f-68c371d35cbf"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "4fa80cae-ab79-41c0-850f-68c371d35cbf,48639379-e854-4da3-8f0b-ea5ec00a4f4e,e7ad0afd-5240-433e-8fa8-3954ddc76d38",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "VIAOps - Base Service"
+  }
+}

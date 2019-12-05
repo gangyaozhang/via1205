@@ -1,0 +1,8 @@
+INSERT INTO viaops_user_mouse_event
+(
+    user_id, user_full_name, current_viewer, 
+    event_ts, event_type, event_x, event_y, 
+    resolution_x, resolution_y, percent_x, percent_y,
+    ip, browser, device, os
+)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)

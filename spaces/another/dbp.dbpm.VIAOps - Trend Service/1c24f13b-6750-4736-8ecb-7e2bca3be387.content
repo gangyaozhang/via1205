@@ -1,0 +1,24 @@
+--- VIAOps - Trend Service > METRIC_SQL_NO_BL
+select
+    a._group_ as _group_,
+    a._data_ as _data_,
+    ${epochProjectionSQL} as _epoch_,
+    ${timeProjectionSQL} as _time_,
+    max(a._value_) as _value1_
+from (
+    select
+        concat(${groupKey}) as _group_,
+        concat(${groupData}) as _data_,
+        ${epochExpr} as _epoch_,
+        ${appColumnClause}
+        ${metricNameColumn},
+${aggrCaseClause}
+    from ${metricTable}
+    where ${epochExpr} ${fromOper} ${fromTime} and ${epochExpr} ${toOper} ${toTime}
+    and ${dateKeyColumn} in (${dateKeys})
+    ${appWhereClause}
+    and ${metricNameColumn} in (${metric})
+    ${dimensionWhereClause}
+    group by ${metricValueGroupBy} ) a
+group by 1,2,3
+order by _epoch_

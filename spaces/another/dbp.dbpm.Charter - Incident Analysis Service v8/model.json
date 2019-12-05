@@ -1,0 +1,65 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "00505e6f-829e-4ea9-87a2-5a2a51df8489"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "cdbc72be-8785-4bbd-8fb1-5c2bf817e040"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "a1caf84d-beba-417a-8fcc-a2816150ef00"
+    },
+    {
+      "fileref": "ModelContentFile4",
+      "name": "3709ab08-5473-4849-82f3-11e3e3293100"
+    },
+    {
+      "fileref": "ModelContentFile5",
+      "name": "cd0f9d7e-c804-460d-8a52-c55efeda5d39"
+    },
+    {
+      "fileref": "ModelContentFile6",
+      "name": "34959900-cca5-4bc3-8c0d-ed4810019b01"
+    },
+    {
+      "fileref": "ModelContentFile7",
+      "name": "c8d1fb4b-3184-44f5-86f7-dbbfdb03a798"
+    },
+    {
+      "fileref": "ModelContentFile8",
+      "name": "bc517976-b9ff-4d6f-83c8-dd8cf3bbed13"
+    },
+    {
+      "fileref": "ModelContentFile9",
+      "name": "5dc83baf-ca94-4f32-886b-8abea5bb6f4e"
+    },
+    {
+      "fileref": "ModelContentFile10",
+      "name": "0c18bb07-227b-4d20-87ab-4a73fd027991"
+    },
+    {
+      "fileref": "ModelContentFile11",
+      "name": "ec0b87a2-62ad-4ada-8cd7-cae47b3679ca"
+    },
+    {
+      "fileref": "ModelContentFile12",
+      "name": "c4b5fb28-0d33-485b-86e4-30de2db0990c"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "c4b5fb28-0d33-485b-86e4-30de2db0990c,c8d1fb4b-3184-44f5-86f7-dbbfdb03a798,bc517976-b9ff-4d6f-83c8-dd8cf3bbed13,cd0f9d7e-c804-460d-8a52-c55efeda5d39,0c18bb07-227b-4d20-87ab-4a73fd027991,ec0b87a2-62ad-4ada-8cd7-cae47b3679ca,34959900-cca5-4bc3-8c0d-ed4810019b01,a1caf84d-beba-417a-8fcc-a2816150ef00,cdbc72be-8785-4bbd-8fb1-5c2bf817e040,5dc83baf-ca94-4f32-886b-8abea5bb6f4e,3709ab08-5473-4849-82f3-11e3e3293100,00505e6f-829e-4ea9-87a2-5a2a51df8489,/app/dbp/user/viaops_admin/dbpm/VIAOps - Base Service:e7ad0afd-5240-433e-8fa8-3954ddc76d38,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Demo Service:bd8e16ff-dc31-4049-8009-c4439cb62001,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Demo Service:ad3cbe11-0553-4d4c-89c6-9cc3f58ec072,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Demo Service:1c4f7f5b-d576-4794-8bdd-f265c92a3bcf,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:da5d56d9-1880-4b04-826d-4a212abd95c0,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:4fa1764d-6840-4a94-816e-328d9238df36,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:59514b04-9a06-458e-823a-aec2feeedb8d,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:dbfc5e26-b087-4791-873d-6e7824727d87,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:c2a39e89-a99f-4864-840d-7f7e517f4459,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:a998154c-3140-4afe-82a9-ab54e131a5c5,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:5984a715-6e7a-4a11-87cb-eb2069d2ff40,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:c90e33b6-ac6b-423f-814d-e128a5070df0,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:af5b54fb-6858-4671-8b6c-87d8687a7456,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:c74d3bfa-2cd2-4fb1-8e31-dacbef4c009b,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:683e08ee-e9e6-4fa2-8fe2-913c4fcf2d73,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:0988e634-b99d-4f6d-8f17-1967ccdecc01,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:26c2df63-df31-4921-8d1d-3e0941d704c7,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:b619d041-fec3-46e0-8960-c2632a7e5f5b,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:b0f4ed67-e210-4eb2-85ca-60eefdb92e74,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:2315e9f6-eff7-4a62-8f52-2ae759893e12,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:f4207a25-05e5-4150-8f81-483cf4d5d43d,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:b85f6d46-5174-423b-8463-d15a42db2aaf,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:b5877b09-efc6-4bb8-8d50-376e0c48461d,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:08394198-832e-471d-8eba-9feb02aeb5fe,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:d2ba544b-f7ea-4e15-8abf-793f5a76662e,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:77a2d2cc-03b5-42bc-8255-caec5d1992b9,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:e479e70d-a351-46d1-8977-cb5cae0203c8,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:8d485071-7851-43b2-84ed-9d83987833a9,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:6a01a6c1-7242-450c-8811-de80b2607130,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:5dd784f7-208b-4efb-811e-087811df18e0,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:39ab37da-4805-42e6-8e1d-5ce63ba7ff1b,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:1f793f10-bdf9-4efd-85e3-2cae619b1053,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:74fa6f3e-7be9-4ef7-8461-b8d61a156a0b,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:981b9a40-64d4-4635-8509-0a33cdedc498,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:c86bd5ee-7b4c-4235-822d-b3e250e3c6d3,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:c0c4672f-7208-4079-8fbf-239a42096a9f,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:e756a56c-547c-4b23-8b6a-dd50633bcc58,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:41c29fc6-ae2c-4e3b-8ea2-52e28bf9ff76,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:82bbd12f-98f1-4b23-861d-a258db30deeb,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:bfa040a5-7733-4427-85c1-c77a8ea0bb18,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:d1bbb455-bf33-47c0-86dd-9510a6921dfe,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:813d6abb-b2ad-4753-896d-ed55fe5757ab,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:d40b9cfe-1ff7-4a2f-828e-f812f0340a5a,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:133db765-7863-44cb-81e5-b4f52b1fe285,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:7599cb14-6d66-4c14-8e21-5b6dd2885823,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:dadb0575-4154-46b4-83ad-93d090381d45,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:b016b630-b190-4310-8822-159371bd8a10,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:8ee622c4-f1ea-4594-849f-a337814a0b28,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:586b66f8-3219-475b-82e2-bb5167c0b72e,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:31a94a6e-3193-4c85-8696-36edd30e0728,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:9a72827f-a617-4dde-8f86-95c7a78497bc,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:dbc54f47-6d74-4622-8803-82bd523a41ae,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:4f68c7ea-e8e0-41eb-8925-2cddd2c961e6,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:9b99635b-fa9e-46c5-8f10-2dbc7473ea63,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:45f84077-40f0-4e48-8714-7c040f509891,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:4ddc24e8-5bf9-4b65-8374-1a9bd48d97f8,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:410df987-c98b-473c-8918-43a33623134d,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:5ee5365f-829a-4f80-8ee8-2f051c042780,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:91f77a6e-32a9-408c-8e42-d47a3945e12b,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:e97c62ab-2f01-4538-84f7-18c5711d8bf5,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:d7a6436c-4948-4e73-874c-2273aa1ca888,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:c30836ec-894b-408b-82a9-eed16ebc4d8a,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:b9f013bb-4b19-4acf-853a-5e8fdfc02843,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:7d18ea9a-3738-4c66-8e4c-9f089b9254c5,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:37ea5fad-32a7-4d6b-8b06-d5fcb25ecef7,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:27c11fbf-6c07-4df7-8289-ac92f2e32138,/app/dbp/user/charter_admin/dbpm/Charter - Base v2:f9fcc3a3-390b-4770-8926-6cd3adb67e7b",
+    "__references__": "/app/dbp/user/via_common/dbpm/VIA - File Service,/app/dbp/user/viaops_admin/dbpm/VIAOps - Base Service,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Demo Service,/app/dbp/user/charter_admin/dbpm/Charter - Base v2",
+    "modelStatus": "valid",
+    "name": "Charter - Incident Analysis Service v8"
+  }
+}

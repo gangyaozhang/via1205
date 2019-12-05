@@ -1,0 +1,151 @@
+// basic config
+{"field":"metric","label":"Group","headerAlign":"left"}
+
+// font styles, background and width
+{"field":"time","label":"Date/Time","headerAlign":"left",
+    "style":{"fontStyle":"normal","fontWeight":"normal","fontSize":"12","backgroundColor":"#EDEDED","color":"#000000","textAlign":"left", "width": 80}
+}
+
+// format - datetime
+{"field":"time","label":"Date/Time","headerAlign":"left",
+    "format": {
+        "type":"datetime",
+        "pattern":"yyyy-MM-dd hh:mm a"
+    },
+}
+
+// format - number
+{"field":"value1","label":"Metric Value","headerAlign":"right",
+    "format":{
+        "type":"number",
+        "pattern":"2",
+        "reduce":false,
+        "unit":""
+    }
+}
+
+// format - percent
+{"field":"value1","label":"Metric Value","headerAlign":"right",
+    "format":{
+        "type":"percent",
+        "pattern":"0",
+        "option":"rawFraction"
+    }
+}
+
+// renderer - bar
+{"field":"diffpct1","label":"%+/- Metric","headerAlign":"center",
+    "renderer":{
+        "type":"bar",
+        "color":"#148AC4",
+        "ncolor":"#65DA9C",
+        "colorType":"solid",
+        "showPRange":true,
+        "showValue":"true",
+        "dataType":"string"
+    }
+}
+
+// renderer - summaryMetric
+{"field":"diffval1","label":"+/- Metric","headerAlign":"center",
+    "renderer":{"type":"summaryMetric",
+        "valueType":"direct",
+        "context":"gridCell",
+        "autoScale":false,
+        "dataType":"string",
+        "mainValueFont": {"fontSize": "12px", "textAlign": "center", "color": "#000000"},
+        "notification":
+            {"thresholds":[{"oper": "LT", "arg1": "2", "color": "#cd4343", "arg2": "name"}],
+            "configThreshold":"true","judgmentValueType":"static","thresholdDataType":"string","thresholdDataField":"diffval1","thresholdDataFieldType":"number"}
+        }
+}
+
+// renderer - Icon
+{"field":"diffval1","label":"+/- Metric","headerAlign":"center",
+    "renderer":{
+        "type":"icon",
+        "checkDisplayField":"true",
+        "labelFieldSelect":"name",
+        "iconType" : "direction",
+        "cases" : [
+        {"shape" : "up", "value" : "Egypt", "color" : "#000000", "direct" : "up"},
+        {"shape" : "up", "value" : "China", "color" : "#ddd000", "direct" : "down"}
+    }
+}
+
+// renderer - Spark Chart
+// the field value must be a string split by ",". For exmaple, "2,5,3" can works well.
+{"field":"diffval1","label":"+/- Metric","headerAlign":"center",
+    "renderer":{
+        "type":"sparkChart",
+        "chartType":"line",
+        "color" : "#f38462",
+        "ncolor":"#f04040",
+        "fillAlpha":1,
+        "seriesColor" : "#3366cc",
+        "seriesStroke":1
+                                                    }
+    }
+}
+
+
+// renderer - Banded Value
+{"field":"diffval1","label":"+/- Metric","headerAlign":"center",
+    "renderer":{
+        "type":"bandedValue",
+        "context":"gridCell",
+        "format":{"type":"number","pattern":"1"},
+        "bandColorMap":
+        {"good":"#5CB272",
+        "fair":"#EDEE75",
+        "poor":"#B9523E",
+        "default":"#5AADD6"},
+        "goodField":"",
+        "fairField":"diffval1",
+        "poorField":"",
+        "totalField":""
+    }
+}
+
+
+// renderer - radialGauge Value
+{"field":"diffval1","label":"+/- Metric","headerAlign":"center",
+    "renderer":{
+		"type":"radialGauge",
+		"context":"gridCell",
+		"majorTicksValue":5,
+		"minorTicksValue":5,
+		"rangeLowValue":0,
+		"rangeHighValue":100,
+		"goodColorMap":"#5CB272",
+		"fairColorMap":"#EDEE75",
+		"poorColorMap":"#B9523E",
+		"goodBandChecked":true,
+		"fairBandChecked":true,
+		"poorBandChecked":true,
+		"shapeValue":"90_left",
+		"showLedValue":true,
+		"configBand":true,
+		"goodLimitBox":60,
+		"fairLimitBox":15
+    }
+}
+
+
+// renderer - Bullet Value
+{       "field":"diffval2","label":"level2_Call","headerAlign":"center",
+            "renderer":{
+                "type":"band",
+                "mainLabelValue":"",
+                "contextLabelValue":"",
+                "goodlimit":0,"fairlimit":30,
+                "maxValue":null,
+                "minValue":null,
+                "target":null,
+                "goodColorMap":"#5CB272",
+                "fairColorMap":"#EDEE75",
+                "poorColorMap":"#B9523E",
+                "dataType":"string",
+                "showThreshold":false
+            }
+        },

@@ -1,0 +1,87 @@
+<DashboardPluginModel is_init="false" name="VIAOps - Operation Service" description="">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions>
+      <Function name="hideTabs" args="acl,callback" private="false">
+        <CodeText>
+          <![CDATA[var self = this;
+var tabIds = ["incident", "incident-group"];
+var tabPages = ["Incident", "Incident Group"];
+var tabBarItems = document.getElementsByClassName("tabBarItem");
+if (tabBarItems != null && tabBarItems.length > 0) {
+    var firstPage = null;
+    for (var i=0; i<tabIds.length && i<tabBarItems.length; i++) {
+        var tabNode = tabBarItems[i];
+        if (acl == null || acl[tabIds[i]] == false) {
+            tabNode.style.display = "none";
+        }
+        else {
+            tabNode.style.display = "";
+            if (firstPage == null) {
+                firstPage = tabPages[i];
+            }
+        }
+    }
+    window.addEventListener('resize', function() {
+        self.hideTabs(acl, null);
+    });
+    if (callback != null) {
+        callback(firstPage);
+    }
+}
+else {
+    setTimeout(function() {
+        self.hideTabs(acl, callback);
+    }, 10);
+}
+]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services>
+      <Service name="getModuleAccessControl" args="" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig   = this.getQueryConfig();
+
+var moduleAccessControl = {
+    "incident"       : true,
+    "incident-group" : true,
+};
+var accessControlList = this.getAccessControlList();
+if (accessControlList != null && queryConfig != null) {
+    if (queryConfig["access-roles-by-module"] != null) {
+        for (var moduleId in queryConfig["access-roles-by-module"]) {
+            var roleTag = queryConfig["access-roles-by-module"][moduleId];
+            moduleAccessControl[moduleId] = this._checkAccessList(accessControlList, null, roleTag);
+        }
+    }
+}
+return moduleAccessControl;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getBaseOperationModules" args="" private="false">
+        <CodeText>
+          <![CDATA[return [
+	{
+		"value": "incident",
+		"label": "Incident",
+		"path": "/app/ax/user/viaops_admin/axv/VIAOps - Operation - Incident",
+	},
+	{
+		"value": "incident-group",
+		"label": "Incident Group",
+		"path": "/app/ax/user/viaops_admin/axv/VIAOps - Operation - Incident Group",
+	}
+];
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources/>
+    <Plugins>
+      <Plugin uri="/app/dbp/space/another/dbpm/VIAOps - Base Service"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

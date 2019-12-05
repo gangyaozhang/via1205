@@ -1,0 +1,6 @@
+DELETE FROM
+    viaops_incident_table
+WHERE metric_id=?
+  AND window=?
+  AND algorithm=?
+  AND threshold_policy=?

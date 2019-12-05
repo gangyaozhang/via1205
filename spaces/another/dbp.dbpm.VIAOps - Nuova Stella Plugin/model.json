@@ -1,0 +1,21 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "f02db9eb-db74-4b08-8a98-d0e3b7e4506c"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "Integration API to incorporate Nuova Stella features",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "f02db9eb-db74-4b08-8a98-d0e3b7e4506c",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "VIAOps - Nuova Stella Plugin"
+  }
+}

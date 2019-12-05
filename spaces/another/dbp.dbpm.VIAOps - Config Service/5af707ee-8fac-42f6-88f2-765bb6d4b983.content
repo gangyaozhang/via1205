@@ -1,0 +1,285 @@
+-- SQL Scripts
+
+DROP TABLE viaops_metric_info;
+
+CREATE TABLE viaops_metric_info (
+    metric_id VARCHAR(1024) NOT NULL,
+    base_metric_id VARCHAR(1024) NOT NULL,
+    service_name VARCHAR(45) NOT NULL,
+    service_label VARCHAR(45) NOT NULL,
+    sub_service_name VARCHAR(250) NOT NULL,
+    sub_service_label VARCHAR(250) NOT NULL,
+    app_name VARCHAR(250) NOT NULL,
+    app_label VARCHAR(250) NOT NULL,
+    metric_name VARCHAR(250) NOT NULL,
+    metric_label VARCHAR(250) NOT NULL,
+    dim_keys VARCHAR(1024) NOT NULL,
+    dim_values text NOT NULL,
+    modified_ts TIMESTAMP DEFAULT current_timestamp(),
+    PRIMARY KEY (metric_id)
+);
+
+ALTER TABLE viaops_metric_info ADD base_metric_id VARCHAR(1024);
+
+UPDATE viaops_metric_info SET base_metric_id=concat(service_name,"|",sub_service_name,"|",app_name,"|",metric_name)
+
+
+ALTER TABLE viaops_metric_qdc RENAME TO viaops_qdc_table;
+
+DROP TABLE viaops_qdc_table;
+
+CREATE TABLE viaops_qdc_table (
+    metric_id VARCHAR(1024) NOT NULL,
+    sql_qdc text NOT NULL,
+    json_qdc text NOT NULL,
+    aggr_func VARCHAR(20) NOT NULL,
+    parse_target_group VARCHAR(200) NOT NULL,
+    modified_ts TIMESTAMP DEFAULT current_timestamp(),
+    PRIMARY KEY (metric_id)
+);
+
+DROP VIEW viaops_metric_label;
+
+CREATE VIEW viaops_metric_label AS
+SELECT
+    concat(service_name,"|",sub_service_name,"|",app_name,"|",metric_name) as metric_id,
+    concat(service_label,"|",sub_service_label,"|",app_label,"|",metric_label) as metric_label,
+    modified_ts as modified_ts
+FROM viaops_metric_info;
+    
+DROP VIEW viaops_metric_qdc;
+
+CREATE VIEW viaops_metric_qdc AS
+SELECT
+    a.metric_id,
+    b.base_metric_id,
+    IF(b.dim_keys is not null and b.dim_keys != "" and b.dim_keys != "[]",
+       concat(b.service_name,"|",b.sub_service_name,"|",b.app_name,"|",b.metric_name,replace(replace(replace(dim_keys,'[\"',"|${"),'\"]',"}"),'","',"}|${")),
+       concat(b.service_name,"|",b.sub_service_name,"|",b.app_name,"|",b.metric_name)
+    ) as metric_sig,
+    b.dim_keys,
+    b.dim_values,
+    a.sql_qdc,
+    a.json_qdc,
+    a.aggr_func,
+    a.parse_target_group,
+    a.modified_ts
+FROM viaops_qdc_table a, viaops_metric_info b
+WHERE a.metric_id = b.metric_id;
+
+
+ALTER TABLE viaops_parse_model RENAME TO viaops_parse_table;
+
+DROP TABLE viaops_parse_table;
+
+CREATE TABLE viaops_parse_table (
+    metric_id VARCHAR(1024) NOT NULL,
+    aggr_func VARCHAR(20) NOT NULL,
+    parse_source_group VARCHAR(200) NOT NULL,
+    parse_source_name VARCHAR(200) NOT NULL,
+    parse_target_group VARCHAR(200) NOT NULL,
+    parse_target_app VARCHAR(80) NOT NULL,
+    parse_target_metric VARCHAR(200) NOT NULL,
+    modified_ts TIMESTAMP DEFAULT current_timestamp(),
+    PRIMARY KEY (metric_id)
+);
+
+
+DROP VIEW viaops_parse_model;
+
+CREATE VIEW viaops_parse_model AS
+SELECT
+    a.metric_id,
+    a.aggr_func,
+    a.parse_source_group,
+    a.parse_source_name,
+    a.parse_target_group,
+    a.parse_target_app,
+    a.parse_target_metric,
+    a.modified_ts
+FROM viaops_parse_table a
+
+
+ALTER TABLE viaops_incident_model_2 RENAME TO viaops_incident_table;
+
+DROP TABLE viaops_incident_table;
+
+CREATE TABLE `viaops_incident_table` (
+  `metric_id` varchar(1024) NOT NULL,
+  `window` varchar(10) NOT NULL,
+  `algorithm` varchar(20) NOT NULL,
+  `threshold_policy` varchar(20) NOT NULL,
+  `call_metric_id` varchar(1024) DEFAULT NULL,
+  `generate` varchar(1) DEFAULT NULL,
+  `emit_notification` varchar(20) DEFAULT NULL,
+  `threshold_high` float DEFAULT NULL,
+  `threshold_low` float DEFAULT NULL,
+  `threshold_med` float DEFAULT NULL,
+  `med_threshold_period` int(11) DEFAULT NULL,
+  `high_threshold_period` int(11) DEFAULT NULL,
+  `metric_time_skew` int(11) DEFAULT NULL,
+  `call_time_skew` int(11) DEFAULT NULL,
+  `call_metric_time_skew` int(11) DEFAULT NULL,
+  `expire_after` int(11) DEFAULT NULL,
+  `cool_down_period` int(11) DEFAULT NULL,
+  `warmup_period` int(11) DEFAULT NULL,
+  `warmup_threshold` float DEFAULT NULL,
+  `min_metric_vol` float DEFAULT '0',
+  `min_metric_deviation` float DEFAULT NULL,
+  `med_metric_deviation` float DEFAULT NULL,
+  `high_metric_deviation` float DEFAULT NULL,
+  `min_call_vol` int(11) DEFAULT NULL,
+  `min_call_deviation` float DEFAULT NULL,
+  `med_call_deviation` float DEFAULT NULL,
+  `high_call_deviation` float DEFAULT NULL,
+  `causation_measure` varchar(45) DEFAULT NULL,
+  `causation_top_count` int(11) DEFAULT NULL,
+  `causation_min_measure` float DEFAULT NULL,
+  `causation_rule_name` varchar(45) DEFAULT NULL,
+  `causation_suppl_measure` varchar(45) DEFAULT NULL,
+  `factor` float DEFAULT NULL,
+  `upd_dt` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`metric_id`,`window`,`algorithm`,`threshold_policy`)
+);
+
+CREATE VIEW `viaops_incident_model_2` AS select
+    `a`.`metric_id` AS `metric_id`,
+    `b`.`dim_keys` AS `dim_keys`,
+    `b`.`dim_values` AS `dim_values`,
+    `a`.`window` AS `window`,
+    `a`.`threshold_policy` AS `threshold_policy`,
+    `a`.`algorithm` AS `algorithm`,
+    `a`.`call_metric_id` AS `call_metric_id`,
+    `a`.`generate` AS `generate`,
+    `a`.`emit_notification` AS `emit_notification`,
+    `a`.`threshold_high` AS `threshold_high`,
+    `a`.`threshold_low` AS `threshold_low`,
+    `a`.`threshold_med` AS `threshold_med`,
+    `a`.`med_threshold_period` AS `med_threshold_period`,
+    `a`.`high_threshold_period` AS `high_threshold_period`,
+    `a`.`metric_time_skew` AS `metric_time_skew`,
+    `a`.`call_time_skew` AS `call_time_skew`,
+    `a`.`call_metric_time_skew` AS `call_metric_time_skew`,
+    `a`.`expire_after` AS `expire_after`,
+    `a`.`cool_down_period` AS `cool_down_period`,
+    `a`.`warmup_period` AS `warmup_period`,
+    `a`.`warmup_threshold` AS `warmup_threshold`,
+    `a`.`min_metric_vol` AS `min_metric_vol`,
+    `a`.`min_metric_deviation` AS `min_metric_deviation`,
+    `a`.`med_metric_deviation` AS `med_metric_deviation`,
+    `a`.`high_metric_deviation` AS `high_metric_deviation`,
+    `a`.`min_call_vol` AS `min_call_vol`,
+    `a`.`min_call_deviation` AS `min_call_deviation`,
+    `a`.`med_call_deviation` AS `med_call_deviation`,
+    `a`.`high_call_deviation` AS `high_call_deviation`,
+    `a`.`causation_measure` AS `causation_measure`,
+    `a`.`causation_top_count` AS `causation_top_count`,
+    `a`.`causation_min_measure` AS `causation_min_measure`,
+    `a`.`causation_rule_name` AS `causation_rule_name`,
+    `a`.`causation_suppl_measure` AS `causation_suppl_measure`,
+    `a`.`upd_dt` AS `upd_dt`
+from (`viaops_incident_table` `a` join `viaops_metric_info` `b`)
+where (`a`.`metric_id` = `b`.`metric_id`)
+
+DROP VIEW IF EXISTS viaops_incident_model_view;
+
+CREATE VIEW `viaops_incident_model_view` AS select 
+    `a`.`metric_id` AS `metric_id`,
+    `b`.`base_metric_id` as `base_metric_id`,
+    `b`.`dim_keys` as `dim_keys`,
+    `b`.`dim_values` AS `dim_pattern`,
+    `b`.`service_name` AS `service_name`,
+    `b`.`sub_service_name` AS `sub_service_name`,
+    `a`.`window` AS `window`,
+    `a`.`threshold_policy` AS `threshold_policy`,
+    `a`.`algorithm` AS `algorithm`,
+    `a`.`call_metric_id` AS `call_metric_id`,
+    `a`.`generate` AS `generate`,
+    `a`.`emit_notification` AS `emit_notification`,
+    `a`.`threshold_high` AS `threshold_high`,
+    `a`.`threshold_low` AS `threshold_low`,
+    `a`.`threshold_med` AS `threshold_med`,
+    `a`.`med_threshold_period` AS `med_threshold_period`,
+    `a`.`high_threshold_period` AS `high_threshold_period`,
+    `a`.`metric_time_skew` AS `metric_time_skew`,
+    `a`.`call_time_skew` AS `call_time_skew`,
+    `a`.`call_metric_time_skew` AS `call_metric_time_skew`,
+    `a`.`expire_after` AS `expire_after`,
+    `a`.`cool_down_period` AS `cool_down_period`,
+    `a`.`warmup_period` AS `warmup_period`,
+    `a`.`warmup_threshold` AS `warmup_threshold`,
+    `a`.`min_metric_vol` AS `min_metric_vol`,
+    `a`.`min_metric_deviation` AS `min_metric_deviation`,
+    `a`.`med_metric_deviation` AS `med_metric_deviation`,
+    `a`.`high_metric_deviation` AS `high_metric_deviation`,
+    `a`.`min_call_vol` AS `min_call_vol`,
+    `a`.`min_call_deviation` AS `min_call_deviation`,
+    `a`.`med_call_deviation` AS `med_call_deviation`,
+    `a`.`high_call_deviation` AS `high_call_deviation`,
+    `a`.`causation_measure` AS `causation_measure`,
+    `a`.`causation_top_count` AS `causation_top_count`,
+    `a`.`causation_min_measure` AS `causation_min_measure`,
+    `a`.`causation_rule_name` AS `causation_rule_name`,
+    `a`.`causation_suppl_measure` AS `causation_suppl_measure`,
+    `a`.`upd_dt` AS `upd_dt`,
+    `c`.`correlation_time` AS `correlation_time`,
+    if(isnull(`c`.`correlation_time`),'n','y') AS `groupable`,
+    if(isnull(`a`.`metric_hist_per`),0,`a`.`metric_hist_per`) AS `metric_hist_per`,
+    if(isnull(`a`.`max_low_per`),86400,`a`.`max_low_per`) AS `max_low_per`,
+    if(isnull(`a`.`max_med_per`),86400,`a`.`max_med_per`) AS `max_med_per`,
+    if(isnull(`a`.`tot_max_low_per`),86400,`a`.`tot_max_low_per`) AS `tot_max_low_per`,
+    if(isnull(`a`.`tot_max_med_per`),86400,`a`.`tot_max_med_per`) AS `tot_max_med_per` 
+from ((`viaops_incident_table` `a` join `viaops_metric_info` `b` on((`a`.`metric_id` = `b`.`metric_id`))) left join `viaops_incident_correlation_view` `c` on(((`b`.`service_name` = `c`.`service_name`) and (`b`.`sub_service_name` = `c`.`sub_service_name`))))
+
+
+DROP TABLE IF EXISTS viaops_config_property;
+
+CREATE TABLE IF NOT EXISTS viaops_config_property (
+    name VARCHAR(512) NOT NULL,
+    value VARCHAR(1024) NULL,
+    PRIMARY KEY (name)
+);
+CREATE UNIQUE INDEX SOLUTION_PROPERTY_NAME_UNIQUE ON viaops_config_property (name);
+
+
+DROP TABLE `action_params`;
+
+CREATE TABLE `action_params` (
+  `metric_id` varchar(255) NOT NULL,
+  `vitria_sev` varchar(40) NOT NULL,
+  `action_id` int(11) NOT NULL,
+  `target_addr1` varchar(512) NOT NULL DEFAULT 'null',
+  `target_addr2` varchar(512) NOT NULL DEFAULT 'null',
+  `target_attr1` varchar(240) NOT NULL DEFAULT 'null',
+  `target_attr2` varchar(240) NOT NULL DEFAULT 'null',
+  `target_attr3` varchar(240) NOT NULL DEFAULT 'null',
+  `target_attr4` varchar(240) NOT NULL DEFAULT 'null',
+  PRIMARY KEY (`metric_id`, `vitria_sev`, `action_id`)
+);
+
+
+DROP TABLE `rule_params`;
+
+CREATE TABLE `rule_params` (
+  `metric_id` varchar(255) NOT NULL,
+  `vitria_sev` varchar(40) NOT NULL,
+  `action_id` int(11) NOT NULL,
+  `rule_id` int(11) NOT NULL,
+  `phase` varchar(40) NOT NULL DEFAULT '1',
+  `measured_attr` varchar(40) NOT NULL DEFAULT 'null',
+  `value1` varchar(40) NOT NULL DEFAULT 'null',
+  `value2` varchar(40) NOT NULL DEFAULT 'null',
+  `value3` varchar(40) NOT NULL DEFAULT 'null',
+  `value4` varchar(40) NOT NULL DEFAULT 'null',
+  PRIMARY KEY (`metric_id`, `vitria_sev`, `action_id`, `rule_id`, `phase`)
+);
+
+
+CREATE TABLE viaops_incident_group_contextual (
+    group_rule_name VARCHAR(1024) NOT NULL,
+    metric_id VARCHAR(1024) NOT NULL,
+    display_options text NOT NULL,
+    modified_ts TIMESTAMP DEFAULT current_timestamp(),
+    PRIMARY KEY (group_rule_name, metric_id)
+);
+

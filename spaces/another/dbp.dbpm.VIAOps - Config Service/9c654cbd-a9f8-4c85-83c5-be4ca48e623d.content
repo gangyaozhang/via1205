@@ -1,0 +1,17 @@
+SELECT
+    source_table,
+    window_size,
+    anomaly_step_size,
+    value_field,
+    timezone,
+    metric_id,
+    score_method,
+    stat_seasonality,
+    anomaly_trigger,
+    lower_scale,
+    upper_scale,
+    enabled
+FROM viaops_anomaly_sol a,
+     viaops_anomaly_baseline_score b
+WHERE a.adm_name = b.adm_name
+ORDER BY 6

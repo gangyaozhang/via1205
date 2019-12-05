@@ -1,0 +1,119 @@
+SELECT 
+    LAST( a.group_id ) AS id,
+    MAX( a.metric_id ) AS metric_id,
+    LAST( a.incident_config_metric_id  ) AS config_metric_id,
+    LAST( a.group_service_name ) as service_name,
+    LAST( a.group_sub_service_name ) as sub_service_name,
+    MIN( a.group_create_tm ) as group_create_tm,
+    MAX( a.group_end_tm ) as group_end_tm,
+    LAST( a.group_state) as status,
+    LAST( a.group_operation ) as group_operation,
+    MAX( a.incident_call_start_tm ) AS cust_call_start_tm,
+    MAX( a.incident_call_end_tm ) AS cust_call_end_tm,
+    ( MAX(a.incident_call_end_tm ) - MAX(a.incident_call_start_tm) + 300 ) AS call_duration,
+    ( MAX(a.group_end_tm ) - MAX(a.group_create_tm) + 300 ) AS duration,
+    SUM( a.incident_call_count ) AS cust_call_count,
+    SUM( a.incident_call_baseline ) AS cust_call_baseline,
+    SUM( a.incident_call_deviation ) AS cust_call_deviation,
+    ROUND(MAX( a.incident_peak_score ),2) AS display_max,
+    
+    'Service' AS causation,
+    'Informational' AS type,
+    COUNT(DISTINCT(a.incident_id)) AS correlated_count, 
+    'Not Actioned' as notification,
+    CASE  
+            WHEN MAX( a.incident_severity_scale ) = 3 THEN "High"
+            WHEN MAX( a.incident_severity_scale ) = 2 THEN "Medium"
+            WHEN MAX( a.incident_severity_scale ) = 1 THEN "Low"
+            WHEN MAX( a.incident_severity_scale ) = 0 THEN ""
+            WHEN MAX( a.incident_severity_scale ) = -1 THEN "Cooldown"
+            WHEN MAX( a.incident_severity_scale ) = -2 THEN "Warmup"
+        END  AS severity,
+        MAX( a.incident_severity_scale ) as severity_scale,
+            
+        CASE  
+            WHEN MAX( a.incident_derived_severity_scale ) = 3 THEN "High"
+            WHEN MAX( a.incident_derived_severity_scale ) = 2 THEN "Medium"
+            WHEN MAX( a.incident_derived_severity_scale ) = 1 THEN "Low"
+            WHEN MAX( a.incident_derived_severity_scale ) = 0 THEN ""
+            WHEN MAX( a.incident_derived_severity_scale ) = -1 THEN "Cooldown"
+            WHEN MAX( a.incident_derived_severity_scale ) = -2 THEN "Warmup"
+        END  AS derived_severity,
+        MAX( a.incident_derived_severity_scale ) as derived_severity_scale,
+        
+        CASE  
+            WHEN MAX( a.incident_max_severity_scale ) = 3 THEN "High"
+            WHEN MAX( a.incident_max_severity_scale ) = 2 THEN "Medium"
+            WHEN MAX( a.incident_max_severity_scale ) = 1 THEN "Low"
+            WHEN MAX( a.incident_max_severity_scale ) = 0 THEN ""
+            WHEN MAX( a.incident_max_severity_scale ) = -1 THEN "Cooldown"
+            WHEN MAX( a.incident_max_severity_scale ) = -2 THEN "Warmup"
+        END  AS max_severity,
+        MAX( a.incident_max_severity_scale ) as max_severity_scale
+
+FROM (
+    SELECT 
+            group_id,
+            IF( group_start_ind = 'y', incident_metric_id, null) as metric_id,
+            group_service_name,
+            group_sub_service_name,
+            group_rule_name,
+            group_start_ind,
+            group_create_tm,
+            group_end_tm,
+            group_state,
+            group_operation,
+            incident_id,
+            incident_config_metric_id,
+            incident_start_tm,
+            incident_end_tm,
+            incident_call_start_tm,
+            incident_call_end_tm,
+            incident_call_count,
+            incident_call_baseline,
+            incident_call_deviation,
+            incident_peak_score,
+            date_key,
+            CASE 
+                WHEN incident_severity = "High" THEN 3
+                WHEN incident_severity = "Medium" THEN 2
+                WHEN incident_severity = "Low" THEN 1
+                WHEN incident_severity = "Cooldown" THEN -11
+                WHEN incident_severity = "Warmup" THEN -2
+                WHEN incident_severity = "" THEN 0
+            END AS incident_severity_scale,
+
+            CASE
+                WHEN incident_derived_severity = "High" THEN 3
+                WHEN incident_derived_severity = "Medium" THEN 2
+                WHEN incident_derived_severity = "Low" THEN 1
+                WHEN incident_derived_severity = "Cooldown" THEN -11
+                WHEN incident_derived_severity = "Warmup" THEN -2
+                WHEN incident_derived_severity = "" THEN 0
+            END AS incident_derived_severity_scale,
+    
+            CASE
+                WHEN incident_max_severity = "High" THEN 3
+                WHEN incident_max_severity = "Medium" THEN 2
+                WHEN incident_max_severity = "Low" THEN 1
+                WHEN incident_max_severity = "Cooldown" THEN -11
+                WHEN incident_max_severity = "Warmup" THEN -2
+                WHEN incident_max_severity = "" THEN 0
+            END AS incident_max_severity_scale
+    
+        from    viaops_incident_group_history
+        WHERE date_key in (${dateKeys}) AND ( ( incident_start_tm BETWEEN 0 AND ${toEpoch} 
+        AND ( incident_end_tm > ${fromEpoch}) ) 
+        OR ( incident_start_tm BETWEEN ${fromEpoch} AND ${toEpoch} AND incident_end_tm = 0 ) )
+        AND  incident_start_tm > 0
+        ${metricIdWhereClause} 
+        ORDER BY incident_event_tm ASC
+) a
+
+GROUP BY a.group_id
+ORDER BY group_create_tm
+
+
+
+
+

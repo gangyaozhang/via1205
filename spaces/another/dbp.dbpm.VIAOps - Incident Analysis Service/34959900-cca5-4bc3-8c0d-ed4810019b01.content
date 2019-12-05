@@ -1,0 +1,104 @@
+SELECT
+        LAST(a.id) as id,
+        LAST(a.metric_id) as metric_id,
+        LAST(a.config_metric_id) as config_metric_id,
+        LAST(a.algorithm) as algorithm,
+        CASE  
+            WHEN MAX( a.severity_scale ) = 3 THEN "High"
+            WHEN MAX( a.severity_scale ) = 2 THEN "Medium"
+            WHEN MAX( a.severity_scale ) = 1 THEN "Low"
+            WHEN MAX( a.severity_scale ) = 0 THEN ""
+            WHEN MAX( a.severity_scale ) = -1 THEN "Cooldown"
+            WHEN MAX( a.severity_scale ) = -2 THEN "Warmup"
+            END  AS severity,
+        MAX( a.severity_scale ) as severity_scale,
+            
+        CASE  
+            WHEN MAX( a.derived_severity_scale ) = 3 THEN "High"
+            WHEN MAX( a.derived_severity_scale ) = 2 THEN "Medium"
+            WHEN MAX( a.derived_severity_scale ) = 1 THEN "Low"
+            WHEN MAX( a.derived_severity_scale ) = 0 THEN ""
+            WHEN MAX( a.derived_severity_scale ) = -1 THEN "Cooldown"
+            WHEN MAX( a.derived_severity_scale ) = -2 THEN "Warmup"
+            END  AS derived_severity,
+        MAX( a.derived_severity_scale ) as derived_severity_scale,
+        
+        CASE  
+            WHEN MAX( a.max_severity_scale ) = 3 THEN "High"
+            WHEN MAX( a.max_severity_scale ) = 2 THEN "Medium"
+            WHEN MAX( a.max_severity_scale ) = 1 THEN "Low"
+            WHEN MAX( a.max_severity_scale ) = 0 THEN ""
+            WHEN MAX( a.max_severity_scale ) = -1 THEN "Cooldown"
+            WHEN MAX( a.max_severity_scale ) = -2 THEN "Warmup"
+            END  AS max_severity,
+        MAX( a.max_severity_scale ) as max_severity_scale,
+        LAST(a.operation) AS status,
+        ( MAX(a.call_end_tm ) - MIN(a.call_start_tm) + 300 ) AS call_duration,
+        ( MAX(a.end_tm ) - MIN(a.start_tm) + 300 ) AS duration,
+        LAST(a.start_tm) AS start_epoch,
+        MAX(a.end_tm ) AS end_epoch,
+        MIN(a.call_start_tm) AS cust_call_start_tm,
+        MAX(a.call_end_tm) AS cust_call_end_tm,
+        SUM(a.call_count) AS cust_call_count,
+        SUM(a.call_baseline) AS cust_call_baseline,
+        "" AS service,
+        "" AS sub_service,
+        LAST(a.window) AS anomaly_window,
+        LAST(a.dim_keys) AS dim_keys,
+        LAST(a.dim_values) AS dim_values,
+        MAX( a.event_tm ) AS event_epoch,
+        'Service' AS causation,
+        count(*) AS anomalies,
+        MAX(a.peak_score) AS peak_score,
+        MAX(a.peak_score) AS max_score,
+        SUM(a.metric_measure) AS metric_measure,
+        SUM(a.metric_baseline) AS metric_baseline,
+        LAST(a.factor) AS score_factor,
+        "y" AS above,
+        "n" AS below,
+        concat(to_utc_timestamp(from_unixtime(FIRST(a.start_tm)),'Etc/UTC'),'Z') AS start_date,
+        IF(LAST(a.end_tm) == 0, "", concat(to_utc_timestamp(from_unixtime(LAST(a.end_tm)),'Etc/UTC'),'Z')) AS end_date,
+        concat(to_utc_timestamp(from_unixtime(LAST(a.event_tm)),'Etc/UTC'),'Z') AS event_date,
+        concat(to_utc_timestamp(from_unixtime(LAST(a.call_end_tm)),'Etc/UTC'),'Z') AS call_date,
+        LAST(a.date_key) AS date_key
+        
+FROM
+    (   SELECT CASE 
+            WHEN severity = "High" THEN 3
+            WHEN severity = "Medium" THEN 2
+            WHEN severity = "Low" THEN 1
+            WHEN severity = "Cooldown" THEN -11
+            WHEN severity = "Warmup" THEN -2
+            WHEN severity = "" THEN 0
+            END AS severity_scale,
+            
+            CASE
+            WHEN derived_severity = "High" THEN 3
+            WHEN derived_severity = "Medium" THEN 2
+            WHEN derived_severity = "Low" THEN 1
+            WHEN derived_severity = "Cooldown" THEN -11
+            WHEN derived_severity = "Warmup" THEN -2
+            WHEN derived_severity = "" THEN 0
+            END AS derived_severity_scale,
+            
+            CASE
+            WHEN max_severity = "High" THEN 3
+            WHEN max_severity = "Medium" THEN 2
+            WHEN max_severity = "Low" THEN 1
+            WHEN max_severity = "Cooldown" THEN -11
+            WHEN max_severity = "Warmup" THEN -2
+            WHEN max_severity = "" THEN 0
+            END AS max_severity_scale, 
+            *
+        FROM viaops_incident_history
+        WHERE date_key in (${dateKeys}) AND ( ( start_tm BETWEEN 0 AND ${toEpoch} 
+        AND ( end_tm > ${fromEpoch}) ) 
+        OR ( start_tm BETWEEN ${fromEpoch} AND ${toEpoch} AND end_tm = 0 ) )
+        AND  start_tm > 0
+        ${metricIdWhereClause}
+        ORDER BY event_tm ASC
+    ) a
+
+    GROUP BY a.id
+    ORDER BY start_epoch desc, id ASC
+

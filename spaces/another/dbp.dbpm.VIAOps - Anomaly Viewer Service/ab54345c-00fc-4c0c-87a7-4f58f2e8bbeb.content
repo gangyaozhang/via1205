@@ -1,0 +1,449 @@
+{
+    "summary-config" : {
+        "callspike-lead" : 12,
+        "callspike-trail" : 12,
+        "callspike-group" : 6,
+
+        "summary-keys[V3]" : [
+            
+            "Summary of incidents, without comparison to any form of 'truth'",
+
+            "ANY_SEV",
+            "HIGH_SEV",
+            "HIST_ANY_SEV",
+            "HIST_HIGH_SEV",
+            "HIST_RAM_UP",
+            "HIST_WIND_DOWN_ANY_SEV",
+            "HIST_WIND_DOWN_HIGH_SEV",
+            "HIST_INACTIVE",
+            "HIST_ABORTED_COOLDOWN",
+            "NOC_NOTIFICATION_COUNT",
+            "IVR_DEFLECT_COUNT",
+            "FLOOR_DISPATCH_COUNT",
+            "DEFLECTED_ABOVE_BASELINE_CALLS",
+            "ABOVE_BASELINE_CALLS",
+            "PCT_DEFLECTED_ABOVE_BASELINE_CALLS",
+
+            "Summary of incidents, in comparison to Call Spikes as ground truth",
+
+            "CALL_SPIKE",
+            "HIGH_SEV_BEFORE_CALL_SPIKE",
+            "ANY_SEV_AFTER_CALL_SPIKE",
+            "HIGH_SEV_AFTER_CALL_SPIKE",
+            "ANY_SEV_NO_CALL_SPIKE",
+            "HIGH_SEV_NO_CALL_SPIKE",
+            "ANY_SEV_CALL_SPIKE_INSIDE",
+            "HIGH_SEV_CALL_SPIKE_INSIDE",
+            "ANY_SEV_CALL_SPIKE_OUTSIDE",
+            "HIGH_SEV_CALL_SPIKE_OUTSIDE",
+            "HIST_ANY_SEV_BEFORE_CALL_SPIKE",
+            "HIST_HIGH_SEV_BEFORE_CALL_SPIKE",
+            "NOC_NOTIFY_BEFORE_CALL_SPIKE",
+            "NOC_NOTIFY_AFTER_CALL_SPIKE",
+            "NOC_NOTIFY_NO_CALL_SPIKE",
+            "PCT_NOC_NOTIFY_BEFORE_CALL_SPIKE",
+            "PCT_NOC_NOTIFY_NO_CALL_SPIKE",
+            "HIST_NOC_NOTIFY_CALL_SPIKE_LEAD_TIME",
+            "NOC_NOTIFY_CALL_SPIKE_LEAD_TIME",
+            "HIST_CLOSE_TOO_SOON_CALL_SPIKE",
+            "HIST_ALERT_TOO_LATE_CALL_SPIKE",
+
+            "Summary of incidents, in comparison to Call Groups as ground truth",
+
+            "CALL_GROUP",
+            "HIGH_SEV_BEFORE_CALL_GROUP",
+            "ANY_SEV_AFTER_CALL_GROUP",
+            "HIGH_SEV_AFTER_CALL_GROUP",
+            "ANY_SEV_NO_CALL_GROUP",
+            "HIGH_SEV_NO_CALL_GROUP",
+            "ANY_SEV_CALL_GROUP_INSIDE",
+            "HIGH_SEV_CALL_GROUP_INSIDE",
+            "ANY_SEV_CALL_GROUP_OUTSIDE",
+            "HIGH_SEV_CALL_GROUP_OUTSIDE",
+            "HIST_ANY_SEV_BEFORE_CALL_GROUP",
+            "HIST_HIGH_SEV_BEFORE_CALL_GROUP",
+            "NOC_NOTIFY_BEFORE_CALL_GROUP",
+            "NOC_NOTIFY_AFTER_CALL_GROUP",
+            "NOC_NOTIFY_NO_CALL_GROUP",
+            "PCT_NOC_NOTIFY_BEFORE_CALL_GROUP",
+            "PCT_NOC_NOTIFY_NO_CALL_GROUP",
+            "HIST_NOC_NOTIFY_CALL_GROUP_LEAD_TIME",
+            "NOC_NOTIFY_CALL_GROUP_LEAD_TIME",
+            "HIST_CLOSE_TOO_SOON_CALL_GROUP",
+            "HIST_ALERT_TOO_LATE_CALL_GROUP"
+        ]
+    },
+
+    "ANY_SEV" : {
+        "label" : "Total number of incidents",
+        "value" : 0,
+        "notes" : [
+            "Incident are consecutive intervals where metric scores are deemed anomalous"
+        ]
+    },
+    "HIGH_SEV" : {
+        "label" : "Total number of high sev incidents",
+        "value" : 0,
+		"notes"  : [
+			"High severity incidents are any incident where the max severity is HIGH"
+		]
+    },
+    "CALL_SPIKE" : {
+        "label" : "Total number of call spikes",
+        "value" : 0,
+        "notes" : [
+            "Call spikes are consecutive intervals where call scores are deemed anomalous",
+            "Anomalous condition for calls defined as deviation >= 100% and volume >= 20"
+        ]
+    },
+    "CALL_GROUP" : {
+        "label" : "Total number of call groups",
+        "value" : 0,
+        "notes" : [
+            "Call groups are consecutive Call Spike with gap less than specific threshold",
+            "Default gap between call spikes is set at 6 intervals"
+        ]
+    },
+    
+    "ANY_SEV_BEFORE_CALL_SPIKE" : {
+        "label" : "Number of incidents of any severity detected before call spike (with leading/trailing window)",
+        "value" : 0
+    },
+    "HIGH_SEV_BEFORE_CALL_SPIKE" : {
+        "label" : "Number of incidents of high severity detected before call spike (with leading/trailing window)",
+        "value" : 0
+    },
+    "ANY_SEV_AFTER_CALL_SPIKE" : {
+        "label" : "Number of incidents of any severity detected after call spike (with leading/trailing window)",
+        "value" : 0
+    },
+    "HIGH_SEV_AFTER_CALL_SPIKE" : {
+        "label" : "Number of incidents of high severity detected after call spike (with leading/trailing window)",
+        "value" : 0
+    },
+    "ANY_SEV_NO_CALL_SPIKE" : {
+        "label" : "Number of incidents of any severity not associated with call spike (with leading/trailing window)",
+        "value" : 0
+    },
+    "HIGH_SEV_NO_CALL_SPIKE" : {
+        "label" : "Number of incidents of high severity not associated with call spike (with leading/trailing window)",
+        "value" : 0
+    },
+    "ANY_SEV_CALL_SPIKE_INSIDE" : {
+        "label" : "Number of incidents of any severity directly associated with call spike within incident window",
+        "value" : 0,
+		"notes" : [
+			"Call Spike overlaps incident"
+		]
+    },
+    "HIGH_SEV_CALL_SPIKE_INSIDE" : {
+        "label" : "Number of incidents of high severity directly associated with call spike within incident window",
+        "value" : 0,
+		"notes" : [
+			"Call Spike overlaps incident"
+		]
+    },
+    "ANY_SEV_CALL_SPIKE_OUTSIDE" : {
+        "label" : "Number of incidents of any severity not directly associated with call spike within incident window",
+        "value" : 0
+    },
+    "HIGH_SEV_CALL_SPIKE_OUTSIDE" : {
+        "label" : "Number of incidents of high severity not directly associated with call spike within incident window",
+        "value" : 0
+    },
+
+    "ANY_SEV_BEFORE_CALL_GROUP" : {
+        "label" : "Number of incidents of any severity detected before call group (with leading/trailing window)",
+        "value" : 0
+    },
+    "HIGH_SEV_BEFORE_CALL_GROUP" : {
+        "label" : "Number of incidents of high severity detected before call group (with leading/trailing window)",
+        "value" : 0
+    },
+    "ANY_SEV_AFTER_CALL_GROUP" : {
+        "label" : "Number of incidents of any severity detected after call group (with leading/trailing window)",
+        "value" : 0
+    },
+    "HIGH_SEV_AFTER_CALL_GROUP" : {
+        "label" : "Number of incidents of high severity detected after call group (with leading/trailing window)",
+        "value" : 0
+    },
+    "ANY_SEV_NO_CALL_GROUP" : {
+        "label" : "Number of incidents of any severity not associated with call group (with leading/trailing window)",
+        "value" : 0
+    },
+    "HIGH_SEV_NO_CALL_GROUP" : {
+        "label" : "Number of incidents of high severity not associated with call group (with leading/trailing window)",
+        "value" : 0
+    },
+    "ANY_SEV_CALL_GROUP_INSIDE" : {
+        "label" : "Number of incidents of any severity directly associated with call group within incident window",
+        "value" : 0,
+		"notes" : [
+			"Call Spike overlaps incident"
+		]
+    },
+    "HIGH_SEV_CALL_GROUP_INSIDE" : {
+        "label" : "Number of incidents of high severity directly associated with call group within incident window",
+        "value" : 0,
+		"notes" : [
+			"Call Spike overlaps incident"
+		]
+    },
+    "ANY_SEV_CALL_GROUP_OUTSIDE" : {
+        "label" : "Number of incidents of any severity not directly associated with call group within incident window",
+        "value" : 0
+    },
+    "HIGH_SEV_CALL_GROUP_OUTSIDE" : {
+        "label" : "Number of incidents of high severity not directly associated with call group within incident window",
+        "value" : 0
+    },
+
+    "HIST_ANY_SEV" : {
+        "label" : "Distribution of duration (number of periods) of incidents of any severity (use ANY_SEV)",
+        "value" : [
+            { "min" : 1 , "max" : 1   , "count" : 0 },
+            { "min" : 2 , "max" : 3   , "count" : 0 },
+            { "min" : 4 , "max" : 6   , "count" : 0 },
+            { "min" : 7 , "max" : 9   , "count" : 0 },
+            { "min" : 10, "max" : null, "count" : 0 }
+        ]
+    },
+    "HIST_HIGH_SEV" : {
+        "label" : "Distribution of duration (number of periods) of incidents of high severity (use HIGH_SEV)",
+        "value" : [
+            { "min" : 1 , "max" : 1   , "count" : 0 },
+            { "min" : 2 , "max" : 3   , "count" : 0 },
+            { "min" : 4 , "max" : 6   , "count" : 0 },
+            { "min" : 7 , "max" : 9   , "count" : 0 },
+            { "min" : 10, "max" : null, "count" : 0 }
+        ]
+    },
+    "HIST_ANY_SEV_BEFORE_CALL_SPIKE" : {
+        "label" : "Distribution of duration (number of periods) of incidents of any severity detected before call spike (use ANY_SEV_BEFORE_CALL_SPIKE)",
+        "value" : [
+            { "min" : 0 , "max" : 3   , "count" : 0 },
+            { "min" : 4 , "max" : 6   , "count" : 0 },
+            { "min" : 7 , "max" : 9   , "count" : 0 },
+            { "min" : 10, "max" : null, "count" : 0 }
+        ]
+    },
+    "HIST_HIGH_SEV_BEFORE_CALL_SPIKE" : {
+        "label" : "Distribution of duration (number of periods) of incidents of high severity detected before call spike (use HIGH_SEV_BEFORE_CALL_SPIKE)",
+        "value" : [
+            { "min" : 0 , "max" : 3   , "count" : 0 },
+            { "min" : 4 , "max" : 6   , "count" : 0 },
+            { "min" : 7 , "max" : 9   , "count" : 0 },
+            { "min" : 10, "max" : null, "count" : 0 }
+        ]
+    },
+    "HIST_ANY_SEV_BEFORE_CALL_GROUP" : {
+        "label" : "Distribution of duration (number of periods) of incidents of any severity detected before call group (use ANY_SEV_BEFORE_CALL_GROUP)",
+        "value" : [
+            { "min" : 0 , "max" : 3   , "count" : 0 },
+            { "min" : 4 , "max" : 6   , "count" : 0 },
+            { "min" : 7 , "max" : 9   , "count" : 0 },
+            { "min" : 10, "max" : null, "count" : 0 }
+        ]
+    },
+    "HIST_HIGH_SEV_BEFORE_CALL_GROUP" : {
+        "label" : "Distribution of duration (number of periods) of incidents of high severity detected before call group (use HIGH_SEV_BEFORE_CALL_GROUP)",
+        "value" : [
+            { "min" : 0 , "max" : 3   , "count" : 0 },
+            { "min" : 4 , "max" : 6   , "count" : 0 },
+            { "min" : 7 , "max" : 9   , "count" : 0 },
+            { "min" : 10, "max" : null, "count" : 0 }
+        ]
+    },
+    "HIST_RAM_UP" : {
+        "label" : "Distribution of ram-up time to high severity. Ram-up is the number of periods from start to first high severity period (use HIGH_SEV)",
+        "value" : [
+            { "min" : 0, "max" : 0   , "count" : 0 },
+            { "min" : 1, "max" : 3   , "count" : 0 },
+            { "min" : 4, "max" : 6   , "count" : 0 },
+            { "min" : 7, "max" : null, "count" : 0 }
+        ]
+    },
+    "HIST_WIND_DOWN_ANY_SEV" : {
+        "label" : "Distribution of wind-down time to close. Wind-down is the number of periods from first high severity period to close. Count all periods (use HIGH_SEV)",
+        "value" : [
+            { "min" : 0, "max" : 1   , "count" : 0 },
+            { "min" : 2, "max" : 3   , "count" : 0 },
+            { "min" : 4, "max" : 6   , "count" : 0 },
+            { "min" : 7, "max" : null, "count" : 0 }
+        ]
+    },
+    "HIST_WIND_DOWN_HIGH_SEV" : {
+        "label" : "Distribution of wind-down time to close. Wind-down is the number of periods from first high severity period to close. Count only high periods (use HIGH_SEV)",
+        "value" : [
+            { "min" : 0, "max" : 1   , "count" : 0 },
+            { "min" : 2, "max" : 3   , "count" : 0 },
+            { "min" : 4, "max" : 6   , "count" : 0 },
+            { "min" : 7, "max" : null, "count" : 0 }
+        ]
+    },
+    "HIST_CLOSE_TOO_SOON_CALL_SPIKE" : {
+        "label" : "Distribution of elapsed time (number of periods) from incident close to call spike (use ANY_SEV_BEFORE_CALL_SPIKE).",
+        "value" : [
+            { "min" : null, "max" : 0   , "count" : 0 },
+            { "min" : 1   , "max" : 1   , "count" : 0 },
+            { "min" : 2   , "max" : 3   , "count" : 0 },
+            { "min" : 4   , "max" : 6   , "count" : 0 },
+            { "min" : 7   , "max" : null, "count" : 0 }
+        ]
+    },
+    "HIST_ALERT_TOO_LATE_CALL_SPIKE" : {
+        "label" : "Distribution of elapsed time (number of periods) from incident alert (high) to call spike (use HIGH_SEV_BEFORE_CALL_SPIKE).",
+        "value" : [
+            { "min" : null, "max" : 0   , "count" : 0 },
+            { "min" : 1   , "max" : 1   , "count" : 0 },
+            { "min" : 2   , "max" : 3   , "count" : 0 },
+            { "min" : 4   , "max" : 6   , "count" : 0 },
+            { "min" : 7   , "max" : null, "count" : 0 }
+        ]
+    },
+    "HIST_CLOSE_TOO_SOON_CALL_GROUP" : {
+        "label" : "Distribution of elapsed time (number of periods) from incident close to call group (use ANY_SEV_BEFORE_CALL_GROUP).",
+        "value" : [
+            { "min" : null, "max" : 0   , "count" : 0 },
+            { "min" : 1   , "max" : 1   , "count" : 0 },
+            { "min" : 2   , "max" : 3   , "count" : 0 },
+            { "min" : 4   , "max" : 6   , "count" : 0 },
+            { "min" : 7   , "max" : null, "count" : 0 }
+        ]
+    },
+    "HIST_ALERT_TOO_LATE_CALL_GROUP" : {
+        "label" : "Distribution of elapsed time (number of periods) from incident alert (high) to call group (use HIGH_SEV_BEFORE_CALL_GROUP).",
+        "value" : [
+            { "min" : null, "max" : 0   , "count" : 0 },
+            { "min" : 1   , "max" : 1   , "count" : 0 },
+            { "min" : 2   , "max" : 3   , "count" : 0 },
+            { "min" : 4   , "max" : 6   , "count" : 0 },
+            { "min" : 7   , "max" : null, "count" : 0 }
+        ]
+    },
+    "HIST_INACTIVE" : {
+        "label" : "Distribution of inactive duration (number of periods) between incidents (use ANY_SEV)",
+        "value" : [
+            { "min" : 1 , "max" : 6   , "count" : 0 },
+            { "min" : 7 , "max" : 12  , "count" : 0 },
+            { "min" : 13, "max" : 36  , "count" : 0 },
+            { "min" : 37, "max" : null, "count" : 0 }
+        ]
+    },
+    "HIST_ABORTED_COOLDOWN" : {
+        "label" : "Distribution of aborted cooldown periods (use ANY_SEV)",
+        "value" : [
+            { "min" : 0, "max" : 0   , "count" : 0 },
+            { "min" : 1, "max" : 1   , "count" : 0 },
+            { "min" : 2, "max" : 3   , "count" : 0 },
+            { "min" : 4, "max" : 6   , "count" : 0 },
+            { "min" : 7, "max" : null, "count" : 0 }
+        ]
+    },
+    "NOC_NOTIFICATION_COUNT" : {
+        "label" : "Number of NOC Notifications sent (NOC_NOTIFICATION_COUNT, use ANY_SEV)",
+        "value" : 0
+    },
+    "IVR_DEFLECT_COUNT" : {
+        "label" : "Number of IVR Deflections installed (IVR_DEFLECT_COUNT, use ANY_SEV)",
+        "value" : 0
+    },
+    "FLOOR_DISPATCH_COUNT" : {
+        "label" : "Number of Floor Dispatches initiated (FLOOR_DISPATCH_COUNT, use ANY_SEV)",
+        "value" : 0
+    },
+    
+    "NOC_NOTIFY_BEFORE_CALL_SPIKE" : {
+        "label" : "Number of NOC notifications triggered before initial call spike (NOC_NOTIFY_BEFORE_CALL_SPIKE, use ANY_SEV_BEFORE_CALL_SPIKE)",
+        "value" : 0
+    },
+    "NOC_NOTIFY_AFTER_CALL_SPIKE" : {
+        "label" : "Number of NOC notifications triggered on or after initial call spike (NOC_NOTIFY_AFTER_CALL_SPIKE, use ANY_SEV_AFTER_CALL_SPIKE and ANY_SEV_BEFORE_CALL_SPIKE)",
+        "value" : 0
+    },
+    "NOC_NOTIFY_NO_CALL_SPIKE" : {
+        "label" : "Number of NOC Notifications triggered without an associated call spike (NOC_NOTIFY_NO_CALL_SPIKE, use ANY_SEV_NO_CALL_SPIKE)",
+        "value" : 0
+    },
+    "PCT_NOC_NOTIFY_NO_CALL_SPIKE" : {
+        "label" : "% of NOC Notifications triggered without an associated call spike (NOC_NOTIFY_NO_CALL_SPIKE/NOC_NOTIFICATION_COUNT)",
+        "value" : 0
+    },
+    "PCT_NOC_NOTIFY_BEFORE_CALL_SPIKE" : {
+        "label" : "% of NOC Notifications triggered before initial call spike (NOC_NOTIFY_BEFORE_CALL_SPIKE/NOC_NOTIFICATION_COUNT)",
+        "value" : 0
+    },
+    "HIST_NOC_NOTIFY_CALL_SPIKE_LEAD_TIME" : {
+        "label" : "Distribution of time differences between NOC notifications and the initial call spikes (where NOC Notification time is < initial call spike time) (use ANY_SEV_BEFORE_CALL_SPIKE)",
+        "value" : [
+            { "min" : 1 , "max" : 1   , "count" : 0 },
+            { "min" : 2 , "max" : 3   , "count" : 0 },
+            { "min" : 4 , "max" : 6   , "count" : 0 },
+            { "min" : 7 , "max" : 9   , "count" : 0 },
+            { "min" : 10, "max" : null, "count" : 0 }
+        ]
+    },
+    "NOC_NOTIFY_CALL_SPIKE_LEAD_TIME" : {
+        "label" : "Time differences between NOC notifications and the initial call spikes (where NOC Notification time is < initial call spike time) (use ANY_SEV_BEFORE_CALL_SPIKE)",
+        "value" : [
+            { "name" : "MIN", "label" : "Minimum Lead Time", "value" : 0 },
+            { "name" : "MAX", "label" : "Maximum Lead Time", "value" : 0 },
+            { "name" : "MED", "label" : "Median Lead Time",  "value" : 0 },
+            { "name" : "AVG", "label" : "Average Lead Time", "value" : 0 }
+        ]
+    },
+
+    "NOC_NOTIFY_BEFORE_CALL_GROUP" : {
+        "label" : "Number of NOC notifications triggered before call group (NOC_NOTIFY_BEFORE_CALL_GROUP, use ANY_SEV_BEFORE_CALL_GROUP)",
+        "value" : 0
+    },
+    "NOC_NOTIFY_AFTER_CALL_GROUP" : {
+        "label" : "Number of NOC notifications triggered on or after call group (NOC_NOTIFY_AFTER_CALL_GROUP, use ANY_SEV_AFTER_CALL_GROUP and ANY_SEV_BEFORE_CALL_GROUP)",
+        "value" : 0
+    },
+    "NOC_NOTIFY_NO_CALL_GROUP" : {
+        "label" : "Number of NOC Notifications triggered without an associated call group (NOC_NOTIFY_NO_CALL_GROUP, use ANY_SEV_NO_CALL_GROUP)",
+        "value" : 0
+    },
+    "PCT_NOC_NOTIFY_NO_CALL_GROUP" : {
+        "label" : "% of NOC Notifications triggered without an associated call group (NOC_NOTIFY_NO_CALL_GROUP/NOC_NOTIFICATION_COUNT)",
+        "value" : 0
+    },
+    "PCT_NOC_NOTIFY_BEFORE_CALL_GROUP" : {
+        "label" : "% of NOC Notifications triggered before call group (NOC_NOTIFY_BEFORE_CALL_GROUP/NOC_NOTIFICATION_COUNT)",
+        "value" : 0
+    },
+    "HIST_NOC_NOTIFY_CALL_GROUP_LEAD_TIME" : {
+        "label" : "Distribution of time differences between NOC notifications and the initial call group (where NOC Notification time is < initial call group time) (use ANY_SEV_BEFORE_CALL_GROUP)",
+        "value" : [
+            { "min" : 1 , "max" : 1   , "count" : 0 },
+            { "min" : 2 , "max" : 3   , "count" : 0 },
+            { "min" : 4 , "max" : 6   , "count" : 0 },
+            { "min" : 7 , "max" : 9   , "count" : 0 },
+            { "min" : 10, "max" : null, "count" : 0 }
+        ]
+    },
+    "NOC_NOTIFY_CALL_GROUP_LEAD_TIME" : {
+        "label" : "Time differences between NOC notifications and the initial call group (where NOC Notification time is < initial call group time) (use ANY_SEV_BEFORE_CALL_GROUP)",
+        "value" : [
+            { "name" : "MIN", "label" : "Minimum Lead Time", "value" : 0 },
+            { "name" : "MAX", "label" : "Maximum Lead Time", "value" : 0 },
+            { "name" : "MED", "label" : "Median Lead Time",  "value" : 0 },
+            { "name" : "AVG", "label" : "Average Lead Time", "value" : 0 }
+        ]
+    },
+
+    "DEFLECTED_ABOVE_BASELINE_CALLS" : {
+        "label" : "Number of above baseline calls received after IVR deflection installed (excludes below baseline differences from baseline) (DEFLECTED_ABOVE_BASELINE_CALLS, use ANY_SEV)",
+        "value" : 0
+    },
+    "ABOVE_BASELINE_CALLS" : {
+        "label" : "Number of above baseline calls received during the time period. (ABOVE_BASELINE_CALLS, use ANY_SEV)",
+        "value" : 0
+    },
+    "PCT_DEFLECTED_ABOVE_BASELINE_CALLS" : {
+        "label" : "% of calls which would have potentially been deflected if IVR Deflection for this Incident deflected all above baseline calls after installation (DEFLECTED_ABOVE_BASELINE_CALLS/ABOVE_BASELINE_CALLS)",
+        "value" : 0
+    }
+}

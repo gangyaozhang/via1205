@@ -1,0 +1,982 @@
+<AnalyticsExplorerView description="" name="VIAOps - Config - Audit Comp" is_init="false">
+  <ModelInfo validated="true" nextPageId="8">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="0.8"/>
+      <NoTileSpacing value="false"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <Page id="2" name="Service_Audit" title="Service" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageProperties/>
+      <Layout type="10" numRow="37" numCol="1" count="2" templateType="3" screenHeight="1080" renderType="undefined" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:36,&quot;id&quot;:0},{&quot;data_col&quot;:1,&quot;data_row&quot;:37,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:36,&quot;id&quot;:1}]" unitSize="{&quot;x&quot;:10.516666666666667,&quot;y&quot;:9.51388888888889}" viewRows="72" viewCols="120"/>
+      <Tile name="Metric_Info" title="Metric Info" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:7" name="axflow:localstore:node:7" label="Metric Info Audit" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="user_id" label="user_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="user_full_name" label="user_full_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="audit_action" label="audit_action" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="metric_id" label="metric_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="base_metric_id" label="base_metric_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="service_name" label="service_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="service_label" label="service_label" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="sub_service_name" label="sub_service_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="sub_service_label" label="sub_service_label" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="app_name" label="app_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="app_label" label="app_label" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="metric_name" label="metric_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="metric_label" label="metric_label" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="dim_keys" label="dim_keys" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="dim_values" label="dim_values" type="text" isDimension="false" isMeasure="false"/>
+          <Field name="modified_ts" label="modified_ts" type="datetime" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <TileThemeSetting><![CDATA[{}]]></TileThemeSetting>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="4"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true},{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;},{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;style&quot;:{&quot;backgroundColor&quot;:&quot;#5aadd6&quot;}},{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;opened&quot;:true},{&quot;name&quot;:&quot;base_metric_id&quot;,&quot;label&quot;:&quot;base_metric_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;opened&quot;:true},{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;service_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:6,&quot;opened&quot;:true},{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;service_label&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:7,&quot;opened&quot;:true},{&quot;name&quot;:&quot;sub_service_name&quot;,&quot;label&quot;:&quot;sub_service_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:8,&quot;opened&quot;:true},{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:9,&quot;opened&quot;:true},{&quot;name&quot;:&quot;app_name&quot;,&quot;label&quot;:&quot;app_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:10,&quot;opened&quot;:true},{&quot;name&quot;:&quot;app_label&quot;,&quot;label&quot;:&quot;app_label&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:11,&quot;opened&quot;:true},{&quot;name&quot;:&quot;metric_name&quot;,&quot;label&quot;:&quot;metric_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:12,&quot;opened&quot;:true},{&quot;name&quot;:&quot;metric_label&quot;,&quot;label&quot;:&quot;metric_label&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:13,&quot;opened&quot;:true},{&quot;name&quot;:&quot;dim_keys&quot;,&quot;label&quot;:&quot;dim_keys&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:14,&quot;opened&quot;:true},{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;text&quot;,&quot;defaultListId&quot;:15,&quot;opened&quot;:true},{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;datetime&quot;,&quot;defaultListId&quot;:16,&quot;opened&quot;:true}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <Tile name="QDC_Table" title="QDC Table" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:8" name="axflow:localstore:node:8" label="QDC Table Audit" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="user_id" label="user_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="user_full_name" label="user_full_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="audit_action" label="audit_action" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="metric_id" label="metric_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="sql_qdc" label="sql_qdc" type="text" isDimension="false" isMeasure="false"/>
+          <Field name="json_qdc" label="json_qdc" type="text" isDimension="false" isMeasure="false"/>
+          <Field name="aggr_func" label="aggr_func" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="parse_target_group" label="parse_target_group" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="modified_ts" label="modified_ts" type="datetime" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <TileThemeSetting><![CDATA[{}]]></TileThemeSetting>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="4"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true},{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;},{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;style&quot;:{&quot;backgroundColor&quot;:&quot;#72b9dc&quot;}},{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;opened&quot;:true},{&quot;name&quot;:&quot;sql_qdc&quot;,&quot;label&quot;:&quot;sql_qdc&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;text&quot;,&quot;defaultListId&quot;:5,&quot;opened&quot;:true},{&quot;name&quot;:&quot;json_qdc&quot;,&quot;label&quot;:&quot;json_qdc&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;text&quot;,&quot;defaultListId&quot;:6,&quot;opened&quot;:true},{&quot;name&quot;:&quot;aggr_func&quot;,&quot;label&quot;:&quot;aggr_func&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:7,&quot;opened&quot;:true},{&quot;name&quot;:&quot;parse_target_group&quot;,&quot;label&quot;:&quot;parse_target_group&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:8,&quot;opened&quot;:true},{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;datetime&quot;,&quot;defaultListId&quot;:9,&quot;opened&quot;:true}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+    </Page>
+    <Page id="3" name="Parse_Audit" title="Parse" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageProperties/>
+      <Layout type="10" numRow="1" numCol="1" count="1" templateType="1" screenHeight="1080" renderType="undefined" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:72,&quot;id&quot;:0}]" unitSize="{&quot;x&quot;:10.516666666666667,&quot;y&quot;:9.51388888888889}" viewRows="72" viewCols="120"/>
+      <Tile name="Main Tile" title="Main Tile" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:9" name="axflow:localstore:node:9" label="Parse Model Audit" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="user_id" label="user_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="user_full_name" label="user_full_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="audit_action" label="audit_action" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="metric_id" label="metric_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="aggr_func" label="aggr_func" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="parse_source_group" label="parse_source_group" type="undefined" isDimension="false" isMeasure="false"/>
+          <Field name="parse_source_name" label="parse_source_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="parse_target_group" label="parse_target_group" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="parse_target_app" label="parse_target_app" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="parse_target_metric" label="parse_target_metric" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="modified_ts" label="modified_ts" type="datetime" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{}]]></TileThemeSetting>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="4"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true},{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;},{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;style&quot;:{&quot;backgroundColor&quot;:&quot;#72b9dc&quot;}},{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;opened&quot;:true},{&quot;name&quot;:&quot;aggr_func&quot;,&quot;label&quot;:&quot;aggr_func&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;opened&quot;:true},{&quot;name&quot;:&quot;parse_source_group&quot;,&quot;label&quot;:&quot;parse_source_group&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;undefined&quot;,&quot;defaultListId&quot;:6,&quot;opened&quot;:true},{&quot;name&quot;:&quot;parse_source_name&quot;,&quot;label&quot;:&quot;parse_source_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:7,&quot;opened&quot;:true},{&quot;name&quot;:&quot;parse_target_group&quot;,&quot;label&quot;:&quot;parse_target_group&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:8,&quot;opened&quot;:true},{&quot;name&quot;:&quot;parse_target_app&quot;,&quot;label&quot;:&quot;parse_target_app&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:9,&quot;opened&quot;:true},{&quot;name&quot;:&quot;parse_target_metric&quot;,&quot;label&quot;:&quot;parse_target_metric&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:10,&quot;opened&quot;:true},{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;datetime&quot;,&quot;defaultListId&quot;:11,&quot;opened&quot;:true}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+    </Page>
+    <Page id="4" name="Incident" title="Incident" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageProperties/>
+      <Layout type="10" numRow="1" numCol="1" count="1" templateType="1" screenHeight="1080" renderType="undefined" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:72,&quot;id&quot;:0}]" unitSize="{&quot;x&quot;:10.516666666666667,&quot;y&quot;:9.51388888888889}" viewRows="72" viewCols="120"/>
+      <Tile name="Main Tile" title="Main Tile" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:10" name="axflow:localstore:node:10" label="Incident Table Audit" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="user_id" label="user_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="user_full_name" label="user_full_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="audit_action" label="audit_action" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="metric_id" label="metric_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="window" label="window" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="algorithm" label="algorithm" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="threshold_policy" label="threshold_policy" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="call_metric_id" label="call_metric_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="generate" label="generate" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="emit_notification" label="emit_notification" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="threshold_high" label="threshold_high" type="double" isDimension="false" isMeasure="false"/>
+          <Field name="threshold_low" label="threshold_low" type="double" isDimension="false" isMeasure="false"/>
+          <Field name="threshold_med" label="threshold_med" type="double" isDimension="false" isMeasure="false"/>
+          <Field name="med_threshold_period" label="med_threshold_period" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="high_threshold_period" label="high_threshold_period" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="metric_time_skew" label="metric_time_skew" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="call_time_skew" label="call_time_skew" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="call_metric_time_skew" label="call_metric_time_skew" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="expire_after" label="expire_after" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="cool_down_period" label="cool_down_period" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="warmup_period" label="warmup_period" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="warmup_threshold" label="warmup_threshold" type="double" isDimension="false" isMeasure="false"/>
+          <Field name="min_metric_vol" label="min_metric_vol" type="double" isDimension="false" isMeasure="false"/>
+          <Field name="min_metric_deviation" label="min_metric_deviation" type="double" isDimension="false" isMeasure="false"/>
+          <Field name="med_metric_deviation" label="med_metric_deviation" type="double" isDimension="false" isMeasure="false"/>
+          <Field name="high_metric_deviation" label="high_metric_deviation" type="double" isDimension="false" isMeasure="false"/>
+          <Field name="min_call_vol" label="min_call_vol" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="min_call_deviation" label="min_call_deviation" type="double" isDimension="false" isMeasure="false"/>
+          <Field name="med_call_deviation" label="med_call_deviation" type="double" isDimension="false" isMeasure="false"/>
+          <Field name="high_call_deviation" label="high_call_deviation" type="double" isDimension="false" isMeasure="false"/>
+          <Field name="causation_measure" label="causation_measure" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="causation_top_count" label="causation_top_count" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="causation_min_measure" label="causation_min_measure" type="double" isDimension="false" isMeasure="false"/>
+          <Field name="causation_rule_name" label="causation_rule_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="causation_suppl_measure" label="causation_suppl_measure" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="factor" label="factor" type="double" isDimension="false" isMeasure="false"/>
+          <Field name="metric_hist_per" label="metric_hist_per" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="max_low_per" label="max_low_per" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="max_med_per" label="max_med_per" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="tot_max_low_per" label="tot_max_low_per" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="tot_max_med_per" label="tot_max_med_per" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="modified_ts" label="modified_ts" type="datetime" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{}]]></TileThemeSetting>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="4"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true},{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;},{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;style&quot;:{&quot;backgroundColor&quot;:&quot;#72b9dc&quot;}},{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;opened&quot;:true},{&quot;name&quot;:&quot;window&quot;,&quot;label&quot;:&quot;window&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;opened&quot;:true},{&quot;name&quot;:&quot;algorithm&quot;,&quot;label&quot;:&quot;algorithm&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:6,&quot;opened&quot;:true},{&quot;name&quot;:&quot;threshold_policy&quot;,&quot;label&quot;:&quot;threshold_policy&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:7,&quot;opened&quot;:true},{&quot;name&quot;:&quot;call_metric_id&quot;,&quot;label&quot;:&quot;call_metric_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:8,&quot;opened&quot;:true},{&quot;name&quot;:&quot;generate&quot;,&quot;label&quot;:&quot;generate&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:9,&quot;opened&quot;:true},{&quot;name&quot;:&quot;emit_notification&quot;,&quot;label&quot;:&quot;emit_notification&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:10,&quot;opened&quot;:true},{&quot;name&quot;:&quot;threshold_high&quot;,&quot;label&quot;:&quot;threshold_high&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;double&quot;,&quot;defaultListId&quot;:11,&quot;opened&quot;:true},{&quot;name&quot;:&quot;threshold_low&quot;,&quot;label&quot;:&quot;threshold_low&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;double&quot;,&quot;defaultListId&quot;:12,&quot;opened&quot;:true},{&quot;name&quot;:&quot;threshold_med&quot;,&quot;label&quot;:&quot;threshold_med&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;double&quot;,&quot;defaultListId&quot;:13,&quot;opened&quot;:true},{&quot;name&quot;:&quot;med_threshold_period&quot;,&quot;label&quot;:&quot;med_threshold_period&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:14,&quot;opened&quot;:true},{&quot;name&quot;:&quot;high_threshold_period&quot;,&quot;label&quot;:&quot;high_threshold_period&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:15,&quot;opened&quot;:true},{&quot;name&quot;:&quot;metric_time_skew&quot;,&quot;label&quot;:&quot;metric_time_skew&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:16,&quot;opened&quot;:true},{&quot;name&quot;:&quot;call_time_skew&quot;,&quot;label&quot;:&quot;call_time_skew&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:17,&quot;opened&quot;:true},{&quot;name&quot;:&quot;call_metric_time_skew&quot;,&quot;label&quot;:&quot;call_metric_time_skew&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:18,&quot;opened&quot;:true},{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:19,&quot;opened&quot;:true},{&quot;name&quot;:&quot;cool_down_period&quot;,&quot;label&quot;:&quot;cool_down_period&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:20,&quot;opened&quot;:true},{&quot;name&quot;:&quot;warmup_period&quot;,&quot;label&quot;:&quot;warmup_period&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:21,&quot;opened&quot;:true},{&quot;name&quot;:&quot;warmup_threshold&quot;,&quot;label&quot;:&quot;warmup_threshold&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;double&quot;,&quot;defaultListId&quot;:22,&quot;opened&quot;:true},{&quot;name&quot;:&quot;min_metric_vol&quot;,&quot;label&quot;:&quot;min_metric_vol&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;double&quot;,&quot;defaultListId&quot;:23,&quot;opened&quot;:true},{&quot;name&quot;:&quot;min_metric_deviation&quot;,&quot;label&quot;:&quot;min_metric_deviation&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;double&quot;,&quot;defaultListId&quot;:24,&quot;opened&quot;:true},{&quot;name&quot;:&quot;med_metric_deviation&quot;,&quot;label&quot;:&quot;med_metric_deviation&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;double&quot;,&quot;defaultListId&quot;:25,&quot;opened&quot;:true},{&quot;name&quot;:&quot;high_metric_deviation&quot;,&quot;label&quot;:&quot;high_metric_deviation&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;double&quot;,&quot;defaultListId&quot;:26,&quot;opened&quot;:true},{&quot;name&quot;:&quot;min_call_vol&quot;,&quot;label&quot;:&quot;min_call_vol&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:27,&quot;opened&quot;:true},{&quot;name&quot;:&quot;min_call_deviation&quot;,&quot;label&quot;:&quot;min_call_deviation&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;double&quot;,&quot;defaultListId&quot;:28,&quot;opened&quot;:true},{&quot;name&quot;:&quot;med_call_deviation&quot;,&quot;label&quot;:&quot;med_call_deviation&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;double&quot;,&quot;defaultListId&quot;:29,&quot;opened&quot;:true},{&quot;name&quot;:&quot;high_call_deviation&quot;,&quot;label&quot;:&quot;high_call_deviation&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;double&quot;,&quot;defaultListId&quot;:30,&quot;opened&quot;:true},{&quot;name&quot;:&quot;causation_measure&quot;,&quot;label&quot;:&quot;causation_measure&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:31,&quot;opened&quot;:true},{&quot;name&quot;:&quot;causation_top_count&quot;,&quot;label&quot;:&quot;causation_top_count&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:32,&quot;opened&quot;:true},{&quot;name&quot;:&quot;causation_min_measure&quot;,&quot;label&quot;:&quot;causation_min_measure&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;double&quot;,&quot;defaultListId&quot;:33,&quot;opened&quot;:true},{&quot;name&quot;:&quot;causation_rule_name&quot;,&quot;label&quot;:&quot;causation_rule_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:34,&quot;opened&quot;:true},{&quot;name&quot;:&quot;causation_suppl_measure&quot;,&quot;label&quot;:&quot;causation_suppl_measure&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:35,&quot;opened&quot;:true},{&quot;name&quot;:&quot;factor&quot;,&quot;label&quot;:&quot;factor&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;double&quot;,&quot;defaultListId&quot;:36,&quot;opened&quot;:true},{&quot;name&quot;:&quot;metric_hist_per&quot;,&quot;label&quot;:&quot;metric_hist_per&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:37,&quot;opened&quot;:true},{&quot;name&quot;:&quot;max_low_per&quot;,&quot;label&quot;:&quot;max_low_per&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:38,&quot;opened&quot;:true},{&quot;name&quot;:&quot;max_med_per&quot;,&quot;label&quot;:&quot;max_med_per&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:39,&quot;opened&quot;:true},{&quot;name&quot;:&quot;tot_max_low_per&quot;,&quot;label&quot;:&quot;tot_max_low_per&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:40,&quot;opened&quot;:true},{&quot;name&quot;:&quot;tot_max_med_per&quot;,&quot;label&quot;:&quot;tot_max_med_per&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:41,&quot;opened&quot;:true},{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;datetime&quot;,&quot;defaultListId&quot;:42,&quot;opened&quot;:true}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+    </Page>
+    <Page id="5" name="Incident_Group" title="Incident Group" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageProperties/>
+      <Layout type="10" numRow="49" numCol="1" count="3" templateType="21" screenHeight="1080" renderType="undefined" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:24,&quot;id&quot;:0},{&quot;data_col&quot;:1,&quot;data_row&quot;:25,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:24,&quot;id&quot;:1},{&quot;data_col&quot;:1,&quot;data_row&quot;:49,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:24,&quot;id&quot;:2}]" unitSize="{&quot;x&quot;:10.516666666666667,&quot;y&quot;:9.51388888888889}" viewRows="72" viewCols="120"/>
+      <Tile name="Main Tile" title="Incident Group" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:11" name="axflow:localstore:node:11" label="Incident Group Audit" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="user_id" label="user_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="user_full_name" label="user_full_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="audit_action" label="audit_action" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="group_rule_name" label="group_rule_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="max_lookback" label="max_lookback" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="expire_after" label="expire_after" type="integer" isDimension="false" isMeasure="false"/>
+          <Field name="modified_ts" label="modified_ts" type="datetime" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <TileThemeSetting><![CDATA[{}]]></TileThemeSetting>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true},{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;},{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;style&quot;:{&quot;backgroundColor&quot;:&quot;#72b9dc&quot;}},{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;group_rule_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;opened&quot;:true},{&quot;name&quot;:&quot;max_lookback&quot;,&quot;label&quot;:&quot;max_lookback&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:5,&quot;opened&quot;:true},{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;integer&quot;,&quot;defaultListId&quot;:6,&quot;opened&quot;:true},{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;datetime&quot;,&quot;defaultListId&quot;:7,&quot;opened&quot;:true}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <Tile name="Tile1" title="Contextual" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:12" name="axflow:localstore:node:12" label="Incident Group Contextual Audit" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="user_id" label="user_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="user_full_name" label="user_full_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="audit_action" label="audit_action" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="group_rule_name" label="group_rule_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="metric_id" label="metric_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="display_options" label="display_options" type="text" isDimension="false" isMeasure="false"/>
+          <Field name="modified_ts" label="modified_ts" type="datetime" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <TileThemeSetting><![CDATA[{}]]></TileThemeSetting>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true},{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;},{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;style&quot;:{&quot;backgroundColor&quot;:&quot;#72b9dc&quot;}},{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;group_rule_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;opened&quot;:true},{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;opened&quot;:true},{&quot;name&quot;:&quot;display_options&quot;,&quot;label&quot;:&quot;display_options&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;text&quot;,&quot;defaultListId&quot;:6,&quot;opened&quot;:true},{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;datetime&quot;,&quot;defaultListId&quot;:7,&quot;opened&quot;:true}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <Tile name="Tile2" title="Correlation" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:13" name="axflow:localstore:node:13" label="Incident Group Correlation" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="user_id" label="user_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="user_full_name" label="user_full_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="audit_action" label="audit_action" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="group_rule_name" label="group_rule_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="service_name" label="service_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="sub_service_name" label="sub_service_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="group_start" label="group_start" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="modified_ts" label="modified_ts" type="datetime" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <TileThemeSetting><![CDATA[{}]]></TileThemeSetting>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true},{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;},{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;style&quot;:{&quot;backgroundColor&quot;:&quot;#72b9dc&quot;}},{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;group_rule_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;opened&quot;:true},{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;service_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;opened&quot;:true},{&quot;name&quot;:&quot;sub_service_name&quot;,&quot;label&quot;:&quot;sub_service_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:6,&quot;opened&quot;:true},{&quot;name&quot;:&quot;group_start&quot;,&quot;label&quot;:&quot;group_start&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:7,&quot;opened&quot;:true},{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;datetime&quot;,&quot;defaultListId&quot;:8,&quot;opened&quot;:true}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+    </Page>
+    <Page id="7" name="Anomaly" title="Anomaly" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageProperties/>
+      <Layout type="10" numRow="37" numCol="1" count="2" templateType="3" screenHeight="1080" renderType="undefined" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:36,&quot;id&quot;:0},{&quot;data_col&quot;:1,&quot;data_row&quot;:37,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:36,&quot;id&quot;:1}]" unitSize="{&quot;x&quot;:10.516666666666667,&quot;y&quot;:9.51388888888889}" viewRows="72" viewCols="120"/>
+      <Tile name="Main Tile" title="Anomaly Config" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:14" name="axflow:localstore:node:14" label="Anomaly Audit" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="user_id" label="user_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="user_full_name" label="user_full_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="audit_action" label="audit_action" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="owner_id" label="owner_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="metric_id" label="metric_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="config_name" label="config_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="config_json" label="config_json" type="text" isDimension="false" isMeasure="false"/>
+          <Field name="modified_ts" label="modified_ts" type="datetime" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <TileThemeSetting><![CDATA[{}]]></TileThemeSetting>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true},{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;},{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;style&quot;:{&quot;backgroundColor&quot;:&quot;#72b9dc&quot;}},{&quot;name&quot;:&quot;owner_id&quot;,&quot;label&quot;:&quot;owner_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;opened&quot;:true},{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;opened&quot;:true},{&quot;name&quot;:&quot;config_name&quot;,&quot;label&quot;:&quot;config_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:6,&quot;opened&quot;:true},{&quot;name&quot;:&quot;config_json&quot;,&quot;label&quot;:&quot;config_json&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;text&quot;,&quot;defaultListId&quot;:7,&quot;opened&quot;:true},{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;datetime&quot;,&quot;defaultListId&quot;:8,&quot;opened&quot;:true}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <Tile name="Tile1" title="Anomaly Favorite" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:15" name="axflow:localstore:node:15" label="Anamaly Favorite Audit" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="user_id" label="user_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="user_full_name" label="user_full_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="audit_action" label="audit_action" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="owner_id" label="owner_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="favorite_name" label="favorite_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="metric_id" label="metric_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="config_json" label="config_json" type="text" isDimension="false" isMeasure="false"/>
+          <Field name="filter_json" label="filter_json" type="text" isDimension="false" isMeasure="false"/>
+          <Field name="modified_ts" label="modified_ts" type="datetime" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <TileThemeSetting><![CDATA[{}]]></TileThemeSetting>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true},{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;},{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;style&quot;:{&quot;backgroundColor&quot;:&quot;#72b9dc&quot;}},{&quot;name&quot;:&quot;owner_id&quot;,&quot;label&quot;:&quot;owner_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;opened&quot;:true},{&quot;name&quot;:&quot;favorite_name&quot;,&quot;label&quot;:&quot;favorite_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;opened&quot;:true},{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:6,&quot;opened&quot;:true},{&quot;name&quot;:&quot;config_json&quot;,&quot;label&quot;:&quot;config_json&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;text&quot;,&quot;defaultListId&quot;:7,&quot;opened&quot;:true},{&quot;name&quot;:&quot;filter_json&quot;,&quot;label&quot;:&quot;filter_json&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;text&quot;,&quot;defaultListId&quot;:8,&quot;opened&quot;:true},{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;datetime&quot;,&quot;defaultListId&quot;:9,&quot;opened&quot;:true}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+    </Page>
+    <Page id="6" name="Config_Property" title="Config Property" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageProperties/>
+      <Layout type="10" numRow="1" numCol="1" count="1" templateType="1" screenHeight="1080" renderType="undefined" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:72,&quot;id&quot;:0,&quot;title&quot;:&quot;Main Tile&quot;}]" unitSize="{&quot;x&quot;:10.516666666666667,&quot;y&quot;:9.51388888888889}" viewRows="72" viewCols="120"/>
+      <Tile name="Main Tile" title="Main Tile" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:16" name="axflow:localstore:node:16" label="Config Property Audit" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="user_id" label="user_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="user_full_name" label="user_full_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="audit_action" label="audit_action" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="name" label="name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="value" label="value" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="modified_ts" label="modified_ts" type="datetime" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{}]]></TileThemeSetting>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true},{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;},{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;style&quot;:{&quot;backgroundColor&quot;:&quot;#72b9dc&quot;}},{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;opened&quot;:true},{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;opened&quot;:true},{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;datetime&quot;,&quot;defaultListId&quot;:6,&quot;opened&quot;:true}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+    </Page>
+    <DataFlow showFooter="true">
+      <Item id="node:5" type="PortIn" label="Port IN 0" _undefined_title="" originHeight="117" width="130" height="177" x="20" y="60">
+        <dynOut id="dout:0" type="any" label="Config Plugin" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="Options Plugin" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any" label="Anomaly Plugin" propagate="always" _isArray="true"/>
+        <dynOut id="dout:3" type="any" label="Time Range" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:6" type="UserScript" label="Fetch Audit Data" _undefined_title="" originHeight="117" width="240" height="337" x="507" y="269">
+        <dynIn id="din:0" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="number" label="Time Range" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="Metric Info Audit" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="QDC Table Audit" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any[]" label="Parse Model Audit" propagate="always" _isArray="true"/>
+        <dynOut id="dout:3" type="any[]" label="Incident Table Audit" propagate="always" _isArray="true"/>
+        <dynOut id="dout:4" type="any[]" label="Incident Group Audit" propagate="always" _isArray="true"/>
+        <dynOut id="dout:5" type="any[]" label="Incident Group Contextual Audit" propagate="always" _isArray="true"/>
+        <dynOut id="dout:6" type="any[]" label="Incident Group Correlation Audit" propagate="always" _isArray="true"/>
+        <dynOut id="dout:7" type="any[]" label="Anomaly Audit" propagate="always" _isArray="true"/>
+        <dynOut id="dout:8" type="any[]" label="Anomaly Favorite Audit" propagate="always" _isArray="true"/>
+        <dynOut id="dout:9" type="any[]" label="Config Property Audit" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:7" type="LocalStore" label="Metric Info Audit" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="910" y="12"/>
+      <Item id="node:8" type="LocalStore" label="QDC Table Audit" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1080" y="30"/>
+      <Item id="node:9" type="LocalStore" label="Parse Model Audit" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1240" y="69"/>
+      <Item id="node:10" type="LocalStore" label="Incident Table Audit" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="906" y="210"/>
+      <Item id="node:11" type="LocalStore" label="Incident Group Audit" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1075" y="227"/>
+      <Item id="node:12" type="LocalStore" label="Incident Group Contextual Audit" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1242" y="269"/>
+      <Item id="node:13" type="LocalStore" label="Incident Group Correlation" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1400" y="300"/>
+      <Item id="node:14" type="LocalStore" label="Anomaly Audit" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="909" y="420"/>
+      <Item id="node:15" type="LocalStore" label="Anamaly Favorite Audit" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1079" y="447"/>
+      <Item id="node:16" type="LocalStore" label="Config Property Audit" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1248" y="500"/>
+      <Link srcId="node:6" srcPort="dout:1" tgtId="node:8" tgtPort="in:0"/>
+      <Link srcId="node:6" srcPort="dout:0" tgtId="node:7" tgtPort="in:0"/>
+      <Link srcId="node:5" srcPort="dout:0" tgtId="node:6" tgtPort="din:0"/>
+      <Link srcId="node:6" srcPort="dout:2" tgtId="node:9" tgtPort="in:0"/>
+      <Link srcId="node:6" srcPort="dout:3" tgtId="node:10" tgtPort="in:0"/>
+      <Link srcId="node:6" srcPort="dout:4" tgtId="node:11" tgtPort="in:0"/>
+      <Link srcId="node:6" srcPort="dout:5" tgtId="node:12" tgtPort="in:0"/>
+      <Link srcId="node:6" srcPort="dout:6" tgtId="node:13" tgtPort="in:0"/>
+      <Link srcId="node:6" srcPort="dout:7" tgtId="node:14" tgtPort="in:0"/>
+      <Link srcId="node:6" srcPort="dout:8" tgtId="node:15" tgtPort="in:0"/>
+      <Link srcId="node:6" srcPort="dout:9" tgtId="node:16" tgtPort="in:0"/>
+      <Link srcId="node:5" srcPort="dout:3" tgtId="node:6" tgtPort="din:1"/>
+      <Input key="node:5/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Options Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Anomaly Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:3&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Time Range&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:6/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;number&quot;,&quot;portLabel&quot;:&quot;Time Range&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:6/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Metric Info Audit&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;QDC Table Audit&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Parse Model Audit&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:3&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Incident Table Audit&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:4&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Incident Group Audit&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:5&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Incident Group Contextual Audit&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:6&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Incident Group Correlation Audit&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:7&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Anomaly Audit&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:8&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Anomaly Favorite Audit&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:9&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Config Property Audit&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:6/cfg:model/default" value="&quot;var configPlugin = getInput(\&quot;din:0\&quot;);\nvar timeRange = getInput(\&quot;din:1\&quot;);\n\nif (configPlugin == null || timeRange == null) return;\nvar fromDate = timeRange.fromUnixTime;\nvar toDate = timeRange.toUnixTime;\n\nvar CommonPlugin = Plugin(\&quot;Common\&quot;);\nCommonPlugin.pbShowProgressBar(\&quot;digi-audit-metric\&quot;, \&quot;Loading audit metric data...\&quot;);\nconfigPlugin.getMetricInfoAudit({fromDate: fromDate, toDate: toDate}, function (result) {\n    if (result != null &amp;&amp; result.status == \&quot;OK\&quot;) {\n       setOutput(\&quot;dout:0\&quot;, result.value);\n    }\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-metric\&quot;);\n}, function (ex) {\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-metric\&quot;);\n});\n\nCommonPlugin.pbShowProgressBar(\&quot;digi-audit-qdc\&quot;, \&quot;Loading audit qdc data...\&quot;);\nconfigPlugin.getQDCTableAudit({fromDate: fromDate, toDate: toDate}, function (result) {\n    if (result != null &amp;&amp; result.status == \&quot;OK\&quot;) {\n       setOutput(\&quot;dout:1\&quot;, result.value);\n    }\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-qdc\&quot;);\n}, function (ex) {\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-qdc\&quot;);\n});\n\nCommonPlugin.pbShowProgressBar(\&quot;digi-audit-parse\&quot;, \&quot;Loading audit parse data...\&quot;);\nconfigPlugin.getParseModelAudit({fromDate: fromDate, toDate: toDate}, function (result) {\n    if (result != null &amp;&amp; result.status == \&quot;OK\&quot;) {\n       setOutput(\&quot;dout:2\&quot;, result.value);\n    }\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-parse\&quot;);\n}, function (ex) {\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-parse\&quot;);\n});\n\nCommonPlugin.pbShowProgressBar(\&quot;digi-audit-incident\&quot;, \&quot;Loading audit incident data...\&quot;);\nconfigPlugin.getIncidentTableAudit({fromDate: fromDate, toDate: toDate}, function (result) {\n    if (result != null &amp;&amp; result.status == \&quot;OK\&quot;) {\n       setOutput(\&quot;dout:3\&quot;, result.value);\n    }\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-incident\&quot;);\n}, function (ex) {\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-incident\&quot;);\n});\n\nCommonPlugin.pbShowProgressBar(\&quot;digi-audit-incident-group\&quot;, \&quot;Loading audit incident group data...\&quot;);\nconfigPlugin.getIncidentGroupAudit({fromDate: fromDate, toDate: toDate}, function (result) {\n    if (result != null &amp;&amp; result.status == \&quot;OK\&quot;) {\n       setOutput(\&quot;dout:4\&quot;, result.value);\n    }\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-incident-group\&quot;);\n}, function (ex) {\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-incident-group\&quot;);\n});\n\nCommonPlugin.pbShowProgressBar(\&quot;digi-audit-incident-group-contextual\&quot;, \&quot;Loading audit contextual data...\&quot;);\nconfigPlugin.getIncidentGroupContextualAudit({fromDate: fromDate, toDate: toDate}, function (result) {\n    if (result != null &amp;&amp; result.status == \&quot;OK\&quot;) {\n       setOutput(\&quot;dout:5\&quot;, result.value);\n    }\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-incident-group-contextual\&quot;);\n}, function (ex) {\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-incident-group-contextual\&quot;);\n});\n\nCommonPlugin.pbShowProgressBar(\&quot;digi-audit-incident-group-correlation\&quot;, \&quot;Loading audit correlation data...\&quot;);\nconfigPlugin.getIncidentGroupCorrelationAudit({fromDate: fromDate, toDate: toDate}, function (result) {\n    if (result != null &amp;&amp; result.status == \&quot;OK\&quot;) {\n       setOutput(\&quot;dout:6\&quot;, result.value);\n    }\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-incident-group-correlation\&quot;);\n}, function (ex) {\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-incident-group-correlation\&quot;);\n});\n\nCommonPlugin.pbShowProgressBar(\&quot;digi-audit-anomaly\&quot;, \&quot;Loading audit anonaly data...\&quot;);\nconfigPlugin.getAnomalyAudit({fromDate: fromDate, toDate: toDate}, function (result) {\n    if (result != null &amp;&amp; result.status == \&quot;OK\&quot;) {\n       setOutput(\&quot;dout:7\&quot;, result.value);\n    }\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-anomaly\&quot;);\n}, function (ex) {\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-anomaly\&quot;);\n});\n\nCommonPlugin.pbShowProgressBar(\&quot;digi-audit-anomaly-favorite\&quot;, \&quot;Loading audit favorite data...\&quot;);\nconfigPlugin.getAnomalyFavoriteListAudit({fromDate: fromDate, toDate: toDate}, function (result) {\n    if (result != null &amp;&amp; result.status == \&quot;OK\&quot;) {\n       setOutput(\&quot;dout:8\&quot;, result.value);\n    }\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-anomaly-favorite\&quot;);\n}, function (ex) {\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-anomaly-favorite\&quot;);\n});\n\nCommonPlugin.pbShowProgressBar(\&quot;digi-audit-config-property\&quot;, \&quot;Loading audit config property data...\&quot;);\nconfigPlugin.getConfigPropertyAudit({fromDate: fromDate, toDate: toDate}, function (result) {\n    if (result != null &amp;&amp; result.status == \&quot;OK\&quot;) {\n       setOutput(\&quot;dout:9\&quot;, result.value);\n    }\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-config-property\&quot;);\n}, function (ex) {\n    CommonPlugin.pbHideProgressBar(\&quot;digi-audit-config-property\&quot;);\n});&quot;"/>
+      <Input key="node:6/cfg:schema/default" value="&quot;setOutputSchema(\&quot;dout:0\&quot;, [\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;label\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;metric_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;metric_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;base_metric_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;base_metric_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;service_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;service_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;service_label\&quot;,\r\n    \&quot;label\&quot;: \&quot;service_label\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;sub_service_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;sub_service_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;sub_service_label\&quot;,\r\n    \&quot;label\&quot;: \&quot;sub_service_label\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;app_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;app_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;app_label\&quot;,\r\n    \&quot;label\&quot;: \&quot;app_label\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;metric_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;metric_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;metric_label\&quot;,\r\n    \&quot;label\&quot;: \&quot;metric_label\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;dim_keys\&quot;,\r\n    \&quot;label\&quot;: \&quot;dim_keys\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;dim_values\&quot;,\r\n    \&quot;label\&quot;: \&quot;dim_values\&quot;,\r\n    \&quot;type\&quot;: \&quot;text\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;label\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;type\&quot;: \&quot;datetime\&quot;\r\n  }\r\n]);\r\n\r\n\r\nsetOutputSchema(\&quot;dout:1\&quot;, [\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;label\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;metric_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;metric_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;sql_qdc\&quot;,\r\n    \&quot;label\&quot;: \&quot;sql_qdc\&quot;,\r\n    \&quot;type\&quot;: \&quot;text\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;json_qdc\&quot;,\r\n    \&quot;label\&quot;: \&quot;json_qdc\&quot;,\r\n    \&quot;type\&quot;: \&quot;text\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;aggr_func\&quot;,\r\n    \&quot;label\&quot;: \&quot;aggr_func\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;parse_target_group\&quot;,\r\n    \&quot;label\&quot;: \&quot;parse_target_group\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;label\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;type\&quot;: \&quot;datetime\&quot;\r\n  }\r\n]);\r\n\r\nsetOutputSchema(\&quot;dout:2\&quot;, [\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;label\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;metric_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;metric_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;aggr_func\&quot;,\r\n    \&quot;label\&quot;: \&quot;aggr_func\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;parse_source_group\&quot;,\r\n    \&quot;label\&quot;: \&quot;parse_source_group\&quot;,\r\n    \&quot;sytpe\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;parse_source_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;parse_source_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;parse_target_group\&quot;,\r\n    \&quot;label\&quot;: \&quot;parse_target_group\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;parse_target_app\&quot;,\r\n    \&quot;label\&quot;: \&quot;parse_target_app\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;parse_target_metric\&quot;,\r\n    \&quot;label\&quot;: \&quot;parse_target_metric\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;label\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;type\&quot;: \&quot;datetime\&quot;\r\n  }\r\n]);\r\n\r\nsetOutputSchema(\&quot;dout:3\&quot;, [\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;label\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;metric_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;metric_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;window\&quot;,\r\n    \&quot;label\&quot;: \&quot;window\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;algorithm\&quot;,\r\n    \&quot;label\&quot;: \&quot;algorithm\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;threshold_policy\&quot;,\r\n    \&quot;label\&quot;: \&quot;threshold_policy\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;call_metric_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;call_metric_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;generate\&quot;,\r\n    \&quot;label\&quot;: \&quot;generate\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;emit_notification\&quot;,\r\n    \&quot;label\&quot;: \&quot;emit_notification\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;threshold_high\&quot;,\r\n    \&quot;label\&quot;: \&quot;threshold_high\&quot;,\r\n    \&quot;type\&quot;: \&quot;double\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;threshold_low\&quot;,\r\n    \&quot;label\&quot;: \&quot;threshold_low\&quot;,\r\n    \&quot;type\&quot;: \&quot;double\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;threshold_med\&quot;,\r\n    \&quot;label\&quot;: \&quot;threshold_med\&quot;,\r\n    \&quot;type\&quot;: \&quot;double\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;med_threshold_period\&quot;,\r\n    \&quot;label\&quot;: \&quot;med_threshold_period\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;high_threshold_period\&quot;,\r\n    \&quot;label\&quot;: \&quot;high_threshold_period\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;metric_time_skew\&quot;,\r\n    \&quot;label\&quot;: \&quot;metric_time_skew\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;call_time_skew\&quot;,\r\n    \&quot;label\&quot;: \&quot;call_time_skew\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;call_metric_time_skew\&quot;,\r\n    \&quot;label\&quot;: \&quot;call_metric_time_skew\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;expire_after\&quot;,\r\n    \&quot;label\&quot;: \&quot;expire_after\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;cool_down_period\&quot;,\r\n    \&quot;label\&quot;: \&quot;cool_down_period\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;warmup_period\&quot;,\r\n    \&quot;label\&quot;: \&quot;warmup_period\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;warmup_threshold\&quot;,\r\n    \&quot;label\&quot;: \&quot;warmup_threshold\&quot;,\r\n    \&quot;type\&quot;: \&quot;double\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;min_metric_vol\&quot;,\r\n    \&quot;label\&quot;: \&quot;min_metric_vol\&quot;,\r\n    \&quot;type\&quot;: \&quot;double\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;min_metric_deviation\&quot;,\r\n    \&quot;label\&quot;: \&quot;min_metric_deviation\&quot;,\r\n    \&quot;type\&quot;: \&quot;double\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;med_metric_deviation\&quot;,\r\n    \&quot;label\&quot;: \&quot;med_metric_deviation\&quot;,\r\n    \&quot;type\&quot;: \&quot;double\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;high_metric_deviation\&quot;,\r\n    \&quot;label\&quot;: \&quot;high_metric_deviation\&quot;,\r\n    \&quot;type\&quot;: \&quot;double\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;min_call_vol\&quot;,\r\n    \&quot;label\&quot;: \&quot;min_call_vol\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;min_call_deviation\&quot;,\r\n    \&quot;label\&quot;: \&quot;min_call_deviation\&quot;,\r\n    \&quot;type\&quot;: \&quot;double\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;med_call_deviation\&quot;,\r\n    \&quot;label\&quot;: \&quot;med_call_deviation\&quot;,\r\n    \&quot;type\&quot;: \&quot;double\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;high_call_deviation\&quot;,\r\n    \&quot;label\&quot;: \&quot;high_call_deviation\&quot;,\r\n    \&quot;type\&quot;: \&quot;double\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;causation_measure\&quot;,\r\n    \&quot;label\&quot;: \&quot;causation_measure\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;causation_top_count\&quot;,\r\n    \&quot;label\&quot;: \&quot;causation_top_count\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;causation_min_measure\&quot;,\r\n    \&quot;label\&quot;: \&quot;causation_min_measure\&quot;,\r\n    \&quot;type\&quot;: \&quot;double\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;causation_rule_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;causation_rule_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;causation_suppl_measure\&quot;,\r\n    \&quot;label\&quot;: \&quot;causation_suppl_measure\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;factor\&quot;,\r\n    \&quot;label\&quot;: \&quot;factor\&quot;,\r\n    \&quot;type\&quot;: \&quot;double\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;metric_hist_per\&quot;,\r\n    \&quot;label\&quot;: \&quot;metric_hist_per\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;max_low_per\&quot;,\r\n    \&quot;label\&quot;: \&quot;max_low_per\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;max_med_per\&quot;,\r\n    \&quot;label\&quot;: \&quot;max_med_per\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;tot_max_low_per\&quot;,\r\n    \&quot;label\&quot;: \&quot;tot_max_low_per\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;tot_max_med_per\&quot;,\r\n    \&quot;label\&quot;: \&quot;tot_max_med_per\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;label\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;type\&quot;: \&quot;datetime\&quot;\r\n  }\r\n]);\r\n\r\n\r\nsetOutputSchema(\&quot;dout:4\&quot;, [\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;label\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;group_rule_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;group_rule_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;max_lookback\&quot;,\r\n    \&quot;label\&quot;: \&quot;max_lookback\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;expire_after\&quot;,\r\n    \&quot;label\&quot;: \&quot;expire_after\&quot;,\r\n    \&quot;type\&quot;: \&quot;integer\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;label\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;type\&quot;: \&quot;datetime\&quot;\r\n  }\r\n]);\r\n\r\nsetOutputSchema(\&quot;dout:5\&quot;, [\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;label\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;group_rule_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;group_rule_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;metric_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;metric_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;display_options\&quot;,\r\n    \&quot;label\&quot;: \&quot;display_options\&quot;,\r\n    \&quot;type\&quot;: \&quot;text\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;label\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;type\&quot;: \&quot;datetime\&quot;\r\n  }\r\n]);\r\n\r\nsetOutputSchema(\&quot;dout:6\&quot;, [\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;label\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;group_rule_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;group_rule_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;service_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;service_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;sub_service_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;sub_service_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;group_start\&quot;,\r\n    \&quot;label\&quot;: \&quot;group_start\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;label\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;type\&quot;: \&quot;datetime\&quot;\r\n  }\r\n]);\r\n\r\nsetOutputSchema(\&quot;dout:7\&quot;, [\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;label\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;owner_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;owner_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;metric_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;metric_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;config_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;config_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;config_json\&quot;,\r\n    \&quot;label\&quot;: \&quot;config_json\&quot;,\r\n    \&quot;type\&quot;: \&quot;text\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;label\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;type\&quot;: \&quot;datetime\&quot;\r\n  }\r\n]);\r\n\r\nsetOutputSchema(\&quot;dout:8\&quot;, [\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;label\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;owner_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;owner_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;favorite_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;favorite_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;metric_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;metric_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;config_json\&quot;,\r\n    \&quot;label\&quot;: \&quot;config_json\&quot;,\r\n    \&quot;type\&quot;: \&quot;text\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;filter_json\&quot;,\r\n    \&quot;label\&quot;: \&quot;filter_json\&quot;,\r\n    \&quot;type\&quot;: \&quot;text\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;label\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;type\&quot;: \&quot;datetime\&quot;\r\n  }\r\n]);\r\n\r\nsetOutputSchema(\&quot;dout:9\&quot;, [\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_id\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;label\&quot;: \&quot;user_full_name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;label\&quot;: \&quot;audit_action\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;name\&quot;,\r\n    \&quot;label\&quot;: \&quot;name\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;value\&quot;,\r\n    \&quot;label\&quot;: \&quot;value\&quot;,\r\n    \&quot;type\&quot;: \&quot;string\&quot;\r\n  },\r\n  {\r\n    \&quot;name\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;label\&quot;: \&quot;modified_ts\&quot;,\r\n    \&quot;type\&quot;: \&quot;datetime\&quot;\r\n  }\r\n]);\r\n\r\n&quot;"/>
+      <Schema id="node:6/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;base_metric_id&quot;,&quot;label&quot;:&quot;base_metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_name&quot;,&quot;label&quot;:&quot;sub_service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;app_name&quot;,&quot;label&quot;:&quot;app_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;app_label&quot;,&quot;label&quot;:&quot;app_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_name&quot;,&quot;label&quot;:&quot;metric_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_keys&quot;,&quot;label&quot;:&quot;dim_keys&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:7/in:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;base_metric_id&quot;,&quot;label&quot;:&quot;base_metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_name&quot;,&quot;label&quot;:&quot;sub_service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;app_name&quot;,&quot;label&quot;:&quot;app_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;app_label&quot;,&quot;label&quot;:&quot;app_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_name&quot;,&quot;label&quot;:&quot;metric_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_keys&quot;,&quot;label&quot;:&quot;dim_keys&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:7/out:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;base_metric_id&quot;,&quot;label&quot;:&quot;base_metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_name&quot;,&quot;label&quot;:&quot;sub_service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;app_name&quot;,&quot;label&quot;:&quot;app_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;app_label&quot;,&quot;label&quot;:&quot;app_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_name&quot;,&quot;label&quot;:&quot;metric_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_keys&quot;,&quot;label&quot;:&quot;dim_keys&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:6/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sql_qdc&quot;,&quot;label&quot;:&quot;sql_qdc&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;json_qdc&quot;,&quot;label&quot;:&quot;json_qdc&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;aggr_func&quot;,&quot;label&quot;:&quot;aggr_func&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_target_group&quot;,&quot;label&quot;:&quot;parse_target_group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:8/in:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sql_qdc&quot;,&quot;label&quot;:&quot;sql_qdc&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;json_qdc&quot;,&quot;label&quot;:&quot;json_qdc&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;aggr_func&quot;,&quot;label&quot;:&quot;aggr_func&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_target_group&quot;,&quot;label&quot;:&quot;parse_target_group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:8/out:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sql_qdc&quot;,&quot;label&quot;:&quot;sql_qdc&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;json_qdc&quot;,&quot;label&quot;:&quot;json_qdc&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;aggr_func&quot;,&quot;label&quot;:&quot;aggr_func&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_target_group&quot;,&quot;label&quot;:&quot;parse_target_group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:6/dout:2">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;aggr_func&quot;,&quot;label&quot;:&quot;aggr_func&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_source_group&quot;,&quot;label&quot;:&quot;parse_source_group&quot;,&quot;sytpe&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_source_name&quot;,&quot;label&quot;:&quot;parse_source_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_target_group&quot;,&quot;label&quot;:&quot;parse_target_group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_target_app&quot;,&quot;label&quot;:&quot;parse_target_app&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_target_metric&quot;,&quot;label&quot;:&quot;parse_target_metric&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:9/in:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;aggr_func&quot;,&quot;label&quot;:&quot;aggr_func&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_source_group&quot;,&quot;label&quot;:&quot;parse_source_group&quot;,&quot;sytpe&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_source_name&quot;,&quot;label&quot;:&quot;parse_source_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_target_group&quot;,&quot;label&quot;:&quot;parse_target_group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_target_app&quot;,&quot;label&quot;:&quot;parse_target_app&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_target_metric&quot;,&quot;label&quot;:&quot;parse_target_metric&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:9/out:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;aggr_func&quot;,&quot;label&quot;:&quot;aggr_func&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_source_group&quot;,&quot;label&quot;:&quot;parse_source_group&quot;,&quot;sytpe&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_source_name&quot;,&quot;label&quot;:&quot;parse_source_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_target_group&quot;,&quot;label&quot;:&quot;parse_target_group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_target_app&quot;,&quot;label&quot;:&quot;parse_target_app&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parse_target_metric&quot;,&quot;label&quot;:&quot;parse_target_metric&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:6/dout:3">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;window&quot;,&quot;label&quot;:&quot;window&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;algorithm&quot;,&quot;label&quot;:&quot;algorithm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_policy&quot;,&quot;label&quot;:&quot;threshold_policy&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_metric_id&quot;,&quot;label&quot;:&quot;call_metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;generate&quot;,&quot;label&quot;:&quot;generate&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;emit_notification&quot;,&quot;label&quot;:&quot;emit_notification&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_high&quot;,&quot;label&quot;:&quot;threshold_high&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_low&quot;,&quot;label&quot;:&quot;threshold_low&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_med&quot;,&quot;label&quot;:&quot;threshold_med&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_threshold_period&quot;,&quot;label&quot;:&quot;med_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_threshold_period&quot;,&quot;label&quot;:&quot;high_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_time_skew&quot;,&quot;label&quot;:&quot;metric_time_skew&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_time_skew&quot;,&quot;label&quot;:&quot;call_time_skew&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_metric_time_skew&quot;,&quot;label&quot;:&quot;call_metric_time_skew&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cool_down_period&quot;,&quot;label&quot;:&quot;cool_down_period&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_period&quot;,&quot;label&quot;:&quot;warmup_period&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_threshold&quot;,&quot;label&quot;:&quot;warmup_threshold&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_vol&quot;,&quot;label&quot;:&quot;min_metric_vol&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_deviation&quot;,&quot;label&quot;:&quot;min_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_metric_deviation&quot;,&quot;label&quot;:&quot;med_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_metric_deviation&quot;,&quot;label&quot;:&quot;high_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_vol&quot;,&quot;label&quot;:&quot;min_call_vol&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_deviation&quot;,&quot;label&quot;:&quot;min_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_call_deviation&quot;,&quot;label&quot;:&quot;med_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_call_deviation&quot;,&quot;label&quot;:&quot;high_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_measure&quot;,&quot;label&quot;:&quot;causation_measure&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_top_count&quot;,&quot;label&quot;:&quot;causation_top_count&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_min_measure&quot;,&quot;label&quot;:&quot;causation_min_measure&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_rule_name&quot;,&quot;label&quot;:&quot;causation_rule_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_suppl_measure&quot;,&quot;label&quot;:&quot;causation_suppl_measure&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;factor&quot;,&quot;label&quot;:&quot;factor&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_hist_per&quot;,&quot;label&quot;:&quot;metric_hist_per&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_low_per&quot;,&quot;label&quot;:&quot;max_low_per&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_med_per&quot;,&quot;label&quot;:&quot;max_med_per&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;tot_max_low_per&quot;,&quot;label&quot;:&quot;tot_max_low_per&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;tot_max_med_per&quot;,&quot;label&quot;:&quot;tot_max_med_per&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:10/in:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;window&quot;,&quot;label&quot;:&quot;window&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;algorithm&quot;,&quot;label&quot;:&quot;algorithm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_policy&quot;,&quot;label&quot;:&quot;threshold_policy&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_metric_id&quot;,&quot;label&quot;:&quot;call_metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;generate&quot;,&quot;label&quot;:&quot;generate&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;emit_notification&quot;,&quot;label&quot;:&quot;emit_notification&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_high&quot;,&quot;label&quot;:&quot;threshold_high&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_low&quot;,&quot;label&quot;:&quot;threshold_low&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_med&quot;,&quot;label&quot;:&quot;threshold_med&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_threshold_period&quot;,&quot;label&quot;:&quot;med_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_threshold_period&quot;,&quot;label&quot;:&quot;high_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_time_skew&quot;,&quot;label&quot;:&quot;metric_time_skew&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_time_skew&quot;,&quot;label&quot;:&quot;call_time_skew&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_metric_time_skew&quot;,&quot;label&quot;:&quot;call_metric_time_skew&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cool_down_period&quot;,&quot;label&quot;:&quot;cool_down_period&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_period&quot;,&quot;label&quot;:&quot;warmup_period&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_threshold&quot;,&quot;label&quot;:&quot;warmup_threshold&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_vol&quot;,&quot;label&quot;:&quot;min_metric_vol&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_deviation&quot;,&quot;label&quot;:&quot;min_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_metric_deviation&quot;,&quot;label&quot;:&quot;med_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_metric_deviation&quot;,&quot;label&quot;:&quot;high_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_vol&quot;,&quot;label&quot;:&quot;min_call_vol&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_deviation&quot;,&quot;label&quot;:&quot;min_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_call_deviation&quot;,&quot;label&quot;:&quot;med_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_call_deviation&quot;,&quot;label&quot;:&quot;high_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_measure&quot;,&quot;label&quot;:&quot;causation_measure&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_top_count&quot;,&quot;label&quot;:&quot;causation_top_count&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_min_measure&quot;,&quot;label&quot;:&quot;causation_min_measure&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_rule_name&quot;,&quot;label&quot;:&quot;causation_rule_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_suppl_measure&quot;,&quot;label&quot;:&quot;causation_suppl_measure&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;factor&quot;,&quot;label&quot;:&quot;factor&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_hist_per&quot;,&quot;label&quot;:&quot;metric_hist_per&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_low_per&quot;,&quot;label&quot;:&quot;max_low_per&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_med_per&quot;,&quot;label&quot;:&quot;max_med_per&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;tot_max_low_per&quot;,&quot;label&quot;:&quot;tot_max_low_per&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;tot_max_med_per&quot;,&quot;label&quot;:&quot;tot_max_med_per&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:10/out:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;window&quot;,&quot;label&quot;:&quot;window&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;algorithm&quot;,&quot;label&quot;:&quot;algorithm&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_policy&quot;,&quot;label&quot;:&quot;threshold_policy&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_metric_id&quot;,&quot;label&quot;:&quot;call_metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;generate&quot;,&quot;label&quot;:&quot;generate&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;emit_notification&quot;,&quot;label&quot;:&quot;emit_notification&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_high&quot;,&quot;label&quot;:&quot;threshold_high&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_low&quot;,&quot;label&quot;:&quot;threshold_low&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_med&quot;,&quot;label&quot;:&quot;threshold_med&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_threshold_period&quot;,&quot;label&quot;:&quot;med_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_threshold_period&quot;,&quot;label&quot;:&quot;high_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_time_skew&quot;,&quot;label&quot;:&quot;metric_time_skew&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_time_skew&quot;,&quot;label&quot;:&quot;call_time_skew&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_metric_time_skew&quot;,&quot;label&quot;:&quot;call_metric_time_skew&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cool_down_period&quot;,&quot;label&quot;:&quot;cool_down_period&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_period&quot;,&quot;label&quot;:&quot;warmup_period&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_threshold&quot;,&quot;label&quot;:&quot;warmup_threshold&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_vol&quot;,&quot;label&quot;:&quot;min_metric_vol&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_deviation&quot;,&quot;label&quot;:&quot;min_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_metric_deviation&quot;,&quot;label&quot;:&quot;med_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_metric_deviation&quot;,&quot;label&quot;:&quot;high_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_vol&quot;,&quot;label&quot;:&quot;min_call_vol&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_deviation&quot;,&quot;label&quot;:&quot;min_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_call_deviation&quot;,&quot;label&quot;:&quot;med_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_call_deviation&quot;,&quot;label&quot;:&quot;high_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_measure&quot;,&quot;label&quot;:&quot;causation_measure&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_top_count&quot;,&quot;label&quot;:&quot;causation_top_count&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_min_measure&quot;,&quot;label&quot;:&quot;causation_min_measure&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_rule_name&quot;,&quot;label&quot;:&quot;causation_rule_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_suppl_measure&quot;,&quot;label&quot;:&quot;causation_suppl_measure&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;factor&quot;,&quot;label&quot;:&quot;factor&quot;,&quot;type&quot;:&quot;double&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_hist_per&quot;,&quot;label&quot;:&quot;metric_hist_per&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_low_per&quot;,&quot;label&quot;:&quot;max_low_per&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_med_per&quot;,&quot;label&quot;:&quot;max_med_per&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;tot_max_low_per&quot;,&quot;label&quot;:&quot;tot_max_low_per&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;tot_max_med_per&quot;,&quot;label&quot;:&quot;tot_max_med_per&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:6/dout:4">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;group_rule_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;label&quot;:&quot;max_lookback&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:11/in:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;group_rule_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;label&quot;:&quot;max_lookback&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:11/out:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;group_rule_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;label&quot;:&quot;max_lookback&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;type&quot;:&quot;integer&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:6/dout:5">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;group_rule_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_options&quot;,&quot;label&quot;:&quot;display_options&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:12/in:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;group_rule_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_options&quot;,&quot;label&quot;:&quot;display_options&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:12/out:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;group_rule_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_options&quot;,&quot;label&quot;:&quot;display_options&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:6/dout:6">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;group_rule_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_name&quot;,&quot;label&quot;:&quot;sub_service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_start&quot;,&quot;label&quot;:&quot;group_start&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:13/in:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;group_rule_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_name&quot;,&quot;label&quot;:&quot;sub_service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_start&quot;,&quot;label&quot;:&quot;group_start&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:13/out:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;group_rule_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_name&quot;,&quot;label&quot;:&quot;sub_service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_start&quot;,&quot;label&quot;:&quot;group_start&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:6/dout:7">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;owner_id&quot;,&quot;label&quot;:&quot;owner_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;config_name&quot;,&quot;label&quot;:&quot;config_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;config_json&quot;,&quot;label&quot;:&quot;config_json&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:14/in:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;owner_id&quot;,&quot;label&quot;:&quot;owner_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;config_name&quot;,&quot;label&quot;:&quot;config_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;config_json&quot;,&quot;label&quot;:&quot;config_json&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:14/out:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;owner_id&quot;,&quot;label&quot;:&quot;owner_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;config_name&quot;,&quot;label&quot;:&quot;config_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;config_json&quot;,&quot;label&quot;:&quot;config_json&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:6/dout:8">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;owner_id&quot;,&quot;label&quot;:&quot;owner_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;favorite_name&quot;,&quot;label&quot;:&quot;favorite_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;config_json&quot;,&quot;label&quot;:&quot;config_json&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;filter_json&quot;,&quot;label&quot;:&quot;filter_json&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:15/in:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;owner_id&quot;,&quot;label&quot;:&quot;owner_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;favorite_name&quot;,&quot;label&quot;:&quot;favorite_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;config_json&quot;,&quot;label&quot;:&quot;config_json&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;filter_json&quot;,&quot;label&quot;:&quot;filter_json&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:15/out:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;owner_id&quot;,&quot;label&quot;:&quot;owner_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;favorite_name&quot;,&quot;label&quot;:&quot;favorite_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;config_json&quot;,&quot;label&quot;:&quot;config_json&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;filter_json&quot;,&quot;label&quot;:&quot;filter_json&quot;,&quot;type&quot;:&quot;text&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:6/dout:9">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:16/in:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <Schema id="node:16/out:0">
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_full_name&quot;,&quot;label&quot;:&quot;user_full_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;audit_action&quot;,&quot;label&quot;:&quot;audit_action&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;modified_ts&quot;,&quot;label&quot;:&quot;modified_ts&quot;,&quot;type&quot;:&quot;datetime&quot;}"/>
+      </Schema>
+      <DynInput id="node:6">
+        <Port id="din:0" type="any" label="Config Plugin" evaluate="always"/>
+        <Port id="din:1" type="number" label="Time Range" evaluate="always"/>
+      </DynInput>
+      <DynOutput id="node:5">
+        <Port id="dout:0" type="any" label="Config Plugin" propagate="always"/>
+        <Port id="dout:1" type="any" label="Options Plugin" propagate="always"/>
+        <Port id="dout:2" type="any" label="Anomaly Plugin" propagate="always"/>
+        <Port id="dout:3" type="any" label="Time Range" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:6">
+        <Port id="dout:0" type="any[]" label="Metric Info Audit" propagate="always"/>
+        <Port id="dout:1" type="any[]" label="QDC Table Audit" propagate="always"/>
+        <Port id="dout:2" type="any[]" label="Parse Model Audit" propagate="always"/>
+        <Port id="dout:3" type="any[]" label="Incident Table Audit" propagate="always"/>
+        <Port id="dout:4" type="any[]" label="Incident Group Audit" propagate="always"/>
+        <Port id="dout:5" type="any[]" label="Incident Group Contextual Audit" propagate="always"/>
+        <Port id="dout:6" type="any[]" label="Incident Group Correlation Audit" propagate="always"/>
+        <Port id="dout:7" type="any[]" label="Anomaly Audit" propagate="always"/>
+        <Port id="dout:8" type="any[]" label="Anomaly Favorite Audit" propagate="always"/>
+        <Port id="dout:9" type="any[]" label="Config Property Audit" propagate="always"/>
+      </DynOutput>
+      <Version id="node:5" version="1"/>
+      <Version id="node:6" version="2"/>
+      <Version id="node:7" version="2"/>
+      <Version id="node:8" version="2"/>
+      <Version id="node:9" version="2"/>
+      <Version id="node:10" version="2"/>
+      <Version id="node:11" version="2"/>
+      <Version id="node:12" version="2"/>
+      <Version id="node:13" version="2"/>
+      <Version id="node:14" version="2"/>
+      <Version id="node:15" version="2"/>
+      <Version id="node:16" version="2"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/space/VIA Common Library/dbpm/VIA - Common" alias="Common"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

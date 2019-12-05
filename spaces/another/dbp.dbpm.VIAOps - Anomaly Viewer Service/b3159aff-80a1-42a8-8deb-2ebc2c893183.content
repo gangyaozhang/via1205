@@ -1,0 +1,6 @@
+select 
+    action_id, 
+    rule_id_list
+from action_dim_v2
+where action_category = 'IVR Deflect'
+  and action_name = 'YesOrNo'

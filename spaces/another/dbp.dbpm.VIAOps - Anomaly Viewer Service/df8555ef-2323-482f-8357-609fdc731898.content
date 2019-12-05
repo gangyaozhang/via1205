@@ -1,0 +1,8 @@
+SELECT
+    favorite_name,
+    metric_id,
+    config_json,
+    filter_json,
+    owner_id
+FROM viaops_anomaly_favorites
+WHERE owner_id = "${owner_id}" OR "*" = "${owner_id}"

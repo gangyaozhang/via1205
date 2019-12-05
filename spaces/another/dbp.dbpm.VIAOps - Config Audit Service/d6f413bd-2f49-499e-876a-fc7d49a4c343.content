@@ -1,0 +1,9 @@
+INSERT INTO viaops_incident_group_correlation_audit (
+    user_id,
+    user_full_name,
+    audit_action,
+    group_rule_name,
+    service_name,
+    sub_service_name,
+    group_start
+) VALUES (?, ?, ?, ?, ?, ?, ?)

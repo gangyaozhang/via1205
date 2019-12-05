@@ -1,0 +1,25 @@
+select
+    service, 
+    sub_service, 
+    dim_values, 
+    median_baseline,
+    threshold_low, 
+    threshold_med, 
+    threshold_high,
+    above,
+    below,
+    warmup_threshold,
+    warmup_period,
+    cool_down_period,
+    min_call_deviation,
+    min_call_vol,
+    min_metric_deviation,
+    min_metric_vol,
+    med_threshold_period,
+    high_threshold_period,
+    med_call_vol_pct,
+    high_call_vol_pct
+from
+    viaops_incident_model
+where anomaly_window = '5/5'
+  and concat(service,"|",sub_service,"|",dim_values) = '${metricID}'

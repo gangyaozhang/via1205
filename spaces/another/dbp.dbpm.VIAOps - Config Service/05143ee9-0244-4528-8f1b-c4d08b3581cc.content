@@ -1,0 +1,6 @@
+SELECT count(*) as count
+FROM viaops_incident_model
+WHERE service="${service}"
+  AND sub_service="${sub_service}"
+  AND dim_values="${dim_values}"
+  AND anomaly_window="${anomaly_window}"

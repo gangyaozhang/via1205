@@ -1,0 +1,9 @@
+select distinct ${selectValue} as value
+from ${tableName}
+where (1 = 1)
+${appWhereClause}
+${metricWhereClause}
+${datekeyWhereClause}
+${whereClause}
+${searchClause}
+order by 1

@@ -1,0 +1,3 @@
+SELECT count(*) as count
+FROM viaops_incident_group
+WHERE group_rule_name="${group_rule_name}"

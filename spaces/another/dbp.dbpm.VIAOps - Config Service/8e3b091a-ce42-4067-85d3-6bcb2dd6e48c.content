@@ -1,0 +1,21 @@
+-- NOTIFICATION_ACTION_RULE_SQL
+SELECT
+    a.action_id,
+    b.rule_id,
+    b.phase,
+    a.action_name,
+    a.target_addr1,
+    a.target_addr2,
+    a.target_attr1,
+    a.target_attr2,
+    a.target_attr3,
+    a.target_attr4,
+    b.measured_attr,
+    b.value1,
+    b.value2,
+    b.value3,
+    b.value4
+FROM action_dim a, rule_dim b
+WHERE a.action_id in (${action_id_list})
+  AND b.action_id = a.action_id
+ORDER BY 1,2,3

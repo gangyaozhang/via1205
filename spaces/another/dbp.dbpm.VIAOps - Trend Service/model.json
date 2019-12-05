@@ -1,0 +1,57 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "028c0e28-62cc-4605-8276-21c0aaf11b78"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "84c7999a-63f6-4e30-8583-42453882713d"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "0343a6f4-fc1a-4c01-8f80-d3814a1d4113"
+    },
+    {
+      "fileref": "ModelContentFile4",
+      "name": "2256f68f-20af-4f0c-8530-e3efaa93f4fe"
+    },
+    {
+      "fileref": "ModelContentFile5",
+      "name": "ef4965f6-b401-4820-8bdc-20011228c5fb"
+    },
+    {
+      "fileref": "ModelContentFile6",
+      "name": "6ec7832e-27cf-42e9-86ed-91bfb701400c"
+    },
+    {
+      "fileref": "ModelContentFile7",
+      "name": "1c24f13b-6750-4736-8ecb-7e2bca3be387"
+    },
+    {
+      "fileref": "ModelContentFile8",
+      "name": "6b1b3310-2b2d-459d-82c2-be45fc4b596b"
+    },
+    {
+      "fileref": "ModelContentFile9",
+      "name": "e3cf0dce-20b8-4caa-82dc-08e357720d8a"
+    },
+    {
+      "fileref": "ModelContentFile10",
+      "name": "2342eeea-8c05-4483-8e13-15e2396eabd6"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "\n",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "2256f68f-20af-4f0c-8530-e3efaa93f4fe,6ec7832e-27cf-42e9-86ed-91bfb701400c,6b1b3310-2b2d-459d-82c2-be45fc4b596b,2342eeea-8c05-4483-8e13-15e2396eabd6,028c0e28-62cc-4605-8276-21c0aaf11b78,84c7999a-63f6-4e30-8583-42453882713d,0343a6f4-fc1a-4c01-8f80-d3814a1d4113,ef4965f6-b401-4820-8bdc-20011228c5fb,1c24f13b-6750-4736-8ecb-7e2bca3be387,e3cf0dce-20b8-4caa-82dc-08e357720d8a,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:4fa80cae-ab79-41c0-850f-68c371d35cbf,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:48639379-e854-4da3-8f0b-ea5ec00a4f4e,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:e7ad0afd-5240-433e-8fa8-3954ddc76d38,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Property:09f69f18-270e-4b01-8995-078e1c892da4,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Property:b0613b6d-5040-4b4c-820d-8da4b99487b7,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Property:6dfdf6cc-b4cb-48fb-8006-a7d2775a43e7,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Property:ffceee2a-ebdf-40e8-8e25-4c74117c3da9,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:1f9fcced-e444-4b19-8a27-1443cc9f85e5,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:7285ca1d-c841-4cca-896f-cd07dbccee55,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:2a793937-9e31-43d3-8fe2-6e17fd2e2bb9,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:2b8d2f6d-d037-4397-8545-533d7fa1e995,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:1154c92a-2675-456c-8c15-db16cc620eac,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:9b73a67e-4e45-4292-8eb6-00577009f781,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:d6f413bd-2f49-499e-876a-fc7d49a4c343,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:0c5d5f13-e0b5-46db-8b74-f8cf1f98f6e8,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:49b47948-109f-49fc-80e1-63336770536e,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:f144a137-7c89-4615-8bc1-f8cc5b0b6198,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:bd1ce3aa-a029-440c-83a0-c67d4449e78f,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:9df1205e-2ee6-480f-8195-aa45576c0fd0,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:3cd5ee49-6714-433d-84ac-f45e2d79187d",
+    "__references__": "/app/dbp/space/another/dbpm/VIAOps - Base Service,/app/dbp/space/another/dbpm/VIAOps - Config Property",
+    "modelStatus": "valid",
+    "name": "VIAOps - Trend Service"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "locale"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "axv",
+    "__references__": "/app/dbp/user/via_common/dbpm/VIA - Common,/app/dbp/space/Charter Digital Operations/dbpm/Charter - Incident Analysis Service v8,/app/dbp/space/Charter Digital Operations/dbpm/Charter - Plugin v11,/app/dbp/user/viaops_admin/dbpm/VIAOps - Trend Plugin,/app/dbp/user/via_common/dbpm/VIA - TimeSeriesChart",
+    "modelStatus": "invalid",
+    "name": "Charter - Anomaly Trend Comp v5"
+  }
+}

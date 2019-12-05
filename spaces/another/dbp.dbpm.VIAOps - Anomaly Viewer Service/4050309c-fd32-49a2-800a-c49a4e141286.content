@@ -1,0 +1,6 @@
+select
+    a.metric_id,
+    lower(b.vitria_sev) as severity,
+    b.action as action_list
+from metric_dim a, metric_severity_dim b
+where a.id = b.metric_id

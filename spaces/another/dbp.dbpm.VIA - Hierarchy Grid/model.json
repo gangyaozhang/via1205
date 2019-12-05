@@ -1,0 +1,33 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "abab7ab4-6f72-41b8-87b7-2906bf03912f"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "7f36173f-23fb-4e5d-81ce-7d5a6adea971"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "8d80c568-a370-46f7-8272-12f994e40ccb"
+    },
+    {
+      "fileref": "ModelContentFile4",
+      "name": "86f404cf-f55a-44c0-80d7-0dc669791c19"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "Description of New Model 0",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "7f36173f-23fb-4e5d-81ce-7d5a6adea971,abab7ab4-6f72-41b8-87b7-2906bf03912f,86f404cf-f55a-44c0-80d7-0dc669791c19,8d80c568-a370-46f7-8272-12f994e40ccb",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "VIA - Hierarchy Grid"
+  }
+}

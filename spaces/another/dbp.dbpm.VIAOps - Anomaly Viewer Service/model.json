@@ -1,0 +1,121 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "99642b4f-c38d-414a-878d-7bf89bd07f9a"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "43da469d-c8b2-4633-82b4-6593f6a5eaf9"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "e5df4e2c-4111-44df-8c4c-3c11e94b6a08"
+    },
+    {
+      "fileref": "ModelContentFile4",
+      "name": "4c63f942-1f07-4c14-89eb-2eb5620b70e9"
+    },
+    {
+      "fileref": "ModelContentFile5",
+      "name": "7641facc-40e0-4340-8580-2b669ee2f4b7"
+    },
+    {
+      "fileref": "ModelContentFile6",
+      "name": "2b16ce62-591a-4c72-8838-c3d42912edd0"
+    },
+    {
+      "fileref": "ModelContentFile7",
+      "name": "1a623c4a-2aa8-4a76-86ca-942cc8fe1b89"
+    },
+    {
+      "fileref": "ModelContentFile8",
+      "name": "ab54345c-00fc-4c0c-87a7-4f58f2e8bbeb"
+    },
+    {
+      "fileref": "ModelContentFile9",
+      "name": "c1e77f64-07dc-4474-868e-274103208cc4"
+    },
+    {
+      "fileref": "ModelContentFile10",
+      "name": "b3159aff-80a1-42a8-8deb-2ebc2c893183"
+    },
+    {
+      "fileref": "ModelContentFile11",
+      "name": "f0591266-9530-49db-8c08-0dd22a9e0067"
+    },
+    {
+      "fileref": "ModelContentFile12",
+      "name": "38ff71db-23b7-41c9-8bc5-93c1c8ba0a21"
+    },
+    {
+      "fileref": "ModelContentFile13",
+      "name": "c6f53bd8-e073-4686-8dd3-9bf6cfac03e4"
+    },
+    {
+      "fileref": "ModelContentFile14",
+      "name": "ab486725-0b81-4c96-8149-5ca3871edafb"
+    },
+    {
+      "fileref": "ModelContentFile15",
+      "name": "18499b49-90fd-48e0-84af-76f8a5c53183"
+    },
+    {
+      "fileref": "ModelContentFile16",
+      "name": "467324ce-076d-47e1-8220-6726a963a0f8"
+    },
+    {
+      "fileref": "ModelContentFile17",
+      "name": "df8555ef-2323-482f-8357-609fdc731898"
+    },
+    {
+      "fileref": "ModelContentFile18",
+      "name": "804090e8-6463-4945-84c6-b08106086b8d"
+    },
+    {
+      "fileref": "ModelContentFile19",
+      "name": "b1e61058-c401-40af-8b48-d53d15371874"
+    },
+    {
+      "fileref": "ModelContentFile20",
+      "name": "747172a6-8fc4-40ba-8903-bb65210a87cf"
+    },
+    {
+      "fileref": "ModelContentFile21",
+      "name": "bb477462-d1bf-4764-8e15-d809fb3ee289"
+    },
+    {
+      "fileref": "ModelContentFile22",
+      "name": "85a8f85a-6bc3-4489-87ae-54f375f72313"
+    },
+    {
+      "fileref": "ModelContentFile23",
+      "name": "4050309c-fd32-49a2-800a-c49a4e141286"
+    },
+    {
+      "fileref": "ModelContentFile24",
+      "name": "762b8513-2412-47e8-8d0e-db9e5eb1f3cf"
+    },
+    {
+      "fileref": "ModelContentFile25",
+      "name": "8bcedde0-61eb-4a44-83a1-5b53933d6762"
+    },
+    {
+      "fileref": "ModelContentFile26",
+      "name": "28221ca0-5763-49af-86de-93731c84751a"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": " ",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "7641facc-40e0-4340-8580-2b669ee2f4b7,2b16ce62-591a-4c72-8838-c3d42912edd0,e5df4e2c-4111-44df-8c4c-3c11e94b6a08,43da469d-c8b2-4633-82b4-6593f6a5eaf9,4c63f942-1f07-4c14-89eb-2eb5620b70e9,1a623c4a-2aa8-4a76-86ca-942cc8fe1b89,ab486725-0b81-4c96-8149-5ca3871edafb,18499b49-90fd-48e0-84af-76f8a5c53183,467324ce-076d-47e1-8220-6726a963a0f8,df8555ef-2323-482f-8357-609fdc731898,804090e8-6463-4945-84c6-b08106086b8d,b1e61058-c401-40af-8b48-d53d15371874,8bcedde0-61eb-4a44-83a1-5b53933d6762,762b8513-2412-47e8-8d0e-db9e5eb1f3cf,28221ca0-5763-49af-86de-93731c84751a,c6f53bd8-e073-4686-8dd3-9bf6cfac03e4,bb477462-d1bf-4764-8e15-d809fb3ee289,b3159aff-80a1-42a8-8deb-2ebc2c893183,85a8f85a-6bc3-4489-87ae-54f375f72313,c1e77f64-07dc-4474-868e-274103208cc4,4050309c-fd32-49a2-800a-c49a4e141286,38ff71db-23b7-41c9-8bc5-93c1c8ba0a21,747172a6-8fc4-40ba-8903-bb65210a87cf,f0591266-9530-49db-8c08-0dd22a9e0067,99642b4f-c38d-414a-878d-7bf89bd07f9a,ab54345c-00fc-4c0c-87a7-4f58f2e8bbeb,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:4fa80cae-ab79-41c0-850f-68c371d35cbf,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:48639379-e854-4da3-8f0b-ea5ec00a4f4e,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:e7ad0afd-5240-433e-8fa8-3954ddc76d38,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Demo Service:bd8e16ff-dc31-4049-8009-c4439cb62001,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Demo Service:ad3cbe11-0553-4d4c-89c6-9cc3f58ec072,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Demo Service:1c4f7f5b-d576-4794-8bdd-f265c92a3bcf,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:1f9fcced-e444-4b19-8a27-1443cc9f85e5,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:7285ca1d-c841-4cca-896f-cd07dbccee55,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:2a793937-9e31-43d3-8fe2-6e17fd2e2bb9,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:1154c92a-2675-456c-8c15-db16cc620eac,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:9b73a67e-4e45-4292-8eb6-00577009f781,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:d6f413bd-2f49-499e-876a-fc7d49a4c343,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:0c5d5f13-e0b5-46db-8b74-f8cf1f98f6e8,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:49b47948-109f-49fc-80e1-63336770536e,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:f144a137-7c89-4615-8bc1-f8cc5b0b6198,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:bd1ce3aa-a029-440c-83a0-c67d4449e78f,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:9df1205e-2ee6-480f-8195-aa45576c0fd0,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:3cd5ee49-6714-433d-84ac-f45e2d79187d",
+    "__references__": "/app/dbp/space/another/dbpm/VIAOps - Base Service,/app/dbp/space/another/dbpm/VIAOps - Demo Service,/app/dbp/space/another/dbpm/VIAOps - Config Audit Service",
+    "modelStatus": "valid",
+    "name": "VIAOps - Anomaly Viewer Service"
+  }
+}

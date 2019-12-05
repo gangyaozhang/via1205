@@ -1,0 +1,39 @@
+UPDATE
+    viaops_incident_table
+SET
+    threshold_low=${threshold_low},
+    threshold_med=${threshold_med},
+    threshold_high=${threshold_high},
+    cool_down_period=${cool_down_period},
+    warmup_threshold=${warmup_threshold},
+    warmup_period=${warmup_period},
+    min_metric_deviation=${min_metric_deviation},
+    min_call_deviation=${min_call_deviation},
+    min_metric_vol=${min_metric_vol},
+    min_call_vol=${min_call_vol},
+    med_threshold_period=${med_threshold_period},
+    high_threshold_period=${high_threshold_period},
+    med_call_deviation=${med_call_vol_pct},
+    high_call_deviation=${high_call_vol_pct},
+    expire_after=${expire_after},
+--  emit_notification="${emit_notification}",
+    generate="${generate}",
+    causation_measure="${causation_measure}",
+    causation_top_count=${causation_top_count},
+    causation_min_measure=${causation_min_measure},
+    causation_rule_name="${causation_rule_name}",
+    causation_suppl_measure="${causation_suppl_measure}",
+--    metric_time_skew=${metric_time_skew},
+--    call_metric_time_skew=${call_metric_time_skew},
+    call_time_skew=${call_time_skew},
+    call_metric_id="${call_metric_id}",
+    metric_hist_per=${metric_hist_per},
+    max_low_per=${max_low_per},
+    max_med_per=${max_med_per},
+    tot_max_low_per=${tot_max_low_per},
+    tot_max_med_per=${tot_max_med_per},
+    upd_dt=current_timestamp()
+WHERE metric_id="${metric_id}"
+  AND window="${anomaly_window}"
+  AND algorithm="${algorithm}"
+  AND threshold_policy="${threshold_policy}"

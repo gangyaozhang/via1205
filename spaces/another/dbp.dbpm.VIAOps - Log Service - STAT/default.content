@@ -1,0 +1,274 @@
+<DashboardPluginModel description="" name="VIAOps - Log Service - STAT" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services>
+      <Service name="_getColumnSetting" args="type,width,fontWeight,color,backgroundColor,barColors" private="true">
+        <CodeText>
+          <![CDATA[if (type == null) type = "string";
+var textAlign = "left";
+if (type == "number") textAlign = "right";
+if (fontWeight == null) fontWeight = "normal";
+if (color == null) color = "#000000";
+if (backgroundColor == null) backgroundColor = "";
+return {
+    "style": {
+        "fontStyle": "normal",
+        "fontSize": "12",
+        "fontWeight": fontWeight,
+        "textAlign": textAlign,
+        "color": color,
+        "width": width,
+        "backgroundColor": backgroundColor,
+    },
+    "format": {
+        "type": type,
+        "pattern": "0"
+    },
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getHighlightSetting" args="judgments" private="true">
+        <CodeText>
+          <![CDATA[var highlightSettings = [];
+if (typeof judgments == "string") {
+    // string encoding... field,value,color;field,value,color;...
+    //              or... index,field,value,color;index,field,value,color;...
+    judgments = judgments.split(";");
+}
+for (var i=0; i<judgments.length; i++) {
+    var judgment = judgments[i];
+    if (typeof judgment == "string") {
+        // string encoded format... field,value,color
+        //                    or... index,field,value,color
+        var toks = judgment.split(",");
+        if (toks.length == 4) {
+            judgment = {
+                index : toks[0],
+                field : toks[1],
+                value : toks[2],
+                color : toks[3]
+            };
+        }
+        else if (toks.length == 3) {
+            judgment = {
+                field : toks[0],
+                value : toks[1],
+                color : toks[2]
+            };
+        }
+    }
+    if (judgment != null) {
+        var cellField = judgment.index != null ? "column"+judgment.index : "column";
+        highlightSettings.push({
+            "highLightScope": "cell",
+            "highLightCellField": "${" + cellField + "}",
+            "judgementColor": judgment.color,
+            "judgementField": judgment.field,
+            "conditions": [{
+                "oper"  : "=",
+                "value" : judgment.value
+            }]
+        });
+    }
+}
+return highlightSettings;]]>
+        </CodeText>
+      </Service>
+      <Service name="_getSolidBarSetting" args="width,fontWeight,color,backgroundColor,minValue,maxValue,negColor,posColor" private="true">
+        <CodeText>
+          <![CDATA[if (fontWeight == null) fontWeight = "normal";
+if (color == null) color = "#000000";
+if (backgroundColor == null) backgroundColor = "";
+var negRange = minValue <= 0 && maxValue >= 0;
+return {
+    "style": {
+        "fontStyle": "normal",
+        "fontSize": "12",
+        "fontWeight": fontWeight,
+        "textAlign": "right",
+        "color": color,
+        "width": width,
+        "backgroundColor": backgroundColor,
+    },
+    "renderer": {
+        "type": "bar",
+        "color": posColor,
+        "ncolor": negColor,
+        "colorType": "solid",
+        "showPRange": negRange,
+        "minimum": minValue,
+        "maximum": maxValue,
+        "showValue": "true",
+        "dataType": "number",
+        "format": {
+            "type": "number",
+            "pattern": "0"
+        }
+    }
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getFilterConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[return {
+    "div-style" : "overflow:hidden;",
+    "categories" : [{
+        "name" : "data",
+        "name-style" : "padding-left:0px;width:0px;",
+        "value-style" : "padding:0px;width:100%;",
+        "submit" : "manual",
+        "dimensions" : [{
+            "name" : "maxLines",
+            "label" : "Max Lines",
+            "type" : "enumeration",
+            "default" : "1000",
+            "enums" : ["100", "1000", "10000", "100000"]
+        }, {
+            "name" : "sortOrder",
+            "label" : "Sort Order",
+            "type" : "enumeration",
+            "default" : "Old to New",
+            "enums" : ["Old to New", "New to Old"]
+        }, {
+            "name" : "regexFilter",
+            "label" : "RegEx Filter",
+            "type" : "string",
+            "style" : "width:200px;height:22px;",
+            "default" : ""
+        }]
+    }]
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getLogConfig" args="filePath" private="false">
+        <CodeText>
+          <![CDATA[if (filePath == null || filePath == "") {
+    filePath = "${WS}/unbundled/ref_arch/digital_ops/log_data/imapserv-stat.log";
+}
+var URI = "/app/dbp/user/" + Context.getModelOwnerId() + "/" + Context.getModelPath();
+return {
+    "service" : {
+        "method" : "POST",
+        "url" : URI + "/getLogData",
+        "params" : {
+            "path" : filePath
+        }
+    },
+    "config" : {
+        "attributes" : [{
+            "label" : "attr.date",
+            "columnSetting" : this._getColumnSetting("string", 5),
+        }, {
+            "label" : "attr.time",
+            "columnSetting" : this._getColumnSetting("string", 5),
+        }, {
+            "label" : "attr.server",
+            "columnSetting" : this._getColumnSetting("string", 5),
+        }, {
+            "label" : "attr.component",
+            "columnSetting" : this._getColumnSetting("string", 5),
+        }, {
+            "label" : "attr.metric",
+            "columnSetting" : this._getColumnSetting("string", 40, "bold", "red"),
+        }, {
+            "label" : "attr.measure",
+            "columnSetting" : this._getColumnSetting("string", 80, "bold", "blue"),
+        }]
+    },
+};]]>
+        </CodeText>
+      </Service>
+      <Service name="getLogData" args="path,filters" private="false">
+        <CodeText>
+          <![CDATA[print("getLogData: filters=" + filters);
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+
+var maxLines = null;
+var sortOrder = null;
+var regexFilter = null;
+for (var i=0; i<filters.length; i++) {
+    switch (filters[i]["name"]) {
+        case "data.maxLines":
+            maxLines = filters[i]["value"];
+            break;
+        case "data.sortOrder":
+            sortOrder = filters[i]["value"];
+            break;
+        case "data.regexFilter":
+            regexFilter = filters[i]["value"];
+            if (regexFilter != null && regexFilter.trim() != "") {
+                regexFilter = new RegExp(regexFilter);
+            }
+            else {
+                regexFilter = null;
+            }
+            break;
+    }
+}
+if (maxLines != null && sortOrder != null) {
+    var logs = Context.getFileAsString(path);
+    if (logs != null && logs != "") {
+        var lines = logs.split("\n");
+        print("# lines = " + lines.length);
+        var result = [];
+        for (var i=0; i<lines.length; i++) {
+            var line = lines[i];
+            // ignore empty line
+            if (line.trim() == "") continue;
+            if (regexFilter == null || regexFilter.test(line)) {
+                var nv = line.split(" ");
+                var mid = "";
+                var metric = "";
+                var measures = "";
+                if (nv.length >= 5) {
+                    mid = nv[4].substring(0, nv[4].indexOf(";"));
+                    metric = nv[4].substring(nv[4].indexOf(";")+1, nv[4].indexOf("("));
+                    measures = line.substring(line.indexOf(metric)+metric.length());
+                }
+                if (i == 0) {
+                    print("+=+=nv lenth[" + nv.length+"]");
+                    print("+=+=date["+nv[0]+" time["+nv[1]+" server["+nv[2]+"] comp["+nv[3]+"] metric["+metric+"] measures["+measures+"]");
+                }
+                result.push({
+                    "_attr00_" : nv[0], 
+                    "_attr01_" : nv[1], 
+                    "_attr02_" : nv[2], 
+                    "_attr03_" : nv[3], 
+                    "_attr04_" : metric, 
+                    "_attr05_" : measures
+                });
+            }
+        }
+        maxLines = Number(maxLines);
+        print("maxLines = " + maxLines);
+        if (result.length > maxLines) {
+            result = result.slice(result.length-maxLines, result.length);
+        }
+        if (sortOrder == "New to Old") {
+            result = result.reverse();
+        }
+        return result;
+    }
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="24e9c5b1-0009-4001-8241-531858135c23" name="en" type="application/json" size="187" private="false">
+        <Description>
+          <![CDATA[Locale string for English language]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

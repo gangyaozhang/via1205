@@ -1,0 +1,20 @@
+INSERT INTO viaops_anomaly_algorithm (
+    adm_name,
+    metric_id,
+    algorithm,
+    fill_policy,
+    seasonality,
+    ignore_baseline,
+    ignore_anomaly,
+    enabled
+)
+VALUES (
+    "${adm_name}",
+    "${metric_id}",
+    "${algorithm}",
+    ${fill_policy},
+    "${seasonality}",
+    ${ignore_baseline},
+    ${ignore_anomaly},
+    ${enabled}
+)

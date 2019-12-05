@@ -1,0 +1,3 @@
+select metric_id, display_options
+from viaops_incident_group_contextual
+where group_rule_name="${group_rule_name}"

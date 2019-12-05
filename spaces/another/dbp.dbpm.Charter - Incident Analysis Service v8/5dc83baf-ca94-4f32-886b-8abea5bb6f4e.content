@@ -1,0 +1,4 @@
+SELECT *
+FROM viaops_metric_info
+${serviceWhereClause}
+${subserviceWhereClause}

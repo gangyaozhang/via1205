@@ -1,0 +1,81 @@
+//Column setting{
+   "level0": [
+        {"label": "Name", "field":"name", "sortable": false, "resizable": false},
+        
+        {"field":"time","label":"Date/Time","headerAlign":"left",
+            "format": {
+                "type":"datetime",
+                "pattern":"yyyy-MM-dd hh:mm a"
+            },
+            "style":{"fontStyle":"normal","fontWeight":"normal","fontSize":"22","backgroundColor":"#EDEDED","color":"#000000","textAlign":"left", "width": 80}
+        },
+        {"field":"diffval2","label":"+/- Call","headerAlign":"center",
+            "style":{"width": 80},
+                "renderer":{
+                    "type":"band",
+                    "mainLabelValue":"",
+                    "contextLabelValue":"",
+                    "goodlimit":0,"fairlimit":30,
+                    "maxValue":null,
+                    "minValue":null,
+                    "target":null,
+                    "goodColorMap":"#5CB272",
+                    "fairColorMap":"#EDEE75",
+                    "poorColorMap":"#B9523E",
+                    "dataType":"string",
+                    "showThreshold":false
+                }
+            },
+        {"label":"Type", "field":"type", "sortable": false},
+        {"label":"Population", "field":"population"},
+        {"label":"Timezone", "field":"timezone"}
+    ],
+    
+    "level1": [
+        {"label": "aaName", "field":"name", "sortable": false},
+        {"field":"diffval2","label":"11+/- Call","headerAlign":"center",
+            "style":{"width": 80},
+                "renderer":{
+                    "type":"band",
+                    "mainLabelValue":"",
+                    "contextLabelValue":"",
+                    "goodlimit":0,"fairlimit":30,
+                    "maxValue":null,
+                    "minValue":null,
+                    "target":null,
+                    "goodColorMap":"#5CB272",
+                    "fairColorMap":"#EDEE75",
+                    "poorColorMap":"#B9523E",
+                    "dataType":"string",
+                    "showThreshold":false
+                }
+            },
+        {"label":"11Type", "field":"aatype", "sortable": false}
+        
+
+     ],
+     
+   "level2":  [
+
+        {"label": "aaName", "field":"name", "sortable": false},
+        {"field":"diffval2","label":"22+/- Call","headerAlign":"center",
+            "style":{"width": 80},
+                "renderer":{
+                    "type":"band",
+                    "mainLabelValue":"",
+                    "contextLabelValue":"",
+                    "goodlimit":0,"fairlimit":30,
+                    "maxValue":null,
+                    "minValue":null,
+                    "target":null,
+                    "goodColorMap":"#5CB272",
+                    "fairColorMap":"#EDEE75",
+                    "poorColorMap":"#B9523E",
+                    "dataType":"string",
+                    "showThreshold":false
+                }
+            },
+        {"label":"22Type", "field":"bbtype", "sortable": false}
+
+     ]
+}

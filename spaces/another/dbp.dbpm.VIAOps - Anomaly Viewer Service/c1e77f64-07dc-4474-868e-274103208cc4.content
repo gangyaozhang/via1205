@@ -1,0 +1,11 @@
+select
+    case
+        when a.api != 'null' and a.api_response != 'null' then concat(a.service,'|',a.subservice,'|',a.app,'|',a.metric,'|',a.api,'|',a.api_response)
+        when a.api != 'null' then concat(a.service,'|',a.subservice,'|',a.app,'|',a.metric,'|',a.api)
+        when a.stream != 'null' then concat(a.service,'|',a.subservice,'|',a.app,'|',a.metric,'|',a.stream)
+        else concat(a.service,'|',a.subservice,'|',a.app,'|',a.metric)
+    end as metric_id,
+    lower(b.vitria_sev) as severity,
+    b.action as action_list
+from metric_dim_v2 a, metric_severity_dim_v2 b
+where a.id = b.metric_id

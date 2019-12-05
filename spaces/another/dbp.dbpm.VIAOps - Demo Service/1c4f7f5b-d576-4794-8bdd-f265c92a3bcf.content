@@ -1,0 +1,91 @@
+{
+	"user-profiles" : {
+		"P2859261" : {
+			"enabled" : true,
+			"profile" : "DEMO1"
+		},
+		"P2865787" : {
+			"enabled" : true,
+			"profile" : "DEMO1"
+		},
+		"P2856403" : {
+			"enabled" : true,
+			"profile" : "DEMO1"
+		},
+		"P2859887" : {
+			"enabled" : true,
+			"profile" : "DEMO1"
+		}
+	},
+	"demo-profiles" : {
+		"DEMO1" : {
+            "service-config": {
+                "sub-service-labels": {
+                    "App Entry": "Grant Application"
+                },
+                "metric-labels": {
+                    "Failed API Attempt": "Grant Authorization",
+                    "Stat Login Failures": "Parent Memo",
+                    "* Customer Call Volume": "* Help Email"
+                },
+                "service-labels": {
+                    "STVA": "Tuition Grant"
+                },
+                "app-labels": {
+                    "Client": "Web Portal"
+                }
+            },
+            "dimension-analysis": {
+                "dimension-labels": {
+                    "Tuition Grant|Grant Application|Web Portal|Grant Authorization|API Name": "API",
+                    "Tuition Grant|*|*|Customer Call Volume|Market": "Locale",
+                    "Device": "Equipment",
+                    "Headend": "SCC",
+                    "City": "Town"
+                },
+                "dimension-values": {
+                    "androidTablet": "Maserati",
+                    "Outage - Spectrum.net Site": "Service outage at site #234",
+                    "xbox": "Lamborghini",
+                    "AppleTV": "Ferrari"
+                }
+            }
+		},
+		"DEMO2" : {
+			"service-config" : {
+				"service-labels" : {
+					"STVA" : "Tuition Grant"
+				},
+				"sub-service-labels" : {
+					"App Entry" : "Grant Application"
+				},
+				"app-labels" : {
+					"Client" : "Web Portal"
+				},
+				"metric-labels" : {
+					"Stat Login Failures" : "Parent Memo",
+					"Failed API Attempt" : "Grant Authorization",
+					"* Customer Call Volume" : "* Help Email"
+				}
+			}
+		},
+		"DEMO3" : {
+			"service-config" : {
+				"service-labels" : {
+					"STVA" : "Tuition Grant"
+				},
+				"sub-service-labels" : {
+					"App Entry" : "Grant Application"
+				},
+				"app-labels" : {
+					"Client" : "Web Portal"
+				},
+				"metric-labels" : {
+					"Stat Login Failures" : "Parent Memo",
+					"Failed API Attempt" : "Grant Authorization",
+					"* Customer Call Volume" : "* Help Email"
+				}
+			}
+		}
+	}
+}

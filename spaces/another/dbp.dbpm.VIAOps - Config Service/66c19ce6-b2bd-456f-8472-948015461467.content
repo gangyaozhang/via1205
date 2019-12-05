@@ -1,0 +1,2 @@
+select distinct metric_id
+from viaops_anomaly_algorithm

@@ -1,0 +1,1 @@
+INSERT INTO viaops_config_property (name, value) VALUES (?, ?)

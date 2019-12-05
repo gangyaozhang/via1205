@@ -1,0 +1,4802 @@
+<DashboardPluginModel description="" name="VIAOps - Base Service" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions>
+      <Function name="formatLocaleStartEndDate" args="epochStartEnd" private="false">
+        <CodeText>
+          <![CDATA[if (epochStartEnd == null || epochStartEnd == "") return "";
+if (epochStartEnd.indexOf("/") == -1) return epochStartEnd;
+
+var toks = epochStartEnd.split("/");
+var start = toks.length > 0 ? Number(toks[0]) : 0;
+var end = toks.length > 1 ? Number(toks[1]) : 0;
+
+var localeStartEnd = "";
+if (start > 0) {
+    localeStartEnd += this.parseShortDate(new Date(start * 1000));
+    localeStartEnd += " - ";
+    if (end > 0) {
+        localeStartEnd += this.parseShortDate(new Date(end * 1000));
+    }
+    else {
+        localeStartEnd += "OPEN"; 
+    }
+}
+return localeStartEnd;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getContextInfo" args="module,filters,callback" private="false">
+        <CodeText>
+          <![CDATA[var self = this;
+this.getFilterInfo(filters, function(response) {
+    var label = [module];
+    if (response.status == "OK" && response.value != null) {
+        if (response.value.svcLabels.length > 0) {
+            label.push("Service: " + response.value.svcLabels.join(", "));
+        }
+        if (response.value.compLabels.length > 0) {
+            label.push("Sub-Service: " + response.value.compLabels.join(", "));
+        }
+        if (response.value.timeRange != null) {
+            var timeRange = response.value.timeRange;
+            var timeLabel = self.getTimeLabel(timeRange.predefinedTimeRange, timeRange.absoluteTimeRange);
+            label.push("Time Interval: " + timeLabel);
+        }
+    }
+    callback({
+        "__TYPE__"  : "filter",
+        "__EVENT__" : {
+            origin : module,
+            label  : label.join(" :: "),
+            data   : filters
+        }
+    });
+});
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getNavEvent" args="source,target,filters" private="false">
+        <CodeText>
+          <![CDATA[var navId = null;
+switch (target) {
+    case "anomalyEvents":
+        navId = "p1";
+        break;
+    case "trendAnalysis":
+        navId = "p3";
+        break;
+    case "dimensionAnalysis":
+        navId = "p4";
+        break;
+    case "anomalyAnalysis":
+        navId = "p7";
+        break;
+}
+if (navId != null) {
+    return [{
+        "__TYPE__"  : "it.ops.navigate.to",
+        "__EVENT__" : {
+            navId   : navId,
+            context : {
+                source  : source,
+                target  : target,
+                filters : filters,
+            }
+        },
+    }];
+}
+return null;]]>
+        </CodeText>
+      </Function>
+      <Function name="getTimeLabel" args="predefined,timeRange" private="false">
+        <CodeText>
+          <![CDATA[if (predefined == 'adhoc') {
+    if (timeRange != null) {
+        var timeSplit = timeRange.split('/');
+        if (timeSplit.length == 2) {
+            var tFrom = new Date(Number(timeSplit[0]) * 1000);
+            var tTo   = new Date(Number(timeSplit[1]) * 1000); 
+            // return tFrom.toLocaleString() + " - " + tTo.toLocaleString();
+            return this.parseShortDate(tFrom) + " - " + this.parseShortDate(tTo);
+        }
+    }
+}
+else if (predefined != null) {
+    switch (predefined) {
+        case "4H":
+            return "Last 4 Hours";
+        case "8H":
+            return "Last 8 Hours";
+        case "24H":
+            return "Last 24 Hours";
+        case "today":
+            return "Today";
+        case "yesterday":
+            return "Yesterday";
+        case "8D":
+            return "Last 8 Days";
+        case "30D":
+            return "Last 30 Days";
+        case "60D":
+            return "Last 60 Days";
+    }
+}
+return "Unknown";
+]]>
+        </CodeText>
+      </Function>
+      <Function name="parseShortDate" args="dObj" private="false">
+        <CodeText>
+          <![CDATA[if (dObj != null) {
+    var year    =   dObj.getFullYear();
+    var month   = ((dObj.getMonth()+1 ) < 10) ? "0"+(dObj.getMonth()+1) : (dObj.getMonth()+1);
+    var day     =  (dObj.getDate() < 10)      ? "0"+dObj.getDate()      :  dObj.getDate();
+    var hours   =  (dObj.getHours() < 10)     ? "0"+dObj.getHours()     :  dObj.getHours();
+    var minutes =  (dObj.getMinutes() < 10)   ? "0"+dObj.getMinutes()   :  dObj.getMinutes();
+    return month + "/" + day + " " + hours + ":" + minutes;
+}
+return "";
+]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services>
+      <Service name="__convertUnixtimeToDateKey" args="epoch" private="false">
+        <CodeText>
+          <![CDATA[function pad(str, len) {
+    while (str.length < len) {
+        str = "0" + str;
+    }
+    return str;
+}
+if (epoch != null) {
+    var dt = new Date(epoch*1000);
+    var dtKey = String(dt.getUTCFullYear()) + pad(String(dt.getUTCMonth()+1), 2) + pad(String(dt.getUTCDate()), 2);
+    return Number(dtKey);
+}
+return 0;]]>
+        </CodeText>
+      </Service>
+      <Service name="__debugPrint" args="key" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+return queryConfig != null && queryConfig["debug-print"][key] == true;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getDateKeyArrayFromUnixtimeRange" args="startTime,endTime" private="false">
+        <CodeText>
+          <![CDATA[var startEpoch = Math.floor(startTime / (24*60*60)) * (24*60*60);
+var endEpoch = Math.floor(endTime / (24*60*60)) * (24*60*60);
+var keys = [];
+for (var epoch = startEpoch; epoch <= endEpoch; epoch += (24*60*60)) {
+    keys.push(this.__convertUnixtimeToDateKey(epoch));
+}
+return keys;]]>
+        </CodeText>
+      </Service>
+      <Service name="_addDimensionWhereClause" args="filters,dimKeys,dimValues" private="false">
+        <CodeText>
+          <![CDATA[if (dimKeys != null && dimValues != null) {
+    if (dimKeys.charAt(0) == "[" && dimValues.charAt(0) == "[") {
+        // new JSON string
+        dimKeys = JSON.parse(dimKeys);
+        dimValues = JSON.parse(dimValues);
+    }
+    else {
+        // *** HACK *** HACK *** HACK *** HACK *** HACK *** HACK *** HACK
+        // to handle additional dimensions appended to dimValues -engkee
+        // OLD '|' separated strings
+        dimKeys = dimKeys.split("|");
+        dimKeys = dimKeys.slice(2, dimKeys.length);
+        dimValues = dimValues.split("|");
+        dimValues = dimValues.slice(2, dimValues.length);
+    }
+}
+if (dimKeys != null && dimValues != null) {
+    if (dimKeys.length > 0 && dimKeys.length == dimValues.length) {
+        var dims = {};
+        for (var i=0; i<dimKeys.length; i++) {
+            dims[dimKeys[i]] = dimValues[i];
+        }
+        filters.push({
+            name  : "$.dimensionWhereClause",
+            value : dims,
+        });
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_applyHoverDrilldownRules" args="rules,result" private="false">
+        <CodeText>
+          <![CDATA[function matchRule(rules, record)
+{
+    for (var i=0, n=rules.length; i<n; i++) {
+        var rule = rules[i];
+        if (rule.meta != null) {
+            var matched = true;
+            if (rule.match != null) {
+                for (var name in rule.match) {
+                    if (record[name] != rule.match[name]) {
+                        matched = false;
+                        break;
+                    }
+                }
+            }
+            if (matched) {
+                return rule;
+            }
+        }
+    }
+}
+
+function subValue(template, record)
+{
+    if (typeof template == "string" && template.indexOf("${") != -1) {
+        for (var key in record) {
+            if (template.indexOf("${") != -1) {
+                // still have variables
+                template = template.replace(new RegExp("\\$\\{"+key+"\\}", "g"), String(record[key]));
+            }
+        }
+    }
+    return template;
+}
+
+function addMeta(rule, record)
+{
+    var meta = [];
+    for (var key in rule.meta) {
+        meta.push(key+":"+subValue(rule.meta[key], record));
+    }
+    if (meta.length > 0) {
+        record["_meta_"] = meta.join(";");
+    }
+}
+
+if (rules != null && result != null) {
+    result.forEach(function(record) {
+        if (record["_meta_"] == null) {
+            var rule = matchRule(rules, record);
+            if (rule != null) {
+                addMeta(rule, record);
+            }
+        }
+    });
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_asDropdownOptions" args="list,accessControlList" private="false">
+        <CodeText>
+          <![CDATA[function isHiddenMetric(obj)
+{
+    return obj["meta"] && obj["meta"]["hidden-metric"] == true;
+}
+
+function getReleaseTag(obj)
+{
+    return obj["meta"] && obj["meta"]["release-tag"];
+}
+
+function getRoleTag(obj)
+{
+    return obj["meta"] && obj["meta"]["role-tag"];
+}
+
+//print("_asDropdownOptions: accessControlList=" + __prettyPrintJSON(accessControlList));
+
+var options = [];
+for (var i=0; i<list.length; i++) {
+    var item = list[i];
+    if (!isHiddenMetric(item) && this._checkAccessList(accessControlList, getReleaseTag(item), getRoleTag(item))) {
+        var option = {
+            value     : item["value"] || item["name"],
+            label     : item["label"] || item["name"],
+            faClass   : item["fa-class"],
+            faLabel   : item["fa-label"],
+            faTooltip : item["fa-tooltip"],
+        };
+        if (item["group-label"] != null) {
+            option.groupLabel = item["group-label"];
+        }
+        options.push(option);
+    }
+}
+return options;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_cacheClear" args="queryConfig,key1" private="false">
+        <CodeText>
+          <![CDATA[if (this.getDemoProfile != null) {
+    var demoProfile = this.getDemoProfile();
+    if (demoProfile != null && demoProfile["demo-name"] != null) {
+        key1 = "DEMO:" + demoProfile["demo-name"] + ":" + key1;
+        print("_cacheClear: using demo cache key1: " + key1);
+    }
+}
+
+var count = 0;
+
+// clear from persistent cache
+var DS = queryConfig["data-source"] && queryConfig["data-source"]["analysis-cache"];
+if (DS != null) {
+    var DELETE = "DELETE FROM viaops_analysis_cache";
+    var deletes = [];
+    if (key1 != null) {
+        DELETE += " WHERE key1=?";
+        deletes.push([key1]);
+    }
+    else {
+        deletes.push([]);
+    }
+    var result = SQL.executeUpdate(DS, DELETE, deletes);
+    if (result != null && result != "") {
+        result = JSON.parse(result);
+        if (result.status == "OK" && result.value.length == 1) {
+            count += result.value[0];
+        }
+    }
+}
+
+// clear from transient cache
+var CacheUtil = com.vitria.util.CacheUtil;
+var HashMap = java.util.HashMap;
+var cache = CacheUtil.getCache("VIA.DIGITAL.OPERATIONS", 5);
+if (key1 != null) {
+    var key1Map = cache.get("viaops_analysis_cache");
+    if (key1Map != null) {
+        var key2Map = key1Map.get(key1);
+        if (key2Map != null) {
+            count += key2Map.size();
+            key2Map.clear();
+        }
+    }
+}
+else {
+    var key1Map = cache.get("viaops_analysis_cache");
+    if (key1Map != null) {
+        var key2MapList = key1Map.values();
+        for (var i=0, n=key2MapList.size(); i<n; i++) {
+            var key2Map = key2MapList.get(i);
+            count += key2Map.size();
+        }
+        key1Map.clear();
+    }
+}
+
+return count;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_cacheDelete" args="cacheConfig" private="false">
+        <CodeText>
+          <![CDATA[var cacheKey1 = cacheConfig.key1;
+var cacheKey2 = cacheConfig.key2;
+
+if (this.getDemoProfile != null) {
+    var demoProfile = this.getDemoProfile();
+    if (demoProfile != null && demoProfile["demo-name"] != null) {
+        cacheKey1 = "DEMO:" + demoProfile["demo-name"] + ":" + cacheKey1;
+        print("_cacheDelete: using demo cache key1: " + cacheKey1);
+    }
+}
+
+// for backward compat, default to persistent cache
+if (cacheConfig.type == null) cacheConfig.type = "persistent";
+switch (cacheConfig.type) {
+    case "persistent":
+        var DS = queryConfig["data-source"] && queryConfig["data-source"]["analysis-cache"];
+        if (DS != null) {
+            var DELETE = "DELETE FROM viaops_analysis_cache WHERE key1=? AND key2=?";
+            var deletes = [[cacheKey1, cacheKey2]];
+            var result = SQL.executeUpdate(DS, DELETE, deletes);
+            if (result != null && result != "") {
+                result = JSON.parse(result);
+                if (result.status == "OK" && result.value.length == 1) {
+                    return result.value[0];
+                }
+            }
+        }
+        break;
+    case "transient":
+        var CacheUtil = com.vitria.util.CacheUtil;
+        var HashMap = java.util.HashMap;
+        var cache = CacheUtil.getCache("VIA.DIGITAL.OPERATIONS", 5);
+        var key1Map = cache.get("viaops_analysis_cache");
+        if (key1Map != null) {
+            var key2Map = key1Map.get(cacheKey1);
+            if (key2Map != null && key2Map.remove(cacheKey2) != null) {
+                return 1;
+            }
+        }
+        break;
+}
+return 0;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_cacheLoad" args="queryConfig,cacheConfig" private="false">
+        <CodeText>
+          <![CDATA[//print("_cacheLoad: cacheConfig="+__prettyPrintJSON(cacheConfig));
+var cacheKey1 = cacheConfig.key1;
+var cacheKey2 = cacheConfig.key2;
+
+if (this.getDemoProfile != null) {
+    var demoProfile = this.getDemoProfile();
+    if (demoProfile != null && demoProfile["demo-name"] != null) {
+        cacheKey1 = "DEMO:" + demoProfile["demo-name"] + ":" + cacheKey1;
+        print("_cacheLoad: using demo cache key1: " + cacheKey1);
+    }
+}
+
+// for backward compat, default to persistent cache
+if (cacheConfig.type == null) cacheConfig.type = "persistent";
+switch (cacheConfig.type) {
+    case "persistent":
+        var DS = queryConfig["data-source"] && queryConfig["data-source"]["analysis-cache"];
+        if (DS != null) {
+            var SELECT = "SELECT data FROM viaops_analysis_cache where key1='" + cacheKey1 + "' and key2='" + cacheKey2 + "'";
+            var result = SQL.executeQuery(DS, SELECT);
+            if (result != null && result != "") {
+                result = JSON.parse(result);
+                if (result.items.length == 1) {
+                    return JSON.parse(result.items[0]["data"]);
+                }
+            }
+        }
+        break;
+    case "transient":
+        var CacheUtil = com.vitria.util.CacheUtil;
+        var HashMap = java.util.HashMap;
+        var cache = CacheUtil.getCache("VIA.DIGITAL.OPERATIONS", 5);
+        var key1Map = cache.get("viaops_analysis_cache");
+        if (key1Map != null) {
+            var key2Map = key1Map.get(cacheKey1);
+            if (key2Map != null) {
+                var item = key2Map.get(cacheKey2);
+                if (item != null) {
+                    item = JSON.parse(item);
+                    // check if item has expired
+                    // the underlying cache keeps item for up to 5 mins from last use
+                    // but for cached data, we discard if item is older than 5 mins
+                    var EXPIRES_AFTER = Number(queryConfig["transient-cache-expires-after"] || "5")*60*1000;
+                    if ((Date.now()-item.ts) > EXPIRES_AFTER) {
+                        // expired
+                        print("Discard expired transient cached item: key1="+cacheKey1+" key2="+cacheKey2)
+                        item = null;
+                        key2Map.remove(cacheKey2);
+                    }
+                }
+                if (item != null) return item.data;
+            }
+        }
+        break;
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_cacheSave" args="queryConfig,cacheConfig,data" private="false">
+        <CodeText>
+          <![CDATA[//print("_cacheSave: cacheConfig="+__prettyPrintJSON(cacheConfig));
+var cacheKey1 = cacheConfig.key1;
+var cacheKey2 = cacheConfig.key2;
+
+if (this.getDemoProfile != null) {
+    var demoProfile = this.getDemoProfile();
+    if (demoProfile != null && demoProfile["demo-name"] != null) {
+        cacheKey1 = "DEMO:" + demoProfile["demo-name"] + ":" + cacheKey1;
+        print("_cacheSave: using demo cache key1: " + cacheKey1);
+    }
+}
+
+// for backward compat, default to persistent cache
+if (cacheConfig.type == null) cacheConfig.type = "persistent";
+switch (cacheConfig.type) {
+    case "persistent":
+        var DS = queryConfig["data-source"] && queryConfig["data-source"]["analysis-cache"];
+        if (DS != null) {
+            // in general, we SHOULD NOT have situation where we are adding to cache multiple times
+            // but because of load balancer retry and also on tight concurrency, multiple request may
+            // very well arrive concurrently, triggering multiple queries and correspondingly, multiple
+            // inserts to cache... to avoid checking, deleting and raising unnecessary alarm, we will
+            // simply delete before inserting
+            var DELETE = "DELETE FROM viaops_analysis_cache WHERE key1=? AND key2=?";
+            var deletes = [[cacheKey1, cacheKey2]];
+            var result = SQL.executeUpdate(DS, DELETE, deletes);
+            if (result != null && result != "") {
+                result = JSON.parse(result);
+                if (result.status == "OK" && result.value.length == 1 && Number(result.value[0]) == 1) {
+                    print("_cacheSave: Delete duplicate cache entry " + cacheKey1 + "/" + cacheKey2);
+                }
+            }
+            var INSERT = "INSERT INTO viaops_analysis_cache (key1, key2, data) VALUES (?, ?, ?)";
+            var inserts = [];
+            inserts.push([
+                cacheKey1,
+                cacheKey2,
+                JSON.stringify(data),
+            ]);
+            SQL.executeUpdate(DS, INSERT, inserts);
+        }
+        break;
+    case "transient":
+        var CacheUtil = com.vitria.util.CacheUtil;
+        var HashMap = java.util.HashMap;
+        var cache = CacheUtil.getCache("VIA.DIGITAL.OPERATIONS", 5);
+        var key1Map = cache.get("viaops_analysis_cache");
+        if (key1Map == null) {
+            key1Map = new HashMap();
+            cache.put("viaops_analysis_cache", key1Map);
+        }
+        var key2Map = key1Map.get(cacheKey1);
+        if (key2Map == null) {
+            key2Map = new HashMap();
+            key1Map.put(cacheKey1, key2Map);
+        }
+        var item = {
+            ts   : Date.now(),
+            data : data,
+        };
+        key2Map.put(cacheKey2, JSON.stringify(item));
+        break;
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_callExternalService" args="url,headers" private="false">
+        <CodeText>
+          <![CDATA[//print("_callExternalService: url="+url);
+//print("_callExternalService: headers="+__prettyPrintJSON(headers));
+var result = Context.POST(url, headers);
+if (result != null && result != "") {
+    result = JSON.parse(result);
+    if (result.status == "OK") {
+        return result.value;
+    }
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_checkAccessList" args="accessControlList,releaseTag,roleTag" private="false">
+        <CodeText>
+          <![CDATA[return this._checkReleaseAccessList(accessControlList, releaseTag)
+    && this._checkRoleAccessList(accessControlList, roleTag);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_checkReleaseAccessList" args="accessControlList,releaseTag" private="false">
+        <CodeText>
+          <![CDATA[if (!Array.isArray(releaseTag)) {
+    if (releaseTag == null || releaseTag == "" || releaseTag == "GA") return true;
+}
+
+if (accessControlList == null) accessControlList = {};
+if (accessControlList["release-access-list"] == null) accessControlList["release-access-list"] = {};
+
+var currentUserId = Context.getCurrentUserId();
+
+function enableAccess(acl)
+{
+    var ok = acl.indexOf(currentUserId) != -1 || acl.indexOf("*") != -1;
+    if (ok) return true;
+    // check for groups... encoded as [group-name]
+    for (var i=0; i<acl.length; i++) {
+        var str = acl[i];
+        var len = str.length;
+        if (str.charAt(0) == "[" && str.charAt(len-1) == "]") {
+            var group = str.substring(1, len-1);
+            //print("_checkReleaseAccessList: check user in group '" + group + "'");
+            if (this._isUserInGroup(group)) return true;
+        }
+    }
+    return false;
+}
+
+var accessList = null;
+
+if (Array.isArray(releaseTag)) {
+    // custom access list defined in system model
+    accessList = releaseTag;
+}
+else {
+    accessList = accessControlList["release-access-list"][releaseTag];
+}
+//print("_checkReleaseAccessList: accessList=" + __prettyPrintJSON(accessList));
+
+if (accessList != null) {
+    return enableAccess(accessList);
+}
+print("[ERROR] _checkReleaseAccessList: invalid release tag=" + releaseTag);
+return false;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_checkRoleAccessList" args="accessControlList,roleTag" private="false">
+        <CodeText>
+          <![CDATA[var currentUserId = Context.getCurrentUserId();
+
+// no role control of any kind
+if (roleTag == null) return true;
+
+// ONLY one should be defined... as denyElseAllow is explicit denial, it has precedence
+// SO if denyElseAllow is defined, we ignore allowElseDeny
+
+var denyElseAllow = roleTag["deny-else-allow"];
+var allowElseDeny = denyElseAllow == null ? roleTag["allow-else-deny"] : null;
+
+// no role control of any kind
+if (denyElseAllow == null && allowElseDeny == null) return true;
+
+if (denyElseAllow != null && denyElseAllow.length == 0) {
+    // Denying NO ONE... allow everyone
+    return true;
+}
+
+if (allowElseDeny != null && allowElseDeny.length == 0) {
+    // allowing NO ONE... deny everyone
+    return false;
+}
+
+if (accessControlList == null) accessControlList = {};
+if (accessControlList["role-access-list"] == null) accessControlList["role-access-list"] = {};
+
+function inRole(acl)
+{
+    var ok = acl.indexOf(currentUserId) != -1 || acl.indexOf("*") != -1;
+    if (ok) return true;
+    // check for groups... encoded as [group-name]
+    for (var i=0; i<acl.length; i++) {
+        var str = acl[i];
+        var len = str.length;
+        if (str.charAt(0) == "[" && str.charAt(len-1) == "]") {
+            var group = str.substring(1, len-1);
+            //print("_checkRoleAccessList: check user in group '" + group + "'");
+            if (this._isUserInGroup(group)) return true;
+        }
+    }
+    return false;
+}
+
+if (denyElseAllow != null) {
+    for (var i=0; i<denyElseAllow.length; i++) {
+        var role = denyElseAllow[i];
+        var acl = accessControlList["role-access-list"][role];
+        //print("_checkRoleAccessList: denyRole="+role+" denyACL="+__prettyPrintJSON(acl));
+        if (acl != null && inRole(acl)) return false;
+    }
+    return true;
+}
+else {
+    for (var i=0; i<allowElseDeny.length; i++) {
+        var role = allowElseDeny[i];
+        var acl = accessControlList["role-access-list"][role];
+        //print("_checkRoleAccessList: allowRole="+role+" allowACL="+__prettyPrintJSON(acl));
+        if (acl != null && inRole(acl)) return true;
+    }
+    return false;
+}
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_convertDimensionValuesToWhereClause" args="queryConfig,executeContext,dimensionValues,dimensionColumns" private="false">
+        <CodeText>
+          <![CDATA[var self = this;
+if (queryConfig == null) {
+    queryConfig = {
+        "evaluate-nested-sql" : false
+    };
+}
+if (queryConfig["cache-nested-sql-result"] == true) {
+    if (self._NESTED_SQL_RESULT_ == null) {
+        self._NESTED_SQL_RESULT_ = {};
+    }
+}
+if (executeContext == null) {
+    executeContext = ["*"];
+}
+var EVALUATE_NESTED_SQL = queryConfig["evaluate-nested-sql"] == true;
+
+function preEvaluateNestedSQLToArray(dim)
+{
+    var sql = dim.value;
+    if (self._NESTED_SQL_RESULT_ != null && self._NESTED_SQL_RESULT_[sql] != null) {
+        dim.value = self._NESTED_SQL_RESULT_[sql];
+        dim.sql = sql;
+        return "'" + dim.value.join("','") + "'";
+    }
+    var result = this.executeSQLQuery(queryConfig, executeContext, ["NestedSQL"], "VT_ODA_QS", sql, null);
+    var values = [];
+    if (result != null) {
+        result.items.forEach(function(item) {
+            var buf = [];
+            for (var key in item) {
+                buf.push(String(item[key]));
+            }
+            values.push(buf.join(","));
+        });
+    }
+    values.sort();
+    if (self._NESTED_SQL_RESULT_ != null) {
+        self._NESTED_SQL_RESULT_[sql] = values;
+    }
+    dim.value = values;
+    dim.sql = sql;
+    return "'" + dim.value.join("','") + "'";
+}
+
+function isMetaDim(dim)
+{
+    return dim.name != null && dim.name.length > 1 && dim.name.substring(0,2) == "$.";
+}
+
+function addToWhereClause(whereClause, dim, dimCol)
+{
+    if (isMetaDim(dim)) {
+        // is a meta qualifier... do not translate to SQL
+    }
+    else if (dim.sql == true) {
+        if (dim.name != null) {
+            var dimCol = dimensionColumns[dim.name] || dim.name;
+            if (dim.not == true) {
+                if (EVALUATE_NESTED_SQL) {
+                    whereClause.push("(" + dimCol + " not in (" + preEvaluateNestedSQLToArray(dim) + "))");
+                }
+                else {
+                    whereClause.push("(" + dimCol + " not in (" + dim.value + "))");
+                }
+            }
+            else {
+                if (EVALUATE_NESTED_SQL) {
+                    whereClause.push("(" + dimCol + " in (" + preEvaluateNestedSQLToArray(dim) + "))");
+                }
+                else {
+                    whereClause.push("(" + dimCol + " in (" + dim.value + "))");
+                }
+            }
+        }
+    }
+    else if (dim.or != null) {
+        var orClause = [];
+        dim.or.forEach(function(dim2) {
+            var dimCol = dimensionColumns[dim2.name] || dim2.name;
+            addToWhereClause(orClause, dim2, dimCol);
+        });
+        whereClause.push("(" + orClause.join(" or ") + ")");
+    }
+    else if (dim.and != null) {
+        var andClause = [];
+        dim.and.forEach(function(dim2) {
+            var dimCol = dimensionColumns[dim2.name] || dim2.name;
+            addToWhereClause(andClause, dim2, dimCol);
+        });
+        whereClause.push("(" + andClause.join(" and ") + ")");
+    }
+    else if (dim.value == null) {
+        if (dim.not == true) {
+            whereClause.push("(" + dimCol + " is not null)");
+        }
+        else {
+            whereClause.push("(" + dimCol + " is null)");
+        }
+    }
+    else if (Array.isArray(dim.value) && dim.value.length > 0) {
+        if (dim.not == true) {
+            whereClause.push("(" + dimCol + " not in ('" + dim.value.join("','") + "'))");
+        }
+        else {
+            whereClause.push("(" + dimCol + " in ('" + dim.value.join("','") + "'))");
+        }
+    }
+    else if (typeof dim.value == "string") {
+        if (dim.not == true) {
+            whereClause.push("(" + dimCol + " != '" + dim.value + "')");
+        }
+        else {
+            whereClause.push("(" + dimCol + " = '" + dim.value + "')");
+        }
+    }
+    else if (typeof dim.value == "number") {
+        if (dim.not == true) {
+            whereClause.push("(" + dimCol + " != " + dim.value + ")");
+        }
+        else {
+            whereClause.push("(" + dimCol + " = " + dim.value + ")");
+        }
+    }
+}
+
+if (dimensionColumns == null) dimensionColumns = {};
+var whereClause = [];
+for (var i=0; i<dimensionValues.length; i++) {
+    var dim = dimensionValues[i];
+    if (isMetaDim(dim)) {
+        // is a meta qualifier... do not translate to SQL
+    }
+    else if (dim.sql == true) {
+        if (dim.name != null) {
+            var dimCol = dimensionColumns[dim.name] || dim.name;
+            if (dim.not == true) {
+                if (EVALUATE_NESTED_SQL) {
+                    whereClause.push("(" + dimCol + " not in (" + preEvaluateNestedSQLToArray(dim) + "))");
+                }
+                else {
+                    whereClause.push("(" + dimCol + " not in (" + dim.value + "))");
+                }
+            }
+            else {
+                if (EVALUATE_NESTED_SQL) {
+                    whereClause.push("(" + dimCol + " in (" + preEvaluateNestedSQLToArray(dim) + "))");
+                }
+                else {
+                    whereClause.push("(" + dimCol + " in (" + dim.value + "))");
+                }
+            }
+        }
+    }
+    else if (dim.or != null) {
+        var orClause = [];
+        dim.or.forEach(function(dim2) {
+            var dimCol = dimensionColumns[dim2.name] || dim2.name;
+            addToWhereClause(orClause, dim2, dimCol);
+        });
+        whereClause.push("(" + orClause.join(" or ") + ")");
+    }
+    else if (dim.and != null) {
+        var andClause = [];
+        dim.and.forEach(function(dim2) {
+            var dimCol = dimensionColumns[dim2.name] || dim2.name;
+            addToWhereClause(andClause, dim2, dimCol);
+        });
+        whereClause.push("(" + andClause.join(" and ") + ")");
+    }
+    else {
+        var dimCol = dimensionColumns[dim.name] || dim.name;
+        addToWhereClause(whereClause, dim, dimCol);
+    }
+}
+return whereClause.join(" and ");
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_createAggregationMap" args="serviceConfig,depth" private="false">
+        <CodeText>
+          <![CDATA[function createAggregationMap(map, items, depth, baseNames)
+{
+    for (var j=0; j<items.length; j++) {
+        var item = items[j];
+        var itemName = item["name"];
+        if (itemName == null) continue;
+
+        var hash = itemName.indexOf("#");
+        if (hash != -1) {
+            itemName = itemName.substring(0, hash);
+        }
+
+        var names = baseNames.slice(0);
+        if (item["groups"] == null && item["items"] == null) {
+            // leaf node
+            if (item["aggr"] != null) {
+                while (names.length < (depth-1)) {
+                    names.push("*");
+                }
+                names.push(itemName);
+                map[names.join("|")] = item["aggr"];
+            }
+        }
+        else {
+            names.push(itemName);
+            if (item["groups"] != null) {
+                createAggregationMap(map, item["groups"], depth, names.slice(0));
+            }
+            if (item["items"] != null) {
+                createAggregationMap(map, item["items"], depth, names.slice(0));
+            }
+        }
+    }
+}
+
+if (serviceConfig._aggregationMap == null) {
+    var start = Date.now();
+    var aggrMap = {};
+    createAggregationMap(aggrMap, serviceConfig.groups, depth, []);
+    serviceConfig._aggregationMap = aggrMap;
+    //print("_createAggregationMap: " + (Date.now()-start) + "ms");
+    //print("_createAggregationMap: " + __prettyPrintJSON(aggrMap));
+    if (serviceConfig.updateCache != null) {
+        serviceConfig.updateCache();
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_createAllowedBaseMetrics" args="serviceConfig,depth,accessControlList" private="false">
+        <CodeText>
+          <![CDATA[function isHiddenMetric(obj)
+{
+    return obj["meta"] && obj["meta"]["hidden-metric"] == true;
+}
+
+function getReleaseTag(obj)
+{
+    return obj["meta"] && obj["meta"]["release-tag"];
+}
+
+function getRoleTag(obj)
+{
+    return obj["meta"] && obj["meta"]["role-tag"];
+}
+
+function createBaseMetricIDs(map, items, depth, baseNames)
+{
+    for (var j=0; j<items.length; j++) {
+        var item = items[j];
+        if (!isHiddenMetric(item) && this._checkAccessList(accessControlList, getReleaseTag(item), getRoleTag(item))) {
+            var itemName = item["name"];
+            if (itemName == null) continue;
+    
+            var hash = itemName.indexOf("#");
+            if (hash != -1) {
+                itemName = itemName.substring(0, hash);
+            }
+    
+            var names = baseNames.slice(0);
+            if (item["groups"] == null && item["items"] == null) {
+                // leaf node
+                while (names.length < (depth-1)) {
+                    names.push("*");
+                }
+                names.push(itemName);
+                map[names.join("|")] = true;
+            }
+            else {
+                names.push(itemName);
+                if (item["groups"] != null) {
+                    createBaseMetricIDs(map, item["groups"], depth, names.slice(0));
+                }
+                if (item["items"] != null) {
+                    createBaseMetricIDs(map, item["items"], depth, names.slice(0));
+                }
+            }
+        }
+    }
+}
+
+var start = Date.now();
+var baseMetricMap = {};
+createBaseMetricIDs(baseMetricMap, serviceConfig.groups, depth, []);
+//print("_createRoleRestrictedBaseMetrics: " + (Date.now()-start) + "ms");
+//print("_createRoleRestrictedBaseMetrics: " + __prettyPrintJSON(baseMetricMap));
+return baseMetricMap;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_createInCriteria" args="colName,valueList" private="false">
+        <CodeText>
+          <![CDATA[// values maybe java.util.List or Array
+var values = [];
+for each(var value in valueList) {
+    values.push(value);
+}
+return colName + " in (" + values.join(",") + ")";
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_createLabelMap" args="serviceConfig,depth" private="false">
+        <CodeText>
+          <![CDATA[function getItemName(item)
+{
+    var itemName = item["name"];
+    if (itemName == null) return null;
+    
+    var hash = itemName.indexOf("#");
+    if (hash != -1) {
+        itemName = itemName.substring(0, hash);
+    }
+    return itemName;
+}
+
+function createLabelMap(map, index, groups, path)
+{
+    var labels = map[index];
+    if (labels == null) {
+        labels = {};
+        map[index] = labels;
+    }
+    for (var j=0; j<groups.length; j++) {
+        var item = groups[j];
+        var itemName = getItemName(item);
+        if (itemName == null) continue;
+
+        var itemLabel = item["label"];
+        labels[itemName] = itemLabel || itemName;
+        if (path.length > 0) {
+            labels[path.join("|")+"|"+itemName] = itemLabel || itemName;
+        }
+        if (item["groups"] != null) {
+            var groupPath = path.slice(0);
+            groupPath.push(itemName);
+            createLabelMap(map, index+1, item["groups"], groupPath);
+        }
+        if (item["items"] != null) {
+            // items ALWAYS at the last level
+            var itemPath = path.slice(0);
+            itemPath.push(itemName);
+            while (itemPath.length < (depth-1)) {
+                itemPath.push("*");
+            }
+            createLabelMap(map, depth-1, item["items"], itemPath);
+        }
+    }
+}
+
+if (serviceConfig._labelMap == null) {
+    var start = Date.now();
+    var labelMap = [];
+    createLabelMap(labelMap, 0, serviceConfig.groups, []);
+    serviceConfig._labelMap = labelMap;
+    print("_createLabelMap: elapsed=" + (Date.now()-start) + "ms");
+    //print("_createLabelMap: labelMap=" + __prettyPrintJSON(labelMap));
+    if (serviceConfig.updateCache != null) {
+        serviceConfig.updateCache();
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_createMetricIDs" args="serviceConfig,depth" private="false">
+        <CodeText>
+          <![CDATA[function createMetricIDs(map, items, depth, baseNames)
+{
+    for (var j=0; j<items.length; j++) {
+        var item = items[j];
+        var itemName = item["name"];
+        if (itemName == null) continue;
+
+        var hash = itemName.indexOf("#");
+        if (hash != -1) {
+            itemName = itemName.substring(0, hash);
+        }
+
+        var names = baseNames.slice(0);
+        if (item["groups"] == null && item["items"] == null) {
+            // leaf node
+            while (names.length < (depth-1)) {
+                names.push("*");
+            }
+            names.push(itemName);
+            map[names.join("|")] = names;
+        }
+        else {
+            names.push(itemName);
+            if (item["groups"] != null) {
+                createMetricIDs(map, item["groups"], depth, names.slice(0));
+            }
+            if (item["items"] != null) {
+                createMetricIDs(map, item["items"], depth, names.slice(0));
+            }
+        }
+    }
+}
+
+if (serviceConfig._metricIDs == null) {
+    var start = Date.now();
+    var idMap = {};
+    createMetricIDs(idMap, serviceConfig.groups, depth, []);
+    serviceConfig._metricIDs = idMap;
+    //print("_createMetricIDs: " + (Date.now()-start) + "ms");
+    //print("_createMetricIDs: " + __prettyPrintJSON(idMap));
+    if (serviceConfig.updateCache != null) {
+        serviceConfig.updateCache();
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_doValueSubstitution" args="template,values" private="false">
+        <CodeText>
+          <![CDATA[template = String(template);
+for (var key in values) {
+    if (template.indexOf("${") != -1) {
+        // still have variables
+        // print("replace ${"+key+"} with " + String(values[key]));
+        template = template.replace(new RegExp("\\$\\{"+key+"\\}", "g"), String(values[key]));
+    }
+}
+return template;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_findAllRules" args="record,ruleCallback" private="false">
+        <CodeText>
+          <![CDATA[var KEYS = this._getRuleKeys();
+var rules = [];
+for (var i=0; i<KEYS.length; i++) {
+    //print("_findAllRules: KEYS[i]="+KEYS[i]);
+    var key = this._getRuleKey(KEYS[i], record);
+    var rule = ruleCallback(key);
+    if (rule != null) rules.push(rule);
+}
+return rules;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_findRule" args="record,ruleCallback" private="false">
+        <CodeText>
+          <![CDATA[var KEYS = this._getRuleKeys();
+for (var i=0; i<KEYS.length; i++) {
+    var key = this._getRuleKey(KEYS[i], record);
+    var rule = ruleCallback(key);
+    if (rule != null) return rule;
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_formatArrayForInClause" args="args" private="false">
+        <CodeText>
+          <![CDATA[var buf = [];
+for (var i=0; i<args.length; i++) {
+    buf.push('"' + args[i] + '"');
+}
+return buf.join(",");
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getAggrInterval" args="queryConfig,minEpoch,maxEpoch" private="false">
+        <CodeText>
+          <![CDATA[var UNITS = {
+    "M":60,
+    "H":60*60,
+    "D":24*60*60
+};
+
+function getSeconds(seconds)
+{
+    if (seconds != null) {
+        var toks = seconds.split("*");
+        return Number(toks[0]) * UNITS[toks[1]];
+    }
+    return null;
+}
+
+var seconds = maxEpoch - minEpoch;
+var profile = queryConfig["aggregation-interval"];
+for (var i=0; i<profile.length; i++) {
+    var p = profile[i];
+    if (p.seconds == null || seconds < getSeconds(p.seconds)) {
+        return getSeconds(p.interval);
+    }
+}
+// defaults to no interval... so whatever interval the table is populated with
+return 1;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getBaselineDatekeyWhereClause" args="queryConfig,dateKeyCol,timeConstraints" private="false">
+        <CodeText>
+          <![CDATA[var count = NaN;
+if (queryConfig != null && queryConfig["baseline-weeks"] != null) {
+    count = Number(queryConfig["baseline-weeks"]);
+}
+if (isNaN(count)) count = 5;
+return "and " + dateKeyCol + " in (" + this._getDateKeysForNumWeeks(timeConstraints.from, timeConstraints.to, count) + ")";
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getBaselineEpochWhereClause" args="queryConfig,epochExpr,fromOper,toOper,timeConstraints" private="false">
+        <CodeText>
+          <![CDATA[var _1W = 7*24*60*60;
+var count = NaN;
+if (queryConfig != null && queryConfig["baseline-weeks"] != null) {
+    count = Number(queryConfig["baseline-weeks"]);
+}
+if (isNaN(count)) count = 5;
+var fromEpoch = timeConstraints.from;
+var toEpoch = timeConstraints.to;
+var buf = [];
+for (var i=0; i<count; i++) {
+    fromEpoch -= _1W;
+    toEpoch -= _1W;
+    buf.push("(" + epochExpr + " " + fromOper + " " + fromEpoch + " and " + epochExpr + " " + toOper + " " + toEpoch + ")");
+}
+return "(" + buf.join("\n        or ") + ")";
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getConnectionInfo" args="" private="false">
+        <CodeText>
+          <![CDATA[// check if we are using an external ODA Query Service
+var System = java.lang.System;
+var VT_ODA_QS = System.getenv("VT_ODA_QS");
+if (VT_ODA_QS != null && VT_ODA_QS != "") {
+    print("VT_ODA_QS="+VT_ODA_QS);
+    return {
+        url : VT_ODA_QS,
+        username : "", 
+        password : ""
+    };
+}
+else {
+    return {
+        url : "/appdata/qs/_model/Default_ODA_QS_default",
+        username : "", 
+        password : ""
+    };
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDateKeysForNumWeeks" args="startTime,endTime,numWeeks" private="false">
+        <CodeText>
+          <![CDATA[var _1W = 7*24*60*60;
+var keys = [];
+for (var i=1; i<=numWeeks; i++) {
+    keys = keys.concat(this.__getDateKeyArrayFromUnixtimeRange(startTime-(i*_1W), endTime-(i*_1W)));
+}
+return keys.join(",");
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDateKeysFromUnixtimeRange" args="startTime,endTime" private="false">
+        <CodeText>
+          <![CDATA[var keys = this.__getDateKeyArrayFromUnixtimeRange(startTime, endTime);
+return keys.length > 0 ? keys.join(",") : null;]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDimensionValuesForMultipleMetrics" args="serviceConfig,svc,comp,app,metric" private="false">
+        <CodeText>
+          <![CDATA[// from VIAOps - Trend Service and Option Service
+var svcList = serviceConfig.groups;
+
+if (svc == null) svc = [];
+if (typeof svc == "string") svc = [svc];
+
+if (comp == null) comp = [];
+if (typeof comp == "string") comp = [comp];
+
+if (app == null) app = [];
+if (typeof app == "string") app = [app];
+
+if (metric == null) metric = [];
+if (typeof metric == "string") metric = [metric];
+
+//print("_getDimensionValuesForMultipleMetrics: svc=" + svc);
+//print("_getDimensionValuesForMultipleMetrics: comp=" + comp);
+//print("_getDimensionValuesForMultipleMetrics: app=" + app);
+//print("_getDimensionValuesForMultipleMetrics: metric=" + metric);
+
+function matchName(obj, name)
+{
+    var hash = name.indexOf("#");
+    if (hash != -1) name = name.substring(0, hash);
+    var objName = obj["name"];
+    var hash = objName.indexOf("#");
+    if (hash != -1) objName = objName.substring(0, hash);
+    return objName == name;
+}
+
+function getDimValues(obj)
+{
+    return (obj["meta"] && obj["meta"]["dimension-values"]) || [];
+}
+
+function addMetricDimValues( dimensionValues, metric, items)
+{
+    metric.forEach(function(m) {
+        for (var l=0; l<items.length; l++) {
+            if (matchName(items[l], m)) {
+                dimensionValues.push({
+                    value : getDimValues(items[l]),
+                });
+            }
+        }
+    });
+}
+
+var dimensionValues1 = [];
+svc.forEach(function(s) {
+    for (var i=0; i<svcList.length; i++) {
+        if (matchName(svcList[i], s)) {
+            var dimensionValues2 = [];
+            dimensionValues1.push({
+                value : getDimValues(svcList[i]),
+                child : dimensionValues2,
+            });
+            if (svcList[i]["items"] != null) {
+                addMetricDimValues(dimensionValues2, metric, svcList[i]["items"]);
+                if (dimensionValues2.length > 0) {
+                    // used... re-init
+                    dimensionValues2 = [];
+                    dimensionValues1.push({
+                        value : getDimValues(svcList[i]),
+                        child : dimensionValues2,
+                    });
+                }
+            }
+            comp.forEach(function(c) {
+                var compList = svcList[i]["groups"];
+                for (var j=0; j<compList.length; j++) {
+                    if (matchName(compList[j], c)) {
+                        var dimensionValues3 = [];
+                        dimensionValues2.push({
+                            value : getDimValues(compList[j]),
+                            child : dimensionValues3
+                        });
+                        if (compList[j]["items"] != null) {
+                            addMetricDimValues(dimensionValues3, metric, compList[j]["items"]);
+                            if (dimensionValues3.length > 0) {
+                                // used... re-init
+                                dimensionValues3 = [];
+                                dimensionValues2.push({
+                                    value : getDimValues(compList[j]),
+                                    child : dimensionValues3,
+                                });
+                            }
+                        }
+                        app.forEach(function(a) {
+                            var appList = compList[j]["groups"];
+                            for (var k=0; k<appList.length; k++) {
+                                if (matchName(appList[k], a)) {
+                                    var dimensionValues4 = [];
+                                    dimensionValues3.push({
+                                        value : getDimValues(appList[k]),
+                                        child : dimensionValues4
+                                    });
+                                    metric.forEach(function(m) {
+                                        addMetricDimValues(dimensionValues4, metric, appList[k]["items"]);
+                                    });
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    }
+});
+//print(__prettyPrintJSON(dimensionValues1));
+
+var dimensionValues = [];
+for (var i=0; i<dimensionValues1.length; i++) {
+    var dv1 = dimensionValues1[i];
+    if (dv1.child != null && dv1.child.length > 0) {
+        for (var j=0; j<dv1.child.length; j++) {
+            var dv2 = dv1.child[j];
+            if (dv2.child != null && dv2.child.length > 0) {
+                for (var k=0; k<dv2.child.length; k++) {
+                    var dv3 = dv2.child[k];
+                    if (dv3.child != null && dv3.child.length > 0) {
+                        for (var m=0; m<dv3.child.length; m++) {
+                            var dv4 = dv3.child[m];
+                            var values = [].concat(dv1.value, dv2.value, dv3.value, dv4.value);
+                            if (values.length > 0) {
+                                dimensionValues.push(values);
+                            }
+                        }
+                    }
+                    else {
+                        var values = [].concat(dv1.value, dv2.value, dv3.value);
+                        if (values.length > 0) {
+                            dimensionValues.push(values);
+                        }
+                    }
+                }
+            }
+            else {
+                var values = [].concat(dv1.value, dv2.value);
+                if (values.length > 0) {
+                    dimensionValues.push(values);
+                }
+            }
+        }
+    }
+    else {
+        var values = [].concat(dv1.value);
+        if (values.length > 0) {
+            dimensionValues.push(values);
+        }
+    }
+}
+//print(__prettyPrintJSON(dimensionValues));
+
+return dimensionValues;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDimensionValuesForSingleMetric" args="serviceConfig,svcName,compName,appName,metricName" private="false">
+        <CodeText>
+          <![CDATA[// from Charter - Dimension Analysis Service
+
+//print("_getDimensionValuesForSingleMetric: svc=" + svcName);
+//print("_getDimensionValuesForSingleMetric: comp=" + compName);
+//print("_getDimensionValuesForSingleMetric: app=" + appName);
+//print("_getDimensionValuesForSingleMetric: metric=" + metricName);
+
+function getItemName(item)
+{
+    var itemName = item["name"];
+    var hash = itemName.indexOf("#");
+    return hash != -1 ? itemName.substring(0, hash) : itemName;
+}
+
+function addDimensionValues(dimValues, item)
+{
+    var dimensionValues = item["meta"] != null && item["meta"]["dimension-values"];
+    if (dimensionValues != null && dimensionValues.length > 0) {
+        dimensionValues.forEach(function(dimensionValue) {
+            dimValues.push(dimensionValue);
+        });
+    }
+}
+
+function addMetricDimensionValues(dimValues, metricList, metricName)
+{
+    for (var i=0; i<metricList.length; i++) {
+        var metricItem = metricList[i];
+        if (metricName == getItemName(metricItem)) {
+            addDimensionValues(dimValues, metricItem);
+            return true;
+        }
+    }
+    return false;
+}
+
+var svcDimValues = [];
+var compDimValues = [];
+var appDimValues = [];
+var metricDimValues = [];
+
+var svcList = serviceConfig.groups;
+svcList.forEach(function(svcItem) {
+    if (svcName == "*" || svcName == getItemName(svcItem)) {
+        if (addMetricDimensionValues(metricDimValues, svcItem["items"] || [], metricName)) {
+            addDimensionValues(svcDimValues, svcItem);
+        }
+        var compList = svcItem["groups"] || [];
+        compList.forEach(function(compItem) {
+            if (compName == "*" || compName == getItemName(compItem)) {
+                if (addMetricDimensionValues(metricDimValues, compItem["items"] || [], metricName)) {
+                    addDimensionValues(compDimValues, compItem);
+                }
+                var appList = compItem["groups"] || [];
+                appList.forEach(function(appItem) {
+                    if (appName == "*" || appName == getItemName(appItem)) {
+                        if (addMetricDimensionValues(metricDimValues, appItem["items"] || [], metricName)) {
+                            addDimensionValues(appDimValues, appItem);
+                        }
+                    }
+                });
+            }
+        });
+    }
+});
+var dimensionValues = [].concat(svcDimValues, compDimValues, appDimValues, metricDimValues);
+//print(__prettyPrintJSON(dimensionValues));
+return dimensionValues;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getEpochExprDSTSQL" args="colName,aggrInterval,timezone,offset" private="false">
+        <CodeText>
+          <![CDATA[return "align_window_with_timezone(" + colName + "," + aggrInterval + ",'" + timezone + "'," + offset + ")";]]>
+        </CodeText>
+      </Service>
+      <Service name="_getEpochExprSQL" args="colName,aggrInterval,refTime,tzOffset" private="false">
+        <CodeText>
+          <![CDATA[if (tzOffset != null && tzOffset != 0) {
+    if (tzOffset > 0) {
+        colName = "(" + colName + "-(" + tzOffset + "))";
+    }
+    else {
+        colName = "(" + colName + "+(" + tzOffset + "))";
+    }
+}
+if (aggrInterval != null) {
+    if (refTime == "StartTime") {
+        colName = "(floor("+colName+"/(" + aggrInterval + "))*(" + aggrInterval + "))"
+    }
+    else if (refTime == "EndTime") {
+        colName = "(ceiling("+colName+"/(" + aggrInterval + "))*(" + aggrInterval + "))"
+    }
+    else {
+        // default
+        colName = "(ceiling("+colName+"/(" + aggrInterval + "))*(" + aggrInterval + "))"
+    }
+}
+return colName;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getEpochProjectionDSTSQL" args="colName,aggrInterval,markTime" private="false">
+        <CodeText>
+          <![CDATA[if (aggrInterval != null) {
+    if (markTime == "StartTime") {
+        return colName;
+    }
+    else if (markTime == "EndTime") {
+        return "("+colName+"+"+aggrInterval+")";
+    }
+    else {
+        // default
+        return "("+colName+"+"+aggrInterval+")";
+    }
+}
+return colName;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getEpochProjectionSQL" args="colName,aggrInterval,markTime,tzOffset" private="false">
+        <CodeText>
+          <![CDATA[if (tzOffset != null && tzOffset != 0) {
+    if (tzOffset > 0) {
+        colName = "(" + colName + "+(" + tzOffset + "))";
+    }
+    else {
+        colName = "(" + colName + "-(" + tzOffset + "))";
+    }
+}
+if (aggrInterval != null) {
+    if (markTime == "StartTime") {
+        return colName;
+    }
+    else if (markTime == "EndTime") {
+        return "("+colName+"+"+aggrInterval+")";
+    }
+    else {
+        // default
+        return "("+colName+"+"+aggrInterval+")";
+    }
+}
+return colName;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getEpochTimestampDSTSQL" args="colName,aggrInterval,markTime,timezone" private="false">
+        <CodeText>
+          <![CDATA[var tz = timezone;
+
+if (aggrInterval != null) {
+    if (markTime == "StartTime") {
+        return "concat(to_utc_timestamp(from_unixtime("+colName+"),'"+tz+"'),'Z')";
+    }
+    else if (markTime == "EndTime") {
+        return "concat(to_utc_timestamp(from_unixtime("+colName+"+"+aggrInterval+"),'"+tz+"'),'Z')";
+    }
+    else {
+        // default
+        return "concat(to_utc_timestamp(from_unixtime("+colName+"+"+aggrInterval+"),'"+tz+"'),'Z')";
+    }
+}
+return "concat(to_utc_timestamp(from_unixtime("+colName+"),'"+tz+"'),'Z')";]]>
+        </CodeText>
+      </Service>
+      <Service name="_getEpochTimestampSQL" args="colName,aggrInterval,markTime,tzOffset" private="false">
+        <CodeText>
+          <![CDATA[var TimeZone = java.util.TimeZone;
+var tz = TimeZone.getDefault().getID();
+if (tzOffset != null && tzOffset != 0) {
+    if (tzOffset > 0) {
+        colName = "(" + colName + "+(" + tzOffset + "))";
+    }
+    else {
+        colName = "(" + colName + "-(" + tzOffset + "))";
+    }
+}
+if (aggrInterval != null) {
+    if (markTime == "StartTime") {
+        return "concat(to_utc_timestamp(from_unixtime("+colName+"),'"+tz+"'),'Z')";
+    }
+    else if (markTime == "EndTime") {
+        return "concat(to_utc_timestamp(from_unixtime("+colName+"+"+aggrInterval+"),'"+tz+"'),'Z')";
+    }
+    else {
+        // default
+        return "concat(to_utc_timestamp(from_unixtime("+colName+"+"+aggrInterval+"),'"+tz+"'),'Z')";
+    }
+}
+return "concat(to_utc_timestamp(from_unixtime("+colName+"),'"+tz+"'),'Z')";
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getFilteredGroups" args="serviceConfig,hierarchies,groups" private="false">
+        <CodeText>
+          <![CDATA[function match(values, itemName)
+{
+    if (itemName == null) return false;
+    if (values.indexOf(itemName) != -1) {
+        return true;
+    }
+    var hash = itemName.indexOf("#");
+    if (hash != -1) {
+        itemName = itemName.substring(0, hash);
+        return values.indexOf(itemName) != -1;
+    }
+    return false;
+}
+
+var applicableGroups = serviceConfig.groups;
+var subGroups = [];
+for (var i=0; i<hierarchies.length; i++) {
+    var hierarchy = hierarchies[i];
+    for (var j=0; j<applicableGroups.length; j++) {
+        var item = applicableGroups[j];
+        if (match(hierarchy, item["name"])) {
+            if (item["groups"] != null) {
+                subGroups = subGroups.concat(item["groups"]);
+            }
+        }
+    }
+    applicableGroups = subGroups;
+    subGroups = [];
+}
+if (groups != null) {
+    groups = this._stripDupAndHashItems(groups);
+    var applicable = {};
+    for (var i=0; i<applicableGroups.length; i++) {
+        if (applicableGroups[i]["name"] != null) {
+            applicable[applicableGroups[i]["name"]] = true;
+        }
+    }
+    var filtered = [];
+    for (var i=0; i<groups.length; i++) {
+        if (applicable[groups[i]]) {
+            filtered.push(groups[i]);
+        }
+        else {
+            for (var groupKey in applicable) {
+                var hash = groupKey.indexOf("#");
+                if (hash != -1 && groupKey.substring(0, hash) == groups[i]) {
+                    filtered.push(groupKey);
+                    break;
+                }
+            }
+        }
+    }
+    return filtered;
+}
+else {
+    var uniques = {};
+    var filtered = [];
+    for (var i=0; i<applicableGroups.length; i++) {
+        if (applicableGroups[i]["name"] != null && uniques[applicableGroups[i]["name"]] == null) {
+            filtered.push(applicableGroups[i]);
+            uniques[applicableGroups[i]["name"]] = true;
+        }
+    }
+    return filtered;
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getFilteredItems" args="serviceConfig,hierarchies,items" private="false">
+        <CodeText>
+          <![CDATA[function match(values, itemName)
+{
+    if (itemName == null) return false;
+    if (values.indexOf(itemName) != -1) {
+        return true;
+    }
+    var hash = itemName.indexOf("#");
+    if (hash != -1) {
+        itemName = itemName.substring(0, hash);
+    }
+    return values.indexOf(itemName) != -1;
+}
+
+var applicableGroups = serviceConfig.groups;
+var applicableItems = [];
+var subGroups = [];
+for (var i=0; i<hierarchies.length; i++) {
+    var hierarchy = hierarchies[i];
+    for (var j=0; j<applicableGroups.length; j++) {
+        var item = applicableGroups[j];
+        if (match(hierarchy, item["name"])) {
+            if (item["groups"] != null) {
+                subGroups = subGroups.concat(item["groups"]);
+            }
+            if (item["items"] != null) {
+                applicableItems = applicableItems.concat(item["items"]);
+            }
+        }
+    }
+    applicableGroups = subGroups;
+    subGroups = [];
+}
+if (items != null) {
+    items = this._stripDupAndHashItems(items);
+    var applicable = {};
+    for (var i=0; i<applicableItems.length; i++) {
+        if (applicableItems[i]["name"] != null) {
+            applicable[applicableItems[i]["name"]] = true;
+        }
+    }
+    var filtered = [];
+    for (var i=0; i<items.length; i++) {
+        if (applicable[items[i]]) {
+            filtered.push(items[i]);
+        }
+    }
+    return filtered;
+}
+else {
+    var uniques = {};
+    var filtered = [];
+    for (var i=0; i<applicableItems.length; i++) {
+        if (applicableItems[i]["name"] != null && uniques[applicableItems[i]["id"]] == null) {
+            filtered.push(applicableItems[i]);
+            uniques[applicableItems[i]["id"]] = true;
+        }
+    }
+    return filtered;
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getFilterValue" args="filters,name,defaultValue,asArray" private="false">
+        <CodeText>
+          <![CDATA[var value = defaultValue;
+for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    if (filter.name == name) {
+        value = filter.value;
+        break;
+    }
+}
+if (asArray == true && !Array.isArray(value)) {
+    if (value == "") {
+        value = [];
+    }
+    else {
+        value = [value];
+    }
+}
+return value;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getGroupData" args="initialData,dimensions,columns,filters" private="false">
+        <CodeText>
+          <![CDATA[var groupData = initialData;
+for (var i=0; i<dimensions.length && i<filters.length && i<columns.length; i++) {
+    var dimension = dimensions[i];
+    if (dimension != null && dimension.length > 0) {
+        groupData = groupData + ",';" + filters[i] + "='," + columns[i];
+    }
+}
+return groupData;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getGroupItemLabels" args="serviceConfig,hierarchy" private="false">
+        <CodeText>
+          <![CDATA[// make copy of array so that when we change to "*" to match,
+// it does not affect the caller's copy
+hierarchy = hierarchy.slice(0);
+
+this._createLabelMap(serviceConfig, hierarchy.length);
+this._createMetricIDs(serviceConfig, hierarchy.length);
+
+var originalHierarchy = hierarchy.slice(0);
+
+for (var i=0; i<hierarchy.length; i++) {
+    var node = hierarchy[i];
+    if (typeof node == "string" && node.charAt(0) == "[" && node.charAt(node.length-1) == "]") {
+        hierarchy[i] = node.substring(1, node.length-1).split("][");
+    }
+}
+
+function removeInvalidCombo(index, nodes, node, path, counts)
+{
+    if (node == null) {
+        node = nodes.shift();
+    }
+    if (nodes.length == 0) {
+        path.push(node);
+        var metricId = path.join("|");
+        if (serviceConfig._metricIDs[metricId] != null) {
+            // is valid metric ID
+            for (var j=0; j<path.length; j++) {
+                var count = counts[j];
+                count[path[j]] = count[path[j]] + 1;
+            }
+        }
+    }
+    else if (Array.isArray(node)) {
+        node.forEach(function(n) {
+            removeInvalidCombo(index+1, nodes.slice(0), n, path.slice(0), counts);
+        });
+    }
+    else {
+        path.push(node);
+        removeInvalidCombo(index+1, nodes, null, path, counts);
+    }
+}
+
+var validCounts = [];
+for (var i=0; i<hierarchy.length; i++) {
+    var node = hierarchy[i];
+    var counts = {};
+    if (Array.isArray(node)) {
+        node.forEach(function(n) {
+            counts[n] = 0;
+        });
+    }
+    else {
+        counts[node] = 0;
+    }
+    validCounts.push(counts);
+}
+removeInvalidCombo(0, hierarchy.slice(0), null, [], validCounts);
+for (var i=0; i<hierarchy.length; i++) {
+    var node = hierarchy[i];
+    var counts = validCounts[i];
+    if (Array.isArray(node)) {
+        for (j=(node.length-1); j>= 0; j--) {
+            if (counts[node[j]] == 0) {
+                // invalid... remove
+                //print("_getGroupItemLabels: remove invalid node=" + node[j]);
+                node.splice(j, 1);
+            }
+        }
+        if (node.length == 0) {
+            // all removed... replace with "*"
+            hierarchy[i] = "*";
+        }
+    }
+    else {
+        if (counts[node] == 0) {
+            // invalid... replace with "*"
+            //print("_getGroupItemLabels: remove invalid node=" + node);
+            hierarchy[i] = "*";
+        }
+    }
+    validCounts.push(counts);
+}
+
+// exception handling... we may end up with NO metric data
+// so something like "E-Mail|TWC_E-Mail_Network|load balancer|Customer Call Volume" gets map to "*|*|*|*"
+// if so, use original hierarchy, even though it is technically not correct as Calls are not subservice or app specific
+// but the label lets us know what metrics are coming up empty
+// -engkee
+
+var useOriginal = true;
+for (var i=0; i<hierarchy.length; i++) {
+    if (hierarchy[i] != "*") {
+        useOriginal = false;
+        break;
+    }
+}
+if (useOriginal) {
+    hierarchy = originalHierarchy;
+}
+
+var labels = [];
+var path = [];
+for (var i=0; i<hierarchy.length && i<serviceConfig._labelMap.length; i++) {
+    var name = hierarchy[i];
+    if (Array.isArray(name)) {
+        var nl = [];
+        name.forEach(function(n) {
+            var label = null;
+            if (path.length > 0) {
+                label = serviceConfig._labelMap[i][path.join("|")+"|"+n];
+            }
+            if (label == null) label = serviceConfig._labelMap[i][n];
+            if (label == null) label = n;
+            nl.push(label);
+        });
+        labels.push(nl);
+        if (name.length > 1) {
+            path.push("["+name.join("][")+"]");
+        }
+        else if (name.length == 1) {
+            path.push(name[0]);
+        }
+        else {
+            path.push("*");
+        }
+    }
+    else {
+        var label = null;
+        if (path.length > 0) {
+            label = serviceConfig._labelMap[i][path.join("|")+"|"+name];
+        }
+        if (label == null) label = serviceConfig._labelMap[i][name];
+        if (label == null) label = name;
+        labels.push(label);
+        path.push(name);
+    }
+}
+//print("_getGroupItemLabels: hierarchy="+__prettyPrintJSON(hierarchy));
+//print("_getGroupItemLabels: labels="+__prettyPrintJSON(labels));
+for (var i=0; i<labels.length; i++) {
+    if (Array.isArray(labels[i])) {
+        if ((labels[i]).length == 0) {
+            labels[i] = "*";
+        }
+        else if ((labels[i]).length == 1) {
+            labels[i] = labels[i][0];
+        }
+        else {
+            labels[i] = "[" + (labels[i]).join("][") + "]";
+        }
+    }
+}
+if (labels.join("|") == "*|*|*|*") {
+    print("_getGroupItemLabels: SOMETHING WRONG... " + originalHierarchy + " => " + labels.join("|"));
+}
+return labels;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getGroupKey" args="initialKey,dimensions,columns" private="false">
+        <CodeText>
+          <![CDATA[var groupKey = initialKey;
+for (var i=0; i<dimensions.length && i<columns.length; i++) {
+    var dimension = dimensions[i];
+    if (dimension != null && dimension.length > 0) {
+        groupKey = groupKey + ",'|'," + columns[i];
+    }
+}
+return groupKey;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getHostName" args="" private="false">
+        <CodeText>
+          <![CDATA[//var start = Date.now();
+var CacheUtil = com.vitria.util.CacheUtil;
+var cache = CacheUtil.getCache("VIA.DIGITAL.OPERATIONS", 5);
+var hostName = cache.get("localhost.name");
+if (hostName == null) {
+    var InetAddress = java.net.InetAddress;
+    var ip = InetAddress.getLocalHost();
+    try {
+        hostName = ip.getHostName();
+        var dot = hostName.indexOf(".");
+        if (dot != -1) {
+            var tmp = hostName.substring(0, dot);
+            if (isNaN(tmp)) {
+                // not a number... so not IP
+                hostName = tmp;
+            }
+        }
+    }
+    catch (e) {
+        hostName = ip.getHostAddress();
+    }
+    cache.put("localhost.name", hostName);
+}
+//print("_getHostName: " + hostName + " in " + (Date.now()-start) + "ms");
+return hostName;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getIncidentInfo" args="queryConfig,metricId,startEpoch,endEpoch" private="false">
+        <CodeText>
+          <![CDATA[var startDateKey = this.__convertUnixtimeToDateKey(startEpoch);
+var endDateKey   = this.__convertUnixtimeToDateKey(endEpoch);
+var sql = "SELECT"
+        + "    LAST(config_metric_id) as config_metric_id,"
+        + "    LAST(dim_keys) as dim_keys,"
+        + "    LAST(dim_values) as dim_values"
+        + " FROM viaops_incident_history"
+        + " WHERE date_key between " + startDateKey + " AND " + endDateKey
+        + "   AND metric_id = '" + metricId + "'";
+var result = this.executeSQLQuery(queryConfig, [], ["IncidentInfo", "Get"], "VT_ODA_QS", sql, null);
+if (result != null && result.total == 1 && result.items.length == 1) {
+    return result.items[0];
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getMetricInfo" args="queryConfig,metricId" private="false">
+        <CodeText>
+          <![CDATA[var DATASOURCE = queryConfig["data-source"] && queryConfig["data-source"]["metric-info"];
+if (DATASOURCE == null) return null;
+
+var sql = "SELECT * FROM viaops_metric_info WHERE metric_id = '" + metricId + "'";
+var result = this.executeSQLQuery(queryConfig, [], ["MetricInfo", "Get"], DATASOURCE, sql, null);
+if (result != null && result.total == 1 && result.items.length == 1) {
+    return result.items[0];
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getQueryContext" args="queryConfig,executeContext,moduleContext,searchPattern" private="false">
+        <CodeText>
+          <![CDATA[if (queryConfig["option-queries"] == null) return null;
+
+function enrichQueryContext(ctx, search)
+{
+    ctx.searchWhereClause = "";
+    if (search != null && search != "" && ctx["search-column"] != null) {
+        ctx.searchWhereClause = "and " + ctx["search-column"] + " like '" + search + "'";
+    }
+    return ctx;
+}
+
+var queryContext = null;
+var context = executeContext.slice(0);
+while (context.length > 0) {
+    var contextKey = context.join("|");
+    var module = moduleContext.slice(0);
+    while (module.length > 0) {
+        var moduleKey = module.join("|");
+        queryContext = queryConfig["option-queries"][contextKey+"["+moduleKey+"]"];
+        if (queryContext != null) return enrichQueryContext(queryContext, searchPattern);
+        module.pop();
+    }
+    queryContext = queryConfig["option-queries"][contextKey];
+    if (queryContext != null) return enrichQueryContext(queryContext, searchPattern);
+    context.pop();
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getRollupTableSuffix" args="timeConstraints,aggrInterval" private="false">
+        <CodeText>
+          <![CDATA[var USE_ROLLUP_TABLES = false;
+if (!USE_ROLLUP_TABLES) return "";
+
+var M = 60;
+var H = 60*M;
+var D = 24*H;
+
+var AVAILABLE_ROLLUPS = [{
+    //value : 1*D,
+    suffix : "_1dy"
+}, {
+    //value : 8*H,
+    suffix : "_8hr"
+}, {
+    //value : 4*H,
+    suffix : "_4hr"
+}, {
+    value : 1*H,
+    suffix : "_1hr"
+}, {
+    value : 15*M,
+    suffix : "_15min"
+}];
+
+var rollup = null;
+if (aggrInterval != null) {
+    // if we have specified an aggregation interval, we want to
+    // find the largest rollup that the INTERVAL is a round multiple of
+    for (var i=0; i<AVAILABLE_ROLLUPS.length; i++) {
+        var r = AVAILABLE_ROLLUPS[i];
+        if (r.value != null && (aggrInterval % r.value) == 0) {
+            rollup = r;
+            break;
+        }
+    }
+}
+else {
+    // if no aggregation interval is specified, we want to
+    // find the largest rollup that the time range is a round multiple of
+    var epochRange = timeConstraints.to - timeConstraints.from;
+    for (var i=0; i<AVAILABLE_ROLLUPS.length; i++) {
+        var r = AVAILABLE_ROLLUPS[i];
+        if ((epochRange % r.value) == 0) {
+            rollup = r;
+            break;
+        }
+    }
+}
+// if we are using a rollup, we need to extend the time range
+// to ensure proper coverage of events in the time range...
+if (rollup != null) {
+    timeConstraints.from = rollup.value * Math.floor(timeConstraints.from/rollup.value);
+    timeConstraints.to = rollup.value * Math.ceil(timeConstraints.to/rollup.value);
+    return rollup.suffix;
+}
+return "";
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getRuleKey" args="keys,record" private="false">
+        <CodeText>
+          <![CDATA[keys = keys.split("|");
+var buf = [];
+keys.forEach(function(key) {
+    if (key == "*") {
+        buf.push("*");
+    }
+    else {
+        buf.push(record[key]);
+    }
+});
+return buf.join("|");
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getRuleKeys" args="" private="false">
+        <CodeText>
+          <![CDATA[return [
+    "svcName|compName|appName|metricName",
+    "svcName|compName|*|metricName",
+    "svcName|*|appName|metricName",
+    "svcName|*|*|metricName",
+    "*|compName|appName|metricName",
+    "*|compName|*|metricName",
+    "*|*|appName|metricName",
+    "*|*|*|metricName",
+    
+    "svcName|compName|appName",
+    "svcName|*|appName",
+    "*|compName|appName",
+    "*|*|appName",
+    
+    "svcName|compName",
+    "*|compName",
+    
+    "svcName",
+    
+    "*",
+];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getServerName" args="" private="false">
+        <CodeText>
+          <![CDATA[//var start = Date.now();
+var CacheUtil = com.vitria.util.CacheUtil;
+var cache = CacheUtil.getCache("VIA.DIGITAL.OPERATIONS", 5);
+var serverName = cache.get("presentation.server.name");
+if (serverName == null) {
+    var DomainServiceClient = com.vitria.domainservice.DomainServiceClient;
+    var ServerInfo = com.vitria.domainservice.ServerInfo;
+    var HomeServerLib = com.vitria.component.server.HomeServerLib;
+    var server = DomainServiceClient.getClient().getServerByUrl(HomeServerLib.getInstance().getNamingProviderUrl(), ServerInfo.SERVER_TYPE_PRESENTATIONSERVER);
+    serverName = server != null ? server.getName() : "(unknown)";
+    cache.put("presentation.server.name", serverName);
+}
+//print("_getServerName: " + serverName + " in " + (Date.now()-start) + "ms");
+return serverName;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getTimeConstraints" args="predefined,adhoc,clientTimezoneOffset" private="false">
+        <CodeText>
+          <![CDATA[// value for predefinedTimeRange comes from the Dimension Filter model
+// - 4H, 24H, today, yesterday, 8D, 30D, 60D, adhoc
+// look at adhocTimeRange IFF the predefinedTimeRange value is "adhoc"
+// - format for adhocTimeRange is from/to epoch value
+// - 1496300400/1498892400... which is Jun 1, 7am GMT to July 1, 7am GMT
+
+var timezoneOffsetDiff = 0;
+if (clientTimezoneOffset != null) {
+    var serverTimezoneOffset = (new Date()).getTimezoneOffset();
+    //print("Client Timezone Offset = " + clientTimezoneOffset);
+    //print("Server Timezone Offset = " + serverTimezoneOffset);
+    timezoneOffsetDiff = (clientTimezoneOffset - serverTimezoneOffset) * 60;
+}
+//print("Timezone Offset Diff = " + timezoneOffsetDiff);
+
+// get value for NOW, in seconds
+// can hardcode to specific value for demo purposes
+var TODAY = new Date();
+var NOW = TODAY.getTime() / 1000;
+
+// round NOW to nearest 5 min interval
+NOW = Math.round(NOW / (60 * 5)) * (60 * 5);
+
+// adjust TODAY by clientTimezoneOffset
+TODAY = new Date(TODAY.getTime() - (1000*timezoneOffsetDiff));
+
+switch (predefined) {
+    case "adhoc":
+        if (adhoc != null) {
+            var toks = adhoc.split("/");
+            if (toks.length == 2) {
+                return {
+                    from : Number(toks[0]),
+                    to   : Number(toks[1]),
+                };
+            }
+        }
+        break;
+    case "4H":
+        return {
+            from : NOW - (4 * 60 * 60),
+            to   : NOW,
+        };
+        break;
+    case "8H":
+        return {
+            from : NOW - (8 * 60 * 60),
+            to   : NOW,
+        };
+        break;
+    case "24H":
+        return {
+            from : NOW - (24 * 60 * 60),
+            to   : NOW,
+        };
+        break;
+    case "today":
+        var FROM = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate());
+        var TO = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate()+1);
+        return {
+            from : Math.floor(FROM.getTime()/1000)+timezoneOffsetDiff,
+            to   : Math.ceil(TO.getTime()/1000)+timezoneOffsetDiff,
+        };
+        break;
+    case "yesterday":
+        var FROM = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate()-1);
+        var TO = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate());
+        return {
+            from : Math.floor(FROM.getTime()/1000)+timezoneOffsetDiff,
+            to   : Math.ceil(TO.getTime()/1000)+timezoneOffsetDiff,
+        };
+        break;
+    case "8D":
+        var FROM = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate()-7);
+        var TO = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate()+1);
+        return {
+            from : Math.floor(FROM.getTime()/1000)+timezoneOffsetDiff,
+            to   : Math.ceil(TO.getTime()/1000)+timezoneOffsetDiff,
+        };
+        break;
+    case "30D":
+        var FROM = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate()-29);
+        var TO = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate()+1);
+        return {
+            from : Math.floor(FROM.getTime()/1000)+timezoneOffsetDiff,
+            to   : Math.ceil(TO.getTime()/1000)+timezoneOffsetDiff,
+        };
+        break;
+    case "60D":
+        var FROM = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate()-59);
+        var TO = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate()+1);
+        return {
+            from : Math.floor(FROM.getTime()/1000)+timezoneOffsetDiff,
+            to   : Math.ceil(TO.getTime()/1000)+timezoneOffsetDiff,
+        };
+        break;
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getTimeIntervalAndFormat" args="timeRange,aggrInterval" private="false">
+        <CodeText>
+          <![CDATA[var seconds = timeRange.toUnixTime - timeRange.fromUnixTime;
+
+var M = 60;
+var H = 60 * M;
+var D = 24 * H;
+
+var value;
+var unit;
+var format;
+
+if ((aggrInterval >= D) && (aggrInterval % D) == 0) {
+    value = Math.round(aggrInterval / D);
+    unit = "d";
+    format = "MM/dd";
+}
+else if ((aggrInterval >= H) && (aggrInterval % H) == 0) {
+    value = Math.round(aggrInterval / H);
+    unit = "h";
+    format = "MM/dd hha";
+}
+else if ((aggrInterval >= M) && (aggrInterval % M) == 0) {
+    value = Math.round(aggrInterval / M);
+    unit = "m";
+    if (seconds > D) {
+        format = "MM/dd, hh:mma";
+    }
+    else {
+        format = "hh:mma";
+    }
+}
+else {
+    value = aggrInterval;
+    unit = "s";
+    if (seconds > D) {
+        // this SHOULD NOT be necessary
+        format = "MM/dd, hh:mm:ssa";
+    }
+    else {
+        format = "hh:mm:ssa";
+    }
+}
+return {
+    value    : value,
+    unit     : unit,
+    format   : format,
+    from     : timeRange.fromUnixTime,
+    to       : timeRange.toUnixTime,
+    interval : aggrInterval,
+};]]>
+        </CodeText>
+      </Service>
+      <Service name="_getTimeProjectionDSTSQL" args="colName,aggrInterval,markTime,timezone" private="false">
+        <CodeText>
+          <![CDATA[var tz = timezone;
+
+if (aggrInterval != null) {
+    if (markTime == "StartTime") {
+        return "concat(to_utc_timestamp(from_unixtime("+colName+"),'"+tz+"'),'Z')";
+    }
+    else if (markTime == "EndTime") {
+        return "concat(to_utc_timestamp(from_unixtime("+colName+"+"+aggrInterval+"),'"+tz+"'),'Z')";
+    }
+    else {
+        // default
+        return "concat(to_utc_timestamp(from_unixtime("+colName+"+"+aggrInterval+"),'"+tz+"'),'Z')";
+    }
+}
+return "concat(to_utc_timestamp(from_unixtime("+colName+"),'"+tz+"'),'Z')";]]>
+        </CodeText>
+      </Service>
+      <Service name="_getTimeProjectionSQL" args="colName,aggrInterval,markTime,tzOffset" private="false">
+        <CodeText>
+          <![CDATA[var TimeZone = java.util.TimeZone;
+var tz = TimeZone.getDefault().getID();
+if (tzOffset != null && tzOffset != 0) {
+    if (tzOffset > 0) {
+        colName = "(" + colName + "+(" + tzOffset + "))";
+    }
+    else {
+        colName = "(" + colName + "-(" + tzOffset + "))";
+    }
+}
+if (aggrInterval != null) {
+    if (markTime == "StartTime") {
+        return "concat(to_utc_timestamp(from_unixtime("+colName+"),'"+tz+"'),'Z')";
+    }
+    else if (markTime == "EndTime") {
+        return "concat(to_utc_timestamp(from_unixtime("+colName+"+"+aggrInterval+"),'"+tz+"'),'Z')";
+    }
+    else {
+        // default
+        return "concat(to_utc_timestamp(from_unixtime("+colName+"+"+aggrInterval+"),'"+tz+"'),'Z')";
+    }
+}
+return "concat(to_utc_timestamp(from_unixtime("+colName+"),'"+tz+"'),'Z')";
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getTimeRange" args="queryConfig,filters" private="false">
+        <CodeText>
+          <![CDATA[if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+//print("getTimeRange: filters=" + __prettyPrintJSON(filters));
+
+var timeFilters = this._parseTimeFilters(queryConfig, filters);
+var predefinedTimeRange  = timeFilters.predefinedTimeRange;
+var absoluteTimeRange    = timeFilters.absoluteTimeRange;
+var clientTimezoneOffset = timeFilters.clientTimezoneOffset;
+
+if (predefinedTimeRange == null) {
+    // check 'absoluteTimeRange' for new time-range format
+    // predefined:XXX
+    // absolute:###/###
+    if (absoluteTimeRange != null && typeof absoluteTimeRange == "string") {
+        if (absoluteTimeRange.indexOf("predefined:") == 0) {
+            var colon = absoluteTimeRange.indexOf(":");
+            predefinedTimeRange = absoluteTimeRange.substring(colon+1);
+        }
+        else if (absoluteTimeRange.indexOf("absolute:") == 0) {
+            var colon = absoluteTimeRange.indexOf(":");
+            absoluteTimeRange = absoluteTimeRange.substring(colon+1);
+            predefinedTimeRange = "adhoc";
+        }
+        else {
+            // assume old ###/### format...
+            predefinedTimeRange = "adhoc";
+        }
+    }
+}
+else {
+    // old style... check and remove "absolute:" from absoluteTimeRange if necessary
+    if (absoluteTimeRange.indexOf("absolute:") == 0) {
+        var colon = absoluteTimeRange.indexOf(":");
+        absoluteTimeRange = absoluteTimeRange.substring(colon+1);
+    }
+}
+
+var tc = this._getTimeConstraints(predefinedTimeRange, absoluteTimeRange, clientTimezoneOffset);
+if (tc == null) return null;
+
+return {
+    clientTimezoneOffset : clientTimezoneOffset,
+    predefinedTimeRange  : predefinedTimeRange,
+    absoluteTimeRange    : absoluteTimeRange,
+    fromUnixTime         : tc.from,
+    toUnixTime           : tc.to,
+};]]>
+        </CodeText>
+      </Service>
+      <Service name="_getTimezoneOffset" args="filters" private="false">
+        <CodeText>
+          <![CDATA[for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    if (filter.timezoneOffset != null) return filter.timezoneOffset;
+}
+return 0;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getUnixTime" args="str" private="false">
+        <CodeText>
+          <![CDATA[var dt = str != null ? new Date(str) : new Date();
+return Math.floor(dt.getTime() / 1000);]]>
+        </CodeText>
+      </Service>
+      <Service name="_invokeDimensionAnalysisService" args="queryConfig,filters" private="false">
+        <CodeText>
+          <![CDATA[if (queryConfig["analytic-services"] == null) {
+    throw "Analytics services not defined in query config";
+}
+var url = queryConfig["analytic-services"]["DimensionAnalysis"] && queryConfig["analytic-services"]["DimensionAnalysis"]["url"];
+if (url == null || url == "") {
+    throw "Dimension Analysis service url not defined";
+}
+
+// exclude compound dimensions -engkee
+filters.push({
+    "name"  : "$.dimensionList",
+    "value" : {
+        "compound-dimensions" : []
+    }
+});
+// exclude event filters
+filters.push({
+    "name"  : "$.excludeEventFilters",
+    "value" : "true"
+});
+
+var headers = {
+    "filters" : JSON.stringify(filters),
+};
+//print("_invokeDimensionAnalysisService: url="+url);
+//print("_invokeDimensionAnalysisService: headers="+__prettyPrintJSON(headers));
+return this._callExternalService(url, headers);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_invokeIncidentAnalysisService" args="queryConfig,filters,timeStamp" private="false">
+        <CodeText>
+          <![CDATA[if (queryConfig["analytic-services"] == null) {
+    throw "Analytics services not defined in query config";
+}
+var url = queryConfig["analytic-services"]["IncidentAnalysis"] && queryConfig["analytic-services"]["IncidentAnalysis"]["url"];
+if (url == null || url == "") {
+    throw "Incident Analysis service url not defined";
+}
+
+var headers = {
+    "filters"   : JSON.stringify(filters),
+    "timeStamp" : timeStamp,
+};
+//print("_invokeIncidentAnalysisService: url="+url);
+//print("_invokeIncidentAnalysisService: headers="+__prettyPrintJSON(headers));
+return this._callExternalService(url, headers);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_invokeKeyDimensionsService" args="queryConfig,metricId" private="false">
+        <CodeText>
+          <![CDATA[if (queryConfig["analytic-services"] == null) {
+    throw "Analytics services not defined in query config";
+}
+var url = queryConfig["analytic-services"]["KeyDimensions"] && queryConfig["analytic-services"]["KeyDimensions"]["url"];
+if (url == null || url == "") {
+    throw "Key Dimensions service url not defined";
+}
+
+var toks = metricId.split("|");
+var headers = {
+    "svc"    : toks[0],
+    "comp"   : toks[1],
+    "app"    : toks[2],
+    "metric" : toks[3],
+};
+//print("_invokeKeyDimensionsService: url="+url);
+//print("_invokeKeyDimensionsService: headers="+__prettyPrintJSON(headers));
+return this._callExternalService(url, headers);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_invokeTrendAnalysisService" args="queryConfig,filters" private="false">
+        <CodeText>
+          <![CDATA[if (queryConfig["analytic-services"] == null) {
+    throw "Analytics services not defined in query config";
+}
+var url = queryConfig["analytic-services"]["TrendAnalysis"] && queryConfig["analytic-services"]["TrendAnalysis"]["url"];
+if (url == null || url == "") {
+    throw "Trend Analysis service url not defined";
+}
+
+var headers = {
+    "filters" : JSON.stringify(filters),
+};
+//print("_invokeTrendAnalysisService: url="+url);
+//print("_invokeTrendAnalysisService: headers="+__prettyPrintJSON(headers));
+return this._callExternalService(url, headers);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_isUserInGroup" args="groupName" private="false">
+        <CodeText>
+          <![CDATA[var currentUserId = Context.getCurrentUserId();
+var USE_REST_API = false;
+if (USE_REST_API) {
+    // this is functionally correct AND preferred EXCEPT the API is access restricted
+    // -engkee
+    var url = "/rest/group?format=json&op=listUsersInGroup&group=" + groupName;
+    var response = Context.GET(url);
+    if (response != null && response != "") {
+        if (response.charAt(0) == "{" && response.charAt(response.length-1) == "}") {
+            response = JSON.parse(response);
+            if (response.result == "OK" && response.content != null && response.content.user != null) {
+                for (var i=0; i<response.content.user.length; i++) {
+                    var user = response.content.user[i];
+                    if (user.name == Context.getCurrentUserId()) return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+else {
+    try {
+        var SUMLib = com.vitria.m3oui.sum.SUMLib;
+        var users = SUMLib.getUM().getAllUsersInGroup(groupName);
+        for (var i=0, n=users.length; i<n; i++) {
+            var user = users[i];
+            if (user.getId() == currentUserId) return true;
+        }
+    }
+    catch (ex) {
+        print("[ERROR] " + ex.getMessage());
+    }
+    return false;
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_loginWithToken" args="userName,token,request" private="false">
+        <CodeText>
+          <![CDATA[var LoginContext = javax.security.auth.login.LoginContext;
+var UserManagerFactory = com.vitria.usermanager.UserManagerFactory;
+var AppUtilPatch = com.vitria.applib.security.AppUtilPatch;
+var HTTPServletContext = com.vitria.flex.fds.HTTPServletContext;
+var ServletContextUtil = com.vitria.flex.fds.ServletContextUtil;
+
+var loginContext = null;
+if (UserManagerFactory.getAccessTokenManaher != null) {
+    // API in new patch or release only
+    try {
+        loginContext = AppUtilPatch.loginSilenceWithException(this, userName, token);
+        UserManagerFactory.getAccessTokenManaher();
+        var servletContext = new HTTPServletContext(request, null);
+        ServletContextUtil.setContext(servletContext);
+    } catch (ex) {
+        print("_loginWithToken: " + ex.toString());
+    }
+}
+return loginContext;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_logoutWithToken" args="context" private="false">
+        <CodeText>
+          <![CDATA[if (context != null) {
+    try {
+        var AppUtilPatch = com.vitria.applib.security.AppUtilPatch;
+        AppUtilPatch.logoutSilenceWithException(this, context);
+    } catch (ex) {
+        print("_logoutWithToken: " + ex.toString());
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_mapMetricIDToFilters" args="queryConfig,filters,metricId" private="false">
+        <CodeText>
+          <![CDATA[// TEST SCENARIO
+// var testFilters = [{
+//     name  : queryConfig["filters"]["time"],
+//     value : "absolute:1566503400/1566503400"
+// }];
+// this._mapMetricIDToFilters(queryConfig, testFilters, 'Video|STVA Entry|Quantum|Stat Login Failures');
+// this._mapMetricIDToFilters(queryConfig, testFilters, 'Network|NCW|CAPM_FW|Port Utilization In Max|dnvr1-legacy-srx5800-vip.netops.charter.com|xe-0/0/0');
+
+function enrichFilters(filters, metricInfo, dimKeys, dimValues)
+{
+    filters.push({ name:queryConfig["filters"]["svc"],    value:metricInfo["service_name"] });
+    filters.push({ name:queryConfig["filters"]["comp"],   value:metricInfo["sub_service_name"] });
+    filters.push({ name:queryConfig["filters"]["app"],    value:metricInfo["app_name"] });
+    filters.push({ name:queryConfig["filters"]["metric"], value:metricInfo["metric_name"] });
+    if (dimKeys.length > 0 && dimKeys.length == dimValues.length) {
+        var dimensionWhereClause = {};
+        for (var i=0; i<dimKeys.length; i++) {
+            dimensionWhereClause[dimKeys[i]] = dimValues[i];
+        }
+        filters.push({ name:"$.dimensionWhereClause", value:dimensionWhereClause });
+    }
+}
+
+//print("_mapMetricIDToFilters: filters=" + __prettyPrintJSON(filters));
+//print("_mapMetricIDToFilters: metricId=" + metricId);
+
+var metricInfo = this._getMetricInfo(queryConfig, metricId);
+//print("_mapMetricIDToFilters: metricInfo="+__prettyPrintJSON(metricInfo));
+if (metricInfo != null) {
+    var dim_keys = JSON.parse(metricInfo["dim_keys"] || "[]");
+    var dim_values = JSON.parse(metricInfo["dim_values"] || "[]");
+    enrichFilters(filters, metricInfo, dim_keys, dim_values);
+}
+else {
+    var startEpoch = null;
+    var endEpoch = null;
+    for (var i=0; i<filters.length; i++) {
+        if (filters[i]["name"] == queryConfig["filters"]["time"]) {
+            var filterValue = filters[i]["value"];
+            if (filterValue.indexOf("absolute:") == 0) {
+                var toks = filterValue.substring(9).split("/");
+                if (toks.length == 2) {
+                    startEpoch = Number(toks[0]);
+                    endEpoch = Number(toks[1]);
+                }
+            }
+            break;
+        }
+    }
+    if (startEpoch != null && endEpoch != null) {
+        var incidentInfo = this._getIncidentInfo(queryConfig, metricId, startEpoch, endEpoch);
+        if (incidentInfo != null && incidentInfo["config_metric_id"] != null) {
+            var metricInfo = this._getMetricInfo(queryConfig, incidentInfo["config_metric_id"]);
+            if (metricInfo != null) {
+                var dim_keys = JSON.parse(incidentInfo["dim_keys"] || "[]");
+                var dim_values = JSON.parse(incidentInfo["dim_values"] || "[]");
+                enrichFilters(filters, metricInfo, dim_keys, dim_values);
+            }
+            else {
+                print("config_metric_info="+incidentInfo["config_metric_id"]+" => metricInfo is null");
+            }
+        }
+    }
+}
+//print("_mapMetricIDToFilters: $.metricID/filters=" + __prettyPrintJSON(filters));
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_matchName" args="groupOrItem,name" private="false">
+        <CodeText>
+          <![CDATA[var groupOrItemName = groupOrItem.name;
+var hash = groupOrItemName.indexOf("#");
+if (hash != -1) groupOrItemName = groupOrItemName.substring(0, hash);
+
+hash = name.indexOf("#");
+if (hash != -1) name = name.substring(0, hash);
+
+return groupOrItemName == name;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_matchNames" args="groupOrItem,names" private="false">
+        <CodeText>
+          <![CDATA[if (names == null) return true;
+for (var i=0; i<names.length; i++) {
+    if (this._matchName(groupOrItem, names[i])) return true;
+}
+return false;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_parseOptions" args="values,optionDefs" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+if (typeof values == "string") {
+    values = JSON.parse(values);
+}
+
+
+var predefinedTimeRange = values[queryConfig["filters"]["predefined"]];
+var absoluteTimeRange = values[queryConfig["filters"]["time"]];
+var clientTimezoneOffset = values["$.timezoneOffset"] || 0;
+
+if (predefinedTimeRange == null) {
+    // check 'absoluteTimeRange' for new time-range format
+    // predefined:XXX
+    // absolute:###/###
+    if (absoluteTimeRange != null && typeof absoluteTimeRange == "string") {
+        if (absoluteTimeRange.indexOf("predefined:") == 0) {
+            var colon = absoluteTimeRange.indexOf(":");
+            predefinedTimeRange = absoluteTimeRange.substring(colon+1);
+        }
+        else if (absoluteTimeRange.indexOf("absolute:") == 0) {
+            var colon = absoluteTimeRange.indexOf(":");
+            absoluteTimeRange = absoluteTimeRange.substring(colon+1);
+            predefinedTimeRange = "adhoc";
+        }
+        else {
+            // assume old ###/### format...
+            predefinedTimeRange = "adhoc";
+        }
+    }
+}
+else {
+    // old style... check and remove "absolute:" from absoluteTimeRange if necessary
+    if (absoluteTimeRange.indexOf("absolute:") == 0) {
+        var colon = absoluteTimeRange.indexOf(":");
+        absoluteTimeRange = absoluteTimeRange.substring(colon+1);
+    }
+}
+
+var timeRange = null;
+var tc = this._getTimeConstraints(predefinedTimeRange, absoluteTimeRange, clientTimezoneOffset);
+if (tc != null) {
+    timeRange = {
+        clientTimezoneOffset : clientTimezoneOffset,
+        predefinedTimeRange  : predefinedTimeRange,
+        absoluteTimeRange    : absoluteTimeRange,
+        fromUnixTime         : tc.from,
+        toUnixTime           : tc.to,
+    };
+}
+
+var options = {
+    "_timerange_" : timeRange,
+    "_datekeys_"  : this._getDateKeysFromUnixtimeRange(timeRange.fromUnixTime, timeRange.toUnixTime),
+};
+for (var key in optionDefs) {
+    var val = values[optionDefs[key]] || [];
+    if (typeof val == "string") {
+        val = [val];
+    }
+    options[key] = this._stripDupAndHashItems(val);
+}
+//print("_parseOptions: options="+__prettyPrintJSON(options));
+return options;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_parseTimeFilters" args="queryConfig,filters" private="false">
+        <CodeText>
+          <![CDATA[var predefinedTimeRange = null, absoluteTimeRange = null;
+var clientTimezoneOffset = null;
+for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    if (filter.timezoneOffset != null && clientTimezoneOffset == null) {
+        clientTimezoneOffset = filter.timezoneOffset;
+    }
+    if (filter.name == "$.clientTimezoneOffset") {
+        clientTimezoneOffset = filter.value;
+    }
+    else if (filter.name == queryConfig["filters"]["predefined"]) {
+        predefinedTimeRange = filter.value;
+    }
+    else if (filter.name == queryConfig["filters"]["time"]) {
+        absoluteTimeRange = filter.value;
+    }
+}
+if (clientTimezoneOffset == null) {
+    clientTimezoneOffset = 0;
+}
+return {
+    predefinedTimeRange  : predefinedTimeRange,
+    absoluteTimeRange    : absoluteTimeRange,
+    clientTimezoneOffset : clientTimezoneOffset,
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_setFilterValue" args="filters,name,value" private="false">
+        <CodeText>
+          <![CDATA[for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    if (filter.name == name) {
+        filter.value = value;
+        break;
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_stripDupAndHashItems" args="items" private="false">
+        <CodeText>
+          <![CDATA[if (Array.isArray(items)) {
+    var uniq = [];
+    for (var i=0; i<items.length; i++) {
+        var item = items[i];
+        var hash = item.indexOf("#");
+        if (hash != -1) {
+            item = item.substring(0, hash);
+        }
+        if (uniq.indexOf(item) == -1) {
+            uniq.push(item);
+        }
+    }
+    return uniq;
+}
+else {
+    return items;
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_toFilterExpression" args="filterName,filterValue" private="false">
+        <CodeText>
+          <![CDATA[var value = null;
+if (Array.isArray(filterValue)) {
+    if (filterValue.length > 1) {
+        return filterName + " in ('" + filterValue.join("','") + "')";
+    }
+    else if (filterValue.length == 1) {
+        filterValue = filterValue[0];
+    }
+    else {
+        return null;
+    }
+}
+if (typeof filterValue == "string") {
+    return filterName + " = '" + filterValue + "'";
+}
+else {
+    return filterName + " = " + filterValue;
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_toISO8601" args="result,tsField" private="false">
+        <CodeText>
+          <![CDATA[var FORMAT = "YYYY-MM-DD hh:mm:ssZ";
+for (var i=0, n=result.length; i<n; i++) {
+    var ts = result[i][tsField];
+    if (ts != null) {
+        var toks = ts.split(" ");
+        if (toks.length == 2) {
+            result[i][tsField] = toks[0] + "T" + toks[1];
+        }
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="abortSQLQuery" args="vtServiceRefId" private="false">
+        <CodeText>
+          <![CDATA[if (vtServiceRefId != null) {
+    Context.cancelSQL(vtServiceRefId);
+    var CacheUtil = com.vitria.util.CacheUtil;
+    var cache = CacheUtil.getCache(vtServiceRefId, 1);
+    var idListCache = cache.get("idList");
+    if (idListCache) {
+        var idList = idListCache.split("/");
+        for (var i=0; i<idList.length; i++) {
+            var id = idList[i];
+            if (id != "" && !Context.isCancelled(id)) {
+                Context.cancelSQL(id);
+            }
+        }
+    }
+    return true;
+}
+return false;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="deleteCache" args="" private="false">
+        <CodeText>
+          <![CDATA[var CacheUtil = com.vitria.util.CacheUtil;
+CacheUtil.removeCache("VIA.DIGITAL.OPERATIONS");
+]]>
+        </CodeText>
+      </Service>
+      <Service name="executeSQLQuery" args="queryConfig,executeContext,moduleContext,dataSource,sql,vtServiceRefId,wrapExceptionObject,timeStamp" private="false">
+        <CodeText>
+          <![CDATA[if (queryConfig == null) queryConfig = {};
+var sqlQueryConfig = queryConfig["sql-query-config"] || {};
+
+var localContext = [];
+for (var i=0; i<executeContext.length; i++) {
+    var ctx = executeContext[i];
+    if (typeof ctx == "string") {
+        var hash = ctx.indexOf("#");
+        if (hash != -1) {
+            ctx = ctx.substring(0, hash);
+        }
+        if (ctx != null && ctx != "") {
+            localContext.push(ctx);
+        }
+    }
+    else if (Array.isArray(ctx)) {
+        var list = [];
+        for (var j=0; j<ctx.length; j++) {
+            var val = ctx[j];
+            var hash = val.indexOf("#");
+            if (hash != -1) {
+                val = val.substring(0, hash);
+            }
+            if (val != null && val != "") {
+                list.push(val);
+            }
+        }
+        if (list.length > 0) {
+            list.sort();
+            localContext.push(list.join(","));
+        }
+    }
+}
+executeContext = localContext;
+
+function isDebugEnabled()
+{
+    if (sqlQueryConfig["debug"] == null) return false;
+    
+    var context = executeContext.slice(0);
+    while (context.length > 0) {
+        var contextKey = context.join("|");
+        var module = moduleContext.slice(0);
+        while (module.length > 0) {
+            var moduleKey = module.join("|");
+            if (sqlQueryConfig["debug"][contextKey+"["+moduleKey+"]"] == true) return true;
+            module.pop();
+        }
+        if (sqlQueryConfig["debug"][contextKey] == true) return true;
+        context.pop();
+    }
+    var module = moduleContext.slice(0);
+    while (module.length > 0) {
+        var moduleKey = module.join("|");
+        if (sqlQueryConfig["debug"]["*["+moduleKey+"]"] == true) return true;
+        module.pop();
+    }
+    return sqlQueryConfig["debug"]["*"] == true;
+}
+
+function getQueryTimeout()
+{
+    if (sqlQueryConfig["timeout"] == null) return 0;
+    
+    var context = executeContext.slice(0);
+    while (context.length > 0) {
+        var timeout = sqlQueryConfig["timeout"][context.join("/")];
+        if (timeout != null) timeout = Number(timeout);
+        if (timeout != null && !isNaN(timeout)) return timeout;
+        context.pop();
+    }
+    return 0;
+}
+
+var conn = null;
+switch (dataSource) {
+    case "VT_ODA_QS":
+        conn = this._getConnectionInfo();
+        break;
+    default:
+        // use as defined data source
+        conn = {
+            url : "/vitria/m3o/datasource/DefaultDomain/"+dataSource,
+            username : "", 
+            password : ""
+        };
+        break;
+}
+
+var prefix = this.getLogPrefix(executeContext, moduleContext, timeStamp);
+if (conn != null) {
+    if (isDebugEnabled()) {
+        print(prefix + "[SQL]\n" + sql + "\n[End SQL]")
+    }
+    var start = Date.now();
+    if (vtServiceRefId == null) vtServiceRefId = String(start);
+    if (wrapExceptionObject == null) wrapExObject = false;
+    var result = Context.SQL(conn.url, conn.username, conn.password, sql, getQueryTimeout(), vtServiceRefId, null, wrapExceptionObject);
+    if (result != null && result != "") {
+        result = JSON.parse(result);
+        if (!Context.isCancelled(vtServiceRefId)) {
+            var elapsed = Date.now() - start;
+            //var elapsed = Math.round((Date.now() - start)/1000);
+            if (result.total != null && result.items != null) {
+                print(prefix + "[Info ] Query returned " + result.total + " record(s) in " + elapsed + "ms");
+                return result;
+            }
+            else {
+                print(prefix + "[Error] Query failed: " + result.error + " in " + elapsed + "ms");
+  		        if (wrapExceptionObject && result.status == "Error") return result;
+            }
+        }
+        else {
+            print(prefix + "[Warn ] Query cancelled... discard result");
+        }
+    }
+}
+else {
+    print(prefix + "[Error] Data Source not specified.");
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="executeSQLUpdate" args="queryConfig,executeContext,moduleContext,dataSource,sql,args" private="false">
+        <CodeText>
+          <![CDATA[if (queryConfig == null) queryConfig = {};
+var sqlQueryConfig = queryConfig["sql-query-config"] || {};
+
+var localContext = [];
+for (var i=0; i<executeContext.length; i++) {
+    var ctx = executeContext[i];
+    if (typeof ctx == "string") {
+        var hash = ctx.indexOf("#");
+        if (hash != -1) {
+            ctx = ctx.substring(0, hash);
+        }
+        if (ctx != null && ctx != "") {
+            localContext.push(ctx);
+        }
+    }
+    else if (Array.isArray(ctx)) {
+        var list = [];
+        for (var j=0; j<ctx.length; j++) {
+            var val = ctx[j];
+            var hash = val.indexOf("#");
+            if (hash != -1) {
+                val = val.substring(0, hash);
+            }
+            if (val != null && val != "") {
+                list.push(val);
+            }
+        }
+        if (list.length > 0) {
+            list.sort();
+            localContext.push(list.join(","));
+        }
+    }
+}
+executeContext = localContext;
+
+function isDebugEnabled()
+{
+    if (sqlQueryConfig["debug"] == null) return false;
+    
+    var context = executeContext.slice(0);
+    while (context.length > 0) {
+        var contextKey = context.join("|");
+        var module = moduleContext.slice(0);
+        while (module.length > 0) {
+            var moduleKey = module.join("|");
+            if (sqlQueryConfig["debug"][contextKey+"["+moduleKey+"]"] == true) return true;
+            module.pop();
+        }
+        if (sqlQueryConfig["debug"][contextKey] == true) return true;
+        context.pop();
+    }
+    var module = moduleContext.slice(0);
+    while (module.length > 0) {
+        var moduleKey = module.join("|");
+        if (sqlQueryConfig["debug"]["*["+moduleKey+"]"] == true) return true;
+        module.pop();
+    }
+    return sqlQueryConfig["debug"]["*"] == true;
+}
+
+function getQueryTimeout()
+{
+    if (sqlQueryConfig["timeout"] == null) return 0;
+    
+    var context = executeContext.slice(0);
+    while (context.length > 0) {
+        var timeout = sqlQueryConfig["timeout"][context.join("/")];
+        if (timeout != null) timeout = Number(timeout);
+        if (timeout != null && !isNaN(timeout)) return timeout;
+        context.pop();
+    }
+    return 0;
+}
+
+var conn = null;
+switch (dataSource) {
+    case "VT_ODA_QS":
+        conn = this._getConnectionInfo();
+        break;
+    default:
+        // use as defined data source
+        conn = {
+            url : "/vitria/m3o/datasource/DefaultDomain/"+dataSource,
+            username : "", 
+            password : ""
+        };
+        break;
+}
+
+//var systemContext = [
+//    Context.getCurrentUserId(),
+//    this._getServerName(),
+//    this._getHostName(),
+//];
+//var prefix = "[" + executeContext.join("|") + "][" + moduleContext.join("|") + "][" + systemContext.join("|") + "]";
+var prefix = this.getLogPrefix(executeContext, moduleContext, null);
+if (conn != null) {
+    if (isDebugEnabled()) {
+        print(prefix + "[Debug] SQL=" + sql)
+    }
+    var start = Date.now();
+    var result = SQL.executeUpdate(conn.url, conn.username, conn.password, sql, args);
+    if (result != null && result != "") {
+        result = JSON.parse(result);
+        var elapsed = Date.now() - start;
+        //var elapsed = Math.round((Date.now() - start)/1000);
+        if (result.status == "OK") {
+            print(prefix + "[Info ] Update status " + result.value + " in " + elapsed + "ms");
+        }
+        else {
+            print(prefix + "[Error] Update failed: " + result.error + " in " + elapsed + "ms");
+        }
+        return result;
+    }
+}
+else {
+    print(prefix + "[Error] Data Source not specified.");
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getAccessControlList" args="" private="false">
+        <CodeText>
+          <![CDATA[var resource = Context.getLocalResource("AccessControlList");
+if (resource != null && resource != "") {
+    return JSON.parse(resource);
+}
+return {
+    "release-access-list" : {},
+    "role-access-list"    : {},
+};
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getAnomalyConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[var resource = Context.getLocalResource("AnomalyConfig");
+if (resource != null && resource != "") {
+    return JSON.parse(resource);
+}
+return {};
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getAppLabel" args="svcName,compName,appName" private="false">
+        <CodeText>
+          <![CDATA[var serviceConfig = this.getServiceConfig();
+
+for (var i=0; i<serviceConfig.groups.length; i++) {
+    var svc = serviceConfig.groups[i];
+    if (this._matchName(svc, svcName) && svc.groups != null) {
+        for (var j=0; j<svc.groups.length; j++) {
+            var comp = svc.groups[j];
+            if (this._matchName(comp, compName) && comp.groups != null) {
+                for (var k=0; k<comp.groups.length; k++) {
+                    var app = comp.groups[k];
+                    if (this._matchName(app, appName)) {
+                        return app.label || app.name;
+                    }
+                }
+            }
+        }
+    }
+}
+return appName;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getAppOptions" args="values,excludes" private="false">
+        <CodeText>
+          <![CDATA[//print("getAppOptions: values=" + values);
+
+var serviceConfig = this.getServiceConfig();
+var queryConfig = this.getQueryConfig();
+var accessControlList = this.getAccessControlList();
+
+// retrieve SVC options
+var options = JSON.parse(values);
+var svc = options[queryConfig["filters"]["svc"]] || [];
+if (typeof svc == "string") {
+    // need to check because we may get string or array, depending on whether
+    // the filter is enumeration or choice
+    svc = [svc];
+}
+//print("getAppOptions: svc=" + __prettyPrintJSON(svc));
+if (svc.length == 0) return [];
+var comp = options[queryConfig["filters"]["comp"]] || [];
+if (typeof comp == "string") {
+    // need to check because we may get string or array, depending on whether
+    // the filter is enumeration or choice
+    comp = [comp];
+}
+//print("getAppOptions: comp=" + __prettyPrintJSON(comp));
+if (comp.length == 0) return [];
+
+var applications = this._getFilteredGroups(serviceConfig, [svc, comp]);
+var options = this._asDropdownOptions(applications, accessControlList);
+//print("getAppOptions: options=" + __prettyPrintJSON(options));
+
+if (excludes != null) {
+    excludes = excludes.split(",");
+    options = options.filter(function(item) {
+        return excludes.indexOf(item.value) == -1;
+    });
+    //print("getAppOptions: options=" + __prettyPrintJSON(options));
+}
+return options;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getCache" args="" private="false">
+        <CodeText>
+          <![CDATA[var CacheUtil = com.vitria.util.CacheUtil;
+return CacheUtil.getCache("VIA.DIGITAL.OPERATIONS", 60*24);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getCompLabel" args="svcName,compName" private="false">
+        <CodeText>
+          <![CDATA[var serviceConfig = this.getServiceConfig();
+
+for (var i=0; i<serviceConfig.groups.length; i++) {
+    var svc = serviceConfig.groups[i];
+    if (this._matchName(svc, svcName) && svc.groups != null) {
+        for (var j=0; j<svc.groups.length; j++) {
+            var comp = svc.groups[j];
+            if (this._matchName(comp, compName)) {
+                return comp.label || comp.name;
+            }
+        }
+    }
+}
+return compName;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getCompOptions" args="values,excludes,grouped" private="false">
+        <CodeText>
+          <![CDATA[//print("getCompOptions: values=" + __prettyPrintJSON(values);
+//print("getCompOptions: excludes=" + __prettyPrintJSON(excludes);
+//print("getCompOptions: grouped=" + __prettyPrintJSON(grouped));
+
+var serviceConfig = this.getServiceConfig();
+var queryConfig = this.getQueryConfig();
+var accessControlList = this.getAccessControlList();
+
+// retrieve SVC options
+var options = JSON.parse(values);
+var svc = options[queryConfig["filters"]["svc"]] || [];
+if (typeof svc == "string") {
+    // need to check because we may get string or array, depending on whether
+    // the filter is enumeration or choice
+    svc = [svc];
+}
+//print("getCompOptions: svc=" + __prettyPrintJSON(svc));
+if (svc.length == 0) return [];
+
+if (svc.length > 1 && (grouped == true || grouped == "true")) {
+    var options = [];
+    svc.forEach(function(s) {
+        var components = this._getFilteredGroups(serviceConfig, [[s]]);
+        var opts = this._asDropdownOptions(components, accessControlList);
+        if (opts.length > 0) {
+            options.push({
+                label : this.getSvcLabel(s),
+                isGroupLabel : true
+            });
+            options = options.concat(opts);
+        }
+    });
+}
+else {
+    var components = this._getFilteredGroups(serviceConfig, [svc]);
+    var options = this._asDropdownOptions(components, accessControlList);
+}
+//print("getCompOptions: options=" + __prettyPrintJSON(options));
+
+if (excludes != null) {
+    excludes = excludes.split(",");
+    options = options.filter(function(item) {
+        return excludes.indexOf(item.value) == -1;
+    });
+    //print("getCompOptions: options=" + __prettyPrintJSON(options));
+}
+return options;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getDefaultDatabaseName" args="" private="false">
+        <CodeText>
+          <![CDATA[var DomainServiceClient = com.vitria.domainservice.DomainServiceClient;
+var VTUtilLib = com.vitria.admin.VTUtilLib;
+var defaultDsJNDI = VTUtilLib.getDefaultDatasourceJNDI();
+//print("getDefaultDatabaseName: defaultDsJNDI="+defaultDsJNDI);
+if (defaultDsJNDI == null || defaultDsJNDI == "") {
+    defaultDsJNDI = "/vitria/m3o/datasource/DefaultDomain/defaultds";
+}
+else if (defaultDsJNDI.indexOf("java:") == 0) {
+    defaultDsJNDI = defaultDsJNDI.substring(5);
+}
+//print("getDefaultDatabaseName: defaultDsJNDI="+defaultDsJNDI);
+var ds = DomainServiceClient.getClient().getDataSource(defaultDsJNDI);
+//print("getDefaultDatabaseName: database="+ds.getDatabase());
+return ds.getDatabase();
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getDimKeyOptions" args="svc,comp,app,metric" private="false">
+        <CodeText>
+          <![CDATA[var resource = Context.getLocalResource("DimKeyConfig");
+if (resource == null || resource == "") return [];
+var dimkeyConfig = JSON.parse(resource);
+
+if (this.addNuovaStellaOptionsDimKeyConfig != null) {
+    //checkpoint = Date.now();
+    this.addNuovaStellaOptionsDimKeyConfig(dimkeyConfig);
+    //print("############ getFilterConfig: addNuovaStellaOptionsDimKeyConfig=" + (Date.now() - checkpoint) + " ms");
+}
+
+var record = {
+    svcName    : svc,
+    compName   : comp,
+    appName    : app,
+    metricName : metric
+};
+var result = this._findRule(record, function(key) {
+    //print("####################### getDimKeyOptions: _findRule() key="+key);
+    var dimKeys = dimkeyConfig[key];
+    if (dimKeys != null && dimKeys.length > 0) {
+        var options = [];
+        dimKeys.forEach(function(dimKey) {
+            if (dimKey.metrics == null || dimKey.metrics.indexOf(metric) != -1) {
+                options.push(dimKey.option);
+            }
+        });
+        return options;
+    }
+    return null;
+});
+return result != null ? result : [];]]>
+        </CodeText>
+      </Service>
+      <Service name="getDimValueOptions" args="svc,comp,app,metric,selectedDimKey,searchString" private="false">
+        <CodeText>
+          <![CDATA[var serviceConfig = this.getServiceConfig();
+var queryConfig = this.getQueryConfig();
+
+var resource = Context.getLocalResource("DimKeyConfig");
+if (resource == null || resource == "") return [];
+var dimConfig = JSON.parse(resource);
+
+var dimensionWhereClauses = [];
+var dimensionValues = this._getDimensionValuesForMultipleMetrics(serviceConfig, [svc], [comp], [app], null);
+var executeContext = [svc[0], comp[0], app[0]];
+if (dimensionValues.length > 0) {
+    if (dimensionValues.length == 1) {
+        var sqlWhereClause = this._convertDimensionValuesToWhereClause(queryConfig, executeContext, dimensionValues[0], {});
+        dimensionWhereClauses.push("and (" + sqlWhereClause + ")");
+    }
+    else if (dimensionValues.length > 1) {
+        dimensionWhereClauses.push("and (");
+        for (var i=0; i<dimensionValues.length; i++) {
+            var prefix = i == 0 ? "" : " or ";
+            var sqlWhereClause = this._convertDimensionValuesToWhereClause(queryConfig, [svc, comp, app], dimensionValues[i], {});
+            dimensionWhereClauses.push(prefix + "(" + sqlWhereClause + ")");
+        }
+        dimensionWhereClauses.push(")");
+    }
+}
+
+var defaultColumnNames = dimConfig["default-column-names"] || {};
+var record = {
+    svcName    : svc,
+    compName   : comp,
+    appName    : app,
+    metricName : metric
+};
+var numberOfDaysToQuery = dimConfig["number-of-days-to-query"] || 7;
+var items = this._findRule(record, function(key) {
+    var dimKeys = dimConfig[key];
+    if (dimKeys != null && dimKeys.length > 0) {
+        for (var i=0; i<dimKeys.length; i++) {
+            if (dimKeys[i]["option"] == selectedDimKey) {
+                var sql = Context.getLocalResource(dimKeys[i]["sql"] || "DIM_KEY_SQL");
+                var epochTo = Math.round(Date.now() / 1000);
+                var epochFrom = epochTo - (numberOfDaysToQuery*24*60*60);
+                var dateKeys = this._getDateKeysFromUnixtimeRange(epochFrom, epochTo);
+
+                var appWhereClause = "";
+                var appName = dimKeys[i]["app-name"] || defaultColumnNames["app-name"] || "app";
+                if (appName != "#none#") {
+                    appWhereClause = "and " + appName + " = '" + app + "'";
+                }
+
+                var metricWhereClause = "";
+                var metricName = dimKeys[i]["metric-name"] || defaultColumnNames["metric-name"] || "metric_name";
+                if (metricName != "#none#") {
+                    metricWhereClause = "and " + metricName + " = '" + metric + "'";
+                }
+
+                var datekeyWhereClause = "";
+                var datekeyName = dimKeys[i]["datekey-name"] || defaultColumnNames["datekey-name"] || "date_key";
+                if (datekeyName != "#none#") {
+                    datekeyWhereClause = "and " + datekeyName + " in (" + dateKeys + ")";
+                }
+
+                var whereClause = dimKeys[i]["where-clause"] || [];
+                if (dimensionWhereClauses.length > 0) {
+                    whereClause.push(dimensionWhereClauses.join(" "));
+                }
+                if (whereClause.length > 0) {
+                    whereClause = whereClause.join("\n");
+                }
+                else {
+                    whereClause = "";
+                }
+                var map = {
+                    "tableName"    : dimKeys[i]["table-name"],
+                    "selectValue"  : dimKeys[i]["select-value"],
+                    "appWhereClause"     : appWhereClause,
+                    "metricWhereClause"  : metricWhereClause,
+                    "datekeyWhereClause" : datekeyWhereClause,
+                    "whereClause"        : whereClause,
+                    "searchClause"       : "",
+                };
+                if (searchString != null && searchString != "") {
+                    map["searchClause"] = "and " + dimKeys[i]["select-value"] + " like '%" + searchString + "%'";
+                }
+                sql = this._doValueSubstitution(sql, map);
+                var queryConfig = this.getQueryConfig();
+                var result = this.executeSQLQuery(queryConfig, [svc, comp, app], ["DimValueOptions"], "VT_ODA_QS", sql, null);
+                return result != null ? result.items : [];
+            }
+        }
+    }
+    return null;
+});
+if (items != null) {
+    for (var i=0; i<items.length; i++) {
+        items[i] = items[i]["value"];
+    }
+    return items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getFilterConfig" args="name" private="false">
+        <CodeText>
+          <![CDATA[if (this.getFilterModelPath == null) {
+    print("############ getFilterConfig: getFilterModelPath not implemented");
+    return {};
+}
+
+var MODEL_PATH = this.getFilterModelPath();
+
+// takes about 5ms
+function getLastModified()
+{
+    var start = Date.now();
+    var StorageLib = com.vitria.m3oui.storage.core.StorageLib;
+    var modelItem = StorageLib.getModelByLogicalPath(MODEL_PATH, false);
+    var ts = Number(modelItem.getProperty("vt:lastDate").toString());
+    //print("###################### getFilterConfig().getLastModified(): " + (Date.now()-start) + "ms");
+    return ts;
+}
+
+function parseBaseOptions(name)
+{
+    var options = {};
+    var params = name.substring(5).split("&");
+    for (var i=0; i<params.length; i++) {
+        var param = params[i];
+        var nv = param.split("=");
+        if (nv.length == 2) {
+            if (nv[1] == "true") {
+                options[nv[0]] = true;
+            }
+            else if (nv[1] == "false") {
+                options[nv[0]] = false;
+            }
+            else {
+                var num = Number(nv[1]);
+                if (isNaN(num)) {
+                    options[nv[0]] = nv[1];
+                }
+                else {
+                    options[nv[0]] = num;
+                }
+            }
+        }
+    }
+    return options;
+}
+
+function makeBaseFilterConfig(config, options)
+{
+    var category = config.categories[0];
+    delete category["label"];
+    var dimensions = category.dimensions;
+    category.dimensions = [];
+    for (var i=0; i<dimensions.length; i++) {
+        var dimension = dimensions[i];
+        if (options[dimension.name] == true) {
+            category.dimensions.push(dimension);
+        }
+        else if (options[dimension.name] == "fa") {
+            dimension["fa-control"] = true;
+            delete dimension["label"];
+            category.dimensions.push(dimension);
+        }
+        else if (options[dimension.name] == "enum" || options[dimension.name] == "enum+none") {
+            dimension["type"] = "enumeration";
+            category.dimensions.push(dimension);
+        }
+        else if (options[dimension.name] == "enum-none") {
+            dimension["type"] = "enumeration";
+            dimension["none"] = false;
+            category.dimensions.push(dimension);
+        }
+        else if (options[dimension.name] == "enum+fa" || options[dimension.name] == "enum+fa+none") {
+            dimension["fa-control"] = true;
+            dimension["type"] = "enumeration";
+            delete dimension["label"];
+            category.dimensions.push(dimension);
+        }
+        else if (options[dimension.name] == "enum+fa-none") {
+            dimension["fa-control"] = true;
+            dimension["type"] = "enumeration";
+            dimension["none"] = false;
+            delete dimension["label"];
+            category.dimensions.push(dimension);
+        }
+        else if (options[dimension.name] == "enum+fa+float") {
+            dimension["fa-control"] = true;
+            dimension["type"] = "enumeration";
+            dimension["position-float"] = true;
+            delete dimension["label"];
+            category.dimensions.push(dimension);
+        }
+        var defaultValue = options[dimension.name+".default"];
+        if (defaultValue != null) {
+            dimension["default"] = defaultValue;
+        }
+    }
+    if (options["fa.submit"] == true) {
+        config.categories[0]["fa-submit"] = "fas fa-sign-out-alt";
+    }
+    else if (options["fa.submit"] != null && typeof options["fa.submit"] == "string") {
+        config.categories[0]["fa-submit"] = options["fa.submit"];
+    }
+}
+
+var start = Date.now();
+
+var lastModified = getLastModified();
+var cache = this.getCache();
+var config = cache.get("filter.config."+name);
+if (config != null) {
+    var filterConfig = JSON.parse(config);
+    // check timestamp
+    //print("############ filterConfig.lastModified = " + filterConfig.lastModified);
+    //print("############ lastModified = " + lastModified);
+    if (filterConfig.lastModified != null && filterConfig.lastModified < lastModified) {
+        print("############ Expired cached FilterConfig ("+name+")");
+    }
+    else {
+        print("############ Reuse cached FilterConfig ("+name+"): " + (Date.now() - start) + " ms");
+        return filterConfig;
+    }
+}
+
+var resourceName = "FilterConfig";
+var serviceList = null;
+switch (name) {
+    case "full":
+        var serviceConfig = this.getServiceConfig();
+        serviceList = serviceConfig.groups;
+        break;
+}
+
+var queryConfig = this.getQueryConfig();
+var OPTIONS_SERVICE = queryConfig["dependent-plugins"]["OptionPlugin"]["url"];
+var filterConfig = Context.getLocalResource(resourceName);
+var URI = "/app/dbp/user/" + Context.getModelOwnerId() + "/" + Context.getModelPath();
+filterConfig = filterConfig.replaceAll("__THIS_PLUGIN__", URI)
+                           .replaceAll("__OPTIONS_SERVICE__", OPTIONS_SERVICE);
+filterConfig = JSON.parse(filterConfig);
+switch (name) {
+    case "base":
+        makeBaseFilterConfig(filterConfig, {
+            "predefined" : true,
+            "timeRange"  : true,
+            "svc"        : "enum",
+        });
+        break;
+    case "full":
+        delete filterConfig.categories[0]["submit"];
+        break;
+    case "mini":
+        delete filterConfig.categories[0]["label"];
+        break;
+    default:
+        if (name.indexOf("base?") == 0) {
+            // is Base filterConfig with custom options
+            makeBaseFilterConfig(filterConfig, parseBaseOptions(name));
+        }
+        break;
+}
+if (serviceList != null) {
+    // collect list of services... if we display services sorted alphabetically,
+    // we should also show service specific additions sorted alphabetically, so that
+    // user has a natural order when looking for service specific dimensions... last service
+    // in the list should be at the end of the form
+    var services = [];
+    for (var i=0; i<serviceList.length; i++) {
+        var serviceItem = serviceList[i];
+        services.push({
+            name : serviceItem["name"],
+            label : serviceItem["label"]
+        });
+        services.sort(function(a,b){
+            return a.label.localeCompare(b.label);
+        });
+    }
+    if (services.length > 0) {
+        for (var i=0; i<services.length; i++) {
+            var service = services[i]["name"];
+            var hash = service.indexOf("#");
+            if (hash != -1) service = service.substring(0, hash);
+            var svcFilterConfig = Context.getLocalResource(resourceName + "?svc=" + service);
+            if (svcFilterConfig != null) {
+                svcFilterConfig = svcFilterConfig.replaceAll("__THIS_PLUGIN__", URI)
+                                                 .replaceAll("__OPTIONS_SERVICE__", OPTIONS_SERVICE);
+                svcFilterConfig = JSON.parse(svcFilterConfig);
+                filterConfig.categories = filterConfig.categories.concat(svcFilterConfig);
+            }
+        }
+    }
+    if (this.addNuovaStellaFilterConfig != null) {
+        //checkpoint = Date.now();
+        this.addNuovaStellaFilterConfig(filterConfig, URI, OPTIONS_SERVICE);
+        //print("############ getFilterConfig: addNuovaStellaFilterConfig=" + (Date.now() - checkpoint) + " ms");
+    }
+}
+
+print("############ getFilterConfig(" + name + "): " + (Date.now() - start) + " ms");
+filterConfig.lastModified = lastModified;
+cache.put("filter.config."+name, JSON.stringify(filterConfig));
+
+return filterConfig;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getFilterInfo" args="filters" private="false">
+        <CodeText>
+          <![CDATA[var serviceConfig = this.getServiceConfig();
+var queryConfig = this.getQueryConfig();
+
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+
+var info = {
+    svcNames   : [],
+    svcLabels  : [],
+    compNames  : [],
+    compLabels : [],
+    timeRange  : this._getTimeRange(queryConfig, filters),
+};
+
+var svcNames  = [];
+var compNames = [];
+for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    if (filter.name == queryConfig["filters"]["svc"]) {
+        info.svcNames = filter.value;
+    }
+    else if (filter.name == queryConfig["filters"]["comp"]) {
+        info.compNames = filter.value;
+    }
+}
+if (typeof info.svcNames == "string") info.svcNames = [info.svcNames];
+if (typeof info.compNames == "string") info.compNames = [info.compNames];
+
+serviceConfig.groups.forEach(function(svc) {
+    info.svcNames.forEach(function(svcName) {
+        if (this._matchName(svc, svcName) && svc.groups != null) {
+            info.svcLabels.push(svc.label || svc.name);
+            svc.groups.forEach(function(comp) {
+                info.compNames.forEach(function(compName) {
+                    if (this._matchName(comp, compName)) {
+                        info.compLabels.push(comp.label || comp.name);
+                    }
+                });
+            });
+        }
+    });
+});
+
+return info;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getFrameConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[var frameConfig = {};
+var resource = Context.getLocalResource("FrameConfig");
+if (resource != null && resource != "") {
+    frameConfig = JSON.parse(resource);
+}
+
+var demoProfile = this.getDemoProfile != null ? this.getDemoProfile() : null;
+if (demoProfile != null && this.applyDemoProfileToFrameConfig != null) {
+    this.applyDemoProfileToFrameConfig(demoProfile, config);
+}
+
+var accessControlList = this.getAccessControlList();
+if (accessControlList != null) {
+    var items = [];
+    for (var i=0; i<frameConfig.items.length; i++) {
+        var item = frameConfig.items[i];
+        var roleTag = {};
+        if (item.denyElseAllow != null) {
+            roleTag["deny-else-allow"] = item.denyElseAllow;
+        }
+        else if (item.allowElseDeny != null) {
+            roleTag["allow-else-deny"] = item.allowElseDeny;
+        }
+        if (this._checkAccessList(accessControlList, item.releaseTag, roleTag)) {
+            items.push(item);
+        }
+    }
+    frameConfig.items = items;
+}
+
+return frameConfig;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getLogConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[var resource = Context.getLocalResource("LogConfig");
+if (resource != null && resource != "") {
+    return JSON.parse(resource);
+}
+return {};
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getLogLevel" args="className" private="false">
+        <CodeText>
+          <![CDATA[var LogManager = org.apache.log4j.LogManager;
+var LogLevel = org.apache.log4j.Level;
+
+var logger = LogManager.getLogger(className);
+if (logger != null) {
+    var logLevel = logger.getLevel();
+    logLevel = logLevel != null ? logLevel.toString() : "WARN_LOG_LEVEL_NOT_SET";
+    print("[INFO ] Log level for class '" + className + "' is '" + logLevel + "'");
+    return logLevel;
+}
+print("[ERROR] Logger not found for class '" + className + "'");
+return "ERROR_LOGGER_NOT_DEFINED";
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getLogPrefix" args="executeContext,moduleContext,timeStamp" private="false">
+        <CodeText>
+          <![CDATA[var systemContext = [
+    Context.getCurrentUserId(),
+    this._getServerName(),
+    this._getHostName(),
+];
+if (timeStamp != null) {
+    return "[" + executeContext.join("|") + "][" + moduleContext.join("|") + "][" + systemContext.join("|") + "|" + timeStamp + "]";
+}
+else {
+    return "[" + executeContext.join("|") + "][" + moduleContext.join("|") + "][" + systemContext.join("|") + "]";
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getMetricLabel" args="svcName,compName,appName,metricName" private="false">
+        <CodeText>
+          <![CDATA[var serviceConfig = this.getServiceConfig();
+
+for (var i=0; i<serviceConfig.groups.length; i++) {
+    var svc = serviceConfig.groups[i];
+    if (this._matchName(svc, svcName) && svc.groups != null) {
+        for (var j=0; j<svc.groups.length; j++) {
+            var comp = svc.groups[j];
+            if (this._matchName(comp, compName) && comp.groups != null) {
+                for (var k=0; k<comp.groups.length; k++) {
+                    var app = comp.groups[k];
+                    if (this._matchName(app, appName) && app.items != null) {
+                        for (var m=0; m<app.items.length; m++) {
+                            var metric = app.items[m];
+                            if (this._matchName(metric, metricName)) {
+                                return metric.label || metric.name;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+return metricName;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getMetricOptions" args="values,excludes" private="false">
+        <CodeText>
+          <![CDATA[//print("getMetricOptions: values=" + values);
+
+var serviceConfig = this.getServiceConfig();
+var queryConfig = this.getQueryConfig();
+var accessControlList = this.getAccessControlList();
+
+var options = JSON.parse(values);
+var svc = options[queryConfig["filters"]["svc"]] || [];
+if (typeof svc == "string") {
+    // need to check because we may get string or array, depending on whether
+    // the filter is enumeration or choice
+    svc = [svc];
+}
+//print("getMetricOptions: svc=" + __prettyPrintJSON(svc));
+if (svc.length == 0) return [];
+var comp = options[queryConfig["filters"]["comp"]] || [];
+if (typeof comp == "string") {
+    // need to check because we may get string or array, depending on whether
+    // the filter is enumeration or choice
+    comp = [comp];
+}
+//print("getMetricOptions: comp=" + __prettyPrintJSON(comp));
+//if (comp.length == 0) return [];
+var app = options[queryConfig["filters"]["app"]] || [];
+if (typeof app == "string") {
+    // need to check because we may get string or array, depending on whether
+    // the filter is enumeration or choice
+    app = [app];
+}
+//print("getMetricOptions: app=" + __prettyPrintJSON(app));
+//if (app.length == 0) return [];
+
+var metrics = this._getFilteredItems(serviceConfig, [svc, comp, app]);
+var options = this._asDropdownOptions(metrics, accessControlList);
+//print("getMetricOptions: options=" + __prettyPrintJSON(options));
+
+if (excludes != null) {
+    excludes = excludes.split(",");
+    options = options.filter(function(item) {
+        return excludes.indexOf(item.value) == -1;
+    });
+    //print("getMetricOptions: options=" + __prettyPrintJSON(options));
+}
+return options;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getNotificationActionRuleModel" args="" private="false">
+        <CodeText>
+          <![CDATA[var resource = Context.getLocalResource("NotificationActionRuleModel");
+if (resource != null && resource != "") {
+    return JSON.parse(resource);
+}
+return {};
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getNotificationActionRuleParamModel" args="" private="false">
+        <CodeText>
+          <![CDATA[var resource = Context.getLocalResource("NotificationActionRuleParamModel");
+if (resource != null && resource != "") {
+    return JSON.parse(resource);
+}
+return {};
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getNotificationConfigModel" args="metric_ids" private="false">
+        <CodeText>
+          <![CDATA[var config = {};
+var resource = Context.getLocalResource("NotificationConfig");
+if (resource != null && resource != "") {
+    config = JSON.parse(resource);
+    var base_config = config["*"] || {};
+    metric_ids.forEach(function(metric_id) {
+        // for each metric_id, see if we have config
+        // this part of the logic is UNFORTUNATELY specific to how we
+        // encode metric_id, ie. using "|", but unavoidable at this time
+        var toks = metric_id.split("|");
+        while (toks.length > 0) {
+            metric_id = toks.join("|");
+            var metric_specific_config = config[metric_id];
+            if (metric_specific_config != null) {
+                for (var key in metric_specific_config) {
+                    if (base_config[key] == null) {
+                        // not defined in base
+                        base_config[key] = metric_specific_config[key];
+                    }
+                    else {
+                        // defined in base or set by previous metric
+                        // get "shared" values only
+                        base_config[key] = (base_config[key]).filter(function(value) {
+                            return (metric_specific_config[key]).indexOf(value) != -1;
+                        });
+                    }
+                }
+                break;
+            }
+            toks.pop();
+        }
+    });
+}
+return base_config;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getOptions" args="values,search,context" private="false">
+        <CodeText>
+          <![CDATA[if (typeof values == "string") {
+    values = JSON.parse(values);
+}
+//print("getOptions: " + values);
+if (context != null && typeof context == "string") {
+    context = JSON.parse(context);
+}
+//print("getOptions: context=" + __prettyPrintJSON(context));
+if (context == null || context["execute-context"] == null || context["module-context"] == null) return [];
+
+var queryConfig = this.getQueryConfig();
+//print("getOptions: queryConfig="+__prettyPrintJSON(queryConfig));
+
+if (this.addNuovaStellaOptionsQueryConfig != null) {
+    //checkpoint = Date.now();
+    this.addNuovaStellaOptionsQueryConfig(queryConfig);
+    //print("############ getFilterConfig: addNuovaStellaOptionsQueryConfig=" + (Date.now() - checkpoint) + " ms");
+}
+
+if (queryConfig == null || queryConfig["option-queries"] == null) return [];
+
+var queryContext = this._getQueryContext(queryConfig, context["execute-context"], context["module-context"], null);
+//print("getOptions: queryContext="+__prettyPrintJSON(queryContext));
+if (queryContext == null) return [];
+
+var optionWhereClause = queryContext["option-where-clause"];
+
+var optionsDef = {};
+if (optionWhereClause != null && optionWhereClause.length > 0) {
+    for (var i=0; i<optionWhereClause.length; i++) {
+        var clause = optionWhereClause[i];
+        optionsDef[clause.option] = clause.filter;
+    }
+}
+var options = this._parseOptions(values, optionsDef);
+if (optionWhereClause != null && optionWhereClause.length > 0) {
+    for (var i=0; i<optionWhereClause.length; i++) {
+        var clause = optionWhereClause[i];
+        if (clause.required == true && (options[clause.option] || []).length == 0) return [];
+    }
+}
+
+var valueSubMap = {
+    "date_keys" : options._datekeys_,
+    "from_epoch" : String(options._timerange_.fromUnixTime),
+    "to_epoch" : String(options._timerange_.toUnixTime),
+};
+for (var filterName in values) {
+    // ONLY category.dimension versions
+    if (filterName != queryConfig["filters"]["time"] && filterName != queryConfig["filters"]["interval"]) {
+        if (filterName.split(".").length == 2) {
+            var filterValue = values[filterName];
+            if (typeof filterValue == "string" && filterValue != "") {
+                var hash = filterValue.indexOf("#");
+                if (hash != -1) filterValue = filterValue.substring(0, hash);
+                valueSubMap[filterName] = filterValue;
+            }
+            else if (Array.isArray(filterValue) && filterValue.length > 0) {
+                var inClauseValues = [];
+                for (var i=0, n=filterValue.length; i<n; i++) {
+                    var hash = filterValue[i].indexOf("#");
+                    inClauseValues.push(hash != -1 ? filterValue[i].substring(0, hash) : filterValue[i]);
+                }
+                valueSubMap[filterName] = this._formatArrayForInClause(inClauseValues);
+            }
+        }
+    }
+}
+//print("valueSubMap="+__prettyPrintJSON(valueSubMap));
+
+var sql = Context.getLocalResource(queryContext["sql"] || "OPTIONS_SQL");
+var map = {
+    "tableName"             : queryContext["table-name"],
+    "distinctColumn"        : queryContext["distinct-column"],
+    "epochWhereClause"      : "",
+    "datekeyWhereClause"    : "",
+    "optionWhereClause"     : "",
+    "customWhereClause"     : "",
+    "searchWhereClause"     : "",
+    "dimensionWhereClauses" : "",
+};
+
+var op = "where";
+var epochColumn = queryContext["epoch-column"];
+if (epochColumn == null && queryConfig["default-column-names"] != null) {
+    epochColumn = queryConfig["default-column-names"]["epoch-column"];
+}
+if (epochColumn != null && epochColumn != "" && options._timerange_ != null) {
+    map["epochWhereClause"] = op + " (" + epochColumn + " >= " + options._timerange_.fromUnixTime
+                            + " and " + epochColumn + " < " + options._timerange_.toUnixTime + ")";
+    op = "and";
+}
+var datekeyColumn = queryContext["datekey-column"];
+if (datekeyColumn == null && queryConfig["default-column-names"] != null) {
+    datekeyColumn = queryConfig["default-column-names"]["datekey-column"];
+}
+if (datekeyColumn != null && datekeyColumn != "" && options._datekeys_ != null) {
+    map["datekeyWhereClause"] = op + " (" + datekeyColumn + " in (" + options._datekeys_ + "))";
+    op = "and";
+}
+var customValueMap = queryContext["custom-value-map"];
+if (optionWhereClause != null && optionWhereClause.length > 0) {
+    var whereClauses = [];
+    for (var i=0; i<optionWhereClause.length; i++) {
+        var clause = optionWhereClause[i];
+        var optionValues = options[clause.option] || [];
+        var customClauses = [];
+        if (optionValues.length > 0 && customValueMap != null && customValueMap[clause.column] != null) {
+            var valueMap = customValueMap[clause.column];
+            for (var j=0; j<optionValues.length; j++) {
+                var customClause = valueMap[optionValues[j]];
+                if (customClause != null) {
+                    customClauses.push(this._doValueSubstitution(customClause, valueSubMap));
+                    optionValues.splice(j, 1);
+                }
+            }
+        }
+        if (optionValues.length > 0) {
+            if (customClauses.length == 0) {
+                whereClauses.push(clause.column + " in (" + this._formatArrayForInClause(optionValues) + ")");
+            }
+            else {
+                customClauses.push(clause.column + " in (" + this._formatArrayForInClause(optionValues) + ")");
+            }
+        }
+        if (customClauses.length > 0) {
+            whereClauses.push("(" + customClauses.join(" or ") + ")");
+        }
+    }
+    if (whereClauses.length > 0) {
+        map["optionWhereClause"] = op + " (" + whereClauses.join(" and ") + ")";
+        op = "and";
+    }
+}
+var customWhereClause = queryContext["custom-where-clause"];
+if (customWhereClause != null && customWhereClause.length > 0) {
+    var whereClauses = [];
+    for (var i=0; i<customWhereClause.length; i++) {
+        whereClauses.push("(" + this._doValueSubstitution(customWhereClause[i], valueSubMap) + ")");
+    }
+    if (whereClauses.length > 0) {
+        map["customWhereClause"] = op + " (" + whereClauses.join(" and ") + ")";
+        op = "and";
+    }
+}
+var searchColumn = queryContext["search-column"];
+if (searchColumn == null) {
+    searchColumn = queryContext["distinct-column"];
+}
+if (searchColumn != null && searchColumn != "" && search != null && search != "") {
+    map["searchWhereClause"] = op + " (" + searchColumn + " like '%" + search + "%')";
+    op = "and";
+}
+
+function filterDimensionClauseValues(values, list)
+{
+    if (values != null && values.length > 0) {
+        return list.filter(function(item) {
+            return values.indexOf(item) != -1;
+        });
+    }
+    return list;
+}
+
+var dimensionClauseAttributes = queryContext["dimension-clause-attributes"];
+var dimensionClauseValues = queryContext["dimension-clause-values"] || {};
+if (dimensionClauseAttributes != null) {
+    var serviceConfig = this.getServiceConfig();
+    if (serviceConfig != null) {
+        var svc = [], comp = [], app = [];
+        if (dimensionClauseAttributes["svc"] != null) {
+            svc = values[dimensionClauseAttributes["svc"]] || [];
+            if (typeof svc == "string") svc = [svc];
+            svc = this._stripDupAndHashItems(svc);
+            svc = filterDimensionClauseValues(dimensionClauseValues["svc"], svc);
+        }
+        if (dimensionClauseAttributes["comp"] != null) {
+            comp = values[dimensionClauseAttributes["comp"]] || [];
+            if (typeof comp == "string") comp = [comp];
+            comp = this._stripDupAndHashItems(comp);
+            comp = filterDimensionClauseValues(dimensionClauseValues["comp"], comp);
+        }
+        if (dimensionClauseAttributes["app"] != null) {
+            app = values[dimensionClauseAttributes["app"]] || [];
+            if (typeof app == "string") app = [app];
+            app = this._stripDupAndHashItems(app);
+            app = filterDimensionClauseValues(dimensionClauseValues["app"], app);
+        }
+        var dimensionValues = this._getDimensionValuesForMultipleMetrics(serviceConfig, svc, comp, app, null);
+        if (dimensionValues.length > 0) {
+            var dimensionWhereClauses = [];
+            if (dimensionValues.length == 1) {
+                dimensionWhereClauses.push("and (" + this._convertDimensionValuesToWhereClause(queryConfig, [svc, comp, app], dimensionValues[0], {}) + ")");
+            }
+            else if (dimensionValues.length > 1) {
+                dimensionWhereClauses.push("and (");
+                for (var i=0; i<dimensionValues.length; i++) {
+                    var prefix = i == 0 ? "    " : " or ";
+                    dimensionWhereClauses.push(prefix + "(" + this._convertDimensionValuesToWhereClause(queryConfig, [svc, comp, app], dimensionValues[i], {}) + ")");
+                }
+                dimensionWhereClauses.push(")");
+            }
+            map["dimensionWhereClauses"] = dimensionWhereClauses.join("\n");
+        }
+    }
+}
+
+sql = this._doValueSubstitution(sql, map);
+var result = this.executeSQLQuery(queryConfig, context["execute-context"], context["module-context"], "VT_ODA_QS", sql, null);
+return result != null ? result.items : [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getQueryConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[if (this.__QueryConfig__ != null) {
+    // this cache is PER instantiation of THIS
+    // so help avoid re-constructing QueryConfig within a single call stack
+    //print("######################## use cached QueryConfig on THIS");
+    return this.__QueryConfig__;
+}
+
+function getManifest(url)
+{
+    //var start = Date.now();
+    var response = Context.GET(url);
+    //var end = Date.now();
+    //print("############ Manifest loaded from '" + url + "' in " + (end - start) + " ms");
+    if (response != null && response != "") {
+        return JSON.parse(response);
+    }
+    return null;
+}
+
+var config = JSON.parse(Context.getLocalResource("QueryConfig"));
+if (config["analytic-services"] == null && config["analytic-service-manifest"] != null) {
+    config["analytic-services"] = getManifest(config["analytic-service-manifest"]);
+}
+if (config["dependent-plugins"] == null && config["dependent-plugin-manifest"] != null) {
+    config["dependent-plugins"] = getManifest(config["dependent-plugin-manifest"]);
+}
+if (config["filters"] == null) {
+    // for backward compat, default to these but should really be set at the solution level
+    // -engkee
+    config["filters"] = {
+        "svc"        : "data.svc",
+        "comp"       : "data.comp",
+        "app"        : "data.app",
+        "metric"     : "data.metric",
+        "time"       : "data.timeRange",
+        "predefined" : "data.predefined",
+        "interval"   : "data.aggregationInterval",
+    };
+}
+
+// this cache is PER instantiation of THIS
+// so help avoid re-constructing QueryConfig within a single call stack
+this.__QueryConfig__ = config;
+//print("######################## cache QueryConfig on THIS");
+
+return config;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getServiceConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[if (this.getSystemModelPath == null) {
+    print("############ getServiceConfig: getSystemModelPath not implemented");
+    return {};
+}
+
+var MODEL_PATH = this.getSystemModelPath();
+var TEMP_CACHE = {};
+
+// takes about 5ms
+function getLastModified()
+{
+    //var start = Date.now();
+    var StorageLib = com.vitria.m3oui.storage.core.StorageLib;
+    var modelItem = StorageLib.getModelByLogicalPath(MODEL_PATH, false);
+    var ts = Number(modelItem.getProperty("vt:lastDate").toString());
+    //print("###################### getLastModified(): " + (Date.now()-start) + "ms");
+    return ts;
+}
+
+function resolveLinkedResource(obj)
+{
+    if (obj.groups != null) {
+        for (var i=0; i<obj.groups.length; i++) {
+            var group = obj.groups[i];
+            var meta = group["meta"];
+            if (group["resource-ref"] != null) {
+                //var checkpoint = Date.now();
+                var resource = null;
+                var payload = TEMP_CACHE[group["resource-ref"]];
+                if (payload == null) {
+                    payload = Context.getLocalResource(group["resource-ref"]);
+                    TEMP_CACHE[group["resource-ref"]] = payload;
+                }
+                if (payload != null) {
+                    resource = JSON.parse(payload);
+                }
+                //print("############ getServiceConfig: load(" + group["resource-ref"] + ")=" + (Date.now() - checkpoint) + " ms");
+                if (resource == null) {
+                    print("###################### " + obj.name + " is null");
+                    // stub to to show error
+                    resource = JSON.stringify({
+                        name  : obj.name + "_" + i,
+                        label : obj.name + " group #" + i + " missing",
+                        items : [],
+                    });
+                }
+                if (group["resource-id"] != null) {
+                    resource["name"] = resource["name"] + "#" + group["resource-id"];
+                }
+                obj.groups[i] = resource;
+                group = obj.groups[i];
+                if (meta != null) {
+                    group["meta"] = meta;
+                }
+            }
+            resolveLinkedResource(group);
+        }
+    }
+}
+
+function stripCommentedEntries(obj)
+{
+    if (obj.items != null) {
+        obj.items = obj.items.filter(function(item) {
+            return item["name"] != null;
+        });
+    }
+    if (obj.groups != null) {
+        obj.groups = obj.groups.filter(function(group) {
+            return group["name"] != null;
+        });
+        obj.groups.forEach(function(group) {
+            stripCommentedEntries(group);
+        });
+    }
+}
+
+function addFragmentIndex(obj, parentIndex)
+{
+    if (obj.items != null) {
+        obj.items.forEach(function(item) {
+            // no need to apply fragment index on items
+        });
+    }
+    if (obj.groups != null) {
+        for (var i=0; i<obj.groups.length; i++) {
+            var group = obj.groups[i];
+            var hash = group.name.indexOf("#");
+            if (hash != -1) {
+                // remove manual hash and replace with auto-hash
+                group.name = group.name.substring(0,hash) + "#" + parentIndex;
+            }
+            else {
+                // append auto-hash
+                group.name = group.name + "#" + parentIndex;
+            }
+            addFragmentIndex(group, i);
+        }
+    }
+}
+
+function addPathToItem(path1, obj)
+{
+    if (obj.groups != null) {
+        obj.groups.forEach(function(group) {
+            var path2 = path1.concat([group["name"]]);
+            addPathToItem(path2, group);
+            if (group["items"] != null) {
+                var items = group["items"];
+                for (var j=0; j<items.length; j++) {
+                    var item = items[j];
+                    item["path"] = path2.slice(0);
+                    item["id"] = (item["path"]).join("/") + "/" + item["name"];
+                }
+            }
+        });
+    }
+}
+
+var lastModified = getLastModified();
+var serviceConfig = null;
+var doCache = false;
+
+var demoProfile = this.getDemoProfile != null ? this.getDemoProfile() : null;
+if (demoProfile != null) {
+    serviceConfig = this.getCachedDemoServiceConfig(demoProfile["demo-name"]);
+}
+else {
+    var cache = this.getCache();
+    var config = cache.get("service.config");
+    if (config != null) {
+        serviceConfig = JSON.parse(config);
+    }
+}
+if (serviceConfig != null) {
+    // check timestamp
+    //print("############ serviceConfig.lastModified = " + serviceConfig.lastModified);
+    //print("############ lastModified = " + lastModified);
+    if (serviceConfig.lastModified != null && serviceConfig.lastModified < lastModified) {
+        if (serviceConfig.demoName != null) {
+            print("############ Expired cached DEMO ServiceConfig ("+serviceConfig.demoName+")");
+        }
+        else {
+            print("############ Expired cached ServiceConfig");
+        }
+        serviceConfig = null;
+    }
+    //else {
+    //    if (serviceConfig.demoName != null) {
+    //        print("############ Reuse cached DEMO ServiceConfig ("+serviceConfig.demoName+")");
+    //    }
+    //    else {
+    //        print("############ Reuse cached ServiceConfig");
+    //    }
+    //}
+}
+if (serviceConfig == null) {
+    doCache = true;
+    var start = Date.now();
+    //var checkpoint = Date.now();
+    serviceConfig = JSON.parse(Context.getLocalResource("ServiceConfig"));
+    //print("############ getServiceConfig: load(ServiceConfig)=" + (Date.now() - checkpoint) + " ms");
+    //checkpoint = Date.now();
+    resolveLinkedResource(serviceConfig);
+    //print("############ getServiceConfig: resolveLinkedResource=" + (Date.now() - checkpoint) + " ms");
+    if (this.addNuovaStellaServiceConfig != null) {
+        //checkpoint = Date.now();
+        this.addNuovaStellaServiceConfig(serviceConfig);
+        //print("############ getServiceConfig: addNuovaStellaServiceConfig=" + (Date.now() - checkpoint) + " ms");
+    }
+    //checkpoint = Date.now();
+    stripCommentedEntries(serviceConfig);
+    //print("############ getServiceConfig: stripCommentedEntries=" + (Date.now() - checkpoint) + " ms");
+    //checkpoint = Date.now();
+    addFragmentIndex(serviceConfig, 0);
+    //print("############ getServiceConfig: addFragmentIndex=" + (Date.now() - checkpoint) + " ms");
+    //checkpoint = Date.now();
+    addPathToItem([], serviceConfig);
+    //print("############ getServiceConfig: addPathToItem=" + (Date.now() - checkpoint) + " ms");
+    //checkpoint = Date.now();
+    serviceConfig.lastModified = lastModified;
+    print("############ Create ServiceConfig: " + (Date.now() - start) + " ms");
+
+    if (demoProfile != null && this.applyDemoProfileToServiceConfig != null) {
+        this.applyDemoProfileToServiceConfig(demoProfile, serviceConfig);
+    }
+}
+//print(JSON.stringify(serviceConfig));
+
+var self = this;
+serviceConfig.updateCache = function() {
+    if (this.demoName != null) {
+        self.putCachedDemoServiceConfig(this.demoName, this);
+    }
+    else {
+        var cache = self.getCache();
+        cache.put("service.config", JSON.stringify(this));
+        print("############ Update cached ServiceConfig");
+    }
+};
+if (doCache) {
+    serviceConfig.updateCache();
+}
+return serviceConfig;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getSourceConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[var sourceConfig = {};
+var resource = Context.getLocalResource("SourceConfig");
+if (resource != null && resource != "") {
+    sourceConfig = JSON.parse(resource);
+}
+if (this.addNuovaStellaSourceConfig != null) {
+    //checkpoint = Date.now();
+    this.addNuovaStellaSourceConfig(sourceConfig);
+    //print("############ getSourceConfig: addNuovaStellaSourceConfig=" + (Date.now() - checkpoint) + " ms");
+}
+return sourceConfig;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getSvcCompLabel" args="svcNames,compNames" private="false">
+        <CodeText>
+          <![CDATA[var serviceConfig = this.getServiceConfig();
+
+if (svcNames != null && typeof svcNames == "string") {
+    if (svcNames != "") {
+        svcNames = [svcNames];
+    }
+    else {
+        svcNames = [];
+    }
+}
+
+if (compNames != null && typeof compNames == "string") {
+    if (compNames != "") {
+        compNames = [compNames];
+    }
+    else {
+        compNames = [];
+    }
+}
+
+var svcLabels = [];
+var compLabels = [];
+serviceConfig.groups.forEach(function(svc) {
+    svcNames.forEach(function(svcName) {
+        if (this._matchName(svc, svcName) && svc.groups != null) {
+            svcLabels.push(svc.label || svc.name);
+            svc.groups.forEach(function(comp) {
+                compNames.forEach(function(compName) {
+                    if (this._matchName(comp, compName)) {
+                        compLabels.push(comp.label || comp.name);
+                    }
+                });
+            });
+        }
+    });
+});
+return {
+    svc  : svcLabels.join(", "),
+    comp : compLabels.join(", ")
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getSvcLabel" args="svcName" private="false">
+        <CodeText>
+          <![CDATA[var serviceConfig = this.getServiceConfig();
+
+for (var i=0; i<serviceConfig.groups.length; i++) {
+    var svc = serviceConfig.groups[i];
+    if (this._matchName(svc, svcName)) {
+        return svc.label || svc.name;
+    }
+}
+return svcName;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getSvcOptions" args="values,excludes" private="false">
+        <CodeText>
+          <![CDATA[//print("getSvcOptions: values=" + values);
+
+var serviceConfig = this.getServiceConfig();
+var accessControlList = this.getAccessControlList();
+
+var services = this._getFilteredGroups(serviceConfig, []);
+var options = this._asDropdownOptions(services, accessControlList);
+//print("getSvcOptions: options=" + __prettyPrintJSON(options));
+
+if (excludes != null) {
+    excludes = excludes.split(",");
+    options = options.filter(function(item) {
+        return excludes.indexOf(item.value) == -1;
+    });
+    //print("getSvcOptions: options=" + __prettyPrintJSON(options));
+}
+return options;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getTimeRange" args="filters" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+return this._getTimeRange(queryConfig, filters);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getTimezonesAndOffsets" args="" private="false">
+        <CodeText>
+          <![CDATA[var ZoneId = java.time.ZoneId;
+var LocalDateTime = java.time.LocalDateTime;
+var String = java.lang.String;
+var ArrayList = java.util.ArrayList;
+var Collections = java.util.Collections;
+
+var PREFERRED_ZONES = {
+    "GMT":true,
+    "America/New_York":true,
+    "America/Chicago":true,
+    "America/Denver":true,
+    "America/Los_Angeles":true,
+    "America/Puerto_Rico":false,
+    "America/Anchorage":true,
+    "Pacific/Honolulu":true,
+};
+
+var allZones = ZoneId.getAvailableZoneIds();
+var dt = LocalDateTime.now();
+
+// Create a List using the set of zones and sort it.
+var zoneList = new ArrayList(allZones);
+
+var offsets   = {};
+var positives = [];
+var negatives = [];
+var gmt       = [];
+
+function addTimezoneOffset(timezoneAndOffset)
+{
+    if (offsets[timezoneAndOffset.offset] == null) {
+        offsets[timezoneAndOffset.offset] = timezoneAndOffset.zone;
+        if (timezoneAndOffset.offset == "Z") {
+            gmt.push({
+                timezone : timezoneAndOffset.zone,
+                offset   : "+00:00",
+            });
+        }
+        else if (timezoneAndOffset.offset.charAt(0) == "+") {
+            positives.push({
+                timezone : timezoneAndOffset.zone,
+                offset   : timezoneAndOffset.offset,
+            });
+        }
+        else if (timezoneAndOffset.offset.charAt(0) == "-") {
+            negatives.push({
+                timezone : timezoneAndOffset.zone,
+                offset   : timezoneAndOffset.offset,
+            });
+        }
+    }
+}
+
+var timezonesAndOffsets = [];
+for (var i=0, n=zoneList.size(); i<n; i++) {
+    var zone = ZoneId.of(zoneList.get(i));
+    var zdt = dt.atZone(zone);
+    var offset = zdt.getOffset();
+    zone = ""+zone;
+    offset = ""+offset;
+    if (zone.indexOf("Etc/") == 0) continue;
+    timezonesAndOffsets.push({
+        zone   : zone,
+        offset : offset,
+    });
+}
+
+// add preferred zones first
+for (var i=0, n=timezonesAndOffsets.length; i<n; i++) {
+    var timezoneAndOffset = timezonesAndOffsets[i];
+    if (offsets[timezoneAndOffset.offset] == null && PREFERRED_ZONES[timezoneAndOffset.zone] == true) {
+        addTimezoneOffset(timezoneAndOffset);
+    }
+}
+
+// fill in remaining zones
+for (var i=0, n=timezonesAndOffsets.length; i<n; i++) {
+    var timezoneAndOffset = timezonesAndOffsets[i];
+    if (offsets[timezoneAndOffset.offset] == null) {
+        addTimezoneOffset(timezoneAndOffset);
+    }
+}
+
+positives.sort(function(a,b) {
+    return b.offset.localeCompare(a.offset);
+});
+negatives.sort(function(a,b) {
+    return a.offset.localeCompare(b.offset);
+});
+return [].concat(positives, gmt, negatives);
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="mapFiltersToDimKeysAndDimValues" args="filters" private="false">
+        <CodeText>
+          <![CDATA[if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+
+var queryConfig = this.getQueryConfig();
+
+var svc = this._getFilterValue(filters, queryConfig["filters"]["svc"], [], true);
+//print("mapFiltersToDimKeysAndDimValues: svc="+svc);
+if (svc.length != 1) return null;
+svc = svc[0];
+
+var comp = this._getFilterValue(filters, queryConfig["filters"]["comp"], [], true);
+//print("mapFiltersToDimKeysAndDimValues: comp="+comp);
+if (comp.length != 1) return null;
+comp = comp[0];
+
+var app = this._getFilterValue(filters, queryConfig["filters"]["app"], [], true);
+//print("mapFiltersToDimKeysAndDimValues: comp="+comp);
+if (app.length != 1) return null;
+app = app[0];
+
+var metric = this._getFilterValue(filters, queryConfig["filters"]["metric"], [], true);
+//print("mapFiltersToDimKeysAndDimValues: metric="+metric);
+if (metric.length != 1) return null;
+metric = metric[0];
+
+if (metric == "Customer Call Volume") {
+    // 2 potential issues
+    // - hardwiring of "Customer Call Volume" in the dashboard is bad as there is NOTHING special about that metric
+    // - assuming calls is ALWAYS and ONLY at the service level is bad
+    //   ... at some point, we may be able to associate calls to lower level
+    // engkee
+    comp = "*";
+    app = "*";
+    // https://vitria.atlassian.net/browse/CHAR-211
+    // for "Customer Call Volume", set comp/app to "*" even if set to something else in filter
+    // NOT ideal... for reasons described above but for now, it works
+    // NEED to get back to this when we start handling secondary metric more generically
+    // -engkee
+}
+
+var dimConfig = JSON.parse(Context.getLocalResource("DimKeyConfig"));
+var record = {
+    svcName    : svc,
+    compName   : comp,
+    appName    : app,
+    metricName : metric
+};
+print("mapFiltersToDimKeysAndDimValues: record="+__prettyPrintJSON(record));
+var result = this._findRule(record, function(key) {
+    var dimKeys = dimConfig[key];
+    if (dimKeys != null && dimKeys.length > 0) {
+        var matchedDimValues = [];
+        for (var i=0; i<dimKeys.length; i++) {
+            var dimKey = dimKeys[i];
+            if (dimKey.metrics == null || dimKey.metrics.indexOf(metric) != -1) {
+                var filterNames = dimKey["filter-names"];
+                if (filterNames != null && filterNames.length > 0) {
+                    var dimValues = [svc, comp, app, metric];
+                    var baseMetricId = dimValues.join("|");
+                    for (var j=0; j<filterNames.length; j++) {
+                        var filterValue = this._getFilterValue(filters, filterNames[j], [], true);
+                        if (filterValue != null && filterValue.length == 1) {
+                            dimValues.push(filterValue[0]);
+                        }
+                        else {
+                            dimValues = null;
+                            break;
+                        }
+                    }
+                    if (dimValues != null) {
+                        // DO-401
+                        return {
+                            metric_id      : dimValues.join("|"),
+                            base_metric_id : baseMetricId,
+                            dim_keys       : dimKey.option.split("|"),
+                            dim_values     : dimValues.slice(4),
+                        };
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    return null;
+});
+if (result == null) {
+    // if no config defined, assume it is simple metric_id
+    // ideally, we should call some centralized function to format the metric_id
+    result = svc + "|" + comp + "|" + app + "|" + metric;
+}
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="setLogLevel" args="className,newLogLevel" private="false">
+        <CodeText>
+          <![CDATA[var LogManager = org.apache.log4j.LogManager;
+var LogLevel = org.apache.log4j.Level;
+
+var logger = LogManager.getLogger(className);
+if (logger != null) {
+    var oldLogLevel = logger.getLevel();
+    newLogLevel = LogLevel.toLevel(newLogLevel);
+    if (newLogLevel != null) {
+        logger.setLevel(newLogLevel);
+        print("[INFO ] Log level changed to '" + newLogLevel.toString() + "' for class '" + className + "'");
+    }
+    else {
+        print("[ERROR] Log level not changed for class '" + className + "'");
+    }
+    return oldLogLevel != null ? oldLogLevel.toString() : "WARN_LOG_LEVEL_NOT_SET";
+}
+print("[ERROR] Logger not found for class '" + className + "'");
+return "ERROR_LOGGER_NOT_DEFINED";
+]]>
+        </CodeText>
+      </Service>
+      <Service name="XXXdeleteCachedFilterConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[var Pattern = java.util.regex.Pattern;
+
+var cache = this.getCache();
+print("############ delete cached FilterConfig");
+cache.remove("filter.config.base");
+cache.remove("filter.config.full");
+cache.remove("filter.config.mini");
+return true;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="XXXdeleteCachedServiceConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[var cache = this.getCache();
+if (cache.get("service.config") != null) {
+    print("############ delete cached ServiceConfig");
+    cache.remove("service.config");
+}
+if (this.deleteCachedDemoServiceConfig != null) {
+    this.deleteCachedDemoServiceConfig();
+}
+return true;
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="4fa80cae-ab79-41c0-850f-68c371d35cbf" name="DIM_KEY_SQL" type="application/sql" size="175" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="48639379-e854-4da3-8f0b-ea5ec00a4f4e" name="OPTIONS_SQL" type="application/sql" size="211" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="e7ad0afd-5240-433e-8fa8-3954ddc76d38" name="SQL Scripts" type="application/sql" size="200" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

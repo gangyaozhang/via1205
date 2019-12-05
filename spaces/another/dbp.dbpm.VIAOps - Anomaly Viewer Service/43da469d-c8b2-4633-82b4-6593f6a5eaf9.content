@@ -1,0 +1,7 @@
+SELECT
+    config_name,
+    config_json,
+    owner_id
+FROM viaops_anomaly_config
+WHERE metric_id = "${metric_id}"
+  AND (owner_id = "${owner_id}" OR "*" = "${owner_id}")

@@ -1,0 +1,2 @@
+select action_id, action_name
+from action_dim

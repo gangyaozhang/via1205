@@ -1,0 +1,14 @@
+select
+    a.group_rule_name AS group_rule_name,
+    a.max_lookback AS max_lookback,
+    a.expire_after AS expire_after,
+    b.group_start AS group_start,
+    b.service_name AS service_name,
+    b.sub_service_name AS sub_service_name,
+    c.component_name AS component_name,
+    c.metric_name AS metric_name,
+    c.correlation_time AS correlation_time
+from viaops_incident_group a, viaops_incident_group_correlation b, viaops_incident_correlation c
+where a.group_rule_name = b.group_rule_name
+  and b.service_name = c.service_name
+  and b.sub_service_name = c.sub_service_name

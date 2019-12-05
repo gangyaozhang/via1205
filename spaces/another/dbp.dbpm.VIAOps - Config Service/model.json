@@ -1,0 +1,273 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "5af707ee-8fac-42f6-88f2-765bb6d4b983"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "b13b2f6a-b7b3-47d0-8cc9-abb4097542c4"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "d2009ed6-91af-46dc-8ce2-0efe9c6a6262"
+    },
+    {
+      "fileref": "ModelContentFile4",
+      "name": "71ad3b95-c14c-4362-8aa7-83343c20edaf"
+    },
+    {
+      "fileref": "ModelContentFile5",
+      "name": "4b4e1174-a208-4b31-824e-74d6c903d1d2"
+    },
+    {
+      "fileref": "ModelContentFile6",
+      "name": "29bf6c4a-3d63-4671-8c82-5030a57bc129"
+    },
+    {
+      "fileref": "ModelContentFile7",
+      "name": "b2f83d34-c173-48e8-8b06-ac11bca98a0d"
+    },
+    {
+      "fileref": "ModelContentFile8",
+      "name": "57deef73-800d-4237-842e-1f47a56a20a2"
+    },
+    {
+      "fileref": "ModelContentFile9",
+      "name": "1d907117-a45b-4db4-8196-a090686ef27b"
+    },
+    {
+      "fileref": "ModelContentFile10",
+      "name": "3280ec91-c142-4ee5-8bfb-1db02b451383"
+    },
+    {
+      "fileref": "ModelContentFile11",
+      "name": "180f5236-d14f-4bdd-89ad-91a15cc03528"
+    },
+    {
+      "fileref": "ModelContentFile12",
+      "name": "cc380b05-b431-4e84-8178-0f12a67333c6"
+    },
+    {
+      "fileref": "ModelContentFile13",
+      "name": "3f333352-665e-4e3f-8428-805ad5b5df8f"
+    },
+    {
+      "fileref": "ModelContentFile14",
+      "name": "9ed29abc-bb66-4f44-8a13-d83fb8473472"
+    },
+    {
+      "fileref": "ModelContentFile15",
+      "name": "9c654cbd-a9f8-4c85-83c5-be4ca48e623d"
+    },
+    {
+      "fileref": "ModelContentFile16",
+      "name": "73071233-1955-4a75-8a4d-e580e5aba8ad"
+    },
+    {
+      "fileref": "ModelContentFile17",
+      "name": "b4b15369-8f5e-4ab9-8993-e5e4bcd9a3f4"
+    },
+    {
+      "fileref": "ModelContentFile18",
+      "name": "801d9cc4-b954-4a75-83f0-66d5767c5f39"
+    },
+    {
+      "fileref": "ModelContentFile19",
+      "name": "fa95a5a7-bd07-47c3-8bea-5fd8f3e3cbca"
+    },
+    {
+      "fileref": "ModelContentFile20",
+      "name": "66c19ce6-b2bd-456f-8472-948015461467"
+    },
+    {
+      "fileref": "ModelContentFile21",
+      "name": "cddc624e-4b6d-4f7e-8b40-2f1b0235e084"
+    },
+    {
+      "fileref": "ModelContentFile22",
+      "name": "5fda0747-2b82-43dc-86bd-aac505cd2a71"
+    },
+    {
+      "fileref": "ModelContentFile23",
+      "name": "ba9d491b-1736-4554-8628-1c17eebc06bf"
+    },
+    {
+      "fileref": "ModelContentFile24",
+      "name": "74012404-690e-4e51-8a94-ee6f324556e3"
+    },
+    {
+      "fileref": "ModelContentFile25",
+      "name": "05143ee9-0244-4528-8f1b-c4d08b3581cc"
+    },
+    {
+      "fileref": "ModelContentFile26",
+      "name": "06b98639-0304-4764-882a-a93010c1a49f"
+    },
+    {
+      "fileref": "ModelContentFile27",
+      "name": "c0839546-05f2-417e-8f99-765507f3b3db"
+    },
+    {
+      "fileref": "ModelContentFile28",
+      "name": "f0277c9d-231e-4a2b-828e-e883134e3345"
+    },
+    {
+      "fileref": "ModelContentFile29",
+      "name": "f045d4c4-32de-4f4c-8aa6-b7505bba9407"
+    },
+    {
+      "fileref": "ModelContentFile30",
+      "name": "a49ad330-7d0b-4c71-829c-46f613d74398"
+    },
+    {
+      "fileref": "ModelContentFile31",
+      "name": "6d1db6dd-e067-42c4-8923-9c8884a4395b"
+    },
+    {
+      "fileref": "ModelContentFile32",
+      "name": "baffcafa-87a0-48d3-8988-a6c9c690a031"
+    },
+    {
+      "fileref": "ModelContentFile33",
+      "name": "8f343e5d-668e-45ea-878f-e7bcc9f2a931"
+    },
+    {
+      "fileref": "ModelContentFile34",
+      "name": "f5984009-68d9-417c-8959-6fa812dffa66"
+    },
+    {
+      "fileref": "ModelContentFile35",
+      "name": "ff221fe2-b05c-419f-8aed-aef11c37619e"
+    },
+    {
+      "fileref": "ModelContentFile36",
+      "name": "16c446b6-4cb6-4fab-841c-d3dca6d80abc"
+    },
+    {
+      "fileref": "ModelContentFile37",
+      "name": "3c861f22-7048-42af-8263-a9fdc70ca60a"
+    },
+    {
+      "fileref": "ModelContentFile38",
+      "name": "d2e60188-517a-43fd-82dc-8ba2d9c08fb4"
+    },
+    {
+      "fileref": "ModelContentFile39",
+      "name": "0f2d1c6c-e2bb-4c1a-8c57-0563902da45d"
+    },
+    {
+      "fileref": "ModelContentFile40",
+      "name": "8b706964-a683-450f-8213-305f0c38b551"
+    },
+    {
+      "fileref": "ModelContentFile41",
+      "name": "14d90d59-ffc1-477b-8c3f-694e523e21c3"
+    },
+    {
+      "fileref": "ModelContentFile42",
+      "name": "8ea2678c-7d2f-4913-8cb7-677ebc87791a"
+    },
+    {
+      "fileref": "ModelContentFile43",
+      "name": "eda9a42a-8247-49c4-8a79-aceb89fc8c23"
+    },
+    {
+      "fileref": "ModelContentFile44",
+      "name": "8e3b091a-ce42-4067-85d3-6bcb2dd6e48c"
+    },
+    {
+      "fileref": "ModelContentFile45",
+      "name": "97219134-14b8-43bc-8571-89edbfbb25bc"
+    },
+    {
+      "fileref": "ModelContentFile46",
+      "name": "8fbb4061-de60-4510-857c-86a90e384daa"
+    },
+    {
+      "fileref": "ModelContentFile47",
+      "name": "0a841b56-721b-4262-875a-9dff8cd14ef3"
+    },
+    {
+      "fileref": "ModelContentFile48",
+      "name": "645bdbc4-6ab0-44e4-837f-a25b259ac0d8"
+    },
+    {
+      "fileref": "ModelContentFile49",
+      "name": "6052371f-15d8-4b6d-8323-9aed61aef2ee"
+    },
+    {
+      "fileref": "ModelContentFile50",
+      "name": "f58f4154-8695-4e52-8f05-165834ffddda"
+    },
+    {
+      "fileref": "ModelContentFile51",
+      "name": "98dbb224-6320-4c42-8cc6-878ece7e9523"
+    },
+    {
+      "fileref": "ModelContentFile52",
+      "name": "caa52b9a-c58d-4aae-8ee1-c9837dac3ced"
+    },
+    {
+      "fileref": "ModelContentFile53",
+      "name": "5f70c6b1-564a-4a8e-8785-937db927d0b1"
+    },
+    {
+      "fileref": "ModelContentFile54",
+      "name": "9b77d9ab-f252-451f-8d38-3b2880a31b1f"
+    },
+    {
+      "fileref": "ModelContentFile55",
+      "name": "7c7ef044-378e-4188-84e3-44fea58d154d"
+    },
+    {
+      "fileref": "ModelContentFile56",
+      "name": "90bf0c0d-a332-458d-8112-7ec5ce3dd478"
+    },
+    {
+      "fileref": "ModelContentFile57",
+      "name": "c7d60670-e939-4016-84fe-13143671d0f7"
+    },
+    {
+      "fileref": "ModelContentFile58",
+      "name": "13296cd2-d0f1-4e1d-806a-fd0719f23512"
+    },
+    {
+      "fileref": "ModelContentFile59",
+      "name": "acab73e3-ca58-4383-8ff8-5532543290c3"
+    },
+    {
+      "fileref": "ModelContentFile60",
+      "name": "20d35784-8279-489b-8671-0ca954c54441"
+    },
+    {
+      "fileref": "ModelContentFile61",
+      "name": "c258f332-a941-4c9e-82d7-57edeb227ba1"
+    },
+    {
+      "fileref": "ModelContentFile62",
+      "name": "20b96c1b-7376-44a1-839c-438042118f45"
+    },
+    {
+      "fileref": "ModelContentFile63",
+      "name": "0b6b9898-da9d-46aa-84df-d46ace2d2be0"
+    },
+    {
+      "fileref": "ModelContentFile64",
+      "name": "218fcd48-d7b4-4eff-832d-8d2a94e44040"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "baffcafa-87a0-48d3-8988-a6c9c690a031,73071233-1955-4a75-8a4d-e580e5aba8ad,ba9d491b-1736-4554-8628-1c17eebc06bf,b4b15369-8f5e-4ab9-8993-e5e4bcd9a3f4,9c654cbd-a9f8-4c85-83c5-be4ca48e623d,801d9cc4-b954-4a75-83f0-66d5767c5f39,180f5236-d14f-4bdd-89ad-91a15cc03528,3280ec91-c142-4ee5-8bfb-1db02b451383,5fda0747-2b82-43dc-86bd-aac505cd2a71,3f333352-665e-4e3f-8428-805ad5b5df8f,74012404-690e-4e51-8a94-ee6f324556e3,cc380b05-b431-4e84-8178-0f12a67333c6,1d907117-a45b-4db4-8196-a090686ef27b,9ed29abc-bb66-4f44-8a13-d83fb8473472,9b77d9ab-f252-451f-8d38-3b2880a31b1f,5f70c6b1-564a-4a8e-8785-937db927d0b1,90bf0c0d-a332-458d-8112-7ec5ce3dd478,645bdbc4-6ab0-44e4-837f-a25b259ac0d8,0a841b56-721b-4262-875a-9dff8cd14ef3,218fcd48-d7b4-4eff-832d-8d2a94e44040,20b96c1b-7376-44a1-839c-438042118f45,c258f332-a941-4c9e-82d7-57edeb227ba1,0b6b9898-da9d-46aa-84df-d46ace2d2be0,7c7ef044-378e-4188-84e3-44fea58d154d,caa52b9a-c58d-4aae-8ee1-c9837dac3ced,98dbb224-6320-4c42-8cc6-878ece7e9523,6052371f-15d8-4b6d-8323-9aed61aef2ee,f58f4154-8695-4e52-8f05-165834ffddda,8fbb4061-de60-4510-857c-86a90e384daa,c7d60670-e939-4016-84fe-13143671d0f7,6d1db6dd-e067-42c4-8923-9c8884a4395b,06b98639-0304-4764-882a-a93010c1a49f,05143ee9-0244-4528-8f1b-c4d08b3581cc,c0839546-05f2-417e-8f99-765507f3b3db,b2f83d34-c173-48e8-8b06-ac11bca98a0d,f0277c9d-231e-4a2b-828e-e883134e3345,b13b2f6a-b7b3-47d0-8cc9-abb4097542c4,f045d4c4-32de-4f4c-8aa6-b7505bba9407,57deef73-800d-4237-842e-1f47a56a20a2,a49ad330-7d0b-4c71-829c-46f613d74398,16c446b6-4cb6-4fab-841c-d3dca6d80abc,20d35784-8279-489b-8671-0ca954c54441,8e3b091a-ce42-4067-85d3-6bcb2dd6e48c,97219134-14b8-43bc-8571-89edbfbb25bc,ff221fe2-b05c-419f-8aed-aef11c37619e,d2e60188-517a-43fd-82dc-8ba2d9c08fb4,3c861f22-7048-42af-8263-a9fdc70ca60a,8f343e5d-668e-45ea-878f-e7bcc9f2a931,8ea2678c-7d2f-4913-8cb7-677ebc87791a,14d90d59-ffc1-477b-8c3f-694e523e21c3,0f2d1c6c-e2bb-4c1a-8c57-0563902da45d,8b706964-a683-450f-8213-305f0c38b551,f5984009-68d9-417c-8959-6fa812dffa66,eda9a42a-8247-49c4-8a79-aceb89fc8c23,29bf6c4a-3d63-4671-8c82-5030a57bc129,71ad3b95-c14c-4362-8aa7-83343c20edaf,13296cd2-d0f1-4e1d-806a-fd0719f23512,d2009ed6-91af-46dc-8ce2-0efe9c6a6262,4b4e1174-a208-4b31-824e-74d6c903d1d2,acab73e3-ca58-4383-8ff8-5532543290c3,cddc624e-4b6d-4f7e-8b40-2f1b0235e084,66c19ce6-b2bd-456f-8472-948015461467,fa95a5a7-bd07-47c3-8bea-5fd8f3e3cbca,5af707ee-8fac-42f6-88f2-765bb6d4b983,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:4fa80cae-ab79-41c0-850f-68c371d35cbf,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:48639379-e854-4da3-8f0b-ea5ec00a4f4e,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:e7ad0afd-5240-433e-8fa8-3954ddc76d38,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:1f9fcced-e444-4b19-8a27-1443cc9f85e5,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:7285ca1d-c841-4cca-896f-cd07dbccee55,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:2a793937-9e31-43d3-8fe2-6e17fd2e2bb9,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:1154c92a-2675-456c-8c15-db16cc620eac,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:9b73a67e-4e45-4292-8eb6-00577009f781,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:d6f413bd-2f49-499e-876a-fc7d49a4c343,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:0c5d5f13-e0b5-46db-8b74-f8cf1f98f6e8,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:49b47948-109f-49fc-80e1-63336770536e,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:f144a137-7c89-4615-8bc1-f8cc5b0b6198,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:bd1ce3aa-a029-440c-83a0-c67d4449e78f,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:9df1205e-2ee6-480f-8195-aa45576c0fd0,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:3cd5ee49-6714-433d-84ac-f45e2d79187d",
+    "__references__": "/app/dbp/space/another/dbpm/VIAOps - Base Service,/app/dbp/space/another/dbpm/VIAOps - Config Audit Service",
+    "modelStatus": "valid",
+    "name": "VIAOps - Config Service"
+  }
+}

@@ -1,0 +1,2119 @@
+<DashboardPluginModel is_init="false" name="VIAOps - Trend Service" description="&#10;">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services>
+      <Service name="_getAggregateCaseClause" args="serviceConfig,queryConfig,queryParams,indent,svcList,compList,appList,metricList,metricAlias" private="false">
+        <CodeText>
+          <![CDATA[this._createAggregationMap(serviceConfig, 4);
+
+var appCol = queryParams["metric-app"] || queryConfig["default-column-names"]["metric-app"] ||  "app";
+var metricNameCol = queryParams["metric-name"] || queryConfig["default-column-names"]["metric-name"] || "metric_name";
+var metricValueCol = queryParams["metric-value"] || queryConfig["default-column-names"]["metric-value"] || "metric_value";
+
+var buf = [];
+buf.push("case");
+
+function addCaseClause(svc, comp, app)
+{
+    metricList.forEach(function(metric) {
+        var metricId = svc + "|" + comp + "|" + app + "|" + (metricAlias || metric);
+        var aggr = serviceConfig._aggregationMap[metricId];
+        if (aggr != null) {
+            var aggrFunc = aggr;
+            // we have non-SQL compliant aggregation, like PCT, which we map to AVG
+            switch (aggrFunc) {
+                case "pct":
+                    aggrFunc = "avg";
+                    break;
+            }
+            if (app != "*") {
+                buf.push("    when " + appCol + " = '" + app + "'" + " and " + metricNameCol + " = '" + metric + "'"
+                         + " then " + aggrFunc + "(" + metricValueCol + ")");
+            }
+            else {
+                buf.push("    when " + metricNameCol + " = '" + metric + "'"
+                         + " then " + aggrFunc + "(" + metricValueCol + ")");
+            }
+        }
+    });
+}
+
+svcList.forEach(function(svc) {
+    if (compList != null && compList.length > 0) {
+        compList.forEach(function(comp) {
+            if (appList != null && appList.length > 0) {
+                appList.forEach(function(app) {
+                    addCaseClause(svc, comp, app);
+                });
+            }
+            else {
+                addCaseClause(svc, comp, "*");
+            }
+        });
+    }
+    else {
+        if (appList != null && appList.length > 0) {
+            appList.forEach(function(app) {
+                addCaseClause(svc, "*", app);
+            });
+        }
+        else {
+            addCaseClause(svc, "*", "*");
+        }
+    }
+});
+buf.push("    else sum(" + metricValueCol + ")");
+buf.push("end as _value_");
+return indent + buf.join("\n" + indent);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getAggregateTimezoneOffset" args="queryConfig,clientTimezoneOffsetInSecs" private="false">
+        <CodeText>
+          <![CDATA[var TimeZone = java.util.TimeZone;
+if (queryConfig["aggregate-timezone"] == null) {
+    // for backward compatibility... if not specific, use UTC... leave tz null
+    return 0;
+}
+else if (queryConfig["aggregate-timezone"] == "(local)") {
+    // return client timezone offset from browser... in seconds
+    return clientTimezoneOffsetInSecs;
+}
+else {
+    var tz = TimeZone.getTimeZone(queryConfig["aggregate-timezone"]);
+    print("set timezone: id="+tz.getID()+" offset="+tz.getRawOffset());
+    return 0 - Math.floor(tz.getRawOffset() / 1000);
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getCallsGroupData" args="queryConfig,svc,comp,app" private="false">
+        <CodeText>
+          <![CDATA[var buf = [];
+if (queryConfig["filters"]["svc"] != null) {
+    if (svc != null && svc.length > 0) svc = svc.join(",");
+    if (svc == null || svc == "") svc = "*";
+    buf.push(queryConfig["filters"]["svc"]+"="+svc);
+}
+if (queryConfig["filters"]["comp"] != null) {
+    if (comp != null && comp.length > 0) comp = comp.join(",");
+    if (comp == null || comp == "") comp = "*";
+    buf.push(queryConfig["filters"]["comp"]+"="+comp);
+}
+if (queryConfig["filters"]["app"] != null) {
+    if (app != null && app.length > 0) app = app.join(",");
+    if (app == null || app == "") app = "*";
+    buf.push(queryConfig["filters"]["app"]+"="+app);
+}
+if (queryConfig["filters"]["metric"] != null) {
+    buf.push(queryConfig["filters"]["metric"]+"=Customer Call Volume");
+}
+return buf.join(";");
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getCallsGroupKey" args="svc,comp,app" private="false">
+        <CodeText>
+          <![CDATA[var buf = [];
+if (svc != null && svc.length > 0) {
+    if (svc.length > 1) {
+        buf.push("[" + svc.join("][") + "]");
+    }
+    else {
+        buf.push(svc[0]);
+    }
+}
+else {
+    buf.push("*");
+}
+if (comp != null && comp.length > 0) {
+    if (comp.length > 1) {
+        buf.push("[" + comp.join("][") + "]");
+    }
+    else {
+        buf.push(comp[0]);
+    }
+}
+else {
+    buf.push("*");
+}
+if (app != null && app.length > 0) {
+    if (app.length > 1) {
+        buf.push("[" + app.join("][") + "]");
+    }
+    else {
+        buf.push(app[0]);
+    }
+}
+else {
+    buf.push("*");
+}
+buf.push("Customer Call Volume");
+return buf.join("|");
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDimensionWhereClause" args="serviceConfig,queryConfig,queryParams,queryName,filters,svc,comp,app,metric,metricAlias,valueSubMap" private="false">
+        <CodeText>
+          <![CDATA[var dimensionWhereClause = [];
+var groupDimensions = [];
+var groupColumns = [];
+var groupFilters = [];
+
+function toWhereExpr(values, column)
+{
+    if (values != null && values.length > 0) {
+        return "and " + column + " in (" + this._formatArrayForInClause(values) + ")";
+    }
+    return "";
+}
+
+// check for embedded dimensionWhereClause
+if (queryName == "metric") {
+    for (var i=0; i<filters.length; i++) {
+        var filter = filters[i];
+        if (filter.name == "$.dimensionWhereClause") {
+            if (filter.value != null) {
+                for (var colName in filter.value) {
+                    var colValue = filter.value[colName];
+                    if (Array.isArray(colValue) && colValue.length > 0) {
+                        dimensionWhereClause.push("and " + colName + " in (" + this._formatArrayForInClause(colValue) + ")");
+                    }
+                    else if (typeof colValue == "string") {
+                        dimensionWhereClause.push("and " + colName + " = '" + colValue + "'");
+                    }
+                    else if (typeof colValue == "number") {
+                        dimensionWhereClause.push("and " + colName + " = " + colValue + "");
+                    }
+                }
+            }
+            break;
+        }
+    }
+}
+
+var dimensionList = queryParams[queryName+"-dimension-list"];
+if (dimensionList != null) {
+    var dimensionValueMap = queryParams[queryName+"-value-map"] || {};
+    for (var i=0; i<dimensionList.length; i++) {
+        var dimension = dimensionList[i];
+        var dimValues = this._getFilterValue(filters, dimension.filter, [], true);
+        var dimWhereClause = null;
+        var valueMap = dimensionValueMap[dimension.column];
+        if (valueMap != null) {
+            var customClauses = [];
+            for (var j=0; j<dimValues.length; j++) {
+                var customClause = valueMap[dimValues[j]];
+                if (customClause != null) {
+                    if (typeof customClause == "string") {
+                        customClauses.push(customClause);
+                    }
+                    else if (Array.isArray(customClause)) {
+                        var clauses = [];
+                        customClause.forEach(function(clause) {
+                            if (typeof clause == "string") {
+                                clauses.push(clause);
+                            }
+                            else if (clause.column != null && clause.filter != null) {
+                                var values = this._getFilterValue(filters, clause.filter, [], true);
+                                if (values.length > 0) {
+                                    clauses.push(this._toFilterExpression(clause.column, values));
+                                }
+                            }
+                        });
+                        customClauses.push("(" + clauses.join(" and ") + ")");
+                    }
+                    dimValues.splice(j, 1);
+                }
+            }
+            if (customClauses.length > 0) {
+                if (dimValues.length > 0) {
+                    customClauses.push(toWhereExpr(dimValues, dimension.column));
+                }
+                dimWhereClause = "and (" + customClauses.join(" or ") + ")";
+            }
+            else if (dimValues.length > 0) {
+                dimWhereClause = toWhereExpr(dimValues, dimension.column);
+            }
+        }
+        else {
+            dimWhereClause = toWhereExpr(dimValues, dimension.column);
+        }
+        if (dimWhereClause != null && dimWhereClause != "") {
+            dimensionWhereClause.push(dimWhereClause);
+        }
+        if (dimension.group == true) {
+            groupDimensions.push(dimValues);
+            groupColumns.push(dimension.column);
+            groupFilters.push(dimension.filter);
+        }
+    }
+}
+
+var whereClause = queryParams[queryName+"-where-clause"];
+if (whereClause != null && whereClause.length > 0) {
+    for (var i=0; i<whereClause.length; i++) {
+        if ((whereClause[i]).indexOf("#") != 0 && (whereClause[i]).indexOf("--") != 0) {
+            dimensionWhereClause.push(whereClause[i]);
+        }
+    }
+}
+
+var dimensionColumns = queryParams[queryName+"-dimension-columns"] || {};
+var dimensionValues = this._getDimensionValuesForMultipleMetrics(serviceConfig, svc, comp, app, metricAlias != null ? metricAlias : metric);
+var dimensionValuesWhereClause = [];
+for (var i=0; i<dimensionValues.length; i++) {
+    var whereClause = this._convertDimensionValuesToWhereClause(queryConfig, [svc, comp, app], dimensionValues[i], {});
+    if (dimensionValuesWhereClause.indexOf(whereClause) == -1) {
+        dimensionValuesWhereClause.push(whereClause);
+    }
+}
+if (dimensionValuesWhereClause.length == 1) {
+    dimensionWhereClause.push("and (" + dimensionValuesWhereClause[0] + ")");
+}
+else if (dimensionValuesWhereClause.length > 1) {
+    dimensionWhereClause.push("and (");
+    for (var i=0; i<dimensionValuesWhereClause.length; i++) {
+        var prefix = i == 0 ? "    " : " or ";
+        dimensionWhereClause.push(prefix + "(" + dimensionValuesWhereClause[i] + ")");
+    }
+    dimensionWhereClause.push(")");
+}
+
+var conditionalWhereClause = queryConfig[queryName+"-conditional-where-clause"];
+if (conditionalWhereClause != null && conditionalWhereClause.length > 0) {
+    for (var i=0; i<conditionalWhereClause.length; i++) {
+        var ifMatch = conditionalWhereClause[i]["if-match"] || {};
+        var whereClause = conditionalWhereClause[i]["where-clause"] || [];
+        if (ifMatch.svc == svc && ifMatch.comp == comp && whereClause.length > 0) {
+            dimensionWhereClause = dimensionWhereClause.concat(whereClause);
+        }
+    }
+}
+
+var metricNameColumn = queryParams[queryName+"-name"] || queryConfig["default-column-names"][queryName+"-name"] || "metricname";
+
+var groupKey = metricNameColumn;
+var groupData = "'" + queryConfig["filters"]["metric"] + "=',"+metricNameColumn;
+if (metricAlias != null) {
+    groupKey = "'" + metricAlias + "'";
+    groupData = "'" + queryConfig["filters"]["metric"] + "=" + metricAlias + "'";
+}
+groupKey  = this._getGroupKey(groupKey, groupDimensions, groupColumns);
+groupData = this._getGroupData(groupData, groupDimensions, groupColumns, groupFilters);
+
+if (app != null && app.length > 0) {
+    var appColumn = queryParams[queryName+"-app"] || queryConfig["default-column-names"][queryName+"-app"] || "app";
+    if (Array.isArray(app) && app.length > 1) {
+        groupKey = "'[" + app.join("][") + "]|'," + groupKey;
+        groupData = "'" + queryConfig["filters"]["app"] + "=[" + app.join("][") + "];'," + groupData;
+    }
+    else {
+        groupKey = "'" + app + "|'," + groupKey;
+        groupData = "'" + queryConfig["filters"]["app"] + "=" + app + ";'," + groupData;
+    }
+}
+else {
+    groupKey = "'*|'," + groupKey;
+    groupData = "'" + queryConfig["filters"]["app"] + "=*;'," + groupData;
+}
+
+if (comp != null && comp.length > 0) {
+    if (Array.isArray(comp) && comp.length > 1) {
+        groupKey = "'[" + comp.join("][") + "]|'," + groupKey;
+        groupData = "'" + queryConfig["filters"]["comp"] + "=[" + comp.join("][") + "];'," + groupData;
+    }
+    else {
+        groupKey = "'" + comp + "|'," + groupKey;
+        groupData = "'" + queryConfig["filters"]["comp"] + "=" + comp + ";'," + groupData;
+    }
+}
+else {
+    groupKey = "'*|'," + groupKey;
+    groupData = "'" + queryConfig["filters"]["comp"] + "=*;'," + groupData;
+}
+
+groupKey = "'" + svc + "|'," + groupKey;
+groupData = "'" + queryConfig["filters"]["svc"] + "=" + svc + ";'," + groupData;
+
+return {
+    whereClause : this._doValueSubstitution(dimensionWhereClause.join("\n"), valueSubMap),
+    groupKey    : groupKey,
+    groupData   : groupData,
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDistinctFilters" args="queryConfig,svc,comp,app,filters,itemList,addCustomerCallVolume" private="false">
+        <CodeText>
+          <![CDATA[var filters = JSON.parse(JSON.stringify(filters));
+for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    if (filter.name == queryConfig["filters"]["svc"]) {
+        filter.value = [];
+        for (var j=0; j<itemList.length; j++) {
+            if (itemList[j]["svc"] != null && filter.value.indexOf(itemList[j]["svc"]) == -1) {
+                var ok1 = svc == null || svc == itemList[j]["svc"];
+                if (ok1) {
+                    filter.value.push(itemList[j]["svc"]);
+                }
+            }
+        }
+    }
+    else if (filter.name == queryConfig["filters"]["comp"]) {
+        filter.value = [];
+        for (var j=0; j<itemList.length; j++) {
+            if (itemList[j]["comp"] != null && filter.value.indexOf(itemList[j]["comp"]) == -1) {
+                var ok1 = svc == null || svc == itemList[j]["svc"];
+                var ok2 = comp == null || comp == itemList[j]["comp"];
+                if (ok1 && ok2) {
+                    filter.value.push(itemList[j]["comp"]);
+                }
+            }
+        }
+    }
+    else if (filter.name == queryConfig["filters"]["app"]) {
+        filter.value = [];
+        for (var j=0; j<itemList.length; j++) {
+            if (itemList[j]["app"] != null && filter.value.indexOf(itemList[j]["app"]) == -1) {
+                var ok1 = svc == null || svc == itemList[j]["svc"];
+                var ok2 = comp == null || comp == itemList[j]["comp"];
+                var ok3 = app == null || app == itemList[j]["app"];
+                if (ok1 && ok2 && ok3) {
+                    filter.value.push(itemList[j]["app"]);
+                }
+            }
+        }
+    }
+    else if (filter.name == queryConfig["filters"]["metric"]) {
+        filter.value = [];
+        for (var j=0; j<itemList.length; j++) {
+            if (itemList[j]["metric"] != null && filter.value.indexOf(itemList[j]["metric"]) == -1) {
+                var ok1 = svc == null || svc == itemList[j]["svc"];
+                var ok2 = comp == null || comp == itemList[j]["comp"];
+                var ok3 = app == null || app == itemList[j]["app"];
+                if (ok1 && ok2 && ok3) {
+                    filter.value.push(itemList[j]["metric"]);
+                }
+            }
+        }
+        if (addCustomerCallVolume) {
+            filter.value.push("Customer Call Volume");
+        }
+    }
+}
+//print("_getDistinctFilters: filters="+__prettyPrintJSON(filters));
+return filters;]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDistinctMetricList" args="serviceConfig,svc,comp,app,metric" private="false">
+        <CodeText>
+          <![CDATA[function stripHash(name)
+{
+    var hash = name.indexOf("#");
+    if (hash != -1) {
+        name = name.substring(0, hash);
+    }
+    return name;
+}
+
+var list = this._getFilteredItems(serviceConfig, [svc, comp, app]);
+var metricList = [];
+for (var i=0; i<list.length; i++) {
+    var item = list[i];
+    if (metric == null || metric.indexOf(item["name"]) != -1) {
+        var path = item["path"];
+        var qdc = item["meta"] && item["meta"]["dimension-values"];
+        if (qdc != null && qdc.length == 0) qdc = null;
+        metricList.push({
+            svc    : path.length > 0 ? stripHash(item["path"][0]) : null,
+            comp   : path.length > 1 ? stripHash(item["path"][1]) : null,
+            app    : path.length > 2 ? stripHash(item["path"][2]) : null,
+            metric : item["name"],
+            qdc    : qdc,
+        });
+    }
+}
+return metricList;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDistinctSvcCompAppList" args="metricList" private="false">
+        <CodeText>
+          <![CDATA[var distinct = {};
+var list = [];
+for (var i=0; i<metricList.length; i++) {
+    var item = metricList[i];
+    var key = item.svc + "|" + item.comp + "|" + item.app;
+    if (distinct[key] == null) {
+        list.push({
+            svc  : item.svc,
+            comp : item.comp,
+            app  : item.app,
+        });
+        distinct[key] = true;
+    }
+}
+return list;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDistinctSvcCompList" args="metricList" private="false">
+        <CodeText>
+          <![CDATA[var distinct = {};
+var list = [];
+for (var i=0; i<metricList.length; i++) {
+    var item = metricList[i];
+    var key = item.svc + "|" + item.comp;
+    if (distinct[key] == null) {
+        list.push({
+            svc  : item.svc,
+            comp : item.comp,
+        });
+        distinct[key] = true;
+    }
+}
+return list;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDistinctSvcList" args="metricList" private="false">
+        <CodeText>
+          <![CDATA[var distinct = {};
+var list = [];
+for (var i=0; i<metricList.length; i++) {
+    var item = metricList[i];
+    var key = item.svc;
+    if (distinct[key] == null) {
+        list.push({
+            svc  : item.svc,
+        });
+        distinct[key] = true;
+    }
+}
+return list;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getMetricFilters" args="queryConfig,item,filters,addCustomerCallVolume" private="false">
+        <CodeText>
+          <![CDATA[var filters = JSON.parse(JSON.stringify(filters));
+for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    if (filter.name == queryConfig["filters"]["svc"]) {
+        if (item.svc != null && item.svc != "" && item.svc != "*") {
+            filter.value = [item.svc];
+        }
+    }
+    else if (filter.name == queryConfig["filters"]["comp"]) {
+        if (item.comp != null && item.comp != "" && item.comp != "*") {
+            filter.value = [item.comp];
+        }
+    }
+    else if (filter.name == queryConfig["filters"]["app"]) {
+        if (item.app != null && item.app != "" && item.app != "*") {
+            filter.value = [item.app];
+        }
+    }
+    else if (filter.name == queryConfig["filters"]["metric"]) {
+        filter.value = [];
+        if (item.qdc != null) {
+            for (var j=0; j<item.qdc.length; j++) {
+                var qdc = item.qdc[j];
+                if (qdc.name == "$.METRIC") {
+                    if (Array.isArray(qdc.value)) {
+                        filter.value = qdc.value.slice(0);
+                    }
+                    else {
+                        filter.value.push(qdc.value);
+                    }
+                    break;
+                }
+            }
+        }
+        if (item.metric != null && item.metric != "" && item.metric != "*") {
+            if (filter.value.length == 0) {
+                filter.value.push(item.metric);
+            }
+            filter.alias = item.metric;
+        }
+        if (addCustomerCallVolume) {
+            filter.value.push("Customer Call Volume");
+        }
+    }
+}
+//print("_getMetricFilters: filters="+__prettyPrintJSON(filters));
+return filters;]]>
+        </CodeText>
+      </Service>
+      <Service name="_getTrendData" args="serviceConfig,queryConfig,filters,vtServiceRefId,timeStamp" private="false">
+        <CodeText>
+          <![CDATA[if (serviceConfig == null) return [];
+
+if (vtServiceRefId == null) {
+    vtServiceRefId = Date.now() + "_" + Math.round(100000*Math.random()) + "_" + Math.round(100000*Math.random());
+    //print("_getTrendData: vtServiceRefId=" + vtServiceRefId);
+}
+
+if (timeStamp != null && queryConfig["query-delay-tolerance"] != null && Number(queryConfig["query-delay-tolerance"]) > 0) {
+    var queryDelayToleranceInMinutes = Number(queryConfig["query-delay-tolerance"]);
+    var timeStampDelay = Date.now() - Number(timeStamp);
+    if (timeStampDelay > queryDelayToleranceInMinutes * 60 * 1000) return [];
+}
+
+if (queryConfig["print-query-timestamp"] == null || queryConfig["print-query-timestamp"] == false) {
+    timeStamp = null;
+}
+
+function getQueryKey(svc, comp, app)
+{
+    var buf = [];
+    if (svc != null) {
+        var hash = svc.indexOf("#");
+        buf.push(hash != -1 ? svc.substring(0,hash) : svc);
+    }
+    if (comp != null) {
+        var hash = comp.indexOf("#");
+        buf.push(hash != -1 ? comp.substring(0,hash) : comp);
+    }
+    if (app != null) {
+        var hash = app.indexOf("#");
+        buf.push(hash != -1 ? app.substring(0,hash) : app);
+    }
+    return buf.join("|");
+}
+
+// try explicit and implicit ANY
+// eg. Video|*|* == Video
+// but Video|*|* is more explicit and more distinctive
+function getQueryContext(queryDims, queryConfig)
+{
+    var explicitQueryDims = queryDims.slice(0);
+    for (var i=0; i<explicitQueryDims.length; i++) {
+        if (explicitQueryDims[i] == null) explicitQueryDims[i] = "*";
+    }
+    var ctx = _getQueryContext(explicitQueryDims, queryConfig);
+    if (ctx != null) return ctx;
+    return _getQueryContext(queryDims, queryConfig);
+}
+
+function _getQueryContext(queryDims, queryConfig)
+{
+    var queryEntry = null;
+    var queryFName = null;
+    
+    var queryDim0 = queryDims[0];
+    var queryDim1 = queryDims[1];
+    var queryDim2 = queryDims[2];
+
+    while (queryFName == null) {
+        queryKey = getQueryKey(queryDim0, queryDim1, queryDim2);
+        print("_getTrendData/getQueryContext: queryKey=" + queryKey);
+        queryEntry = queryConfig["service-queries"][queryKey];
+        // default to reduce repetitive config
+        if (queryEntry != null && queryEntry["function"] == null) {
+            queryEntry["function"] = "_getTrendDataImpl";
+        }
+        queryFName = queryEntry != null ? queryEntry["function"] : null;
+        if (queryFName == "") {
+            queryFName = null;
+        }
+        if (queryFName == null) {
+            if (queryDim2 != null) {
+                if (queryDim1 != "*") {
+                    queryDim1 = "*";
+                }
+                else if (queryDim0 != "*") {
+                    queryDim0 = "*"
+                }
+                else {
+                    break;
+                }
+            }
+            else if (queryDim1 != null) {
+                if (queryDim0 != "*") {
+                    queryDim0 = "*"
+                }
+                else {
+                    break;
+                }
+            }
+            else {
+                // matching only on dim0... if no match, we are done
+                // handle incomplete configuration of new service situation where service was added
+                // to system model but no query config set up here
+                break;
+            }
+        }
+    }
+    if (queryFName != null) {
+        return {
+            queryDims  : {
+                svc  : queryDims[0] != null ? [queryDims[0]] : null, 
+                comp : queryDims[1] != null ? [queryDims[1]] : null, 
+                app  : queryDims[2] != null ? [queryDims[2]] : null,
+            },
+            queryKeys  : getQueryKey(queryDims[0], queryDims[1], queryDims[2]),
+            queryEntry : queryEntry,
+            queryFName : queryFName
+        };
+    }
+    return null;
+}
+
+// initialized variables for multi-threaded execution
+var Executors = java.util.concurrent.Executors;
+var TimeUnit  = java.util.concurrent.TimeUnit;
+var ArrayList = java.util.ArrayList;
+var executor = null;
+var parallel = false;
+var results = new ArrayList();
+var servletRequest = com.vitria.flex.fds.ServletContextUtil.getRequest();
+var vtToken = Context.getToken();
+var userName = Context.getCurrentUserId();
+var self = this;
+
+function invokeQueryFunc(result, queryDims, serviceConfig, queryConfig, timeConstraints, filters, vtServiceRefId, aggrInterval, tzOffset)
+{
+    var dst = queryConfig["enable-dst"] == true && queryConfig["baseline-trend"] == null;
+    var ctx = getQueryContext(queryDims, queryConfig);
+    if (ctx != null) {
+        if (dst) ctx.queryFName += "DST";
+        print("_getTrendData/invokeQueryFunc: queryFName=" + ctx.queryFName);
+        var queryFunc = this[ctx.queryFName];
+        if (queryFunc != null && typeof queryFunc == "function") {
+            var queryParams = ctx.queryEntry != null ? ctx.queryEntry["params"] : null;
+            var queryOptions = ctx.queryEntry != null ? ctx.queryEntry["options"] : null;
+            if (queryOptions != null) {
+                if (queryOptions["use-precomputed-baseline"] == false && queryConfig["baseline-trend"] != null) {
+                    queryConfig["baseline-trend"] = null;
+                }
+            }
+            var metricSQLName = queryParams["metric-sql"] || "METRIC_SQL";
+            if (metricSQLName != null && dst) metricSQLName += "_DST";
+            if (metricSQLName != null && (queryConfig["baseline-trend"] || queryConfig["metric-baseline-trend"]) != null) {
+                // DST is not relevant if we are not computing baseline or using pre-computed baseline
+                switch (queryConfig["baseline-trend"] || queryConfig["metric-baseline-trend"]) {
+                    case "none":
+                        metricSQLName += "_NO_BL";
+                        break;
+                    default:
+                        metricSQLName += "_PRE_BL";
+                        break;
+                }
+            }
+            var metricSQL = metricSQLName != null ? Context.getLocalResource(metricSQLName) : null;
+            var callsSQLName = queryParams["calls-sql"] || "CALLS_SQL";
+            if (callsSQLName != null && dst) callsSQLName += "_DST";
+            if (callsSQLName != null && (queryConfig["baseline-trend"] || queryConfig["calls-baseline-trend"]) != null) {
+                // DST is not relevant if we are not computing baseline or using pre-computed baseline
+                switch (queryConfig["baseline-trend"] || queryConfig["calls-baseline-trend"]) {
+                    case "none":
+                        callsSQLName += "_NO_BL";
+                        break;
+                    default:
+                        callsSQLName += "_PRE_BL";
+                        break;
+                }
+            }
+            var callsSQL = callsSQLName != null ? Context.getLocalResource(callsSQLName) : null;
+            var mixSQL = Context.getLocalResource("METRIC_CALL_SQL");
+            if (dst) {
+                queryConfig["dst-config"] = {
+                    time_zone : this._getConfigProperty(queryConfig, "time_zone", true) || "America/Denver",
+                    time_loop : this._getConfigProperty(queryConfig, "time_loop", true) || "1",
+                    time_gap  : this._getConfigProperty(queryConfig, "time_gap", true)  || "0",
+                };
+            }
+            if (!Context.isCancelled(vtServiceRefId)) {
+                if (!parallel) {
+                    var trend = queryFunc(serviceConfig, queryConfig, metricSQL, callsSQL, mixSQL,
+                                          timeConstraints, filters, vtServiceRefId,
+                                          queryParams, ctx.queryDims, aggrInterval, tzOffset, timeStamp);
+                    if (trend != null && !Context.isCancelled(vtServiceRefId)) {
+                        result = result.concat(trend);
+                    }
+                    return result;
+                }
+                else {
+                    results.add((function (Context) {
+                        var queryId = vtServiceRefId + "_" + Date.now() + "_" + Math.round(100000*Math.random()) + "_" + Math.round(100000*Math.random());
+                        function addition() {
+                            var loginContext = self._loginWithToken(userName, vtToken, servletRequest);
+                            var currentList = cache.get("idList") + '/' + queryId;
+                            cache.put("idList", currentList);
+                            var trend = queryFunc(serviceConfig, queryConfig, metricSQL, callsSQL, mixSQL,
+                                                  timeConstraints, filters, vtServiceRefId,
+                                                  queryParams, ctx.queryDims, aggrInterval, tzOffset, timeStamp);
+                            self._logoutWithToken(loginContext);
+                            if (trend != null && !Context.isCancelled(vtServiceRefId)) {
+                                return trend;
+                            }
+                            else {
+                                return [];
+                            }
+                        }
+                        if (Context.isCancelled(queryId)) {
+                            print("QUERY cancelled... skip trend query for " + ctx.queryKeys);
+                            return [];
+                        }
+                        return executor["submit(java.util.concurrent.Callable)"](addition);
+                    })(Context));
+                    // UI-329: even though we don't yet have result, return non-null so that we know
+                    //         this case has been scheduled and we can remove from list
+                    return [];
+                }
+            }
+            else {
+                print("QUERY cancelled... skip trend query for " + ctx.queryKeys);
+            }
+        }
+    }
+    return null;
+}
+
+function trimList(oldList, svcName, compName, appName)
+{
+    var newList = [];
+    for (var i=0; i<oldList.length; i++) {
+        var item = oldList[i];
+        var s = (svcName == null || item.svc == svcName);
+        var c = (compName == null || item.comp == compName);
+        var a = (appName == null || item.app == appName);
+        if (!s || !c || !a) {
+            newList.push(item);
+        }
+    }
+    return newList;
+}
+
+var ServiceUtil = com.vitria.dbp.resource.utils.ServiceUtil;
+var StringRepresentation = org.restlet.representation.StringRepresentation;
+
+function getTimeoutMessage(id, timeout)
+{
+    return "Query (" + id + ") timed out (" + timeout + "s). Please limit the filter scope (eg. smaller time range, fewer components)";
+}
+
+function seeErrorLogMessage(error)
+{
+    return error + ".\r\nPlease refer the server log for detail stack.";
+}
+
+function hasFailedResult()
+{
+    var isTimeOut = cache.get("isTimeOut");
+    if (isTimeOut == true) {
+        cache.remove("isTimeOut");
+        var checkResult = new StringRepresentation(ServiceUtil.createResult(null, getTimeoutMessage(vtServiceRefId, queryTimeOut), ""));
+        return {status: true, result : checkResult};
+    }
+    if (result && result.length == 1 && result[0].status == "Error") {
+        var checkResult = new StringRepresentation(ServiceUtil.createResult(null, seeErrorLogMessage(result[0].error), ""));
+        return {status: true, result : checkResult};
+    }
+    return {status : false};
+}
+
+//print("_getTrendData: filters=" + __prettyPrintJSON(filters));
+//print("_getTrendData: vtServiceRefId=" + vtServiceRefId);
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+
+//print("_getTrendData: filters="+__prettyPrintJSON(filters));
+var customAggregationInterval = null;
+var vtQueryTimeout = null;
+var vtBaselineTrend = null;
+var vtMetricID = null;
+var tmp = filters;
+filters = [];
+for (var i=0; i<tmp.length; i++) {
+    var filter = tmp[i];
+    if (filter.name == "$.metricID") {
+        vtMetricID = filter.value;
+    }
+    else if (filter.name == "$.timeRange") {
+        filters.push({
+            name  : queryConfig["filters"]["time"],
+            value : filter.value,
+        });
+    }
+    else if (filter.name == "$.aggregation.interval" || filter.name == "$.interval") {
+        customAggregationInterval = filter.value;
+    }
+    else if (filter.name == "$.queryTimeout") {
+        vtQueryTimeout = Number(filter.value);
+        if (isNaN(vtQueryTimeout)) vtQueryTimeout = null;
+    }
+    else if (filter.name == queryConfig["filters"]["interval"]) {
+        if (filter.value != "(AUTO)") {
+            customAggregationInterval = [
+                { "seconds": null, "interval": filter.value }
+            ];
+        }
+    }
+    else if (filter.name == "$.baselineTrend") {
+        // $.baselineTrend can be "none" or a object containing the metric MetricID and optionally call MetricID
+        vtBaselineTrend = filter.value;
+        if (vtBaselineTrend != null) {
+            if (typeof vtBaselineTrend == "string" && vtBaselineTrend != "none") {
+                // invalid string value... must be "none" for now
+                vtBaselineTrend = null;
+            }
+            else if (vtBaselineTrend.metricId == null && vtBaselineTrend.callMetricId == null) {
+                // metricId and/or callMetricId must be specified
+                vtBaselineTrend = null;
+            }
+        }
+    }
+    else {
+        filters.push(filter);
+    }
+}
+if (vtMetricID != null) {
+    this._mapMetricIDToFilters(queryConfig, filters, vtMetricID);
+}
+//print("_getTrendData: filters="+__prettyPrintJSON(filters));
+//print("_getTrendData: customAggregationInterval="+__prettyPrintJSON(customAggregationInterval));
+
+var timeRange = this._getTimeRange(queryConfig, filters);
+if (timeRange == null) return [];
+
+var timeConstraints = {
+    from : timeRange.fromUnixTime,
+    to   : timeRange.toUnixTime
+};
+
+var svc = [];
+if (queryConfig["filters"] != null) {
+    svc = this._getFilterValue(filters, queryConfig["filters"]["svc"], [], true);
+    svc = this._stripDupAndHashItems(svc);
+    //print("_getTrendData: svc=" + __prettyPrintJSON(svc));
+}
+if (svc.length == 0) return [];
+
+var comp = [];
+if (queryConfig["filters"] != null) {
+    comp = this._getFilterValue(filters, queryConfig["filters"]["comp"], [], true);
+    comp = this._stripDupAndHashItems(comp);
+    //print("_getTrendData: comp=" + __prettyPrintJSON(comp));
+}
+//if (comp.length == 0) return [];
+
+if (comp.length == 1 && (comp[0]).indexOf("][") != -1) {
+    // we have [...][...] sub-services
+    var mergedComp = comp[0];
+    comp = mergedComp.substring(1, mergedComp.length-1).split("][");
+    //print("_getTrendData: comp=" + __prettyPrintJSON(comp));
+}
+
+var app = [];
+if (queryConfig["filters"] != null) {
+    app = this._getFilterValue(filters, queryConfig["filters"]["app"], [], true);
+    app = this._stripDupAndHashItems(app);
+    //print("_getTrendData: app=" + __prettyPrintJSON(app));
+}
+//if (app.length == 0) return [];
+
+var services = serviceConfig.groups;
+if (services == null || services.length == 0) return [];
+
+if (queryConfig == null || queryConfig["service-queries"] == null) return [];
+if (queryConfig["default-column-names"] == null) queryConfig["default-column-names"] = {};
+
+if (queryConfig["thread-pool-size"] != null && Number(queryConfig["thread-pool-size"]) > 1) {
+    parallel = true;
+    executor = Executors.newFixedThreadPool(Number(queryConfig["thread-pool-size"]));
+}
+
+var queryTimeOut = -1;
+var cacheTimeoutInMinutes = 20;
+if (vtQueryTimeout != null) {
+    queryTimeOut = vtQueryTimeout;
+}
+else if (queryConfig["query-time-out"] != null && Number(queryConfig["query-time-out"]) >= 0) {
+    queryTimeOut = Number(queryConfig["query-time-out"]);
+}
+if (queryTimeOut > 0) {
+    cacheTimeoutInMinutes = 1 + Math.round(queryTimeOut / 60);
+}
+var CacheUtil = com.vitria.util.CacheUtil;
+var cache = CacheUtil.getCache(vtServiceRefId, cacheTimeoutInMinutes);
+cache.put("isTimeOut", false);
+cache.put("idList", "");
+
+if (queryTimeOut > 0) {
+    TimerTask.setTimeout("QueryTimeOut", queryTimeOut, function(queryId, cache, parallel, Context, executor) {
+        if(!parallel) {
+            if(!Context.isCancelled(queryId)) Context.cancelSQL(queryId);
+        } else {
+            var idListCache = cache.get("idList");
+            var idList = idListCache.split("/");
+            for(var i = 0; i < idList.length; i++){
+                var id = idList[i];
+                if(id != "" && !Context.isCancelled(id)) {
+                    Context.cancelSQL(id);
+                } 
+            }
+            cache.remove("idList");
+            executor.shutdownNow();
+        } 
+        cache.put("isTimeOut", true);
+    }, vtServiceRefId, cache, parallel, Context, executor);
+}
+
+if (customAggregationInterval != null) {
+    queryConfig["aggregation-interval"] = customAggregationInterval;
+}
+
+if (queryConfig["enable-baseline-options"] == true && vtBaselineTrend != null) {
+    queryConfig["baseline-trend"] = vtBaselineTrend;
+}
+
+var aggrInterval = this._getAggrInterval(queryConfig, timeConstraints.from, timeConstraints.to);
+var tzOffset = aggrInterval > (60*60) ? this._getAggregateTimezoneOffset(queryConfig, 60*timeRange.clientTimezoneOffset) : 0;
+//print("_getTrendData: aggrInterval="+aggrInterval+" tzOffset="+tzOffset);
+
+var metric = [];
+if (queryConfig["filters"] != null) {
+    metric = this._getFilterValue(filters, queryConfig["filters"]["metric"], [], true);
+    metric = this._stripDupAndHashItems(metric);
+    //print("_getTrendData: metric=" + __prettyPrintJSON(metric));
+}
+var indexCustomerCallVolume = metric.indexOf("Customer Call Volume");
+if (indexCustomerCallVolume != -1) {
+    metric.splice(indexCustomerCallVolume, 1);
+}
+//print("_getTrendData: metric=" + __prettyPrintJSON(metric));
+
+var metricList = null;
+var addCustomerCallVolume = false;
+
+if (metric.length > 0) {
+    metricList = this._getDistinctMetricList(serviceConfig, svc, comp, app, metric);
+    addCustomerCallVolume = indexCustomerCallVolume != -1;
+}
+else if (indexCustomerCallVolume != -1) {
+    // calls only
+    metricList = this._getDistinctMetricList(serviceConfig, svc, comp, app, ["Customer Call Volume"]);
+    addCustomerCallVolume = false;
+}
+
+var result = [];
+var startTime = Date.now();
+if (metricList != null) {
+    //print("_getTrendData: 1:metricList="+__prettyPrintJSON(metricList));
+    // first we iterate over metricList and process entries with metric level QDC separately
+    for (var i=0; i<metricList.length; i++) {
+        var item = metricList[i];
+        if (item.qdc != null) {
+            var trend = invokeQueryFunc(result, [item.svc, item.comp, item.app], serviceConfig, queryConfig, timeConstraints,
+                                        this._getMetricFilters(queryConfig, item, filters, addCustomerCallVolume),
+                                        vtServiceRefId, aggrInterval, tzOffset);
+            if (trend != null) {
+                result = trend;
+            }
+            if (!parallel) {
+                var failedResult = hasFailedResult(result);
+                if (failedResult.status) return failedResult.result;
+            }
+        }
+    }
+    metricList = metricList.filter(function(item) {
+        return item.qdc == null;
+    });
+    //print("_getTrendData: 2:metricList="+__prettyPrintJSON(metricList));
+    var distinctSvcCompAppList = this._getDistinctSvcCompAppList(metricList);
+    //print("_getTrendData: distinctSvcCompAppList="+__prettyPrintJSON(distinctSvcCompAppList));
+    for (var i=0; i<distinctSvcCompAppList.length; i++) {
+        var item = distinctSvcCompAppList[i]
+        if (item.app == null) continue;
+        var trend = invokeQueryFunc(result, [item.svc, item.comp, item.app], serviceConfig, queryConfig, timeConstraints,
+                                    this._getDistinctFilters(queryConfig, item.svc, item.comp, item.app, filters, metricList, addCustomerCallVolume),
+                                    vtServiceRefId, aggrInterval, tzOffset);
+        if (trend != null) {
+            metricList = trimList(metricList, item.svc, item.comp, item.app);
+            //print("_getTrendData: 3:metricList="+__prettyPrintJSON(metricList));
+            result = trend;
+        }
+        if (!parallel) {
+            var failedResult = hasFailedResult(result);
+            if (failedResult.status) return failedResult.result;
+        }
+    }
+    var distinctSvcCompList = this._getDistinctSvcCompList(metricList);
+    for (var i=0; i<distinctSvcCompList.length; i++) {
+        var item = distinctSvcCompList[i]
+        if (item.comp == null) continue;
+        var trend = invokeQueryFunc(result, [item.svc, item.comp, null], serviceConfig, queryConfig, timeConstraints,
+                                    this._getDistinctFilters(queryConfig, item.svc, item.comp, null, filters, metricList, addCustomerCallVolume),
+                                    vtServiceRefId, aggrInterval, tzOffset);
+        if (trend != null) {
+            metricList = trimList(metricList, item.svc, item.comp, null);
+            //print("_getTrendData: 4:metricList="+__prettyPrintJSON(metricList));
+            result = trend;
+        }
+        if (!parallel) {
+            var failedResult = hasFailedResult(result);
+            if (failedResult.status) return failedResult.result;
+        }
+    }
+    var distinctSvcList = this._getDistinctSvcList(metricList);
+    for (var i=0; i<distinctSvcList.length; i++) {
+        var item = distinctSvcList[i]
+        if (item.svc == null) continue;
+        var trend = invokeQueryFunc(result, [item.svc, null, null], serviceConfig, queryConfig, timeConstraints,
+                                    this._getDistinctFilters(queryConfig, item.svc, null, null, filters, metricList, addCustomerCallVolume),
+                                    vtServiceRefId, aggrInterval, tzOffset);
+        if (trend != null) {
+            metricList = trimList(metricList, item.svc, null, null);
+            //print("_getTrendData: 5:metricList="+__prettyPrintJSON(metricList));
+            result = trend;
+        }
+        if (!parallel) {
+            var failedResult = hasFailedResult(result);
+            if (failedResult.status) return failedResult.result;
+        }
+    }
+    //print("_getTrendData: 6:metricList="+__prettyPrintJSON(metricList));
+}
+
+if (parallel) {
+    try {
+        var currentTime = Date.now();
+        print("Finished getTrends threads: " + results.size() + " Time: " + (currentTime - startTime)/1000 + "s");
+        executor.shutdown();
+        executor.awaitTermination(10, TimeUnit.MINUTES);
+    }
+    catch (ex) {
+        print(ex);
+    }
+    result = [];
+    for (var j=0; j < results.size(); j++) {
+        var r = results[j];
+        if (r != null) {
+            var ret = r.get();
+            if (cache.get("isTimeOut")) {
+                cache.remove("isTimeOut");
+                result = new StringRepresentation(ServiceUtil.createResult(null, getTimeoutMessage(vtServiceRefId, queryTimeOut), ""));
+                return result;
+            }
+            if (ret && ret.status == "Error") {
+                result = new StringRepresentation(ServiceUtil.createResult(null, seeErrorLogMessage(ret.error), ""));
+                return result;
+            }
+            result = result.concat(ret);
+        }
+    }
+}
+
+var endTime = Date.now();
+if (timeStamp != null) {
+    print("[" + timeStamp + "] getTrends total time: " + (endTime - startTime) + "ms");
+} else {
+    print("getTrends total time: " + (endTime - startTime) + "ms");
+}
+
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getTrendDataImpl" args="serviceConfig,queryConfig,metricSQL,callsSQL,mixSQL,timeConstraints,filters,vtServiceRefId,queryParams,queryDims,aggrInterval,tzOffset,timeStamp" private="false">
+        <CodeText>
+          <![CDATA[//print("getTrendDataImpl: queryDims="+__prettyPrintJSON(queryDims));
+//print("getTrendDataImpl: queryParams="+__prettyPrintJSON(queryParams));
+
+var _1W = 7*24*60*60;
+
+var svc = queryDims["svc"] || queryParams["svc"];
+//print("getTrendDataImpl: svc=" + svc);
+if (svc == null) {
+    svc = this._getFilterValue(filters, queryConfig["filters"]["svc"], [], true);
+    this._stripReservedItems(queryParams["reserved-svc"], svc);
+    //print("getTrendDataImpl: svc=" + svc);
+}
+if (svc == null || svc.length == 0) return [];
+
+var comp = queryDims["comp"] || queryParams["comp"];
+//print("getTrendDataImpl: comp=" + comp);
+if (comp == null) {
+    comp = this._getFilterValue(filters, queryConfig["filters"]["comp"], [], true);
+    this._stripReservedItems(queryParams["reserved-comp"], comp);
+    //print("getTrendDataImpl: comp=" + comp);
+}
+
+var app = queryDims["app"] || queryParams["app"];
+//print("getTrendDataImpl: app=" + app);
+if (app == null) {
+    app = this._getFilterValue(filters, queryConfig["filters"]["app"], [], true);
+    this._stripReservedItems(queryParams["reserved-app"], app);
+    //print("getTrendDataImpl: app=" + app);
+}
+
+var metric = null;
+if (metric == null) {
+    metric = this._getFilterValue(filters, queryConfig["filters"]["metric"], [], true);
+    this._stripReservedItems(queryParams["reserved-metric"], metric);
+    //print("getTrendDataImpl: metric=" + metric);
+}
+if (metric == null || metric.length == 0) return [];
+
+//var onlyCustomerCallVolume = metric.length == 1 && metric[0] == "Customer Call Volume";
+//if (!onlyCustomerCallVolume) {
+//    if (comp.length == 0) return [];
+//    if (app.length == 0) return [];
+//
+//    app = this._getFilteredGroups(serviceConfig, [svc, comp], app);
+//    //print("getTrendDataImpl: app=" + app);
+//    if (app.length == 0) return [];
+//
+//    metric = this._getFilteredItems(serviceConfig, [svc, comp, app], metric);
+//    //print("getTrendDataImpl: metric=" + metric);
+//    if (metric.length == 0) return [];
+//}
+
+comp = this._stripDupAndHashItems(comp);
+comp.sort();
+
+app = this._stripDupAndHashItems(app);
+metric = this._stripDupAndHashItems(metric);
+
+var inclCustomerCallVolume = metric.indexOf("Customer Call Volume");
+if (inclCustomerCallVolume != -1) {
+    metric = metric.slice(0);
+    metric.splice(inclCustomerCallVolume, 1);
+}
+
+var baselineTableName = queryConfig["baseline-history-table"] || "viaops_baseline_history";
+
+var metricDateKeyCol = queryParams["metric-date-key"] || queryConfig["default-column-names"]["metric-date-key"] || "date_key";
+var metricAppCol     = queryParams["metric-app"] || queryConfig["default-column-names"]["metric-app"] || "app";
+var metricNameCol    = queryParams["metric-name"] || queryConfig["default-column-names"]["metric-name"] || "metric_name";
+var metricEpochCol   = queryParams["metric-epoch"] || queryConfig["default-column-names"]["metric-epoch"] || "aggr_start_tm";
+
+var callDateKeyCol = queryParams["calls-date-key"] || queryConfig["default-column-names"]["calls-date-key"] || "date_key";
+var callCountCol   = queryParams["calls-count"] || queryConfig["default-column-names"]["calls-count"] || "metric_value";
+var callEpochCol   = queryParams["calls-epoch"] || queryConfig["default-column-names"]["calls-epoch"] || "aggr_start_tm";
+
+var baselineWeeks = Number(queryConfig["baseline-weeks"]);
+var baselineFromTime = timeConstraints.from-(5*_1W);
+var baselineToTime = timeConstraints.to-(1*_1W);
+
+var dateKeys = this._getDateKeysFromUnixtimeRange(timeConstraints.from,timeConstraints.to);
+var metricBaselineDateKeyWhereClause = this._getBaselineDatekeyWhereClause(queryConfig, metricDateKeyCol, timeConstraints);
+var callsBaselineDateKeyWhereClause = this._getBaselineDatekeyWhereClause(queryConfig, callDateKeyCol, timeConstraints);
+
+var refTime = queryConfig != null ? queryConfig["round-time-to"] : null;
+if (refTime == null) refTime = "EndTime";
+
+var markTime = queryConfig != null ? queryConfig["mark-time-by"] : null;
+if (markTime == null) markTime = "EndTime";
+
+var valueSubMap = this._getValueSubMap(queryConfig, dateKeys, timeConstraints.from, timeConstraints.to, filters);
+
+var fromOper = refTime == "StartTime" ? ">=" : ">";
+var toOper   = refTime == "StartTime" ? "<" : "<=";
+
+var chunkedEpochWhereClause = queryConfig != null && queryConfig["chunked-epoch-where-clause"] == true;
+
+if (metric.length > 0) {
+    var metricAlias = null;
+    for (var i=0; i<filters.length; i++) {
+        var filter = filters[i];
+        if (filter.name == queryConfig["filters"]["metric"]) {
+            metricAlias = filter.alias;
+            break;
+        }
+    }
+    var aggrCaseClause = this._getAggregateCaseClause(serviceConfig, queryConfig, queryParams, "        ", svc, comp, app, metric, metricAlias);
+    var appColumnClause = "";
+    var appWhereClause = "";
+    var metricValueGroupBy = "1,2,3,4";
+    var metricBaselineGroupBy = "1,2,3";
+    if (app.length > 0) {
+        appColumnClause = metricAppCol + ",";
+        appWhereClause = "and " + metricAppCol + " in (" + this._formatArrayForInClause(app) + ")";
+        metricValueGroupBy = "1,2,3,4,5";
+        metricBaselineGroupBy = "1,2,3,4";
+    }
+    var metricEpochExpr = this._getEpochExprSQL(metricEpochCol, aggrInterval, refTime, tzOffset);
+    var metricBaselineEpochWhereClause = chunkedEpochWhereClause
+        ? this._getBaselineEpochWhereClause(queryConfig, metricEpochExpr, fromOper, toOper, timeConstraints)
+        : metricEpochExpr + " " + fromOper + " " + baselineFromTime + " and " + metricEpochExpr + " " + toOper + " " + baselineToTime;
+    var values = {
+        "metricTable" : queryParams["metric-table"],
+        "dateKeyColumn" : metricDateKeyCol,
+        "metricNameColumn" : metricNameCol,
+        "fromTime" : String(timeConstraints.from),
+        "toTime" : String(timeConstraints.to),
+        "fromOper" : fromOper,
+        "toOper" : toOper,
+        "baselineFromTime" : String(baselineFromTime),
+        "baselineToTime" : String(baselineToTime),
+        "svc" : this._formatArrayForInClause(svc),
+        "metric" : this._formatArrayForInClause(metric),
+        "aggrCaseClause" : aggrCaseClause,
+        "dateKeys" : dateKeys,
+        "baselineDateKeyWhereClause" : metricBaselineDateKeyWhereClause,
+        "epochProjectionSQL" : this._getEpochProjectionSQL("a._epoch_", aggrInterval, markTime, tzOffset),
+        "timeProjectionSQL" : this._getTimeProjectionSQL("a._epoch_", aggrInterval, markTime, tzOffset),
+        "epochExpr" : metricEpochExpr,
+        "baselineWeeks" : String(baselineWeeks),
+        "baselineEpochWhereClause" : metricBaselineEpochWhereClause,
+        "baselineTableName" : baselineTableName,
+        "appColumnClause" : appColumnClause,
+        "appWhereClause" : appWhereClause,
+        "metricValueGroupBy" : metricValueGroupBy,
+        "metricBaselineGroupBy" : metricBaselineGroupBy,
+    };
+    var dimensionWhereClause = this._getDimensionWhereClause(serviceConfig, queryConfig, queryParams, "metric", filters,
+                                                             svc, comp, app, metric, metricAlias, valueSubMap);
+    values["groupKey"] = dimensionWhereClause.groupKey;
+    values["groupData"] = dimensionWhereClause.groupData;
+    values["dimensionWhereClause"] = dimensionWhereClause.whereClause;
+    if (queryConfig["baseline-trend"] != null && (queryConfig["baseline-trend"]).incidentMetricId != null) {
+        values["metricId"] = (queryConfig["baseline-trend"]).incidentMetricId;
+    }
+    metricSQL = this._doValueSubstitution(metricSQL, values);
+}
+else {
+    metricSQL = null;
+}
+
+var callsGroupKey = null;
+if (inclCustomerCallVolume != -1) {
+    var callEpochExpr = this._getEpochExprSQL(callEpochCol, aggrInterval, refTime, tzOffset);
+    var callBaselineEpochWhereClause = chunkedEpochWhereClause
+        ? this._getBaselineEpochWhereClause(queryConfig, callEpochExpr, fromOper, toOper, timeConstraints)
+        : callEpochExpr + " " + fromOper + " " + baselineFromTime + " and " + callEpochExpr + " " + toOper + " " + baselineToTime;
+    callsGroupKey = this._getCallsGroupKey(svc, comp, app);
+    var values = {
+        "callsTable" : queryParams["calls-table"],
+        "dateKeyColumn" : callDateKeyCol,
+        "callsCount" : callCountCol,
+        // DO NOT use "" for group key as it has special meaning (no filtering) inside container widget
+        "groupKey" : callsGroupKey,
+        "groupData" : this._getCallsGroupData(queryConfig, svc, comp, app),
+        "fromTime" : String(timeConstraints.from),
+        "toTime" : String(timeConstraints.to),
+        "fromOper" : refTime == "StartTime" ? ">=" : ">",
+        "toOper" : refTime == "StartTime" ? "<" : "<=",
+        "svc" : this._formatArrayForInClause(svc),
+        "baselineFromTime" : String(baselineFromTime),
+        "baselineToTime" : String(baselineToTime),
+        "dateKeys" : dateKeys,
+        "baselineDateKeyWhereClause" : callsBaselineDateKeyWhereClause,
+        "epochProjectionSQL" : this._getEpochProjectionSQL("a._epoch_", aggrInterval, markTime, tzOffset),
+        "timeProjectionSQL" : this._getTimeProjectionSQL("a._epoch_", aggrInterval, markTime, tzOffset),
+        "epochExpr" : callEpochExpr,
+        "baselineWeeks" : String(baselineWeeks),
+        "baselineEpochWhereClause" : callBaselineEpochWhereClause,
+        "baselineTableName" : baselineTableName,
+    };
+    var dimensionWhereClause = this._getDimensionWhereClause(serviceConfig, queryConfig, queryParams, "calls", filters,
+                                                             svc, null, null, "Customer Call Volume", null, valueSubMap);
+    values["dimensionWhereClause"] = dimensionWhereClause.whereClause;
+    if (queryConfig["baseline-trend"] != null && (queryConfig["baseline-trend"]).callMetricId != null) {
+        values["metricId"] = (queryConfig["baseline-trend"]).callMetricId;
+    }
+    callsSQL = this._doValueSubstitution(callsSQL, values);
+}
+else {
+    callsSQL = null;
+}
+
+var sql = null;
+if (metricSQL != null && callsSQL != null) {
+    sql = mixSQL;
+    var values = {
+        "metricSQL" : metricSQL,
+        "callsSQL"  : callsSQL,
+    };
+    sql = this._doValueSubstitution(sql, values);
+}
+else if (metricSQL != null) {
+    sql = metricSQL;
+}
+else if (callsSQL != null) {
+    sql = callsSQL;
+}
+
+var moduleName = queryConfig["module-name"] || "(TA)";
+var result = this.executeSQLQuery(queryConfig, [svc, comp, app], [moduleName], "VT_ODA_QS", sql, vtServiceRefId, true, timeStamp);
+if (result != null) {
+    if (result.status == "Error") return result;
+    var start = Date.now();
+    this._toISO8601(result.items, "_time_");
+    if (metricSQL != null && callsSQL != null) {
+        if (callsGroupKey != null) {
+            result.items = this._mergeCallsIntoMetrics(result.items, callsGroupKey);
+        }
+    }
+    result.items = this._updateGroupKeyToShowLabel(serviceConfig, result.items);
+    var elapsed = Date.now() - start;
+    var prefix = this.getLogPrefix([svc, comp, app], [moduleName, "PostProcess"], timeStamp);
+    print(prefix + "[Info ] Processed " + result.total + " record(s) in " + elapsed + "ms");
+    return result.items;
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getTrendDataImplDST" args="serviceConfig,queryConfig,metricSQL,callsSQL,mixSQL,timeConstraints,filters,vtServiceRefId,queryParams,queryDims,aggrInterval,tzOffset,timeStamp" private="false">
+        <CodeText>
+          <![CDATA[//print("getTrendDataDSTImpl: queryDims="+__prettyPrintJSON(queryDims));
+//print("getTrendDataDSTImpl: queryParams="+__prettyPrintJSON(queryParams));
+
+var _1W = 7*24*60*60;
+var weekStartDay = 1;
+if (queryConfig['week-start-day'] != null) {
+    weekStartDay = queryConfig['week-start-day'];
+}
+
+var weekOffset = 0;
+if (aggrInterval >= _1W) {
+    if (weekStartDay > 4) {
+        weekOffset = (weekStartDay - 11)*24*60*60;
+    } else {
+        weekOffset = (weekStartDay - 4)*24*60*60;
+    }
+}
+
+var svc = queryDims["svc"] || queryParams["svc"];
+//print("getTrendDataImpl: svc=" + svc);
+if (svc == null) {
+    svc = this._getFilterValue(filters, queryConfig["filters"]["svc"], [], true);
+    this._stripReservedItems(queryParams["reserved-svc"], svc);
+    //print("getTrendDataImpl: svc=" + svc);
+}
+if (svc == null || svc.length == 0) return [];
+
+var comp = queryDims["comp"] || queryParams["comp"];
+//print("getTrendDataImpl: comp=" + comp);
+if (comp == null) {
+    comp = this._getFilterValue(filters, queryConfig["filters"]["comp"], [], true);
+    this._stripReservedItems(queryParams["reserved-comp"], comp);
+    //print("getTrendDataImpl: comp=" + comp);
+}
+
+var app = queryDims["app"] || queryParams["app"];
+//print("getTrendDataImpl: app=" + app);
+if (app == null) {
+    app = this._getFilterValue(filters, queryConfig["filters"]["app"], [], true);
+    this._stripReservedItems(queryParams["reserved-app"], app);
+    //print("getTrendDataImpl: app=" + app);
+}
+
+var metric = null;
+if (metric == null) {
+    metric = this._getFilterValue(filters, queryConfig["filters"]["metric"], [], true);
+    this._stripReservedItems(queryParams["reserved-metric"], metric);
+    //print("getTrendDataImpl: metric=" + metric);
+}
+if (metric == null || metric.length == 0) return [];
+
+//var onlyCustomerCallVolume = metric.length == 1 && metric[0] == "Customer Call Volume";
+//if (!onlyCustomerCallVolume) {
+//    if (comp.length == 0) return [];
+//    if (app.length == 0) return [];
+//
+//    app = this._getFilteredGroups(serviceConfig, [svc, comp], app);
+//    //print("getTrendDataImpl: app=" + app);
+//    if (app.length == 0) return [];
+//
+//    metric = this._getFilteredItems(serviceConfig, [svc, comp, app], metric);
+//    //print("getTrendDataImpl: metric=" + metric);
+//    if (metric.length == 0) return [];
+//}
+
+comp = this._stripDupAndHashItems(comp);
+comp.sort();
+
+app = this._stripDupAndHashItems(app);
+metric = this._stripDupAndHashItems(metric);
+
+var inclCustomerCallVolume = metric.indexOf("Customer Call Volume");
+if (inclCustomerCallVolume != -1) {
+    metric = metric.slice(0);
+    metric.splice(inclCustomerCallVolume, 1);
+}
+
+var baselineTableName = queryConfig["baseline-history-table"] || "viaops_baseline_history";
+
+var metricDateKeyCol = queryParams["metric-date-key"] || queryConfig["default-column-names"]["metric-date-key"] || "date_key";
+var metricAppCol     = queryParams["metric-app"] || queryConfig["default-column-names"]["metric-app"] || "app";
+var metricNameCol    = queryParams["metric-name"] || queryConfig["default-column-names"]["metric-name"] || "metric_name";
+var metricEpochCol   = queryParams["metric-epoch"] || queryConfig["default-column-names"]["metric-epoch"] || "aggr_start_tm";
+
+var callDateKeyCol = queryParams["calls-date-key"] || queryConfig["default-column-names"]["calls-date-key"] || "date_key";
+var callCountCol   = queryParams["calls-count"] || queryConfig["default-column-names"]["calls-count"] || "metric_value";
+var callEpochCol   = queryParams["calls-epoch"] || queryConfig["default-column-names"]["calls-epoch"] || "aggr_start_tm";
+
+var TimeZoneUtil = com.vitria.dbp.resource.utils.TimeZoneUtil;
+var Collections = java.util.Collections;
+
+var baselineWeeks = Number(queryConfig["baseline-weeks"]);
+var dstConfig = queryConfig["dst-config"];
+var solutionTimezone = dstConfig["time_zone"];
+var timeloop =  dstConfig["time_loop"];
+var timegap = dstConfig["time_gap"];
+var timeRanges =  TimeZoneUtil.getBaselineTimeRange(timeConstraints.from, timeConstraints.to, solutionTimezone, baselineWeeks, -7, false);
+var timeRangeList = timeRanges.getEpochRange();
+Collections.sort(timeRangeList);
+var baselineFromTime = timeRangeList.get(0).getStartTime();
+var baselineToTime = timeRangeList.get(timeRangeList.size()-1).getEndTime();
+var baselineDateKeys = timeRanges.getDateKeys("UTC", "yyyyMMdd");
+
+var dateKeys = this._getDateKeysFromUnixtimeRange(timeConstraints.from,timeConstraints.to);
+var metricBaselineDateKeyWhereClause = " and " + this._createInCriteria(metricDateKeyCol, baselineDateKeys);
+var callsBaselineDateKeyWhereClause = " and " + this._createInCriteria(callDateKeyCol, baselineDateKeys);
+
+var refTime = queryConfig != null ? queryConfig["round-time-to"] : null;
+if (refTime == null) refTime = "EndTime";
+
+var markTime = queryConfig != null ? queryConfig["mark-time-by"] : null;
+if (markTime == null) markTime = "EndTime";
+
+var valueSubMap = this._getValueSubMap(queryConfig, dateKeys, timeConstraints.from, timeConstraints.to, filters);
+
+if (metric.length > 0) {
+    var metricAlias = null;
+    for (var i=0; i<filters.length; i++) {
+        var filter = filters[i];
+        if (filter.name == queryConfig["filters"]["metric"]) {
+            metricAlias = filter.alias;
+            break;
+        }
+    }
+    var aggrCaseClause = this._getAggregateCaseClause(serviceConfig, queryConfig, queryParams, "        ", svc, comp, app, metric, metricAlias);
+    var appColumnClause = "";
+    var appWhereClause = "";
+    var metricValueGroupBy = "1,2,3,4";
+    var metricBaselineGroupBy = "1,2,3";
+    if (app.length > 0) {
+        appColumnClause = metricAppCol + ",";
+        appWhereClause = "and " + metricAppCol + " in (" + this._formatArrayForInClause(app) + ")";
+        metricValueGroupBy = "1,2,3,4,5";
+        metricBaselineGroupBy = "1,2,3,4";
+    }
+    var values = {
+        "metricTable" : queryParams["metric-table"],
+        "dateKeyColumn" : metricDateKeyCol,
+        "metricNameColumn" : metricNameCol,
+        "fromTime" : String(timeConstraints.from),
+        "toTime" : String(timeConstraints.to),
+        "fromOper" : refTime == "StartTime" ? ">=" : ">",
+        "toOper" : refTime == "StartTime" ? "<" : "<=",
+        "baselineFromTime" : String(baselineFromTime),
+        "baselineToTime" : String(baselineToTime),
+        "svc" : this._formatArrayForInClause(svc),
+        "metric" : this._formatArrayForInClause(metric),
+        "aggrCaseClause" : aggrCaseClause,
+        "dateKeys" : dateKeys,
+        "baselineDateKeyWhereClause" : metricBaselineDateKeyWhereClause,
+        "epochProjectionSQL" : this._getEpochProjectionDSTSQL("a._epoch_", aggrInterval, markTime),
+        "timeProjectionSQL" : this._getTimeProjectionDSTSQL("a._epoch_", aggrInterval, markTime, solutionTimezone),
+        "epochExpr" : this._getEpochExprDSTSQL(metricEpochCol, aggrInterval, solutionTimezone, weekOffset),
+        "baselineWeeks" : String(baselineWeeks),
+        "baselineTableName" : baselineTableName,
+        "solutionTimezone" : "'" + solutionTimezone + "'",
+        "timeloop" : timeloop,
+        "timegap" : timegap,
+        "appColumnClause" : appColumnClause,
+        "appWhereClause" : appWhereClause,
+        "metricValueGroupBy" : metricValueGroupBy,
+        "metricBaselineGroupBy" : metricBaselineGroupBy,
+    };
+    var dimensionWhereClause = this._getDimensionWhereClause(serviceConfig, queryConfig, queryParams, "metric", filters,
+                                                             svc, comp, app, metric, metricAlias, valueSubMap);
+    values["groupKey"] = dimensionWhereClause.groupKey;
+    values["groupData"] = dimensionWhereClause.groupData;
+    values["dimensionWhereClause"] = dimensionWhereClause.whereClause;
+    metricSQL = this._doValueSubstitution(metricSQL, values);
+}
+else {
+    metricSQL = null;
+}
+
+var callsGroupKey = null;
+if (inclCustomerCallVolume != -1) {
+    callsGroupKey = this._getCallsGroupKey(svc, comp, app);
+    var values = {
+        "callsTable" : queryParams["calls-table"],
+        "dateKeyColumn" : callDateKeyCol,
+        "callsCount" : callCountCol,
+        // DO NOT use "" for group key as it has special meaning (no filtering) inside container widget
+        "groupKey" : callsGroupKey,
+        "groupData" : this._getCallsGroupData(queryConfig, svc, comp, app),
+        "fromTime" : String(timeConstraints.from),
+        "toTime" : String(timeConstraints.to),
+        "fromOper" : refTime == "StartTime" ? ">=" : ">",
+        "toOper" : refTime == "StartTime" ? "<" : "<=",
+        "svc" : this._formatArrayForInClause(svc),
+        "baselineFromTime" : String(baselineFromTime),
+        "baselineToTime" : String(baselineToTime),
+        "dateKeys" : dateKeys,
+        "baselineDateKeyWhereClause" : callsBaselineDateKeyWhereClause,
+        "epochProjectionSQL" : this._getEpochProjectionDSTSQL("a._epoch_", aggrInterval, markTime),
+        "timeProjectionSQL" : this._getTimeProjectionDSTSQL("a._epoch_", aggrInterval, markTime, solutionTimezone),
+        "epochExpr" : this._getEpochExprDSTSQL(callEpochCol, aggrInterval, solutionTimezone, weekOffset),
+        "baselineWeeks" : String(baselineWeeks),
+        "baselineTableName" : baselineTableName,
+        "solutionTimezone" : "'" + solutionTimezone + "'",
+        "timeloop" : timeloop,
+        "timegap" : timegap,
+    };
+    var dimensionWhereClause = this._getDimensionWhereClause(serviceConfig, queryConfig, queryParams, "calls", filters,
+                                                             svc, null, null, "Customer Call Volume", null, valueSubMap);
+    values["dimensionWhereClause"] = dimensionWhereClause.whereClause;
+    callsSQL = this._doValueSubstitution(callsSQL, values);
+}
+else {
+    callsSQL = null;
+}
+
+var sql = null;
+if (metricSQL != null && callsSQL != null) {
+    sql = mixSQL;
+    var values = {
+        "metricSQL" : metricSQL,
+        "callsSQL"  : callsSQL,
+    };
+    sql = this._doValueSubstitution(sql, values);
+}
+else if (metricSQL != null) {
+    sql = metricSQL;
+}
+else if (callsSQL != null) {
+    sql = callsSQL;
+}
+
+var moduleName = queryConfig["module-name"] || "(TA)";
+var result = this.executeSQLQuery(queryConfig, [svc, comp, app], [moduleName], "VT_ODA_QS", sql, vtServiceRefId, true, timeStamp);
+if (result != null) {
+    if (result.status == "Error") return result;
+    var start = Date.now();
+    this._toISO8601(result.items, "_time_");
+    if (metricSQL != null && callsSQL != null) {
+        if (callsGroupKey != null) {
+            result.items = this._mergeCallsIntoMetrics(result.items, callsGroupKey);
+        }
+    }
+    result.items = this._updateGroupKeyToShowLabel(serviceConfig, result.items);
+    var elapsed = Date.now() - start;
+    var prefix = this.getLogPrefix([svc, comp, app], [moduleName, "PostProcess"], timeStamp);
+    print(prefix + "[Info ] Processed " + result.total + " record(s) in " + elapsed + "ms");
+    return result.items;
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getValueSubMap" args="queryConfig,dateKeys,fromEpoch,toEpoch,filters" private="false">
+        <CodeText>
+          <![CDATA[var valueSubMap = {
+    "date_keys" : dateKeys,
+    "from_epoch" : String(fromEpoch),
+    "to_epoch" : String(toEpoch),
+};
+filters.forEach(function(filter) {
+    var filterName = filter.name;
+    if (filterName == queryConfig["filters"]["interval"]) {
+        // IGNORE
+    }
+    else if (filterName == queryConfig["filters"]["time"]) {
+        // IGNORE
+    }
+    else {
+        var toks = filterName.split(".");
+        if (toks.length == 2 && toks[0] != "$") {
+            var filterValue = filter.value;
+            if (typeof filterValue == "string" && filterValue != "") {
+                var hash = filterValue.indexOf("#");
+                if (hash != -1) filterValue = filterValue.substring(0, hash);
+                valueSubMap[filterName] = filterValue;
+            }
+            else if (Array.isArray(filterValue) && filterValue.length > 0) {
+                var inClauseValues = [];
+                filterValue.forEach(function(value) {
+                    var hash = value.indexOf("#");
+                    inClauseValues.push(hash != -1 ? value.substring(0, hash) : value);
+                });
+                valueSubMap[filterName] = this._formatArrayForInClause(inClauseValues);
+            }
+        }
+    }
+});
+//print("valueSubMap="+__prettyPrintJSON(valueSubMap));
+return valueSubMap;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_matchName" args="groupOrItem,name" private="false">
+        <CodeText>
+          <![CDATA[var groupOrItemName = groupOrItem.name;
+var hash = groupOrItemName.indexOf("#");
+if (hash != -1) groupOrItemName = groupOrItemName.substring(0, hash);
+
+hash = name.indexOf("#");
+if (hash != -1) name = name.substring(0, hash);
+
+return groupOrItemName == name;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_matchNames" args="groupOrItem,names" private="false">
+        <CodeText>
+          <![CDATA[if (names == null) return true;
+for (var i=0; i<names.length; i++) {
+    if (this._matchName(groupOrItem, names[i])) return true;
+}
+return false;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_mergeCallsIntoMetrics" args="result,callsGroupKey" private="false">
+        <CodeText>
+          <![CDATA[// APOAUTO-1196
+
+// first collect all distinct epoch
+var epochs = [];
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    if (epochs.indexOf(record["_epoch_"]) == -1) {
+        epochs.push(record["_epoch_"]);
+    }
+}
+epochs.sort(function(a,b) {
+    if (a > b) return 1;
+    else if (a < b) return -1;
+    return 0;
+});
+
+// next find call records per epoch
+var callsRecord = {};
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    if (callsRecord[record["_epoch_"]] == null && (record["_value2_"] != null || record["_baseline2_"] != null)) {
+        callsRecord[record["_epoch_"]] = {
+            "_time_" : record["_time_"],
+            "_value2_" : record["_value2_"],
+            "_baseline2_" : record["_baseline2_"],
+        };
+    }
+}
+
+// finally, re-org metric records by group and epoch
+var metricRecordByGroup = {};
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    if (record["_group_"] != callsGroupKey) {
+        var metricGroup = metricRecordByGroup[record["_group_"]];
+        if (metricGroup == null) {
+            metricGroup = {};
+            metricRecordByGroup[record["_group_"]] = metricGroup;
+        }
+        if (metricGroup[record["_epoch_"]] == null) {
+            // check if really not necessary as there should be one and only one record per epoch per group
+            metricGroup[record["_epoch_"]] = record;
+        }
+    }
+}
+
+// NOW we create merged result with calls filled in where missing
+var merged = [];
+for (var i=0, n=epochs.length; i<n; i++) {
+    // for each time interval... add metrics record or if missing, fill with call record
+    for (var groupKey in metricRecordByGroup) {
+        var record = metricRecordByGroup[groupKey][epochs[i]];
+        if (record == null) {
+            var callRecord = callsRecord[epochs[i]];
+            if (callRecord != null) {
+                record = {
+                    "_group_"     : groupKey,
+                    "_epoch_"     : epochs[i],
+                    "_time_"      : callRecord["_time_"],
+                    "_value2_"    : callRecord["_value2_"],
+                    "_baseline2_" : callRecord["_baseline2_"],
+                };
+            }
+        }
+        if (record != null) {
+            merged.push(record);
+        }
+    }
+}
+return merged;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_stripReservedItems" args="reservedItems,list" private="false">
+        <CodeText>
+          <![CDATA[if (reservedItems == null) return;
+for (var i=0; i<reservedItems.length; i++) {
+    if (list.length == 0) return;
+    var index = list.indexOf(reservedItems[i]);
+    if (index != -1) list.splice(index, 1);
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_updateGroupKeyToShowLabel" args="serviceConfig,result" private="false">
+        <CodeText>
+          <![CDATA[var groupLabels = {};
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    var groupKey = record["_group_"];
+    var labels = groupLabels[groupKey];
+    if (labels == null) {
+        var hierarchy = groupKey.split("|");
+        if (hierarchy.length == 4) {
+            labels = this._getGroupItemLabels(serviceConfig, hierarchy).join("|");
+            groupLabels[groupKey] = labels;
+        }
+    }
+    if (labels != null) {
+        record["_group_"] = labels;
+    }
+}
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="checkFilters" args="filters" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+var result = {
+    errors : [],
+    warns  : [],
+};
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+//print("_checkFilters: filters=" + __prettyPrintJSON(filters));
+
+var timeRange = this._getTimeRange(queryConfig, filters);
+if (timeRange == null) {
+    result.errors.push("Check start time, end time setting.");
+}
+else if (timeRange.fromUnixTime > timeRange.toUnixTime) {
+    result.errors.push("Start Time must be before End Time.");
+}
+
+var app = this._getFilterValue(filters, queryConfig["filters"]["app"], [], true);
+//print("checkFilters: app=" + __prettyPrintJSON(app));
+
+var metric = this._getFilterValue(filters, queryConfig["filters"]["metric"], [], true);
+//print("checkFilters: metric=" + __prettyPrintJSON(metric));
+if (metric.length == 0) {
+    if (app.length == 0) {
+        result.errors.push("Must select at least one component.");
+    }
+    result.errors.push("Must select at least one metric.");
+}
+
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getMetricUnitOfMeasure" args="filters" private="false">
+        <CodeText>
+          <![CDATA[var serviceConfig = this.getServiceConfig();
+var queryConfig = this.getQueryConfig();
+
+function stripHash(name)
+{
+    var hash = name.indexOf("#");
+    if (hash != -1) {
+        name = name.substring(0, hash);
+    }
+    return name;
+}
+
+//print("getMetricUnitOfMeasure: filters=" + __prettyPrintJSON(filters));
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+
+var uoms = {};
+
+var svcNames = this._getFilterValue(filters, queryConfig["filters"]["svc"], [], true);
+svcNames = this._stripDupAndHashItems(svcNames);
+//print("getMetricUnitOfMeasure: svcNames=" + __prettyPrintJSON(svcNames));
+if (svcNames.length == 0) return uoms;
+
+var compNames = this._getFilterValue(filters, queryConfig["filters"]["comp"], [], true);
+compNames = this._stripDupAndHashItems(compNames);
+//print("getMetricUnitOfMeasure: compNames=" + __prettyPrintJSON(compNames));
+if (compNames.length == 0) return uoms;
+
+var appNames = this._getFilterValue(filters, queryConfig["filters"]["app"], [], true);
+appNames = this._stripDupAndHashItems(appNames);
+//print("getMetricUnitOfMeasure: appNames=" + __prettyPrintJSON(appNames));
+if (appNames.length == 0) return uoms;
+
+if (serviceConfig == null) return uoms;
+
+for (var i=0; i<serviceConfig.groups.length; i++) {
+    var svc = serviceConfig.groups[i];
+    if (this._matchNames(svc, svcNames) && svc.groups != null) {
+        for (var j=0; j<svc.groups.length; j++) {
+            var comp = svc.groups[j];
+            if (this._matchNames(comp, compNames) && comp.groups != null) {
+                for (var k=0; k<comp.groups.length; k++) {
+                    var app = comp.groups[k];
+                    if (this._matchNames(app, appNames) && app.items != null) {
+                        for (var m=0; m<app.items.length; m++) {
+                            var metric = app.items[m];
+                            var key = [
+                                queryConfig["filters"]["svc"] + "=" + stripHash(svc.name),
+                                queryConfig["filters"]["comp"] + "=" + stripHash(comp.name),
+                                queryConfig["filters"]["app"] + "=" + stripHash(app.name),
+                                queryConfig["filters"]["metric"] + "=" + metric["name"],
+                            ];
+                            key = key.join(";");
+                            if (uoms[key] == null) {
+                                uoms[key] = metric["uom"];
+                            }
+                            else if (uoms[key] != metric["uom"]) {
+                                print("Duplicate Unit of Measure for '" + key +
+                                      "' with different values... '" + uoms[key] + "' != '" + metric["uom"] + "'");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+return uoms;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getTimeIntervalAndFormat" args="filters" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+//print("getTimeIntervalAndFormat: " + __prettyPrintJSON(filters));
+
+//print("getTimeIntervalAndFormat: filters="+__prettyPrintJSON(filters));
+var customAggregationInterval = null;
+for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    if (filter.name == "$.aggregation.interval") {
+        customAggregationInterval = filter.value;
+        filters.splice(i, 1);
+        break;
+    }
+    else if (filter.name == queryConfig["filters"]["interval"]) {
+        if (filter.value != "(AUTO)") {
+            customAggregationInterval = [
+                { "seconds": null, "interval": filter.value }
+            ];
+        }
+        filters.splice(i, 1);
+        break;
+    }
+}
+//print("getTimeIntervalAndFormat: filters="+__prettyPrintJSON(filters));
+//print("getTimeIntervalAndFormat: customAggregationInterval="+__prettyPrintJSON(customAggregationInterval));
+
+if (customAggregationInterval != null) {
+    queryConfig["aggregation-interval"] = customAggregationInterval;
+}
+
+var timeRange = this._getTimeRange(queryConfig, filters);
+var aggrInterval = this._getAggrInterval(queryConfig, timeRange.fromUnixTime, timeRange.toUnixTime);
+
+var result = this._getTimeIntervalAndFormat(timeRange, aggrInterval);
+
+result["round-time-to"] = queryConfig["round-time-to"] || "EndTime";
+result["mark-time-by"] = queryConfig["mark-time-by"] || "EndTime";
+
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getTrendData" args="filters,vtServiceRefId,timeStamp" private="false">
+        <CodeText>
+          <![CDATA[if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+
+var serviceConfig = this.getServiceConfig();
+var queryConfig = this.getQueryConfig();
+
+// TEST SCENARIO
+// var testFilters = [{
+//     name  : queryConfig["filters"]["time"],
+//     value : "absolute:1566503400/1566503400"
+// }];
+// this._mapMetricIDToFilters(queryConfig, testFilters, 'Video|STVA Entry|Quantum|Stat Login Failures');
+// this._mapMetricIDToFilters(queryConfig, testFilters, 'Network|NCW|CAPM_FW|Port Utilization In Max|dnvr1-legacy-srx5800-vip.netops.charter.com|xe-0/0/0');
+
+if (this.addNuovaStellaTrendQueryConfig != null) {
+    var checkpoint = Date.now();
+    this.addNuovaStellaTrendQueryConfig(queryConfig);
+    print("############ getTrendData: addNuovaStellaTrendQueryConfig=" + (Date.now() - checkpoint) + " ms");
+}
+
+var vtCacheConfig = null;
+for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    if (filter.name == "$.cacheConfig") {
+        vtCacheConfig = filter.value;
+        filters.splice(i, 1);
+        break;
+    }
+}
+
+var result = null;
+if (vtCacheConfig != null) {
+    var start = Date.now();
+    result = this._cacheLoad(queryConfig, vtCacheConfig);
+    if (result != null) {
+        print("Load cached trend analysis for " + vtCacheConfig.key1 + "/" + vtCacheConfig.key2 + " in " + (Date.now()-start) + "ms");
+        return result;
+    }
+}
+result = this._getTrendData(serviceConfig, queryConfig, filters, vtServiceRefId, timeStamp);
+if (vtCacheConfig != null && result != null) {
+    if (queryConfig["cache-analysis-results"] == true) {
+        if (queryConfig["cache-empty-results"] == true || result.length > 0) {
+            this._cacheSave(queryConfig, vtCacheConfig, result);
+        }
+    }
+}
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="mapDimensionWhereClauseToFilter" args="values" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+function findDimensionMapping(queryConfig, values)
+{
+    var dimMaps = queryConfig["dimension-mappings"];
+    if (dimMaps == null) return null;
+
+    var svc    = values[queryConfig["filters"]["svc"]];
+    var comp   = values[queryConfig["filters"]["comp"]];
+    var app    = values[queryConfig["filters"]["app"]];
+    var metric = values[queryConfig["filters"]["metric"]];
+    var dimMap = null;
+    for (var i=0; i<svc.length; i++) {
+        for (var j=0; j<comp.length; j++) {
+            for (var k=0; k<app.length; k++) {
+                for (var m=0; m<metric.length; m++) {
+                    dimMap = dimMaps[svc[i] + "|" + comp[j] + "|" + app[k] + "|" + metric[m]];
+                    if (dimMap != null) return dimMap;
+                }
+                dimMap = dimMaps[svc[i] + "|" + comp[j] + "|" + app[k]];
+                if (dimMap != null) return dimMap;
+                dimMap = dimMaps[svc[i] + "|*|" + app[k]];
+                if (dimMap != null) return dimMap;
+            }
+            for (var m=0; m<metric.length; m++) {
+                dimMap = dimMaps[svc[i] + "|" + comp[j] + "|*|" + metric[m]];
+                if (dimMap != null) return dimMap;
+            }
+            dimMap = dimMaps[svc[i] + "|" + comp[j]];
+            if (dimMap != null) return dimMap;
+        }
+        for (var m=0; m<metric.length; m++) {
+            dimMap = dimMaps[svc[i] + "|*|*|" + metric[m]];
+            if (dimMap != null) return dimMap;
+        }
+        dimMap = dimMaps[svc[i]];
+        if (dimMap != null) return dimMap;
+    }
+    return null;
+}
+
+if (values && values["$.dimensionWhereClause"] != null) {
+    var dimMap = findDimensionMapping(queryConfig, values);
+    print("_mapDimensionWhereClauseToFilter: dimMap="+__prettyPrintJSON(dimMap));
+    if (dimMap != null) {
+        for (var colName in values["$.dimensionWhereClause"]) {
+            var colValue = values["$.dimensionWhereClause"][colName];
+            for (var filterName in dimMap) {
+                var dimCol = dimMap[filterName];
+                if (dimCol.name == colName) {
+                    values[filterName] = [colValue];
+                }
+            }
+        }
+    }
+    delete values["$.dimensionWhereClause"];
+}
+return values;
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="2256f68f-20af-4f0c-8530-e3efaa93f4fe" name="CALLS_SQL" type="application/sql" size="1133" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="6ec7832e-27cf-42e9-86ed-91bfb701400c" name="CALLS_SQL_DST" type="application/sql" size="1713" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="6b1b3310-2b2d-459d-82c2-be45fc4b596b" name="CALLS_SQL_NO_BL" type="application/sql" size="591" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="2342eeea-8c05-4483-8e13-15e2396eabd6" name="CALLS_SQL_PRE_BL" type="application/sql" size="1153" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="028c0e28-62cc-4605-8276-21c0aaf11b78" name="en" type="application/json" size="1265" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="84c7999a-63f6-4e30-8583-42453882713d" name="METRIC_CALL_SQL" type="application/sql" size="618" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="0343a6f4-fc1a-4c01-8f80-d3814a1d4113" name="METRIC_SQL" type="application/sql" size="1623" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="ef4965f6-b401-4820-8bdc-20011228c5fb" name="METRIC_SQL_DST" type="application/sql" size="2266" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="1c24f13b-6750-4736-8ecb-7e2bca3be387" name="METRIC_SQL_NO_BL" type="application/sql" size="812" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="e3cf0dce-20b8-4caa-82dc-08e357720d8a" name="METRIC_SQL_PRE_BL" type="application/sql" size="1404" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/space/another/dbpm/VIAOps - Base Service"/>
+      <Plugin uri="/app/dbp/space/another/dbpm/VIAOps - Config Property"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

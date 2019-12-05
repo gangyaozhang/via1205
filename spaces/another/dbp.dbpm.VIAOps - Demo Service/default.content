@@ -1,0 +1,1012 @@
+<DashboardPluginModel description="" name="VIAOps - Demo Service" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets>
+      <Widget name="DemoProfileWidget" private="false">
+        <PropertyText>
+          <![CDATA[[]]]>
+        </PropertyText>
+        <CodeText segment="#doRefresh">
+          <![CDATA[
+            if (this.initialConfig.model != null) {
+                var profile = this.initialConfig.model;
+                this.setModel(profile);
+            }
+]]>
+        </CodeText>
+        <CodeText segment="#methods">
+          <![CDATA[
+        // MUST implement resize, setModel() and getModel() if to be used in edit mode
+        
+        resize : function() {
+            if (this._editor != null) {
+                this._editor.resize(true);
+            }
+        },
+        
+        setModel : function(profile) {
+            this._demoProfiles = [];
+            this._userProfiles = [];
+            this._demoSelects = {
+                identifier : "name",
+                items : []
+            };
+            if (profile["demo-profiles"] != null) {
+                for (var demoName in profile["demo-profiles"]) {
+                    this._demoProfiles.push({
+                        name  : demoName,
+                        model : profile["demo-profiles"][demoName],
+                    });
+                    this._demoSelects.items.push({name:demoName});
+                }
+            }
+            if (this.initialConfig.model["user-profiles"] != null) {
+                for (var userId in profile["user-profiles"]) {
+                    this._userProfiles.push({
+                        userId  : userId,
+                        profile : profile["user-profiles"][userId]["profile"],
+                        enabled : profile["user-profiles"][userId]["enabled"] == true,
+                    });
+                }
+            }
+            this._createDemoGrid();
+            this._createUserGrid();
+            
+            this._editor.setValue("", -1);
+            this._editor.clearSelection();
+            this._editor.getSession().setMode("ace/mode/text");
+            this._selectedDemo = null;
+            this._setDirty(false);
+            domStyle.set(this._demoScriptDiv, "display", "none");
+        },
+        
+        getModel : function() {
+            var profile = {
+                "user-profiles" : {},
+                "demo-profiles" : {},
+            };
+            for (var i=0; i<this._demoProfiles.length; i++) {
+                profile["demo-profiles"][this._demoProfiles[i]["name"]] = this._demoProfiles[i]["model"];
+            }
+            for (var i=0; i<this._userProfiles.length; i++) {
+                profile["user-profiles"][this._userProfiles[i]["userId"]] = {
+                    profile : this._userProfiles[i]["profile"],
+                    enabled : this._userProfiles[i]["enabled"],
+                };
+            }
+            return profile;
+        },
+
+        _loadAceLib : function(callback) {
+            if (window.ace == undefined) {
+                require(["af/utils/proxies/Ace", "dojo/domReady!"], function(AceLib) {
+                    var proxy = new AceLib();
+                    proxy.load('default').then(function() {
+                        callback();
+                    });
+                });
+            }
+            else {
+                callback();
+            }
+        },
+
+        _enableEvents : function(node, enable) {
+            if (enable) {
+                domStyle.set(node, {
+                    "pointer-events" : "auto",
+                    "opacity" : 1,
+                });
+            }
+            else {
+                domStyle.set(node, {
+                    "pointer-events" : "none",
+                    "opacity" : 0.3,
+                });
+            }
+        },
+
+        _setDirty : function(dirty) {
+            this._isDirty = dirty;
+
+            this._enableEvents(this._btnSave, this._isDirty);
+            this._enableEvents(this._btnCancel, this._isDirty);
+
+            this._enableEvents(this._demoGridDiv, !this._isDirty);
+            this._enableEvents(this._btnAddDemo, !this._isDirty);
+            this._enableEvents(this._btnDelDemo, !this._isDirty);
+            
+            if (this.setOkButtonEnable != null) {
+                this.setOkButtonEnable(!this._isDirty);
+            }
+        },
+
+        _createAceEditor : function() {
+            var container = domConstruct.create("div", {
+                "style" : "display:block;width:100%;height:100%;",
+            });
+            this._demoScriptDiv.appendChild(container);
+            var editor = ace.edit(container);
+            editor.setTheme("ace/theme/chrome");
+            editor.getSession().setMode("ace/mode/text");
+            editor.getSession().setTabSize(4);
+            editor.setKeyboardHandler(null);
+            editor.setShowPrintMargin(false);
+            editor.getSession().setUseWrapMode(false);                
+            editor.setBehavioursEnabled(true);
+            ace.config.loadModule('ace/ext/language_tools', function() { 
+                editor.setOptions({ 
+                    enableBasicAutocompletion: true, 
+                    enableSnippets: true 
+                });
+            });
+            return editor;
+        },
+
+        _createDemoGrid : function() {
+            if (this._demoGrid != null) {
+                this._demoGrid.destroy();
+                AppUtil.removeAllChildrenOf(this._demoGridDiv);
+            }
+            var self = this;
+            var div = domConstruct.create("div", {});
+            this._demoGridDiv.appendChild(div);
+            
+            var columns = [{
+                field    : "name",
+                label    : "Profile",
+                style    : "font-family:monospace;line-height:27px !important;",
+                sortable : true,
+                editor   : "textbox",
+                editOn   : "dblclick",
+                autoSave : true,
+            }];
+            var id = Date.now();
+            for (var i=0; i<this._demoProfiles.length; i++) {
+                this._demoProfiles[i]["_id_"] = id+i;
+            }
+            this._demoStore = GridUtil.createGridStore("_id_", this._demoProfiles);
+            this._demoGrid = GridUtil.createGridWidget("demoList", div, true, null, columns, this._demoStore, function(evt) {
+                if (evt.type == "dgrid-select") {
+                    domStyle.set(self._demoScriptDiv, "display", "");
+                    var selected = evt.rows[0].data;
+                    var jsonText = JSON.stringify(selected.model, null, "    ");
+                    self._editor.setValue(jsonText, -1);
+                    self._editor.clearSelection();
+                    self._editor.getSession().setMode("ace/mode/json");
+                    self._selectedDemo = selected;
+                    self._setDirty(false);
+                }
+            }, null, "single", function(evt) {
+                if (evt.type == "dgrid-deselect") {
+                    self._editor.setValue("", -1);
+                    self._editor.clearSelection();
+                    self._editor.getSession().setMode("ace/mode/text");
+                    self._selectedDemo = null;
+                    self._setDirty(false);
+                    domStyle.set(self._demoScriptDiv, "display", "none");
+                }
+            }, null);
+        },
+
+        _createUserGrid : function() {
+            if (this._userGrid != null) {
+                this._userGrid.destroy();
+                AppUtil.removeAllChildrenOf(this._userGridDiv);
+            }
+            var self = this;
+            require(["dijit/form/Select", "dojo/data/ObjectStore", "dojo/store/Memory", "dojo/store/Observable", "dojo/domReady!"], function(Select, ObjectStore, LegacyMemory, LegacyObservable) {
+                var div = domConstruct.create("div", {});
+                self._userGridDiv.appendChild(div);
+
+				self._demoSelectStore = new ObjectStore({
+					objectStore: LegacyObservable(new LegacyMemory({ data: lang.clone(self._demoSelects) })),
+					labelProperty: "name"
+				});
+                
+                var columns = [{
+                    field    : "enabled",
+                    label    : "",
+                    style    : "font-family:monospace;width:30px;padding-top:10px !important;",
+                    sortable : false,
+                    editor   : "checkbox",
+                    autoSave : true,
+                }, {
+                    field    : "userId",
+                    label    : "User",
+                    style    : "font-family:monospace;line-height:27px !important;",
+                    sortable : true,
+                    editor   : "textbox",
+                    editOn   : "dblclick",
+                    autoSave : true,
+                }, {
+                    field    : "profile",
+                    label    : "Profile",
+                    style    : "font-family:monospace;width:125px;line-height:27px !important;",
+                    sortable : true,
+                    editor   : Select,
+                    editOn   : "click",
+                    editorArgs: {
+                        store : self._demoSelectStore,
+                        style : "width:120px;"
+        			},
+                    autoSave : true,
+                }];
+                var id = Date.now();
+                for (var i=0; i<self._userProfiles.length; i++) {
+                    self._userProfiles[i]["_id_"] = id+i;
+                }
+                self._userStore = GridUtil.createGridStore("_id_", self._userProfiles);
+                self._userGrid = GridUtil.createGridWidget("userList", div, true, null, columns, self._userStore, function(evt) {
+                    if (evt.type == "dgrid-select") {
+                        self._selectedUser = evt.rows[0].data;
+                    }
+                }, null, "single", function(evt) {
+                    if (evt.type == "dgrid-deselect") {
+                        self._selectedUser = null;
+                    }
+                }, null);
+            });
+        },
+
+        _onClickAddUser : function() {
+            this._userStore.put({
+                "_id_":Date.now(),
+                "userId":"NEW_USER",
+    			"profile": "",
+    			"enabled": false
+    		});
+        },
+
+        _onClickDelUser : function() {
+            if (this._selectedUser != null) {
+                this._userStore.remove(this._selectedUser._id_);
+            }
+        },
+
+        _onClickAddDemo : function() {
+            this._demoStore.put({
+                "_id_": Date.now(),
+                name  : "NEW_DEMO",
+                model : {
+                    "#service-config" : {
+                        "#service-labels" : {
+                            "Original Service Label" : "Demo Service Label"
+                        },
+                        "#sub-service-labels" : {
+        					"Demo Service Label|Original Subservice Label": "Demo Subservice Label",
+        					"Original Subservice Label": "Demo Subservice Label"
+                        },
+                        "#app-labels" : {
+        					"Demo Service Label|Demo Subservice Label|Original App Label": "Demo App Label",
+        					"Original App Label": "Demo App Label"
+                        },
+                        "#metric-labels" : {
+        					"Demo Service Label|Demo Subservice Label|Demo App Label|Original App Label": "Demo Metric Label",
+        					"Original Metric Name": "Demo Metric Label"
+                        }
+                    },
+        			"#dimension-analysis": {
+        				"#dimension-labels": {
+        					"[Demo Service Label|Demo Subservice Label|Demo App Label|Demo Metric Label]API Name": "API",
+        					"[Demo Service Label|*|*|Demo Metric Label]Market": "Locale",
+        					"Device": "Equipment",
+        				},
+        				"#dimension-values": {
+        				}
+        			}
+                },
+            });
+        },
+
+        _onClickDelDemo : function() {
+            if (this._selectedDemo != null) {
+                this._demoStore.remove(this._selectedDemo._id_);
+            }
+        },
+
+        _onClickSave : function() {
+            if (this._selectedDemo != null) {
+                var jsonText = this._editor.getValue();
+                this._selectedDemo.model = JSON.parse(jsonText);
+                this._setDirty(false);
+            }
+        },
+        
+        _onClickCancel : function() {
+            if (this._selectedDemo != null) {
+                var jsonText = JSON.stringify(this._selectedDemo.model, null, "    ");
+                this._editor.setValue(jsonText, -1);
+                this._editor.clearSelection();
+                this._setDirty(false);
+            }
+        },
+]]>
+        </CodeText>
+        <CodeText segment="#postCreate">
+          <![CDATA[
+            var self = this;
+            this._loadAceLib(function() {
+                self._editor = self._createAceEditor();
+                self._editor.on("change", function() {
+                    if (self._selectedDemo != null) {
+                        self._setDirty(true);
+                    }
+                });
+                domStyle.set(self._demoScriptDiv, "display", "none");
+                
+                self.doRefresh();
+            });
+            this._setDirty(false);
+]]>
+        </CodeText>
+        <CodeText segment="#buildRendering">
+          <![CDATA[]]>
+        </CodeText>
+        <CodeText segment="#functions">
+          <![CDATA[
+]]>
+        </CodeText>
+        <CodeText segment="#constructor">
+          <![CDATA[
+]]>
+        </CodeText>
+        <CodeText segment="#onTileMaxsize">
+          <![CDATA[
+]]>
+        </CodeText>
+        <CodeText segment="#onTileMinisize">
+          <![CDATA[
+]]>
+        </CodeText>
+        <CodeText segment="#updateWidthAndHeight">
+          <![CDATA[]]>
+        </CodeText>
+        <HtmlText>
+          <![CDATA[<div style="width:100%;height:100%;display:flex;">
+    <style>
+        @import '/vitria-oi/rest/app/dbp/user/via_common/dbpm/VIA - Common/VIA-CSS';
+        .user-grid-div {
+            width:250px;
+            height:calc(100% - 30px);
+        }
+        .user-grid-div .dgrid-header-scroll {
+            background-color:inherit !important;
+        }
+        .user-grid-div .dgrid-header .userList-enabled {
+            pointer-events:none;
+        }
+        .user-grid-div .dgrid-header .userList-enabled:focus {
+            outline: none;
+        }
+        .user-grid-div .dgrid-scroller {
+            background-color:white !important;
+        }
+        .demo-grid-div {
+            width:150px;
+            height:calc(100% - 30px);
+        }
+        .demo-grid-div .dgrid-header-scroll {
+            background-color:inherit !important;
+        }
+        .demo-grid-div .dgrid-scroller {
+            background-color:white !important;
+        }
+        .demo-profile-div {
+            width:calc(100% - 400px);
+            height:100%;
+        }
+        .demo-header-div {
+            height:34px;
+        }
+        .demo-script-div {
+            width:100%;
+            height:calc(100% - 35px);
+        }
+        .button-div {
+            display:inline-block;
+            border-radius:2px;
+            cursor:pointer;
+            padding:5px 5px 0px 5px;
+            font-size:10px;
+            border:thin solid gray;
+            text-align:center;
+            font-weight:bold;
+            height:17px;
+        }
+        .left-button-div {
+            float:left;
+            margin:5px 5px 0px 0px;
+        }
+        .right-button-div {
+            float:right;
+            margin:5px 0px 5px 5px;
+        }
+        .button-div:hover {
+            color:red;
+            background-color:white;
+        }
+    </style>
+    <div>
+        <div data-dojo-attach-point='_userGridDiv' class="user-grid-div via-scroller">
+        </div>
+        <div class="demo-header-div">
+            <div class="left-button-div button-div" data-dojo-attach-point='_btnAddUser' data-dojo-attach-event="click:_onClickAddUser">
+                Add
+            </div>
+            <div class="left-button-div button-div" data-dojo-attach-point='_btnDelUser' data-dojo-attach-event="click:_onClickDelUser">
+                Delete
+            </div>
+        </div>
+    </div>
+    <div>
+        <div data-dojo-attach-point='_demoGridDiv' class="demo-grid-div via-scroller">
+        </div>
+        <div class="demo-header-div">
+            <div class="left-button-div button-div" data-dojo-attach-point='_btnAddDemo' data-dojo-attach-event="click:_onClickAddDemo">
+                Add
+            </div>
+            <div class="left-button-div button-div" data-dojo-attach-point='_btnDelDemo' data-dojo-attach-event="click:_onClickDelDemo">
+                Delete
+            </div>
+        </div>
+    </div>
+    <div data-dojo-attach-point='_demoProfileDiv' class="demo-profile-div">
+        <div class="demo-header-div">
+            <div class="right-button-div button-div" data-dojo-attach-point='_btnCancel' data-dojo-attach-event="click:_onClickCancel">
+                Cancel
+            </div>
+            <div class="right-button-div button-div" data-dojo-attach-point='_btnSave' data-dojo-attach-event="click:_onClickSave">
+                Save
+            </div>
+        </div>
+        <div data-dojo-attach-point='_demoScriptDiv' class="demo-script-div scriptDiv via-scroller">
+        </div>
+    </div>
+</div>
+]]>
+        </HtmlText>
+      </Widget>
+    </Widgets>
+    <Functions>
+      <Function name="popupDemoProfile" args="CommonPlugin,controller,title,width,height,model,options,callback,buttonDefs" private="false">
+        <CodeText>
+          <![CDATA[var PATH = "/app/dbp/user/viaops_admin/dbpm/VIAOps - Demo Service";
+var NAME = "DemoProfileWidget";
+if (width == null) {
+    width = Math.min(1200, Math.round(0.8*window.body.clientWidth));
+}
+if (height == null) {
+    height = Math.min(600, Math.round(0.6*window.body.clientHeight));
+}
+var self = this;
+require(["af/controls/PopupEditorDialog",
+         "af/utils/AppUtil",
+         "af/utils/RestRequest",
+         "dbp/utils/ClientUtil",
+         "dojox/xml/parser",
+         "dojo/on",
+         "dojo/dom-geometry",
+         "dojo/dom-style",
+         "dojo/dom-class",
+         "dojo/dom-attr",
+         "dojo/dom-construct",
+         "dojo/domReady!"],
+function(PopupDialogClazz, AppUtil, RestRequest, ClientUtil, XmlParser, on, domGeom, domStyle, domClass, domAttr, domConstruct) {
+    function doGetModel(path, callback)
+    {
+        RestRequest.json({
+            url       : AppUtil.getItemURL(path),
+            method    : "get",
+            parameter : null,
+            header    : null,
+            callback  : function(t) {
+                var doc = XmlParser.parse(t);
+                var xml = doc.documentElement;
+                callback(xml);
+            },
+        });
+    }
+    function insertButton(parentNode, label, tooltip)
+    {
+        var button = domConstruct.create("button", {
+            "type"  : "button",
+            "class" : "popup-command-button",
+            "title" : tooltip,
+        });
+        button.innerHTML = label;
+        parentNode.insertBefore(button, parentNode.firstElementChild);
+        return button;
+    }
+    doGetModel(PATH, function(xml) {
+        var plugin = {};
+        ClientUtil.decodeModel(plugin, xml);
+        for (var i=0;i<plugin._widgets.length; i++) {
+            var w = plugin._widgets[i];
+			w.path = PATH;
+            if (w.name == NAME) {
+                var WidgetClass = ClientUtil.getWidgetClass(controller, w, plugin._widgets, plugin._resources);
+                var dialog = new PopupDialogClazz({
+                    title    : title,
+                    vtWidth  : width,
+                    vtHeight : height,
+                    model    : model,
+                    editorClass : WidgetClass,
+                    editorConfig : {
+                        options : options,
+                    },
+                    onClickOk : function(value) {
+                        callback(value);
+                    }
+                });
+                domStyle.set(dialog._widget.modelTd.domNode, "overflow", "hidden");
+                domClass.add(dialog._widget.editorTitleLabel, "popup-title-label");
+                domStyle.set(dialog._widget.editorTitleLabel, {
+                    "display"     : "none",
+                    "height"      : "0px",
+                    "line-height" : "0px"
+                });
+                domClass.add(dialog._dialog.domNode, "popup-dialog");
+                dialog.show();
+                dialog._widget._editor.setOkButtonEnable = function(enable) {
+                    dialog._dialog.setOkButtonEnable(enable);
+                };
+                if (buttonDefs != null) {
+                    var footerDiv = dialog._dialog.buttonBarContainer;
+                    buttonDefs.forEach(function(def) {
+                        def.widget = insertButton(footerDiv, def.label, def.tooltip);
+                        if (def.callback != null) {
+                            on(def.widget, "click", function(evt) {
+                                def.callback(dialog._widget, evt);
+                            });
+                            def.disable = function(disable) {
+                                if (disable) {
+                                    domStyle.set(this.widget, {
+                                        "pointer-events" : "none",
+                                        "opacity" : 0.3,
+                                        "cursor" : "not-allowed",
+                                    });
+                                }
+                                else {
+                                    domStyle.set(this.widget, {
+                                        "pointer-events" : "auto",
+                                        "opacity" : 1.0,
+                                        "cursor" : "pointer",
+                                    });
+                                }
+                            };
+                        }
+                        else {
+                            domStyle.set(def.widget, {
+                                "opacity" : 0.3,
+                                "cursor" : "not-allowed",
+                            });
+                        }
+                    });
+                }
+                break;
+            }
+        }
+    });
+});
+]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services>
+      <Service name="_getCache" args="" private="false">
+        <CodeText>
+          <![CDATA[var CacheUtil = com.vitria.util.CacheUtil;
+return CacheUtil.getCache("VIA.DIGITAL.OPERATIONS", 60);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="applyDemoProfileToDimensionLabel" args="mappings,context,label" private="false">
+        <CodeText>
+          <![CDATA[if (label.indexOf("|") == -1) {
+    // simple 1D
+    if (mappings["["+context+"]"+label] != null) {
+        label = mappings["["+context+"]"+label];
+    }
+    else if (mappings[label] != null) {
+        label = mappings[label];
+    }
+    return label;
+}
+else {
+    label = label.split("|");
+    for (var i=0; i<label.length; i++) {
+        if (mappings["["+context+"]"+label[i]] != null) {
+            label[i] = mappings["["+context+"]"+label[i]];
+        }
+        else if (mappings[label[i]] != null) {
+            label[i] = mappings[label[i]];
+        }
+    }
+    return label.join("|");
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="applyDemoProfileToDimensionValue" args="mappings,context,label,value" private="false">
+        <CodeText>
+          <![CDATA[function padStrWith(num, len, pad)
+{
+    var str = String(num);
+    while (str.length < len) {
+        str = pad + str;
+    }
+    return str;
+}
+
+if (value.indexOf("|") == -1) {
+    // simple 1D
+    if (mappings["["+label+"]"+value] != null) {
+        value = mappings["["+label+"]"+value];
+    }
+    else if (mappings[value] != null) {
+        value = mappings[value];
+    }
+    else if (mappings["["+label+"]*"] == "#keep#") {
+        // keep value as-is
+    }
+    else {
+        if (this._dimValueIndex_ == null) {
+            this._dimValueIndex_ = 1;
+        }
+        mappings[value] = label + "_" + padStrWith(this._dimValueIndex_, 5, "0");
+        this._dimValueIndex_ = this._dimValueIndex_ + 1;
+        value = mappings[value];
+    }
+    return value;
+}
+else {
+    value = value.split("|");
+    for (var i=0; i<value.length; i++) {
+        if (mappings["["+label+"]"+value[i]] != null) {
+            value[i] = mappings["["+label+"]"+value[i]];
+        }
+        else if (mappings[value[i]] != null) {
+            value[i] = mappings[value[i]];
+        }
+        else if (mappings["["+label+"]*"] == "#keep#") {
+            // keep value as-is
+        }
+        else {
+            if (this._dimValueIndex_ == null) {
+                this._dimValueIndex_ = 1;
+            }
+            mappings[value[i]] = label + "_" + padStrWith(this._dimValueIndex_, 5, "0");
+            this._dimValueIndex_ = this._dimValueIndex_ + 1;
+            value[i] = mappings[value[i]];
+        }
+    }
+    return value.join("|");
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="applyDemoProfileToFrameConfig" args="demoProfile,frameConfig" private="false">
+        <CodeText>
+          <![CDATA[if (demoProfile != null && demoProfile["frame-config"] != null) {
+    if (demoProfile["frame-config"]["logo"] != null) {
+        frameConfig["logo"] = demoProfile["frame-config"]["logo"];
+    }
+    if (demoProfile["frame-config"]["disable-items"] != null) {
+        (demoProfile["frame-config"]["disable-items"]).forEach(function(itemName) {
+            for (var i=0; i<frameConfig.items.length; i++) {
+                var item = frameConfig.items[i];
+                if (item.name == itemName) {
+                    delete item.id;
+                }
+            }
+        });
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="applyDemoProfileToServiceConfig" args="demoProfile,serviceConfig" private="false">
+        <CodeText>
+          <![CDATA[function padStrWith(num, len, pad)
+{
+    var str = String(num);
+    while (str.length < len) {
+        str = pad + str;
+    }
+    return str;
+}
+
+function isKeepOrAnon(mappings, context)
+{
+    if (context != null) {
+        context = context.split("|");
+        if (mappings[context.join("|")+"|*"] == "#keep#") return "#keep#";
+        if (mappings[context.join("|")+"|*"] == "#anon#") return "#anon#";
+        for (var i=(context.length-1); i>=0; i--) {
+            context[i] = "*";
+            if (mappings[context.join("|")+"|*"] == "#keep#") return "#keep#";
+            if (mappings[context.join("|")+"|*"] == "#anon#") return "#anon#";
+        }
+    }
+    return null;
+}
+
+function mapLabel(item, property, mappings, context, label, unmappedPrefix, unmappedIndex)
+{
+    var mappedLabel = null;
+    if (context != null) {
+        mappedLabel = mappings[context+"|"+label];
+    }
+    if (mappedLabel == null) {
+        var keepOrAnon = isKeepOrAnon(mappings, context);
+        if (keepOrAnon == null || keepOrAnon == "#anon#") {
+            // leave as NULL to anonymize
+        }
+        else if (keepOrAnon == "#keep#") {
+            mappedLabel = "#keep#";
+        }
+    }
+    if (mappedLabel == null) {
+        mappedLabel = mappings[label];
+    }
+    if (mappedLabel == null) {
+        var unmappedLabel = unmappedPrefix + "_" + padStrWith(unmappedIndex, 3, "0");
+        unmappedIndex++;
+        mappedLabel = unmappedLabel;
+        mappings[label] = unmappedLabel;
+    }
+    else if (mappedLabel == "#keep#") {
+        mappedLabel = null;
+    }
+    if (mappedLabel != null) {
+        item[property] = mappedLabel;
+    }
+    return unmappedIndex;
+}
+
+function applyDemoLabel(items, mappings, context, unmappedPrefix, unmappedIndex)
+{
+    if (items == null) return unmappedIndex;
+    items.forEach(function(item) {
+        if (item["label"] != null) {
+            unmappedIndex = mapLabel(item, "label", mappings, context, item["label"], unmappedPrefix, unmappedIndex);
+        }
+        else {
+            unmappedIndex = mapLabel(item, "label", mappings, context, item["name"], unmappedPrefix, unmappedIndex);
+        }
+        if (item["fa-label"] != null) {
+            unmappedIndex = mapLabel(item, "fa-label", mappings, context, item["fa-label"], unmappedPrefix, unmappedIndex);
+        }
+    });
+    return unmappedIndex;
+}
+
+if (demoProfile != null && demoProfile["service-config"] != null) {
+    var svcIndex    = 1;
+    var compIndex   = 1;
+    var appIndex    = 1;
+    var metricIndex = 1;
+    svcIndex = applyDemoLabel(serviceConfig.groups, demoProfile["service-config"]["service-labels"], null, "Service", svcIndex);
+    serviceConfig.groups.forEach(function(svc) {
+        var ctxSvcGroup = (svc.label || svc.name);
+        var ctxSvcMetric = ctxSvcGroup + "|*|*";
+        compIndex = applyDemoLabel(svc.groups, demoProfile["service-config"]["sub-service-labels"], ctxSvcGroup, "Subservice", compIndex);
+        metricIndex = applyDemoLabel(svc.items, demoProfile["service-config"]["metric-labels"], ctxSvcMetric, "Metric", metricIndex);
+        svc.groups.forEach(function(comp) {
+            var ctxCompGroup = ctxSvcGroup + "|" + (comp.label || comp.name);
+            var ctxCompMetric = ctxCompGroup + "|*";
+            appIndex = applyDemoLabel(comp.groups, demoProfile["service-config"]["app-labels"], ctxCompGroup, "Component", appIndex);
+            metricIndex = applyDemoLabel(comp.items, demoProfile["service-config"]["metric-labels"], ctxCompMetric, "Metric", metricIndex);
+            comp.groups.forEach(function(app) {
+                var ctxAppGroup = ctxCompGroup + "|" + (app.label || app.name);
+                var ctxAppMetric = ctxAppGroup;
+                metricIndex = applyDemoLabel(app.items, demoProfile["service-config"]["metric-labels"], ctxAppMetric, "Metric", metricIndex);
+            });
+        });
+    });
+    serviceConfig.demoName = demoProfile["demo-name"];
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="deleteCachedDemoServiceConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[var cache = this._getCache();
+var profile = cache.get("demo.profile");
+if (profile != null) {
+    //print("getDemoProfile: profile="+__prettyPrintJSON(profile));
+    var profile = JSON.parse(profile);
+    if (profile["demo-profiles"] != null) {
+        for (var demoName in profile["demo-profiles"]) {
+            //print("deleteCachedDemoServiceConfig: demoName="+demoName);
+            cache.remove("service.config[" + demoName + "]");
+        }
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="enableDemoMode" args="" private="false">
+        <CodeText>
+          <![CDATA[var demoAccessControlList = JSON.parse(Context.getLocalResource("DemoAccessControlList"));
+var userId = Context.getCurrentUserId();
+return demoAccessControlList.indexOf(userId) != -1;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="exportDemoProfile" args="" private="false">
+        <CodeText>
+          <![CDATA[var File = java.io.File;
+var System = java.lang.System;
+var FileUtils = org.apache.commons.io.FileUtils;
+var UUID = java.util.UUID;
+
+var cache = this._getCache();
+var profile = cache.get("demo.profile");
+if (profile != null) {
+    var tempDirectory = System.getProperty("java.io.tmpdir");
+    var tgtFile = new File(tempDirectory + "/" + UUID.randomUUID().toString());
+    print("Export demo profile to " + tgtFile.getPath() + " for download");
+    
+    FileUtils.writeStringToFile(tgtFile, profile, "UTF-8");
+
+    TimerTask.setTimeout("DeleteTempDownloadFile", 10, function(path) {
+        var file = new java.io.File(path);
+        print("Deleting download file: "+ file.getPath());
+        if (file.delete()) {
+            print("... " + file.getPath() + " deleted");
+        }
+        else {
+            print("... " + file.getPath() + " delete exception");
+        }
+    }, tgtFile.getPath());
+    
+    return tgtFile.getName();
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getCachedDemoServiceConfig" args="demoName" private="false">
+        <CodeText>
+          <![CDATA[//print("getCachedDemoServiceConfig: demoName="+demoName);
+var cache = this._getCache();
+var serviceConfig = cache.get("service.config[" + demoName + "]");
+if (serviceConfig != null) {
+    return JSON.parse(serviceConfig);
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getDemoProfile" args="" private="false">
+        <CodeText>
+          <![CDATA[var cache = this._getCache();
+var profile = cache.get("demo.profile");
+if (profile == null) {
+    profile = this._fsLoadFromFile("viaops-demo-profile");
+    if (profile != null) {
+        cache.put("demo.profile", JSON.stringify(profile));
+    }
+}
+if (profile == null) {
+    profile = "{}";
+}
+//print("getDemoProfile: profile="+__prettyPrintJSON(profile));
+try {
+    var profile = JSON.parse(profile);
+    if (profile["user-profiles"] != null && profile["demo-profiles"] != null) {
+        var userId = Context.getCurrentUserId();
+        var userProfile = profile["user-profiles"][userId];
+        //print("getDemoProfile: userId="+userId);
+        if (userProfile != null) {
+            //print("getDemoProfile: userProfile="+__prettyPrintJSON(userProfile));
+            if (userProfile["enabled"] == true) {
+                var demoName = userProfile["profile"];
+                //print("getDemoProfile: demoName="+demoName);
+                if (demoName != null && demoName != "" && profile["demo-profiles"][demoName] != null) {
+                    var demoProfile = profile["demo-profiles"][demoName];
+                    demoProfile["user-id"] = userId;
+                    demoProfile["demo-name"] = demoName;
+                    return demoProfile;
+                }
+            }
+        }
+    }
+}
+catch (err) {
+    print("Error in DEMO profile");
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="importDemoProfile" args="uid" private="false">
+        <CodeText>
+          <![CDATA[var File = java.io.File;
+var System = java.lang.System;
+var FileUtils = org.apache.commons.io.FileUtils;
+var IOUtils = org.apache.commons.io.IOUtils;
+
+var tempDirectory = System.getProperty("java.io.tmpdir");
+var srcFile = new File(tempDirectory + "/" + uid);
+//print("Import demo profile from " + srcFile.getPath());
+var profile = FileUtils.readFileToString(srcFile, "UTF-8");
+if (profile != null) {
+    return JSON.parse(profile);
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="loadDemoProfile" args="" private="false">
+        <CodeText>
+          <![CDATA[var cache = this._getCache();
+var profile = cache.get("demo.profile");
+if (profile == null) {
+    profile = this._fsLoadFromFile("viaops-demo-profile");
+    if (profile != null) {
+        profile = JSON.stringify(profile);
+        cache.put("demo.profile", profile);
+    }
+}
+if (profile == null) {
+    profile = "{}";
+}
+if (profile != null) {
+    try {
+        return JSON.parse(profile);
+    }
+    catch (err) {
+        print("JSON error in DEMO profile");
+        return profile;
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="putCachedDemoServiceConfig" args="demoName,serviceConfig" private="false">
+        <CodeText>
+          <![CDATA[var data = JSON.stringify(serviceConfig);
+//print("putCachedDemoServiceConfig: demoName="+demoName);
+//print("putCachedDemoServiceConfig: serviceConfig="+data.substring(0, 50));
+var cache = this._getCache();
+cache.put("service.config[" + demoName + "]", data);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="saveDemoProfile" args="profile" private="false">
+        <CodeText>
+          <![CDATA[var cache = this._getCache();
+var data = JSON.stringify(profile);
+cache.put("demo.profile", data);
+this._fsSaveToFile("viaops-demo-profile", profile);
+this.deleteCachedDemoServiceConfig();
+return true;
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="bd8e16ff-dc31-4049-8009-c4439cb62001" name="Blank Demo Profile" type="application/json" size="59" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="ad3cbe11-0553-4d4c-89c6-9cc3f58ec072" name="DemoAccessControlList" type="application/json" size="35" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="1c4f7f5b-d576-4794-8bdd-f265c92a3bcf" name="Sample Demo Profile" type="application/json" size="2516" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/space/VIA Common Library/dbpm/VIA - File Service"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

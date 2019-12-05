@@ -1,0 +1,33 @@
+--- VIAOps - Trend Service > CALLS_SQL_PRE_BL
+select
+    a._group_,
+    a._data_,
+    ${epochProjectionSQL} as _epoch_,
+    ${timeProjectionSQL} as _time_,
+    max(a._value_) as _value2_,
+    (sort_array(collect_list(b._value_))[floor((count(*)-1)/2)] + sort_array(collect_list(b._value_))[floor((count(*))/2)]) / 2 as _baseline2_
+from (
+    select
+        "${metricId}" as _group_,
+        "${groupData}" as _data_,
+        ${epochExpr} as _epoch_,
+        sum(${callsCount}) as _value_
+    from ${callsTable}
+    where ${epochExpr} ${fromOper} ${fromTime} and ${epochExpr} ${toOper} ${toTime}
+    and ${dateKeyColumn} in (${dateKeys})
+    ${dimensionWhereClause}
+    group by 3
+    order by _epoch_) a
+left join (
+    select
+        "${metricId}" as _group_,
+        start_tm as _epoch_,
+        median as _value_
+    from ${baselineTableName}
+    where start_tm ${fromOper} ${fromTime} and start_tm ${toOper} ${toTime}
+    and date_key in (${dateKeys})
+    and metric_id = "${metricId}") b
+on date_format(from_unixtime(a._epoch_),'u|HHmm') = date_format(from_unixtime(b._epoch_),'u|HHmm')
+and a._epoch_ = b._epoch_
+group by 1,2,3
+order by _epoch_

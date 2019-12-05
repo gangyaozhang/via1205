@@ -1,0 +1,4 @@
+SELECT count(*) as count
+FROM viaops_anomaly_algorithm
+WHERE adm_name="${adm_name}"
+  AND metric_id="${metric_id}"

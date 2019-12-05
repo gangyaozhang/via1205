@@ -1,0 +1,20 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "locale"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "axv",
+    "__references__": "/app/dbp/space/VIA Common Library/dbpm/VIA - Common,/app/ax/space/another/axv/VIAOps - Operation - STUB",
+    "modelStatus": "valid",
+    "name": "VIAOps - Operation Comp"
+  }
+}

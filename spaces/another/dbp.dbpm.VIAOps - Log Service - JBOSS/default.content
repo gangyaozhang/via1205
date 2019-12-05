@@ -1,0 +1,409 @@
+<DashboardPluginModel description="" name="VIAOps - Log Service - JBOSS" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services>
+      <Service name="_getColumnSetting" args="type,width,fontWeight,color,backgroundColor,barColors" private="true">
+        <CodeText>
+          <![CDATA[if (type == null) type = "string";
+var textAlign = "left";
+if (type == "number") textAlign = "right";
+if (fontWeight == null) fontWeight = "normal";
+if (color == null) color = "#000000";
+var style = {
+    "fontStyle": "normal",
+    "fontSize": "12",
+    "fontWeight": fontWeight,
+    "textAlign": textAlign,
+    "color": color,
+};
+if (width != null) {
+    style["width"] = width;
+}
+if (backgroundColor != null) {
+    style["backgroundColor"] = backgroundColor;
+}
+return {
+    "style": style,
+    "format": {
+        "type": type,
+        "pattern": "0"
+    },
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getHighlightSetting" args="judgments" private="true">
+        <CodeText>
+          <![CDATA[var highlightSettings = [];
+if (typeof judgments == "string") {
+    // string encoding... field,value,color;field,value,color;...
+    //              or... index,field,value,color;index,field,value,color;...
+    judgments = judgments.split(";");
+}
+for (var i=0; i<judgments.length; i++) {
+    var judgment = judgments[i];
+    if (typeof judgment == "string") {
+        // string encoded format... field,value,color
+        //                    or... index,field,value,color
+        var toks = judgment.split(",");
+        if (toks.length == 4) {
+            judgment = {
+                index : toks[0],
+                field : toks[1],
+                value : toks[2],
+                color : toks[3]
+            };
+        }
+        else if (toks.length == 3) {
+            judgment = {
+                field : toks[0],
+                value : toks[1],
+                color : toks[2]
+            };
+        }
+    }
+    if (judgment != null) {
+        var cellField = judgment.index != null ? "column"+judgment.index : "column";
+        highlightSettings.push({
+            "highLightScope": "cell",
+            "highLightCellField": "${" + cellField + "}",
+            "judgementColor": judgment.color,
+            "judgementField": judgment.field,
+            "conditions": [{
+                "oper"  : "=",
+                "value" : judgment.value
+            }]
+        });
+    }
+}
+return highlightSettings;]]>
+        </CodeText>
+      </Service>
+      <Service name="_getSolidBarSetting" args="width,fontWeight,color,backgroundColor,minValue,maxValue,negColor,posColor" private="true">
+        <CodeText>
+          <![CDATA[if (fontWeight == null) fontWeight = "normal";
+if (color == null) color = "#000000";
+if (backgroundColor == null) backgroundColor = "";
+var negRange = minValue <= 0 && maxValue >= 0;
+return {
+    "style": {
+        "fontStyle": "normal",
+        "fontSize": "12",
+        "fontWeight": fontWeight,
+        "textAlign": "right",
+        "color": color,
+        "width": width,
+        "backgroundColor": backgroundColor,
+    },
+    "renderer": {
+        "type": "bar",
+        "color": posColor,
+        "ncolor": negColor,
+        "colorType": "solid",
+        "showPRange": negRange,
+        "minimum": minValue,
+        "maximum": maxValue,
+        "showValue": "true",
+        "dataType": "number",
+        "format": {
+            "type": "number",
+            "pattern": "0"
+        }
+    }
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getDrilldownConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[var URI = "/app/dbp/user/" + Context.getModelOwnerId() + "/" + Context.getModelPath();
+return {
+    "default-info" : {
+        "type" : "custom",
+    },
+    "custom" : {
+        "model" : "/app/ax/user/viaops_admin/axv/VIAOps - Drilldown - CUSTOM",
+        "title" : "Humpty Dumpty sat on the wall...",
+        "config" : {
+            "attributes" : [
+                ["_attr00_", "attr.timestamp"],
+                ["_attr01_", "attr.loglevel"],
+                ["_attr02_", "attr.source"],
+                ["_attr03_", "attr.text"],
+            ],
+        },
+        "model[1-item]" : "/app/ax/user/viaops_admin/axv/VIAOps - Drilldown - 1-item",
+        "config[1-item]" : {
+            "label" : "Detail",
+            "service" : {
+                "method" : "POST",
+                "url" : "/app/dbp/user/viaops_admin/dbpm/VIAOps - Drilldown Service/getDrilldownOneItemConfig"
+            },
+            "attributes" : [
+                ["_attr00_", "attr.timestamp"],
+                ["_attr01_", "attr.loglevel"],
+                ["_attr02_", "attr.source"],
+                ["_attr03_", "attr.text"],
+            ],
+        },
+        "model[2-item]" : "/app/ax/user/viaops_admin/axv/VIAOps - Drilldown - 2-item",
+        "config[2-item]" : {
+            "label" : "Compare",
+            "service" : {
+                "method" : "POST",
+                "url" : "/app/dbp/user/viaops_admin/dbpm/VIAOps - Drilldown Service/getDrilldownTwoItemConfig"
+            },
+            "attributes" : [
+                ["_attr00_", "attr.timestamp"],
+                ["_attr01_", "attr.loglevel"],
+                ["_attr02_", "attr.source"],
+                ["_attr03_", "attr.text"],
+            ],
+        },
+    },
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getFilterConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[return {
+    "div-style" : "overflow:hidden;",
+    "categories" : [{
+        "name" : "data",
+        "name-style" : "padding-left:0px;width:0px;",
+        "value-style" : "padding:0px;width:100%;",
+        "submit" : "manual",
+        "dimensions" : [{
+            "name" : "logLevel",
+            "label" : "Log Level",
+            "type" : "enumeration",
+            "default" : "INFO",
+            "enums" : ["DEBUG", "LOG", "INFO", "WARN", "ERROR"]
+        }, {
+            "name" : "maxLines",
+            "label" : "Max Lines",
+            "type" : "enumeration",
+            "default" : "1000",
+            "enums" : ["100", "1000", "10000", "100000"]
+        }, {
+            "name" : "sortOrder",
+            "label" : "Sort Order",
+            "type" : "enumeration",
+            "default" : "Old to New",
+            "enums" : ["Old to New", "New to Old"]
+        }, {
+            "name" : "regexFilter",
+            "label" : "RegEx Filter",
+            "type" : "string",
+            "style" : "width:200px;height:22px;",
+            "default" : ""
+        }]
+    }]
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getHoverConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[var URI = "/app/dbp/user/" + Context.getModelOwnerId() + "/" + Context.getModelPath();
+return {
+    "default-info" : {
+        "type" : "custom",
+    },
+    "default-config" : {
+        "hoverWidth" : 600,
+        "hoverTitle" : "Simba, Salty, Mikey and Tessy LOG",
+    },
+    "custom" : {
+        "model" : "/app/ax/user/viaops_admin/axv/VIAOps - Hover - CUSTOM",
+        "title" : "Baa Baa Black Sheep...",
+        "config" : {
+            "attributes" : [
+                ["_attr00_", "attr.timestamp"],
+                ["_attr01_", "attr.loglevel"],
+                ["_attr02_", "attr.source"],
+            ],
+        },
+    },
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getLogConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[var URI = "/app/dbp/user/" + Context.getModelOwnerId() + "/" + Context.getModelPath();
+return {
+    "service" : {
+        "method" : "POST",
+        "url" : URI + "/getLogData",
+        "params" : {
+            "path" : "$VTBA_HOME/wildfly/standalone/log/server.log"
+        }
+    },
+    "config" : {
+        "attributes" : [{
+            "label" : "attr.timestamp",
+            "columnSetting" : this._getColumnSetting("string", "200px", "bold", "red"),
+        }, {
+            "label" : "attr.loglevel",
+            "columnSetting" : this._getColumnSetting("string", "80px"),
+        }, {
+            "label" : "attr.source",
+            "columnSetting" : this._getColumnSetting("string", "150px"),
+        }, {
+            "label" : "attr.text",
+            "columnSetting" : this._getColumnSetting("string", "-1", "bold", "blue"),
+        }]
+    },
+};]]>
+        </CodeText>
+      </Service>
+      <Service name="getLogData" args="path,filters" private="false">
+        <CodeText>
+          <![CDATA[print("getLogData: filters=" + filters);
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+
+function getTimestamp(line)
+{
+    return line.substring(0, 22).trim().replace(",", ".");
+    //date = new Date(date);
+    //return date.toISOString();
+}
+
+function getLogLevel(line)
+{
+    return line.substring(24, 29).trim();
+}
+
+function getSource(line)
+{
+    var pos = line.indexOf("]", 31);
+    if (pos != -1) {
+        return line.substring(31, pos);
+    }
+    return "UNKNOWN";
+}
+
+function getText(line)
+{
+    var pos = line.indexOf("]", 30);
+    if (pos != -1) {
+        return line.substring(pos+2);
+    }
+    return "---";
+}
+
+var logLevel = null;
+var maxLines = null;
+var sortOrder = null;
+var regexFilter = null;
+for (var i=0; i<filters.length; i++) {
+    switch (filters[i]["name"]) {
+        case "data.logLevel":
+            logLevel = filters[i]["value"];
+            break;
+        case "data.maxLines":
+            maxLines = filters[i]["value"];
+            break;
+        case "data.sortOrder":
+            sortOrder = filters[i]["value"];
+            break;
+        case "data.regexFilter":
+            regexFilter = filters[i]["value"];
+            if (regexFilter != null && regexFilter.trim() != "") {
+                regexFilter = new RegExp(regexFilter);
+            }
+            else {
+                regexFilter = null;
+            }
+            break;
+    }
+}
+if (logLevel != null && maxLines != null && sortOrder != null) {
+    var LOG_LEVELS = {"ERROR":0, "WARN":1, "INFO":2, "LOG":3, "DEBUG":4};
+    var logLevelValue = LOG_LEVELS[logLevel];
+    if (logLevelValue == null) return [];
+    
+    var logs = Context.getFileAsString(path);
+    if (logs != null && logs != "") {
+        var lines = logs.split("\n");
+        print("# lines = " + lines.length);
+        var result = [];
+        for (var i=0; i<lines.length; i++) {
+            var line = lines[i];
+            if (regexFilter == null || regexFilter.test(line)) {
+                if (line.length() > 30) {
+                    var lineLogLevel = getLogLevel(line);
+                    var lineLogLevelValue = LOG_LEVELS[lineLogLevel];
+                    if (i == 0) {
+                        print("logLevel = '" + logLevel + "' value = " + logLevelValue);
+                        print("lineLogLevel = '" + lineLogLevel + "' value = " + lineLogLevelValue);
+                    }
+                    if (lineLogLevelValue != null && lineLogLevelValue <= logLevelValue) {
+                        var lineTimestamp = getTimestamp(line);
+                        var lineSource = getSource(line);
+                        var lineText = getText(line);
+                        result.push({
+                            "_id_"     : lineTimestamp + "#" + lineLogLevel + "#" + lineSource,
+                            "_meta_"   : "drilldown-type:custom",
+                            "_attr00_" : lineTimestamp,
+                            "_attr01_" : lineLogLevel,
+                            "_attr02_" : lineSource,
+                            "_attr03_" : lineText,
+                            "line"     : line
+                        });
+                    }
+                }
+                else {
+                    if (line.trim().length() == 0 || line.startsWith("\t")) {
+                        // ignore... probably stacktrace
+                    }
+                    else {
+                        // WHAT TO DO with continuation lines that are not part of stacktrace
+                        // BUT cannot be parse into log elements?
+                        result.push({
+                            "_id_"     : "#" + i,
+                            "_meta_"   : "",
+                            "_attr00_" : "",
+                            "_attr01_" : "",
+                            "_attr02_" : "",
+                            "_attr03_" : line,
+                            "line"     : line
+                        });
+                        // console.error("bad line #" + (i+1) + " in " + path + " (len=" + line.length() + ")");
+                        // console.error(line);
+                    }
+                }
+            }
+        }
+        maxLines = Number(maxLines);
+        print("maxLines = " + maxLines);
+        if (result.length > maxLines) {
+            result = result.slice(result.length-maxLines, result.length);
+        }
+        if (sortOrder == "New to Old") {
+            result = result.reverse();
+        }
+        return result;
+    }
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="24e9c5b1-0009-4001-8241-531858135c23" name="en" type="application/json" size="687" private="false">
+        <Description>
+          <![CDATA[Locale string for English language]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

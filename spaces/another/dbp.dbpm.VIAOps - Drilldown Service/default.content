@@ -1,0 +1,432 @@
+<DashboardPluginModel description="" name="VIAOps - Drilldown Service" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services>
+      <Service name="_getCallSchema" args="" private="true">
+        <CodeText>
+          <![CDATA[return "date_key,accountnumber,unq_ivrcall_id,call_date,lob,is_deflected,division_name,region_name,system_name,headend,cmts,node,cr_probcode,cr_solcode,stb_devicemfg,stb_devicemodel,stb_fw,hsd_devicemodel,hsd_devicemfg,hsd_boot_file_name,mta_devicemodel,mta_devicemfg,mta_boot_file_name,cr_probcode_subcategory,cr_probcode_probsum,cr_probcode_display,cr_solcode_category,cr_solcode_subcategory,cr_solcode_descr,cr_solcode_display,advanced_feature1,account_type,dp_value,dp_prev_value,dp_attribute,dp_id,beforeAfter";
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getEventData" args="metric" private="true">
+        <CodeText>
+          <![CDATA[var data = null;
+switch (metric) {
+    case "Calls":
+        data = JSON.parse(Context.parseCSVtoJSON(Context.getLocalResource("sample-list-of-calls")));
+        break;
+    case "Tickets":
+        data = JSON.parse(Context.parseCSVtoJSON(Context.getLocalResource("sample-list-of-tickets")));
+        break;
+    case "Trucks":
+        data = JSON.parse(Context.parseCSVtoJSON(Context.getLocalResource("sample-list-of-trucks")));
+        break;
+}
+return data;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getTicketSchema" args="" private="true">
+        <CodeText>
+          <![CDATA[return [
+    "date_key",
+    "accountnumber",
+    "create_ts",
+    "modified_ts",
+    "lob",
+    "division_name",
+    "region_name",
+    "system_name",
+    "headend",
+    "cmts",
+    "node",
+    "cr_probcode",
+    "cr_solcode",
+    "stb_devicemfg",
+    "stb_devicemodel",
+    "stb_fw",
+    "hsd_devicemodel",
+    "hsd_devicemfg",
+    "hsd_boot_file_name",
+    "mta_devicemodel",
+    "mta_devicemfg",
+    "mta_boot_file_name",
+    "cr_probcode_subcategory",
+    "cr_probcode_probsum",
+    "cr_probcode_display",
+    "cr_solcode_category",
+    "cr_solcode_subcategory",
+    "cr_solcode_descr",
+    "cr_solcode_display",
+    "advanced_feature1",
+    "account_type",
+    "dp_value",
+    "dp_prev_value",
+    "dp_attribute",
+    "dp_id"
+];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getTruckRollSchema" args="" private="true">
+        <CodeText>
+          <![CDATA[return [
+    {"name":"date_key","label":"date_key","type":"string"},
+    {"name":"accountnumber","label":"accountnumber","type":"string"},
+    {"name":"dispatch_id","label":"dispatch_id","type":"string"},
+    {"name":"create_ts","label":"create_ts","type":"string"},
+    {"name":"modified_ts","label":"modified_ts","type":"string"},
+    {"name":"lob","label":"lob","type":"string"},
+    {"name":"division_name","label":"division_name","type":"string"},
+    {"name":"region_name","label":"region_name","type":"string"},
+    {"name":"system_name","label":"system_name","type":"string"},
+    {"name":"headend","label":"headend","type":"string"},
+    {"name":"cmts","label":"cmts","type":"string"},
+    {"name":"node","label":"node","type":"string"},
+    {"name":"cr_probcode","label":"cr_probcode","type":"string"},
+    {"name":"cr_solcode","label":"cr_solcode","type":"string"},
+    {"name":"stb_devicemfg","label":"stb_devicemfg","type":"string"},
+    {"name":"stb_devicemodel","label":"stb_devicemodel","type":"string"},
+    {"name":"stb_fw","label":"stb_fw","type":"string"},
+    {"name":"hsd_devicemodel","label":"hsd_devicemodel","type":"string"},
+    {"name":"hsd_devicemfg","label":"hsd_devicemfg","type":"string"},
+    {"name":"hsd_boot_file_name","label":"hsd_boot_file_name","type":"string"},
+    {"name":"mta_devicemodel","label":"mta_devicemodel","type":"string"},
+    {"name":"mta_devicemfg","label":"mta_devicemfg","type":"string"},
+    {"name":"mta_boot_file_name","label":"mta_boot_file_name","type":"string"},
+    {"name":"cr_probcode_subcategory","label":"cr_probcode_subcategory","type":"string"},
+    {"name":"cr_probcode_probsum","label":"cr_probcode_probsum","type":"string"},
+    {"name":"cr_probcode_display","label":"cr_probcode_display","type":"string"},
+    {"name":"cr_solcode_category","label":"cr_solcode_category","type":"string"},
+    {"name":"cr_solcode_subcategory","label":"cr_solcode_subcategory","type":"string"},
+    {"name":"cr_solcode_descr","label":"cr_solcode_descr","type":"string"},
+    {"name":"cr_solcode_display","label":"cr_solcode_display","type":"string"},
+    {"name":"advanced_feature1","label":"advanced_feature1","type":"string"},
+    {"name":"account_type","label":"account_type","type":"string"},
+    {"name":"dp_value","label":"dp_value","type":"string"},
+    {"name":"dp_prev_value","label":"dp_prev_value","type":"string"},
+    {"name":"dp_attribute","label":"dp_attribute","type":"string"},
+    {"name":"dp_id","label":"dp_id","type":"string"}
+];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getComparativeTrendData" args="ids,filters" private="false">
+        <CodeText>
+          <![CDATA[function str(val, len)
+{
+    var s = typeof val == "string" ? val : String(val);
+    while (s.length < len) {
+        s = "0" + s;
+    }
+    return s;
+}
+
+if (typeof ids == "string") {
+    ids = JSON.parse(ids);
+}
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+print("getComparativeTrendData(" + (ids != null ? JSON.stringify(ids) : "null") + ")");
+print("getComparativeTrendData: filters is " + JSON.stringify(filters, null, "    "));
+
+var metrics = ["Calls", "Tickets", "Trucks"];
+var anomaly = 0.9
+
+var result = [];
+for (var i=0; i<metrics.length; i++) {
+    for (var j=0; j<30; j++) {
+        var record = {
+            // display fields
+            _id1_      : ids[0],
+            _id2_      : ids[1],
+            _metric_   : metrics[i],
+            _time_     : "T" + str(j, 2),
+            // reference fields for later use
+            metric     : metrics[i],
+            time       : "T" + str(j, 2),
+        };
+        for (var k=0; k<ids.length; k++) {
+            var prop = Math.random();
+            record["_value"+(k+1)+"_"] = 10000 + (Math.round((prop > anomaly ? 10000 : 100) * Math.random()) - (prop > anomaly ? 5000 : 50));
+        }
+        result.push(record);
+    }
+}
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getDetailTrendData" args="id,filters" private="false">
+        <CodeText>
+          <![CDATA[function str(val, len)
+{
+    var s = typeof val == "string" ? val : String(val);
+    while (s.length < len) {
+        s = "0" + s;
+    }
+    return s;
+}
+
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+print("getDetailTrendData(" + id + ")");
+print("getDetailTrendData: filters is " + JSON.stringify(filters, null, "    "));
+
+var metrics = ["Calls", "Tickets", "Trucks"];
+var anomaly = 0.9
+
+var result = [];
+for (var i=0; i<metrics.length; i++) {
+    for (var j=0; j<30; j++) {
+        var prop1 = Math.random();
+        var prop2 = Math.random();
+        result.push({
+            // display fields
+            _id_       : id,
+            _metric_   : metrics[i],
+            _time_     : "T" + str(j, 2),
+            _baseline_ : 10000 + (Math.round(1000 * Math.random()) - 500),
+            _before_   : j < 15 ? 10000 + (Math.round((prop1 > anomaly ? 10000 : 100) * Math.random()) - (prop1 > anomaly ? 5000 : 50)) : 0,
+            _after_    : j < 15 ? 0 : 10000 + (Math.round((prop2 > anomaly ? 10000 : 100) * Math.random()) - (prop2 > anomaly ? 5000 : 50)),
+            // reference fields for later use
+            metric     : metrics[i],
+            time       : "T" + str(j, 2),
+        });
+    }
+}
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getDrilldownOneItemConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[var URI = "/app/dbp/user/" + Context.getModelOwnerId() + "/" + Context.getModelPath();
+return {
+    "method" : "POST",
+    "url" : URI + "/getDetailTrendData",
+    "label" : "Drilldown detail on selected population",
+    "field-labels" : {
+        "_value_" : "DP"
+    },
+    "drilldown" : {
+        "list-of-events" : {
+            "method" : "POST",
+            "url" : URI + "/getListOfEvents",
+            "title" : {
+                "Calls" : "List of Calls",
+                "Tickets" : "List of Tickets",
+                "Trucks" : "List of Truck Rolls"
+            },
+            "schema" : {
+                "Calls" : this._getCallSchema(),
+                "Tickets" : this._getTicketSchema(),
+                "Trucks" : this._getTruckRollSchema()
+            }
+        },
+        "primary-breakdown" : {
+            "method" : "POST",
+            "url" : URI + "/getPrimaryBreakdown",
+            "title" : {
+                "Calls" : "Calls by Problem Subcategory",
+                "Tickets" : "Tickets by System",
+                "Trucks" : "Truck Rolls by Solution Subcategory"
+            },
+            "schema" : {
+                "Calls" : "cr_probcode_subcategory",
+                "Tickets" : ["system_name"],
+                "Trucks" : [
+                    {"name":"cr_solcode_subcategory","label":"Solution Subcategory","type":"string"}
+                ]
+            }
+        },
+        "secondary-breakdown" : {
+            "method" : "POST",
+            "url" : URI + "/getSecondaryBreakdown",
+            "title" : {
+                "Calls" : "Calls by Problem Display",
+                "Tickets" : "Tickets by Headend",
+                "Trucks" : "Truck Rolls by Solution Display"
+            },
+            "schema" : {
+                "Calls" : "cr_probcode_subcategory,cr_probcode_display",
+                "Tickets" : ["system_name", "headend"],
+                "Trucks" : [
+                    {"name":"cr_solcode_subcategory","label":"Solution Subcategory","type":"string"},
+                    {"name":"cr_solcode_display","label":"Solution Display","type":"string"}
+                ]
+            }
+        }
+    }
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getDrilldownTwoItemConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[var URI = "/app/dbp/user/" + Context.getModelOwnerId() + "/" + Context.getModelPath();
+return {
+    "method" : "POST",
+    "url" : URI + "/getComparativeTrendData",
+    "label" : "Compare detail on 2 selected populations",
+    "field-labels" : {
+        "_value1_" : "DP 1",
+        "_value2_" : "DP 2"
+    },
+    "drilldown" : {
+        "list-of-events-1" : {
+            "method" : "POST",
+            "url" : URI + "/getListOfEvents",
+            "title" : {
+                "Calls" : "List of Calls for DP1",
+                "Tickets" : "List of Tickets for DP1",
+                "Trucks" : "List of Truck Rolls for DP1"
+            },
+            "schema" : {
+                "Calls" : this._getCallSchema(),
+                "Tickets" : this._getTicketSchema(),
+                "Trucks" : this._getTruckRollSchema()
+            }
+        },
+        "list-of-events-2" : {
+            "method" : "POST",
+            "url" : URI + "/getListOfEvents",
+            "title" : {
+                "Calls" : "List of Calls for DP2",
+                "Tickets" : "List of Tickets for DP2",
+                "Trucks" : "List of Truck Rolls for DP2"
+            },
+            "schema" : {
+                "Calls" : this._getCallSchema(),
+                "Tickets" : this._getTicketSchema(),
+                "Trucks" : this._getTruckRollSchema()
+            }
+        }
+    }
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getListOfEvents" args="id,filters,metric,time" private="false">
+        <CodeText>
+          <![CDATA[if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+print("getListOfEvents(" + id + ")");
+print("getListOfEvents: filters is " + JSON.stringify(filters, null, "    "));
+print("getListOfEvents: metric is " + metric);
+print("getListOfEvents: time is " + time);
+
+var data = _getEventData(metric);
+
+// for purpose of generating "randomized" result, take ONLY a portion
+// based on random number... N of 10
+var N = 1 + Math.floor(10 * Math.random());
+var result = [];
+for (var i=0; i<data.length; i++) {
+    if ((i % 10) < N) {
+        result.push(data[i]);
+    }
+}
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getPrimaryBreakdown" args="id,filters,metric,time,dimension" private="false">
+        <CodeText>
+          <![CDATA[if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+print("getPrimaryBreakdown(" + id + ")");
+print("getPrimaryBreakdown: filters is " + JSON.stringify(filters, null, "    "));
+print("getPrimaryBreakdown: metric is " + metric);
+print("getPrimaryBreakdown: time is " + time);
+print("getPrimaryBreakdown: dimension is " + dimension);
+
+var counts = {};
+var data = _getEventData(metric);
+for (var i=0; i<data.length; i++) {
+    var item = data[i];
+    var dim = item[dimension] || "(none)";
+    counts[dim] = (counts[dim] || 0) + 1;
+}
+var result = [];
+for (var dim in counts) {
+    result.push({
+        _dimension_ : dim,
+        _value_     : counts[dim]
+    });
+}
+result.sort(function(a,b) {
+    return a._dimension_.localeCompare(b._dimension_);
+});
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getSecondaryBreakdown" args="id,filters,metric,time,group,subgroup" private="false">
+        <CodeText>
+          <![CDATA[if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+print("getSecondaryBreakdown(" + id + ")");
+print("getSecondaryBreakdown: filters is " + JSON.stringify(filters, null, "    "));
+print("getSecondaryBreakdown: metric is " + metric);
+print("getSecondaryBreakdown: time is " + time);
+print("getSecondaryBreakdown: group is " + group);
+print("getSecondaryBreakdown: subgroup is " + subgroup);
+
+var result = [];
+var counts = {};
+var data = _getEventData(metric);
+for (var i=0; i<data.length; i++) {
+    var item = data[i];
+    var groupDim = item[group] || "(none)";
+    var subgroupDim = item[subgroup] || "(none)";
+    var key = groupDim + "###" + subgroupDim;
+    var record = counts[key];
+    if (record == null) {
+        record = {
+            _group_ : groupDim,
+            _subgroup_ : subgroupDim,
+            _value_ : 0
+        }
+        counts[key] = record;
+        result.push(record);
+    }
+    record._value_ = record._value_ + 1;
+}
+result.sort(function(a,b) {
+    if (a._value_ > b._value_) return -1;
+    else if (a._value_ < b._value_) return 1;
+    else return a._group_.localeCompare(b._group_) ||  a._subgroup_.localeCompare(b._subgroup_);
+});
+return result;
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="f190a058-e15e-4149-8a4f-5142a8c1eff9" name="sample-list-of-calls" type="text/csv" size="62843" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="432c82e9-c093-4db1-833f-9b4fecbaa8b7" name="sample-list-of-tickets" type="text/csv" size="120510" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="707acc62-548f-4aef-8818-fd6a54f7faf2" name="sample-list-of-trucks" type="text/csv" size="19169" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

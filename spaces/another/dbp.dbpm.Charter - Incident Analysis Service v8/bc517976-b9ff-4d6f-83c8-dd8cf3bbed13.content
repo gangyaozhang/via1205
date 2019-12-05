@@ -1,0 +1,8 @@
+SELECT * 
+FROM viaops_incident_history
+WHERE event_tm BETWEEN ${fromEpoch} AND ${toEpoch}
+${serviceWhereClause}
+${subserviceWhereClause}
+${metricWhereClause}
+ORDER BY event_tm ASC
+   

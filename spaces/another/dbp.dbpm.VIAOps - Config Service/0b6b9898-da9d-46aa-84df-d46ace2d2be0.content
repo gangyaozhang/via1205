@@ -1,0 +1,3 @@
+UPDATE viaops_incident_group_contextual
+SET display_options=?, modified_ts=current_timestamp()
+WHERE group_rule_name=? AND metric_id=?

@@ -1,0 +1,20 @@
+{
+    "attr.type"         : "유형",
+    "attr.started"      : "시작됨",
+    "attr.last_account" : "마지막 계정",
+    "attr.attribute"    : "속성",
+    "attr.from_value"   : "가치로부터",
+    "attr.to_value"     : "가치 창출",
+    
+    "metric.calls"            : "전화",
+    "metric.tickets"          : "티켓",
+    "metric.truck_rolls"      : "트럭 롤스",
+    "metric.subscriber_count" : "구독자 수",
+    "metric.customer_score"   : "고객 점수",
+    
+    "value.type.network"      : "회로망",
+    "value.type.manual_load"  : "수동로드",
+    "value.type.service"      : "서비스",
+    "value.type.device"       : "장치",
+    "value.type.new_accounts" : "새 계정"
+}

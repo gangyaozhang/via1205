@@ -1,0 +1,482 @@
+<DashboardPluginModel description="" name="VIAOps - Maintenance Scheduler Service" is_init="false">
+  <ModelInfo validated="true">
+    <Properties>
+      <Property name="userName" label="User Name" type="string" value="via61" constraints="" runtimeControl="false" enableAll="false" enableOthers="false" withQuotes="false" defaultAll="false"/>
+      <Property name="password" label="Password" type="string" value="V2tr2a4300!" constraints="" runtimeControl="false" enableAll="false" enableOthers="false" withQuotes="false" defaultAll="false"/>
+    </Properties>
+    <Widgets/>
+    <Functions>
+      <Function name="parseDate" args="dObj" private="false">
+        <CodeText>
+          <![CDATA[if (dObj != null) {
+    var year    =   dObj.getFullYear();
+    var month   = ((dObj.getMonth()+1 ) < 10) ? "0"+(dObj.getMonth()+1) : (dObj.getMonth()+1);
+    var day     =  (dObj.getDate() < 10)      ? "0"+dObj.getDate()      :  dObj.getDate();
+    var hours   =  (dObj.getHours() < 10)     ? "0"+dObj.getHours()     :  dObj.getHours();
+    var minutes =  (dObj.getMinutes() < 10)   ? "0"+dObj.getMinutes()   :  dObj.getMinutes();
+    return month + "/" + day + "/" + year + " " + hours + ":" + minutes;
+}
+return "";
+]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services>
+      <Service name="addScheduledOutage" args="jndiName,start_epoch,end_epoch,subject_line,description,reason,active" private="false">
+        <CodeText>
+          <![CDATA[var config = this.getOutageMangerConfig();
+print("addScheduledOutage");
+print( __prettyPrintJSON(config) );
+
+var values  = []
+var user_id = Context.getUserId();
+values.push( DQ(user_id) );
+values.push( DQ(start_epoch) );
+values.push( DQ(end_epoch) );
+values.push( DQ(subject_line) );
+values.push( DQ(description) );
+values.push( DQ(reason) );
+values.push( DQ(active) );
+
+
+
+//var jndiName = config.jndiName;
+    var sql = "INSERT INTO viaops_outage_manager (user_id, start_epoch, end_epoch, subject_line, description, reason, active) VALUES (" + values.join(",") + ")";
+    print(sql);
+    //SQL.executeUpdate(jndiName, sql, null);
+
+var result = SQL.executeUpdate(jndiName, sql, null);
+
+print( __prettyPrintJSON(result) );
+
+if (result != null) {
+    result = JSON.parse(result);
+    return result.items;
+} else {
+    return [];
+}  
+
+function DQ(str)
+{
+    return '"'+str+'"';
+}]]>
+        </CodeText>
+      </Service>
+      <Service name="checkForNextOutage" args="jndiName" private="false">
+        <CodeText>
+          <![CDATA[var config = this.getOutageMangerConfig();
+//print("checkForNextOutage");
+//print( __prettyPrintJSON(config) );
+
+var current = new Date().getTime() / 1000;
+
+var sql  = "select * from viaops_outage_manager where active = 1 AND start_epoch >= " + parseInt(current) + " AND end_epoch <" + parseInt(current) + 86400;
+    sql += " ORDER BY start_epoch ASC";
+var result = SQL.executeQuery( jndiName, sql );
+
+//print( __prettyPrintJSON(result) );
+
+if (result != null) {
+    result = JSON.parse(result);
+    return result.items;
+} else {
+    return [];
+}   ]]>
+        </CodeText>
+      </Service>
+      <Service name="checkForOutage" args="jndiName" private="false">
+        <CodeText>
+          <![CDATA[var config = this.getOutageMangerConfig();
+//print("checkForOutage");
+//print( __prettyPrintJSON(config) );
+
+var current = new Date().getTime() / 1000;
+
+var sql = "select * from viaops_outage_manager where start_epoch <= " + current + " and end_epoch > " + current + " AND active = 1  ORDER BY start_epoch ASC";
+
+var result = SQL.executeQuery( jndiName, sql );
+
+//print( __prettyPrintJSON(result) );
+
+if (result != null) {
+    result = JSON.parse(result);
+    return result.items;
+} else {
+    return [];
+}   ]]>
+        </CodeText>
+      </Service>
+      <Service name="getCurrentUserId" args="" private="false">
+        <CodeText>
+          <![CDATA[return Context.getCurrentUserId();]]>
+        </CodeText>
+      </Service>
+      <Service name="getFilterConfig" args="name" private="false">
+        <CodeText>
+          <![CDATA[function parseBaseOptions(name)
+{
+    var options = {};
+    var params = name.substring(5).split("&");
+    for (var i=0; i<params.length; i++) {
+        var param = params[i];
+        var nv = param.split("=");
+        if (nv.length == 2) {
+            if (nv[1] == "true") {
+                options[nv[0]] = true;
+            }
+            else if (nv[1] == "false") {
+                options[nv[0]] = false;
+            }
+            else {
+                var num = Number(nv[1]);
+                if (isNaN(num)) {
+                    options[nv[0]] = nv[1];
+                }
+                else {
+                    options[nv[0]] = num;
+                }
+            }
+        }
+    }
+    return options;
+}
+
+function makeBaseFilterConfig(config, options)
+{
+    var category = config.categories[0];
+    delete category["label"];
+    var dimensions = category.dimensions;
+    category.dimensions = [];
+    for (var i=0; i<dimensions.length; i++) {
+        var dimension = dimensions[i];
+        if (options[dimension.name] == true) {
+            category.dimensions.push(dimension);
+        }
+        else if (options[dimension.name] == "fa") {
+            dimension["fa-control"] = true;
+            delete dimension["label"];
+            category.dimensions.push(dimension);
+        }
+        else if (options[dimension.name] == "enum" || options[dimension.name] == "enum+none") {
+            dimension["type"] = "enumeration";
+            category.dimensions.push(dimension);
+        }
+        else if (options[dimension.name] == "enum-none") {
+            dimension["type"] = "enumeration";
+            dimension["none"] = false;
+            category.dimensions.push(dimension);
+        }
+        else if (options[dimension.name] == "enum+fa" || options[dimension.name] == "enum+fa+none") {
+            dimension["fa-control"] = true;
+            dimension["type"] = "enumeration";
+            delete dimension["label"];
+            category.dimensions.push(dimension);
+        }
+        else if (options[dimension.name] == "enum+fa-none") {
+            dimension["fa-control"] = true;
+            dimension["type"] = "enumeration";
+            dimension["none"] = false;
+            delete dimension["label"];
+            category.dimensions.push(dimension);
+        }
+        var defaultValue = options[dimension.name+".default"];
+        if (defaultValue != null) {
+            dimension["default"] = defaultValue;
+        }
+    }
+    if (options["fa.submit"] == true) {
+        config.categories[0]["fa-submit"] = "fas fa-sign-out-alt";
+    }
+    else if (options["fa.submit"] != null && typeof options["fa.submit"] == "string") {
+        config.categories[0]["fa-submit"] = options["fa.submit"];
+    }
+}
+
+var resourceName = "FilterConfig";
+var serviceList = null;
+switch (name) {
+    case "full":
+        serviceList = this.getServiceConfig().groups;
+        break;
+}
+var OPTIONS_SERVICE = "/app/dbp/user/charter_admin/dbpm/Charter - Options Service v2";
+var config = Context.getLocalResource(resourceName);
+var URI = "/app/dbp/user/" + Context.getModelOwnerId() + "/" + Context.getModelPath();
+config = config.replaceAll("__MAINTENANCE_PLUGIN__", URI)
+               .replaceAll("__OPTIONS_SERVICE__", OPTIONS_SERVICE);
+config = JSON.parse(config);
+switch (name) {
+    case "base":
+        makeBaseFilterConfig(config, {
+            "predefined" : true,
+            "timeRange"  : true,
+            "svc"        : "enum",
+        });
+        break;
+    case "full":
+        delete config.categories[0]["submit"];
+        break;
+    case "mini":
+        delete config.categories[0]["label"];
+        break;
+    default:
+        if (name.indexOf("base?") == 0) {
+            // is Base config with custom options
+            makeBaseFilterConfig(config, parseBaseOptions(name));
+        }
+        break;
+}
+if (serviceList != null) {
+    // collect list of services... if we display services sorted alphabetically,
+    // we should also show service specific additions sorted alphabetically, so that
+    // user has a natural order when looking for service specific dimensions... last service
+    // in the list should be at the end of the form
+    var services = [];
+    for (var i=0; i<serviceList.length; i++) {
+        var serviceItem = serviceList[i];
+        services.push({
+            name : serviceItem["name"],
+            label : serviceItem["label"]
+        });
+        services.sort(function(a,b){
+            return a.label.localeCompare(b.label);
+        });
+    }
+    if (services.length > 0) {
+        for (var i=0; i<services.length; i++) {
+            var service = services[i]["name"];
+            var hash = service.indexOf("#");
+            if (hash != -1) service = service.substring(0, hash);
+            var serviceConfig = Context.getLocalResource(resourceName + "?svc=" + service);
+            if (serviceConfig != null) {
+                serviceConfig = serviceConfig.replaceAll("__MAINTENANCE_PLUGIN__", URI)
+                                             .replaceAll("__OPTIONS_SERVICE__", OPTIONS_SERVICE);
+                serviceConfig = JSON.parse(serviceConfig);
+                config.categories = config.categories.concat(serviceConfig);
+            }
+        }
+    }
+}
+return config;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getOutageMangerConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[return JSON.parse(Context.getLocalResource("outageManagerConfig"));]]>
+        </CodeText>
+      </Service>
+      <Service name="getScheduleHistory" args="jndiName,startEpoch,endEpoch" private="false">
+        <CodeText>
+          <![CDATA[var config = this.getOutageMangerConfig();
+print("getScheduleHistory");
+print( __prettyPrintJSON(config) );
+
+var current     = Math.round( new Date().getTime() / 1000 );
+var monthAgo    = current - 2628000;
+
+if( startEpoch == null ){
+    startEpoch = current;   
+} else {
+    startEpoch = parseInt( startEpoch );   
+}
+
+if( endEpoch == null ){
+    endEpoch = monthAgo;   
+} else {
+    endEpoch = parseInt( endEpoch );   
+}
+
+
+var sql = "select * from viaops_outage_manager where start_epoch BETWEEN '" + startEpoch + "' AND '" + endEpoch + "'";
+print( sql );
+
+var result = SQL.executeQuery( jndiName, sql );
+
+print( __prettyPrintJSON(result) );
+
+if (result != null) {
+    result = JSON.parse(result);
+    return result.items;
+} else {
+    return [];
+}   ]]>
+        </CodeText>
+      </Service>
+      <Service name="getTimeRange" args="jndiName,filters" private="false">
+        <CodeText>
+          <![CDATA[return this._getTimeRange(this.getQueryConfig(), filters);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="modifyScheduledOutage" args="jndiName,id,start_epoch,end_epoch,subject_line,description,reason,user_id,active" private="false">
+        <CodeText>
+          <![CDATA[var config = this.getOutageMangerConfig();
+print("modifyScheduledOutage");
+print( __prettyPrintJSON(config) );
+
+if( id == null || id == "" ){
+    return "error: No id referenced";  
+}
+
+var sql  = "UPDATE viaops_outage_manager "
+    sql += " SET " 
+    
+if( start_epoch != null ){
+    sql += " start_epoch = " + DQ(start_epoch);
+    sql += addComma( "start_epoch" );
+}
+
+if( end_epoch != null ){
+    sql += " end_epoch = " + DQ(end_epoch)   
+    sql += addComma( "end_epoch" );
+}
+
+if( subject_line != null ){
+    sql += " subject_line = " + DQ(subject_line) 
+    sql += addComma( "subject_line" );
+}
+
+if( description != null ){
+    sql += " description = " + DQ(description)
+    sql += addComma( "description" );
+}
+
+if( reason != null ){
+    sql += " reason = " + DQ(reason)
+    sql += addComma( "reason" );
+}
+
+if( user_id != null ){
+    sql += " user_id = " + DQ(user_id)
+    sql += addComma( "user_id" );
+}
+
+if( active != null ){
+    sql += " active = " + DQ(active)
+    sql += addComma( "active" );
+}
+
+    sql += " WHERE id = " + id;
+
+//var jndiName = config.jndiName;
+    print(sql);
+
+var result = SQL.executeUpdate(jndiName, sql, null);
+if( result != null ){
+    return result;
+} else {
+    return [];   
+}
+
+
+function DQ(str)
+{
+    return '"'+str+'"';
+}
+
+
+function addComma( field ){
+    var emitComma = false;
+    switch( field ){
+    case 'id':
+        if( start_epoch != null 
+            || end_epoch != null 
+            || subject_line != null 
+            || description != null 
+            || reason != null 
+            || user_id != null
+            || active != null ){
+                emitComma = true;            
+        }
+        break;
+    case 'start_epoch':
+        if( end_epoch != null 
+            || subject_line != null 
+            || description != null 
+            || reason != null 
+            || user_id != null
+            || active != null ){
+                emitComma = true;            
+        }
+        break;
+    case 'end_epoch':
+        if( subject_line != null 
+            || description != null 
+            || reason != null 
+            || user_id != null
+            || active != null ){
+                emitComma = true;            
+        }
+        break;
+    case 'subject_line':
+        if( description != null 
+            || reason != null 
+            || user_id != null
+            || active != null ){
+                emitComma = true;            
+        }
+        break;
+    case 'description':
+        if( reason != null 
+            || user_id != null
+            || active != null ){
+                emitComma = true;            
+        }
+        break;
+    case 'reason':
+        if( user_id != null
+            || active != null ){
+                emitComma = true;            
+        }
+        break;
+    case 'user_id':
+        if( active != null ){
+                emitComma = true;            
+        }
+        break;
+    case 'active':
+        
+        break;    
+        
+        
+    }
+    
+    if( emitComma ){
+        return ",";   
+    } else {
+        return "";
+    }
+    
+}]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="afa2ad66-b88c-4914-8d3b-589445dcdad4" name="filterConfig" type="text/plain" size="2465" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="9c7a8c20-7897-4e5d-8118-99ab81a10f90" name="outageManagerConfig" type="text/plain" size="37" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="abd45719-aba1-4b48-8bdd-f4174d9d13db" name="QueryConfig" type="application/json" size="0" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="45ed622a-1fb0-42a1-86cb-131965724958" name="SQL CREATE TABLE SCRIPT___" type="text/plain" size="327" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/user/via_common/dbpm/VIA - File Service"/>
+      <Plugin uri="/app/dbp/space/another/dbpm/VIAOps - Base Service"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

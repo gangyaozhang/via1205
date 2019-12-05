@@ -1,0 +1,9 @@
+INSERT INTO viaops_anomaly_config_audit (
+    user_id,
+    user_full_name,
+    audit_action,
+    owner_id,
+    metric_id,
+    config_name,
+    config_json
+) VALUES (?, ?, ?, ?, ?, ?, ?)

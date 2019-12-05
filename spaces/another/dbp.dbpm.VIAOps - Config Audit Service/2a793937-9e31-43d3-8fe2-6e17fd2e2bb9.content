@@ -1,0 +1,7 @@
+INSERT INTO viaops_config_property_audit (
+    user_id,
+    user_full_name,
+    audit_action,
+    name,
+    value
+) VALUES (?, ?, ?, ?, ?)

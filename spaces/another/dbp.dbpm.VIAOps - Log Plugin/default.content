@@ -1,0 +1,50 @@
+<DashboardPluginModel description="" name="VIAOps - Log Plugin" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions>
+      <Function name="getDevConfig" args="type" private="false">
+        <CodeText>
+          <![CDATA[var SERVICE = "/app/dbp/user/viaops_admin/dbpm/VIAOps - Log Service - " + type;
+return {
+    "locale" : "en-US",
+    "timezone" : "America/New_York",
+    "i18n_namespace" : "com.vitria.digi_ops.Log." + type,
+    //"drilldown" : false,
+    //"hover" : false,
+    "filter-config" : {
+        "method" : "POST",
+        "url" : SERVICE + "/getFilterConfig",
+    },
+    "log-config" : {
+        "method" : "POST",
+        "url" : SERVICE + "/getLogConfig",
+    },
+    "drilldown-config" : {
+        "method" : "POST",
+        "url" : SERVICE + "/getDrilldownConfig",
+    },
+    "hover-config" : {
+        "method" : "POST",
+        "url" : SERVICE + "/getHoverConfig",
+    },
+    "locales" : [{
+        "code" : "en",
+        "url"  : SERVICE + "/en"
+    }]
+};
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getDevLanguage" args="" private="false">
+        <CodeText>
+          <![CDATA[return "en";
+]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services/>
+    <Resources/>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

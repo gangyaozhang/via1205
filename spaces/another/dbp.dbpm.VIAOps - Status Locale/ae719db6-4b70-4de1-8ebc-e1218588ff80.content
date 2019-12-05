@@ -1,0 +1,20 @@
+{
+    "attr.type"         : "類型",
+    "attr.started"      : "入門",
+    "attr.last_account" : "上次帳戶",
+    "attr.attribute"    : "屬性",
+    "attr.from_value"   : "從價值",
+    "attr.to_value"     : "價值",
+    
+    "metric.calls"            : "呼叫",
+    "metric.tickets"          : "門票",
+    "metric.truck_rolls"      : "卡車勞斯",
+    "metric.subscriber_count" : "訂戶數量",
+    "metric.customer_score"   : "顧客評分",
+    
+    "value.type.network"      : "網絡",
+    "value.type.manual_load"  : "手動加載",
+    "value.type.service"      : "服務",
+    "value.type.device"       : "設備",
+    "value.type.new_accounts" : "新帳戶"
+}

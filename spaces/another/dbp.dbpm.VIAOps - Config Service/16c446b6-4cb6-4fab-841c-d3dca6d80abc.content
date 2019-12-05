@@ -1,0 +1,7 @@
+-- NOTIFICATION_ACTION_LIST_SQL
+SELECT
+    action_name as label,
+    action_id as value
+FROM action_dim
+-- WHERE action_name not in ("Key Dims", "Locality Dims", "Cause Dims")
+ORDER BY 1

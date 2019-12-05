@@ -1,0 +1,20 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "locale"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "axv",
+    "__references__": "/app/dbp/space/another/dbpm/VIAOps - Commonality Plugin,/app/dbp/space/VIA Common Library/dbpm/VIA - Common,/app/ax/space/another/axv/VIAOps - Commonality View - Items,/app/ax/space/another/axv/VIAOps - Anomaly Trend Comp,/app/ax/space/another/axv/VIAOps - Commonality View - Breakdown,/app/ax/space/another/axv/VIAOps - Notification Action Comp,/app/ax/space/another/axv/VIAOps - Commonality View - Info",
+    "modelStatus": "valid",
+    "name": "Charter - Incident Analysis Comp v5"
+  }
+}

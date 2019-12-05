@@ -1,0 +1,8 @@
+{
+    "attr.date"     : "Date",
+    "attr.time"     : "Time",
+    "attr.host"     : "Host",
+    "attr.app"      : "App",
+    "attr.loglevel" : "Log Level",
+    "attr.text"     : "Text"
+}

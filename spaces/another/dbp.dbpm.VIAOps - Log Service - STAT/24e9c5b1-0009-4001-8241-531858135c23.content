@@ -1,0 +1,8 @@
+{
+    "attr.date"      : "Date",
+    "attr.time"      : "Time",
+    "attr.server"    : "Server",
+    "attr.component" : "Component",
+    "attr.metric"    : "Metric",
+    "attr.measure"   : "Measure"
+}

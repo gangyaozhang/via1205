@@ -1,0 +1,5 @@
+SELECT * 
+FROM viaops_notification_archive
+WHERE date_key = ${dateKey}
+  AND id = '${incidentId}'
+ORDER BY event_tm ASC

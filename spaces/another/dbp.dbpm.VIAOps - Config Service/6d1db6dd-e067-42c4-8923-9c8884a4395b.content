@@ -1,0 +1,6 @@
+DELETE FROM
+    viaops_incident_model
+WHERE service=?
+  AND sub_service=?
+  AND dim_values=?
+  AND anomaly_window=?

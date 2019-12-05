@@ -1,0 +1,7 @@
+SELECT 
+    ${dimension} as name, 
+    count(*) as value 
+FROM viaops_user_mouse_event 
+where current_viewer = '${viewer}'
+group by ${dimension}
+order by value desc

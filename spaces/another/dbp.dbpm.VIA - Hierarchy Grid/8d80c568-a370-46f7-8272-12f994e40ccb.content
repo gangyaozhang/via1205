@@ -1,0 +1,19 @@
+//'_id', 'parent'(parent id) and  '_type' feild are required for the data. If '_type' is 'group', the data is branch node;
+//if '_type' is 'item', the data is leaf node.
+[
+    { _id: 'AF', name: 'Africa',"diffval2":-3, "time":"2018-12-31T16:00:00Z",_type: 'group', type: 'continent', population: '900 million', area: '30,221,532 sq km',
+        timezone: '-1 UTC to +4 UTC'},
+    { _id: 'EG', name: 'Egypt', "diffval2":-3,_type: 'group',  aatype: 'country', _parent: 'AF' },
+    { _id: 'SD', name: 'Sudan', "diffval2":-3,_type: 'group', aatype: 'country', _parent: 'AF'},
+    { _id: 'KE', name: 'Kenya', "diffval2":-3,_type: 'group', aatype: 'country', _parent: 'AF'},
+    { _id: 'Cairo', name: 'Cairo',"diffval2":-3, _type: 'item', bbtype: 'city', _parent: 'EG' },
+    { _id: 'Nairobi', name: 'Nairobi',"diffval2":-3,_type: 'item',  bbtype: 'city', _parent: 'KE' },
+    { _id: 'Mombasa', name: 'Mombasa', "diffval2":-3,_type: 'item',  bbtype: 'city', _parent: 'KE' },
+    
+    { _id: 'Khartoum', name: 'Khartoum',"diffval2":-3, _type: 'item',  bbtype: 'city', _parent: 'SD' },
+    
+    { _id: 'AS', name: 'Asia', "diffval2":4,"time":"2018-12-31T16:00:00Z",_type: 'group', type: 'continent', population: '3.2 billion'},
+    { _id: 'CN', name: 'China',"diffval2":-3, _type: 'group', aatype: 'country', _parent: 'AS' },
+    { _id: 'Shanghai', name: 'Shanghai',"diffval2":-3, _type: 'item', bbtype: 'city', _parent: 'CN' },
+    { _id: 'IN', name: 'India', "diffval2":-3,_type: 'group', aatype: 'country', _parent: 'AS' }
+]

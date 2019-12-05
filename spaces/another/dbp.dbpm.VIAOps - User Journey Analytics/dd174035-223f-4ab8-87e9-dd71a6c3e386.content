@@ -1,0 +1,33 @@
+DROP TABLE IF EXISTS viaops_user_mouse_event;
+
+CREATE TABLE IF NOT EXISTS viaops_user_mouse_event (
+    user_id VARCHAR(512) NOT NULL,
+    user_full_name VARCHAR(1024),
+    current_viewer VARCHAR(1024),
+    event_ts BIGINT,
+    event_type VARCHAR(512),
+    event_x INTEGER,
+    event_y  INTEGER,
+    resolution_x INTEGER,
+    resolution_y INTEGER,
+    percent_x DOUBLE,
+    percent_y DOUBLE,
+    ip VARCHAR(512),
+    browser VARCHAR(512),
+    device VARCHAR(512),
+    os VARCHAR(512)
+);
+
+DROP TABLE IF EXISTS viaops_user_journey_event;
+
+CREATE TABLE IF NOT EXISTS viaops_user_journey_event (
+    user_id VARCHAR(512) NOT NULL,
+    user_full_name VARCHAR(1024),
+    event_ts BIGINT,
+    from_viewer VARCHAR(1024),
+    to_viewer VARCHAR(1024),
+    ip VARCHAR(512),
+    browser VARCHAR(512),
+    device VARCHAR(512),
+    os VARCHAR(512)
+);

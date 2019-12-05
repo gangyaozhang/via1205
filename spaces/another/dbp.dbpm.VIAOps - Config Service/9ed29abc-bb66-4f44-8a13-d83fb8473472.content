@@ -1,0 +1,12 @@
+UPDATE
+    viaops_anomaly_algorithm
+SET
+    algorithm="${algorithm}",
+    fill_policy=${fill_policy},
+    seasonality="${seasonality}",
+    ignore_baseline=${ignore_baseline},
+    ignore_anomaly=${ignore_anomaly},
+    enabled=${enabled},
+    modified_ts=current_timestamp()
+WHERE adm_name="${adm_name}"
+  AND metric_id="${metric_id}"

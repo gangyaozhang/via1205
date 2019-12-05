@@ -1,0 +1,20 @@
+{
+    "attr.type"         : "Art",
+    "attr.started"      : "Gestartet",
+    "attr.last_account" : "Letztes Konto",
+    "attr.attribute"    : "Attribut",
+    "attr.from_value"   : "Von Wert",
+    "attr.to_value"     : "Schätzen",
+    
+    "metric.calls"            : "Anrufe",
+    "metric.tickets"          : "Tickets",
+    "metric.truck_rolls"      : "LKW-Rollen",
+    "metric.subscriber_count" : "Abonnentenanzahl",
+    "metric.customer_score"   : "Kundenbewertung",
+    
+    "value.type.network"      : "Netzwerk",
+    "value.type.manual_load"  : "Manuelles Laden",
+    "value.type.service"      : "Bedienung",
+    "value.type.device"       : "Gerät",
+    "value.type.new_accounts" : "Neue Konten"
+}

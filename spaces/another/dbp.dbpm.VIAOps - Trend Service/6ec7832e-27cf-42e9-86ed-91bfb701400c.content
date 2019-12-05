@@ -1,0 +1,44 @@
+--- VIAOps - Trend Service > CALLS_SQL_DST
+select
+    a._group_,
+    a._data_,
+    ${epochProjectionSQL} as _epoch_,
+    ${timeProjectionSQL} as _time_,
+    max(a._value_) as _value2_,
+    (sort_array(collect_list(b._value_))[floor((count(*)-1)/2)] + sort_array(collect_list(b._value_))[floor((count(*))/2)]) / 2 as _baseline2_
+from (
+    select
+        *,
+        date_format_with_timezone(_epoch_, 'e|HHmm', ${solutionTimezone}) as _df_,
+        date_format_with_timezone(_epoch_, 'e', ${solutionTimezone}) as _df1_
+    from (
+        select
+            "${groupKey}" as _group_,
+            "${groupData}" as _data_,
+            ${epochExpr} as _epoch_,
+            sum(${callsCount}) as _value_
+        from ${callsTable}
+        where ${epochExpr} ${fromOper} ${fromTime} and ${epochExpr} ${toOper} ${toTime}
+        and ${dateKeyColumn} in (${dateKeys})
+        ${dimensionWhereClause}
+        group by 3
+        order by _epoch_)
+    ) a
+left join (
+    select 
+        *, 
+        date_format_with_timezone(_epoch_, 'e|HHmm', ${solutionTimezone}) as _df_,
+        date_format_with_timezone(_epoch_, 'e', ${solutionTimezone}) as _df1_
+    from (
+        select
+            ${epochExpr} as _epoch_,
+            sum(${callsCount}) as _value_
+        from ${callsTable}
+        where ${epochExpr} ${fromOper} ${baselineFromTime} and ${epochExpr} ${toOper} ${baselineToTime}
+            ${baselineDateKeyWhereClause}
+            ${dimensionWhereClause}
+        group by 1)
+    ) b
+on a._df1_=b._df1_ and baseline_match(a._epoch_, b._epoch_, a._df_, b._df_, 'e|HHmm', ${solutionTimezone}, ${baselineWeeks}, 7, ${timeloop}, ${timegap})
+group by 1,2,3
+order by _epoch_

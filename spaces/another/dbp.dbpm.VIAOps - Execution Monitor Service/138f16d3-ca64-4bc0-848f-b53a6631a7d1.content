@@ -1,0 +1,46 @@
+select  
+
+    cd.id,
+    (cd.start_ts * 1000) as start_ts,
+    (cd.end_ts * 1000) as end_ts,
+    cd.host,
+    cd.host_ip,
+    cd.tech_id,
+    cd.update_count,
+    cd.location,
+    nm.primary_ip,
+    nm.service,
+    cd.ackuser,
+    cd.ackepoch,
+    cd.ackvalue,
+    cd.acknotes
+
+FROM
+(
+
+    select 
+            cm.uuid as id,
+            cm.start_tm as start_ts,
+            cm.end_tm as end_ts,
+            cm.host as host,
+            cm.ip as host_ip,
+            cm.user as tech_id,
+            cm.update_count as update_count,
+            cm.location as location,
+            ca.ackuser as ackuser,
+            ca.ack_tm as ackepoch,
+            ca.ackvalue as ackvalue,
+            ca.acknotes as acknotes
+    
+    from viaops_change_mgmt cm
+    LEFT JOIN viaops_change_mgmt_acks ca
+    ON cm.uuid = ca.uuid
+    WHERE cm.start_tm BETWEEN UNIX_TIMESTAMP( DATE_SUB(NOW() , INTERVAL ${intervalHours} HOUR) ) AND UNIX_TIMESTAMP( NOW() )
+
+) cd
+
+left join 
+    charter_network_metadata nm
+ON cd.host = nm.host 
+ORDER BY cd.start_ts desc
+

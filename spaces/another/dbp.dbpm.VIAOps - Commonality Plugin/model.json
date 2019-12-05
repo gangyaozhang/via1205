@@ -1,0 +1,14 @@
+{
+  "contents": [{
+    "fileref": "ModelContentFile0",
+    "name": "default"
+  }],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": " ",
+    "_RESOURCE_Type": "dbpm",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "VIAOps - Commonality Plugin"
+  }
+}

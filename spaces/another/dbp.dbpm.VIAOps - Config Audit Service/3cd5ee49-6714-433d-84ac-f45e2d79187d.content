@@ -1,0 +1,163 @@
+DROP TABLE IF EXISTS viaops_metric_info_audit;
+CREATE TABLE viaops_metric_info_audit (
+    user_id VARCHAR(512) NOT NULL,
+    user_full_name VARCHAR(1024) DEFAULT NULL,
+    audit_action VARCHAR(45) NOT NULL,
+    metric_id VARCHAR(1024) DEFAULT NULL,
+    base_metric_id VARCHAR(1024) DEFAULT NULL,
+    service_name VARCHAR(45) DEFAULT NULL,
+    service_label VARCHAR(45) DEFAULT NULL,
+    sub_service_name VARCHAR(250) DEFAULT NULL,
+    sub_service_label VARCHAR(250) DEFAULT NULL,
+    app_name VARCHAR(250) DEFAULT NULL,
+    app_label VARCHAR(250) DEFAULT NULL,
+    metric_name VARCHAR(250) DEFAULT NULL,
+    metric_label VARCHAR(250) DEFAULT NULL,
+    dim_keys VARCHAR(1024) DEFAULT NULL,
+    dim_values text DEFAULT NULL,
+    modified_ts TIMESTAMP DEFAULT current_timestamp()
+);
+
+DROP TABLE IF EXISTS viaops_qdc_table_audit;
+CREATE TABLE viaops_qdc_table_audit (
+    user_id VARCHAR(512) NOT NULL,
+    user_full_name VARCHAR(1024) DEFAULT NULL,
+    audit_action VARCHAR(45) NOT NULL,
+    metric_id VARCHAR(1024) DEFAULT NULL,
+    sql_qdc text DEFAULT NULL,
+    json_qdc text DEFAULT NULL,
+    aggr_func VARCHAR(20) DEFAULT NULL,
+    parse_target_group VARCHAR(200) DEFAULT NULL,
+    modified_ts TIMESTAMP DEFAULT current_timestamp()
+);
+
+DROP TABLE IF EXISTS viaops_parse_table_audit;
+CREATE TABLE viaops_parse_table_audit (
+    user_id VARCHAR(512) NOT NULL,
+    user_full_name VARCHAR(1024) DEFAULT NULL,
+    audit_action VARCHAR(45) NOT NULL,
+    metric_id VARCHAR(1024) DEFAULT NULL,
+    aggr_func VARCHAR(20) DEFAULT NULL,
+    parse_source_group VARCHAR(200) DEFAULT NULL,
+    parse_source_name VARCHAR(200) DEFAULT NULL,
+    parse_target_group VARCHAR(200) DEFAULT NULL,
+    parse_target_app VARCHAR(80) DEFAULT NULL,
+    parse_target_metric VARCHAR(200) DEFAULT NULL,
+    modified_ts TIMESTAMP DEFAULT current_timestamp()
+);
+
+DROP TABLE IF EXISTS viaops_incident_table_audit;
+CREATE TABLE `viaops_incident_table_audit` (
+  `user_id` VARCHAR(512) NOT NULL,
+  `user_full_name` VARCHAR(1024) DEFAULT NULL,
+  `audit_action` VARCHAR(45) NOT NULL,
+  `metric_id` varchar(1024)  NOT NULL,
+  `window` varchar(10) DEFAULT NULL,
+  `algorithm` varchar(20)  DEFAULT NULL,
+  `threshold_policy` varchar(20) DEFAULT NULL,
+  `call_metric_id` varchar(1024) DEFAULT NULL,
+  `generate` varchar(1) DEFAULT NULL,
+  `emit_notification` varchar(20) DEFAULT NULL,
+  `threshold_high` float DEFAULT NULL,
+  `threshold_low` float DEFAULT NULL,
+  `threshold_med` float DEFAULT NULL,
+  `med_threshold_period` int(11) DEFAULT NULL,
+  `high_threshold_period` int(11) DEFAULT NULL,
+  `metric_time_skew` int(11) DEFAULT NULL,
+  `call_time_skew` int(11) DEFAULT NULL,
+  `call_metric_time_skew` int(11) DEFAULT NULL,
+  `expire_after` int(11) DEFAULT NULL,
+  `cool_down_period` int(11) DEFAULT NULL,
+  `warmup_period` int(11) DEFAULT NULL,
+  `warmup_threshold` float DEFAULT NULL,
+  `min_metric_vol` float DEFAULT 0,
+  `min_metric_deviation` float DEFAULT NULL,
+  `med_metric_deviation` float DEFAULT NULL,
+  `high_metric_deviation` float DEFAULT NULL,
+  `min_call_vol` int(11) DEFAULT NULL,
+  `min_call_deviation` float DEFAULT NULL,
+  `med_call_deviation` float DEFAULT NULL,
+  `high_call_deviation` float DEFAULT NULL,
+  `causation_measure` varchar(45)  DEFAULT NULL,
+  `causation_top_count` int(11) DEFAULT NULL,
+  `causation_min_measure` float DEFAULT NULL,
+  `causation_rule_name` varchar(45)  DEFAULT NULL,
+  `causation_suppl_measure` varchar(45)  DEFAULT NULL,
+  `factor` float DEFAULT NULL,
+  `metric_hist_per` int(11) DEFAULT NULL,
+  `max_low_per` int(11) DEFAULT NULL,
+  `max_med_per` int(11) DEFAULT NULL,
+  `tot_max_low_per` int(11) DEFAULT NULL,
+  `tot_max_med_per` int(11) DEFAULT NULL,
+  `modified_ts` datetime DEFAULT CURRENT_TIMESTAMP
+);
+
+DROP TABLE IF EXISTS viaops_config_property_audit;
+CREATE TABLE  viaops_config_property_audit (
+    `user_id` VARCHAR(512) NOT NULL,
+    `user_full_name` VARCHAR(1024) DEFAULT NULL,
+    `audit_action` VARCHAR(45) NOT NULL,
+    `name` VARCHAR(512) NOT NULL,
+    `value` VARCHAR(1024) DEFAULT NULL,
+    `modified_ts` TIMESTAMP DEFAULT current_timestamp()
+);
+
+DROP TABLE IF EXISTS viaops_anomaly_config_audit;
+CREATE TABLE viaops_anomaly_config_audit (
+    user_id VARCHAR(512) NOT NULL,
+    user_full_name VARCHAR(1024) DEFAULT NULL,
+    audit_action VARCHAR(45) NOT NULL,
+    owner_id VARCHAR(20) DEFAULT NULL,
+    metric_id VARCHAR(1024) DEFAULT NULL,
+    config_name VARCHAR(80) DEFAULT NULL,
+    config_json text DEFAULT NULL,
+    modified_ts TIMESTAMP DEFAULT current_timestamp()
+);
+
+DROP TABLE IF EXISTS  viaops_anomaly_favorites_audit;
+CREATE TABLE viaops_anomaly_favorites_audit (
+    user_id VARCHAR(512) NOT NULL,
+    user_full_name VARCHAR(1024) DEFAULT NULL,
+    audit_action VARCHAR(45) NOT NULL,
+    owner_id VARCHAR(20) DEFAULT NULL,
+    favorite_name VARCHAR(80) DEFAULT NULL,
+    metric_id VARCHAR(1024) DEFAULT NULL,
+    config_json text DEFAULT NULL,
+    filter_json text DEFAULT NULL,
+    modified_ts TIMESTAMP DEFAULT current_timestamp()
+);
+
+DROP TABLE IF EXISTS  viaops_incident_group_audit;
+CREATE TABLE viaops_incident_group_audit (
+    user_id VARCHAR(512) NOT NULL,
+    user_full_name VARCHAR(1024) DEFAULT NULL,
+    audit_action VARCHAR(45) NOT NULL,
+    group_rule_name varchar(1024) NOT NULL,
+    max_lookback int(11) DEFAULT NULL,
+    expire_after int(11) DEFAULT NULL,
+    modified_ts timestamp  DEFAULT current_timestamp()
+);
+
+
+DROP TABLE IF EXISTS  viaops_incident_group_contextual_audit;
+CREATE TABLE viaops_incident_group_contextual_audit (
+    user_id VARCHAR(512) NOT NULL,
+    user_full_name VARCHAR(1024) DEFAULT NULL,
+    audit_action VARCHAR(45) NOT NULL,
+    group_rule_name VARCHAR(1024) DEFAULT NULL,
+    metric_id VARCHAR(1024) DEFAULT NULL,
+    display_options text DEFAULT NULL,
+    modified_ts TIMESTAMP DEFAULT current_timestamp()
+);
+
+DROP TABLE IF EXISTS  viaops_incident_group_correlation_audit;
+CREATE TABLE viaops_incident_group_correlation_audit (
+    user_id VARCHAR(512) NOT NULL,
+    user_full_name VARCHAR(1024) DEFAULT NULL,
+    audit_action VARCHAR(45) NOT NULL,
+    group_rule_name varchar(1024)  DEFAULT NULL,
+    service_name varchar(50)  DEFAULT NULL,
+    sub_service_name varchar(50)  DEFAULT NULL,
+    group_start varchar(1)  DEFAULT NULL,
+    modified_ts TIMESTAMP DEFAULT current_timestamp()
+);

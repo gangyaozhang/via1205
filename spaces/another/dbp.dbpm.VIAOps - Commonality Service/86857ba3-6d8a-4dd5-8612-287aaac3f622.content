@@ -1,0 +1,29 @@
+// Populations, Current Counts and Baselines
+// =========================================
+// P  = Total Population
+// X  = Subpopulation of P with dimension value X 
+// Cx = Current count of anomalies for X
+// Bx = Baseline count of anomalies for X
+// Cp = Current count of anomalies for P
+// Bp = Baseline count of anomalies for P
+// 
+// Complement Population of X, denoted as "nX" for "not X", are members of P with a dimension value that is not "X"
+// ================================================================================================================
+// Cnx = Cp - Cx   Current count of anomalies in "Not X"
+// Bnx = Bp - Bx   Baseline of anomalies in "Not X"
+// 
+// Scale Factor is current count divided by baseline
+// =================================================
+// Sx  = Cx / Bx     Scale Factor for subpopulation "X" 
+// Snx = Cnx / Bnx   Scale Factor for subpopulation "not X"
+// Sp  = Cp / Bp     Scale Factor for entire population "P"
+//
+// Additional measures to be computed are
+// S-Score            = (Sx – Snx)
+//                    = (Cx / Bx) - (Cnx / Bnx)
+//                    = (Cx / Bx) - ((Cp - Cx) / (Bp - Bx))
+// Normalized S-Score = S-Score / Sp * 100 (%)
+//                    = (((Cx / Bx) - ((Cp - Cx) / (Bp - Bx)) / (Cp / Bp)) * 100
+// Eccentricity       = Sx / Snx
+//                    = (Cx / Bx) / (Cnx / Bnx)
+//                    = (Cx / Bx) / ((Cp - Cx) / (Bp - Bx))

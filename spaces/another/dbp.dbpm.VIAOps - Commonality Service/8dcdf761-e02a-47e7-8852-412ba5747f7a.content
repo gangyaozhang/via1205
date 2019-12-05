@@ -1,0 +1,101 @@
+select
+    *,
+    rank() over (order by count desc) as countRank,
+    rank() over (order by baseline desc) as baselineRank,
+    rank() over (order by baselineDiff desc) as baselineDiffRank,
+    rank() over (order by baselineDiffPct desc) as baselineDiffPctRank,
+    rank() over (order by sScore desc) as sScoreRank,
+    rank() over (order by nsScore desc) as nsScoreRank,
+    rank() over (order by eScore desc) as eScoreRank,
+    rank() over (order by countPopPct desc) as countPopPctRank,
+    rank() over (order by baselinePopPct desc) as baselinePopPctRank,
+    rank() over (order by relDiff desc) as relDiffRank,
+    rank() over (order by pctDev desc) as pctDevRank
+from (
+    select
+        dim,
+        count,
+        baseline,
+        (count-baseline) as baselineDiff,
+        cast(((count-baseline)/baseline) as decimal(16,2)) as baselineDiffPct,
+        cast((((count/baseline) - ((33910-count)/(115-baseline)))) as decimal(16,2)) as sScore,
+        cast((((((count/baseline) - ((33910-count)/(115-baseline)))/(33910/115)) * 100)) as decimal(16,2)) as nsScore,
+        cast((((count/baseline) / ((33910-count) / (115-baseline)))) as decimal(16,2)) as eScore,
+        cast(count/33910 as decimal(16,2)) as countPopPct,
+        cast(baseline/115 as decimal(16,2)) as baselinePopPct,
+        cast(((count/33910)-(baseline/115)) as decimal(16,2)) as relDiff,
+        cast(((count-baseline)/(33795)) as decimal(16,2)) as pctDev
+    from (
+        select
+            dim,
+            cast(sum(if (idx=0, metricvalue, 0)) as decimal(16,2)) as count,
+            cast((sort_array(collect_list(if(idx < 0, metricvalue, null)))[floor(count(if(idx <0, 0, null))/2)] + sort_array(collect_list(if(idx < 0, metricvalue, null)))[floor((count(if(idx <0, 0, null)) - 1)/2)])/2 as decimal(16,2)) as baseline
+        from (
+            select
+                dim,
+                idx,
+                sum(metricvalue) as metricvalue
+            from (
+                select
+                    case
+                        when tsepoch >= 1555009500 and tsepoch < 1555016400 then 0
+                        when tsepoch >= 1554404700 and tsepoch < 1554411600 then -1
+                        when tsepoch >= 1553799900 and tsepoch < 1553806800 then -2
+                        when tsepoch >= 1553195100 and tsepoch < 1553202000 then -3
+                        when tsepoch >= 1552590300 and tsepoch < 1552597200 then -4
+                        when tsepoch >= 1551985500 and tsepoch < 1551992400 then -5
+                    end as idx,
+                    *
+                from itops_video_metric
+                where datekey in (20190411,20190404,20190328,20190321,20190314,20190307)
+                and (app = 'ipvideoauth')
+                and (metricname = 'Failed API Attempt')
+                and (api = 'location')
+                and (device = 'webBrowser')
+                and ((api in ('','oauthToken','oauthAuthorize','oauthRequest','oauthDeauthorize','autoAuth','ssoTokenExchange','capabilitiesV3','location','behindModemV1')) and (stream not in ('dvr')))
+                and ((tsepoch >= 1555009500 and tsepoch < 1555016400)
+                  or (tsepoch >= 1554404700 and tsepoch < 1554411600)
+                  or (tsepoch >= 1553799900 and tsepoch < 1553806800)
+                  or (tsepoch >= 1553195100 and tsepoch < 1553202000)
+                  or (tsepoch >= 1552590300 and tsepoch < 1552597200)
+                  or (tsepoch >= 1551985500 and tsepoch < 1551992400)
+                )
+            )
+            lateral view explode (array(
+                concat('connection#', ifnull(connection, '')),
+                concat('authentication#', ifnull(authentication, '')),
+                concat('msgcat#', ifnull(msgcat, '')),
+                concat('api#', ifnull(api, '')),
+                concat('response#', ifnull(response, '')),
+                concat('version#', ifnull(version, '')),
+                concat('platform#', ifnull(platform, '')),
+                concat('netstatus#', ifnull(netstatus, '')),
+                concat('streamformat#', ifnull(streamformat, '')),
+                concat('stream#', ifnull(stream, '')),
+                concat('channel#', ifnull(channel, '')),
+                concat('content#', ifnull(content, '')),
+                concat('company#', ifnull(company, '')),
+                concat('state#', ifnull(state, '')),
+                concat('api|response#', ifnull(api, ''), '|', ifnull(response, '')),
+                concat('channel|content#', ifnull(channel, ''), '|', ifnull(content, ''))
+            )) table1 as dim
+            group by dim, idx
+        )
+        group by dim
+    )
+)
+where substring(dim,locate('#',dim)) != '#'
+  and substring(dim,locate('#',dim)) != '#|'
+  and substring(dim,locate('#',dim)) != '#||'
+  and substring(dim,locate('#',dim)) != '#|||'
+having countRank < 25
+or baselineRank < 25
+or baselineDiffRank < 25
+or baselineDiffPctRank < 25
+or sScoreRank < 25
+or nsScoreRank < 25
+or eScoreRank < 25
+or countPopPctRank < 25
+or baselinePopPctRank < 25
+or relDiffRank < 25
+or pctDevRank < 25

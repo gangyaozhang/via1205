@@ -1,0 +1,18 @@
+-- BASELINE_MODEL_SELECT_SQL
+SELECT
+    source_table,
+    window_size,
+    anomaly_step_size,
+    value_field,
+    timezone,
+    metric_id,
+    algorithm,
+    fill_policy,
+    seasonality,
+    ignore_baseline,
+    ignore_anomaly,
+    enabled
+FROM viaops_anomaly_sol a,
+     viaops_anomaly_algorithm b
+WHERE a.adm_name = b.adm_name
+ORDER BY metric_id

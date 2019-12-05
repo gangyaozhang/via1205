@@ -1,0 +1,20 @@
+{
+    "attr.type"         : "Type",
+    "attr.started"      : "Commencé",
+    "attr.last_account" : "Dernier compte",
+    "attr.attribute"    : "Attribut",
+    "attr.from_value"   : "De la valeur",
+    "attr.to_value"     : "Évaluer",
+    
+    "metric.calls"            : "Appels",
+    "metric.tickets"          : "Des billets",
+    "metric.truck_rolls"      : "Rouleaux de camion",
+    "metric.subscriber_count" : "Nombre d'abonnés",
+    "metric.customer_score"   : "Score client",
+    
+    "value.type.network"      : "Réseau",
+    "value.type.manual_load"  : "Charge manuelle",
+    "value.type.service"      : "Un service",
+    "value.type.device"       : "Dispositif",
+    "value.type.new_accounts" : "Nouveaux comptes"
+}

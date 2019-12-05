@@ -1,0 +1,17 @@
+INSERT INTO viaops_incident_correlation (
+    service_name,
+    sub_service_name,
+    component_name,
+    metric_name,
+    correlation_time,
+    modified_ts
+)
+VALUES (
+    "${service_name}",
+    "${sub_service_name}",
+    NULL,
+    NULL,
+    NULL,
+    current_timestamp()
+)
+

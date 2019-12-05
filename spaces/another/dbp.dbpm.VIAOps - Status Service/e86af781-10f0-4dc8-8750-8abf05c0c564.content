@@ -1,0 +1,87 @@
+{
+	"hover-drilldown-rules" : [
+		{
+			"match" : {
+				"Type" : "network"
+			},
+			"meta" : {
+				"drilldown-type" : "trend",
+				"drilldown-view" : "chart",
+				"drilldown-name" : "network"
+			}
+		},
+		{
+			"match" : {
+				"Type" : "device",
+				"Attribute" : "mta_devicemodel"
+			},
+			"meta" : {
+				"drilldown-type" : "geo",
+				"drilldown-name" : "device"
+			}
+		},
+		{
+			"match" : {
+				"Type" : "device",
+				"Attribute" : "stb_devicemodel"
+			},
+			"meta" : {
+				"drilldown-type" : "geo",
+				"drilldown-view" : "heatmap",
+				"drilldown-name" : "device"
+			}
+		},
+		{
+			"match" : {
+				"Type" : "device",
+				"Attribute" : "hsd_devicemodel"
+			},
+			"meta" : {
+				"drilldown-type" : "geo",
+				"drilldown-view" : "poi",
+				"drilldown-name" : "device"
+			}
+		},
+		{
+			"match" : {
+				"Type" : "device"
+			},
+			"meta" : {
+				"drilldown-type" : "trend",
+				"drilldown-name" : "device"
+			}
+		},
+		{
+			"match" : {
+				"Type" : "manual_load"
+			},
+			"meta" : {
+				"drilldown-type"  : "custom",
+				"drilldown-name"  : "xxx",
+				"drilldown-label" : "Humpty Dumpty sat on the Wall",
+				"hover-type" : "custom",
+				"hover-style" : "dialog",
+				"hover-width" : 800,
+				"hover-height" : 600,
+				"hover-name"  : "xxx",
+				"hover-label" : "Twinkle Twinkle Little Star"
+			}
+		},
+		{
+			"match" : {
+				"Type" : "service"
+			},
+			"meta" : {
+				"drilldown-type"  : "custom",
+				"drilldown-name"  : "service",
+				"drilldown-label" : "Detail info on ${Type} population with id=${_id_}"
+			}
+		},
+		{
+		    "meta" : {
+		        "drilldown-type" : "summary",
+				"drilldown-name" : "${Type}"
+		    }
+		}
+	]
+}

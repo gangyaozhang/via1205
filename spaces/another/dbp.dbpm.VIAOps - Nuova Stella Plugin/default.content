@@ -1,0 +1,285 @@
+<DashboardPluginModel description="Integration API to incorporate Nuova Stella features" name="VIAOps - Nuova Stella Plugin" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services>
+      <Service name="_getNuovaStellaSystemModel" args="" private="true">
+        <CodeText>
+          <![CDATA[var EnvLib = com.vitria.fc.utils.EnvLib;
+var File = java.io.File;
+
+var models = [];
+var path = EnvLib.expandVars("${VTBA_HOME}/tmp/" + "nuova_stella/system_models");
+var file = new File(path);
+var files = file.listFiles();
+if (files != null) {
+    for (var i=0; i<files.length; i++) {
+        file = files[i];
+        if (file.isFile()) {
+            // if exist, load it
+            var model = JSON.parse(Context.getFileAsString(path + "/" + file.getName()));
+            models.push(model);
+        }
+    }
+}
+
+return models;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="addNuovaStellaDimensionQueryConfig" args="queryConfig" private="false">
+        <CodeText>
+          <![CDATA[var models = this._getNuovaStellaSystemModel();
+models.forEach(function(model) {
+    var sourceConfig = model["source-config"] || model["SourceConfig"];
+    var dimensionQueryConfig = model["dimension-query-config"] || model["DimensionQueryConfig"];
+    if (sourceConfig && dimensionQueryConfig && dimensionQueryConfig["service-queries"] != null) {
+        for (var key in dimensionQueryConfig["service-queries"]) {
+            var newServiceQueries = dimensionQueryConfig["service-queries"][key];
+
+            var sourceConfigKey = key;
+            if (dimensionQueryConfig["source-config-keys"] != null) {
+                sourceConfigKey = dimensionQueryConfig["source-config-keys"][key];
+            }
+            var sourceGroup = sourceConfig[sourceConfigKey]["source-group"];
+            var targetGroup = sourceConfig[sourceConfigKey]["target-group"];
+            
+            var columnNames = queryConfig["column-names"];
+            if (columnNames == null) {
+                columnNames = {};
+                queryConfig["column-names"] = columnNames;
+            }
+            columnNames[sourceGroup] = {};
+            (sourceConfig[sourceConfigKey]["dimension-list"]).forEach(function(dimension) {
+                columnNames[sourceGroup][dimension.filter] = dimension.name;
+            });
+            
+            var columnLabels = queryConfig["column-labels"];
+            if (columnLabels == null) {
+                columnLabels = {};
+                queryConfig["column-labels"] = columnLabels;
+            }
+            columnLabels[sourceGroup] = {};
+            (sourceConfig[sourceConfigKey]["dimension-list"]).forEach(function(dimension) {
+                columnLabels[sourceGroup][dimension.filter] = dimension.label;
+            });
+            
+            var eventTypeDimensions = queryConfig["event-type-dimensions"];
+            if (eventTypeDimensions == null) {
+                eventTypeDimensions = {};
+                queryConfig["event-type-dimensions"] = eventTypeDimensions;
+            }
+            eventTypeDimensions[sourceGroup] = [];
+            (sourceConfig[sourceConfigKey]["dimension-list"]).forEach(function(dimension) {
+                (eventTypeDimensions[sourceGroup]).push(dimension.name);
+            });
+            
+            var compoundDimensions = queryConfig["compound-dimensions"];
+            if (compoundDimensions == null) {
+                compoundDimensions = {};
+                queryConfig["compound-dimensions"] = compoundDimensions;
+            }
+            compoundDimensions[sourceGroup] = newServiceQueries["params"]["compound-dimensions"];
+            
+            var excludeDimensions = queryConfig["exclude-dimensions"];
+            if (excludeDimensions == null) {
+                excludeDimensions = {};
+                queryConfig["exclude-dimensions"] = excludeDimensions;
+            }
+            compoundDimensions[sourceGroup] = newServiceQueries["params"]["exclude-dimensions"];
+            
+            if (queryConfig["service-queries"] == null) {
+                queryConfig["service-queries"] = {};
+            }
+            var serviceQueries = queryConfig["service-queries"][key];
+            if (serviceQueries == null) {
+                serviceQueries = {
+                    "function" : "_getCommonalitiesImpl",
+                    "params" : {
+                        "metric-event-type"   : sourceGroup,
+                        "metric-where-clause" : newServiceQueries["params"]["where-clause"],
+                    }
+                };
+                queryConfig["service-queries"][key] = serviceQueries;
+            }
+            
+            var eventTypes = queryConfig["event-types"];
+            if (eventTypes == null) {
+                eventTypes = {};
+                queryConfig["event-types"] = eventTypes;
+            }
+            eventTypes[sourceGroup] = {
+                "table-name" : targetGroup,
+            };
+        }
+    }
+});
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="addNuovaStellaFilterConfig" args="filterConfig,URI,OPTIONS_SERVICE" private="false">
+        <CodeText>
+          <![CDATA[var models = this._getNuovaStellaSystemModel();
+models.forEach(function(model) {
+    var nvFilterConfig = model["filter-config"] || model["FilterConfig"];
+    if (nvFilterConfig != null && nvFilterConfig.length > 0) {
+        nvFilterConfig = JSON.stringify(nvFilterConfig);
+        nvFilterConfig = nvFilterConfig.replaceAll("__THIS_PLUGIN__", URI)
+                                       .replaceAll("__OPTIONS_SERVICE__", OPTIONS_SERVICE);
+        nvFilterConfig = JSON.parse(nvFilterConfig);
+        filterConfig.categories = filterConfig.categories.concat(nvFilterConfig);
+    }
+});
+]]>
+        </CodeText>
+      </Service>
+      <Service name="addNuovaStellaOptionsDimKeyConfig" args="dimkeyConfig" private="false">
+        <CodeText>
+          <![CDATA[var models = this._getNuovaStellaSystemModel();
+models.forEach(function(model) {
+    var optionsDimKeyConfig = model["options-dimkey-config"] || model["OptionsDimKeyConfig"];
+    if (optionsDimKeyConfig != null) {
+        for (var key in optionsDimKeyConfig) {
+            dimkeyConfig[key] = optionsDimKeyConfig[key];
+        }
+    }
+});
+]]>
+        </CodeText>
+      </Service>
+      <Service name="addNuovaStellaOptionsQueryConfig" args="queryConfig" private="false">
+        <CodeText>
+          <![CDATA[var models = this._getNuovaStellaSystemModel();
+models.forEach(function(model) {
+    var optionsQueryConfig = model["options-query-config"] || model["OptionsQueryConfig"];
+    if (optionsQueryConfig != null && optionsQueryConfig["option-queries"] != null) {
+        if (queryConfig["option-queries"] == null) {
+            queryConfig["option-queries"] = {};
+        }
+        for (var key in optionsQueryConfig["option-queries"]) {
+            queryConfig["option-queries"][key] = optionsQueryConfig["option-queries"][key];
+        }
+    }
+});
+]]>
+        </CodeText>
+      </Service>
+      <Service name="addNuovaStellaServiceConfig" args="serviceConfig" private="false">
+        <CodeText>
+          <![CDATA[function matchGroup(groups, newGroup)
+{
+    for (var i=0; i<groups.length; i++) {
+        var group = groups[i];
+        if (group.name == newGroup.name) {
+            // found matching service
+            return group;
+        }
+    }
+    return null;
+}
+
+var models = this._getNuovaStellaSystemModel();
+models.forEach(function(model) {
+    var config = model["service-config"] || model["ServiceConfig"];
+    config.groups.forEach(function(svc) {
+        var matchedSvc = matchGroup(serviceConfig.groups, svc);
+        if (matchedSvc != null) {
+            if (svc.items != null) {
+                if (matchedSvc.items == null) {
+                    matchedSvc.items = [];
+                }
+                svc.items.forEach(function(metric) {
+                    matchedSvc.items.push(metric);
+                });
+            }
+            if (svc.groups != null) {
+                svc.groups.forEach(function(comp) {
+                    var matchedComp = matchGroup(matchedSvc.groups, comp);
+                    if (matchedComp != null) {
+                        if (comp.items != null) {
+                            if (matchedComp.items == null) {
+                                matchedComp.items = [];
+                            }
+                            comp.items.forEach(function(metric) {
+                                matchedComp.items.push(metric);
+                            });
+                        }
+                        if (comp.groups != null) {
+                            comp.groups.forEach(function(app) {
+                                var matchedApp = matchGroup(matchedComp.groups, app);
+                                if (matchedApp != null) {
+                                    if (app.items != null) {
+                                        if (matchedApp.items == null) {
+                                            matchedApp.items = [];
+                                        }
+                                        app.items.forEach(function(metric) {
+                                            matchedApp.items.push(metric);
+                                        });
+                                    }
+                                }
+                                else {
+                                    matchedComp.groups.push(app);
+                                }
+                            });
+                        }
+                    }
+                    else {
+                        matchedSvc.groups.push(comp);
+                    }
+                });
+            }
+        }
+        else {
+            serviceConfig.groups.push(svc);
+        }
+    });
+});
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="addNuovaStellaSourceConfig" args="sourceConfig" private="false">
+        <CodeText>
+          <![CDATA[var models = this._getNuovaStellaSystemModel();
+models.forEach(function(model) {
+    var config = model["source-config"] || model["SourceConfig"];
+    if (config != null) {
+        for (var svc_comp_app in config) {
+            sourceConfig[svc_comp_app] = config[svc_comp_app];
+        }
+    }
+});
+]]>
+        </CodeText>
+      </Service>
+      <Service name="addNuovaStellaTrendQueryConfig" args="queryConfig" private="false">
+        <CodeText>
+          <![CDATA[var models = this._getNuovaStellaSystemModel();
+models.forEach(function(model) {
+    var trendQueryConfig = model["trend-query-config"] || model["TrendQueryConfig"];
+    if (trendQueryConfig && trendQueryConfig["service-queries"] != null) {
+        for (var key in trendQueryConfig["service-queries"]) {
+            if (queryConfig["service-queries"] == null) {
+                queryConfig["service-queries"] = {};
+            }
+            queryConfig["service-queries"][key] = trendQueryConfig["service-queries"][key];
+        }
+    }
+});
+
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="f02db9eb-db74-4b08-8a98-d0e3b7e4506c" name="Integration Notes" type="text/plain" size="2431" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

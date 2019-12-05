@@ -1,0 +1,8 @@
+UPDATE
+    viaops_anomaly_favorites
+SET
+    metric_id=?,
+    config_json=?,
+    filter_json=?,
+    modified_ts=current_timestamp()
+WHERE favorite_name=? AND owner_id=?

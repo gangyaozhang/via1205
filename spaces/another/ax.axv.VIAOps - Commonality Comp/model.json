@@ -1,0 +1,21 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "locale"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": " ",
+    "_RESOURCE_Type": "axv",
+    "__references__": "/app/dbp/space/another/dbpm/VIAOps - Commonality Plugin,/app/dbp/user/via_common/dbpm/VIA - Common,/app/ax/space/another/axv/VIAOps - Commonality Detail,/app/ax/space/another/axv/VIAOps - Drilldown - CUSTOM",
+    "modelStatus": "valid",
+    "name": "DigiOps - Commonality Comp",
+    "theme": "null"
+  }
+}

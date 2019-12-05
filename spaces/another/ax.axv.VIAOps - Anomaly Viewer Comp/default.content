@@ -1,0 +1,712 @@
+<AnalyticsExplorerView is_init="false" name="VIAOps - Anomaly Viewer Comp" description=" ">
+  <ModelInfo nextPageId="8" validated="true">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;value&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;,&quot;selected&quot;:true}"/>
+      <TileOpacity opacity="1"/>
+      <NoTileSpacing value="true"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <CustomCSSSetting><![CDATA[@import '/vitria-oi/rest/app/dbp/user/via_common/dbpm/VIA - Common/VIA-CSS';
+@import '/vitria-oi/rest/app/dbp/user/viaops_admin/dbpm/VIAOps - Anomaly Viewer Service/ANOMALY-CSS';
+
+.app .smallTile .tileContainer.digiops-filter {
+    margin-top: -3px;
+    margin-left: -3px;
+    padding: 0px;
+    height: 57px !important;
+}
+
+.xxx .dijitButtonNode {
+    color: #1f78b4 !important;
+    font-weight: normal !important;
+    padding: 1px 3px 1px 3px !important;
+    margin-top: -2px !important;
+    font-size: 12px !important;
+    border: 1px solid #1f78b4 !important;
+    background-color: #fff !important;
+}
+
+.xxx .dijitButtonNode:hover {
+    color: white !important;
+    background-color: #148ac4 !important;
+}
+
+.digiops-filterBar-container {
+	padding-bottom: 0px !important;
+	border: thin solid lightgray !important;
+}
+
+.common-plugin.dimension-filter .click-to-open-div {
+    margin-top: 8px !important;
+    color: inherit !important;
+}
+
+.common-plugin.dimension-filter div.click-to-open-link {
+	border: thin solid lightgray;
+	border-radius: 20px;
+}
+
+.common-plugin.dimension-filter .click-for-summary-link {
+    margin-top: 5px !important;
+    color: inherit !important;
+}
+
+.common-plugin.dimension-filter div.click-for-summary-link {
+	border: thin solid lightgray;
+	border-radius: 20px;
+}
+]]></CustomCSSSetting>
+    <Page className="page-anomalyViewer anomalyViewer" panelstatus="closed" panelposition="right" tabNavVisible="true" desc="" title="Default" name="Default" id="1">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<div style="width:calc(100% - 5px);height:100%;background-color:white;">
+    <div class="digiops-filterBar-container" style="width:100%;height:59px;padding-bottom:5px;display:flex;">
+        <div style="width:160px;height:100%;border-right:thin solid lightgray;margin-right:2px;" data-vitria-type="tile" data-vitria-tile-name="Action" class="filterBar anomaly-properties"></div>
+        <div style="width:calc(100% - 300px);height:100%;padding-left:5px;" data-vitria-type="tile" data-vitria-tile-name="Filter" class="filterBar left"></div>
+        <div style="width:150px;height:100%;margin-left:2px;border-left:thin solid lightgray;" data-vitria-type="tile" data-vitria-tile-name="Filter" class="filterBar left"></div>
+    </div>
+    <div style="height: 35px; padding-top:5px;width: 100%; border: none; background: none;" data-vitria-type="tile" data-vitria-tile-name="Info"></div>
+    <div class="digiops-anomaly-viewer-row" style="width:100%;height:calc(100% - 120px);">
+        <div style="width:100%;height:100%;" data-vitria-type="layout" class="digiops-anomaly-viewer-cell"></div>
+    </div>
+</div>
+]]></PageFrameContent>
+      <PageCustomCSS><![CDATA[.page-anomalyViewer .dgrid .dgrid-cell.dgridBarCell .valueBar {
+    border-radius: 5px !important;
+    background-color: #148ac4 !important;
+}
+
+.page-anomalyViewer .dgrid .dgrid-row {
+    border: none;
+    border-top: 1px solid transparent !important;
+    border-bottom: 1px solid transparent !important;
+}
+
+.page-anomalyViewer .daMeasurePopup .dgrid .dgrid-row {
+    border: none !important;   
+}
+
+.page-anomalyViewer .dgrid  .dgrid-row-even {
+    border-color: #f5f5f5 !important;   
+}
+
+.page-anomalyViewer .dgrid-row:hover {
+    border-color: #148ac4 !important;
+    background-color: transparent !important;
+}
+
+.page-anomalyViewer .dgrid  .dgrid-row-even table {
+    background-color: #f5f5f5 !important;
+}
+
+.page-anomalyViewer .dgrid-selected.ui-state-active table {
+    background-color: #92DBFF !important;
+}]]></PageCustomCSS>
+      <PageProperties/>
+      <Layout type="10" numRow="19" numCol="1" count="2" templateType="3" screenHeight="1080" renderType="null" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:36,&quot;id&quot;:0,&quot;title&quot;:&quot;Chart&quot;},{&quot;data_col&quot;:1,&quot;data_row&quot;:37,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:36,&quot;id&quot;:1,&quot;title&quot;:&quot;Detail&quot;}]" unitSize="undefined" viewRows="72" viewCols="120"/>
+      <Tile allowFullscreen="true" advancedDisable="true" advancedConfig="false" parentSelect="false" className="section-trend" sampleData="false" style="small" type="Independent" previewSize="15" hideEmptyTile="false" desc="" title="Chart" name="Chart">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{"_tileOpacity":"0"}]]></TileThemeSetting>
+        <DataViewer minimode="false" optional="false" label="Dashboard View" name="ax.DashboardView">
+          <Property value="/app/ax/space/another/axv/VIAOps - Anomaly Viewer - PlotlyChart" name="model"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <Tile allowFullscreen="false" advancedDisable="true" advancedConfig="false" parentSelect="false" className="section-detail-trend via-scroller" sampleData="false" style="small" type="Independent" previewSize="15" hideEmptyTile="false" desc="" title="Detail" name="Detail">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{"_tileOpacity":"0"}]]></TileThemeSetting>
+        <DataViewer minimode="false" optional="false" label="Dashboard View" name="ax.DashboardView">
+          <Property value="/app/ax/space/another/axv/VIAOps - Anomaly Viewer - Detail" name="model"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <frame_tile name="Action" title="Action" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="via-action-bar" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/user/via_common/dbpm/VIA - Common/Action Bar&quot;,&quot;model&quot;:&quot;{\n\t\&quot;toolbar\&quot;: [\n\t\t{\n\t\t\t\&quot;label\&quot;: \&quot;&amp;lt;i style=&apos;font-size:20px;margin-top:-4px;&apos; class=&apos;fas fa-sliders-h&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n\t\t\t\&quot;title\&quot;: \&quot;Edit custom properties\&quot;,\n\t\t\t\&quot;value\&quot;: \&quot;edit/properties\&quot;\n\t\t},\n\t\t{\n\t\t\t\&quot;label\&quot;: \&quot;&amp;lt;i style=&apos;font-size:20px;margin-top:-4px;&apos; class=&apos;far fa-list-alt&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n\t\t\t\&quot;title\&quot;: \&quot;Manage custom anomaly configurations\&quot;,\n\t\t\t\&quot;value\&quot;: \&quot;manage/properties\&quot;\n\t\t},\n\t\t{\n\t\t\t\&quot;label\&quot;: \&quot;&amp;lt;i style=&apos;font-size:20px;margin-top:-4px;&apos; class=&apos;far fa-star&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n\t\t\t\&quot;title\&quot;: \&quot;Manage favorite list of config and filters\&quot;,\n\t\t\t\&quot;value\&quot;: \&quot;manage/favorites\&quot;\n\t\t}\n\t],\n\t\&quot;# --- allow 45px per item ---\&quot;: [\n\t\t{\n\t\t\t\&quot;label\&quot;: \&quot;&amp;lt;i style=&apos;font-size:20px;margin-top:-4px;&apos; class=&apos;far fa-file-image&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n\t\t\t\&quot;title\&quot;: \&quot;Capture screen as PNG image\&quot;,\n\t\t\t\&quot;value\&quot;: \&quot;capture/png\&quot;\n\t\t},\n\t\t{\n\t\t\t\&quot;label\&quot;: \&quot;&amp;lt;i style=&apos;font-size:20px;margin-top:-4px;&apos; class=&apos;fas fa-info-circle&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n\t\t\t\&quot;title\&quot;: \&quot;View summary of anomalies\&quot;,\n\t\t\t\&quot;value\&quot;: \&quot;anomaly/summary\&quot;\n\t\t}\n\t]\n}&quot;}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="Filter" title="Filter" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="digiops-filter anomaly-viewer-filter" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{"_tileOpacity":"0","_tileBackgroundColor":"#ededed"}]]></TileThemeSetting>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/user/via_common/dbpm/VIA - Common/Dimension Filter&quot;,&quot;saveCookie&quot;:false,&quot;model&quot;:&quot;{}&quot;,&quot;cookiePath&quot;:&quot;anomaly.viewer&quot;}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="ExpandedFilter" title="ExpandedFilter" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="digiops-filter anomaly-viewer-full-filter" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{"_tileOpacity":"1","_tileBackgroundColor":"#ffffff"}]]></TileThemeSetting>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/user/via_common/dbpm/VIA - Common/Dimension Filter&quot;,&quot;saveCookie&quot;:false,&quot;model&quot;:&quot;{}&quot;,&quot;minimizedMode&quot;:true,&quot;cookiePath&quot;:&quot;anomaly.viewer&quot;,&quot;clickForSummaryHTML&quot;:&quot;Filter Summary&quot;}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="Info" title="Info" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:229" name="axflow:localstore:node:229" label="Config Info" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="label" label="Label" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="value" label="Value" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="SimpleText" label="HTML Composition" optional="false" minimode="false">
+          <Property name="text" value="{&quot;value&quot;:&quot;&amp;lt;!DOCTYPE html&amp;gt;\r\n&amp;lt;html&amp;gt;\r\n&amp;lt;head&amp;gt;\r\n&amp;lt;/head&amp;gt;\r\n&amp;lt;body&amp;gt;\r\n&amp;lt;table style=\&quot;width:100%;\&quot;&amp;gt;\r\n    &amp;lt;tr&amp;gt;\r\n&amp;lt;!-- OUTER-BEGIN --&amp;gt;\r\n        &amp;lt;td style=\&quot;width:${width}%;\&quot;&amp;gt;\r\n            &amp;lt;table style=\&quot;width:100%;height:100%;\&quot;&amp;gt;\r\n                &amp;lt;tr style=\&quot;vertical-align:top;\&quot;&amp;gt;\r\n                    &amp;lt;td style=\&quot;text-align:right;font-size:14px;font-weight:normal;color:${color};\&quot;&amp;gt;${value}&amp;lt;/td&amp;gt;\r\n                    &amp;lt;td style=\&quot;text-align:left;font-size:8px;font-weight:normal;font-style:italic;white-space:normal;\&quot;&amp;gt;${label}&amp;lt;/td&amp;gt;\r\n                &amp;lt;/tr&amp;gt;\r\n            &amp;lt;/table&amp;gt;\r\n        &amp;lt;/td&amp;gt;\r\n&amp;lt;!-- OUTER-END --&amp;gt;\r\n    &amp;lt;/tr&amp;gt;\r\n&amp;lt;/table&amp;gt;\r\n&amp;lt;/body&amp;gt;\r\n&amp;lt;/html&amp;gt;&quot;,&quot;editBySource&quot;:true}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+    </Page>
+    <Script>
+      <Stores/>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id="node:182" type="Tile" label="Filter" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="660" y="40"/>
+      <Item id="node:190" type="UserScript" label="Script 10" _undefined_title="" originHeight="117" width="134" height="117" x="1360" y="320">
+        <dynIn id="din:0" type="any[]" label="Filters" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="Plugins" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Trend Data" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:193" type="Tile" label="Chart" _undefined_title="" originHeight="177" width="130" height="177" x="1980" y="60">
+        <dynIn id="din:Data" type="event[]" label="Data" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Config" type="any" label="Config" _undefined_default="" evaluate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:198" type="UserScript" label="Script 11" _undefined_title="" originHeight="117" width="166" height="177" x="1670" y="400">
+        <dynIn id="din:0" type="event[]" label="Trend Data" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="Config" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="any[]" label="Chart UI Event" evaluate="always" _isArray="true"/>
+        <dynIn id="din:3" type="any" label="Plugins" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Trend Data" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="Config" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="event[]" label="Config Info" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:205" type="UserScript" label="Script 13" _undefined_title="" originHeight="117" width="148" height="177" x="1040" y="660">
+        <dynIn id="din:0" type="any[]" label="Filters" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="Plugins" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="string" label="Version" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Config" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="string" label="Metric ID" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:214" type="PortOut" label="Port OUT 0" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1160" y="40"/>
+      <Item id="node:218" type="Tile" label="Full Filter" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="820" y="193"/>
+      <Item id="node:220" type="Tile" label="Action" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1108" y="1000"/>
+      <Item id="node:221" type="UserScript" label="Script 16" _undefined_title="" originHeight="117" width="160" height="217" x="1340" y="760">
+        <dynIn id="din:0" type="event[]" label="Action" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="Config" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="string" label="Metric ID" evaluate="always" _isArray="true"/>
+        <dynIn id="din:3" type="event[]" label="Trend Data" evaluate="always" _isArray="true"/>
+        <dynIn id="din:4" type="any[]" label="Filters" evaluate="always" _isArray="true"/>
+        <dynIn id="din:5" type="any" label="Plugins" evaluate="always" _isArray="true"/>
+        <dynIn id="din:6" type="string" label="Version" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Config" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="event[]" label="Summary Data" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any" label="Filter Value" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:223" type="Tile" label="Detail" _undefined_title="" originHeight="177" width="140" height="177" x="1968" y="510">
+        <dynIn id="din:Trend Data" type="event[]" label="Trend Data" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Config" type="any" label="Config" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:Filters" type="any[]" label="Filters" _undefined_default="" evaluate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:225" type="Widget" label="Summary Popup" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1672" y="780"/>
+      <Item id="node:227" type="PortIn" label="Port IN 1" _undefined_title="" originHeight="117" width="130" height="177" x="360" y="400">
+        <dynOut id="dout:0" type="any" label="Base Filter Config" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="Full Filter Config" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any" label="Plugins" propagate="always" _isArray="true"/>
+        <dynOut id="dout:3" type="string" label="Version" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:229" type="LocalStore" label="Config Info" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1967" y="707"/>
+      <Link srcId="node:227" srcPort="dout:2" tgtId="node:221" tgtPort="din:5"/>
+      <Link srcId="node:227" srcPort="dout:2" tgtId="node:205" tgtPort="din:1"/>
+      <Link srcId="node:227" srcPort="dout:2" tgtId="node:198" tgtPort="din:3"/>
+      <Link srcId="node:227" srcPort="dout:2" tgtId="node:190" tgtPort="din:1"/>
+      <Link srcId="node:218" srcPort="out:3" tgtId="node:214" tgtPort="in:3"/>
+      <Link srcId="node:182" srcPort="out:3" tgtId="node:214" tgtPort="in:3"/>
+      <Link srcId="node:227" srcPort="dout:1" tgtId="node:218" tgtPort="in:0"/>
+      <Link srcId="node:205" srcPort="dout:0" tgtId="node:198" tgtPort="din:1"/>
+      <Link srcId="node:221" srcPort="dout:0" tgtId="node:198" tgtPort="din:1"/>
+      <Link srcId="node:198" srcPort="dout:0" tgtId="node:193" tgtPort="din:Data"/>
+      <Link srcId="node:220" srcPort="out:0" tgtId="node:221" tgtPort="din:0"/>
+      <Link srcId="node:218" srcPort="out:1" tgtId="node:190" tgtPort="din:0"/>
+      <Link srcId="node:190" srcPort="dout:0" tgtId="node:198" tgtPort="din:0"/>
+      <Link srcId="node:205" srcPort="dout:0" tgtId="node:221" tgtPort="din:1"/>
+      <Link srcId="node:198" srcPort="dout:1" tgtId="node:221" tgtPort="din:1"/>
+      <Link srcId="node:218" srcPort="out:1" tgtId="node:205" tgtPort="din:0"/>
+      <Link srcId="node:205" srcPort="dout:1" tgtId="node:221" tgtPort="din:2"/>
+      <Link srcId="node:198" srcPort="dout:0" tgtId="node:221" tgtPort="din:3"/>
+      <Link srcId="node:221" srcPort="dout:1" tgtId="node:225" tgtPort="in:0"/>
+      <Link srcId="node:218" srcPort="out:1" tgtId="node:221" tgtPort="din:4"/>
+      <Link srcId="node:193" srcPort="out:3" tgtId="node:198" tgtPort="din:2"/>
+      <Link srcId="node:227" srcPort="dout:0" tgtId="node:182" tgtPort="in:0"/>
+      <Link srcId="node:221" srcPort="dout:2" tgtId="node:218" tgtPort="in:0"/>
+      <Link srcId="node:221" srcPort="dout:2" tgtId="node:182" tgtPort="in:0"/>
+      <Link srcId="node:198" srcPort="dout:0" tgtId="node:223" tgtPort="din:Trend Data"/>
+      <Link srcId="node:198" srcPort="dout:1" tgtId="node:223" tgtPort="din:Config"/>
+      <Link srcId="node:218" srcPort="out:1" tgtId="node:223" tgtPort="din:Filters"/>
+      <Link srcId="node:198" srcPort="dout:2" tgtId="node:229" tgtPort="in:0"/>
+      <Link srcId="node:227" srcPort="dout:3" tgtId="node:205" tgtPort="din:2"/>
+      <Link srcId="node:227" srcPort="dout:3" tgtId="node:221" tgtPort="din:6"/>
+      <Link srcId="node:198" srcPort="dout:1" tgtId="node:193" tgtPort="din:Config"/>
+      <Input key="node:182/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#Filter&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Filter&quot;}]"/>
+      <Input key="node:190/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Filters&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Plugins&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:190/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Trend Data&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:190/cfg:schema/default" value="&quot;setOutputSchema(\&quot;dout:0\&quot;, [{\r\n    name  : \&quot;_group_\&quot;,\r\n    label : \&quot;Group\&quot;,\r\n    type  : \&quot;string\&quot;\r\n}, {\r\n    name  : \&quot;_epoch_\&quot;,\r\n    label : \&quot;Epoch Time\&quot;,\r\n    type  : \&quot;string\&quot;\r\n}, {\r\n    name  : \&quot;_time_\&quot;,\r\n    label : \&quot;Time\&quot;,\r\n    type  : \&quot;string\&quot;\r\n}, {\r\n    name  : \&quot;_value1_\&quot;,\r\n    label : \&quot;Metric Value\&quot;,\r\n    type  : \&quot;string\&quot;\r\n}, {\r\n    name  : \&quot;_baseline1_\&quot;,\r\n    label : \&quot;Metric Baseline\&quot;,\r\n    type  : \&quot;string\&quot;\r\n}, {\r\n    name  : \&quot;_value2_\&quot;,\r\n    label : \&quot;Calls Value\&quot;,\r\n    type  : \&quot;string\&quot;\r\n}, {\r\n    name  : \&quot;_baseline2_\&quot;,\r\n    label : \&quot;Calls Baseline\&quot;,\r\n    type  : \&quot;string\&quot;\r\n}]);&quot;"/>
+      <Input key="node:190/cfg:model/default" value="&quot;var plugins = getInput(\&quot;din:1\&quot;);\r\nif (plugins == null) return;\r\n\r\nvar CommonPlugin = Plugin(\&quot;Common\&quot;);\r\n\r\nsetOutput(\&quot;dout:0\&quot;, []);\r\n\r\nif (port == \&quot;din:0\&quot;) {\r\n    var filters = getInput(\&quot;din:0\&quot;);\r\n    \r\n    var start = Date.now();\r\n\tCommonPlugin.pbShowProgressBar(\&quot;anomaly-viewer-trend\&quot;, \&quot;Loading trend data...\&quot;);\r\n    plugins.AnomalyPlugin.getTrendData(filters, function(response) {\r\n        if (response.status == \&quot;OK\&quot;) {\r\n            setOutput(\&quot;dout:0\&quot;, response.value);\r\n        }\r\n\t\tCommonPlugin.pbHideProgressBar(\&quot;anomaly-viewer-trend\&quot;);\r\n    });\r\n}\r\n&quot;"/>
+      <Input key="node:193/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#Chart&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Chart&quot;}]"/>
+      <Input key="node:193/in:0/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:198/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Trend Data&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Chart UI Event&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:3&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Plugins&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:198/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Trend Data&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Config Info&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:198/cfg:schema/default" value="&quot;var schema = getInputSchema(\&quot;din:0\&quot;);\nschema = schema.concat([{\n    name  : \&quot;_chrisScore_\&quot;,\n    label : \&quot;Score\&quot;,\n    type  : \&quot;number\&quot;\n}, {\n    name  : \&quot;_chrisLevel_\&quot;,\n    label : \&quot;Level\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_chrisEvent_\&quot;,\n    label : \&quot;Event\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_chrisActive_\&quot;,\n    label : \&quot;Active\&quot;,\n    type  : \&quot;number\&quot;\n}, {\n    name  : \&quot;_chrisCalls_\&quot;,\n    label : \&quot;Calls\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;_chrisValueH_\&quot;,\n    label : \&quot;High Marker\&quot;,\n    type  : \&quot;number\&quot;\n}, {\n    name  : \&quot;_chrisValueM_\&quot;,\n    label : \&quot;Medium Marker\&quot;,\n    type  : \&quot;number\&quot;\n}, {\n    name  : \&quot;_chrisValueL_\&quot;,\n    label : \&quot;Low Marker\&quot;,\n    type  : \&quot;number\&quot;\n}, {\n    name  : \&quot;_chrisValueW_\&quot;,\n    label : \&quot;Warmup Marker\&quot;,\n    type  : \&quot;number\&quot;\n}, {\n    name  : \&quot;_chrisValueC_\&quot;,\n    label : \&quot;Cooldown Marker\&quot;,\n    type  : \&quot;number\&quot;\n}, {\n    name  : \&quot;_metricDev_\&quot;,\n    label : \&quot;Metric Deviation\&quot;,\n    type  : \&quot;number\&quot;\n}, {\n    name  : \&quot;_callDev_\&quot;,\n    label : \&quot;Calls Deviation\&quot;,\n    type  : \&quot;number\&quot;\n}]);\nsetOutputSchema(\&quot;dout:0\&quot;, schema);\n\nsetOutputSchema(\&quot;dout:2\&quot;, [{\n    name  : \&quot;label\&quot;,\n    label : \&quot;Label\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;value\&quot;,\n    label : \&quot;Value\&quot;,\n    type  : \&quot;string\&quot;\n}]);\n\n&quot;"/>
+      <Input key="node:198/cfg:model/default" value="&quot;var plugins = getInput(\&quot;din:3\&quot;);\nif (plugins == null) return;\n\nvar CommonPlugin = Plugin(\&quot;Common\&quot;);\n\nif (port != null) {\n    switch (port) {\n        case \&quot;din:0\&quot;:\n        case \&quot;din:1\&quot;:\n            var result = getInput(\&quot;din:0\&quot;) || [];\n            var config = getInput(\&quot;din:1\&quot;) || {};\n            var configInfo = [];\n            if (result.length &gt; 0) {\n                var start = Date.now();\n                var tmp = CommonPlugin.stripDisabledFormData(config);\n                plugins.AnomalyPlugin.applyAnomalyScoring(result, tmp);\n                console.debug(\&quot;[applyAnomalyScoring] elapsed=\&quot;+(Date.now()-start)+\&quot;ms\&quot;);\n                configInfo = plugins.AnomalyPlugin.getIncidentConfigInfo(plugins.ConfigPlugin, tmp);\n            }\n            setOutput(\&quot;dout:0\&quot;, result);\n            setOutput(\&quot;dout:1\&quot;, config);\n            setOutput(\&quot;dout:2\&quot;, configInfo);\n            break;\n        case \&quot;din:2\&quot;:\n            var events = getInput(\&quot;din:2\&quot;) || [];\n            if (events.length &gt; 0) {\n                for (var i=0; i&lt;events.length; i++) {\n                    var event = events[i];\n                    if (event.__TYPE__ == \&quot;onTSRangeChange\&quot;) {\n                        var result = getInput(\&quot;din:0\&quot;) || [];\n                        if (event.__EVENT__.data.start != null &amp;&amp; event.__EVENT__.data.end != null) {\n                            var minEpoch = Math.floor((new Date(event.__EVENT__.data.start)).getTime()/1000);\n                            var maxEpoch = Math.floor((new Date(event.__EVENT__.data.end)).getTime()/1000);\n                            result = result.filter(item =&gt; item._epoch_ &gt;= minEpoch &amp;&amp; item._epoch_ &lt;= maxEpoch);\n                        }\n                        setOutput(\&quot;dout:0\&quot;, result);\n                    }\n                }\n            }\n            break;\n    }\n}\n&quot;"/>
+      <Input key="node:205/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Metric ID&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:205/cfg:model/default" value="&quot;var CommonPlugin = Plugin(\&quot;Common\&quot;);\nvar userId = CommonPlugin.getUserName();\n\nvar plugins = getInput(\&quot;din:1\&quot;);\nif (plugins == null) return;\n\nvar VERSION = getInput(\&quot;din:2\&quot;);\n\nfunction getFilterSignature(filters)\n{\n    var values = [];\n    filters.forEach(function(filter) {\n        // CHAR-226\n        // - JS exception caused the logic updating config to abort\n        // - not all filter elements have \&quot;type\&quot;\n        // - specifically meta-filter, in this case, the culprit is $.wildcard\n        if (filter.type != null &amp;&amp; (filter.type == \&quot;timeinterval\&quot; || filter.type.indexOf(\&quot;:timeinterval\&quot;) != -1)) {\n            // ignore timeinterval changes\n        }\n        else {\n            values.push({name:filter.name, value:filter.value});\n        }\n    });\n    values.sort(function(a,b) {\n        return a.name.localeCompare(b.name);\n    });\n    return JSON.stringify(values);\n}\n\nfunction isFilterChanged(prevFilters, currFilters)\n{\n    if (prevFilters == null) return true;\n    \n    var prev = getFilterSignature(prevFilters);\n    var curr = getFilterSignature(currFilters);\n    return prev != curr;\n}\n\nfunction stripHash(value)\n{\n    var hash = value.indexOf(\&quot;#\&quot;);\n    return hash != -1 ? value.substring(0, hash) : value;\n}\n\nfunction getScoreConfig()\n{\n    var svc = null, comp = null, app = null, metric = null;\n    var timeRange = null;\n    var filters = getInput(\&quot;din:0\&quot;);\n    \n    if (!isFilterChanged(getLocal(\&quot;ACTIVE-FILTER\&quot;), filters)) {\n        // if filters NOT fundamentally changed, only time changed, no need to retrieve config BUT\n        // CHAR-103 / APOAUTO-1222\n        // - need to update score factor (or at least check for changes) when time range\n        // - changed... since we retrieve score factor BASED on the time window\n        var config = getOutput(\&quot;dout:0\&quot;);\n        var metric_id = getOutput(\&quot;dout:1\&quot;);\n        if (config != null &amp;&amp; metric_id != null) {\n            plugins.AnomalyPlugin.getScoreFactorByMetricID(metric_id, null, filters, function(response) {\n                if (response.status == \&quot;OK\&quot; &amp;&amp; response.value != null) {\n                    var factor = response.value;\n                    if (config[\&quot;median_baseline\&quot;] != factor) {\n                        config[\&quot;median_baseline\&quot;] = factor;\n                        setOutput(\&quot;dout:0\&quot;, config);\n                    }\n                }\n            });\n        }\n        return;\n    }\n    setLocal(\&quot;ACTIVE-FILTER\&quot;, filters);\n    \n    setOutput(\&quot;dout:0\&quot;, null);\n    plugins.OptionsPlugin.mapFiltersToDimKeysAndDimValues(filters, function(response) {\n        if (response.status == \&quot;OK\&quot; &amp;&amp; response.value != null) {\n            var metric_id = null;\n            if (typeof response.value == \&quot;string\&quot;) {\n                metric_id  = response.value;\n            }\n            else {\n                metric_id  = response.value.metric_id;\n                // DO-401\n                if (response.value.base_metric_id != null &amp;&amp; response.value.dim_keys != null &amp;&amp; response.value.dim_values != null) {\n                    filters.push({\n                        name  : \&quot;$.wildcard\&quot;,\n                        value : {\n                            base_metric_id : response.value.base_metric_id,\n                            dim_keys       : response.value.dim_keys,\n                            dim_values     : response.value.dim_values,\n                        }\n                    });\n                }\n            }\n            plugins.AnomalyPlugin.getAnomalyConfigByMetricID(metric_id, timeRange, filters, VERSION, function(response) {\n                if (response.status == \&quot;OK\&quot;) {\n                    var config = response.value;\n                    setOutput(\&quot;dout:0\&quot;, config);\n                    setOutput(\&quot;dout:1\&quot;, metric_id);\n                }\n            });\n        }\n    });\n}\n\nif (port == \&quot;din:0\&quot;) {\n    getScoreConfig();\n}\n&quot;"/>
+      <Input key="node:205/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Filters&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Plugins&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Version&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:218/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#ExpandedFilter&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;ExpandedFilter&quot;}]"/>
+      <Input key="node:220/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#Action&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Action&quot;}]"/>
+      <Input key="node:221/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Action&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Metric ID&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:3&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Trend Data&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:4&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Filters&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:5&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Plugins&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:6&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Version&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:221/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Summary Data&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Filter Value&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:221/cfg:model/default" value="&quot;var plugins = getInput(\&quot;din:5\&quot;);\r\nif (plugins == null) return;\r\n\r\nvar CommonPlugin = Plugin(\&quot;Common\&quot;);\r\n\r\nvar VERSION = getInput(\&quot;din:6\&quot;);\r\n\r\nfunction getFilterSignature(filters)\r\n{\r\n    var values = [];\r\n    filters.forEach(function(filter) {\r\n        if (filter.type == \&quot;timeinterval\&quot; || filter.type.indexOf(\&quot;:timeinterval\&quot;) != -1) {\r\n            // ignore timeinterval changes\r\n        }\r\n        else {\r\n            values.push({name:filter.name, value:filter.value});\r\n        }\r\n    });\r\n    values.sort(function(a,b) {\r\n        return a.name.localeCompare(b.name);\r\n    });\r\n    return JSON.stringify(values);\r\n}\r\n\r\nfunction isFilterChanged(prevFilters, currFilters)\r\n{\r\n    if (prevFilters == null) return true;\r\n    \r\n    var prev = getFilterSignature(prevFilters);\r\n    var curr = getFilterSignature(currFilters);\r\n    return prev != curr;\r\n}\r\n\r\nfunction updateConfig(metric_id, config, callback)\r\n{\r\n    if (VERSION == \&quot;V2\&quot;) {\r\n        delete config[\&quot;above_threshold\&quot;];\r\n        delete config[\&quot;below_threshold\&quot;];\r\n        delete config[\&quot;noc_notify_high_enable\&quot;];\r\n        delete config[\&quot;noc_notify_medium_enable\&quot;];\r\n        delete config[\&quot;ivr_deflect_high_enable\&quot;];\r\n        delete config[\&quot;ivr_deflect_medium_enable\&quot;];\r\n        delete config[\&quot;floor_dispatch_high_enable\&quot;];\r\n        delete config[\&quot;floor_dispatch_medium_enable\&quot;];\r\n    }\r\n    if (metric_id != null &amp;&amp; metric_id != \&quot;\&quot;) {\r\n        plugins.AnomalyPlugin.getAnomalyConfigByMetricID(metric_id, null, null, VERSION, function(response) {\r\n            if (response.status == \&quot;OK\&quot;) {\r\n                var currConfig = response.value;\r\n                // because CONFIG may be out of date, we add new properties from CURRENT CONFIG\r\n                for (var key in currConfig) {\r\n                    if (config[key] == undefined) {\r\n                        config[key] = currConfig[key];\r\n                    }\r\n                }\r\n            }\r\n            callback(config);\r\n        });\r\n    }\r\n    else {\r\n        callback(config);\r\n    }\r\n}\r\n\r\nfor (var p=0; p&lt;triggeredPorts.length; p++) {\r\n    port = triggeredPorts[p];\r\n    if (port == \&quot;din:0\&quot;) {\r\n        var actions = getInput(\&quot;din:0\&quot;);\r\n        for (var i=0; i&lt;actions.length; i++) {\r\n            var action = actions[i];\r\n            if (action.type == \&quot;toolbarSelect\&quot;) {\r\n                switch (action.value) {\r\n                    case \&quot;edit/properties\&quot;:\r\n                        var config = getInput(\&quot;din:1\&quot;);\r\n                        var metricId = getInput(\&quot;din:2\&quot;);\r\n                        var result = getInput(\&quot;din:3\&quot;) || [];\r\n                        if (config != null) {\r\n                            var buttonDefs = [{\r\n                                name     : \&quot;ComputeDefaults\&quot;,\r\n                                label    : \&quot;Compute Defaults\&quot;,\r\n                                tooltip  : null,\r\n                                callback : null,\r\n                            }, {\r\n                                name     : \&quot;RevertConfig\&quot;,\r\n                                label    : \&quot;Revert Config\&quot;,\r\n                                tooltip  : \&quot;Revert configuration values to that used at runtime.\&quot;,\r\n                                callback : function(formDef, evt) {\r\n                                    CommonPlugin.updateFormWidget(formDef, getLocal(\&quot;ORIGINAL-CONFIG\&quot;));\r\n                                },\r\n                            }];\r\n                            if (result.length &gt; 100) {\r\n                                // at least 100 data points\r\n                                (buttonDefs[0]).tooltip = \&quot;Compute default factor and thresholds from baseline and scores.\&quot;;\r\n                                (buttonDefs[0]).callback = function(formDef, evt) {\r\n                                    plugins.AnomalyPlugin.getConfigDefaults(metricId, function(response) {\r\n                                        if (response.status == \&quot;OK\&quot;) {\r\n                                            var algorithm = getLocal(\&quot;ALGORITHM\&quot;);\r\n                                            var thresholdPolicy = getLocal(\&quot;THRESHOLD-POLICY\&quot;);\r\n                                            plugins.AnomalyPlugin.computeDefaults(response.value, result, algorithm, thresholdPolicy, function(defaults) {\r\n                                                CommonPlugin.updateFormWidget(formDef, defaults);\r\n                                            });\r\n                                        }\r\n                                    });\r\n                                };\r\n                            }\r\n                            else {\r\n                                (buttonDefs[0]).tooltip = \&quot;Feature disabled due to insufficient number of data points to properly compute factor and thresholds.\&quot;;\r\n                            }\r\n                            var description = [\r\n                                \&quot;&lt;div style=&apos;background-color: #f2f2f2f2; width: calc(100% - 20px); padding: 10px; font-size: 14px;&apos;&gt;\&quot;,\r\n                                \&quot;Customize incident detection configuration.\&quot;,\r\n                                \&quot;&lt;/div&gt;\&quot;,\r\n                            ];\r\n                            var options = null;\r\n                            if (VERSION == \&quot;V2\&quot;) {\r\n                                options = plugins.AnomalyPlugin.getIncidentConfigOptions(config, function(formDef, option) {\r\n                                    CommonPlugin.updateFormWidget(formDef, option);\r\n                                    setLocal(\&quot;ALGORITHM\&quot;, option[\&quot;algorithm\&quot;]);\r\n                                    setLocal(\&quot;THRESHOLD-POLICY\&quot;, option[\&quot;threshold_policy\&quot;]);\r\n                                });\r\n                                setLocal(\&quot;ALGORITHM\&quot;, config[\&quot;algorithm\&quot;]);\r\n                                setLocal(\&quot;THRESHOLD-POLICY\&quot;, config[\&quot;threshold_policy\&quot;]);\r\n                            }\r\n                            plugins.ConfigPlugin.editIncidentConfig(CommonPlugin, this.axflow.config.controller, config, description, function(obj) {\r\n                                if (VERSION == \&quot;V2\&quot;) {\r\n                                    plugins.AnomalyPlugin.onSelectIncidentPerspective(obj);\r\n                                }\r\n                                setOutput(\&quot;dout:0\&quot;, obj);\r\n                                setLocal(\&quot;ACTIVE-CONFIG\&quot;, obj);\r\n                            }, buttonDefs, options);\r\n                        }\r\n                        break;\r\n                    case \&quot;manage/properties\&quot;:\r\n                        var config = getInput(\&quot;din:1\&quot;);\r\n                        var metric_id = getInput(\&quot;din:2\&quot;) || \&quot;\&quot;;\r\n                        if (metric_id != \&quot;\&quot; &amp;&amp; config != null) {\r\n                            plugins.AnomalyPlugin.manageAnomalyConfig(CommonPlugin, metric_id, config, function(obj) {\r\n                                updateConfig(metric_id, obj, function(currConfig) {\r\n                                    setOutput(\&quot;dout:0\&quot;, currConfig);\r\n                                    setLocal(\&quot;ACTIVE-CONFIG\&quot;, currConfig);\r\n                                });\r\n                            });\r\n                        }\r\n                        break;\r\n                    case \&quot;anomaly/summary\&quot;:\r\n                        var config = getInput(\&quot;din:1\&quot;);\r\n                        var result = getInput(\&quot;din:3\&quot;) || [];\r\n                        if (metric_id != \&quot;\&quot; &amp;&amp; config != null) {\r\n                            var initialValues = getLocal(\&quot;INITIAL-VALUES\&quot;);\r\n                            plugins.AnomalyPlugin.showAnomalySummary(CommonPlugin, result, initialValues, \&quot;As-IS\&quot;, \&quot;What-IF\&quot;, function(data) {\r\n                                setOutput(\&quot;dout:1\&quot;, data);\r\n                            });\r\n                        }\r\n                        break;\r\n                    case \&quot;manage/favorites\&quot;:\r\n                        var config = getInput(\&quot;din:1\&quot;) || {};\r\n                        var metric_id = getInput(\&quot;din:2\&quot;) || \&quot;\&quot;;\r\n                        var filters = getInput(\&quot;din:4\&quot;) || [];\r\n                        var filterObj = {};\r\n                        filters.forEach(function(filter) {\r\n                            if (typeof filter.value == \&quot;string\&quot; &amp;&amp; filter.value != \&quot;\&quot;) {\r\n                                filterObj[filter.name] = filter.value;\r\n                            }\r\n                            else if (Array.isArray(filter.value) &amp;&amp; filter.value.length &gt; 0) {\r\n                                filterObj[filter.name] = filter.value;\r\n                            }\r\n                        });\r\n                        plugins.AnomalyPlugin.manageFavoriteList(CommonPlugin, metric_id, config, filterObj, function(obj) {\r\n                            updateConfig(obj.metricId, obj.config, function(currConfig) {\r\n                                setOutput(\&quot;dout:2\&quot;, {\r\n                                    values : obj.filters\r\n                                });\r\n                                setLocal(\&quot;SAVED-CONFIG\&quot;, currConfig);\r\n                                setLocal(\&quot;ACTIVE-CONFIG\&quot;, currConfig);\r\n                            });\r\n                        });\r\n                        break;\r\n                }\r\n            }\r\n        }\r\n    }\r\n    else if (port == \&quot;din:2\&quot;) {\r\n        // new apply\r\n        // ... clear INITIAL-VALUES\r\n        setLocal(\&quot;INITIAL-VALUES\&quot;, null);\r\n        // check if we need to Apply saved config in conjunction with the new apply\r\n        config = getLocal(\&quot;SAVED-CONFIG\&quot;);\r\n        if (config != null) {\r\n            setTimeout(function() {\r\n                setLocal(\&quot;SAVED-CONFIG\&quot;, null);\r\n                setOutput(\&quot;dout:0\&quot;, config);\r\n            }, 20);\r\n            // ... save ORIGINAL-CONFIG\r\n            // setLocal(\&quot;ORIGINAL-CONFIG\&quot;, config);\r\n        }\r\n        else {\r\n            var currFilters = getInput(\&quot;din:4\&quot;);\r\n            var prevFilters = getLocal(\&quot;ORIGINAL-FILTER\&quot;);\r\n            if (isFilterChanged(prevFilters, currFilters)) {\r\n                // filters changed\r\n                setLocal(\&quot;ACTIVE-CONFIG\&quot;, null);\r\n                setOutput(\&quot;dout:0\&quot;, null);\r\n            }\r\n            else {\r\n                // filters NOT fundamentally changed... only time range changed\r\n                config = getLocal(\&quot;ACTIVE-CONFIG\&quot;);\r\n                if (config != null) {\r\n                    setOutput(\&quot;dout:0\&quot;, config);\r\n                }\r\n            }\r\n            if (config == null) {\r\n                config = getInput(\&quot;din:1\&quot;);\r\n                setOutput(\&quot;dout:0\&quot;, config);\r\n                // ... save ORIGINAL-CONFIG\r\n                // setLocal(\&quot;ORIGINAL-CONFIG\&quot;, config);\r\n            }\r\n        }\r\n        // ... save ORIGINAL-FILTER\r\n        setLocal(\&quot;ORIGINAL-FILTER\&quot;, getInput(\&quot;din:4\&quot;));\r\n    }\r\n    else if (port == \&quot;din:3\&quot;) {\r\n        var result = getInput(\&quot;din:3\&quot;) || [];\r\n        if (getLocal(\&quot;INITIAL-VALUES\&quot;) == null &amp;&amp; result.length &gt; 0) {\r\n            var config = getInput(\&quot;din:1\&quot;);\r\n            plugins.AnomalyPlugin.compileSummary(result, function(summary) {\r\n                setLocal(\&quot;INITIAL-VALUES\&quot;, plugins.AnomalyPlugin.getSummaryValues(summary));\r\n            });\r\n            // ... save ORIGINAL-CONFIG\r\n            setLocal(\&quot;ORIGINAL-CONFIG\&quot;, config);\r\n        }\r\n    }\r\n}\r\n&quot;"/>
+      <Input key="node:223/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#Detail&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Detail&quot;}]"/>
+      <Input key="node:221/cfg:schema/default" value="&quot;var schema = [];\r\nschema.push({\r\n    name  : \&quot;name\&quot;,\r\n    label : \&quot;Name\&quot;,\r\n    type  : \&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name  : \&quot;label\&quot;,\r\n    label : \&quot;Label\&quot;,\r\n    type  : \&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name  : \&quot;prev\&quot;,\r\n    label : \&quot;Previous Value\&quot;,\r\n    type  : \&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name  : \&quot;curr\&quot;,\r\n    label : \&quot;Current Value\&quot;,\r\n    type  : \&quot;number\&quot;\r\n});\r\nsetOutputSchema(\&quot;dout:1\&quot;, schema);\r\n\r\nsetOutputSchema(\&quot;dout:2\&quot;, [{\r\n    name  : \&quot;_group_\&quot;,\r\n    label : \&quot;Group\&quot;,\r\n    type  : \&quot;string\&quot;\r\n}, {\r\n    name  : \&quot;_epoch_\&quot;,\r\n    label : \&quot;Epoch Time\&quot;,\r\n    type  : \&quot;string\&quot;\r\n}, {\r\n    name  : \&quot;_time_\&quot;,\r\n    label : \&quot;Time\&quot;,\r\n    type  : \&quot;string\&quot;\r\n}, {\r\n    name  : \&quot;_value1_\&quot;,\r\n    label : \&quot;Metric Value\&quot;,\r\n    type  : \&quot;string\&quot;\r\n}, {\r\n    name  : \&quot;_baseline1_\&quot;,\r\n    label : \&quot;Metric Baseline\&quot;,\r\n    type  : \&quot;string\&quot;\r\n}, {\r\n    name  : \&quot;_value2_\&quot;,\r\n    label : \&quot;Calls Value\&quot;,\r\n    type  : \&quot;string\&quot;\r\n}, {\r\n    name  : \&quot;_baseline2_\&quot;,\r\n    label : \&quot;Calls Baseline\&quot;,\r\n    type  : \&quot;string\&quot;\r\n}]);&quot;"/>
+      <Input key="node:225/in:0/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:225/cfg:width/default" value="1000"/>
+      <Input key="node:225/cfg:height/default" value="600"/>
+      <Input key="node:225/cfg:widget/default" value="[{&quot;viewer&quot;:&quot;DataGrid&quot;,&quot;label&quot;:&quot;Data Grid&quot;,&quot;properties&quot;:{&quot;showHeader&quot;:&quot;enable&quot;,&quot;borderType&quot;:&quot;all&quot;,&quot;rowSpacing&quot;:&quot;5&quot;,&quot;columnResize&quot;:&quot;enable&quot;,&quot;columnReorder&quot;:&quot;disable&quot;,&quot;columnSortable&quot;:&quot;enable&quot;,&quot;dataExport&quot;:&quot;enable&quot;,&quot;pagination&quot;:&quot;disable&quot;,&quot;lockedColumns&quot;:&quot;0&quot;,&quot;highlightColor&quot;:&quot;#148AC4&quot;,&quot;hoverColor&quot;:&quot;#148AC4&quot;,&quot;selectionMode&quot;:&quot;single&quot;,&quot;showSummary&quot;:&quot;disable&quot;,&quot;lineWrapping&quot;:&quot;disable&quot;,&quot;autoSelectFirst&quot;:&quot;disable&quot;,&quot;columnSetting&quot;:&quot;[{\&quot;name\&quot;:\&quot;name\&quot;,\&quot;label\&quot;:\&quot;Name\&quot;,\&quot;type\&quot;:\&quot;string\&quot;,\&quot;defaultListId\&quot;:1,\&quot;opened\&quot;:true,\&quot;style\&quot;:{\&quot;width\&quot;:200}},{\&quot;name\&quot;:\&quot;label\&quot;,\&quot;label\&quot;:\&quot;Label\&quot;,\&quot;type\&quot;:\&quot;string\&quot;,\&quot;defaultListId\&quot;:2,\&quot;opened\&quot;:true,\&quot;isKeyField\&quot;:false,\&quot;style\&quot;:{\&quot;width\&quot;:400}},{\&quot;name\&quot;:\&quot;prev\&quot;,\&quot;label\&quot;:\&quot;Previous Value\&quot;,\&quot;isKeyField\&quot;:false,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;defaultListId\&quot;:3,\&quot;opened\&quot;:true,\&quot;style\&quot;:{\&quot;width\&quot;:150}},{\&quot;name\&quot;:\&quot;curr\&quot;,\&quot;label\&quot;:\&quot;Current Value\&quot;,\&quot;isKeyField\&quot;:false,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;defaultListId\&quot;:4,\&quot;opened\&quot;:true,\&quot;style\&quot;:{\&quot;width\&quot;:150}}]&quot;},&quot;schema&quot;:[{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Label&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;prev&quot;,&quot;label&quot;:&quot;Previous Value&quot;,&quot;type&quot;:&quot;number&quot;},{&quot;name&quot;:&quot;curr&quot;,&quot;label&quot;:&quot;Current Value&quot;,&quot;type&quot;:&quot;number&quot;}]}]"/>
+      <Input key="node:218/in:0/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:182/in:0/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:227/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Base Filter Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Full Filter Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Plugins&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:3&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Version&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:223/cfg:trigger/default" value="&quot;single&quot;"/>
+      <Schema id="node:182/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:182/out:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:182/out:2">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:182/out:3">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:190/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:190/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;GMT&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_uom1_&quot;,&quot;label&quot;:&quot;Metric UoM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_uom2_&quot;,&quot;label&quot;:&quot;Calls UoM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval1_&quot;,&quot;label&quot;:&quot;+/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffval2_&quot;,&quot;label&quot;:&quot;+/- Calls over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct1_&quot;,&quot;label&quot;:&quot;% +/- Metric over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffpct2_&quot;,&quot;label&quot;:&quot;% +/- Calls over Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_anomalyFlag_&quot;,&quot;label&quot;:&quot;Anomaly Flag&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_anomalyValue_&quot;,&quot;label&quot;:&quot;Anomaly Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:198/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisScore_&quot;,&quot;label&quot;:&quot;Score&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisLevel_&quot;,&quot;label&quot;:&quot;Level&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisEvent_&quot;,&quot;label&quot;:&quot;Event&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisActive_&quot;,&quot;label&quot;:&quot;Active&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisCalls_&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueH_&quot;,&quot;label&quot;:&quot;High Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueM_&quot;,&quot;label&quot;:&quot;Medium Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueL_&quot;,&quot;label&quot;:&quot;Low Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueW_&quot;,&quot;label&quot;:&quot;Warmup Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueC_&quot;,&quot;label&quot;:&quot;Cooldown Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metricDev_&quot;,&quot;label&quot;:&quot;Metric Deviation&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_callDev_&quot;,&quot;label&quot;:&quot;Calls Deviation&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:198/din:0">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:205/din:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:205/din:1">
+        <JSON value="{&quot;_sqlType&quot;:&quot;VARCHAR(45)&quot;,&quot;nullable&quot;:false,&quot;name&quot;:&quot;service&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;VARCHAR(250)&quot;,&quot;nullable&quot;:false,&quot;name&quot;:&quot;sub_service&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;VARCHAR(250)&quot;,&quot;nullable&quot;:false,&quot;name&quot;:&quot;dim_values&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;FLOAT(12,31)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;median_baseline&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true,&quot;label&quot;:&quot;median_baseline&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;FLOAT(12,31)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;threshold_low&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true,&quot;label&quot;:&quot;threshold_low&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;FLOAT(12,31)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;threshold_med&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true,&quot;label&quot;:&quot;threshold_med&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;FLOAT(12,31)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;threshold_high&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true,&quot;label&quot;:&quot;threshold_high&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;VARCHAR(1)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;above&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false,&quot;label&quot;:&quot;above&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;VARCHAR(1)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;below&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false,&quot;label&quot;:&quot;below&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;FLOAT(12,31)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;warmup_threshold&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true,&quot;label&quot;:&quot;warmup_threshold&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;INT(11)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;warmup_period&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true,&quot;label&quot;:&quot;warmup_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;INT(11)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;cool_down_period&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true,&quot;label&quot;:&quot;cool_down_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;FLOAT(12,31)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;min_call_deviation&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true,&quot;label&quot;:&quot;min_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;INT(11)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;min_call_vol&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true,&quot;label&quot;:&quot;min_call_vol&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;FLOAT(12,31)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;min_metric_deviation&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true,&quot;label&quot;:&quot;min_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;FLOAT(12,31)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;min_metric_vol&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true,&quot;label&quot;:&quot;min_metric_vol&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;INT(11)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;med_threshold_period&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true,&quot;label&quot;:&quot;med_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;INT(11)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;high_threshold_period&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true,&quot;label&quot;:&quot;high_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;FLOAT(12,31)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;med_call_vol_pct&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true,&quot;label&quot;:&quot;med_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;_sqlType&quot;:&quot;FLOAT(12,31)&quot;,&quot;nullable&quot;:true,&quot;name&quot;:&quot;high_call_vol_pct&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true,&quot;label&quot;:&quot;high_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:218/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:218/out:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:218/out:2">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:218/out:3">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:190/din:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:220/out:0">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:220/out:1">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:220/out:2">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:220/out:3">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:221/din:0">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:193/din:Data">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisScore_&quot;,&quot;label&quot;:&quot;Score&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisLevel_&quot;,&quot;label&quot;:&quot;Level&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisEvent_&quot;,&quot;label&quot;:&quot;Event&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisActive_&quot;,&quot;label&quot;:&quot;Active&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisCalls_&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueH_&quot;,&quot;label&quot;:&quot;High Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueM_&quot;,&quot;label&quot;:&quot;Medium Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueL_&quot;,&quot;label&quot;:&quot;Low Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueW_&quot;,&quot;label&quot;:&quot;Warmup Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueC_&quot;,&quot;label&quot;:&quot;Cooldown Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metricDev_&quot;,&quot;label&quot;:&quot;Metric Deviation&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_callDev_&quot;,&quot;label&quot;:&quot;Calls Deviation&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:221/din:3">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisScore_&quot;,&quot;label&quot;:&quot;Score&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisLevel_&quot;,&quot;label&quot;:&quot;Level&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisEvent_&quot;,&quot;label&quot;:&quot;Event&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisActive_&quot;,&quot;label&quot;:&quot;Active&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisCalls_&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueH_&quot;,&quot;label&quot;:&quot;High Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueM_&quot;,&quot;label&quot;:&quot;Medium Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueL_&quot;,&quot;label&quot;:&quot;Low Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueW_&quot;,&quot;label&quot;:&quot;Warmup Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueC_&quot;,&quot;label&quot;:&quot;Cooldown Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metricDev_&quot;,&quot;label&quot;:&quot;Metric Deviation&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_callDev_&quot;,&quot;label&quot;:&quot;Calls Deviation&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:221/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;prev&quot;,&quot;label&quot;:&quot;Previous Value&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;curr&quot;,&quot;label&quot;:&quot;Current Value&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:225/in:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;prev&quot;,&quot;label&quot;:&quot;Previous Value&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;curr&quot;,&quot;label&quot;:&quot;Current Value&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:225/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;prev&quot;,&quot;label&quot;:&quot;Previous Value&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;curr&quot;,&quot;label&quot;:&quot;Current Value&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:225/out:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;prev&quot;,&quot;label&quot;:&quot;Previous Value&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;curr&quot;,&quot;label&quot;:&quot;Current Value&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:221/din:4">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:221/dout:2">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:218/in:0">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:182/in:0">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:214/in:3">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:193/out:0">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;Time&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisScore_&quot;,&quot;label&quot;:&quot;Score&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisLevel_&quot;,&quot;label&quot;:&quot;Level&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisEvent_&quot;,&quot;label&quot;:&quot;Event&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisActive_&quot;,&quot;label&quot;:&quot;Active&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisCalls_&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueH_&quot;,&quot;label&quot;:&quot;High Marker&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueM_&quot;,&quot;label&quot;:&quot;Medium Marker&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueL_&quot;,&quot;label&quot;:&quot;Low Marker&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueW_&quot;,&quot;label&quot;:&quot;Warmup Marker&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueC_&quot;,&quot;label&quot;:&quot;Cooldown Marker&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metricDev_&quot;,&quot;label&quot;:&quot;Metric Deviation&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;_callDev_&quot;,&quot;label&quot;:&quot;Calls Deviation&quot;,&quot;type&quot;:&quot;number&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:223/din:Trend Data">
+        <JSON value="{&quot;name&quot;:&quot;_group_&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_epoch_&quot;,&quot;label&quot;:&quot;Epoch Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_time_&quot;,&quot;label&quot;:&quot;Time&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value1_&quot;,&quot;label&quot;:&quot;Metric Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline1_&quot;,&quot;label&quot;:&quot;Metric Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value2_&quot;,&quot;label&quot;:&quot;Calls Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline2_&quot;,&quot;label&quot;:&quot;Calls Baseline&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisScore_&quot;,&quot;label&quot;:&quot;Score&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisLevel_&quot;,&quot;label&quot;:&quot;Level&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisEvent_&quot;,&quot;label&quot;:&quot;Event&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisActive_&quot;,&quot;label&quot;:&quot;Active&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisCalls_&quot;,&quot;label&quot;:&quot;Calls&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueH_&quot;,&quot;label&quot;:&quot;High Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueM_&quot;,&quot;label&quot;:&quot;Medium Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueL_&quot;,&quot;label&quot;:&quot;Low Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueW_&quot;,&quot;label&quot;:&quot;Warmup Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_chrisValueC_&quot;,&quot;label&quot;:&quot;Cooldown Marker&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_metricDev_&quot;,&quot;label&quot;:&quot;Metric Deviation&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_callDev_&quot;,&quot;label&quot;:&quot;Calls Deviation&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:223/din:Filters">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:198/dout:2">
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:229/in:0">
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:229/out:0">
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <DynInput id="node:190">
+        <Port id="din:0" type="any[]" label="Filters" evaluate="always"/>
+        <Port id="din:1" type="any" label="Plugins" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:198">
+        <Port id="din:0" type="event[]" label="Trend Data" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="any" label="Config" evaluate="always" _isArray="true"/>
+        <Port id="din:2" type="any[]" label="Chart UI Event" evaluate="always" _isArray="true"/>
+        <Port id="din:3" type="any" label="Plugins" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:205">
+        <Port id="din:0" type="any[]" label="Filters" evaluate="always"/>
+        <Port id="din:1" type="any" label="Plugins" evaluate="always"/>
+        <Port id="din:2" type="string" label="Version" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:221">
+        <Port id="din:0" type="event[]" label="Action" evaluate="always"/>
+        <Port id="din:1" type="any" label="Config" evaluate="always"/>
+        <Port id="din:2" type="string" label="Metric ID" evaluate="always"/>
+        <Port id="din:3" type="event[]" label="Trend Data" evaluate="always"/>
+        <Port id="din:4" type="any[]" label="Filters" evaluate="always"/>
+        <Port id="din:5" type="any" label="Plugins" evaluate="always"/>
+        <Port id="din:6" type="string" label="Version" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:193">
+        <Port id="din:Data" type="event[]" label="Data" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:Config" type="any" label="Config" _undefined_default="" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:223">
+        <Port id="din:Trend Data" type="event[]" label="Trend Data" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:Config" type="any" label="Config" _undefined_default="" evaluate="always" _isArray="true"/>
+        <Port id="din:Filters" type="any[]" label="Filters" _undefined_default="" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynOutput id="node:190">
+        <Port id="dout:0" type="event[]" label="Trend Data" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:198">
+        <Port id="dout:0" type="event[]" label="Trend Data" propagate="always"/>
+        <Port id="dout:1" type="any" label="Config" propagate="always"/>
+        <Port id="dout:2" type="event[]" label="Config Info" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:205">
+        <Port id="dout:0" type="any" label="Config" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="string" label="Metric ID" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:221">
+        <Port id="dout:0" type="any" label="Config" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="event[]" label="Summary Data" propagate="always" _isArray="true"/>
+        <Port id="dout:2" type="any" label="Filter Value" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:227">
+        <Port id="dout:0" type="any" label="Base Filter Config" propagate="always"/>
+        <Port id="dout:1" type="any" label="Full Filter Config" propagate="always"/>
+        <Port id="dout:2" type="any" label="Plugins" propagate="always"/>
+        <Port id="dout:3" type="string" label="Version" propagate="always"/>
+      </DynOutput>
+      <Version id="node:182" version="1"/>
+      <Version id="node:190" version="2"/>
+      <Version id="node:193" version="1"/>
+      <Version id="node:198" version="2"/>
+      <Version id="node:205" version="2"/>
+      <Version id="node:214" version="1"/>
+      <Version id="node:218" version="1"/>
+      <Version id="node:220" version="1"/>
+      <Version id="node:221" version="2"/>
+      <Version id="node:223" version="1"/>
+      <Version id="node:225" version="1"/>
+      <Version id="node:227" version="1"/>
+      <Version id="node:229" version="2"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/user/via_common/dbpm/VIA - Common" alias="Common"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

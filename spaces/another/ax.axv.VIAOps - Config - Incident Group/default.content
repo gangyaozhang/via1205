@@ -1,0 +1,805 @@
+<AnalyticsExplorerView is_init="false" name="VIAOps - Config - Incident Group" description="">
+  <ModelInfo nextPageId="5" validated="true">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="0.8"/>
+      <NoTileSpacing value="false"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="false"/>
+    <DWRSetting disable="false"/>
+    <CustomCSSSetting><![CDATA[@import '/vitria-oi/rest/app/dbp/user/via_common/dbpm/VIA - Common/VIA-CSS';
+
+.incident-config .dgrid-cell.field-service {
+    font-family: Arial;
+}
+.incident-config .dgrid-cell.field-sub_service {
+    font-family: Arial;
+}
+.incident-config .dgrid-cell.field-dim_values {
+    font-family: Arial;
+}
+
+.incident-config-table {
+    border-collapse: unset;
+}
+]]></CustomCSSSetting>
+    <Page id="2" name="Incident Groups" title="Incident Groups" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<div style="width:calc(100% - 2px);height:100%;background-color:white;padding:0px;">
+    <div data-vitria-type="tile" style="width:100%;height:29px;padding:0px;border:none;" data-vitria-tile-name="Tile1"></div>
+    <div style="width:100%;height:calc(100% - 29px);" data-vitria-type="layout"></div> 
+</div>]]></PageFrameContent>
+      <PageProperties/>
+      <Layout type="10" numRow="46" numCol="1" count="2" templateType="21" screenHeight="1050" renderType="undefined" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:46,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:27,&quot;id&quot;:0,&quot;title&quot;:&quot;Correlation Rules&quot;},{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:45,&quot;id&quot;:1,&quot;title&quot;:&quot;Incident Groups (double-click to edit)&quot;}]" unitSize="{&quot;x&quot;:7.6,&quot;y&quot;:8.13888888888889}" viewRows="72" viewCols="120"/>
+      <Tile name="Correlation Rules" title="Correlation Rules" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="incident-config via-scroller" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:38" name="axflow:localstore:node:38" label="Correlation Data" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="group_metric_id" label="group_metric_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="service_name" label="service_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="sub_service_name" label="sub_service_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="component_name" label="component_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="metric_name" label="metric_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="correlation_time" label="Correlation Time (sec)" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="group_start" label="Start Group" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="__label__" label="Correlation Rule" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;group_metric_id&quot;,&quot;label&quot;:&quot;group_metric_id&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;,&quot;seriesTableShow&quot;:null},{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;service_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;,&quot;seriesTableShow&quot;:null},{&quot;name&quot;:&quot;sub_service_name&quot;,&quot;label&quot;:&quot;sub_service_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;,&quot;seriesTableShow&quot;:null},{&quot;name&quot;:&quot;component_name&quot;,&quot;label&quot;:&quot;component_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;,&quot;seriesTableShow&quot;:null},{&quot;name&quot;:&quot;metric_name&quot;,&quot;label&quot;:&quot;metric_name&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;,&quot;seriesTableShow&quot;:null},{&quot;name&quot;:&quot;__label__&quot;,&quot;label&quot;:&quot;Correlation Rule&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:6,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:80}},{&quot;name&quot;:&quot;group_start&quot;,&quot;label&quot;:&quot;Start&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:7,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:10,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;12&quot;,&quot;color&quot;:&quot;#000000&quot;,&quot;textAlign&quot;:&quot;center&quot;},&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;correlation_time&quot;,&quot;label&quot;:&quot;Correlation Time (sec)&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:8,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:30,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;12&quot;,&quot;color&quot;:&quot;#000000&quot;,&quot;textAlign&quot;:&quot;right&quot;}}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <Tile name="Incident Groups" title="Incident Groups (double-click to edit)" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="incident-config via-scroller" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:9" name="axflow:localstore:node:9" label="Group Data" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="group_rule_name" label="Group Rule Name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="max_lookback" label="Max Lookback (sec)" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="expire_after" label="Expires After (sec)" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="__start_group_name__" label="Start Group" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="__start_group_label__" label="Start Group Label" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="__correlation_rules__" label="Correlation Rules" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"block","color":"#555555"}]]></LabelStyle>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="1"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="extended"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnDefaultSetting" value="{&quot;columnWidth&quot;:100}"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;Group Rule Name&quot;,&quot;isKeyField&quot;:true,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:200,&quot;backgroundColor&quot;:&quot;#ededed&quot;},&quot;seriesTableShow&quot;:null},{&quot;name&quot;:&quot;max_lookback&quot;,&quot;label&quot;:&quot;Max Lookback (sec)&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:80,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;12&quot;,&quot;color&quot;:&quot;#000000&quot;,&quot;textAlign&quot;:&quot;right&quot;},&quot;seriesTableShow&quot;:null},{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;Expires After (sec)&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:80,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;12&quot;,&quot;color&quot;:&quot;#000000&quot;,&quot;textAlign&quot;:&quot;right&quot;},&quot;seriesTableShow&quot;:null},{&quot;name&quot;:&quot;__start_group_name__&quot;,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:150},&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;__correlation_rules__&quot;,&quot;label&quot;:&quot;Correlation Rules&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:400},&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;__contextual_metric_count__&quot;,&quot;label&quot;:&quot;Contextual Metric Count&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:6,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:80,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;12&quot;,&quot;color&quot;:&quot;#000000&quot;,&quot;textAlign&quot;:&quot;right&quot;},&quot;isKeyField&quot;:false}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <frame_tile name="ActionBar" title="ActionBar" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="via-action-bar" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:25" name="axflow:localstore:node:25" label="Actionbar Data" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="value" label="value" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="disable" label="disable" type="boolean" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/user/via_common/dbpm/VIA - Common/Action Bar&quot;,&quot;model&quot;:&quot;{\n    \&quot;toolbar\&quot;: [\n        {\n    \t\t\&quot;label\&quot;: \&quot;Incident Groups\&quot;,\n    \t\t\&quot;title\&quot;: \&quot;Incident Groups\&quot;\n    \t},\n        {\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-plus-square&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n            \&quot;title\&quot; : \&quot;Add new incident group\&quot;,\n            \&quot;value\&quot; : \&quot;group/add\&quot;\n        },\n        {\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-edit&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n            \&quot;title\&quot; : \&quot;Edit selected incident group\&quot;,\n            \&quot;value\&quot; : \&quot;group/edit\&quot;\n        },\n        {\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-trash-alt&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n            \&quot;title\&quot; : \&quot;Delete selected incident groups\&quot;,\n            \&quot;value\&quot; : \&quot;group/delete\&quot;\n        },\n        {\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-redo&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n            \&quot;title\&quot; : \&quot;Refresh entries from database\&quot;,\n            \&quot;value\&quot; : \&quot;group/refresh\&quot;\n        },\n        {\n    \t\t\&quot;label\&quot;: \&quot;Correlation Time\&quot;,\n    \t\t\&quot;title\&quot;: \&quot;Correlation Time\&quot;\n    \t},\n        {\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-edit&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n            \&quot;title\&quot; : \&quot;Edit rule specific correlation time\&quot;,\n            \&quot;value\&quot; : \&quot;corr_time/edit\&quot;\n        }\n    ],\n    \&quot;#contextual-metrics\&quot; : [\n        {\n    \t\t\&quot;label\&quot;: \&quot;Contextual Metrics\&quot;,\n    \t\t\&quot;title\&quot;: \&quot;Contextual Metrics\&quot;\n    \t},\n        {\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-plus-square&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n            \&quot;title\&quot; : \&quot;Add new contextual metric\&quot;,\n            \&quot;value\&quot; : \&quot;context/add\&quot;\n        },\n        {\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-edit&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n            \&quot;title\&quot; : \&quot;Edit selected contextual metrics\&quot;,\n            \&quot;value\&quot; : \&quot;context/edit\&quot;\n    \t},\n        {\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-trash-alt&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n            \&quot;title\&quot; : \&quot;Delete selected contextual metrics\&quot;,\n            \&quot;value\&quot; : \&quot;context/delete\&quot;\n    \t}\n    ],\n    \&quot;#\&quot; : [\n        {\n    \t\t\&quot;label\&quot;: \&quot;Correlation Rules\&quot;,\n    \t\t\&quot;title\&quot;: \&quot;Correlation Rules\&quot;\n    \t},\n        {\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-plus-square&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n            \&quot;title\&quot; : \&quot;Add new incident group correlation\&quot;,\n            \&quot;value\&quot; : \&quot;correlation/add\&quot;\n        },\n        {\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-edit&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n            \&quot;title\&quot; : \&quot;Edit selected incident group correlation\&quot;,\n            \&quot;value\&quot; : \&quot;correlation/edit\&quot;\n    \t},\n        {\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-trash-alt&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\n            \&quot;title\&quot; : \&quot;Delete selected incident group correlations\&quot;,\n            \&quot;value\&quot; : \&quot;correlation/delete\&quot;\n        }\n    ]\n}\n&quot;}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="Tile1" title="Tile1" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="undefined" allowFullscreen="false"/>
+      <frame_tile name="Tile2" title="Tile2" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="undefined" allowFullscreen="false"/>
+    </Page>
+    <Page id="4" name="Unused" title="Unused" desc="New Page1" tabNavVisible="false" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageProperties/>
+      <Layout type="10" numRow="37" numCol="61" count="4" templateType="8" screenHeight="1050" renderType="undefined" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:36,&quot;id&quot;:0},{&quot;data_col&quot;:61,&quot;data_row&quot;:1,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:36,&quot;id&quot;:1},{&quot;data_col&quot;:1,&quot;data_row&quot;:37,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:36,&quot;id&quot;:2},{&quot;data_col&quot;:61,&quot;data_row&quot;:37,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:36,&quot;id&quot;:3}]" unitSize="{&quot;x&quot;:7.616666666666666,&quot;y&quot;:8.541666666666666}" viewRows="72" viewCols="120"/>
+      <Tile name="Contextual Metrics" title="Contextual Metrics" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:44" name="axflow:localstore:node:44" label="Context Data" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="metric_id" label="Metric ID" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="__style__" label="Display As" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="extended"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;Metric ID&quot;,&quot;isKeyField&quot;:false,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:80}},{&quot;name&quot;:&quot;__style__&quot;,&quot;label&quot;:&quot;Display As&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:20}}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <Tile name="Tile1" title="Tile1" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="undefined" allowFullscreen="false"/>
+      <Tile name="Tile2" title="Tile2" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="undefined" allowFullscreen="false"/>
+      <Tile name="Tile3" title="Tile3" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="undefined" allowFullscreen="false"/>
+    </Page>
+    <Script>
+      <Stores/>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id="node:9" type="LocalStore" label="Group Data" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1008" y="29"/>
+      <Item id="node:11" type="Tile" label="Incident Group" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="46" y="260"/>
+      <Item id="node:12" type="UserScript" label="Script 3" _undefined_title="" originHeight="117" width="140" height="177" x="368" y="180">
+        <dynIn id="din:0" type="event[]" label="UI event" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="any" label="Edit" evaluate="always" _isArray="true"/>
+        <dynIn id="din:3" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+        <dynIn id="din:4" type="any" label="Options Plugin" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Refresh" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:23" type="UserScript" label="Selection" _undefined_title="" originHeight="117" width="160" height="117" x="271" y="907">
+        <dynIn id="din:0" type="event[]" label="Groups" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="event[]" label="Contexts" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:25" type="LocalStore" label="Actionbar Data" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="529" y="907"/>
+      <Item id="node:27" type="Tile" label="Toolbar" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="40" y="460"/>
+      <Item id="node:28" type="UserScript" label="Script 1" _undefined_title="" originHeight="117" width="200" height="177" x="353" y="460">
+        <dynIn id="din:0" type="event[]" label="Action" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="event[]" label="Groups" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+        <dynIn id="din:3" type="any" label="Options Plugin" evaluate="always" _isArray="true"/>
+        <dynIn id="din:4" type="event[]" label="Contexts" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Edit Groups" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="Refresh Groups" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any" label="Refresh Contextuals" propagate="always" _isArray="true"/>
+        <dynOut id="dout:3" type="any" label="Edit Contextuals" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:33" type="UserScript" label="Script 2" _undefined_title="" originHeight="117" width="130" height="117" x="760" y="29">
+        <dynIn id="din:0" type="any" label="Refresh" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:35" type="PortIn" label="Port IN 0" _undefined_title="" originHeight="117" width="130" height="177" x="89" y="29">
+        <dynOut id="dout:0" type="any" label="Config Plugin" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="Options Plugin" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:37" type="UserScript" label="Script 4" _undefined_title="" originHeight="117" width="140" height="117" x="729" y="371">
+        <dynIn id="din:0" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:38" type="LocalStore" label="Correlation Data" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="986" y="371"/>
+      <Item id="node:43" type="UserScript" label="Script 6" _undefined_title="" originHeight="117" width="130" height="177" x="960" y="620">
+        <dynIn id="din:0" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="any" label="Refresh" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:44" type="LocalStore" label="Context Data" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1220" y="620"/>
+      <Item id="node:46" type="Tile" label="Contextual Metrics" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="31" y="790"/>
+      <Item id="node:48" type="UserScript" label="Script 7" _undefined_title="" originHeight="117" width="134" height="172" x="700" y="728">
+        <dynIn id="din:0" type="event[]" label="UI event" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="event[]" label="Contexts" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="any" label="Edit" evaluate="always" _isArray="true"/>
+        <dynIn id="din:3" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+        <dynIn id="din:4" type="any" label="Options Plugin" evaluate="always" _isArray="true"/>
+        <dynIn id="din:5" type="event[]" label="Groups" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Refresh" propagate="always" _isArray="true"/>
+      </Item>
+      <Link srcId="node:35" srcPort="dout:0" tgtId="node:43" tgtPort="din:0"/>
+      <Link srcId="node:43" srcPort="dout:0" tgtId="node:44" tgtPort="in:0"/>
+      <Link srcId="node:37" srcPort="dout:0" tgtId="node:38" tgtPort="in:0"/>
+      <Link srcId="node:11" srcPort="out:0" tgtId="node:37" tgtPort="din:1"/>
+      <Link srcId="node:35" srcPort="dout:0" tgtId="node:37" tgtPort="din:0"/>
+      <Link srcId="node:11" srcPort="out:0" tgtId="node:28" tgtPort="din:1"/>
+      <Link srcId="node:28" srcPort="dout:0" tgtId="node:12" tgtPort="din:2"/>
+      <Link srcId="node:11" srcPort="out:0" tgtId="node:12" tgtPort="din:1"/>
+      <Link srcId="node:27" srcPort="out:0" tgtId="node:28" tgtPort="din:0"/>
+      <Link srcId="node:23" srcPort="dout:0" tgtId="node:25" tgtPort="in:0"/>
+      <Link srcId="node:11" srcPort="out:0" tgtId="node:23" tgtPort="din:0"/>
+      <Link srcId="node:11" srcPort="out:3" tgtId="node:12" tgtPort="din:0"/>
+      <Link srcId="node:33" srcPort="dout:0" tgtId="node:9" tgtPort="in:0"/>
+      <Link srcId="node:28" srcPort="dout:1" tgtId="node:33" tgtPort="din:0"/>
+      <Link srcId="node:12" srcPort="dout:0" tgtId="node:33" tgtPort="din:0"/>
+      <Link srcId="node:35" srcPort="dout:0" tgtId="node:12" tgtPort="din:3"/>
+      <Link srcId="node:35" srcPort="dout:0" tgtId="node:33" tgtPort="din:1"/>
+      <Link srcId="node:35" srcPort="dout:0" tgtId="node:28" tgtPort="din:2"/>
+      <Link srcId="node:35" srcPort="dout:1" tgtId="node:28" tgtPort="din:3"/>
+      <Link srcId="node:11" srcPort="out:0" tgtId="node:43" tgtPort="din:1"/>
+      <Link srcId="node:35" srcPort="dout:1" tgtId="node:12" tgtPort="din:4"/>
+      <Link srcId="node:46" srcPort="out:0" tgtId="node:23" tgtPort="din:1"/>
+      <Link srcId="node:46" srcPort="out:0" tgtId="node:28" tgtPort="din:4"/>
+      <Link srcId="node:28" srcPort="dout:2" tgtId="node:43" tgtPort="din:2"/>
+      <Link srcId="node:28" srcPort="dout:3" tgtId="node:48" tgtPort="din:2"/>
+      <Link srcId="node:46" srcPort="out:3" tgtId="node:48" tgtPort="din:0"/>
+      <Link srcId="node:46" srcPort="out:0" tgtId="node:48" tgtPort="din:1"/>
+      <Link srcId="node:35" srcPort="dout:0" tgtId="node:48" tgtPort="din:3"/>
+      <Link srcId="node:35" srcPort="dout:1" tgtId="node:48" tgtPort="din:4"/>
+      <Link srcId="node:48" srcPort="dout:0" tgtId="node:43" tgtPort="din:2"/>
+      <Link srcId="node:11" srcPort="out:0" tgtId="node:48" tgtPort="din:5"/>
+      <Input key="node:12/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;UI event&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Edit&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:3&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:4&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Options Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:12/cfg:model/default" value="&quot;if (port == null) {\n    var DemoPlugin = Plugin(\&quot;Demo\&quot;);\n    DemoPlugin.getDemoProfile(function(response) {\n        if (response.status == \&quot;OK\&quot;) {\n            if (response.value != null) {\n                setLocal(\&quot;DEMO-MODE\&quot;, true);\n            }\n        }\n    });\n}\n\nvar CommonPlugin = Plugin(\&quot;Common\&quot;);\nvar ConfigPlugin = getInput(\&quot;din:3\&quot;);\nif (ConfigPlugin == null) return;\nvar OptionsPlugin = getInput(\&quot;din:4\&quot;);\nif (OptionsPlugin == null) return;\n\nvar controller = this.axflow.config.controller;\n\nfunction updateIncidentGroup(record)\n{\n    CommonPlugin.pbShowProgressBar(\&quot;updateIncidentGroup\&quot;, \&quot;Updating incident group configuration...\&quot;);\n    ConfigPlugin.updateIncidentGroupModel(record, function(response) {\n        CommonPlugin.pbHideProgressBar(\&quot;updateIncidentGroup\&quot;);\n        if (response.status == \&quot;OK\&quot;) {\n            setOutput(\&quot;dout:0\&quot;, Date.now());\n        }\n    });\n}\n\nif (port == \&quot;din:0\&quot;) {\n    var events = getInput(\&quot;din:0\&quot;) || [];\n    var demoMode = getLocal(\&quot;DEMO-MODE\&quot;) == true;\n    if (!demoMode &amp;&amp; events.length == 1) {\n        if (events[0][\&quot;__TYPE__\&quot;] == \&quot;dblclick\&quot;) {\n            var record = lang.clone(events[0]);\n            delete record[\&quot;__EVENT__\&quot;];\n            delete record[\&quot;__FIELD__\&quot;];\n            delete record[\&quot;__TYPE__\&quot;];\n            delete record[\&quot;_vtid\&quot;];\n            ConfigPlugin.editIncidentGroupConfig(CommonPlugin, OptionsPlugin, controller, record, null, function(selection) {\n                updateIncidentGroup(selection);\n            });\n        }\n    }\n}\nelse if (port == \&quot;din:2\&quot;) {\n    var selection = getInput(\&quot;din:1\&quot;) || [];\n    if (selection.length == 1) {\n        var record = lang.clone(selection[0]);\n        delete record[\&quot;_vtid\&quot;];\n        ConfigPlugin.editIncidentGroupConfig(CommonPlugin, OptionsPlugin, controller, record, null, function(selection) {\n            updateIncidentGroup(selection);\n        });\n    }\n}\n&quot;"/>
+      <Input key="node:11/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#2#Incident Groups&quot;,&quot;path&quot;:[&quot;Incident Groups&quot;],&quot;name&quot;:&quot;Incident Groups&quot;}]"/>
+      <Input key="node:12/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Refresh&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:12/cfg:schema/default" value="&quot;&quot;"/>
+      <Input key="node:23/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Groups&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Contexts&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:23/cfg:model/default" value="&quot;function disableActionBar()\n{\n    var demoMode = getLocal(\&quot;DEMO-MODE\&quot;) == true;\n    var groups   = getInput(\&quot;din:0\&quot;) || [];\n    var contexts = getInput(\&quot;din:1\&quot;) || [];\n    var disables = [{\n        \&quot;value\&quot;   : \&quot;group/add\&quot;,\n        \&quot;disable\&quot; : demoMode,\n    }, {\n        \&quot;value\&quot;   : \&quot;group/edit\&quot;,\n        \&quot;disable\&quot; : demoMode || groups.length != 1,\n    }, {\n        \&quot;value\&quot;   : \&quot;group/delete\&quot;,\n        \&quot;disable\&quot; : demoMode || groups.length == 0,\n    }, {\n        \&quot;value\&quot;   : \&quot;context/add\&quot;,\n        \&quot;disable\&quot; : demoMode || groups.length != 1,\n    }, {\n        \&quot;value\&quot;   : \&quot;context/edit\&quot;,\n        \&quot;disable\&quot; : demoMode || contexts.length == 0,\n    }, {\n        \&quot;value\&quot;   : \&quot;context/delete\&quot;,\n        \&quot;disable\&quot; : demoMode || contexts.length == 0,\n    }];\n    setOutput(\&quot;dout:0\&quot;, disables);\n}\n\nif (port == null) {\n    var DemoPlugin = Plugin(\&quot;Demo\&quot;);\n    DemoPlugin.getDemoProfile(function(response) {\n        if (response.status == \&quot;OK\&quot;) {\n            if (response.value != null) {\n                setLocal(\&quot;DEMO-MODE\&quot;, true);\n            }\n            disableActionBar();\n        }\n    });\n}\nelse {\n    disableActionBar();\n}\n&quot;"/>
+      <Input key="node:23/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:23/cfg:schema/default" value="&quot;setOutputSchema(\&quot;dout:0\&quot;, [{\n    name  : \&quot;value\&quot;,\n    label : \&quot;value\&quot;,\n    type  : \&quot;string\&quot;,\n}, {\n    name  : \&quot;disable\&quot;,\n    label : \&quot;disable\&quot;,\n    type  : \&quot;boolean\&quot;,\n}]);&quot;"/>
+      <Input key="node:27/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#2#ActionBar&quot;,&quot;path&quot;:[&quot;Incident Groups&quot;],&quot;name&quot;:&quot;ActionBar&quot;}]"/>
+      <Input key="node:28/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Action&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Groups&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:3&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Options Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:4&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Contexts&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:28/cfg:model/default" value="&quot;var CommonPlugin = Plugin(\&quot;Common\&quot;);\nvar ConfigPlugin = getInput(\&quot;din:2\&quot;);\nif (ConfigPlugin == null) return;\nvar OptionsPlugin = getInput(\&quot;din:3\&quot;);\nif (OptionsPlugin == null) return;\nvar controller = this.axflow.config.controller;\n\n// for notification, we cannot create in parallel because of the\n// need to get the internal ID by getting the max(id)+1\nfunction addIncidentGroup(model)\n{\n    if (model[\&quot;correlation_rules\&quot;] != null &amp;&amp; (model[\&quot;correlation_rules\&quot;]).length &gt; 0) {\n        if (model[\&quot;group_rule_name\&quot;] == null || model[\&quot;group_rule_name\&quot;] == \&quot;\&quot;) {\n            model[\&quot;group_rule_name\&quot;] = model[\&quot;start_group\&quot;];\n        }\n        CommonPlugin.pbShowProgressBar(\&quot;createIncidentGroupModel\&quot;, \&quot;Creating &apos;\&quot; + model[\&quot;group_rule_name\&quot;] + \&quot;&apos;...\&quot;);\n        ConfigPlugin.createIncidentGroupModel(model, true, function(response) {\n            if (response.status == \&quot;OK\&quot;) {\n                setOutput(\&quot;dout:1\&quot;, Date.now());\n            }\n            CommonPlugin.pbHideProgressBar(\&quot;createIncidentGroupModel\&quot;);\n        });\n    }\n}\n\nfunction getItemValue(itemType, itemValue)\n{\n    switch (itemType) {\n        case \&quot;choice\&quot;:\n            if (typeof itemValue == \&quot;string\&quot;) {\n                itemValue = itemValue.split(\&quot;|\&quot;);\n            }\n            break;\n    }\n    return itemValue;\n}\n\nif (port == \&quot;din:0\&quot;) {\n    var action = getInput(\&quot;din:0\&quot;);\n    if (action != null &amp;&amp; action.length == 1) {\n        action = action[0];\n        switch (action.value) {\n            case \&quot;group/add\&quot;:\n                ConfigPlugin.editIncidentGroupConfig(CommonPlugin, OptionsPlugin, controller, null, null, function(model) {\n                    addIncidentGroup(model);\n                });\n                break;\n            case \&quot;group/edit\&quot;:\n                setOutput(\&quot;dout:0\&quot;, Date.now());\n                break;\n            case \&quot;group/delete\&quot;:\n                var selection = getInput(\&quot;din:1\&quot;) || [];\n                if (selection.length &gt; 0) {\n                    CommonPlugin.pbShowProgressBar(\&quot;deleteIncidentGroupModel\&quot;, \&quot;Deleting selected incident groups...\&quot;);\n                    ConfigPlugin.deleteIncidentGroupModel(selection, function(response) {\n                        if (response.status == \&quot;OK\&quot;) {\n                            setOutput(\&quot;dout:1\&quot;, Date.now());\n                        }\n                        CommonPlugin.pbHideProgressBar(\&quot;deleteIncidentGroupModel\&quot;);\n                    });\n                }\n                break;\n            case \&quot;group/refresh\&quot;:\n                setOutput(\&quot;dout:1\&quot;, Date.now());\n                break;\n            case \&quot;corr_time/edit\&quot;:\n                ConfigPlugin.editCorrelationTimes(CommonPlugin, OptionsPlugin, controller, function() {\n                    setOutput(\&quot;dout:1\&quot;, Date.now());\n                });\n                break;\n            case \&quot;context/add\&quot;:\n                var groups = getInput(\&quot;din:1\&quot;) || [];\n                if (groups.length == 1) {\n                    var group = groups[0];\n                    var metricFilterRegex = [];\n                    if (!Array.isArray(group.correlation_rules)) {\n                        group.correlation_rules = [group.correlation_rules];\n                    }\n                    for (var j=0; j&lt;group.correlation_rules.length; j++) {\n                        var rule = group.correlation_rules[j];\n                        if (rule.sub_service_name == \&quot;*\&quot;) {\n                            metricFilterRegex.push(new RegExp(\&quot;^\&quot;+rule.service_name+\&quot;\\\\\\\\|\\\\\\\\*\\\\\\\\|.*\&quot;));\n                        }\n                        else {\n                            metricFilterRegex.push(new RegExp(\&quot;^\&quot;+rule.service_name+\&quot;\\\\\\\\|\&quot;+rule.sub_service_name+\&quot;\\\\\\\\|.*\&quot;));\n                        }\n                    }\n                    var options = {\n                        \&quot;enableAnomalyWindow\&quot; : false,\n                        \&quot;metricFilterRegex\&quot;   : metricFilterRegex,\n                    };\n                    ConfigPlugin.popupMetricConfig(CommonPlugin, OptionsPlugin, controller, \&quot;Select Metric\&quot;, null, null, options, function(selection, sync) {\n                        CommonPlugin.pbShowProgressBar(\&quot;addIncidentGroupContextualMetrics\&quot;, \&quot;Adding contextual metrics...\&quot;);\n                        ConfigPlugin.addIncidentGroupContextualMetrics(group, selection, function(response) {\n                            setOutput(\&quot;dout:2\&quot;, Date.now());\n                            CommonPlugin.pbHideProgressBar(\&quot;addIncidentGroupContextualMetrics\&quot;);\n                        });\n                    });\n                }\n                break;\n            case \&quot;context/edit\&quot;:\n                setOutput(\&quot;dout:3\&quot;, Date.now());\n                break;\n            case \&quot;context/delete\&quot;:\n                var groups = getInput(\&quot;din:1\&quot;) || [];\n                var contexts = getInput(\&quot;din:4\&quot;) || [];\n                if (groups.length == 1 &amp;&amp; contexts.length &gt; 0) {\n                    CommonPlugin.pbShowProgressBar(\&quot;deleteIncidentGroupContextualMetrics\&quot;, \&quot;Deleting selected contextual metrics...\&quot;);\n                    ConfigPlugin.deleteIncidentGroupContextualMetrics(groups[0], contexts, function(response) {\n                        setOutput(\&quot;dout:2\&quot;, Date.now());\n                        CommonPlugin.pbHideProgressBar(\&quot;deleteIncidentGroupContextualMetrics\&quot;);\n                    });\n                }\n                break;\n        }\n    }\n}\n&quot;"/>
+      <Input key="node:28/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Edit Groups&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Refresh Groups&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Refresh Contextuals&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:3&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Edit Contextuals&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:28/cfg:schema/default" value="&quot;&quot;"/>
+      <Input key="node:33/cfg:schema/default" value="&quot;var FIELDS = [\n    \&quot;group_rule_name:Group Rule Name\&quot;,\n    \&quot;max_lookback:Max Lookback (sec)\&quot;,\n    \&quot;expire_after:Expires After (sec)\&quot;,\n    \&quot;__start_group_name__:Start Group\&quot;,\n    \&quot;__start_group_label__:Start Group Label\&quot;,\n    \&quot;__correlation_rules__:Correlation Rules\&quot;,\n];\nvar schema = [];\nfor (var i=0; i&lt;FIELDS.length; i++) {\n    var field = FIELDS[i];\n    var label = field;\n    var type = \&quot;string\&quot;;\n    var colon = field.indexOf(\&quot;:\&quot;);\n    if (colon != -1) {\n        label = field.substring(colon+1);\n        field = field.substring(0, colon);\n    }\n    schema.push({\n        name  : field,\n        label : label,\n        type  : type,\n    });\n}\nsetOutputSchema(\&quot;dout:0\&quot;, schema);\n&quot;"/>
+      <Input key="node:33/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:33/cfg:model/default" value="&quot;var CommonPlugin = Plugin(\&quot;Common\&quot;);\nvar ConfigPlugin = getInput(\&quot;din:1\&quot;);\nif (ConfigPlugin == null) return;\n\nCommonPlugin.pbShowProgressBar(\&quot;getIncidentGroupModel\&quot;, \&quot;Retrieving incident group configurations...\&quot;);\nConfigPlugin.getIncidentGroupModel(function(response) {\n    if (response.status == \&quot;OK\&quot;) {\n        setOutput(\&quot;dout:0\&quot;, response.value);\n    }\n    CommonPlugin.pbHideProgressBar(\&quot;getIncidentGroupModel\&quot;);\n});\n\n&quot;"/>
+      <Input key="node:33/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Refresh&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;}]"/>
+      <Input key="node:35/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Options Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:37/cfg:schema/default" value="&quot;var FIELDS = [\n    \&quot;group_metric_id\&quot;,\n    \&quot;service_name\&quot;,\n    \&quot;sub_service_name\&quot;,\n    \&quot;component_name\&quot;,\n    \&quot;metric_name\&quot;,\n    \&quot;correlation_time:Correlation Time (sec)\&quot;,\n    \&quot;group_start:Start Group\&quot;,\n    \&quot;__label__:Correlation Rule\&quot;,\n];\nvar schema = [];\nfor (var i=0; i&lt;FIELDS.length; i++) {\n    var field = FIELDS[i];\n    var label = field;\n    var type = \&quot;string\&quot;;\n    var colon = field.indexOf(\&quot;:\&quot;);\n    if (colon != -1) {\n        label = field.substring(colon+1);\n        field = field.substring(0, colon);\n    }\n    schema.push({\n        name  : field,\n        label : label,\n        type  : type,\n    });\n}\nsetOutputSchema(\&quot;dout:0\&quot;, schema);\n&quot;"/>
+      <Input key="node:37/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:37/cfg:model/default" value="&quot;var CommonPlugin = Plugin(\&quot;Common\&quot;);\nvar ConfigPlugin = getInput(\&quot;din:0\&quot;);\nif (ConfigPlugin == null) return;\n\nvar selection = getInput(\&quot;din:1\&quot;) || [];\nif (selection.length == 1) {\n    setOutput(\&quot;dout:0\&quot;, selection[0][\&quot;correlation_rules\&quot;]);\n}\nelse {\n    setOutput(\&quot;dout:0\&quot;, []);\n}\n\n&quot;"/>
+      <Input key="node:37/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:43/cfg:schema/default" value="&quot;var FIELDS = [\n    \&quot;metric_id:Metric ID\&quot;,\n    \&quot;__style__:Display As\&quot;,\n];\nvar schema = [];\nfor (var i=0; i&lt;FIELDS.length; i++) {\n    var field = FIELDS[i];\n    var label = field;\n    var type = \&quot;string\&quot;;\n    var colon = field.indexOf(\&quot;:\&quot;);\n    if (colon != -1) {\n        label = field.substring(colon+1);\n        field = field.substring(0, colon);\n    }\n    schema.push({\n        name  : field,\n        label : label,\n        type  : type,\n    });\n}\nsetOutputSchema(\&quot;dout:0\&quot;, schema);\n&quot;"/>
+      <Input key="node:43/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:43/cfg:model/default" value="&quot;var CommonPlugin = Plugin(\&quot;Common\&quot;);\nvar ConfigPlugin = getInput(\&quot;din:0\&quot;);\nif (ConfigPlugin == null) return;\n\nsetOutput(\&quot;dout:0\&quot;, []);\n\nvar ENABLE_CONTEXTUAL_METRICS = false;\nif (!ENABLE_CONTEXTUAL_METRICS) return;\n\nvar groups = getInput(\&quot;din:1\&quot;) || [];\nif (groups.length == 1) {\n    var group = groups[0];\n    ConfigPlugin.getIncidentGroupContextualMetrics(group, function(response) {\n        if (response.status == \&quot;OK\&quot; &amp;&amp; response.value != null &amp;&amp; response.value.length &gt; 0) {\n            var contextualMetrics = response.value;\n            contextualMetrics.forEach(function(metric) {\n                metric.__style__ = metric.display_options[\&quot;style\&quot;] || \&quot;Overlay\&quot;;\n            });\n            setOutput(\&quot;dout:0\&quot;, contextualMetrics);\n        }\n    });\n}\n\n&quot;"/>
+      <Input key="node:43/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Refresh&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:46/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#4#Contextual Metrics&quot;,&quot;path&quot;:[&quot;Unused&quot;],&quot;name&quot;:&quot;Contextual Metrics&quot;}]"/>
+      <Input key="node:48/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;UI event&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Contexts&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Edit&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:3&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:4&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Options Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:5&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Groups&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:48/cfg:model/default" value="&quot;if (port == null) {\n    var DemoPlugin = Plugin(\&quot;Demo\&quot;);\n    DemoPlugin.getDemoProfile(function(response) {\n        if (response.status == \&quot;OK\&quot;) {\n            if (response.value != null) {\n                setLocal(\&quot;DEMO-MODE\&quot;, true);\n            }\n        }\n    });\n}\n\nvar CommonPlugin = Plugin(\&quot;Common\&quot;);\nvar ConfigPlugin = getInput(\&quot;din:3\&quot;);\nif (ConfigPlugin == null) return;\nvar OptionsPlugin = getInput(\&quot;din:4\&quot;);\nif (OptionsPlugin == null) return;\n\nvar controller = this.axflow.config.controller;\n\nfunction getDescription(selection)\n{\n    var metric_ids = selection.map(a =&gt; a[\&quot;metric_id\&quot;]);\n    if (metric_ids.length &gt; 1) {\n        metric_ids = metric_ids.join(\&quot;&lt;br&gt;\&quot;);\n    }\n    var labelStyle = \&quot; style=&apos;width:1%;font-style:normal;padding:7px 0px 3px 0px;vertical-align:top;&apos;\&quot;;\n    var valueStyle = \&quot; style=&apos;width:99%;font-weight:normal;font-family:Arial;padding:5px 0px 5px 5px; font-size: 14px; color: #666666;vertical-align:top;&apos;\&quot;;\n    var description = [\n        \&quot;&lt;table style=&apos;background-color: #f2f2f2f2; width: 100%; padding: 10px;&apos;&gt;\&quot;,\n        \&quot;&lt;tr&gt;&lt;td\&quot;+labelStyle+\&quot;&gt;Metric ID:&lt;/td&gt;&lt;td\&quot;+valueStyle+\&quot;&gt;\&quot; + metric_ids + \&quot;&lt;/td&gt;&lt;/tr&gt;\&quot;,\n        \&quot;&lt;table&gt;\&quot;,\n    ];\n    return description;\n}\n\nfunction updateContextualMetrics(group, selection, changed)\n{\n    for (var i=0; i&lt;selection.length; i++) {\n        selection[i][\&quot;display_options\&quot;][\&quot;style\&quot;] = changed[\&quot;style\&quot;];\n    }\n    CommonPlugin.pbShowProgressBar(\&quot;updateIncidentGroupContextualMetrics\&quot;, \&quot;Updating incident group contextual metrics...\&quot;);\n    ConfigPlugin.updateIncidentGroupContextualMetrics(group, selection, function(response) {\n        setOutput(\&quot;dout:0\&quot;, Date.now());\n        CommonPlugin.pbHideProgressBar(\&quot;updateIncidentGroupContextualMetrics\&quot;);\n    });\n}\n\n// update this when we have more than ONE config attribute to enable selective changes\nvar CONFIG_COUNT = 1;\n\nif (port == \&quot;din:0\&quot;) {\n    var groups = getInput(\&quot;din:5\&quot;) || [];\n    var events = getInput(\&quot;din:0\&quot;) || [];\n    var demoMode = getLocal(\&quot;DEMO-MODE\&quot;) == true;\n    if (!demoMode &amp;&amp; groups.length == 1 &amp;&amp; events.length == 1) {\n        if (events[0][\&quot;__TYPE__\&quot;] == \&quot;dblclick\&quot;) {\n            var record = {\n                \&quot;style\&quot; : events[0][\&quot;display_options\&quot;][\&quot;style\&quot;],\n            };\n            ConfigPlugin.editIncidentGroupContextualMetrics(CommonPlugin, controller, record, getDescription(events), function(changed) {\n                updateContextualMetrics(groups[0], events, changed);\n            }, null, null);\n        }\n    }\n}\nelse if (port == \&quot;din:2\&quot;) {\n    var groups = getInput(\&quot;din:5\&quot;) || [];\n    var selection = getInput(\&quot;din:1\&quot;) || [];\n    if (groups.length == 1 &amp;&amp; selection.length &gt; 0) {\n        var record = {\n            \&quot;style\&quot; : selection[0][\&quot;display_options\&quot;][\&quot;style\&quot;],\n        };\n        ConfigPlugin.editIncidentGroupContextualMetrics(CommonPlugin, controller, record, getDescription(selection), function(changed) {\n            updateContextualMetrics(groups[0], selection, changed);\n        }, null, {\n            \&quot;selective-change\&quot; : selection.length &gt; 1 &amp;&amp; CONFIG_COUNT &gt; 1\n        });\n    }\n}\n&quot;"/>
+      <Input key="node:48/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Refresh&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:48/cfg:schema/default" value="&quot;&quot;"/>
+      <Schema id="node:9/out:0">
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;Group Rule Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;label&quot;:&quot;Max Lookback (sec)&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;Expires After (sec)&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_name__&quot;,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_label__&quot;,&quot;label&quot;:&quot;Start Group Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;__correlation_rules__&quot;,&quot;label&quot;:&quot;Correlation Rules&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:23/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:25/in:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:25/out:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:28/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;median_baseline&quot;,&quot;label&quot;:&quot;median_baseline&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_low&quot;,&quot;label&quot;:&quot;threshold_low&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_med&quot;,&quot;label&quot;:&quot;threshold_med&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_high&quot;,&quot;label&quot;:&quot;threshold_high&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cool_down_period&quot;,&quot;label&quot;:&quot;cool_down_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_threshold&quot;,&quot;label&quot;:&quot;warmup_threshold&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_period&quot;,&quot;label&quot;:&quot;warmup_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_deviation&quot;,&quot;label&quot;:&quot;min_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_deviation&quot;,&quot;label&quot;:&quot;min_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_vol&quot;,&quot;label&quot;:&quot;min_metric_vol&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_vol&quot;,&quot;label&quot;:&quot;min_call_vol&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_threshold_period&quot;,&quot;label&quot;:&quot;med_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_threshold_period&quot;,&quot;label&quot;:&quot;high_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_call_vol_pct&quot;,&quot;label&quot;:&quot;med_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_call_vol_pct&quot;,&quot;label&quot;:&quot;high_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emit_notification&quot;,&quot;label&quot;:&quot;emit_notification&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;above&quot;,&quot;label&quot;:&quot;above&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;below&quot;,&quot;label&quot;:&quot;below&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;generate&quot;,&quot;label&quot;:&quot;generate&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_measure&quot;,&quot;label&quot;:&quot;causation_measure&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_top_count&quot;,&quot;label&quot;:&quot;causation_top_count&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:28/dout:2">
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;median_baseline&quot;,&quot;label&quot;:&quot;median_baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_low&quot;,&quot;label&quot;:&quot;threshold_low&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_med&quot;,&quot;label&quot;:&quot;threshold_med&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_high&quot;,&quot;label&quot;:&quot;threshold_high&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cool_down_period&quot;,&quot;label&quot;:&quot;cool_down_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_threshold&quot;,&quot;label&quot;:&quot;warmup_threshold&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_period&quot;,&quot;label&quot;:&quot;warmup_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_deviation&quot;,&quot;label&quot;:&quot;min_metric_deviation&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_deviation&quot;,&quot;label&quot;:&quot;min_call_deviation&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_vol&quot;,&quot;label&quot;:&quot;min_metric_vol&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_vol&quot;,&quot;label&quot;:&quot;min_call_vol&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_threshold_period&quot;,&quot;label&quot;:&quot;med_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_threshold_period&quot;,&quot;label&quot;:&quot;high_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_call_vol_pct&quot;,&quot;label&quot;:&quot;med_call_vol_pct&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_call_vol_pct&quot;,&quot;label&quot;:&quot;high_call_vol_pct&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emit_notification&quot;,&quot;label&quot;:&quot;emit_notification&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;above&quot;,&quot;label&quot;:&quot;above&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;below&quot;,&quot;label&quot;:&quot;below&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;generate&quot;,&quot;label&quot;:&quot;generate&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_measure&quot;,&quot;label&quot;:&quot;causation_measure&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_top_count&quot;,&quot;label&quot;:&quot;causation_top_count&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_keys&quot;,&quot;label&quot;:&quot;dim_keys&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_keys&quot;,&quot;label&quot;:&quot;dim_keys&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_keys&quot;,&quot;label&quot;:&quot;dim_keys&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_keys&quot;,&quot;label&quot;:&quot;dim_keys&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:33/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;Group Rule Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;label&quot;:&quot;Max Lookback (sec)&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;Expires After (sec)&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_name__&quot;,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_label__&quot;,&quot;label&quot;:&quot;Start Group Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;__correlation_rules__&quot;,&quot;label&quot;:&quot;Correlation Rules&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:9/in:0">
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;label&quot;:&quot;Group Rule Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;label&quot;:&quot;Max Lookback (sec)&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;Expires After (sec)&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_name__&quot;,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_label__&quot;,&quot;label&quot;:&quot;Start Group Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;__correlation_rules__&quot;,&quot;label&quot;:&quot;Correlation Rules&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:33/din:0">
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;median_baseline&quot;,&quot;label&quot;:&quot;median_baseline&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_low&quot;,&quot;label&quot;:&quot;threshold_low&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_med&quot;,&quot;label&quot;:&quot;threshold_med&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_high&quot;,&quot;label&quot;:&quot;threshold_high&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cool_down_period&quot;,&quot;label&quot;:&quot;cool_down_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_threshold&quot;,&quot;label&quot;:&quot;warmup_threshold&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_period&quot;,&quot;label&quot;:&quot;warmup_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_deviation&quot;,&quot;label&quot;:&quot;min_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_deviation&quot;,&quot;label&quot;:&quot;min_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_vol&quot;,&quot;label&quot;:&quot;min_metric_vol&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_vol&quot;,&quot;label&quot;:&quot;min_call_vol&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_threshold_period&quot;,&quot;label&quot;:&quot;med_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_threshold_period&quot;,&quot;label&quot;:&quot;high_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_call_vol_pct&quot;,&quot;label&quot;:&quot;med_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_call_vol_pct&quot;,&quot;label&quot;:&quot;high_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emit_notification&quot;,&quot;label&quot;:&quot;emit_notification&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;above&quot;,&quot;label&quot;:&quot;above&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;below&quot;,&quot;label&quot;:&quot;below&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;generate&quot;,&quot;label&quot;:&quot;generate&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_measure&quot;,&quot;label&quot;:&quot;causation_measure&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_top_count&quot;,&quot;label&quot;:&quot;causation_top_count&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:37/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;group_metric_id&quot;,&quot;label&quot;:&quot;group_metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_name&quot;,&quot;label&quot;:&quot;sub_service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_name&quot;,&quot;label&quot;:&quot;component_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_name&quot;,&quot;label&quot;:&quot;metric_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;correlation_time&quot;,&quot;label&quot;:&quot;Correlation Time (sec)&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_start&quot;,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;__label__&quot;,&quot;label&quot;:&quot;Correlation Rule&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:37/din:0">
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;median_baseline&quot;,&quot;label&quot;:&quot;median_baseline&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_low&quot;,&quot;label&quot;:&quot;threshold_low&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_med&quot;,&quot;label&quot;:&quot;threshold_med&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_high&quot;,&quot;label&quot;:&quot;threshold_high&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cool_down_period&quot;,&quot;label&quot;:&quot;cool_down_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_threshold&quot;,&quot;label&quot;:&quot;warmup_threshold&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_period&quot;,&quot;label&quot;:&quot;warmup_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_deviation&quot;,&quot;label&quot;:&quot;min_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_deviation&quot;,&quot;label&quot;:&quot;min_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_vol&quot;,&quot;label&quot;:&quot;min_metric_vol&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_vol&quot;,&quot;label&quot;:&quot;min_call_vol&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_threshold_period&quot;,&quot;label&quot;:&quot;med_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_threshold_period&quot;,&quot;label&quot;:&quot;high_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_call_vol_pct&quot;,&quot;label&quot;:&quot;med_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_call_vol_pct&quot;,&quot;label&quot;:&quot;high_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emit_notification&quot;,&quot;label&quot;:&quot;emit_notification&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;above&quot;,&quot;label&quot;:&quot;above&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;below&quot;,&quot;label&quot;:&quot;below&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;generate&quot;,&quot;label&quot;:&quot;generate&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_measure&quot;,&quot;label&quot;:&quot;causation_measure&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_top_count&quot;,&quot;label&quot;:&quot;causation_top_count&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:38/in:0">
+        <JSON value="{&quot;name&quot;:&quot;group_metric_id&quot;,&quot;label&quot;:&quot;group_metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_name&quot;,&quot;label&quot;:&quot;sub_service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_name&quot;,&quot;label&quot;:&quot;component_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_name&quot;,&quot;label&quot;:&quot;metric_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;correlation_time&quot;,&quot;label&quot;:&quot;Correlation Time (sec)&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_start&quot;,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;__label__&quot;,&quot;label&quot;:&quot;Correlation Rule&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:38/out:0">
+        <JSON value="{&quot;name&quot;:&quot;group_metric_id&quot;,&quot;label&quot;:&quot;group_metric_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_name&quot;,&quot;label&quot;:&quot;service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_name&quot;,&quot;label&quot;:&quot;sub_service_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_name&quot;,&quot;label&quot;:&quot;component_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_name&quot;,&quot;label&quot;:&quot;metric_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;correlation_time&quot;,&quot;label&quot;:&quot;Correlation Time (sec)&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;group_start&quot;,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;__label__&quot;,&quot;label&quot;:&quot;Correlation Rule&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:11/out:0">
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group Rule Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Max Lookback (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Expires After (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_name__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_label__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__correlation_rules__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Correlation Rules&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:23/din:0">
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group Rule Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Max Lookback (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Expires After (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_name__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_label__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__correlation_rules__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Correlation Rules&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:12/din:1">
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group Rule Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Max Lookback (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Expires After (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_name__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_label__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__correlation_rules__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Correlation Rules&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:28/din:1">
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group Rule Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Max Lookback (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Expires After (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_name__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_label__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__correlation_rules__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Correlation Rules&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:37/din:1">
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group Rule Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Max Lookback (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Expires After (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_name__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_label__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__correlation_rules__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Correlation Rules&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:11/out:1">
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group Rule Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Max Lookback (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Expires After (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_name__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_label__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__correlation_rules__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Correlation Rules&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:11/out:2">
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group Rule Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Max Lookback (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Expires After (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_name__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_label__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__correlation_rules__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Correlation Rules&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:11/out:3">
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group Rule Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Max Lookback (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Expires After (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_name__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_label__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__correlation_rules__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Correlation Rules&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:12/din:0">
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group Rule Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Max Lookback (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Expires After (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_name__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_label__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__correlation_rules__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Correlation Rules&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:43/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;Metric ID&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;__style__&quot;,&quot;label&quot;:&quot;Display As&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:43/din:0">
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;median_baseline&quot;,&quot;label&quot;:&quot;median_baseline&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_low&quot;,&quot;label&quot;:&quot;threshold_low&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_med&quot;,&quot;label&quot;:&quot;threshold_med&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_high&quot;,&quot;label&quot;:&quot;threshold_high&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cool_down_period&quot;,&quot;label&quot;:&quot;cool_down_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_threshold&quot;,&quot;label&quot;:&quot;warmup_threshold&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_period&quot;,&quot;label&quot;:&quot;warmup_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_deviation&quot;,&quot;label&quot;:&quot;min_metric_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_deviation&quot;,&quot;label&quot;:&quot;min_call_deviation&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_vol&quot;,&quot;label&quot;:&quot;min_metric_vol&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_vol&quot;,&quot;label&quot;:&quot;min_call_vol&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_threshold_period&quot;,&quot;label&quot;:&quot;med_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_threshold_period&quot;,&quot;label&quot;:&quot;high_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_call_vol_pct&quot;,&quot;label&quot;:&quot;med_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_call_vol_pct&quot;,&quot;label&quot;:&quot;high_call_vol_pct&quot;,&quot;type&quot;:&quot;double&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emit_notification&quot;,&quot;label&quot;:&quot;emit_notification&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;above&quot;,&quot;label&quot;:&quot;above&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;below&quot;,&quot;label&quot;:&quot;below&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;generate&quot;,&quot;label&quot;:&quot;generate&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_measure&quot;,&quot;label&quot;:&quot;causation_measure&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_top_count&quot;,&quot;label&quot;:&quot;causation_top_count&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:43/din:1">
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group Rule Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Max Lookback (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Expires After (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_name__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_label__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__correlation_rules__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Correlation Rules&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:44/in:0">
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;Metric ID&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;__style__&quot;,&quot;label&quot;:&quot;Display As&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:44/out:0">
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;label&quot;:&quot;Metric ID&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;__style__&quot;,&quot;label&quot;:&quot;Display As&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:27/out:0">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:28/din:0">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:27/out:1">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:27/out:2">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:27/out:3">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:43/din:2">
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;median_baseline&quot;,&quot;label&quot;:&quot;median_baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_low&quot;,&quot;label&quot;:&quot;threshold_low&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_med&quot;,&quot;label&quot;:&quot;threshold_med&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;threshold_high&quot;,&quot;label&quot;:&quot;threshold_high&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cool_down_period&quot;,&quot;label&quot;:&quot;cool_down_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_threshold&quot;,&quot;label&quot;:&quot;warmup_threshold&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;warmup_period&quot;,&quot;label&quot;:&quot;warmup_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_deviation&quot;,&quot;label&quot;:&quot;min_metric_deviation&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_deviation&quot;,&quot;label&quot;:&quot;min_call_deviation&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_metric_vol&quot;,&quot;label&quot;:&quot;min_metric_vol&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_call_vol&quot;,&quot;label&quot;:&quot;min_call_vol&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_threshold_period&quot;,&quot;label&quot;:&quot;med_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_threshold_period&quot;,&quot;label&quot;:&quot;high_threshold_period&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;med_call_vol_pct&quot;,&quot;label&quot;:&quot;med_call_vol_pct&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;high_call_vol_pct&quot;,&quot;label&quot;:&quot;high_call_vol_pct&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;label&quot;:&quot;expire_after&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emit_notification&quot;,&quot;label&quot;:&quot;emit_notification&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;above&quot;,&quot;label&quot;:&quot;above&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;below&quot;,&quot;label&quot;:&quot;below&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;generate&quot;,&quot;label&quot;:&quot;generate&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_measure&quot;,&quot;label&quot;:&quot;causation_measure&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation_top_count&quot;,&quot;label&quot;:&quot;causation_top_count&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_keys&quot;,&quot;label&quot;:&quot;dim_keys&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_keys&quot;,&quot;label&quot;:&quot;dim_keys&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_keys&quot;,&quot;label&quot;:&quot;dim_keys&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_keys&quot;,&quot;label&quot;:&quot;dim_keys&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:48/din:5">
+        <JSON value="{&quot;name&quot;:&quot;group_rule_name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group Rule Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_lookback&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Max Lookback (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;expire_after&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Expires After (sec)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_name__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__start_group_label__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Start Group Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__correlation_rules__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Correlation Rules&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:46/out:0">
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Metric ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__style__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Display As&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:23/din:1">
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Metric ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__style__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Display As&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:28/din:4">
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Metric ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__style__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Display As&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:48/din:1">
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Metric ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__style__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Display As&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:46/out:1">
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Metric ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__style__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Display As&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:46/out:2">
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Metric ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__style__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Display As&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:46/out:3">
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Metric ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__style__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Display As&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:48/din:0">
+        <JSON value="{&quot;name&quot;:&quot;metric_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Metric ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;__style__&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Display As&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <DynInput id="node:12">
+        <Port id="din:0" type="event[]" label="UI event" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <Port id="din:2" type="any" label="Edit" evaluate="always" _isArray="true"/>
+        <Port id="din:3" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+        <Port id="din:4" type="any" label="Options Plugin" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:23">
+        <Port id="din:0" type="event[]" label="Groups" evaluate="always"/>
+        <Port id="din:1" type="event[]" label="Contexts" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:28">
+        <Port id="din:0" type="event[]" label="Action" evaluate="always"/>
+        <Port id="din:1" type="event[]" label="Groups" evaluate="always"/>
+        <Port id="din:2" type="any" label="Config Plugin" evaluate="always"/>
+        <Port id="din:3" type="any" label="Options Plugin" evaluate="always"/>
+        <Port id="din:4" type="event[]" label="Contexts" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:33">
+        <Port id="din:0" type="any" label="Refresh" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:37">
+        <Port id="din:0" type="any" label="Config Plugin" evaluate="always"/>
+        <Port id="din:1" type="event[]" label="Selection" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:43">
+        <Port id="din:0" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <Port id="din:2" type="any" label="Refresh" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:48">
+        <Port id="din:0" type="event[]" label="UI event" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="event[]" label="Contexts" evaluate="always" _isArray="true"/>
+        <Port id="din:2" type="any" label="Edit" evaluate="always" _isArray="true"/>
+        <Port id="din:3" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+        <Port id="din:4" type="any" label="Options Plugin" evaluate="always" _isArray="true"/>
+        <Port id="din:5" type="event[]" label="Groups" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynOutput id="node:12">
+        <Port id="dout:0" type="any" label="Refresh" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:23">
+        <Port id="dout:0" type="event[]" label="Out(0)" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:28">
+        <Port id="dout:0" type="any" label="Edit Groups" propagate="always"/>
+        <Port id="dout:1" type="any" label="Refresh Groups" propagate="always"/>
+        <Port id="dout:2" type="any" label="Refresh Contextuals" propagate="always"/>
+        <Port id="dout:3" type="any" label="Edit Contextuals" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:33">
+        <Port id="dout:0" type="event[]" label="Out(0)" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:35">
+        <Port id="dout:0" type="any" label="Config Plugin" propagate="always"/>
+        <Port id="dout:1" type="any" label="Options Plugin" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:37">
+        <Port id="dout:0" type="event[]" label="Out(0)" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:43">
+        <Port id="dout:0" type="event[]" label="Out(0)" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:48">
+        <Port id="dout:0" type="any" label="Refresh" propagate="always"/>
+      </DynOutput>
+      <Version id="node:9" version="2"/>
+      <Version id="node:11" version="1"/>
+      <Version id="node:12" version="2"/>
+      <Version id="node:23" version="2"/>
+      <Version id="node:25" version="2"/>
+      <Version id="node:27" version="1"/>
+      <Version id="node:28" version="2"/>
+      <Version id="node:33" version="2"/>
+      <Version id="node:35" version="1"/>
+      <Version id="node:37" version="2"/>
+      <Version id="node:38" version="2"/>
+      <Version id="node:43" version="2"/>
+      <Version id="node:44" version="2"/>
+      <Version id="node:46" version="1"/>
+      <Version id="node:48" version="2"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/user/via_common/dbpm/VIA - Common" alias="Common"/>
+      <DashboardPlugin uri="/app/dbp/space/another/dbpm/VIAOps - Demo Service" alias="Demo"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

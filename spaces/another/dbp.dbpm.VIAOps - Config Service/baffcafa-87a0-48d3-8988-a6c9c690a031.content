@@ -1,0 +1,54 @@
+SELECT
+    t1.source_table,
+    t1.window_size,
+    t1.anomaly_step_size,
+    t1.value_field,
+    t1.timezone,
+    t2.metric_id,
+    t2.algorithm,
+    t2.fill_policy,
+    t2.seasonality,
+    t2.ignore_baseline,
+    t2.ignore_anomaly,
+    t2.baseline_enabled,
+    t2.lower_threshold,
+    t2.upper_threshold,
+    t2.anomaly_trigger,
+    t2.simple_threshold_enabled
+FROM viaops_anomaly_sol t1,
+     (
+        SELECT
+            a.adm_name,
+            a.metric_id,
+            a.algorithm,
+            a.fill_policy,
+            a.seasonality,
+            a.ignore_baseline,
+            a.ignore_anomaly,
+            a.enabled as baseline_enabled,
+            t.lower_threshold,
+            t.upper_threshold,
+            t.anomaly_trigger,
+            t.enabled as simple_threshold_enabled
+        FROM viaops_anomaly_algorithm a
+        LEFT JOIN viaops_anomaly_simple_threshold t
+               ON a.adm_name = t.adm_name AND a.metric_id = t.metric_id
+        UNION
+        SELECT
+            a.adm_name,
+            a.metric_id,
+            a.algorithm,
+            a.fill_policy,
+            a.seasonality,
+            a.ignore_baseline,
+            a.ignore_anomaly,
+            a.enabled as baseline_enabled,
+            t.lower_threshold,
+            t.upper_threshold,
+            t.anomaly_trigger,
+            t.enabled as simple_threshold_enabled
+        FROM viaops_anomaly_algorithm a
+        RIGHT JOIN viaops_anomaly_simple_threshold t
+               ON a.adm_name = t.adm_name AND a.metric_id = t.metric_id
+     ) t2
+WHERE t1.adm_name = t2.adm_name

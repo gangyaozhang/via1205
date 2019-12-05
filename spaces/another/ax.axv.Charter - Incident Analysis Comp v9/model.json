@@ -1,0 +1,20 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "locale"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "axv",
+    "__references__": "/app/dbp/space/Charter Digital Operations/dbpm/Charter - Plugin v11,/app/dbp/space/Charter Digital Operations/dbpm/Charter - Incident Analysis Service v8,/app/dbp/space/Charter Digital Operations/dbpm/Charter - Dimension Analysis Service v5,/app/dbp/user/viaops_admin/dbpm/VIAOps - Commonality Plugin,/app/dbp/space/Charter Digital Operations/dbpm/Charter - Trend Analysis Service v4,/app/dbp/user/viaops_admin/dbpm/VIAOps - Trend Plugin,/app/dbp/space/VIA Common Library/dbpm/VIA - Common,/app/ax/user/viaops_admin/axv/VIAOps - Commonality View - Items,/app/ax/space/another/axv/Charter - Anomaly Trend Comp v5,/app/ax/user/viaops_admin/axv/VIAOps - Commonality View - Breakdown,/app/ax/space/Charter Digital Operations/axv/Charter - Notification Action Comp v2,/app/ax/space/VIA Digital Operations/axv/VIAOps - Commonality View - Info",
+    "modelStatus": "valid",
+    "name": "Charter - Incident Analysis Comp v5"
+  }
+}

@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS viaops_config_property;
+
+CREATE TABLE IF NOT EXISTS viaops_config_property (
+    name VARCHAR(512) NOT NULL,
+    value VARCHAR(1024) NULL,
+    PRIMARY KEY (name)
+);
+CREATE UNIQUE INDEX SOLUTION_PROPERTY_NAME_UNIQUE ON viaops_config_property (name);

@@ -1,0 +1,55 @@
+Charter - Base v2
+- add plugin as dependent
+- in getServiceConfig, add IF-clause below after the line containing
+  "resolveLinkedResource(serviceConfig);"
+-----------------------------------------------------------------------------------------------------------------------
+    resolveLinkedResource(serviceConfig);
+    //print("############ getServiceConfig: resolveLinkedResource=" + (Date.now() - checkpoint) + " ms");
+    if (this.addNuovaStellaServiceConfig != null) {
+        //checkpoint = Date.now();
+        this.addNuovaStellaServiceConfig(serviceConfig);
+        //print("############ getServiceConfig: addNuovaStellaServiceConfig=" + (Date.now() - checkpoint) + " ms");
+    }
+    //checkpoint = Date.now();
+-----------------------------------------------------------------------------------------------------------------------
+- in getSourceConfig, add IF-clause below () after the line containing
+  "var sourceConfig = JSON.parse(Context.getLocalResource("SourceConfig"));"
+-----------------------------------------------------------------------------------------------------------------------
+var sourceConfig = JSON.parse(Context.getLocalResource("SourceConfig"));
+if (this.addNuovaStellaSourceConfig != null) {
+    //checkpoint = Date.now();
+    this.addNuovaStellaSourceConfig(sourceConfig);
+    //print("############ getSourceConfig: addNuovaStellaSourceConfig=" + (Date.now() - checkpoint) + " ms");
+}
+return sourceConfig;
+-----------------------------------------------------------------------------------------------------------------------
+
+
+Charter - Trend Analysis Service v4
+- in getBaseData, add IF-clause below after line containing
+  "var queryConfig = this.getQueryConfig();"
+-----------------------------------------------------------------------------------------------------------------------
+var serviceConfig = this.getServiceConfig();
+var queryConfig = this.getQueryConfig();
+
+if (this.addNuovaStellaTrendQueryConfig != null) {
+    var checkpoint = Date.now();
+    this.addNuovaStellaTrendQueryConfig(queryConfig);
+    print("############ getBaseData: addNuovaStellaTrendQueryConfig=" + (Date.now() - checkpoint) + " ms");
+}
+-----------------------------------------------------------------------------------------------------------------------
+
+
+Charter - Dimension Analysis Service v5
+- in getCommonalities, add IF-clause below after the line containing
+  "if (queryConfig == null || queryConfig["service-queries"] == null) return EMPTY_RESULT;"
+-----------------------------------------------------------------------------------------------------------------------
+var queryConfig = this.getQueryConfig();
+if (queryConfig == null || queryConfig["service-queries"] == null) return EMPTY_RESULT;
+
+if (this.addNuovaStellaDimensionQueryConfig != null) {
+    var checkpoint = Date.now();
+    this.addNuovaStellaDimensionQueryConfig(queryConfig);
+    print("############ getCommonalities: addNuovaStellaDimensionQueryConfig=" + (Date.now() - checkpoint) + " ms");
+}
+-----------------------------------------------------------------------------------------------------------------------

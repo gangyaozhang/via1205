@@ -1,0 +1,13 @@
+INSERT INTO viaops_incident_group (
+    group_rule_name,
+    max_lookback,
+    expire_after,
+    modified_ts
+)
+VALUES (
+    "${group_rule_name}",
+    ${max_lookback},
+    ${expire_after},
+    current_timestamp()
+)
+

@@ -1,0 +1,10 @@
+SELECT
+    event_tm as event_epoch,
+    score as score,
+    id as incident,
+    derived_severity as level,
+    state as state,
+    metric_id as metric
+FROM viaops_incident_history
+WHERE id = '${id}' ${dateKeyWhereClause}
+ORDER BY event_epoch

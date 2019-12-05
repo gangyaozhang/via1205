@@ -1,0 +1,4 @@
+DELETE FROM
+    viaops_anomaly_baseline_score
+WHERE adm_name=?
+  AND metric_id=?

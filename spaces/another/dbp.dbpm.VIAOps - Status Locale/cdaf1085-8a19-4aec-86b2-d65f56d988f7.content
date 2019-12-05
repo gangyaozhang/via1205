@@ -1,0 +1,20 @@
+{
+    "attr.type"         : "Type",
+    "attr.started"      : "Started",
+    "attr.last_account" : "Last Account",
+    "attr.attribute"    : "Attribute",
+    "attr.from_value"   : "From",
+    "attr.to_value"     : "To",
+    
+    "metric.calls"            : "Calls",
+    "metric.tickets"          : "Tickets",
+    "metric.truck_rolls"      : "Truck Rolls",
+    "metric.subscriber_count" : "Subscriber Count",
+    "metric.customer_score"   : "Customer Score",
+    
+    "value.type.network"      : "Network",
+    "value.type.manual_load"  : "Manual Load",
+    "value.type.service"      : "Service",
+    "value.type.device"       : "Device",
+    "value.type.new_accounts" : "New Accounts"
+}

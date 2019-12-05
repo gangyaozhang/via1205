@@ -1,0 +1,3 @@
+select rule_id, rule_desc
+from rule_dim
+where rule_desc in ("Effective Period", "Sev Value")

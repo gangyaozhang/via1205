@@ -1,0 +1,5 @@
+-- CONFIG_PROPERTY_SELECT_SQL
+SELECT
+    name,
+    value
+FROM viaops_config_property

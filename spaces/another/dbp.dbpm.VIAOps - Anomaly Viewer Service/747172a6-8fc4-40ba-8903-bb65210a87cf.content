@@ -1,0 +1,8 @@
+select a.action_id, a.effective_sev,
+       r.rule_desc, r.measured_attr, 
+       r.value1, r.value2, r.value3, r.value4
+from rule_dim r, action_dim a
+where r.action_id = a.action_id
+  and a.action_category = "Notify"
+  and a.target_type = "SNMP"
+  and r.phase = "1"

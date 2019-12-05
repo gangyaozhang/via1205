@@ -1,0 +1,3 @@
+DELETE FROM
+    viaops_incident_group_correlation
+WHERE group_rule_name="${group_rule_name}"

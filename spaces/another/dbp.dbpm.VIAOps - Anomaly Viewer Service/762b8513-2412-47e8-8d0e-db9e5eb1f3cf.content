@@ -1,0 +1,13 @@
+select distinct
+    metric_id,
+    factor as median_baseline,
+    start_tm,
+    algorithm
+from
+    viaops_incident_history
+where date_key between from_unixtime(${fromUnixTime}, 'yyyyMMdd')
+                   and from_unixtime(${toUnixTime}, 'yyyyMMdd')
+  and start_tm != 0
+  and (factor > 0 or algorithm = "simple_threshold")
+  and metric_id = '${metricID}'
+order by start_tm desc

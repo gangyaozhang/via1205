@@ -1,0 +1,189 @@
+<DashboardPluginModel is_init="false" name="VIAOps - Execution Monitor Service" description=" ">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services>
+      <Service name="addChangeMgmtAcknowledgment" args="uuid,ackvalue,acknotes" private="false">
+        <CodeText>
+          <![CDATA[var debug = this.__debugPrint("addChangeMgmtAcknowledgment");
+
+// uuid, ack_tm, ackuser, ackvalue, acknotes
+
+function DQ(str)
+{
+    return '"'+str+'"';
+}
+
+if (debug) print( "addChangeMgmtAcknowledgment" );
+
+var queryConfig = this.getQueryConfig();
+if (queryConfig == null) return null;
+
+var DATASOURCE = queryConfig["data-source"]["change-mgmt"];
+if (DATASOURCE == null) return null;
+
+var ack_tm = Math.round( new Date().getTime() / 1000 );
+var ackuser = Context.getCurrentUserId();
+
+if( uuid == null || uuid == "" ) return null;
+if( ackvalue == null || ackvalue == "" ) return null;
+
+
+var values = [];
+    values.push(DQ(uuid));
+    values.push(String(ack_tm));
+    values.push(DQ(ackuser));
+    values.push(DQ(ackvalue));
+    values.push(DQ(acknotes));
+
+var sql = "INSERT INTO viaops_change_mgmt_acks (uuid, ack_tm, ackuser, ackvalue, acknotes)  VALUES (" + values.join(",") + ")";
+
+    if (debug) print(sql);
+    SQL.executeUpdate(DATASOURCE, sql, null);
+    
+var returnObj = {};
+    returnObj["action"]         = "Insert Acknowledgment";
+    returnObj["uuid"]           = uuid
+    returnObj["ackvalue"]       = ackvalue;
+    returnObj["ack_tm"]         = ack_tm;
+    returnObj["ackuser"]        = ackuser;
+    returnObj["acknotes"]       = acknotes;
+    return returnObj;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getChangeMgmtData" args="intervalHours" private="false">
+        <CodeText>
+          <![CDATA[var debug = this.__debugPrint("getChangeMgmtData");
+
+if (debug) print("getChangeMgmtData: interval in hours=" + intervalHours );
+
+if( intervalHours == null || intervalHours == "" ){
+    intervalHours = 12;   
+}
+
+var queryConfig = this.getQueryConfig();
+if (queryConfig == null) return [];
+
+var DATASOURCE = queryConfig["data-source"]["change-mgmt"];
+if (DATASOURCE == null) return [];
+
+if (debug) print("getChangeMgmtData: queryConfig = " + queryConfig );
+
+var networkMetadataDS = queryConfig["data-source"]["network-metadata"];
+if (networkMetadataDS == null) return [];
+
+var nmTableName, nmHostColumn, nmAddressColumn, nmServiceColumn;
+
+var networkMetadata = queryConfig["network-metadata"];
+if (networkMetadata == null || networkMetadata["table-name"] == null) {
+    // if network metadata not specific, self join for no enrichment
+    // can also change SQL but this is more fun
+    nmTableName = "viaops_change_mgmt";
+    nmHostColumn = '""';
+    nmAddressColumn = '""';
+    nmServiceColumn = '""';
+}
+else {
+    nmTableName = networkMetadataDS + "." + networkMetadata["table-name"];
+    nmHostColumn = networkMetadata["host-column"];
+    if (nmHostColumn != null) {
+        nmHostColumn = "nm." + nmHostColumn;
+    }
+    else {
+        nmHostColumn = '""';
+    }
+    nmAddressColumn = networkMetadata["address-column"];
+    if (nmAddressColumn != null) {
+        nmAddressColumn = "nm." + nmAddressColumn;
+    }
+    else {
+        nmAddressColumn = '""';
+    }
+    nmServiceColumn = networkMetadata["service-column"];
+    if (nmServiceColumn != null) {
+        nmServiceColumn = "nm." + nmServiceColumn;
+    }
+    else {
+        nmServiceColumn = '""';
+    }
+}
+
+
+var sql = Context.getLocalResource("CHANGE_MGMT_SQL");
+var values = {
+    "intervalHours"   : intervalHours,
+    "defaultDatabase" : this.getDefaultDatabaseName(),
+    "nmTableName"     : nmTableName,
+    "nmHostColumn"    : nmHostColumn,
+    "nmAddressColumn" : nmAddressColumn,
+    "nmServiceColumn" : nmServiceColumn,
+};
+sql = this._doValueSubstitution(sql, values);
+if (debug) print("getChangeMgmtData: SQL = " + sql );
+
+var moduleName = queryConfig["module-name"] || "(EM)";
+var result = this.executeSQLQuery(queryConfig, [moduleName], ["ChangeLog"], DATASOURCE, sql, null);
+if (result != null) {
+   return result.items; 
+}
+
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="updateChangeMgmtAcknowledgment" args="uuid,ackvalue,acknotes" private="false">
+        <CodeText>
+          <![CDATA[var debug = this.__debugPrint("updateChangeMgmtAcknowledgment");
+
+// uuid, ack_tm, ackuser, ackvalue, acknotes
+
+if (debug) print( "updateChangeMgmtAcknowledgment" );
+
+var queryConfig = this.getQueryConfig();
+if (queryConfig == null) return null;
+
+var DATASOURCE = queryConfig["data-source"]["change-mgmt"];
+if (DATASOURCE == null) return null;
+
+var ack_tm = Math.round( new Date().getTime() / 1000 );
+var ackuser = Context.getCurrentUserId();
+
+if( uuid == null || uuid == "" ) return null;
+if( ackvalue == null ) return null;
+
+var sql = "UPDATE viaops_change_mgmt_acks SET ack_tm = '" + ack_tm + "', ackuser = '" + ackuser + "', ackvalue = '" + ackvalue + "', acknotes = '" + acknotes + "' WHERE uuid = '" + uuid + "'";
+
+    if (debug) print(sql);
+    SQL.executeUpdate(DATASOURCE, sql, null);
+    
+var returnObj = {};
+    returnObj["action"]         = "Update Acknowledgment";
+    returnObj["uuid"]           = uuid
+    returnObj["ackvalue"]       = ackvalue;
+    returnObj["ack_tm"]         = ack_tm;
+    returnObj["ackuser"]        = ackuser;
+    returnObj["acknotes"]       = acknotes;
+    return returnObj;
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="5fe2b976-3655-475e-8159-697159b5117d" name="CHANGE_MGMT_SQL" type="application/sql" size="1872" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="138f16d3-ca64-4bc0-848f-b53a6631a7d1" name="CHANGE_MGMT_SQL_OLD" type="application/sql" size="1037" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/space/another/dbpm/VIAOps - Base Service"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

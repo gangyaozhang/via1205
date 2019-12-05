@@ -1,0 +1,693 @@
+{
+    "module-name":"CausalAnalysis",
+	"sql-query-config" : {
+		"debug" : {
+			"*"     : true
+		}
+    },
+    "data-source" : {
+        "analysis-cache" : "charter_ref_db"
+    },
+    "analytic-service-manifest":"/app/dbp/space/Charter Digital Operations/dbpm/Charter - Manifest/AnalyticServiceManifest",
+    "incident-group-defaults" : {
+        "key-metric-correlation-window" : {
+            "leading-interval" : 300,
+            "trailing-interval" : 900
+        },
+        "match-rule-correlation-window" : {
+            "leading-interval" : 900
+        },
+        "reverse-correlation-order" : false
+    },
+    "incident-group-rules" : [
+        {
+            "match-rule" : "Video|STVA Entry|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"Video|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_SR|Port Utilization"
+                },
+                {
+                    "metric-id":"Video|Application|IP2MAC|LL Receiver"
+                },
+                {
+                    "metric-id":"Video|Application|IP2MAC|DLN Delay"
+                }
+            ]
+        },
+        {
+            "match-rule" : "Video|STVA Browse|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"Video|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_SR|Port Utilization"
+                },
+                {
+                    "metric-id":"Video|Application|IP2MAC|LL Receiver"
+                },
+                {
+                    "metric-id":"Video|Application|IP2MAC|DLN Delay"
+                }
+            ]
+        },
+        {
+            "match-rule" : "Video|STVA Initialize|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"Video|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_SR|Port Utilization"
+                },
+                {
+                    "metric-id":"Video|Application|IP2MAC|LL Receiver"
+                },
+                {
+                    "metric-id":"Video|Application|IP2MAC|DLN Delay"
+                }
+            ]
+        },
+        {
+            "match-rule" : "Video|STVA Watch|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"Video|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"Video|STVA Network|CAPM_SR|Port Utilization"
+                },
+                {
+                    "metric-id":"Video|Application|IP2MAC|LL Receiver"
+                },
+                {
+                    "metric-id":"Video|Application|IP2MAC|DLN Delay"
+                }
+            ]
+        },
+        {
+            "match-rule" : "E-Mail|TWC_E-Mail_Login|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"E-Mail|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_SR|Port Utilization"
+                }
+            ]
+        },
+        {
+            "match-rule" : "E-Mail|TWC_E-Mail_Send|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"E-Mail|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_SR|Port Utilization"
+                }
+            ]
+        },
+        {
+            "match-rule" : "E-Mail|TWC_E-Mail_Receive|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"E-Mail|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_SR|Port Utilization"
+                }
+            ]
+        },
+        {
+            "match-rule" : "E-Mail|TWC_E-Mail_Application|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"E-Mail|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"E-Mail|TWC_E-Mail_Network|CAPM_SR|Port Utilization"
+                }
+            ]
+        },
+        {
+            "match-rule" : "CHTR_E-Mail|CHTR_E-Mail_Login|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"CHTR_E-Mail|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_SR|Port Utilization"
+                }
+            ]
+        },
+        {
+            "match-rule" : "CHTR_E-Mail|CHTR_E-Mail_Send|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"CHTR_E-Mail|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_SR|Port Utilization"
+                }
+            ]
+        },
+        {
+            "match-rule" : "CHTR_E-Mail|CHTR_E-Mail_Receive|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"CHTR_E-Mail|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_SR|Port Utilization"
+                }
+            ]
+        },
+        {
+            "match-rule" : "CHTR_E-Mail|CHTR_E-Mail_Application|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"CHTR_E-Mail|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"CHTR_E-Mail|CHTR_E-Mail_Network|CAPM_SR|Port Utilization"
+                }
+            ]
+        },
+        {
+            "match-rule" : "cDVR|cDVR Play|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"cDVR|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"cDVR|cDVR Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"cDVR|cDVR Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"cDVR|cDVR Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"cDVR|cDVR Network|CAPM_SR|Port Utilization"
+                }
+            ]
+        },
+        {
+            "match-rule" : "cDVR|cDVR Schedule-Usage|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"cDVR|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"cDVR|cDVR Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"cDVR|cDVR Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"cDVR|cDVR Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"cDVR|cDVR Network|CAPM_SR|Port Utilization"
+                }
+            ]
+        },
+        {
+            "match-rule" : "SpecGuide|Guide|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"SpecGuide|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_SR|Port Utilization"
+                }
+            ]
+        },
+        {
+            "match-rule" : "SpecGuide|DVR|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"SpecGuide|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_SR|Port Utilization"
+                }
+            ]
+        },
+        {
+            "match-rule" : "SpecGuide|Channel Tune|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"SpecGuide|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_SR|Port Utilization"
+                }
+            ]
+        },
+        {
+            "match-rule" : "SpecGuide|VOD|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"SpecGuide|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_SR|Port Utilization"
+                }
+            ]
+        },
+        {
+            "match-rule" : "SpecGuide|Other|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+                {
+                    "metric-id":"SpecGuide|*|*|Customer Call Volume"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_FW|CPU Utilization"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_FW|Port Utilization"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_SR|CPU Utilization"
+                },
+                {
+                    "metric-id":"SpecGuide|SpecGuide Network|CAPM_SR|Port Utilization"
+                }
+            ]
+        },
+        {
+            "match-rule" : "Network|%|*|*",
+            "metric-ranking" : "time",
+            "additional-metrics" : [
+            ]
+        },
+        {
+            "#match-rule" : "Video|*|*|*",
+            "metric-ranking" : "time",
+            "#metric-ranking" : [
+                "Video|STVA Entry|ipvideoauth|Stat Login Failures",
+                "Video|STVA Entry|ipvideoauth|Failed API Attempt|capabilitiesV3",
+                "Video|STVA Entry|ipvideoauth|Failed API Attempt|behindModemV1",
+                "Video|STVA Entry|ipvideoauth|Failed API Attempt|location",
+                "Video|STVA Watch|ipvideoauth|Failing Streams",
+                "Video|STVA Watch|ipvideoauth|Broken Stream Streams",
+                "Video|STVA Watch|ipvideoauth|Buffering Events",
+                "Video|STVA Watch|ipvideoauth|Failed API Attempt",
+                "Video|STVA Watch|ipvideoauth|Bitrate Downshifts",
+                "Video|STVA Watch|ipvideoauth|Bitrate Downshifts|vod",
+                "Video|STVA Initialize|ipvideoauth|Failed Stream Start",
+                "Video|STVA Initialize|ipvideoauth|Failed API Attempt|liveUrlFetch",
+                "Video|STVA Initialize|ipvideoauth|Failed API Attempt|liveUrlFetch|403",
+                "Video|STVA Initialize|ipvideoauth|Failed API Attempt|liveUrlFetch|404",
+                "Video|STVA Initialize|ipvideoauth|Failed API Attempt|liveUrlFetch|502",
+                "Video|STVA Initialize|ipvideoauth|Failed API Attempt|drm",
+                "Video|STVA Browse|ipvideoauth|Failed API Attempt|topSearches",
+                "Video|STVA Browse|ipvideoauth|Failed API Attempt|nnsSearchComponent",
+                "Video|STVA Browse|ipvideoauth|Failed API Attempt|guideStreamShowDetailsV2"
+            ],
+            "additional-metrics" : [
+                {
+                    "metric-id":"Video|*|*|Customer Call Volume"
+                }
+            ]
+        },
+        {
+            "#key-metric" : "Video|STVA Watch|ipvideoauth|Bitrate Downshifts",
+            "correlated-metrics" : [
+                {
+                    "metric-id":"Video|STVA Watch|ipvideoauth|Buffering Events",
+                    "incident-only":true
+                },
+                {
+                    "metric-id":"Video|STVA Entry|ipvideoauth|Failed API Attempt|capabilitiesV3",
+                    "incident-only":true
+                },
+                {
+                    "metric-id":"Video|STVA Entry|ipvideoauth|Failed API Attempt|location",
+                    "incident-only":true
+                },
+                {
+                    "metric-id":"Video|STVA Initialize|ipvideoauth|Failed API Attempt|liveUrlFetch",
+                    "incident-only":true
+                },
+                {
+                    "metric-id":"Video|*|*|Customer Call Volume"
+                }
+            ],
+            "correlation-window" : {
+                "leading-interval" : 300,
+                "trailing-interval" : 900
+            }
+        },
+        {
+            "#key-metric" : "Video|STVA Entry|ipvideoauth|Stat Login Failures",
+            "correlated-metrics" : [
+                {
+                    "metric-id":"Video|STVA Entry|ipvideoauth|Failed API Attempt|capabilitiesV3",
+                    "incident-only":true
+                },
+                {
+                    "metric-id":"Video|STVA Initialize|ipvideoauth|Failed API Attempt|liveUrlFetch|404",
+                    "incident-only":true
+                },
+                {
+                    "metric-id":"Video|*|*|Customer Call Volume"
+                }
+            ]
+        },
+        {
+            "#key-metric" : "E-Mail|TWC_E-Mail_Send|cm|Outbound Log Delivered",
+            "correlated-metrics" : [
+                {
+                    "metric-id":"E-Mail|*|*|Customer Call Volume"
+                }
+            ]
+        }
+    ],
+    "incident-key-dimensions" : {
+        "Video|STVA Watch|ipvideoauth|Bitrate Downshifts" : ["device", "authentication", "connection"],
+        "Video|STVA Watch|ipvideoauth|Buffering Events" : ["device", "authentication", "connection"],
+        "Video|STVA Entry|ipvideoauth|Failed API Attempt|capabilitiesV3" : ["device", "authentication", "connection"],
+        "Video|STVA Entry|ipvideoauth|Failed API Attempt|location" : ["device", "authentication", "connection"],
+        "Video|STVA Initialize|ipvideoauth|Failed API Attempt|liveUrlFetch" : ["device", "authentication", "connection"],
+        "Video|STVA Initialize|ipvideoauth|Failed API Attempt|liveUrlFetch|404" : ["device", "authentication", "connection"],
+        "Video|*|*|Customer Call Volume" : ["region1", "region2", "cause_code", "resolution_code"]
+    },
+    "drilldown-dimension-rules" : [
+        {
+            "match-rule" : "*|*|*|Customer Call Volume",
+            "dimension-list" : [
+                "region1",
+                "region1|region2",
+                "cause_code",
+                "cause_code|resolution_code"
+            ]
+        },
+        {
+            "match-rule" : "E-Mail|*|*|*",
+            "dimension-list" : [
+                "host",
+                "dom",
+                "dhost"
+            ]
+        },
+        {
+            "match-rule" : [
+                "E-Mail|*|switch|*",
+                "E-Mail|*|load balancer|*"
+            ],
+            "dimension-list" : [
+                "host",
+                "node",
+                "host|node"
+            ]
+        },
+        {
+            "match-rule" : "CHTR_E-Mail|*|*|*",
+            "dimension-list" : [
+                "host",
+                "dom",
+                "dhost"
+            ]
+        },
+        {
+            "match-rule" : [
+                "CHTR_E-Mail|*|switch|*",
+                "CHTR_E-Mail|*|load balancer|*"
+            ],
+            "dimension-list" : [
+                "host",
+                "node",
+                "host|node"
+            ]
+        },
+        {
+            "match-rule" : "Video|*|*|*",
+            "#dimension-list[device]" : [
+                "connection",
+                "authentication",
+                "version",
+                "platform"
+            ],
+            "dimension-list" : [
+                "device",
+                "connection",
+                "authentication",
+                "msgcat",
+                "api",
+                "response",
+                "version",
+                "platform",
+                "netstatus",
+                "streamformat",
+                "stream",
+                "channel",
+                "content",
+                "company",
+                "state",
+                "api|response",
+                "channel|content"
+            ]
+        },
+        {
+            "match-rule" : [
+                "Video|*|switch|*",
+                "Video|*|load balancer|*"
+            ],
+            "dimension-list" : [
+                "host",
+                "node",
+                "host|node"
+            ]
+        },
+        {
+            "match-rule" : "cDVR|*|*|*",
+            "dimension-list" : [
+                "device",
+                "connection",
+                "authentication",
+                "msgcat",
+                "api",
+                "response",
+                "version",
+                "platform",
+                "netstatus",
+                "streamformat",
+                "stream",
+                "channel",
+                "content",
+                "company",
+                "state",
+                "api|response",
+                "channel|content"
+            ]
+        },
+        {
+            "match-rule" : [
+                "cDVR|*|switch|*",
+                "cDVR|*|load balancer|*"
+            ],
+            "dimension-list" : [
+                "host",
+                "node",
+                "host|node"
+            ]
+        }
+    ],
+    "dimension-analysis-config" : {
+        "minimum-time-interval" : 300,
+        "maximum-open-time-interval" : 86400,
+        "score-allowance" : {
+            "_count/value" : 0.25,
+            "_baseline/value" : 0.25,
+            "_diff/value" : 0.25,
+            "_diffPct/percent" : 0.25,
+            "_pTotal/percent" : 0.25,
+            "_pBaseline/percent" : 0.25,
+            "_pctDev/percent" : 0.25,
+            "_relDiff/percent" : 0.25
+        },
+        "score-cutoff" : {
+            "_count/value" : 0,
+            "_baseline/value" : 0,
+            "_diff/value" : 0,
+            "_diffPct/percent" : 0,
+            "_pTotal/percent" : 0,
+            "_pBaseline/percent" : 0,
+            "_pctDev/percent" : 0,
+            "_relDiff/percent" : 0
+        },
+        "cache-analysis-results" : true
+    },
+    "trend-analysis-config" : {
+        "cache-analysis-results" : true
+    }
+}

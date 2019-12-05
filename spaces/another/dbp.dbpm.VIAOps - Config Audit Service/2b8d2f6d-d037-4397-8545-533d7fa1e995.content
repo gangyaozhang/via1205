@@ -1,0 +1,167 @@
+{
+    "type-mixins": {
+        "DualListBuilder": {
+        "dialog": {
+            "widget": {
+            "path": "/app/dbp/user/via_common/dbpm/VIA - Common/Dual List Builder",
+            "config": {
+                "service": {
+                "method": "post",
+                "url": "dialog/widget/config/service/url"
+                }
+            }
+            },
+            "width": "600px",
+            "description": "dialog/description",
+            "reset": "x",
+            "label": "Set",
+            "type": "editor",
+            "title": "dialog/title",
+            "class": "DualListDialog via-scroller",
+            "height": "400px"
+        },
+        "text": {
+            "style": "width:200px;",
+            "placeholder": "text/placeholder"
+        },
+        "type": "popup"
+        },
+        "AbsoluteTimePicker": {
+        "timezoneOffset": true,
+        "minInterval": 5,
+        "asLocalTime": true,
+        "secHide": true,
+        "style": "white-space:normal;height:22px;",
+        "type": "timeinterval"
+        },
+        "TimeIntervalPicker": {
+        "dialog": {
+            "maximize": false,
+            "widget": {
+            "path": "/app/dbp/user/via_common/dbpm/VIA - Time Range Picker/TimeRangePicker",
+            "config": {
+                "predefined": [
+                {
+                    "label": "Last 4 Hours",
+                    "value": "4H"
+                },
+                {
+                    "label": "Last 24 Hours",
+                    "value": "24H"
+                },
+                {
+                    "label": "Today",
+                    "value": "today"
+                },
+                {
+                    "label": "Yesterday",
+                    "value": "yesterday"
+                },
+                {
+                    "label": "Last 8 Days",
+                    "value": "8D"
+                },
+                {
+                    "label": "Last 30 Days",
+                    "value": "30D"
+                },
+                {
+                    "label": "Last 60 Days",
+                    "value": "60D"
+                }
+                ]
+            }
+            },
+            "width": "680px",
+            "label": "Set Time",
+            "type": "editor",
+            "title": "Select Time Range",
+            "class": "timePickerDialog",
+            "height": "355px"
+        },
+        "timezoneOffset": true,
+        "asLocalTime": true,
+        "style": "font-size:7pt;font-family:arial;border-radius:2px;margin-left:2px;height:12px;",
+        "data-type": "timeinterval",
+        "text": {
+            "style": "width:250px;font-family:monospace;color:black;",
+            "placeholder": "Select time range from picker..."
+        },
+        "type": "popup"
+        }
+    },
+    "categories": [
+        {
+        "submit": "manual",
+        "value-style": "padding:0px;width:100%;",
+        "toggleHighlight": false,
+        "name": "data",
+        "name-style": "padding-left:0px;width:0px;",
+        "fa-label": "Apply",
+        "dimensions": [
+            {
+            "dialog": {
+                "maximize": false,
+                "widget": {
+                "path": "/app/dbp/user/via_common/dbpm/VIA - Time Range Picker/TimeRangePicker",
+                "config": {
+                    "predefined": [
+                    {
+                        "label": "Last 4 Hours",
+                        "value": "4H"
+                    },
+                    {
+                        "label": "Last 24 Hours",
+                        "value": "24H"
+                    },
+                    {
+                        "label": "Today",
+                        "value": "today"
+                    },
+                    {
+                        "label": "Yesterday",
+                        "value": "yesterday"
+                    },
+                    {
+                        "label": "Last 8 Days",
+                        "value": "8D"
+                    },
+                    {
+                        "label": "Last 30 Days",
+                        "value": "30D"
+                    },
+                    {
+                        "label": "Last 60 Days",
+                        "value": "60D"
+                    }
+                    ]
+                }
+                },
+                "width": "680px",
+                "label": "Set Time",
+                "type": "editor",
+                "title": "Select Time Range",
+                "class": "timePickerDialog",
+                "height": "355px"
+            },
+            "timezoneOffset": true,
+            "asLocalTime": true,
+            "style": "font-size:7pt;font-family:arial;border-radius:2px;margin-left:2px;height:12px;",
+            "data-type": "timeinterval",
+            "text": {
+                "style": "width:250px;font-family:monospace;color:black;",
+                "placeholder": "Select time range from picker..."
+            },
+            "type": "popup",
+            "default": "predefined:24H",
+            "fa-class-button": "far fa-clock",
+            "fa-style": "margin-right:20px",
+            "name": "timeRange",
+            "label": "Time Range",
+            "fa-label": "Time Range"
+            }
+        ]
+        }
+    ],
+    "div-style": "overflow:hidden;"
+}

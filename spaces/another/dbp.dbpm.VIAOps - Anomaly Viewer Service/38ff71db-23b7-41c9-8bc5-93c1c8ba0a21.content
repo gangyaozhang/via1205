@@ -1,0 +1,6 @@
+select 
+    action_id, 
+    rule_id_list
+from action_dim_v2
+where action_category = 'Notify'
+  and action_name = 'Alarm NOC via Netcool'

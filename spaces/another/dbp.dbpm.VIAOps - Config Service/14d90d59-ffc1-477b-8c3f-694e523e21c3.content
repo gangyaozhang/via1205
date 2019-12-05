@@ -1,0 +1,3 @@
+SELECT count(*) as count
+FROM metric_dim
+WHERE metric_id="${metric_id}"

@@ -1,0 +1,7 @@
+select 
+    ${xExpression}, 
+    ${yExpression},
+    count(*) as value
+    from viaops_user_mouse_event
+    where current_viewer = '${viewer}'
+    group by x, y

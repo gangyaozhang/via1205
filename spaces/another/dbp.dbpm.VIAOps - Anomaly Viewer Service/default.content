@@ -1,0 +1,5285 @@
+<DashboardPluginModel is_init="false" name="VIAOps - Anomaly Viewer Service" description=" ">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions>
+      <Function name="_addCheckbox" args="parentNode,label,tooltip,domConstruct" private="true">
+        <CodeText>
+          <![CDATA[var id = "checkbox_" + Math.round(10000 * Math.random()) + "_" + Math.round(10000 * Math.random());
+var checkbox = domConstruct.create("input", {
+    "id" : id,
+    "type" : "checkbox",
+    "class" : "option-checkbox",
+    "title" : tooltip,
+});
+parentNode.appendChild(checkbox);
+var lbl = domConstruct.create("label", {
+    "for" : id,
+    "class" : "option-label",
+});
+lbl.innerHTML = label;
+parentNode.appendChild(lbl);
+return checkbox;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_addEvent" args="record,event,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9" private="false">
+        <CodeText>
+          <![CDATA[if (record["_chrisEventList_"] == null) {
+    record["_chrisEventList_"] = [];
+}
+var eventObj = {
+    event : event,
+    params : {}
+};
+if (p0 != null) eventObj.params["p0"] = p0;
+if (p1 != null) eventObj.params["p1"] = p1;
+if (p2 != null) eventObj.params["p2"] = p2;
+if (p3 != null) eventObj.params["p3"] = p3;
+if (p4 != null) eventObj.params["p4"] = p4;
+if (p5 != null) eventObj.params["p5"] = p5;
+if (p6 != null) eventObj.params["p6"] = p6;
+if (p7 != null) eventObj.params["p7"] = p7;
+if (p8 != null) eventObj.params["p8"] = p8;
+if (p9 != null) eventObj.params["p9"] = p9;
+(record["_chrisEventList_"]).push(eventObj);
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_addEventText" args="record,event" private="true">
+        <CodeText>
+          <![CDATA[if (record["_chrisEvent_"] == null) {
+    record["_chrisEvent_"] = event;
+}
+else {
+    record["_chrisEvent_"] = record["_chrisEvent_"] + " " + event;
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_computeScore" args="config,onlyCustomerCalls,record" private="true">
+        <CodeText>
+          <![CDATA[if (config.algorithm == null) config.algorithm = "score";
+switch (config.algorithm) {
+    case "score":
+        var OFFSET = 1;
+        if (config.median_baseline > 0) {
+            // chris's scoring
+            var actual = onlyCustomerCalls == true ? record["_value2_"] : record["_value1_"];
+            var baseline = onlyCustomerCalls == true ? record["_baseline2_"] : record["_baseline1_"];
+            if (OFFSET != null) {
+                actual = (actual != null ? actual : 0) + OFFSET;
+                baseline = (baseline != null ? baseline : 0) + OFFSET;
+            }
+            if (actual != null && baseline != null) {
+                var score = ((actual-baseline)/config.median_baseline)*100;
+                score = Number(score.toFixed(2));
+                record["_chrisScore_"] = score;
+            }
+        }
+        if (!onlyCustomerCalls) {
+            var value1 = record["_value1_"];
+            var baseline1 = record["_baseline1_"];
+            // not just calls... compute metric vol and dev
+            record["_metricVol_"] = value1;
+            if (OFFSET != null) {
+                value1 = (value1 != null ? value1 : 0) + OFFSET;
+                baseline1 = (baseline1 != null ? baseline1 : 0) + OFFSET;
+            }
+            if (baseline1 != null && baseline1 != 0) {
+                record["_metricDev_"] = (value1 - baseline1) / baseline1;
+            }
+        }
+        break;
+    case "simple_threshold":
+        var actual = onlyCustomerCalls == true ? record["_value2_"] : record["_value1_"];
+        if (actual != null) {
+            var score = actual;
+            score = Number(score.toFixed(2));
+            record["_chrisScore_"] = score;
+        }
+        var value1 = record["_value1_"];
+        if (value1 != null) {
+            record["_metricVol_"] = value1;
+            record["_metricDev_"] = 0;
+        }
+        break;
+}
+var value2 = record["_value2_"];
+var baseline2 = record["_baseline2_"];
+record["_callVol_"] = value2;
+if (OFFSET != null) {
+    value2 = (value2 != null ? value2 : 0) + OFFSET;
+    baseline2 = (baseline2 != null ? baseline2 : 0) + OFFSET;
+}
+if (baseline2 != null && baseline2 != 0) {
+    record["_callDev_"] = (value2 - baseline2) / baseline2;
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_deleteEvent" args="record,event" private="false">
+        <CodeText>
+          <![CDATA[if (record["_chrisEventList_"] != null) {
+    var oldEventList = record["_chrisEventList_"];
+    var newEventList = [];
+    oldEventList.forEach(function(eventObj) {
+        if (eventObj.event != event) {
+            newEventList.push(eventObj);
+        }
+    });
+    record["_chrisEventList_"] = newEventList;
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_enableButton" args="button,enable,domStyle" private="true">
+        <CodeText>
+          <![CDATA[if (enable) {
+    domStyle.set(button, {
+        "pointer-events" : "auto",
+        "opacity" : 1.0,
+        "cursor" : "pointer",
+    });
+}
+else {
+    domStyle.set(button, {
+        "pointer-events" : "none",
+        "opacity" : 0.3,
+        "cursor" : "not-allowed",
+    });
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_getCallGroups" args="config,result" private="true">
+        <CodeText>
+          <![CDATA[var CALL_GROUP_WINDOW = config["summary-config"]["call-group-window"];
+if (CALL_GROUP_WINDOW == null) CALL_GROUP_WINDOW = 6;
+
+var callgroups = [];
+var callgroup = null;
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    if (callgroup != null) {
+        // look for end of call spike mark
+        if (record["_chrisCalls_"] == null) {
+            if ((i-callgroup.endIndex) > CALL_GROUP_WINDOW) {
+                // gap from last call spike exceed set gap, close callgroup
+                callgroup = null;
+            }
+        }
+        else {
+            callgroup.endEpoch = record["_epoch_"];
+            callgroup.endIndex = i;
+        }
+    }
+    else {
+        // look for call spike marker
+        if (record["_chrisCalls_"] != null) {
+            callgroup = {
+                startEpoch : record["_epoch_"],
+                endEpoch   : record["_epoch_"],
+                startIndex : i,
+                endIndex   : i,
+            };
+            callgroups.push(callgroup);
+        }
+    }
+}
+return callgroups;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_getCallSpikes" args="config,result" private="true">
+        <CodeText>
+          <![CDATA[var callspikes = [];
+var callspike = null;
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    if (callspike != null) {
+        // look for end of call spike mark
+        if (record["_chrisCalls_"] == null) {
+            callspike = null;
+        }
+        else {
+            callspike.endEpoch = record["_epoch_"];
+            callspike.endIndex = i;
+        }
+    }
+    else {
+        // look for call spike marker
+        if (record["_chrisCalls_"] != null) {
+            callspike = {
+                startEpoch : record["_epoch_"],
+                endEpoch   : record["_epoch_"],
+                startIndex : i,
+                endIndex   : i,
+            };
+            callspikes.push(callspike);
+        }
+    }
+}
+return callspikes;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_getEventText" args="record,eventTextTemplates" private="true">
+        <CodeText>
+          <![CDATA[function doValueSubstitution(pattern, params)
+{
+    for (var key in params) {
+        if (pattern.indexOf("${") != -1) {
+            // still have variables
+            // print("replace ${"+key+"} with " + String(params[key]));
+            pattern = pattern.replace(new RegExp("\\$\\{"+key+"\\}", "g"), String(params[key]));
+        }
+    }
+    return pattern;
+}
+
+var EVENT_TEXT_TEMPLATES = {
+    BEGIN_WARMUP : "Begin Warmup",
+    ABORT_WARMUP : "Abort Warmup",
+
+    BEGIN_HIGH : "Begin at High",
+    UPGRADE_HIGH : "Upgrade to High",
+    ESCALATE_HIGH : "Escalate to High",
+    RE_ESCALATE_HIGH : "Re-escalate to High",
+    STAY_HIGH : "Stay at High",
+    RESUME_HIGH : "Resume at High",
+
+    BEGIN_MEDIUM : "Begin at Medium",
+    DOWNGRADE_MEDIUM : "Downgrade to Medium",
+    UPGRADE_MEDIUM : "Upgrade to Medium",
+    ESCALATE_MEDIUM : "Escalate to Medium",
+    RE_ESCALATE_MEDIUM : "Re-escalate to Medium",
+    STAY_MEDIUM : "Stay at Medium",
+    RESUME_MEDIUM : "Resume at Medium",
+
+    BEGIN_LOW : "Begin at Low",
+    DOWNGRADE_LOW : "Downgrade to Low",
+    DE_ESCALATE_LOW : "De-escalate to Low",
+    ESCALATE_LOW : "Escalate to Low",
+    STAY_LOW : "Stay at Low",
+    RESUME_LOW : "Resume at Low",
+    RE_ESCALATE_LOW : "Re-escalate to Low",
+
+    BEGIN_COOLDOWN : "Begin Cooldown",
+    ABORT_COOLDOWN : "Abort Cooldown",
+    COMPLETE_COOLDOWN : "Complete Cooldown",
+
+    BEGIN_INACTIVE : "Begin Inactive",
+    
+    NOC_NOTIFY : "<b>Send notification to NOC</b>",
+    IVR_DEFLECT : "<b>Set up IVR deflection</b>",
+    FLOOR_DISPATCH : "<b>Dispatch service personnel</b>",
+    
+    CALL_SPIKE : "Call spike (volume >= 20 and deviation >= 100%)",
+    INCIDENT_START : "Start of incident",
+    INCIDENT_END : "End of incident",
+};
+
+if (eventTextTemplates != null) {
+    for (var key in eventTextTemplates) {
+        EVENT_TEXT_TEMPLATES[key] = eventTextTemplates[key];
+    }
+}
+
+var eventList = record["_chrisEventList_"];
+if (eventList != null && eventList.length > 0) {
+    var buf = [];
+    eventList.forEach(function(eventObj) {
+        var template = EVENT_TEXT_TEMPLATES[eventObj.event];
+        if (template != null) {
+            buf.push(template);
+            for (var p=0; p<10; p++) {
+                var param = eventObj.params["p"+p];
+                if (param == null) break;
+                if (typeof param == "string") {
+                    buf.push("<span style='font-weight:bold;'>&because;</span> "+param);
+                }
+                else if (Array.isArray(param)) {
+                    for (var i=0; i<param.length; i++) {
+                        buf.push("<span style='font-weight:bold;'>&because;</span> "+param[i]);
+                    }
+                }
+            }
+        }
+    });
+    return "<html>" + buf.join("<br>") + "</html>";
+}
+return null;]]>
+        </CodeText>
+      </Function>
+      <Function name="_getIncidents" args="config,result" private="true">
+        <CodeText>
+          <![CDATA[var incidents = [];
+var incident = null;
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    if (incident != null) {
+        // look for end of active mark
+        if (record["_chrisActive_"] == null) {
+            incident = null;
+        }
+        else {
+            incident.endEpoch = record["_epoch_"];
+            incident.endIndex = i;
+        }
+    }
+    else {
+        // look for active marker
+        if (record["_chrisActive_"] != null) {
+            incident = {
+                level : "none",
+                startEpoch : record["_epoch_"],
+                endEpoch   : record["_epoch_"],
+                startIndex : i,
+                endIndex   : i,
+                severity : {
+                    high   : 0,
+                    medium : 0,
+                    low    : 0,
+                    none   : 0,
+                },
+                warmup   : 0,
+                cooldown : 0,
+                nocNotifyIndex     : NaN,
+                nocNotifyEpoch     : NaN,
+                ivrDeflectIndex    : NaN,
+                ivrDeflectEpoch    : NaN,
+                floorDispatchIndex : NaN,
+                floorDispatchEpoch : NaN,
+            };
+            incidents.push(incident);
+        }
+    }
+    if (incident != null) {
+        switch (record["_chrisActual_"]) {
+            case "high":
+                incident.severity.high++;
+                break;
+            case "medium":
+                incident.severity.medium++;
+                break;
+            case "low":
+                incident.severity.low++;
+                break;
+            default:
+                incident.severity.none++;
+                break;
+        }
+        if (record["_chrisLevel_"] == "warmup") {
+            incident.warmup++;
+        }
+        if (record["_chrisLevel_"] == "cooldown") {
+            incident.cooldown++;
+        }
+        if (this._hasEvent(record, "NOC_NOTIFY")) {
+            incident.nocNotifyIndex = i;
+            incident.nocNotifyEpoch = record["_epoch_"];
+        }
+        if (this._hasEvent(record, "IVR_DEFLECT")) {
+            incident.ivrDeflectIndex = i;
+            incident.ivrDeflectEpoch = record["_epoch_"];
+        }
+        if (this._hasEvent(record, "FLOOR_DISPATCH")) {
+            incident.floorDispatchIndex = i;
+            incident.floorDispatchEpoch = record["_epoch_"];
+        }
+    }
+}
+for (var i=0, n=incidents.length; i<n; i++) {
+    var incident = incidents[i];
+    incident["index"] = i;
+    if (incident.severity.high > 0) {
+        incident.level = "high";
+    }
+    else if (incident.severity.medium > 0) {
+        incident.level = "medium";
+    }
+    else if (incident.severity.low > 0) {
+        incident.level = "low";
+    }
+    else if (incident.severity.none > 0) {
+        incident.level = "none";
+    }
+}
+return incidents;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_getPopulations" args="populations,config,incidentEvents,callEvents,callType" private="true">
+        <CodeText>
+          <![CDATA[var self = this;
+
+if (populations == null) {
+    populations = {};
+}
+
+function findCalls(fromIndex, toIndex)
+{
+    var calls = [];
+    for (var i=0, n=callEvents.length; i<n; i++) {
+        var callEvent = callEvents[i];
+        if (callEvent.startIndex >= fromIndex && callEvent.startIndex <= toIndex) {
+            calls.push(callEvent);
+        }
+        if (callEvent.startIndex > toIndex) break;
+    }
+    return calls;
+}
+
+if (callEvents == null) {
+    for (var i=0, n=incidentEvents.length; i<n; i++) {
+        var incident = incidentEvents[i];
+
+        this._popAdd(populations, "ANY_SEV", incident);
+        if (incident.severity.high > 0) {
+            this._popAdd(populations, "HIGH_SEV", incident);
+        }
+    }
+}
+else {
+    var LEADING_WINDOW = config["summary-config"][callType.toLowerCase()+"-leading-window"];
+    if (LEADING_WINDOW == null) LEADING_WINDOW = 12;
+    var TRAILING_WINDOW = config["summary-config"][callType.toLowerCase()+"-trailing-window"];
+    if (TRAILING_WINDOW == null) TRAILING_WINDOW = 12;
+
+    for (var i=0, n=incidentEvents.length; i<n; i++) {
+        var incident = incidentEvents[i];
+        var calls;
+    
+        calls = findCalls(incident.startIndex, incident.endIndex+TRAILING_WINDOW);
+        if (calls.length > 0) {
+            incident["trailing_"+callType.toLowerCase()] = calls;
+            this._popAdd(populations, "ANY_SEV_BEFORE_"+callType, incident);
+            if (incident.severity.high > 0) {
+                this._popAdd(populations, "HIGH_SEV_BEFORE_"+callType, incident);
+            }
+        }
+        calls = findCalls(incident.startIndex-LEADING_WINDOW, incident.startIndex-1);
+        if (calls.length > 0) {
+            incident["leading_"+callType.toLowerCase()] = calls;
+            this._popAdd(populations, "ANY_SEV_AFTER_"+callType, incident);
+            if (incident.severity.high > 0) {
+                this._popAdd(populations, "HIGH_SEV_AFTER_"+callType, incident);
+            }
+        }
+        
+        calls = findCalls(incident.startIndex, incident.endIndex);
+        if (calls.length > 0) {
+            incident.insideCalls = calls;
+            this._popAdd(populations, "ANY_SEV_"+callType+"_INSIDE", incident);
+            if (incident.severity.high > 0) {
+                this._popAdd(populations, "HIGH_SEV_"+callType+"_INSIDE", incident);
+            }
+        }
+    }
+    
+    for (var i=0, n=incidentEvents.length; i<n; i++) {
+        var incident = incidentEvents[i];
+        if (incident["trailing_"+callType.toLowerCase()] != null && incident["leading_"+callType.toLowerCase()] != null) {
+            // if incident is associated with BOTH trailing and leading calls,
+            // keep one that is closest...
+            // distance between incident start and
+            // ... FIRST trailing call
+            // ... LAST leading call
+            var trailingDistance = (incident["trailing_"+callType.toLowerCase()][0]).startIndex - incident.startIndex;
+            var leadingDistance = incident.startIndex - (incident["leading_"+callType.toLowerCase()][incident["leading_"+callType.toLowerCase()].length-1]).startIndex;
+            if (trailingDistance < leadingDistance) {
+                // keep trailingCalls
+                delete incident["leading_"+callType.toLowerCase()];
+                this._popDelete(populations, "ANY_SEV_AFTER_"+callType, incident);
+                if (incident.severity.high > 0) {
+                    this._popDelete(populations, "HIGH_SEV_AFTER_"+callType, incident);
+                }
+            }
+            else if (trailingDistance > leadingDistance) {
+                // keep leadingCalls
+                delete incident["trailing_"+callType.toLowerCase()];
+                this._popDelete(populations, "ANY_SEV_BEFORE_"+callType, incident);
+                if (incident.severity.high > 0) {
+                    this._popDelete(populations, "HIGH_SEV_BEFORE_"+callType, incident);
+                }
+            }
+            else {
+                // toss up... keep optimistic choice... incident BEFORE calls... keep trailingCalls
+                delete incident["leading_"+callType.toLowerCase()];
+                this._popDelete(populations, "ANY_SEV_AFTER_"+callType, incident);
+                if (incident.severity.high > 0) {
+                    this._popDelete(populations, "HIGH_SEV_AFTER_"+callType, incident);
+                }
+            }
+        }
+    }
+    
+    // another pass to eliminate duplicate associations of calls with multiple incidents
+    // if a calls is associate with multiple, we prefer call to be after incident
+    var ANY_SEV_BEFORE = (populations["ANY_SEV_BEFORE_"+callType] || []).slice(0);
+    var associatedCalls = {};
+    ANY_SEV_BEFORE.forEach(function(incident) {
+        var trailingCalls = [];
+        incident["trailing_"+callType.toLowerCase()].forEach(function(call) {
+            if (associatedCalls[call.startIndex] == null) {
+                associatedCalls[call.startIndex] = incident;
+                trailingCalls.push(call);
+            }
+        });
+        if (trailingCalls.length == 0) {
+            // no longer a valid member of ANY_SEV_BEFORE
+            delete incident["trailing_"+callType.toLowerCase()];
+            self._popDelete(populations, "ANY_SEV_BEFORE_"+callType, incident);
+            if (incident.severity.high > 0) {
+                self._popDelete(populations, "HIGH_SEV_BEFORE_"+callType, incident);
+            }
+        }
+        else {
+            incident["trailing_"+callType.toLowerCase()] = trailingCalls;
+        }
+    });
+    var ANY_SEV_AFTER  = (populations["ANY_SEV_AFTER_"+callType] || []).slice(0);
+    ANY_SEV_AFTER.forEach(function(incident) {
+        var leadingCalls = [];
+        incident["leading_"+callType.toLowerCase()].forEach(function(call) {
+            if (associatedCalls[call.startIndex] == null) {
+                associatedCalls[call.startIndex] = incident;
+                leadingCalls.push(call);
+            }
+        });
+        if (leadingCalls.length == 0) {
+            // no longer a valid member of ANY_SEV_AFTER
+            delete incident["leading_"+callType.toLowerCase()];
+            self._popDelete(populations, "ANY_SEV_AFTER_"+callType, incident);
+            if (incident.severity.high > 0) {
+                self._popDelete(populations, "HIGH_SEV_AFTER_"+callType, incident);
+            }
+        }
+        else {
+            incident["leading_"+callType.toLowerCase()] = leadingCalls;
+        }
+    });
+    
+    for (var i=0, n=incidentEvents.length; i<n; i++) {
+        var incident = incidentEvents[i];
+        if (incident["trailing_"+callType.toLowerCase()] == null && incident["leading_"+callType.toLowerCase()] == null) {
+            this._popAdd(populations, "ANY_SEV_NO_"+callType, incident);
+            if (incident.severity.high > 0) {
+                this._popAdd(populations, "HIGH_SEV_NO_"+callType, incident);
+            }
+        }
+        if (incident.insideCalls == null) {
+            this._popAdd(populations, "ANY_SEV_"+callType+"_OUTSIDE", incident);
+            if (incident.severity.high > 0) {
+                this._popAdd(populations, "HIGH_SEV_"+callType+"_OUTSIDE", incident);
+            }
+        }
+    }
+}
+
+return populations;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_getSummaryEvents" args="config,result" private="true">
+        <CodeText>
+          <![CDATA[var CALLSPIKE_GROUP = config["summary-config"]["callspike-group"];
+if (CALLSPIKE_GROUP == null) CALLSPIKE_GROUP = 6;
+
+var incidents = [];
+var callspikes = [];
+var callgroups = [];
+
+var incident = null;
+var callspike = null;
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    if (incident != null) {
+        // look for end of active mark
+        if (record["_chrisActive_"] == null) {
+            incident = null;
+        }
+        else {
+            incident.endEpoch = record["_epoch_"];
+            incident.endIndex = i;
+        }
+    }
+    else {
+        // look for active marker
+        if (record["_chrisActive_"] != null) {
+            incident = {
+                level : "none",
+                startEpoch : record["_epoch_"],
+                endEpoch   : record["_epoch_"],
+                startIndex : i,
+                endIndex   : i,
+                severity : {
+                    high   : 0,
+                    medium : 0,
+                    low    : 0,
+                    none   : 0,
+                },
+                warmup   : 0,
+                cooldown : 0,
+                nocNotifyIndex     : NaN,
+                nocNotifyEpoch     : NaN,
+                ivrDeflectIndex    : NaN,
+                ivrDeflectEpoch    : NaN,
+                floorDispatchIndex : NaN,
+                floorDispatchEpoch : NaN,
+            };
+            incidents.push(incident);
+        }
+    }
+    if (incident != null) {
+        switch (record["_chrisActual_"]) {
+            case "high":
+                incident.severity.high++;
+                break;
+            case "medium":
+                incident.severity.medium++;
+                break;
+            case "low":
+                incident.severity.low++;
+                break;
+            default:
+                incident.severity.none++;
+                break;
+        }
+        if (record["_chrisLevel_"] == "warmup") {
+            incident.warmup++;
+        }
+        if (record["_chrisLevel_"] == "cooldown") {
+            incident.cooldown++;
+        }
+        if (this._hasEvent(record, "NOC_NOTIFY")) {
+            incident.nocNotifyIndex = i;
+            incident.nocNotifyEpoch = record["_epoch_"];
+        }
+        if (this._hasEvent(record, "IVR_DEFLECT")) {
+            incident.ivrDeflectIndex = i;
+            incident.ivrDeflectEpoch = record["_epoch_"];
+        }
+        if (this._hasEvent(record, "FLOOR_DISPATCH")) {
+            incident.floorDispatchIndex = i;
+            incident.floorDispatchEpoch = record["_epoch_"];
+        }
+    }
+    if (callspike != null) {
+        // look for end of call spike mark
+        if (record["_chrisCalls_"] == null) {
+            callspike = null;
+        }
+        else {
+            callspike.endEpoch = record["_epoch_"];
+            callspike.endIndex = i;
+        }
+    }
+    else {
+        // look for call spike marker
+        if (record["_chrisCalls_"] != null) {
+            callspike = {
+                startEpoch : record["_epoch_"],
+                endEpoch   : record["_epoch_"],
+                startIndex : i,
+                endIndex   : i,
+            };
+            callspikes.push(callspike);
+        }
+    }
+}
+for (var i=0, n=incidents.length; i<n; i++) {
+    var incident = incidents[i];
+    incident["index"] = i;
+    if (incident.severity.high > 0) {
+        incident.level = "high";
+    }
+    else if (incident.severity.medium > 0) {
+        incident.level = "medium";
+    }
+    else if (incident.severity.low > 0) {
+        incident.level = "low";
+    }
+    else if (incident.severity.none > 0) {
+        incident.level = "none";
+    }
+}
+var callgroup = null;
+for (var i=0, n=callspikes.length; i<n; i++) {
+    var callspike = callspikes[i];
+    if (callgroup != null) {
+        if ((callspike.startIndex-callgroup.endIndex) <= CALLSPIKE_GROUP) {
+            // same group
+            callgroup.endEpoch = callspike.endEpoch;
+            callgroup.endIndex = callspike.endIndex;
+            callgroup.callspikes.push(callspike);
+        }
+        else {
+            callgroup = null;
+        }
+    }
+    if (callgroup == null) {
+        callgroup = {
+            startEpoch : callspike.startEpoch,
+            endEpoch   : callspike.endEpoch,
+            startIndex : callspike.startIndex,
+            endIndex   : callspike.endIndex,
+            callspikes : [callspike],
+        };
+        callgroups.push(callgroup);
+    }
+}
+return {
+    incidents  : incidents,
+    callspikes : callspikes,
+    callgroups : callgroups,
+};
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_getSummaryPopulations" args="config,events" private="true">
+        <CodeText>
+          <![CDATA[var CALL_SPIKE_LEAD = config["summary-config"]["callspike-lead"];
+if (CALL_SPIKE_LEAD == null) CALL_SPIKE_LEAD = 12;
+var CALL_SPIKE_TRAIL = config["summary-config"]["callspike-trail"];
+if (CALL_SPIKE_TRAIL == null) CALL_SPIKE_TRAIL = 12;
+
+var self = this;
+
+function findCallSpikes(fromIndex, toIndex)
+{
+    var callspikes = [];
+    for (var i=0, n=events.callspikes.length; i<n; i++) {
+        var callspike = events.callspikes[i];
+        if (callspike.startIndex >= fromIndex && callspike.startIndex <= toIndex) {
+            callspikes.push(callspike);
+        }
+        if (callspike.startIndex > toIndex) break;
+    }
+    return callspikes;
+}
+
+function findCallGroups(fromIndex, toIndex)
+{
+    var callgroups = [];
+    for (var i=0, n=events.callgroups.length; i<n; i++) {
+        var callgroup = events.callgroups[i];
+        if (callgroup.startIndex >= fromIndex && callgroup.startIndex <= toIndex) {
+            callgroups.push(callgroup);
+        }
+        if (callgroup.startIndex > toIndex) break;
+    }
+    return callgroups;
+}
+
+var populations = {};
+
+for (var i=0, n=events.incidents.length; i<n; i++) {
+    var incident = events.incidents[i];
+    var callSpikes;
+    var callGroups;
+    
+    this._popAdd(populations, "ANY_SEV", incident);
+    if (incident.severity.high > 0) {
+        this._popAdd(populations, "HIGH_SEV", incident);
+    }
+
+    callSpikes = findCallSpikes(incident.startIndex, incident.endIndex+CALL_SPIKE_TRAIL);
+    if (callSpikes.length > 0) {
+        incident.trailingCallSpikes = callSpikes;
+        this._popAdd(populations, "ANY_SEV_BEFORE_CALL_SPIKE", incident);
+        if (incident.severity.high > 0) {
+            this._popAdd(populations, "HIGH_SEV_BEFORE_CALL_SPIKE", incident);
+        }
+    }
+    callSpikes = findCallSpikes(incident.startIndex-CALL_SPIKE_LEAD, incident.startIndex-1);
+    if (callSpikes.length > 0) {
+        incident.leadingCallSpikes = callSpikes;
+        this._popAdd(populations, "ANY_SEV_AFTER_CALL_SPIKE", incident);
+        if (incident.severity.high > 0) {
+            this._popAdd(populations, "HIGH_SEV_AFTER_CALL_SPIKE", incident);
+        }
+    }
+    
+    callSpikes = findCallSpikes(incident.startIndex, incident.endIndex);
+    if (callSpikes.length > 0) {
+        incident.insideCallSpikes = callSpikes;
+        this._popAdd(populations, "ANY_SEV_CALL_SPIKE_INSIDE", incident);
+        if (incident.severity.high > 0) {
+            this._popAdd(populations, "HIGH_SEV_CALL_SPIKE_INSIDE", incident);
+        }
+    }
+    
+    callGroups = findCallGroups(incident.startIndex, incident.endIndex+CALL_SPIKE_TRAIL);
+    if (callGroups.length > 0) {
+        incident.trailingCallGroups = callGroups;
+        this._popAdd(populations, "ANY_SEV_BEFORE_CALL_GROUP", incident);
+        if (incident.severity.high > 0) {
+            this._popAdd(populations, "HIGH_SEV_BEFORE_CALL_GROUP", incident);
+        }
+    }
+    callGroups = findCallGroups(incident.startIndex-CALL_SPIKE_LEAD, incident.startIndex-1);
+    if (callGroups.length > 0) {
+        incident.leadingCallGroups = callGroups;
+        this._popAdd(populations, "ANY_SEV_AFTER_CALL_GROUP", incident);
+        if (incident.severity.high > 0) {
+            this._popAdd(populations, "HIGH_SEV_AFTER_CALL_GROUP", incident);
+        }
+    }
+    
+    callGroups = findCallGroups(incident.startIndex, incident.endIndex);
+    if (callGroups.length > 0) {
+        incident.insideCallGroups = callGroups;
+        this._popAdd(populations, "ANY_SEV_CALL_GROUP_INSIDE", incident);
+        if (incident.severity.high > 0) {
+            this._popAdd(populations, "HIGH_SEV_CALL_GROUP_INSIDE", incident);
+        }
+    }
+}
+
+for (var i=0, n=events.incidents.length; i<n; i++) {
+    var incident = events.incidents[i];
+    if (incident.trailingCallSpikes != null && incident.leadingCallSpikes != null) {
+        // if incident is associated with BOTH trailing and leading call spikes,
+        // keep one that is closest...
+        // distance between incident start and
+        // ... FIRST trailing call spike
+        // ... LAST leading call spike
+        var trailingDistance = (incident.trailingCallSpikes[0]).startIndex - incident.startIndex;
+        var leadingDistance = incident.startIndex - (incident.leadingCallSpikes[incident.leadingCallSpikes.length-1]).startIndex;
+        if (trailingDistance < leadingDistance) {
+            // keep trailingCallSpikes
+            delete incident.leadingCallSpikes;
+            this._popDelete(populations, "ANY_SEV_AFTER_CALL_SPIKE", incident);
+            if (incident.severity.high > 0) {
+                this._popDelete(populations, "HIGH_SEV_AFTER_CALL_SPIKE", incident);
+            }
+        }
+        else if (trailingDistance > leadingDistance) {
+            // keep leadingCallSpikes
+            delete incident.trailingCallSpikes;
+            this._popDelete(populations, "ANY_SEV_BEFORE_CALL_SPIKE", incident);
+            if (incident.severity.high > 0) {
+                this._popDelete(populations, "HIGH_SEV_BEFORE_CALL_SPIKE", incident);
+            }
+        }
+        else {
+            // toss up... keep optimistic choice... incident BEFORE calls... keep trailingCallSpikes
+            delete incident.leadingCallSpikes;
+            this._popDelete(populations, "ANY_SEV_AFTER_CALL_SPIKE", incident);
+            if (incident.severity.high > 0) {
+                this._popDelete(populations, "HIGH_SEV_AFTER_CALL_SPIKE", incident);
+            }
+        }
+    }
+    if (incident.trailingCallGroups != null && incident.leadingCallGroups != null) {
+        // if incident is associated with BOTH trailing and leading call groups,
+        // keep one that is closest...
+        // distance between incident start and
+        // ... FIRST trailing call group
+        // ... LAST leading call group
+        var trailingDistance = (incident.trailingCallGroups[0]).startIndex - incident.startIndex;
+        var leadingDistance = incident.startIndex - (incident.leadingCallGroups[incident.leadingCallGroups.length-1]).startIndex;
+        if (trailingDistance < leadingDistance) {
+            // keep trailingCallSpikes
+            delete incident.leadingCallGroups;
+            this._popDelete(populations, "ANY_SEV_AFTER_CALL_GROUP", incident);
+            if (incident.severity.high > 0) {
+                this._popDelete(populations, "HIGH_SEV_AFTER_CALL_GROUP", incident);
+            }
+        }
+        else if (trailingDistance > leadingDistance) {
+            // keep leadingCallSpikes
+            delete incident.trailingCallGroups;
+            this._popDelete(populations, "ANY_SEV_BEFORE_CALL_GROUP", incident);
+            if (incident.severity.high > 0) {
+                this._popDelete(populations, "HIGH_SEV_BEFORE_CALL_GROUP", incident);
+            }
+        }
+        else {
+            // toss up... keep optimistic choice... incident BEFORE calls... keep trailingCallGroups
+            delete incident.leadingCallGroups;
+            this._popDelete(populations, "ANY_SEV_AFTER_CALL_GROUP", incident);
+            if (incident.severity.high > 0) {
+                this._popDelete(populations, "HIGH_SEV_AFTER_CALL_GROUP", incident);
+            }
+        }
+    }
+}
+
+// another pass to eliminate duplicate associations of call spikes/groups with multiple incidents
+// if a call spike/group is associate with multiple, we prefer call to be after incident
+var ANY_SEV_BEFORE_CALL_SPIKE = (populations["ANY_SEV_BEFORE_CALL_SPIKE"] || []).slice(0);
+var ANY_SEV_AFTER_CALL_SPIKE  = (populations["ANY_SEV_AFTER_CALL_SPIKE"] || []).slice(0);
+var associatedCallSpikes = {};
+ANY_SEV_BEFORE_CALL_SPIKE.forEach(function(incident) {
+    //incident.trailingCallSpikes.forEach(function(callSpike) {
+    //    associatedCallSpikes[callSpike.startIndex] = incident;
+    //});
+    var trailingCallSpikes = [];
+    incident.trailingCallSpikes.forEach(function(callSpike) {
+        if (associatedCallSpikes[callSpike.startIndex] == null) {
+            associatedCallSpikes[callSpike.startIndex] = incident;
+            trailingCallSpikes.push(callSpike);
+        }
+    });
+    if (trailingCallSpikes.length == 0) {
+        // no longer a valid member of ANY_SEV_BEFORE_CALL_SPIKE
+        console.debug("remove " + incident.startIndex + " from ANY_SEV_BEFORE_CALL_SPIKE");
+        delete incident.trailingCallSpikes;
+        self._popDelete(populations, "ANY_SEV_BEFORE_CALL_SPIKE", incident);
+        if (incident.severity.high > 0) {
+            self._popDelete(populations, "HIGH_SEV_BEFORE_CALL_SPIKE", incident);
+        }
+    }
+    else {
+        incident.trailingCallSpikes = trailingCallSpikes;
+    }
+});
+ANY_SEV_AFTER_CALL_SPIKE.forEach(function(incident) {
+    var leadingCallSpikes = [];
+    incident.leadingCallSpikes.forEach(function(callSpike) {
+        if (associatedCallSpikes[callSpike.startIndex] == null) {
+            associatedCallSpikes[callSpike.startIndex] = incident;
+            leadingCallSpikes.push(callSpike);
+        }
+    });
+    if (leadingCallSpikes.length == 0) {
+        // no longer a valid member of ANY_SEV_AFTER_CALL_SPIKE
+        console.debug("remove " + incident.startIndex + " from ANY_SEV_AFTER_CALL_SPIKE");
+        delete incident.leadingCallSpikes;
+        self._popDelete(populations, "ANY_SEV_AFTER_CALL_SPIKE", incident);
+        if (incident.severity.high > 0) {
+            self._popDelete(populations, "HIGH_SEV_AFTER_CALL_SPIKE", incident);
+        }
+    }
+    else {
+        incident.leadingCallSpikes = leadingCallSpikes;
+    }
+});
+var ANY_SEV_BEFORE_CALL_GROUP = (populations["ANY_SEV_BEFORE_CALL_GROUP"] || []).slice(0);
+var ANY_SEV_AFTER_CALL_GROUP  = (populations["ANY_SEV_AFTER_CALL_GROUP"] || []).slice(0);
+var associatedCallGroups = {};
+ANY_SEV_BEFORE_CALL_GROUP.forEach(function(incident) {
+    var trailingCallGroups = [];
+    incident.trailingCallGroups.forEach(function(callGroup) {
+        if (associatedCallGroups[callGroup.startIndex] == null) {
+            associatedCallGroups[callGroup.startIndex] = incident;
+            trailingCallGroups.push(callGroup);
+        }
+    });
+    if (trailingCallGroups.length == 0) {
+        // no longer a valid member of ANY_SEV_BEFORE_CALL_GROUP
+        delete incident.trailingCallGroups;
+        self._popDelete(populations, "ANY_SEV_BEFORE_CALL_GROUP", incident);
+        if (incident.severity.high > 0) {
+            self._popDelete(populations, "HIGH_SEV_BEFORE_CALL_GROUP", incident);
+        }
+    }
+    else {
+        incident.trailingCallGroups = trailingCallGroups;
+    }
+});
+ANY_SEV_AFTER_CALL_GROUP.forEach(function(incident) {
+    var leadingCallGroups = [];
+    incident.leadingCallGroups.forEach(function(callGroup) {
+        if (associatedCallGroups[callGroup.startIndex] == null) {
+            associatedCallGroups[callGroup.startIndex] = incident;
+            leadingCallGroups.push(callGroup);
+        }
+    });
+    if (leadingCallGroups.length == 0) {
+        // no longer a valid member of ANY_SEV_AFTER_CALL_GROUP
+        delete incident.leadingCallGroups;
+        self._popDelete(populations, "ANY_SEV_AFTER_CALL_GROUP", incident);
+        if (incident.severity.high > 0) {
+            self._popDelete(populations, "HIGH_SEV_AFTER_CALL_GROUP", incident);
+        }
+    }
+    else {
+        incident.leadingCallGroups = leadingCallGroups;
+    }
+});
+
+for (var i=0, n=events.incidents.length; i<n; i++) {
+    var incident = events.incidents[i];
+    if (incident.trailingCallSpikes == null && incident.leadingCallSpikes == null) {
+        this._popAdd(populations, "ANY_SEV_NO_CALL_SPIKE", incident);
+        if (incident.severity.high > 0) {
+            this._popAdd(populations, "HIGH_SEV_NO_CALL_SPIKE", incident);
+        }
+    }
+    if (incident.insideCallSpikes == null) {
+        this._popAdd(populations, "ANY_SEV_CALL_SPIKE_OUTSIDE", incident);
+        if (incident.severity.high > 0) {
+            this._popAdd(populations, "HIGH_SEV_CALL_SPIKE_OUTSIDE", incident);
+        }
+    }
+    if (incident.trailingCallGroups == null && incident.leadingCallGroups == null) {
+        this._popAdd(populations, "ANY_SEV_NO_CALL_GROUP", incident);
+        if (incident.severity.high > 0) {
+            this._popAdd(populations, "HIGH_SEV_NO_CALL_GROUP", incident);
+        }
+    }
+    if (incident.insideCallGroups == null) {
+        this._popAdd(populations, "ANY_SEV_CALL_GROUP_OUTSIDE", incident);
+        if (incident.severity.high > 0) {
+            this._popAdd(populations, "HIGH_SEV_CALL_GROUP_OUTSIDE", incident);
+        }
+    }
+}
+
+return populations;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_getUserId" args="" private="false">
+        <CodeText>
+          <![CDATA[if (window.af != null && window.af.utils != null && window.af.utils.AppFrame != null) {
+    var userId = window.af.utils.AppFrame.getUserName();
+    if (userId != null) return userId;
+}
+return "anonymous";
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_hasEvent" args="record,event" private="false">
+        <CodeText>
+          <![CDATA[var eventList = record["_chrisEventList_"];
+if (eventList != null) {
+    for (var i=0, n=eventList.length; i<n; i++) {
+        var eventObj = eventList[i];
+        if (eventObj.event == event) return true;
+    }
+}
+return false;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_insertButton" args="parentNode,label,tooltip,domConstruct" private="true">
+        <CodeText>
+          <![CDATA[var button = domConstruct.create("button", {
+    "type" : "button",
+    "class" : "button-bar-button",
+    "title" : tooltip,
+});
+button.innerHTML = label;
+parentNode.insertBefore(button, parentNode.firstElementChild);
+return button;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_markActiveStartEnd" args="result,axisValue" private="true">
+        <CodeText>
+          <![CDATA[var self = this;
+var activeAxisValue = 0.95 * axisValue;
+
+function markActive(result, start, end)
+{
+    for (var j=start; j<end; j++) {
+        result[j]["_chrisActive_"] = activeAxisValue;
+        if (j == start) {
+            self._addEvent(result[j], "INCIDENT_START");
+        }
+        if (j == (end-1)) {
+            self._addEvent(result[j], "INCIDENT_END");
+        }
+    }
+}
+
+var activeStart = NaN;
+var activeEnd = NaN;
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    if (this._hasEvent(record, "BEGIN_LOW") || this._hasEvent(record, "BEGIN_MEDIUM") || this._hasEvent(record, "BEGIN_HIGH")) {
+        activeStart = i;
+    }
+    else if (this._hasEvent(record, "BEGIN_COOLDOWN")) {
+        activeEnd = i;
+    }
+    else if (this._hasEvent(record, "BEGIN_INACTIVE")) {
+        if (!isNaN(activeStart)) {
+            activeEnd = i;
+            markActive(result, activeStart, activeEnd);
+            activeStart = NaN;
+            activeEnd = NaN;
+        }
+    }
+    else if (this._hasEvent(record, "COMPLETE_COOLDOWN")) {
+        if (!isNaN(activeStart) && !isNaN(activeEnd)) {
+            markActive(result, activeStart, activeEnd);
+            activeStart = NaN;
+            activeEnd = NaN;
+        }
+    }
+    else if (this._hasEvent(record, "ABORT_COOLDOWN")) {
+        activeEnd = NaN;
+    }
+    else if (this._hasEvent(record, "ESCALATE_LOW")) {
+        activeStart = i;
+    }
+}
+if (!isNaN(activeStart)) {
+    if (isNaN(activeEnd)) {
+        activeEnd = result.length;
+    }
+    markActive(result, activeStart, activeEnd);
+    activeStart = NaN;
+    activeEnd = NaN;
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_markCallSpikes" args="result,axisValue" private="true">
+        <CodeText>
+          <![CDATA[var MIN_CALL_VOL = 20;
+var MIN_CALL_DEV = 1.0;
+
+var callsAxisValue = this.getMarkupCallValue(result);
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    var callVol = record["_callVol_"];
+    if (callVol == null) callVol = NaN;
+    var callDev = record["_callDev_"];
+    if (callDev == null) callDev = NaN;
+    if (!isNaN(callVol) && !isNaN(callDev) && callVol >= MIN_CALL_VOL && callDev >= MIN_CALL_DEV) {
+        record["_chrisCalls_"] = callsAxisValue;
+        this._addEvent(record, "CALL_SPIKE");
+    }
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_markFloorDispatches" args="result,axisValue,config" private="true">
+        <CodeText>
+          <![CDATA[var elapsedFromHigh = NaN;
+if (config.floor_dispatch_high_period != null) {
+    elapsedFromHigh = Number(config.floor_dispatch_high_period)/300;
+}
+var minHighCount = NaN;
+if (config.floor_dispatch_high_count != null) {
+    minHighCount = Number(config.floor_dispatch_high_count);
+}
+var elapsedFromMedium = NaN;
+if (config.floor_dispatch_medium_period != null) {
+    elapsedFromMedium = Number(config.floor_dispatch_medium_period)/300;
+}
+var minMediumCount = NaN;
+if (config.floor_dispatch_medium_count != null) {
+    minMediumCount = Number(config.floor_dispatch_medium_count);
+}
+if (isNaN(elapsedFromHigh) && isNaN(minHighCount) && isNaN(elapsedFromMedium) && isNaN(minMediumCount)) return;
+
+var dispatchAxisValue = 0.75 * axisValue;
+var notifyIndex = NaN;
+var countHigh = 0;
+var countMedium = 0;
+var marked = false;
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    // only when active
+    if (record["_chrisActive_"] != null) {
+        if (record["_chrisNOCNotify_"] != null) {
+            notifyIndex = i;
+        }
+        if (!marked && !isNaN(notifyIndex)) {
+            if (!isNaN(elapsedFromHigh) && record["_chrisLevel_"] == "high") {
+                if ((i-notifyIndex) >= elapsedFromHigh) {
+                    // mark Floor Dispatch
+                    record["_chrisFloorDispatch_"] = dispatchAxisValue;
+                    this._addEvent(record, "FLOOR_DISPATCH");
+                    marked = true;
+                }
+            }
+            if (!isNaN(minHighCount) && record["_chrisLevel_"] == "high") {
+                if (countHigh >= minHighCount) {
+                    // mark Floor Dispatch
+                    record["_chrisFloorDispatch_"] = dispatchAxisValue;
+                    this._addEvent(record, "FLOOR_DISPATCH");
+                    marked = true;
+                }
+                countHigh++;
+            }
+            if (!isNaN(elapsedFromMedium) && (record["_chrisLevel_"] == "high" || record["_chrisLevel_"] == "medium")) {
+                if ((i-notifyIndex) >= elapsedFromMedium) {
+                    // mark Floor Dispatch
+                    record["_chrisFloorDispatch_"] = dispatchAxisValue;
+                    this._addEvent(record, "FLOOR_DISPATCH");
+                    marked = true;
+                }
+            }
+            if (!isNaN(minMediumCount) && (record["_chrisLevel_"] == "high" || record["_chrisLevel_"] == "medium")) {
+                if (countMedium >= minMediumCount) {
+                    // mark Floor Dispatch
+                    record["_chrisFloorDispatch_"] = dispatchAxisValue;
+                    this._addEvent(record, "FLOOR_DISPATCH");
+                    marked = true;
+                }
+                countMedium++;
+            }
+        }
+    }
+    else {
+        notifyIndex = NaN;
+        countHigh = 0;
+        countMedium = 0;
+        marked = false;
+    }
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_markIVRDeflections" args="result,axisValue,config" private="true">
+        <CodeText>
+          <![CDATA[var elapsedFromHigh = NaN;
+if (config.ivr_deflect_high_period != null) {
+    elapsedFromHigh = Number(config.ivr_deflect_high_period)/300;
+}
+var minHighCount = NaN;
+if (config.ivr_deflect_high_count != null) {
+    minHighCount = Number(config.ivr_deflect_high_count);
+}
+var elapsedFromMedium = NaN;
+if (config.ivr_deflect_medium_period != null) {
+    elapsedFromMedium = Number(config.ivr_deflect_medium_period)/300;
+}
+var minMediumCount = NaN;
+if (config.ivr_deflect_medium_count != null) {
+    minMediumCount = Number(config.ivr_deflect_medium_count);
+}
+if (isNaN(elapsedFromHigh) && isNaN(minHighCount) && isNaN(elapsedFromMedium) && isNaN(minMediumCount)) return;
+
+var deflectAxisValue = 0.80 * axisValue;
+var notifyIndex = NaN;
+var countHigh = 0;
+var countMedium = 0;
+var marked = false;
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    // only when active
+    if (record["_chrisActive_"] != null) {
+        if (record["_chrisNOCNotify_"] != null) {
+            notifyIndex = i;
+        }
+        if (!marked && !isNaN(notifyIndex)) {
+            if (!isNaN(elapsedFromHigh) && record["_chrisLevel_"] == "high") {
+                if ((i-notifyIndex) >= elapsedFromHigh) {
+                    // mark IVR Deflect
+                    record["_chrisIVRDeflect_"] = deflectAxisValue;
+                    this._addEvent(record, "IVR_DEFLECT");
+                    marked = true;
+                }
+            }
+            if (!isNaN(minHighCount) && record["_chrisLevel_"] == "high") {
+                if (countHigh >= minHighCount) {
+                    // mark IVR Deflect
+                    record["_chrisIVRDeflect_"] = deflectAxisValue;
+                    this._addEvent(record, "IVR_DEFLECT");
+                    marked = true;
+                }
+                countHigh++;
+            }
+            if (!isNaN(elapsedFromMedium) && (record["_chrisLevel_"] == "high" || record["_chrisLevel_"] == "medium")) {
+                if ((i-notifyIndex) >= elapsedFromMedium) {
+                    // mark IVR Deflect
+                    record["_chrisIVRDeflect_"] = deflectAxisValue;
+                    this._addEvent(record, "IVR_DEFLECT");
+                    marked = true;
+                }
+            }
+            if (!isNaN(minMediumCount) && (record["_chrisLevel_"] == "high" || record["_chrisLevel_"] == "medium")) {
+                if (countMedium >= minMediumCount) {
+                    // mark IVR Deflect
+                    record["_chrisIVRDeflect_"] = deflectAxisValue;
+                    this._addEvent(record, "IVR_DEFLECT");
+                    marked = true;
+                }
+                countMedium++;
+            }
+        }
+    }
+    else {
+        notifyIndex = NaN;
+        countHigh = 0;
+        countMedium = 0;
+        marked = false;
+    }
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_markNOCNotifications" args="result,axisValue,config" private="true">
+        <CodeText>
+          <![CDATA[var elapsedFromHigh = NaN;
+if (config.noc_notify_high_period != null) {
+    elapsedFromHigh = Number(config.noc_notify_high_period)/300;
+}
+var minHighCount = NaN;
+if (config.noc_notify_high_count != null) {
+    minHighCount = Number(config.noc_notify_high_count);
+}
+var elapsedFromMedium = NaN;
+if (config.noc_notify_medium_period != null) {
+    elapsedFromMedium = Number(config.noc_notify_medium_period)/300;
+}
+var minMediumCount = NaN;
+if (config.noc_notify_medium_count != null) {
+    minMediumCount = Number(config.noc_notify_medium_count);
+}
+if (isNaN(elapsedFromHigh) && isNaN(minHighCount) && isNaN(elapsedFromMedium) && isNaN(minMediumCount)) return;
+
+var notifyAxisValue = 0.85 * axisValue;
+var startIndexHigh = NaN;
+var startIndexMedium = NaN;
+var countHigh = 0;
+var countMedium = 0;
+var marked = false;
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    // only when active
+    if (record["_chrisActive_"] != null) {
+        if (!marked) {
+            if (!isNaN(elapsedFromHigh) && record["_chrisLevel_"] == "high") {
+                if (isNaN(startIndexHigh)) {
+                    startIndexHigh = i;
+                }
+                if (!isNaN(startIndexHigh) && (i-startIndexHigh) >= elapsedFromHigh) {
+                    // mark NOC Notify
+                    record["_chrisNOCNotify_"] = notifyAxisValue;
+                    this._addEvent(record, "NOC_NOTIFY");
+                    marked = true;
+                }
+            }
+            if (!isNaN(minHighCount) && record["_chrisLevel_"] == "high") {
+                if (countHigh >= minHighCount) {
+                    // mark NOC Notify
+                    record["_chrisNOCNotify_"] = notifyAxisValue;
+                    this._addEvent(record, "NOC_NOTIFY");
+                    marked = true;
+                }
+                countHigh++;
+            }
+            if (!isNaN(elapsedFromMedium) && (record["_chrisLevel_"] == "high" || record["_chrisLevel_"] == "medium")) {
+                if (isNaN(startIndexMedium)) {
+                    startIndexMedium = i;
+                }
+                if (!isNaN(startIndexMedium) && (i-startIndexMedium) >= elapsedFromMedium) {
+                    // mark NOC Notify
+                    record["_chrisNOCNotify_"] = notifyAxisValue;
+                    this._addEvent(record, "NOC_NOTIFY");
+                    marked = true;
+                }
+            }
+            if (!isNaN(minMediumCount) && (record["_chrisLevel_"] == "high" || record["_chrisLevel_"] == "medium")) {
+                if (countMedium >= minMediumCount) {
+                    // mark NOC Notify
+                    record["_chrisNOCNotify_"] = notifyAxisValue;
+                    this._addEvent(record, "NOC_NOTIFY");
+                    marked = true;
+                }
+                countMedium++;
+            }
+        }
+    }
+    else {
+        startIndexHigh = NaN;
+        startIndexMedium = NaN;
+        countHigh = 0;
+        countMedium = 0;
+        marked = false;
+    }
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_popAdd" args="pops,name,event" private="false">
+        <CodeText>
+          <![CDATA[var pop = pops[name];
+if (pop == null) {
+    pop = [];
+    pops[name] = pop;
+}
+else if (this._popContains(pops, name, event)) {
+    return;
+}
+pop.push(event);
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_popContains" args="pops,name,event" private="false">
+        <CodeText>
+          <![CDATA[var pop = pops[name];
+if (pop != null) {
+    for (var i=0, n=pop.length; i<n; i++) {
+        if (pop[i] === event) return true;
+    }
+}
+return false;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_popDelete" args="pops,name,event" private="false">
+        <CodeText>
+          <![CDATA[var pop = pops[name];
+if (pop != null) {
+    for (var i=0, n=pop.length; i<n; i++) {
+        if (pop[i] === event) {
+            pop.splice(i, 1);
+            break;
+        }
+    }
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_resetRecord" args="record" private="true">
+        <CodeText>
+          <![CDATA[// first make sure no leftover data
+delete record["_chrisScore_"];
+delete record["_chrisValueH_"];
+delete record["_chrisValueM_"];
+delete record["_chrisValueL_"];
+delete record["_chrisValueW_"];
+delete record["_chrisValueC_"];
+delete record["_chrisLevel_"];
+delete record["_chrisEvent_"];
+delete record["_chrisEventList_"];
+delete record["_chrisActive_"];
+delete record["_chrisCalls_"];
+delete record["_chrisActual_"];
+delete record["_chrisNOCNotify_"];
+delete record["_chrisIVRDeflect_"];
+delete record["_chrisFloorDispatch_"];
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_updateContext" args="config,context,record,axisValue" private="true">
+        <CodeText>
+          <![CDATA[if (context == null) {
+    context = {
+        active : {
+            start : 0,
+            last  : 0,
+        },
+        score : {
+            min : NaN,
+            max : NaN,
+        },
+        warmup : {
+            start : 0,
+            escalated : false,
+        },
+        severity : {
+            cur : "none",
+            max : "none",      // max severity
+            esc : "none",      // escalated severity
+        },
+        state : "NONE",
+        actual : {
+            low    : 0,
+            medium : 0,
+            high   : 0,
+        },
+        derive : {
+            low    : 0,
+            medium : 0,
+            high   : 0,
+        },
+        severity_window : [],
+    };
+}
+
+var SEVERITY = ["none", "low", "medium", "high"];
+var ESCALATE_ON_ELAPSED = false;
+var INTERVAL_IN_SECS = 300;
+
+var epoch = record["_epoch_"];
+var elapsed = context.active.start != 0 ? epoch - context.active.start : 0;
+var duration = 0;
+if (context.active.start != 0) {
+    duration = (context.actual.low + context.actual.medium + context.actual.high) * INTERVAL_IN_SECS;
+}
+var score = record["_chrisScore_"];
+var metric_vol = record["_metricVol_"];
+var metric_dev = record["_metricDev_"];
+var call_vol = record["_callVol_"];
+var call_dev = record["_callDev_"];
+
+function checkScore(threshold_attribute)
+{
+    if (score == null) return false;
+    var threshold = config[threshold_attribute];
+    if (threshold != null) {
+        switch (config.algorithm) {
+            case "score":
+                if (config.above_threshold && score >= threshold) {
+                    return "Score >= "+ threshold;
+                }
+                if (config.below_threshold && score <= -threshold) {
+                    return "Score <= -"+ threshold;
+                }
+                break;
+            case "simple_threshold":
+                if (config.above_threshold && score >= threshold) {
+                    return "Metric >= "+ threshold;
+                }
+                if (config.below_threshold && score <= threshold) {
+                    return "Metric <= "+ threshold;
+                }
+                break;
+        }
+    }
+    return null;
+}
+
+function escalateSeverityBaselineScore(period_attribute, deviation_attribute)
+{
+    var conditions = [];
+    if (ESCALATE_ON_ELAPSED) {
+        // escalation strictly on elapsed from start of incident
+        if (config[period_attribute] != null && elapsed >= config[period_attribute]) {
+            conditions.push("Elapsed time >= " + config[period_attribute] + " secs");
+        }
+    }
+    else {
+        // escalation based on duration of true active intervals
+        if (config[period_attribute] != null && duration >= config[period_attribute]) {
+            conditions.push("Active duration >= " + config[period_attribute] + " secs");
+        }
+    }
+    if (config[deviation_attribute] != null && config["min_call_vol"] != null) {
+        if (call_vol != null && call_vol > config["min_call_vol"]) {
+            if (call_dev != null && call_dev >= config[deviation_attribute]) {
+                conditions.push("Call volume >= " + config["min_call_vol"] + " and deviation >= " + config[deviation_attribute]);
+            }
+        }
+    }
+    return conditions.length > 0 ? conditions : null;
+}
+
+function specialConditionBaselineScore()
+{
+    var conditions = [];
+    if (config["min_call_vol"] != null && call_vol != null && call_vol >= config["min_call_vol"]) {
+        if (config["min_call_dev"] != null && call_dev != null && call_dev >= config["min_call_dev"]) {
+            conditions.push("Call volume >= " + config["min_call_vol"] + " and deviation >= " + config["min_call_dev"]);
+        }
+    }
+    if (config["min_metric_vol"] != null && metric_vol != null && metric_vol >= config["min_metric_vol"]) {
+        if (config["min_metric_dev"] != null && config.above_threshold && metric_dev != null && metric_dev >= config["min_metric_dev"]) {
+            conditions.push("Metric volume >= " + config["min_metric_vol"] + " and deviation >= " + config["min_metric_dev"]);
+        }
+    }
+    if (config["min_metric_dev"] != null && config.below_threshold && metric_dev != null && metric_dev <= -config["min_metric_dev"]) {
+        conditions.push("Metric deviation <= " + -config["min_metric_dev"]);
+    }
+    return conditions.length > 0 ? conditions : null;
+}
+
+function escalateSeveritySimpleThreshold(period_attribute, match_sev, max_per_window, max_per_lifetime)
+{
+    var conditions = [];
+    if (ESCALATE_ON_ELAPSED) {
+        // escalation strictly on elapsed from start of incident
+        if (config[period_attribute] != null && elapsed >= config[period_attribute]) {
+            conditions.push("Elapsed time >= " + config[period_attribute] + " secs");
+        }
+    }
+    else {
+        // escalation based on duration of true active intervals
+        if (config[period_attribute] != null && duration >= config[period_attribute]) {
+            conditions.push("Active duration >= " + config[period_attribute] + " secs");
+        }
+    }
+    if (config.metric_hist_per > 0) {
+        // check for window based escalation
+        var count_per_window = 0;
+        context.severity_window.forEach(function(sev) {
+            if (sev == match_sev) count_per_window++;
+        });
+        if (config[max_per_window] != null && (count_per_window * INTERVAL_IN_SECS) >= config[max_per_window]) {
+            conditions.push("Severity (" + match_sev + ") duration >= " + config[max_per_window] + " secs/window");
+        }
+    }
+    if (config[max_per_lifetime] != null && (context.derive[match_sev] * INTERVAL_IN_SECS) >= config[max_per_lifetime]) {
+        conditions.push("Severity (" + match_sev + ") duration >= " + config[max_per_lifetime] + " secs/lifetime");
+    }
+    return conditions.length > 0 ? conditions : null;
+}
+
+function specialConditionSimpleThreshold()
+{
+    var conditions = [];
+    if (context.warmup.escalated) {
+        // DO-464
+        // if we are still in escalated from warmup condition, inhibit cooldown if score is above warmup threshold
+        if (config.above_threshold && score >= config.warmup_threshold) {
+            conditions.push("Metric >= Warmup ("+ config.warmup_threshold + ")");
+        }
+        if (config.below_threshold && score <= config.warmup_threshold) {
+            conditions.push("Metric <= Warmup ("+ config.warmup_threshold + ")");
+        }
+    }
+    return conditions.length > 0 ? conditions : null;
+}
+
+function updateScore()
+{
+    if (isNaN(context.score.min) || context.score.min > score) {
+        context.score.min = score;
+    }
+    if (isNaN(context.score.max) || context.score.max < score) {
+        context.score.max = score;
+    }
+}
+
+function updateSeverity()
+{
+    if (checkScore("high_threshold") != null) {
+        context.severity.cur = "high";
+    }
+    else if (checkScore("medium_threshold") != null) {
+        context.severity.cur = "medium";
+    }
+    else if (checkScore("low_threshold") != null) {
+        context.severity.cur = "low";
+    }
+    else {
+        context.severity.cur = "none";
+    }
+    if (SEVERITY.indexOf(context.severity.max) < SEVERITY.indexOf(context.severity.cur)) {
+        context.severity.max = context.severity.cur;
+    }
+}
+
+function markSeverity(record, sev)
+{
+    switch (sev) {
+        case "low":
+            record["_chrisValueL_"] = axisValue;
+            record["_chrisLevel_"] = "low";
+            break;
+        case "medium":
+            record["_chrisValueM_"] = axisValue;
+            record["_chrisLevel_"] = "medium";
+            break;
+        case "high":
+            record["_chrisValueH_"] = axisValue;
+            record["_chrisLevel_"] = "high";
+            break;
+    }
+}
+
+if (score != null) {
+    var special    = null;
+    var esc_high   = null;
+    var esc_medium = null;
+    switch (config.algorithm) {
+        case "score":
+            special    = specialConditionBaselineScore();
+            esc_high   = escalateSeverityBaselineScore("high_threshold_period", "high_call_vol_pct");
+            esc_medium = escalateSeverityBaselineScore("med_threshold_period", "med_call_vol_pct");
+            break;
+        case "simple_threshold":
+            special    = specialConditionSimpleThreshold();
+            esc_high   = escalateSeveritySimpleThreshold("high_threshold_period", "medium", "max_med_per", "tot_max_med_per");
+            esc_medium = escalateSeveritySimpleThreshold("med_threshold_period", "low", "max_low_per", "tot_max_low_per");
+            break;
+    }
+    var is_warmup  = checkScore("warmup_threshold");
+    var is_low     = checkScore("low_threshold");
+    var is_medium  = checkScore("medium_threshold");
+    var is_high    = checkScore("high_threshold");
+    var is_active  = is_low != null || is_medium != null || is_high != null;
+
+    var severity   = context.severity.cur;
+    var state      = context.state;
+    
+    switch (context.state) {
+        case "NONE":
+            if (is_active) {
+                context.state = "ACTIVE";
+                context.active.start = epoch;
+                context.active.last  = epoch;
+                updateScore();
+                updateSeverity();
+                this._addEvent(record, "BEGIN_"+context.severity.cur.toUpperCase());
+            }
+            else if (is_warmup != null) {
+                context.state = "WARMUP";
+                context.warmup.start = epoch;
+                context.warmup.escalated = false;
+                updateScore();
+                context.severity.cur = "none";
+                context.severity.max = "none";
+                context.severity.esc = "none";
+                this._addEvent(record, "BEGIN_WARMUP");
+            }
+            break;
+        case "ACTIVE":
+            if (is_active) {
+                context.active.last = epoch;
+                updateScore();
+                updateSeverity();
+                // CHAR-93
+                // - show natural upgrade/downgrade is applicable
+                // - on escalation, do not check MAX severity. if escalation conditions are met, escalate
+                var escSevIndex = SEVERITY.indexOf(context.severity.esc);
+                var oldSevIndex = SEVERITY.indexOf(severity);
+                var newSevIndex = SEVERITY.indexOf(context.severity.cur);
+                if (context.severity.esc == "none") {
+                    if (oldSevIndex < newSevIndex) {
+                        this._addEvent(record, "UPGRADE_"+context.severity.cur.toUpperCase());
+                    }
+                    else if (oldSevIndex > newSevIndex) {
+                        // never escalated, check for downgrade
+                        this._addEvent(record, "DOWNGRADE_"+context.severity.cur.toUpperCase());
+                    }
+                }
+                if (esc_high != null && context.severity.cur != "high") {   // CHAR-93
+                    if (context.severity.esc != "high") {
+                        context.severity.max = "high";
+                        context.severity.esc = "high";
+                        this._addEvent(record, "ESCALATE_HIGH", esc_high);
+                    }
+                    context.warmup.escalated = false;
+                }
+                else if (esc_medium != null && context.severity.cur != "high" && context.severity.cur != "medium") {   // CHAR-93
+                    if (context.severity.esc != "high" && context.severity.esc != "medium") {
+                        context.severity.max = "medium";
+                        context.severity.esc = "medium";
+                        this._addEvent(record, "ESCALATE_MEDIUM", esc_medium);
+                    }
+                    context.warmup.escalated = false;
+                }
+                else {
+                    if (context.severity.esc != "none") {
+                        // if we have escalated... then escalated state is min
+                        if (newSevIndex < escSevIndex) {
+                            // continue in escalated state
+                        }
+                        else if (oldSevIndex < newSevIndex) {
+                            this._addEvent(record, "UPGRADE_"+context.severity.cur.toUpperCase());
+                        }
+                    }
+                    // CHAR-93
+                    //else {
+                    //    if (oldSevIndex < newSevIndex) {
+                    //        this._addEvent(record, "UPGRADE_"+context.severity.cur.toUpperCase());
+                    //    }
+                    //    else if (oldSevIndex > newSevIndex) {
+                    //        // never escalated, check for downgrade
+                    //        this._addEvent(record, "DOWNGRADE_"+context.severity.cur.toUpperCase());
+                    //    }
+                    //}
+                }
+            }
+            else {
+                if (special != null) {
+                    context.active.last = epoch;
+                    updateScore();
+                    if (context.severity.esc != "none") {
+                        context.severity.cur = context.severity.esc;
+                        this._addEvent(record, "STAY_"+context.severity.cur.toUpperCase(), "Escalated", special);
+                    }
+                    else {
+                        context.severity.cur = severity;
+                        this._addEvent(record, "STAY_"+context.severity.cur.toUpperCase(), special);
+                    }
+                }
+                else if (config.cooldown_period > 0) {
+                    context.state = "COOLDOWN";
+                    this._addEvent(record, "BEGIN_COOLDOWN");
+                }
+                else {
+                    context.state = "NONE";
+                    context.severity.cur = "none";
+                    context.severity.max = "none";
+                    context.severity.esc = "none";
+                    context.actual.low    = 0;
+                    context.actual.medium = 0;
+                    context.actual.high   = 0;
+                    context.derive.low    = 0;
+                    context.derive.medium = 0;
+                    context.derive.high   = 0;
+                    context.severity_window = [];
+                    this._addEvent(record, "BEGIN_INACTIVE");
+                }
+            }
+            break;
+        case "WARMUP":
+            if (!is_active && is_warmup != null && (epoch - context.warmup.start) < config.warmup_period) {
+                updateScore();
+                updateSeverity();
+                // CONTINUE WARMUP
+            }
+            else if (is_active || (is_warmup != null && (epoch - context.warmup.start) >= config.warmup_period)) {
+                context.state = "ACTIVE";
+                context.active.start = epoch;
+                context.active.last  = epoch;
+                context.warmup.start = 0;
+                context.warmup.escalated = true;
+                updateScore();
+                updateSeverity();
+                if (is_active) {
+                    this._addEvent(record, "BEGIN_"+context.severity.cur.toUpperCase());
+                }
+                else {
+                    // we have no sev... artifically set to low
+                    context.severity.cur = "low";
+                    if (SEVERITY.indexOf(context.severity.max) < SEVERITY.indexOf(context.severity.cur)) {
+                        context.severity.max = context.severity.cur;
+                    }
+                    this._addEvent(record, "ESCALATE_LOW", "Elapsed time >= " + config.warmup_period + " secs");
+                }
+            }
+            else if (is_warmup == null) {
+                context.state = "NONE";
+                context.active.start = 0;
+                context.active.last  = 0;
+                context.warmup.start = 0;
+                context.warmup.escalated = false;
+                context.actual.low    = 0;
+                context.actual.medium = 0;
+                context.actual.high   = 0;
+                context.derive.low    = 0;
+                context.derive.medium = 0;
+                context.derive.high   = 0;
+                context.severity_window = [];
+                this._addEvent(record, "ABORT_WARMUP");
+            }
+            break;
+        case "COOLDOWN":
+            if (is_active || special != null) {
+                context.state = "ACTIVE";
+                context.active.last  = epoch;
+                updateScore();
+                updateSeverity();
+                this._addEvent(record, "ABORT_COOLDOWN");
+                if (context.severity.esc != "none") {
+                    // if we have escalated severity... resume to that
+                    context.severity.cur = context.severity.esc;
+                    if (is_active) {
+                        if (special == null) {
+                            special = is_high || is_medium || is_low;
+                        }
+                        this._addEvent(record, "RESUME_"+context.severity.esc.toUpperCase(), "Escalated", special);
+                    }
+                    else {
+                        this._addEvent(record, "RESUME_"+context.severity.esc.toUpperCase(), "Escalated", special);
+                    }
+                }
+                else {
+                    // else resume to current (actual) severity
+                    if (is_active) {
+                        this._addEvent(record, "RESUME_"+context.severity.cur.toUpperCase());
+                    }
+                    else {
+                        context.severity.cur = "low";
+                        this._addEvent(record, "RESUME_"+context.severity.cur.toUpperCase(), special);
+                    }
+                }
+            }
+            else {
+                if ((epoch - context.active.last) < config.cooldown_period) {
+                    updateScore();
+                    updateSeverity();
+                    // CONTINUE COOLDOWN
+                }
+                else {
+                    context.state = "NONE";
+                    context.active.start = 0;
+                    context.active.last  = 0;
+                    context.severity.cur = "none";
+                    context.severity.max = "none";
+                    context.severity.esc = "none";
+                    context.actual.low    = 0;
+                    context.actual.medium = 0;
+                    context.actual.high   = 0;
+                    context.derive.low    = 0;
+                    context.derive.medium = 0;
+                    context.derive.high   = 0;
+                    context.severity_window = [];
+                    this._addEvent(record, "COMPLETE_COOLDOWN");
+                }
+            }
+            break;
+    }
+    
+    if (context.severity.cur != "none") {
+        record["_chrisActual_"] = context.severity.cur;
+    }
+
+    if (context.active.start != 0) {
+        // increment count of number of actual sev periods
+        if (is_high != null) {
+            context.actual.high++;
+        }
+        else if (is_medium != null) {
+            context.actual.medium++;
+        }
+        else if (is_low != null) {
+            context.actual.low++;
+        }
+    }
+
+    var derived_sev = context.severity.esc != "none" ? context.severity.esc : context.severity.cur;
+
+    switch (derived_sev) {
+        case "high":
+            context.derive.high++;
+            break;
+        case "medium":
+            context.derive.medium++;
+            break;
+        case "low":
+            context.derive.low++;
+            break;
+    }
+
+    switch (config.algorithm) {
+        case "score":
+            break;
+        case "simple_threshold":
+            if (config.metric_hist_per > 0) {
+                // add to window
+                context.severity_window.push(derived_sev);
+                if (context.severity_window.length > Math.round(config.metric_hist_per/INTERVAL_IN_SECS)) {
+                    // remove oldest from window
+                    context.severity_window.shift();
+                }
+            }
+            break;
+    }
+}
+
+switch (context.state) {
+    case "ACTIVE":
+        if (context.severity.esc != "none") {
+            markSeverity(record, context.severity.esc);
+        }
+        else {
+            markSeverity(record, context.severity.cur);
+        }
+        break;
+    case "WARMUP":
+        record["_chrisValueW_"] = axisValue;
+        record["_chrisLevel_"] = "warmup";
+        break;
+    case "COOLDOWN":
+        record["_chrisValueC_"] = axisValue;
+        record["_chrisLevel_"] = "cooldown";
+        break;
+    case "NONE":
+        if (state == "COOLDOWN") {
+            // mark last cooldown interval
+            record["_chrisValueC_"] = axisValue;
+            record["_chrisLevel_"] = "cooldown";
+        }
+        break;
+}
+return context;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="applyAnomalyScoring" args="result,config" private="false">
+        <CodeText>
+          <![CDATA[/*
+** var config = {
+**     median_baseline,
+**     high_threshold,
+**     medium_threshold,
+**     low_threshold,
+**     above_threshold,
+**     below_threshold,
+**     warmup_threshold,
+**     warmup_period,
+**     cooldown_period,
+**     min_call_dev,
+**     min_call_vol,
+**     min_metric_dev,
+**     min_metric_vol,
+**     med_threshold_period,
+**     high_threshold_period,
+**     med_call_vol_pct,
+**     high_call_vol_pct,
+** };
+*/
+
+// for compatibility...
+if (config.threshold_policy != null) {
+    console.debug("config.threshold_policy="+config.threshold_policy);
+    switch (config.threshold_policy) {
+        case "above":
+            config.above_threshold = true;
+            config.below_threshold = false;
+            break;
+        case "below":
+            config.above_threshold = false;
+            config.below_threshold = true;
+            break;
+        default:
+            config.above_threshold = true;
+            config.below_threshold = false;
+            break;
+    }
+    console.debug("config.above_threshold="+config.above_threshold);
+    console.debug("config.below_threshold="+config.below_threshold);
+}
+else {
+    if (config.above_threshold == null) config.above_threshold = true;
+    if (config.below_threshold == null) config.below_threshold = false;
+}
+
+var start = Date.now();
+
+var axisValue = this.getMarkupBaseValue(result);
+var onlyCustomerCalls = true;
+for (var i=0; i<result.length; i++) {
+    if (result[i]["_value1_"] != null) {
+        onlyCustomerCalls = false;
+        break;
+    }
+}
+
+for (var i=0; i<result.length; i++) {
+    this._resetRecord(result[i]);
+    this._computeScore(config, onlyCustomerCalls, result[i]);
+}
+
+var context = null;
+for (var i=0; i<result.length; i++) {
+    context = this._updateContext(config, context, result[i], axisValue);
+}
+this._markActiveStartEnd(result, axisValue);
+this._markCallSpikes(result, axisValue);
+
+this._markNOCNotifications(result, axisValue, config);
+this._markIVRDeflections(result, axisValue, config);
+this._markFloorDispatches(result, axisValue, config);
+
+var eventTextTemplates = config["__event_text__"];
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    var eventText = this._getEventText(record, eventTextTemplates);
+    if (eventText != null) {
+        record["_chrisEvent_"] = eventText;
+    }
+    // this._addEventText("(record[epoch]="+record["_epoch_"]+",context[epoch]="+context.epoch+")");
+}
+
+console.debug("computeChrisScore: elapsed="+(Date.now()-start)+"ms");
+]]>
+        </CodeText>
+      </Function>
+      <Function name="compareSummary" args="summary,reference" private="false">
+        <CodeText>
+          <![CDATA[function getUnitText(value)
+{
+    return value > 1 ? "periods" : "period";
+}
+
+function formatCurrPrevValue(item)
+{
+    var color = "black";
+    if (item.prevValue != null && item.currValue != null) {
+        if (item.prevValue > item.currValue) color = "green";
+        else if (item.prevValue < item.currValue) color = "red";
+    }
+    item.prevText = item.prevValue != null ? "<html><span style='color:black;'>"+item.prevValue+"</span></html>" : "---";
+    item.currText = item.currValue != null ? "<html><span style='color:"+color+";'>"+item.currValue+"</span></html>" : "---";
+}
+
+function addSummaryItem(mergedItems, item, prevValues)
+{
+    if (item.value == undefined) {
+        var baseItem = {
+            name      : item.key,
+            label     : item.label,
+            prevValue : null,
+            currValue : null,
+            labelText : "<html>" + item.label + "</html>",
+            prevText  : "",
+            currText  : "",
+        };
+        mergedItems.push(baseItem);
+    }
+    else if (Array.isArray(item.value)) {
+        var baseItem = {
+            name      : item.key,
+            label     : item.label,
+            prevValue : null,
+            currValue : null,
+            labelText : "<html>" + item.label + "</html>",
+            prevText  : "",
+            currText  : "",
+        };
+        mergedItems.push(baseItem);
+
+        var first = item.value[0];
+        if ((first.min != null || first.max != null) && first.count != null) {
+            // histogram distribution
+            for (var i=0, n=item.value.length; i<n; i++) {
+                var bucket = item.value[i];
+                var minText = bucket.min != null ? String(bucket.min) : "NA";
+                var maxText = bucket.max != null ? String(bucket.max) : "NA";
+                var bucketItem = {
+                    name      : item.key + "_" + minText + "_" + maxText,
+                    label     : item.label + " ("+ minText + "," + maxText + ")",
+                    prevValue : prevValues[item.key+"["+i+"]"],
+                    currValue : bucket.count,
+                    labelText : "<html>&nbsp;&nbsp;&nbsp;&nbsp;",
+                    prevText  : "",
+                    currText  : "",
+                };
+                formatCurrPrevValue(bucketItem);
+                if (bucket.min == null) {
+                    bucketItem.labelText += "up to " + bucket.max + " " + getUnitText(bucket.max);
+                }
+                else if (bucket.max == null) {
+                    bucketItem.labelText += bucket.min + " or more " + getUnitText(2);
+                }
+                else if (bucket.min == bucket.max) {
+                    bucketItem.labelText += bucket.min + " " + getUnitText(bucket.min);
+                }
+                else {
+                    bucketItem.labelText += bucket.min + " to " + bucket.max + " " + getUnitText(bucket.max);
+                }
+                bucketItem.labelText += "</html>";
+                mergedItems.push(bucketItem);
+            }
+        }
+        else if (first.label != null && first.value != null) {
+            // sub-entries, eg. min,max,med,avg...
+            // but can be anything
+            for (var i=0, n=item.value.length; i<n; i++) {
+                var subItem = {
+                    name      : item.key + "_" + (item.value[i]).name,
+                    label     : item.label + " (" + (item.value[i]).label + ")",
+                    prevValue : prevValues[item.key+"["+i+"]"],
+                    currValue : (item.value[i]).value,
+                    labelText : "<html>&nbsp;&nbsp;&nbsp;&nbsp;" + (item.value[i]).label + "</html>",
+                    prevText  : "",
+                    currText  : "",
+                };
+                formatCurrPrevValue(subItem);
+                mergedItems.push(subItem);
+            }
+        }
+    }
+    else {
+        var baseItem = {
+            name      : item.key,
+            label     : item.label,
+            prevValue : prevValues[item.key],
+            currValue : item.value,
+            labelText : "<html>" + item.label + "</html>",
+            prevText  : "",
+            currText  : "",
+        };
+        formatCurrPrevValue(baseItem);
+        mergedItems.push(baseItem);
+    }
+}
+
+var summaryCompareItems = [];
+summary.forEach(function(item) {
+    addSummaryItem(summaryCompareItems, item, reference);
+});
+return summaryCompareItems;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="compileSummary" args="result,callback" private="false">
+        <CodeText>
+          <![CDATA[function getValueBucket(buckets, value)
+{
+    for (var i=0, n=buckets.length; i<n; i++) {
+        var bucket = buckets[i];
+        if ((bucket.min == null || bucket.min <= value) && (bucket.max == null || value <= bucket.max)) {
+            return bucket;
+        }
+    }
+    return null;
+}
+
+function setItemValue(config, itemName, value)
+{
+    if (Array.isArray(config.value)) {
+        for (var i=0; i<config.value.length; i++) {
+            var item = config.value[i];
+            if (item.name == itemName) {
+                item.value = value;
+                break;
+            }
+        }
+    }
+}
+
+function asPercent(numer, denom)
+{
+    if (denom > 0) {
+        return Math.round(100 * (numer / denom)) + "%";
+    }
+    else {
+        return "---";
+    }
+}
+
+function getSubPopulationInfo(populations, config, callType)
+{
+    var ANY_SEV_BEFORE_XXX   = populations["ANY_SEV_BEFORE_"+callType] || [];
+    var HIGH_SEV_BEFORE_XXX  = populations["HIGH_SEV_BEFORE_"+callType] || [];
+    var ANY_SEV_AFTER_XXX    = populations["ANY_SEV_AFTER_"+callType] || [];
+    var HIGH_SEV_AFTER_XXX   = populations["HIGH_SEV_AFTER_"+callType] || [];
+    var ANY_SEV_NO_XXX       = populations["ANY_SEV_NO_"+callType] || [];
+    var HIGH_SEV_NO_XXX      = populations["HIGH_SEV_NO_"+callType] || [];
+    var ANY_SEV_XXX_INSIDE   = populations["ANY_SEV_"+callType+"_INSIDE"] || [];
+    var HIGH_SEV_XXX_INSIDE  = populations["HIGH_SEV_"+callType+"_INSIDE"] || [];
+    var ANY_SEV_XXX_OUTSIDE  = populations["ANY_SEV_"+callType+"_OUTSIDE"] || [];
+    var HIGH_SEV_XXX_OUTSIDE = populations["HIGH_SEV_"+callType+"_OUTSIDE"] || [];
+
+    // ANY_SEV_BEFORE_XXX
+    (config["ANY_SEV_BEFORE_"+callType]).value = ANY_SEV_BEFORE_XXX.length;
+    // HIGH_SEV_BEFORE_XXX
+    (config["HIGH_SEV_BEFORE_"+callType]).value = HIGH_SEV_BEFORE_XXX.length;
+    // ANY_SEV_AFTER_XXX
+    (config["ANY_SEV_AFTER_"+callType]).value = ANY_SEV_AFTER_XXX.length;
+    // HIGH_SEV_AFTER_XXX
+    (config["HIGH_SEV_AFTER_"+callType]).value = HIGH_SEV_AFTER_XXX.length;
+    // ANY_SEV_NO_XXX
+    (config["ANY_SEV_NO_"+callType]).value = ANY_SEV_NO_XXX.length;
+    // HIGH_SEV_NO_XXX
+    (config["HIGH_SEV_NO_"+callType]).value = HIGH_SEV_NO_XXX.length;
+    // ANY_SEV_XXX_INSIDE
+    (config["ANY_SEV_"+callType+"_INSIDE"]).value = HIGH_SEV_XXX_INSIDE.length;
+    // HIGH_SEV_XXX_INSIDE
+    (config["HIGH_SEV_"+callType+"_INSIDE"]).value = HIGH_SEV_XXX_INSIDE.length;
+    // ANY_SEV_XXX_OUTSIDE
+    (config["ANY_SEV_"+callType+"_OUTSIDE"]).value = ANY_SEV_XXX_OUTSIDE.length;
+    // HIGH_SEV_XXX_OUTSIDE
+    (config["HIGH_SEV_"+callType+"_OUTSIDE"]).value = HIGH_SEV_XXX_OUTSIDE.length;
+
+        
+    // HIST_ANY_SEV_BEFORE_XXX
+    for (var i=0, n=ANY_SEV_BEFORE_XXX.length; i<n; i++) {
+        var incident = ANY_SEV_BEFORE_XXX[i];
+        var duration = incident.endIndex - incident.startIndex;
+        var bucket = getValueBucket((config["HIST_ANY_SEV_BEFORE_"+callType]).value, duration);
+        if (bucket != null) {
+            bucket.count++;
+        }
+    }
+    
+    // HIST_HIGH_SEV_BEFORE_XXX
+    for (var i=0, n=HIGH_SEV_BEFORE_XXX.length; i<n; i++) {
+        var incident = HIGH_SEV_BEFORE_XXX[i];
+        var duration = incident.endIndex - incident.startIndex;
+        var bucket = getValueBucket((config["HIST_HIGH_SEV_BEFORE_"+callType]).value, duration);
+        if (bucket != null) {
+            bucket.count++;
+        }
+    }
+
+    // HIST_CLOSE_TOO_SOON_XXX
+    for (var i=0, n=ANY_SEV_BEFORE_XXX.length; i<n; i++) {
+        var incident = ANY_SEV_BEFORE_XXX[i];
+        incident["trailing_"+callType.toLowerCase()].forEach(function(calls) {
+            var elapsed = calls.startIndex - incident.endIndex;
+            var bucket = getValueBucket((config["HIST_CLOSE_TOO_SOON_"+callType]).value, elapsed);
+            if (bucket != null) {
+                bucket.count++;
+            }
+        });
+    }
+
+    // HIST_ALERT_TOO_LATE_XXX
+    for (var i=0, n=HIGH_SEV_BEFORE_XXX.length; i<n; i++) {
+        var incident = HIGH_SEV_BEFORE_XXX[i];
+        var calls = incident["trailing_"+callType.toLowerCase()][0];
+        // if we never notify... then we are by definition too late
+        if (isNaN(incident.nocNotifyIndex)) {
+            var elapsed = calls.startIndex - incident.startIndex;
+            var bucket = getValueBucket((config["HIST_ALERT_TOO_LATE_"+callType]).value, elapsed);
+            if (bucket != null) {
+                bucket.count++;
+            }
+        }
+        else {
+            var elapsed = calls.startIndex - incident.nocNotifyIndex;
+            var bucket = getValueBucket((config["HIST_ALERT_TOO_LATE_"+callType]).value, elapsed);
+            if (bucket != null) {
+                bucket.count++;
+            }
+        }
+    }
+
+    // NOC_NOTIFY_BEFORE_XXX
+    for (var i=0, n=ANY_SEV_BEFORE_XXX.length; i<n; i++) {
+        var incident = ANY_SEV_BEFORE_XXX[i];
+        var calls = incident["trailing_"+callType.toLowerCase()][0];
+        if (!isNaN(incident.nocNotifyIndex) && incident.nocNotifyIndex < calls.startIndex) {
+            (config["NOC_NOTIFY_BEFORE_"+callType]).value++;
+        }
+    }
+
+    // NOC_NOTIFY_AFTER_XXX
+    for (var i=0, n=ANY_SEV_AFTER_XXX.length; i<n; i++) {
+        var incident = ANY_SEV_AFTER_XXX[i];
+        var calls = incident["leading_"+callType.toLowerCase()][0];
+        if (!isNaN(incident.nocNotifyIndex) && incident.nocNotifyIndex >= calls.startIndex) {
+            (config["NOC_NOTIFY_AFTER_"+callType]).value++;
+        }
+    }
+    for (var i=0, n=ANY_SEV_BEFORE_XXX.length; i<n; i++) {
+        var incident = ANY_SEV_BEFORE_XXX[i];
+        var calls = incident["trailing_"+callType.toLowerCase()][0];
+        if (!isNaN(incident.nocNotifyIndex) && incident.nocNotifyIndex >= calls.startIndex) {
+            (config["NOC_NOTIFY_AFTER_"+callType]).value++;
+        }
+    }
+
+    // NOC_NOTIFY_NO_XXX
+    for (var i=0, n=ANY_SEV_NO_XXX.length; i<n; i++) {
+        var incident = ANY_SEV_NO_XXX[i];
+        if (!isNaN(incident.nocNotifyIndex)) {
+            (config["NOC_NOTIFY_NO_"+callType]).value++;
+        }
+    }
+
+    // PCT_NOC_NOTIFY_BEFORE_XXX
+    (config["PCT_NOC_NOTIFY_BEFORE_"+callType]).value = asPercent((config["NOC_NOTIFY_BEFORE_"+callType]).value, (config["NOC_NOTIFICATION_COUNT"]).value);
+
+    // PCT_NOC_NOTIFY_NO_XXX
+    (config["PCT_NOC_NOTIFY_NO_"+callType]).value = asPercent((config["NOC_NOTIFY_NO_"+callType]).value, (config["NOC_NOTIFICATION_COUNT"]).value);
+
+    // HIST_NOC_NOTIFY_XXX_LEAD_TIME
+    for (var i=0, n=ANY_SEV_BEFORE_XXX.length; i<n; i++) {
+        var incident = ANY_SEV_BEFORE_XXX[i];
+        var calls = incident["trailing_"+callType.toLowerCase()][0];
+        if (!isNaN(incident.nocNotifyIndex) && incident.nocNotifyIndex < calls.startIndex) {
+            var nocNotifyLead = calls.startIndex - incident.nocNotifyIndex;
+            var bucket = getValueBucket((config["HIST_NOC_NOTIFY_"+callType+"_LEAD_TIME"]).value, nocNotifyLead);
+            if (bucket != null) {
+                bucket.count++;
+            }
+        }
+    }
+
+    // NOC_NOTIFY_XXX_LEAD_TIME
+    var nocNotifyLeads = [];
+    for (var i=0, n=ANY_SEV_BEFORE_XXX.length; i<n; i++) {
+        var incident = ANY_SEV_BEFORE_XXX[i];
+        var calls = incident["trailing_"+callType.toLowerCase()][0];
+        if (!isNaN(incident.nocNotifyIndex) && incident.nocNotifyIndex < calls.startIndex) {
+            var nocNotifyLead = calls.startIndex - incident.nocNotifyIndex;
+            nocNotifyLeads.push(nocNotifyLead);
+        }
+    }
+    if (nocNotifyLeads.length > 0) {
+        nocNotifyLeads.sort();
+
+        var minNocNotifyLead = Math.min(...nocNotifyLeads);
+        setItemValue(config["NOC_NOTIFY_"+callType+"_LEAD_TIME"], "MIN", minNocNotifyLead);
+
+        var maxNocNotifyLead = Math.max(...nocNotifyLeads);
+        setItemValue(config["NOC_NOTIFY_"+callType+"_LEAD_TIME"], "MAX", maxNocNotifyLead);
+
+        var medNocNotifyLead = (nocNotifyLeads[Math.floor((nocNotifyLeads.length-1)/2)] + nocNotifyLeads[Math.floor((nocNotifyLeads.length)/2)])/2;
+        setItemValue(config["NOC_NOTIFY_"+callType+"_LEAD_TIME"], "MED", medNocNotifyLead);
+
+        var avgNocNotifyLead = Number((nocNotifyLeads.reduce((x, y) => x + y) / nocNotifyLeads.length).toFixed(1));
+        setItemValue(config["NOC_NOTIFY_"+callType+"_LEAD_TIME"], "AVG", avgNocNotifyLead);
+    }
+    else {
+        setItemValue(config["NOC_NOTIFY_"+callType+"_LEAD_TIME"], "MIN", "---");
+        setItemValue(config["NOC_NOTIFY_"+callType+"_LEAD_TIME"], "MAX", "---");
+        setItemValue(config["NOC_NOTIFY_"+callType+"_LEAD_TIME"], "MED", "---");
+        setItemValue(config["NOC_NOTIFY_"+callType+"_LEAD_TIME"], "AVG", "---");
+    }
+}
+
+var self = this;
+this.getSummaryConfig(function(response) {
+    if (response.status == "OK") {
+        var config = response.value;
+
+        var incidents  = self._getIncidents(config, result);
+        var callspikes = self._getCallSpikes(config, result);
+        var callgroups = self._getCallGroups(config, result);
+
+        // get base populations
+        var populations = {};
+        populations = self._getPopulations(populations, config, incidents, null, null);
+
+        var ANY_SEV  = populations["ANY_SEV"] || [];
+        var HIGH_SEV = populations["HIGH_SEV"] || [];
+
+        // ANY_SEV
+        (config["ANY_SEV"]).value = ANY_SEV.length;
+        // HIGH_SEV
+        (config["HIGH_SEV"]).value = HIGH_SEV.length;
+        
+        // HIST_ANY_SEV
+        for (var i=0, n=ANY_SEV.length; i<n; i++) {
+            var incident = ANY_SEV[i];
+            var duration = incident.endIndex - incident.startIndex;
+            var bucket = getValueBucket((config["HIST_ANY_SEV"]).value, duration);
+            if (bucket != null) {
+                bucket.count++;
+            }
+        }
+        
+        // HIST_HIGH_SEV
+        for (var i=0, n=HIGH_SEV.length; i<n; i++) {
+            var incident = HIGH_SEV[i];
+            var duration = incident.endIndex - incident.startIndex;
+            var bucket = getValueBucket((config["HIST_HIGH_SEV"]).value, duration);
+            if (bucket != null) {
+                bucket.count++;
+            }
+        }
+        // HIST_RAM_UP
+        for (var i=0, n=HIGH_SEV.length; i<n; i++) {
+            var incident = HIGH_SEV[i];
+            var ramUp = 0;
+            for (var j=incident.startIndex; j<=incident.endIndex; j++) {
+                var record = result[j];
+                if (record["_chrisActual_"] == "high") break;
+                ramUp++;
+            }
+            var bucket = getValueBucket((config["HIST_RAM_UP"]).value, ramUp);
+            if (bucket != null) {
+                bucket.count++;
+            }
+        }
+
+        // HIST_WIND_DOWN_ANY_SEV
+        for (var i=0, n=HIGH_SEV.length; i<n; i++) {
+            var incident = HIGH_SEV[i];
+            var windDown = 0;
+            for (var j=incident.startIndex; j<=incident.endIndex; j++) {
+                var record = result[j];
+                if (record["_chrisActual_"] == "high") {
+                    // found first high...
+                    windDown = incident.endIndex - j - 1;
+                    break;
+                }
+            }
+            var bucket = getValueBucket((config["HIST_WIND_DOWN_ANY_SEV"]).value, windDown);
+            if (bucket != null) {
+                bucket.count++;
+            }
+        }
+
+        // HIST_WIND_DOWN_HIGH_SEV
+        for (var i=0, n=HIGH_SEV.length; i<n; i++) {
+            var incident = HIGH_SEV[i];
+            var windDown = 0;
+            for (var j=incident.startIndex; j<=incident.endIndex; j++) {
+                var record = result[j];
+                if (record["_chrisActual_"] == "high") {
+                    // found first high...
+                    for (var k=j+1; k<=incident.endIndex; k++) {
+                        var record = result[k];
+                        if (record["_chrisActual_"] == "high") {
+                            windDown++;
+                        }
+                    }
+                    break;
+                }
+            }
+            var bucket = getValueBucket((config["HIST_WIND_DOWN_HIGH_SEV"]).value, windDown);
+            if (bucket != null) {
+                bucket.count++;
+            }
+        }
+        // HIST_INACTIVE
+        for (var i=0, n=(ANY_SEV.length-1); i<n; i++) {
+            var currIncident = ANY_SEV[i];
+            var nextIncident = ANY_SEV[i+1];
+            var duration = nextIncident.startIndex - currIncident.endIndex;
+            var bucket = getValueBucket((config["HIST_INACTIVE"]).value, duration);
+            if (bucket != null) {
+                bucket.count++;
+            }
+        }
+
+        // HIST_ABORTED_COOLDOWN
+        for (var i=0, n=ANY_SEV.length; i<n; i++) {
+            var incident = ANY_SEV[i];
+            var bucket = getValueBucket((config["HIST_ABORTED_COOLDOWN"]).value, incident.cooldown);
+            if (bucket != null) {
+                bucket.count++;
+            }
+        }
+
+        // NOC_NOTIFICATION_COUNT
+        for (var i=0, n=ANY_SEV.length; i<n; i++) {
+            var incident = ANY_SEV[i];
+            if (!isNaN(incident.nocNotifyIndex)) {
+                (config["NOC_NOTIFICATION_COUNT"]).value++;
+            }
+        }
+
+        // IVR_DEFLECT_COUNT
+        for (var i=0, n=ANY_SEV.length; i<n; i++) {
+            var incident = ANY_SEV[i];
+            if (!isNaN(incident.ivrDeflectIndex)) {
+                (config["IVR_DEFLECT_COUNT"]).value++;
+            }
+        }
+
+        // FLOOR_DISPATCH_COUNT
+        for (var i=0, n=ANY_SEV.length; i<n; i++) {
+            var incident = ANY_SEV[i];
+            if (!isNaN(incident.floorDispatchIndex)) {
+                (config["FLOOR_DISPATCH_COUNT"]).value++;
+            }
+        }
+        
+        // DEFLECTED_ABOVE_BASELINE_CALLS
+        // ABOVE_BASELINE_CALLS
+        (config["DEFLECTED_ABOVE_BASELINE_CALLS"]).value = 0;
+        (config["ABOVE_BASELINE_CALLS"]).value = 0;
+        for (var i=0, n=ANY_SEV.length; i<n; i++) {
+            var incident = ANY_SEV[i];
+            if (!isNaN(incident.ivrDeflectIndex)) {
+                for (var j=incident.startIndex; j<=incident.endIndex; j++) {
+                    var record = result[j];
+                    var diff = record["_value2_"] - record["_baseline2_"];
+                    if (diff > 0) {
+                        if (j > incident.ivrDeflectIndex) {
+                            (config["DEFLECTED_ABOVE_BASELINE_CALLS"]).value += diff;
+                        }
+                        (config["ABOVE_BASELINE_CALLS"]).value += diff;
+                    }
+                }
+            }
+        }
+
+        // PCT_DEFLECTED_ABOVE_BASELINE_CALLS
+        (config["PCT_DEFLECTED_ABOVE_BASELINE_CALLS"]).value = asPercent((config["DEFLECTED_ABOVE_BASELINE_CALLS"]).value, (config["ABOVE_BASELINE_CALLS"]).value);
+
+
+
+        // CALL_SPIKE
+        (config["CALL_SPIKE"]).value = callspikes.length;
+
+        populations = self._getPopulations(populations, config, incidents, callspikes, "CALL_SPIKE");
+        getSubPopulationInfo(populations, config, "CALL_SPIKE");
+
+
+
+        // CALL_GROUP
+        (config["CALL_GROUP"]).value = callgroups.length;
+
+        populations = self._getPopulations(populations, config, incidents, callgroups, "CALL_GROUP");
+        getSubPopulationInfo(populations, config, "CALL_GROUP");
+
+
+
+        var summary = [];
+        (config["summary-config"]["summary-keys[V3]"]).forEach(function(key) {
+            var item = config[key];
+            if (item == null) {
+                // just text
+                summary.push({
+                    label : "<div style='font-size:14px;font-weight:bold;padding-top:10px;padding-bottom:10px;'>" + key + "</div>"
+                });
+            }
+            else {
+                item.key = key;
+                summary.push(item);
+            }
+        });
+        callback(summary);
+    }
+    else {
+        callback([]);
+    }
+});
+]]>
+        </CodeText>
+      </Function>
+      <Function name="computeDefaults" args="configDefault,result,algorithm,thresholdPolicy,callback" private="false">
+        <CodeText>
+          <![CDATA[if (algorithm == null) algorithm = "score";
+if (thresholdPolicy == null) thresholdPolicy = "above";
+
+var onlyCustomerCalls = true;
+for (var i=0, n=result.length; i<n; i++) {
+    if (result[i]["_value1_"] != null) {
+        onlyCustomerCalls = false;
+        break;
+    }
+}
+
+function computeScores(factor)
+{
+    var scores = [];
+    for (var i=0, n=result.length; i<n; i++) {
+        var record = result[i];
+        switch (algorithm) {
+            case "score":
+                var OFFSET = 1;
+                var actual = onlyCustomerCalls == true ? record["_value2_"] : record["_value1_"];
+                var baseline = onlyCustomerCalls == true ? record["_baseline2_"] : record["_baseline1_"];
+                if (OFFSET != null) {
+                    actual = (actual != null ? actual : 0) + OFFSET;
+                    baseline = (baseline != null ? baseline : 0) + OFFSET;
+                }
+                if (actual != null && baseline != null) {
+                    var score = ((actual-baseline)/factor)*100;
+                    score = Number(score.toFixed(2));
+                    switch (thresholdPolicy) {
+                        case "above":
+                            if (score > 0) {
+                                scores.push(Math.abs(score));
+                            }
+                            break;
+                        case "below":
+                            if (score < 0) {
+                                scores.push(Math.abs(score));
+                            }
+                            break;
+                    }
+                }
+                break;
+            case "simple_threshold":
+                var actual = onlyCustomerCalls == true ? record["_value2_"] : record["_value1_"];
+                if (actual != null) {
+                    var score = actual;
+                    score = Number(score.toFixed(2));
+                    switch (thresholdPolicy) {
+                        case "above":
+                            if (score > 0) {
+                                scores.push(Math.abs(score));
+                            }
+                            break;
+                        case "below":
+                            if (score < 0) {
+                                scores.push(Math.abs(score));
+                            }
+                            break;
+                    }
+                }
+                break;
+        }
+    }
+    scores.sort(function(a,b) {
+        if (a > b) return 1;
+        else if (a < b) return -1;
+        return 0;
+    });
+    return scores;
+}
+
+function computeConfig(factor)
+{
+    var config = {
+        median_baseline  : factor,
+        high_threshold   : 0,
+        medium_threshold : 0,
+        low_threshold    : 0,
+    };
+
+    var scores = computeScores(factor);
+    var max_score = scores[scores.length-1];
+    
+    var PERCENTILE = configDefault["mode"] == "percentile";
+    var HIGH   = configDefault["defaults"]["high"]   || 99;
+    var MEDIUM = configDefault["defaults"]["medium"] || 97;
+    var LOW    = configDefault["defaults"]["low"]    || 95;
+    var WARMUP = configDefault["defaults"]["warmup"] || 70;
+    if (PERCENTILE) {
+        // percentile
+        config.high_threshold   = scores[Math.floor((HIGH/100)*scores.length)];
+        config.medium_threshold = scores[Math.floor((MEDIUM/100)*scores.length)];
+        config.low_threshold    = scores[Math.floor((LOW/100)*scores.length)];
+        config.warmup_threshold = scores[Math.floor((WARMUP/100)*scores.length)];
+    }
+    else {
+        // percent
+        config.high_threshold   = (HIGH/100)*max_score;
+        config.medium_threshold = (MEDIUM/100)*max_score;
+        config.low_threshold    = (LOW/100)*max_score;
+        config.warmup_threshold = (WARMUP/100)*max_score;
+    }
+    return config;
+}
+
+switch (algorithm) {
+    case "score":
+        var baselines = [];
+        for (var i=0, n=result.length; i<n; i++) {
+            var record = result[i];
+            var baseline = onlyCustomerCalls ? record["_baseline2_"] : record["_baseline1_"];
+            if (baseline != null) {
+                baselines.push(baseline);
+            }
+        }
+        baselines.sort(function(a,b) {
+            if (a > b) return 1;
+            else if (a < b) return -1;
+            return 0;
+        });
+        //console.debug(baselines);
+        this.computeScoreFactor(baselines, function(response) {
+            if (response.status == "OK") {
+                callback(computeConfig(response.value));
+            }
+            else {
+                callback({
+                    median_baseline  : 0,
+                    high_threshold   : 0,
+                    medium_threshold : 0,
+                    low_threshold    : 0,
+                });
+            }
+        });
+        break;
+    case "simple_threshold":
+        callback(computeConfig(0));
+        break;
+    default:
+        callback({
+            median_baseline  : 0,
+            high_threshold   : 0,
+            medium_threshold : 0,
+            low_threshold    : 0,
+        });
+        break;
+}
+
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getConfigInfo" args="config,baseConfig" private="false">
+        <CodeText>
+          <![CDATA[var info = [];
+for (var name in config) {
+    var value = config[name];
+    if (value != null) {
+        var base = baseConfig != null ? baseConfig[name] : value;
+        info.push({
+            name  : name,
+            value : value,
+            style : (String(base) != String(value) ? "color:red;" : ""),
+        });
+    }
+}
+info.sort(function(a,b) {
+    return a.name.localeCompare(b.name);
+});
+return info;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getIncidentConfigInfo" args="ConfigPlugin,config" private="false">
+        <CodeText>
+          <![CDATA[function getConfigItem(config, name, label, color)
+{
+    var value = Number(config[name]);
+    if (isNaN(value)) {
+        value = "---";
+    }
+    else {
+        value = value.toFixed(2);
+        var dot = value.indexOf(".");
+        if (dot != -1 && value.substring(dot) == ".00") {
+            value = value.substring(0, dot);
+        }
+    }
+    if (config[name+"$disabled"] == true) {
+        return {
+            label : label,
+            value : "("+value+")",
+            color : "#dddddd",
+        };
+    }
+    else {
+        return {
+            label : label,
+            value : value,
+            color : color,
+        };
+    }
+}
+
+var configInfo = [];
+if (config["algorithm"] != null) {
+    configInfo.push({
+        label : "Algorithm",
+        value : ConfigPlugin.getAlgorithmCode(config["algorithm"]),
+    });
+}
+if (config["threshold_policy"] != null) {
+    configInfo.push({
+        label : "Threshold Policy",
+        value : ConfigPlugin.getThresholdPolicyCode(config["threshold_policy"]),
+    });
+}
+switch (config["algorithm"]) {
+    case "score":
+        configInfo.push(getConfigItem(config, "median_baseline", "Factor", null));
+        break;
+    case "simple_threshold":
+        break;
+}
+configInfo.push(getConfigItem(config, "high_threshold", "High Threshold", "#cd4343"));
+configInfo.push(getConfigItem(config, "medium_threshold", "Medium Threshold", "#ffb53e"));
+configInfo.push(getConfigItem(config, "low_threshold", "Low Threshold", "#ffe36e"));
+configInfo.push(getConfigItem(config, "warmup_threshold", "Warmup Threshold", "#68ad80"));
+var width = Math.round(100/configInfo.length);
+configInfo.forEach(function(info) {
+    info.width = width;
+    if (info.color == null) info.color = "#999999";
+});
+return configInfo;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getIncidentConfigOptions" args="config,onChangeCallback" private="false">
+        <CodeText>
+          <![CDATA[var options = {
+    "selective-disable" : true,
+};
+if (config["__options__"] != null) {
+    var opts = [];
+    var value = config.algorithm + ":" + config.threshold_policy;
+    (config["__options__"]).forEach(function(opt) {
+        if (config["__perspective__"] == null && opt["__value__"] == value) {
+            config["__perspective__"] = opt["__label__"];
+        }
+        opts.push(opt["__label__"]);
+    });
+    if (config["__perspective__"] == null) {
+        config["__perspective__"] = opts[0];
+    }
+    options["custom-items"] = [{
+        name   : "__perspective__",
+        type   : "enumeration",
+        label  : "Configuration Perspectives",
+        enums  : opts,
+        required : true,
+        config : {
+            onchange : lang.partial(function(__options__, model, item, prop, widgets, rows, values, formDef) {
+                for (var o=0; o<__options__.length; o++) {
+                    var __option__ = __options__[o];
+                    if (__option__["__label__"] == values["__perspective__"]) {
+                        // found it
+                        onChangeCallback(formDef, __option__);
+                        break;
+                    }
+                }
+            }, config["__options__"])
+        }
+    }];
+}
+return options;
+
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getIncidentSummary" args="result" private="false">
+        <CodeText>
+          <![CDATA[var items           = [];
+var item            = null;
+var start_epoch     = null;
+var end_epoch       = null;
+var call_spike      = null;
+var noc_notify      = null;
+var ivr_deflect     = null;
+var floor_dispatch  = null;
+var baseline_calls  = 0;
+var deflected_calls = 0;
+
+function finalize()
+{
+    if (call_spike != null && noc_notify != null) {
+        item["noc_lead_time"] = call_spike - noc_notify;
+    }
+    item["incident_duration"] = end_epoch - start_epoch + 300;
+    item["baseline_calls"] = baseline_calls;
+    item["deflected_calls"] = deflected_calls;
+    if (baseline_calls != 0) {
+        item["pct_deflected_calls"] = deflected_calls / baseline_calls;
+    }
+
+    start_epoch     = null;
+    end_epoch       = null;
+    item            = null;
+    call_spike      = null;
+    noc_notify      = null;
+    ivr_deflect     = null;
+    floor_dispatch  = null;
+    baseline_calls  = 0;
+    deflected_calls = 0;
+}
+
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    if (item == null && record["_chrisActive_"] != null) {
+        item = {};
+        item["start_time"] = record["_time_"];
+        item["start_epoch"] = record["_epoch_"];
+        start_epoch = record["_epoch_"];
+        item["end_time"] = record["_time_"];
+        item["end_epoch"] = record["_epoch_"];
+        end_epoch = record["_epoch_"];
+        items.push(item);
+
+        // monitor above baseline calls
+        var value2 = record["_value2_"];
+        var baseline2 = record["_baseline2_"];
+        if (value2 != null && baseline2 != null && value2 > baseline2) {
+            baseline_calls += (value2 - baseline2);
+        }
+    }
+    if (item != null) {
+        if (record["_chrisActive_"] != null) {
+            // still active
+            item["end_time"] = record["_time_"];
+            item["end_epoch"] = record["_epoch_"];
+            end_epoch = record["_epoch_"];
+            if (item["call_spike"] == null && record["_chrisCalls_"] != null) {
+                item["call_spike"] = record["_time_"];
+                call_spike = record["_epoch_"];
+            }
+            if (item["noc_notify"] == null && record["_chrisNOCNotify_"] != null) {
+                item["noc_notify"] = record["_time_"];
+                noc_notify = record["_epoch_"];
+            }
+            if (item["ivr_deflection"] == null && record["_chrisIVRDeflect_"] != null) {
+                item["ivr_deflection"] = record["_time_"];
+                ivr_deflect = record["_epoch_"];
+            }
+            if (item["floor_dispatch"] == null && record["_chrisFloorDispatch_"] != null) {
+                item["floor_dispatch"] = record["_time_"];
+                floor_dispatch = record["_epoch_"];
+            }
+
+            // monitor above baseline calls
+            var value2 = record["_value2_"];
+            var baseline2 = record["_baseline2_"];
+            if (value2 != null && baseline2 != null && value2 > baseline2) {
+                baseline_calls += (value2 - baseline2);
+                if (ivr_deflect != null) {
+                    // IVR Deflection installed, monitor deflected calls
+                    deflected_calls += (value2 - baseline2);
+                }
+            }
+        }
+        else {
+            // inactive
+            finalize();
+        }
+    }
+}
+if (item != null) {
+    // wrap up... even though incident may be have ended, treat as end since we are out of time
+    finalize();
+}
+for (var i=0, n=items.length; i<n; i++) {
+    if (i > 0) {
+        items[i]["prev_incident"] = items[i]["start_epoch"] - items[i-1]["end_epoch"];
+    }
+    if (i < (n-1)) {
+        items[i]["next_incident"] = items[i+1]["start_epoch"] - items[i]["end_epoch"];
+    }
+}
+return items;
+
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getMarkupBaseValue" args="result" private="false">
+        <CodeText>
+          <![CDATA[var max2 = 0;
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    if (record._value2_ != null && max2 < record._value2_) {
+        max2 = record._value2_;
+    }
+    if (record._baseline2_ != null && max2 < record._baseline2_) {
+        max2 = record._baseline2_;
+    }
+}
+if (max2 == 0) {
+    return 90;
+}
+else if (max2 < 18) {
+    max2 = 18;
+}
+else {
+    return max2 * 1.8;
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getMarkupCallValue" args="result" private="false">
+        <CodeText>
+          <![CDATA[return 0.90 * this.getMarkupBaseValue(result);
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getSummaryValues" args="summary" private="false">
+        <CodeText>
+          <![CDATA[var values = {};
+summary.forEach(function(item) {
+    if (item.value != null) {
+        if (Array.isArray(item.value)) {
+            var first = item.value[0];
+            if ((first.min != null || first.max != null) && first.count != null) {
+                // histogram distribution
+                for (var i=0; i<item.value.length; i++) {
+                    values[item.key+"["+i+"]"] = item.value[i].count;
+                }
+            }
+            else if (first.label != null && first.value != null) {
+                // sub-entries, eg. min,max,med,avg...
+                // but can be anything
+                for (var i=0, n=item.value.length; i<n; i++) {
+                    values[item.key+"["+i+"]"] = item.value[i].value;
+                }
+            }
+        }
+        else {
+            values[item.key] = item.value;
+        }
+    }
+});
+return values;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getTimeIntervalAndFormat" args="fromUnixTime,toUnixTime,aggrInterval" private="false">
+        <CodeText>
+          <![CDATA[var seconds = toUnixTime - fromUnixTime;
+
+var M = 60;
+var H = 60 * M;
+var D = 24 * H;
+
+var value;
+var unit;
+var format;
+
+if ((aggrInterval >= D) && (aggrInterval % D) == 0) {
+    value = Math.round(aggrInterval / D);
+    unit = "d";
+    format = "MM/dd";
+}
+else if ((aggrInterval >= H) && (aggrInterval % H) == 0) {
+    value = Math.round(aggrInterval / H);
+    unit = "h";
+    format = "MM/dd hha";
+}
+else if ((aggrInterval >= M) && (aggrInterval % M) == 0) {
+    value = Math.round(aggrInterval / M);
+    unit = "m";
+    if (seconds > D) {
+        format = "MM/dd, hh:mma";
+    }
+    else {
+        format = "hh:mma";
+    }
+}
+else {
+    value = aggrInterval;
+    unit = "s";
+    if (seconds > D) {
+        // this SHOULD NOT be necessary
+        format = "MM/dd, hh:mm:ssa";
+    }
+    else {
+        format = "hh:mm:ssa";
+    }
+}
+return {
+    value    : value,
+    unit     : unit,
+    format   : format,
+    from     : fromUnixTime,
+    to       : toUnixTime,
+    interval : aggrInterval,
+    "mark-time-by"  : "StartTime",
+    "round-time-by" : "StartTime",
+};]]>
+        </CodeText>
+      </Function>
+      <Function name="manageAnomalyConfig" args="CommonPlugin,metricId,config,callback,readonly" private="false">
+        <CodeText>
+          <![CDATA[var self = this;
+
+if (config != null) {
+    config = lang.clone(config);
+    delete config["__options__"];
+    delete config["__label__"];
+    delete config["__perspective__"];
+}
+
+function getConfigObj(configJSON)
+{
+    var obj = JSON.parse(configJSON);
+    delete obj["noc_notify_high_enable"];
+    delete obj["noc_notify_medium_enable"];
+    delete obj["ivr_deflect_high_enable"];
+    delete obj["ivr_deflect_medium_enable"];
+    delete obj["floor_dispatch_high_enable"];
+    delete obj["floor_dispatch_medium_enable"];
+    return obj;
+}
+
+function addRow(table, item, curr, ownedOnly, domConstruct)
+{
+    var tr = domConstruct.create("tr", {
+        "class" : "content-row"
+    });
+    table.appendChild(tr);
+    
+    var td = domConstruct.create("td", {
+        "class" : "content-name-cell",
+    });
+    if (ownedOnly || item.is_owned) {
+        td.innerHTML = item.config_name;
+    }
+    else {
+        td.innerHTML = item.config_name + "<br><span style='font-size:9px;color:gray;'>(" + item.owner_id + ")</span>";
+    }
+    tr.appendChild(td);
+    
+    var td = domConstruct.create("td", {
+        "class" : "content-config-cell",
+    });
+    tr.appendChild(td);
+
+    var info = self.getConfigInfo(getConfigObj(item.config_json), curr);
+    info.forEach(function(obj) {
+        var span = domConstruct.create("span", {
+            "class" : "config-item-span",
+            "style" : obj.style,
+        });
+        span.innerHTML = obj.name + "=" + obj.value + "; ";
+        td.appendChild(span);
+    });
+    
+    return tr;
+}
+
+function populateConfigList(table, metric_id, owned_only, curr_config, dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on)
+{
+    while (table.firstChild) {
+        table.removeChild(table.firstChild);
+    }
+    if (dialog.replaceButton != null) {
+        self._enableButton(dialog.replaceButton, false, domStyle);
+    }
+    if (dialog.deleteButton != null) {
+        self._enableButton(dialog.deleteButton, false, domStyle);
+    }
+    dialog.setOkButtonEnable(false);
+    CommonPlugin.pbShowProgressBar("load-saved-config", "Loading saved configurations...");
+    self.loadAnomalyConfig(metric_id, owned_only, function(response) {
+        CommonPlugin.pbHideProgressBar("load-saved-config");
+        if (response.status == "OK") {
+            var config_list = response.value;
+            config_list.forEach(function(config_item) {
+                var row = addRow(table, config_item, curr_config, dialog.ownedOnly.checked, domConstruct);
+                row._config_item_ = config_item;
+                on(row, "click", function(evt) {
+                    if (dialog.row != null) {
+                        domClass.remove(dialog.row, "selected");
+                        delete dialog.row;
+                    }
+                    dialog.row = evt.currentTarget;
+                    dialog.value = getConfigObj(dialog.row._config_item_.config_json);
+                    domClass.add(dialog.row, "selected");
+                    if (dialog.replaceButton != null) {
+                        self._enableButton(dialog.replaceButton, dialog.row._config_item_.is_owned, domStyle);
+                    }
+                    if (dialog.deleteButton != null) {
+                        self._enableButton(dialog.deleteButton, dialog.row._config_item_.is_owned, domStyle);
+                    }
+                    dialog.setOkButtonEnable(true);
+                });
+            });
+        }
+    });
+}
+
+function getConfigName(callback)
+{
+    var title = "Name anomaly configuration";
+    CommonPlugin.popupDialog(title, 500, 40, false, function(dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on) {
+        dialog.value = (new Date()).toLocaleString();
+        
+        domClass.add(dialog.containerNode, "manage-properties");
+
+        var textbox = domConstruct.create("input", {
+            "class" : "name-textbox",
+    		"placeholder" : dialog.value,
+        });
+        dialog.containerNode.appendChild(textbox);
+        
+        on(textbox, "change", function(evt) {
+    		dialog.value = evt.currentTarget.value;
+    	});
+    
+    }, function(value) {
+        if (value == null || value.trim() == "") {
+            value = (new Date()).toLocaleString();
+        }
+        callback(value);
+    });
+}
+
+var title = readonly != true ? "Manage saved anomaly configurations" : "Get saved anomaly configurations";
+CommonPlugin.popupDialog(title, 800, 580, false, function(dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on) {
+    dialog.value = config;
+    dialog.row = null;
+    
+    domClass.add(dialog.contentNode, "manage-properties");
+
+    var headerDiv = domConstruct.create("div", {
+        "class" : "header-div"
+    })
+    dialog.containerNode.appendChild(headerDiv);
+
+    var titleDiv = domConstruct.create("div", {
+        "class" : "title-div"
+    });
+    titleDiv.innerHTML = config != null ? "Active anomaly configuration" : "Saved anomaly configurations";
+    headerDiv.appendChild(titleDiv);
+
+    var ownerDiv = domConstruct.create("div", {
+        "class" : "owner-div"
+    });
+    headerDiv.appendChild(ownerDiv);
+
+    dialog.ownedOnly = self._addCheckbox(ownerDiv, "My saved configurations only",
+                                         "Show only saved configurations owned by me", domConstruct);
+    dialog.ownedOnly.checked = true;
+    on(dialog.ownedOnly, "change", function(evt) {
+        populateConfigList(table, metricId, dialog.ownedOnly.checked, config,
+                           dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on);
+    });
+
+    if (config != null) {
+        var infoDiv = domConstruct.create("div", {
+            "class" : "info-div"
+        })
+        dialog.containerNode.appendChild(infoDiv);
+    
+        var info = self.getConfigInfo(config);
+        info.forEach(function(obj) {
+            var span = domConstruct.create("span", {
+                "class" : "config-item-span",
+            });
+            span.innerHTML = obj.name + "=" + obj.value + "; ";
+            infoDiv.appendChild(span);
+        });
+    }
+
+    var contentDiv = domConstruct.create("div", {
+        "class" : "via-scroller content-div",
+    })
+    dialog.containerNode.appendChild(contentDiv);
+    
+    var footerDiv = dialog.buttonBarContainer;
+
+    var table = domConstruct.create("table", {
+        "cellspacing" : "0",
+        "class" : "content-table"
+    });
+    contentDiv.appendChild(table);
+
+    if (readonly != true) {
+        dialog.deleteButton = self._insertButton(footerDiv, "Delete", "Delete selected item in saved list", domConstruct);
+        dialog.replaceButton = self._insertButton(footerDiv, "Replace", "Replace selected item in saved list with current configuration", domConstruct);
+        dialog.addButton = self._insertButton(footerDiv, "Add", "Add current configuration to saved list", domConstruct);
+    
+        on(dialog.addButton, "click", function(evt) {
+            getConfigName(function(configName) {
+                if (configName == null) {
+                    configName = String(Math.round(Date.now()/1000));
+                }
+                var configJSON = JSON.stringify(config);
+                self.saveAnomalyConfig(metricId, configName, configJSON, function(response) {
+                    if (response.status == "OK") {
+                        populateConfigList(table, metricId, dialog.ownedOnly.checked, config, 
+                                           dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on);
+                    }
+                });
+            });
+        });
+    
+        on(dialog.replaceButton, "click", function(evt) {
+            if (dialog.row != null && dialog.row._config_item_ != null) {
+                var configName = dialog.row._config_item_.config_name;
+                var configJSON = JSON.stringify(config);
+                self.saveAnomalyConfig(metricId, configName, configJSON, function(response) {
+                    if (response.status == "OK") {
+                        populateConfigList(table, metricId, dialog.ownedOnly.checked, config, 
+                                           dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on);
+                    }
+                });
+            }
+        });
+        
+        on(dialog.deleteButton, "click", function(evt) {
+            if (dialog.row != null && dialog.row._config_item_ != null) {
+                var configName = dialog.row._config_item_.config_name;
+                self.deleteAnomalyConfig(metricId, configName, function(response) {
+                    if (response.status == "OK") {
+                        populateConfigList(table, metricId, dialog.ownedOnly.checked, config, 
+                                           dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on);
+                    }
+                });
+            }
+        });
+    }
+
+    populateConfigList(table, metricId, dialog.ownedOnly.checked, config, 
+                       dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on);
+
+}, function(value) {
+    callback(value);
+}, "Apply");
+]]>
+        </CodeText>
+      </Function>
+      <Function name="manageFavoriteList" args="CommonPlugin,metric_id,config,filters,callback" private="false">
+        <CodeText>
+          <![CDATA[var self = this;
+
+if (config != null) {
+    config = lang.clone(config);
+    delete config["__options__"];
+    delete config["__label__"];
+    delete config["__perspective__"];
+}
+
+var currConfig  = config;
+var currFilters = filters;
+
+var configJSON = config != null ? JSON.stringify(config) : null;
+var filterJSON = filters != null ? JSON.stringify(filters) : null;
+
+function getConfigObj(configStr)
+{
+    var obj = JSON.parse(configStr);
+    delete obj["noc_notify_high_enable"];
+    delete obj["noc_notify_medium_enable"];
+    delete obj["ivr_deflect_high_enable"];
+    delete obj["ivr_deflect_medium_enable"];
+    delete obj["floor_dispatch_high_enable"];
+    delete obj["floor_dispatch_medium_enable"];
+    return obj;
+}
+
+function mapConfigFilterToString(parentNode, metricID, configObj, filterObj, domConstruct)
+{
+    if (metricID != null && metricID != "") {
+        var span = domConstruct.create("span", {
+            "class" : "config-metric-id-span",
+        });
+        span.innerHTML = metricID;
+        parentNode.appendChild(span);
+
+        parentNode.appendChild(domConstruct.create("br"));
+        parentNode.appendChild(domConstruct.create("br"));
+    }
+    
+    var configInfo = self.getConfigInfo(configObj, configJSON != null && configJSON != "{}" ? currConfig : null);
+    configInfo.forEach(function(obj) {
+        var span = domConstruct.create("span", {
+            "class" : "config-item-span",
+            "style" : obj.style,
+        });
+        span.innerHTML = obj.name + "=" + obj.value + "; ";
+        parentNode.appendChild(span);
+    });
+    
+    parentNode.appendChild(domConstruct.create("br"));
+    parentNode.appendChild(domConstruct.create("br"));
+    
+    for (var name in filterObj) {
+        var value = JSON.stringify(filterObj[name]);
+        var style = "";
+        if (currFilters != null && (currFilters[name] == null || JSON.stringify(currFilters[name]) != value)) {
+            style = "color:red;";
+        }
+        var span = domConstruct.create("span", {
+            "class" : "config-item-span",
+            "style" : style,
+        });
+        span.innerHTML = name + "=" + value + "; ";
+        parentNode.appendChild(span);
+    }
+}
+
+function addRow(table, item, ownedOnly, domConstruct)
+{
+    var tr = domConstruct.create("tr", {
+        "class" : "content-row"
+    });
+    table.appendChild(tr);
+    
+    var td = domConstruct.create("td", {
+        "class" : "content-name-cell",
+    });
+    if (ownedOnly || item.is_owned) {
+        td.innerHTML = item.favorite_name;
+    }
+    else {
+        td.innerHTML = item.favorite_name + "<br><span style='font-size:9px;color:gray;'>(" + item.owner_id + ")</span>";
+    }
+    tr.appendChild(td);
+    
+    var td = domConstruct.create("td", {
+        "class" : "content-config-cell",
+    });
+    mapConfigFilterToString(td, item.metric_id, getConfigObj(item.config_json), JSON.parse(item.filter_json), domConstruct);
+    tr.appendChild(td);
+
+    return tr;
+}
+
+function populateFavoriteList(table, owned_only, dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on)
+{
+    while (table.firstChild) {
+        table.removeChild(table.firstChild);
+    }
+    if (configJSON != null) {
+        self._enableButton(dialog.addButton, configJSON != "{}", domStyle);
+        self._enableButton(dialog.replaceButton, false, domStyle);
+        self._enableButton(dialog.deleteButton, false, domStyle);
+    }
+    dialog.setOkButtonEnable(false);
+    CommonPlugin.pbShowProgressBar("load-favorite-list", "Loading favorite configurations...");
+    self.loadFavoriteList(owned_only, function(response) {
+        CommonPlugin.pbHideProgressBar("load-favorite-list");
+        if (response.status == "OK") {
+            var config_list = response.value;
+            config_list.forEach(function(config_item) {
+                var row = addRow(table, config_item, dialog.ownedOnly.checked, domConstruct);
+                row._config_item_ = config_item;
+                on(row, "click", function(evt) {
+                    if (dialog.row != null) {
+                        domClass.remove(dialog.row, "selected");
+                        delete dialog.row;
+                    }
+                    dialog.row = evt.currentTarget;
+                    dialog.value = {
+                        metricId : dialog.row._config_item_.metric_id,
+                        config   : getConfigObj(dialog.row._config_item_.config_json),
+                        filters  : JSON.parse(dialog.row._config_item_.filter_json),
+                    };
+                    domClass.add(dialog.row, "selected");
+                    if (configJSON != null) {
+                        self._enableButton(dialog.replaceButton, dialog.row._config_item_.is_owned && configJSON != "{}", domStyle);
+                        self._enableButton(dialog.deleteButton, dialog.row._config_item_.is_owned, domStyle);
+                    }
+                    dialog.setOkButtonEnable(true);
+                });
+            });
+        }
+    });
+}
+
+function getFavoriteName(callback)
+{
+    var title = "Name favorite config";
+    CommonPlugin.popupDialog(title, 500, 40, false, function(dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on) {
+        dialog.value = (new Date()).toLocaleString();
+        
+        domClass.add(dialog.containerNode, "manage-favorites");
+
+        var textbox = domConstruct.create("input", {
+            "class" : "name-textbox",
+    		"placeholder" : dialog.value,
+        });
+        dialog.containerNode.appendChild(textbox);
+        
+        on(textbox, "change", function(evt) {
+    		dialog.value = evt.currentTarget.value;
+    	});
+    
+    }, function(value) {
+        if (value == null || value.trim() == "") {
+            value = (new Date()).toLocaleString();
+        }
+        callback(value);
+    });
+}
+
+var title = configJSON != null ? "Manage favorite list of examples" : "Select from favorite list of examples";
+CommonPlugin.popupDialog(title, 900, 500, false, function(dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on) {
+    dialog.value = config;
+    dialog.row = null;
+    
+    domClass.add(dialog.contentNode, "manage-favorites");
+
+    var headerDiv = domConstruct.create("div", {
+        "class" : "header-div"
+    })
+    dialog.containerNode.appendChild(headerDiv);
+
+    var titleDiv = domConstruct.create("div", {
+        "class" : "title-div"
+    });
+    titleDiv.innerHTML = "Saved Favorites";
+    headerDiv.appendChild(titleDiv);
+
+    var ownerDiv = domConstruct.create("div", {
+        "class" : "owner-div"
+    });
+    headerDiv.appendChild(ownerDiv);
+
+    dialog.ownedOnly = self._addCheckbox(ownerDiv, "My favorites only",
+                                         "Show only favorites owned by me", domConstruct);
+    dialog.ownedOnly.checked = true;
+    on(dialog.ownedOnly, "change", function(evt) {
+        populateFavoriteList(table, dialog.ownedOnly.checked,
+                             dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on);
+    });
+
+    if (configJSON != null) {
+        var infoDiv = domConstruct.create("div", {
+            "class" : "info-div"
+        })
+        dialog.containerNode.appendChild(infoDiv);
+    
+        if (configJSON != "{}") {
+            mapConfigFilterToString(infoDiv, metric_id, config, filters, domConstruct);
+        }
+        else {
+            infoDiv.innerHTML = "- no configuration defined -";
+        }
+    }
+
+    var contentDiv = domConstruct.create("div", {
+        "class" : "via-scroller content-div",
+    })
+    dialog.containerNode.appendChild(contentDiv);
+    
+    var footerDiv = dialog.buttonBarContainer;
+
+    var table = domConstruct.create("table", {
+        "cellspacing" : "0",
+        "class" : "content-table"
+    });
+    contentDiv.appendChild(table);
+
+    if (configJSON != null) {
+        dialog.deleteButton = self._insertButton(footerDiv, "Delete", "Delete selected item in favorite list", domConstruct);
+        dialog.replaceButton = self._insertButton(footerDiv, "Replace", "Replace selected item in favorite list with current configuration", domConstruct);
+        dialog.addButton = self._insertButton(footerDiv, "Add", "Add current configuration to favorite list", domConstruct);
+    
+        on(dialog.addButton, "click", function(evt) {
+            getFavoriteName(function(favoriteName) {
+                if (favoriteName == null) {
+                    favoriteName = String(Math.round(Date.now()/1000));
+                }
+                self.saveFavoriteList(favoriteName, metric_id, configJSON, filterJSON, function(response) {
+                    if (response.status == "OK") {
+                        populateFavoriteList(table, dialog.ownedOnly.checked,
+                                             dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on);
+                    }
+                });
+            });
+        });
+    
+        on(dialog.replaceButton, "click", function(evt) {
+            if (dialog.row != null && dialog.row._config_item_ != null) {
+                var favoriteName = dialog.row._config_item_.favorite_name;
+                self.saveFavoriteList(favoriteName, metric_id, configJSON, filterJSON, function(response) {
+                    if (response.status == "OK") {
+                        populateFavoriteList(table, dialog.ownedOnly.checked,
+                                             dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on);
+                    }
+                });
+            }
+        });
+        
+        on(dialog.deleteButton, "click", function(evt) {
+            if (dialog.row != null && dialog.row._config_item_ != null) {
+                var favoriteName = dialog.row._config_item_.favorite_name;
+                self.deleteFavoriteList(favoriteName, function(response) {
+                    if (response.status == "OK") {
+                        populateFavoriteList(table, dialog.ownedOnly.checked,
+                                             dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on);
+                    }
+                });
+            }
+        });
+    }
+
+    populateFavoriteList(table, dialog.ownedOnly.checked,
+                         dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on);
+
+}, function(value) {
+    callback(value);
+}, "Apply");
+]]>
+        </CodeText>
+      </Function>
+      <Function name="onSelectIncidentPerspective" args="obj" private="false">
+        <CodeText>
+          <![CDATA[var __options__ = obj["__options__"];
+if (__options__ != null) {
+    for (var o=0; o<__options__.length; o++) {
+        var __option__ = __options__[o];
+        if (__option__["algorithm"] == obj["algorithm"] && __option__["threshold_policy"] == obj["threshold_policy"]) {
+            // found it
+            for (var key in obj) {
+                switch (key) {
+                    case "__options__":
+                    case "__perspective__":
+                    case "__label__":
+                        break;
+                    default:
+                        __option__[key] = obj[key];
+                        break;
+                }
+            }
+            break;
+        }
+    }
+}
+
+]]>
+        </CodeText>
+      </Function>
+      <Function name="showAnomalySummary" args="CommonPlugin,result,prevValues,prevHeader,currHeader,dataCallback" private="false">
+        <CodeText>
+          <![CDATA[var self = this;
+
+function addRow(table, item, domConstruct)
+{
+    var tr = domConstruct.create("tr", {
+        "class" : "content-row"
+    });
+    table.appendChild(tr);
+
+    var td = domConstruct.create("td", {
+        "class" : "content-label-cell",
+    });
+    td.innerHTML = item.labelText;
+    tr.appendChild(td);
+
+    var td = domConstruct.create("td", {
+        "class" : "content-value-cell",
+    });
+    td.innerHTML = item.prevText;
+    tr.appendChild(td);
+
+    var td = domConstruct.create("td", {
+        "class" : "content-value-cell",
+    });
+    td.innerHTML = item.currText;
+    tr.appendChild(td);
+
+    return tr;
+}
+
+function buildDialogContent(dialog, domGeom, domStyle, domClass, domAttr, domConstruct, on)
+{
+    domClass.add(dialog.contentNode, "anomaly-summary");
+    // domClass.add(dialog.containerNode, "anomaly-summary");
+
+    var contentDiv = domConstruct.create("div", {
+        "class" : "via-scroller content-div",
+    })
+    dialog.containerNode.appendChild(contentDiv);
+    
+    var footerDiv = dialog.buttonBarContainer;
+
+    var table = domConstruct.create("table", {
+        "cellspacing" : "0",
+        "class" : "content-table"
+    });
+    contentDiv.appendChild(table);
+
+    if (prevValues != null && prevHeader != null && currHeader != null) {
+        var tr = domConstruct.create("tr", {
+            "class" : "content-row"
+        });
+        table.appendChild(tr);
+        
+        var th = domConstruct.create("th", {
+            "class" : "content-label-header",
+        });
+        tr.appendChild(th);
+        
+        var th = domConstruct.create("th", {
+            "class" : "content-value-header",
+        });
+        th.innerHTML = prevHeader;
+        tr.appendChild(th);
+        
+        var th = domConstruct.create("th", {
+            "class" : "content-value-header",
+        });
+        th.innerHTML = currHeader;
+        tr.appendChild(th);
+    }
+
+    self.compileSummary(result, function(summary) {
+        dialog.summaryData = summary;
+        dialog.mergedSummary = self.compareSummary(dialog.summaryData, prevValues);
+        dialog.mergedSummary.forEach(function(item) {
+            addRow(table, item, domConstruct);
+        });
+    });
+
+    if (footerDiv != null && dataCallback != null) {
+        dialog.dataButton = self._insertButton(footerDiv, "View Data", "View summary data for export", domConstruct);
+        on(dialog.dataButton, "click", function(evt) {
+            var data = [];
+            dialog.mergedSummary.forEach(function(item) {
+                if (item.prevValue != null && item.currValue != null) {
+                    data.push({
+                        name  : item.name,
+                        label : item.label,
+                        prev  : item.prevValue,
+                        curr  : item.currValue,
+                    });
+                }
+            });
+            dataCallback(data);
+        });
+    }
+}
+
+var title = "Anomaly Summary";
+CommonPlugin.popupDialog(title, 800, 580, false, buildDialogContent, null);
+]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services>
+      <Service name="__computeFactorByMetricID" args="queryConfig,filters" private="true">
+        <CodeText>
+          <![CDATA[filters.push({
+    "name"  : "$.aggregation.interval",
+    "value" : [{ "seconds": null, "interval": "5*M" }]
+});
+//print("_computeFactorByMetricID: filters="+__prettyPrintJSON(filters));
+var start = Date.now();
+var result = this._invokeTrendAnalysisService(queryConfig, filters);
+//print("_computeFactorByMetricID: elapsed="+(Date.now()-start)+"ms");
+//print("_computeFactorByMetricID: result="+__prettyPrintJSON(result));
+
+var onlyCustomerCalls = true;
+for (var i=0, n=result.length; i<n; i++) {
+    if (result[i]["_value1_"] != null) {
+        onlyCustomerCalls = false;
+        break;
+    }
+}
+var baselines = [];
+result.forEach(function(record) {
+    var baseline = onlyCustomerCalls ? record["_baseline2_"] : record["_baseline1_"];
+    if (baseline != null) {
+        baselines.push(baseline);
+    }
+});
+if (baselines.length == 0) return null;
+
+return this.computeScoreFactor(baselines);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getIncidentModelV1ByMetricID" args="queryConfig,item,metricID" private="true">
+        <CodeText>
+          <![CDATA[function asNumber(value, defaultValue)
+{
+    if (defaultValue == null) defaultValue = 0;
+    if (value == null) return defaultValue;
+    var num = Number(value);
+    if (isNaN(num)) return defaultValue;
+    return num;
+}
+
+var ds = queryConfig["data-source"]["incident-model"];
+var sql = Context.getLocalResource("INCIDENT_MODEL_BY_METRIC_ID_SQL_1");
+var values = {
+    "metricID" : metricID,
+};
+sql = this._doValueSubstitution(sql, values);
+var result = this.executeSQLQuery(queryConfig, ["*"], ["IncidentModel"], ds, sql, null);
+if (result != null && result.items.length > 0) {
+    // there should ONLY be one... if for some reason, there is more than one
+    // take first one
+    var record = result.items[0];
+    item["high_threshold"]        = asNumber(record["threshold_high"]);
+    item["medium_threshold"]      = asNumber(record["threshold_med"]);
+    item["low_threshold"]         = asNumber(record["threshold_low"]);
+    item["above_threshold"]       = record["above"] == 'y';
+    item["below_threshold"]       = record["below"] == 'y';
+    item["warmup_threshold"]      = asNumber(record["warmup_threshold"]);
+    item["warmup_period"]         = asNumber(record["warmup_period"]);
+    item["cooldown_period"]       = asNumber(record["cool_down_period"]);
+    item["min_call_dev"]          = asNumber(record["min_call_deviation"]);
+    item["min_call_vol"]          = asNumber(record["min_call_vol"]);
+    item["min_metric_dev"]        = asNumber(record["min_metric_deviation"]);
+    item["min_metric_vol"]        = asNumber(record["min_metric_vol"]);
+    item["med_threshold_period"]  = asNumber(record["med_threshold_period"]);
+    item["high_threshold_period"] = asNumber(record["high_threshold_period"]);
+    item["med_call_vol_pct"]      = asNumber(record["med_call_vol_pct"]);
+    item["high_call_vol_pct"]     = asNumber(record["high_call_vol_pct"]);
+    if (item["median_baseline"] == 0 && record["median_baseline"] != null) {
+        // if median_baseline has not been set by live incident... look for default
+        // this SHOULD ALMOST NEVER HAPPEN... ALSO, we are removing the user defined value so
+        // wont match
+        var median_baseline = asNumber(record["median_baseline"]);
+        if (!isNaN(median_baseline) && median_baseline > 0) {
+            item["median_baseline"] = median_baseline;
+        }
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getIncidentModelV2ByMetricID" args="queryConfig,item,metricID,wildcard" private="true">
+        <CodeText>
+          <![CDATA[function asNumber(value, defaultValue)
+{
+    if (defaultValue == null) defaultValue = 0;
+    if (value == null) return defaultValue;
+    var num = Number(value);
+    if (isNaN(num)) return defaultValue;
+    return num;
+}
+
+// delete old attribute
+delete item["above_threshold"];
+delete item["below_threshold"];
+
+function getConfigLabel(algorithm, thresholdPolicy)
+{
+    var ALGORITHM_LABELS = {
+        "score" : "Baseline Score",
+        "simple_threshold" : "Simple Threshold",
+    };
+    var algorithmLabel = ALGORITHM_LABELS[algorithm] || algorithm;
+    var THRESHOLD_POLICY_LABELS = {
+        "score/above" : "Above (Positive) Threshold",
+        "score/below" : "Below (Negative) Threshold",
+        "simple_threshold/above" : "Above Threshold",
+        "simple_threshold/below" : "Below Threshold",
+    };
+    var thresholdPolicyLabel = THRESHOLD_POLICY_LABELS[algorithm+"/"+thresholdPolicy] || thresholdPolicy;
+    return algorithmLabel + " / " + thresholdPolicyLabel;
+}
+
+function getConfigTemplate(options, algorithm, thresholdPolicy, median_baseline)
+{
+    var option = {
+        algorithm             : algorithm,
+        threshold_policy      : thresholdPolicy,
+        high_threshold        : 0,
+        medium_threshold      : 0,
+        low_threshold         : 0,
+        warmup_threshold      : 0,
+        warmup_period         : 0,
+        cooldown_period       : 0,
+        min_call_dev          : 0,
+        min_call_vol          : 0,
+        min_metric_dev        : 0,
+        min_metric_vol        : 0,
+        med_threshold_period  : 0,
+        high_threshold_period : 0,
+        med_call_vol_pct      : 0,
+        high_call_vol_pct     : 0,
+        __label__             : getConfigLabel(algorithm, thresholdPolicy),
+        __value__             : algorithm + ":" + thresholdPolicy,
+    };
+    options[option.__label__] = option;
+}
+
+var options = {};
+getConfigTemplate(options, "score", "above", item["median_baseline"]);
+getConfigTemplate(options, "score", "below", item["median_baseline"]);
+getConfigTemplate(options, "simple_threshold", "above", 0);
+getConfigTemplate(options, "simple_threshold", "below", 0);
+
+var ds = queryConfig["data-source"]["incident-model"];
+var templateSQL = Context.getLocalResource("INCIDENT_MODEL_BY_METRIC_ID_SQL_2");
+var values = {
+    "metricID" : metricID,
+};
+sql = this._doValueSubstitution(templateSQL, values);
+var result = this.executeSQLQuery(queryConfig, ["*"], ["IncidentModel"], ds, sql, null);
+// DO-401
+if (result != null && result.items.length == 0 && wildcard != null) {
+    for (var i=(wildcard.dim_keys.length-1); i >= 0; i--) {
+        wildcard.dim_values[i] = "${" + wildcard.dim_keys[i] + "}";
+        metricID = wildcard.base_metric_id + "|" + wildcard.dim_values.join("|");
+        values = {
+            "metricID" : metricID,
+        };
+        sql = this._doValueSubstitution(templateSQL, values);
+        result = this.executeSQLQuery(queryConfig, ["*"], ["IncidentModel"], ds, sql, null);
+        if (result != null && result.items.length > 0) break;
+    }
+}
+if (result != null && result.items.length > 0) {
+    var record = result.items[0];
+    item["algorithm"]             = record["algorithm"];
+    item["threshold_policy"]      = record["threshold_policy"];
+    item["high_threshold"]        = asNumber(record["threshold_high"]);
+    item["medium_threshold"]      = asNumber(record["threshold_med"]);
+    item["low_threshold"]         = asNumber(record["threshold_low"]);
+    item["warmup_threshold"]      = asNumber(record["warmup_threshold"]);
+    item["warmup_period"]         = asNumber(record["warmup_period"]);
+    item["cooldown_period"]       = asNumber(record["cool_down_period"]);
+    item["min_call_dev"]          = asNumber(record["min_call_deviation"]);
+    item["min_call_vol"]          = asNumber(record["min_call_vol"]);
+    item["min_metric_dev"]        = asNumber(record["min_metric_deviation"]);
+    item["min_metric_vol"]        = asNumber(record["min_metric_vol"]);
+    item["med_threshold_period"]  = asNumber(record["med_threshold_period"]);
+    item["high_threshold_period"] = asNumber(record["high_threshold_period"]);
+    item["med_call_vol_pct"]      = asNumber(record["med_call_vol_pct"]);
+    item["high_call_vol_pct"]     = asNumber(record["high_call_vol_pct"]);
+
+    for (var i=0; i<result.items.length; i++) {
+        var median_baseline = 0;
+        switch (result.items[i]["algorithm"]) {
+            case "score":
+                if (item["median_baseline"] != null) {
+                    median_baseline = item["median_baseline"];
+                }
+                break;
+        }
+        var optionLabel = getConfigLabel(result.items[i]["algorithm"], result.items[i]["threshold_policy"])
+        options[optionLabel] = {
+            algorithm             : result.items[i]["algorithm"],
+            threshold_policy      : result.items[i]["threshold_policy"],
+            median_baseline       : median_baseline,
+            high_threshold        : asNumber(result.items[i]["threshold_high"]),
+            medium_threshold      : asNumber(result.items[i]["threshold_med"]),
+            low_threshold         : asNumber(result.items[i]["threshold_low"]),
+            warmup_threshold      : asNumber(result.items[i]["warmup_threshold"]),
+            warmup_period         : asNumber(result.items[i]["warmup_period"]),
+            cooldown_period       : asNumber(result.items[i]["cool_down_period"]),
+            min_call_dev          : asNumber(result.items[i]["min_call_deviation"]),
+            min_call_vol          : asNumber(result.items[i]["min_call_vol"]),
+            min_metric_dev        : asNumber(result.items[i]["min_metric_deviation"]),
+            min_metric_vol        : asNumber(result.items[i]["min_metric_vol"]),
+            med_threshold_period  : asNumber(result.items[i]["med_threshold_period"]),
+            high_threshold_period : asNumber(result.items[i]["high_threshold_period"]),
+            med_call_vol_pct      : asNumber(result.items[i]["med_call_vol_pct"]),
+            high_call_vol_pct     : asNumber(result.items[i]["high_call_vol_pct"]),
+            __label__             : optionLabel,
+            __value__             : result.items[i]["algorithm"] + ":" + result.items[i]["threshold_policy"],
+        };
+    }
+}
+else {
+    item["algorithm"]        = "score";
+    item["threshold_policy"] = "above";
+}
+item["__options__"] = [];
+for (var label in options) {
+    var option = options[label];
+    //option["__label__"] = label;
+    (item["__options__"]).push(option);
+}
+(item["__options__"]).sort(function(a,b) {
+    return a.__label__.localeCompare(b.__label__);
+});
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getNotificationActionList" args="queryConfig" private="true">
+        <CodeText>
+          <![CDATA[var ds = queryConfig["data-source"]["notification-rules"];
+var sql = Context.getLocalResource("NOTIFICATION_ACTION_LIST_SQL");
+var result = this.executeSQLQuery(queryConfig, ["NotificationRules"], ["ActionList"], ds, sql, null);
+var action_list = {};
+if (result != null && result.items != null) {
+    result.items.forEach(function(item) {
+        action_list[item.action_id] = item.action_name;
+    });
+}
+return action_list;
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getNotificationFloorDispatchActionsV1" args="queryConfig,rule_expr" private="true">
+        <CodeText>
+          <![CDATA[var ds = queryConfig["data-source"]["notification-rules"];
+var sql = Context.getLocalResource("NOTIFICATION_FLOOR_DISPATCH_SQL_1");
+var result = this.executeSQLQuery(queryConfig, ["NotificationRules"], ["Notify"], ds, sql, null);
+result = result != null ? result.items : [];
+var action_rules = {};
+result.forEach(function(record) {
+    var action_id = String(record["action_id"]);
+    var rule_list = [];
+    (record["rule_id_list"]).split("|").forEach(function(rule_id) {
+        rule_list.push(rule_expr[rule_id]);
+    });
+    action_rules[action_id] = rule_list;
+});
+//print("_getNotificationFloorDispatchActionsV1: action_rules="+__prettyPrintJSON(action_rules));
+return action_rules;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getNotificationFloorDispatchActionsV2" args="queryConfig" private="true">
+        <CodeText>
+          <![CDATA[var ds = queryConfig["data-source"]["notification-rules"];
+var sql = Context.getLocalResource("NOTIFICATION_FLOOR_DISPATCH_SQL_2");
+var result = this.executeSQLQuery(queryConfig, ["NotificationRules"], ["Notify"], ds, sql, null);
+result = result != null ? result.items : [];
+var action_rules = {};
+result.forEach(function(record) {
+    var action_id = String(record["action_id"]);
+    var rule_list = action_rules[action_id];
+    if (rule_list == null) {
+        rule_list = [];
+        action_rules[action_id] = rule_list;
+    }
+    rule_list.push(record);
+});
+//print("_getNotificationFloorDispatchActionsV2: action_rules="+__prettyPrintJSON(action_rules));
+return action_rules;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getNotificationIVRDeflectActionsV1" args="queryConfig,rule_expr" private="true">
+        <CodeText>
+          <![CDATA[var ds = queryConfig["data-source"]["notification-rules"];
+var sql = Context.getLocalResource("NOTIFICATION_IVR_DEFLECT_SQL_1");
+var result = this.executeSQLQuery(queryConfig, ["NotificationRules"], ["IVRDeflect"], ds, sql, null);
+result = result != null ? result.items : [];
+var action_rules = {};
+result.forEach(function(record) {
+    var action_id = String(record["action_id"]);
+    var rule_list = [];
+    (record["rule_id_list"]).split("|").forEach(function(rule_id) {
+        rule_list.push(rule_expr[rule_id]);
+    });
+    action_rules[action_id] = rule_list;
+});
+//print("_getNotificationIVRDeflectActionsV1: action_rules="+__prettyPrintJSON(action_rules));
+return action_rules;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getNotificationIVRDeflectActionsV2" args="queryConfig" private="true">
+        <CodeText>
+          <![CDATA[var ds = queryConfig["data-source"]["notification-rules"];
+var sql = Context.getLocalResource("NOTIFICATION_IVR_DEFLECT_SQL_2");
+var result = this.executeSQLQuery(queryConfig, ["NotificationRules"], ["IVRDeflect"], ds, sql, null);
+result = result != null ? result.items : [];
+var action_rules = {};
+result.forEach(function(record) {
+    var action_id = String(record["action_id"]);
+    var rule_list = action_rules[action_id];
+    if (rule_list == null) {
+        rule_list = [];
+        action_rules[action_id] = rule_list;
+    }
+    rule_list.push(record);
+});
+//print("_getNotificationIVRDeflectActionsV2: action_rules="+__prettyPrintJSON(action_rules));
+return action_rules;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getNotificationMetricListV1" args="queryConfig" private="true">
+        <CodeText>
+          <![CDATA[var ds = queryConfig["data-source"]["notification-rules"];
+var sql = Context.getLocalResource("NOTIFICATION_METRIC_SEVERITY_SQL_1");
+var result = this.executeSQLQuery(queryConfig, ["NotificationRules"], ["MetricSeverity"], ds, sql, null);
+return result != null ? result.items : [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getNotificationMetricListV2" args="queryConfig" private="true">
+        <CodeText>
+          <![CDATA[var ds = queryConfig["data-source"]["notification-rules"];
+var sql = Context.getLocalResource("NOTIFICATION_METRIC_SEVERITY_SQL_2");
+var result = this.executeSQLQuery(queryConfig, ["NotificationRules"], ["MetricSeverity"], ds, sql, null);
+return result != null ? result.items : [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getNotificationNOCNotifyActionsV1" args="queryConfig,rule_expr" private="true">
+        <CodeText>
+          <![CDATA[var ds = queryConfig["data-source"]["notification-rules"];
+var sql = Context.getLocalResource("NOTIFICATION_NOC_NOTIFY_SQL_1");
+var result = this.executeSQLQuery(queryConfig, ["NotificationRules"], ["Notify"], ds, sql, null);
+result = result != null ? result.items : [];
+var action_rules = {};
+result.forEach(function(record) {
+    var action_id = String(record["action_id"]);
+    var rule_list = [];
+    (record["rule_id_list"]).split("|").forEach(function(rule_id) {
+        rule_list.push(rule_expr[rule_id]);
+    });
+    action_rules[action_id] = rule_list;
+});
+//print("_getNotificationNotifyActionsV1: action_rules="+__prettyPrintJSON(action_rules));
+return action_rules;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getNotificationNOCNotifyActionsV2" args="queryConfig" private="true">
+        <CodeText>
+          <![CDATA[var ds = queryConfig["data-source"]["notification-rules"];
+var sql = Context.getLocalResource("NOTIFICATION_NOC_NOTIFY_SQL_2");
+var result = this.executeSQLQuery(queryConfig, ["NotificationRules"], ["Notify"], ds, sql, null);
+result = result != null ? result.items : [];
+var action_rules = {};
+result.forEach(function(record) {
+    var action_id = String(record["action_id"]);
+    var rule_list = action_rules[action_id];
+    if (rule_list == null) {
+        rule_list = [];
+        action_rules[action_id] = rule_list;
+    }
+    rule_list.push(record);
+});
+//print("_getNotificationNotifyActionsV2: action_rules="+__prettyPrintJSON(action_rules));
+return action_rules;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getNotificationRuleByMetricID" args="queryConfig,config,metricID" private="true">
+        <CodeText>
+          <![CDATA[var INTERVAL = 300;
+
+function parseRuleToConfig(rule, period, count, enable)
+{
+    if (rule.name == null && rule["and"] != null) {
+        (rule["and"]).forEach(function(andRule) {
+            parseRuleToConfig(andRule, period, count, enable);
+        });
+    }
+    else {
+        switch (rule.name) {
+            case "$ElapsedFromStart":
+                if (period != null) {
+                    config[period] = INTERVAL * Number(rule.value);
+                    config[enable] = true;
+                }
+                break;
+            case "$CountFromStart":
+                if (count != null) {
+                    config[count] = Number(rule.value);
+                    config[enable] = true;
+                }
+                break;
+            case "$ElapsedFromNotify":
+                if (period != null) {
+                    config[period] = INTERVAL * Number(rule.value);
+                    config[enable] = true;
+                }
+                break;
+            case "$ElapsedFromNotify":
+                if (count != null) {
+                    config[count] = Number(rule.value);
+                    config[enable] = true;
+                }
+                break;
+        }
+    }
+}
+
+var CATEGORIES = ["noc_notify", "ivr_deflect", "floor_dispatch"];
+CATEGORIES.forEach(function(category) {
+    //config[category+"_high_period"] = 1000000;
+    config[category+"_high_count"]  = 1000000;
+    //config[category+"_medium_period"] = 1000000;
+    config[category+"_medium_count"]  = 1000000;
+});
+
+var rules = this._getNotificationRules(queryConfig);
+if (rules == null) return null;
+
+if (rules["noc_notify"] != null) {
+    var noc_notify_rules = rules["noc_notify"][metricID];
+    if (noc_notify_rules != null && noc_notify_rules["high"] != null) {
+        (noc_notify_rules["high"]).forEach(function(rule) {
+            //parseRuleToConfig(rule, "noc_notify_high_period", "noc_notify_high_count", "noc_notify_high_enable");
+            parseRuleToConfig(rule, null, "noc_notify_high_count", "noc_notify_high_enable");
+        });
+    }
+    if (noc_notify_rules != null && noc_notify_rules["medium"] != null) {
+        (noc_notify_rules["medium"]).forEach(function(rule) {
+            //parseRuleToConfig(rule, "noc_notify_medium_period", "noc_notify_medium_count", "noc_notify_medium_enable");
+            parseRuleToConfig(rule, null, "noc_notify_medium_count", "noc_notify_medium_enable");
+        });
+    }
+}
+
+if (rules["ivr_deflect"] != null) {
+    var ivr_deflect_rules = rules["ivr_deflect"][metricID];
+    if (ivr_deflect_rules != null && ivr_deflect_rules["high"] != null) {
+        (ivr_deflect_rules["high"]).forEach(function(rule) {
+            //parseRuleToConfig(rule, "ivr_deflect_high_period", "ivr_deflect_high_count", "ivr_deflect_high_enable");
+            parseRuleToConfig(rule, null, "ivr_deflect_high_count", "ivr_deflect_high_enable");
+        });
+    }
+    if (ivr_deflect_rules != null && ivr_deflect_rules["medium"] != null) {
+        (ivr_deflect_rules["medium"]).forEach(function(rule) {
+            //parseRuleToConfig(rule, "ivr_deflect_medium_period", "ivr_deflect_medium_count", "ivr_deflect_medium_enable");
+            parseRuleToConfig(rule, null, "ivr_deflect_medium_count", "ivr_deflect_medium_enable");
+        });
+    }
+}
+
+if (rules["floor_dispatch"] != null) {
+    var floor_dispatch_rules = rules["floor_dispatch"][metricID];
+    if (floor_dispatch_rules != null && floor_dispatch_rules["high"] != null) {
+        (floor_dispatch_rules["high"]).forEach(function(rule) {
+            //parseRuleToConfig(rule, "floor_dispatch_high_period", "floor_dispatch_high_count", "floor_dispatch_high_enable");
+            parseRuleToConfig(rule, null, "floor_dispatch_high_count", "floor_dispatch_high_enable");
+        });
+    }
+    if (floor_dispatch_rules != null && floor_dispatch_rules["medium"] != null) {
+        (floor_dispatch_rules["medium"]).forEach(function(rule) {
+            //parseRuleToConfig(rule, "floor_dispatch_medium_period", "floor_dispatch_medium_count", "floor_dispatch_medium_enable");
+            parseRuleToConfig(rule, null, "floor_dispatch_medium_count", "floor_dispatch_medium_enable");
+        });
+    }
+}
+
+return config;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getNotificationRulesV1" args="queryConfig" private="true">
+        <CodeText>
+          <![CDATA[function getRuleExprs()
+{
+    var ds = queryConfig["data-source"]["notification-rules"];
+    var sql = Context.getLocalResource("NOTIFICATION_RULE_SQL_1");
+    var result = this.executeSQLQuery(queryConfig, ["NotificationRules"], ["Rules"], ds, sql, null);
+    result = result != null ? result.items : [];
+    var rule_expr = {};
+    result.forEach(function(record) {
+        rule_expr[String(record["rule_id"])] = record;
+    });
+    //print("__getNotificationRulesV1: getRuleExprs()="+__prettyPrintJSON(rule_expr));
+    return rule_expr;
+}
+
+var rule_expr = getRuleExprs();
+var metric_list = this.__getNotificationMetricListV1(queryConfig);
+
+var ivr_deflect_actions = this.__getNotificationIVRDeflectActionsV1(queryConfig, rule_expr);
+var ivr_deflect_rules = {};
+metric_list.forEach(function(record) {
+    var metric_id = record["metric_id"];
+    var severity = record["severity"];
+    var rules = [];
+    (record["action_list"]).split("|").forEach(function(action_id) {
+        var rule_list = ivr_deflect_actions[action_id];
+        if (rule_list != null) {
+            rules.push(rule_list);
+        }
+    });
+    if (rules.length > 0) {
+        if (ivr_deflect_rules[metric_id] == null) {
+            ivr_deflect_rules[metric_id] = {};
+        }
+        ivr_deflect_rules[metric_id][severity] = this.__parseNotificationRuleExprs(rules, severity);
+    }
+});
+//print("__getNotificationRulesV1: ivr_deflect_rules="+JSON.stringify(ivr_deflect_rules, null, "    "));
+
+var floor_dispatch_actions = this.__getNotificationFloorDispatchActionsV1(queryConfig, rule_expr);
+var floor_dispatch_rules = {};
+metric_list.forEach(function(record) {
+    var metric_id = record["metric_id"];
+    var severity = record["severity"];
+    var rules = [];
+    (record["action_list"]).split("|").forEach(function(action_id) {
+        var rule_list = floor_dispatch_actions[action_id];
+        if (rule_list != null) {
+            rules.push(rule_list);
+        }
+    });
+    if (rules.length > 0) {
+        if (floor_dispatch_rules[metric_id] == null) {
+            floor_dispatch_rules[metric_id] = {};
+        }
+        floor_dispatch_rules[metric_id][severity] = this.__parseNotificationRuleExprs(rules, severity);
+    }
+});
+//print("__getNotificationRulesV1: floor_dispatch_rules="+JSON.stringify(floor_dispatch_rules, null, "    "));
+
+var noc_notify_actions = this.__getNotificationNOCNotifyActionsV1(queryConfig, rule_expr);
+var noc_notify_rules = {};
+metric_list.forEach(function(record) {
+    var metric_id = record["metric_id"];
+    var severity = record["severity"];
+    var rules = [];
+    (record["action_list"]).split("|").forEach(function(action_id) {
+        var rule_list = noc_notify_actions[action_id];
+        if (rule_list != null) {
+            rules.push(rule_list);
+        }
+    });
+    if (rules.length > 0) {
+        if (noc_notify_rules[metric_id] == null) {
+            noc_notify_rules[metric_id] = {};
+        }
+        noc_notify_rules[metric_id][severity] = this.__parseNotificationRuleExprs(rules, severity);
+    }
+});
+//print("__getNotificationRulesV1: noc_notify_rules="+JSON.stringify(noc_notify_rules, null, "    "));
+
+var rules = {
+    ivr_deflect : ivr_deflect_rules,
+    floor_dispatch : floor_dispatch_rules,
+    noc_notify : noc_notify_rules,
+};
+//print("__getNotificationRulesV1: rules="+JSON.stringify(rules, null, "    "));
+return rules;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getNotificationRulesV2" args="queryConfig" private="true">
+        <CodeText>
+          <![CDATA[var metric_list = this.__getNotificationMetricListV2(queryConfig);
+var action_list = this.__getNotificationActionList(queryConfig);
+
+var ivr_deflect_actions = this.__getNotificationIVRDeflectActionsV2(queryConfig);
+var ivr_deflect_rules = {};
+metric_list.forEach(function(record) {
+    var metric_id = record["metric_id"];
+    var severity = record["severity"];
+    var rules = [];
+    (record["action_list"]).split("|").forEach(function(action_id) {
+        var rule_list = ivr_deflect_actions[action_id];
+        if (rule_list != null) {
+            rules.push(rule_list);
+        }
+    });
+    if (rules.length > 0) {
+        if (ivr_deflect_rules[metric_id] == null) {
+            ivr_deflect_rules[metric_id] = {};
+        }
+        ivr_deflect_rules[metric_id][severity] = this.__parseNotificationRuleExprs(rules, severity, action_list);
+    }
+});
+//print("__getNotificationRulesV2: ivr_deflect_rules="+JSON.stringify(ivr_deflect_rules, null, "    "));
+
+var floor_dispatch_actions = this.__getNotificationFloorDispatchActionsV2(queryConfig);
+var floor_dispatch_rules = {};
+metric_list.forEach(function(record) {
+    var metric_id = record["metric_id"];
+    var severity = record["severity"];
+    var rules = [];
+    (record["action_list"]).split("|").forEach(function(action_id) {
+        var rule_list = floor_dispatch_actions[action_id];
+        if (rule_list != null) {
+            rules.push(rule_list);
+        }
+    });
+    if (rules.length > 0) {
+        if (floor_dispatch_rules[metric_id] == null) {
+            floor_dispatch_rules[metric_id] = {};
+        }
+        floor_dispatch_rules[metric_id][severity] = this.__parseNotificationRuleExprs(rules, severity, action_list);
+    }
+});
+//print("__getNotificationRulesV2: floor_dispatch_rules="+JSON.stringify(floor_dispatch_rules, null, "    "));
+
+var noc_notify_actions = this.__getNotificationNOCNotifyActionsV2(queryConfig);
+var noc_notify_rules = {};
+metric_list.forEach(function(record) {
+    var metric_id = record["metric_id"];
+    var severity = record["severity"];
+    var rules = [];
+    (record["action_list"]).split("|").forEach(function(action_id) {
+        var rule_list = noc_notify_actions[action_id];
+        if (rule_list != null) {
+            rules.push(rule_list);
+        }
+    });
+    if (rules.length > 0) {
+        if (noc_notify_rules[metric_id] == null) {
+            noc_notify_rules[metric_id] = {};
+        }
+        noc_notify_rules[metric_id][severity] = this.__parseNotificationRuleExprs(rules, severity, action_list);
+    }
+});
+//print("__getNotificationRulesV2: noc_notify_rules="+JSON.stringify(noc_notify_rules, null, "    "));
+
+var rules = {
+    ivr_deflect : ivr_deflect_rules,
+    floor_dispatch : floor_dispatch_rules,
+    noc_notify : noc_notify_rules,
+};
+//print("__getNotificationRulesV2: rules="+JSON.stringify(rules, null, "    "));
+return rules;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__getScoreFactorByMetricID" args="queryConfig,metricID,timeRange" private="true">
+        <CodeText>
+          <![CDATA[print("__getScoreFactorByMetricID: metricID="+metricID);
+print("__getScoreFactorByMetricID: timeRange="+timeRange);
+
+function asNumber(value, defaultValue)
+{
+    if (defaultValue == null) defaultValue = 0;
+    if (value == null) return defaultValue;
+    var num = Number(value);
+    if (isNaN(num)) return defaultValue;
+    return num;
+}
+
+var DAYS = 1;//Number(queryConfig["days-of-incidents"] || "30");
+var CURRENT_MEDIAN_BASELINE = queryConfig["current-median-baseline"] != false;
+var fromEpoch = null;
+var toEpoch = null;
+if (!CURRENT_MEDIAN_BASELINE) {
+    if (timeRange == null) {
+        // if no time range specified, use current time
+        CURRENT_MEDIAN_BASELINE = true;
+    }
+    else {
+        // only handle absolute:###/### format
+        if (typeof timeRange == "string" && timeRange.indexOf("absolute:") == 0) {
+            var colon = timeRange.indexOf(":");
+            var toks = timeRange.substring(colon+1).split("/");
+            if (toks.length == 2) {
+                fromEpoch = Number(toks[0]);
+                if (isNaN(fromEpoch)) fromEpoch = null;
+                toEpoch = Number(toks[1]);
+                if (isNaN(toEpoch)) toEpoch = null;
+            }
+        }
+        if (fromEpoch == null || toEpoch == null) {
+            // if time range cannot be parsed, use current time
+            CURRENT_MEDIAN_BASELINE = true;
+        }
+    }
+}
+
+var DS = queryConfig["data-source"]["incident-history"];
+var SQL = Context.getLocalResource("MEDIAN_BASELINE_BY_METRIC_ID_SQL");
+for (var i=0; i<DAYS; i++) {
+    var fromUnixTime, toUnixTime;
+    if (CURRENT_MEDIAN_BASELINE) {
+        fromUnixTime = "unix_timestamp(date_sub(current_date(),"+(i+1)+"))";
+        toUnixTime   = "unix_timestamp(date_sub(current_date(),"+(i)+"))";
+    }
+    else {
+        fromUnixTime = fromEpoch - (i*(24*60*60));
+        toUnixTime   = toEpoch - (i*(24*60*60));
+    }
+    var values = {
+        "fromUnixTime" : fromUnixTime,
+        "toUnixTime"   : toUnixTime,
+        "metricID"     : metricID,
+    };
+    var sql = this._doValueSubstitution(SQL, values);
+    var result = this.executeSQLQuery(queryConfig, ["*"], ["MedianBaseline"], DS, sql, null);
+    if (result != null && result.items.length > 0) {
+        // CHAR-103 / APOAUTO-1222
+        // - refactored to process the history data here for better encapsulation and reuse
+        var history = result.items;
+        // DO-401 - fix reuse of variable 'i' to 'j'... 'i' is on outer loop
+        for (var j=0; j<history.length; j++) {
+            var record = history[j];
+            if (record["algorithm"] == "simple_threshold") {
+                // DO-401
+                print("#### SIMPLE THRESHOLD has no score factor... return 0");
+                return 0;
+            }
+            else {
+                var median_baseline = asNumber(record["median_baseline"]);
+                if (median_baseline > 0) {
+                    // DO-222: custom adjustments to factor
+                    if (median_baseline < 25) median_baseline += 25;
+                    else if (median_baseline < 50) median_baseline = 50;
+                    
+                    //print("__getScoreFactorByMetricID: median_baseline="+median_baseline);
+                    return median_baseline;
+                }
+            }
+        }
+    }
+}
+
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="__parseNotificationRuleExprs" args="ruleList,defaultSeverity,actionList" private="true">
+        <CodeText>
+          <![CDATA[var INTERVAL = 300;
+
+function getPreCondition(rules)
+{
+    for (var i=0; i<rules.length; i++) {
+        var rule = rules[i];
+        if (rule.rule_desc == "Qualifying Action") {
+            return actionList[String(rule.value1)];
+        }
+    }
+    return "null";
+}
+
+function parseRule(rule, preCondition)
+{
+    switch (rule.rule_desc) {
+        case "Elapsed Sec":
+            switch (rule.value4) {
+                case "from first": // V1
+                case "from first quailf": // V1
+                    return {
+                        name  : "$ElapsedFromStart",
+                        value : Math.round(Number(rule.value1)/INTERVAL),
+                    };
+            }
+            break;
+        case "Elapsed Periods":
+        case "Effective Period":
+            switch (rule.value4) {
+                case "from first": // V1
+                case "from first quailf": // V1
+                case "from first qualif": // V1
+                    return {
+                        name  : "$ElapsedFromStart",
+                        value : Number(rule.value1),
+                        cond  : rule.value2,
+                    };
+                case "from first 1": // V1
+                    return {
+                        name  : "$ElapsedFromNotify",
+                        value : Number(rule.value1),
+                        cond  : rule.value2,
+                    };
+                case "any periods": // V2
+                    switch (preCondition) {
+                        case "null":
+                            return {
+                                name  : "$ElapsedFromStart",
+                                value : Number(rule.value1),
+                                cond  : rule.value2,
+                            };
+                            break;
+                        case "Alert NOC via Netcool":
+                            return {
+                                name  : "$ElapsedFromNotify",
+                                value : Number(rule.value1),
+                                cond  : rule.value2,
+                            };
+                            break;
+                    }
+                    break;
+                case "qualified periods": // V2
+                    switch (preCondition) {
+                        case "null":
+                            return {
+                                name  : "$CountFromStart",
+                                value : Number(rule.value1),
+                                cond  : rule.value2,
+                            };
+                            break;
+                        case "Alert NOC via Netcool":
+                            return {
+                                name  : "$CountFromNotify",
+                                value : Number(rule.value1),
+                                cond  : rule.value2,
+                            };
+                            break;
+                    }
+                    break;
+            }
+            break;
+        case "Sev Value": // V1 and v2
+            var severity = rule.value1.toLowerCase();
+            switch (rule.measured_attr) {
+                case "current":
+                case "max":
+                    return {
+                        name  : "$Severity",
+                        value : severity,
+                        cond  : rule.value2,
+                    };
+                    break;
+                case "effective":
+                    if (severity != defaultSeverity) {
+                        return {
+                            name  : "$Severity",
+                            value : severity,
+                            cond  : rule.value2,
+                        };
+                    }
+                    break;
+            }
+            break;
+    }
+    return null;
+}
+
+var expr_list = [];
+// outer array is ORed
+// inner array is ANDed
+if (ruleList.length == 1) {
+    // if we have ONE and ONLY ONE item in the outer array, no need for the OR
+    var exprs = [];
+    var preCondition = getPreCondition(ruleList[0]);
+    (ruleList[0]).forEach(function(rule) {
+        var expr = parseRule(rule, preCondition);
+        if (expr != null) {
+            exprs.push(expr);
+        }
+    });
+    if (exprs.length > 0) {
+        if (exprs.length > 1) {
+            expr_list.push({
+                "and" : exprs
+            });
+        }
+        else {
+            expr_list.push(exprs[0]);
+        }
+    }
+}
+else {
+    var inner_list = [];
+    ruleList.forEach(function(outer) {
+        var exprs = [];
+        var preCondition = getPreCondition(outer);
+        outer.forEach(function(inner) {
+            var expr = parseRule(rule, preCondition);
+            if (expr != null) {
+                exprs.push(expr);
+            }
+        });
+        if (exprs.length > 0) {
+            if (exprs.length > 1) {
+                inner_list.push({
+                    "and" : exprs
+                });
+            }
+            else {
+                inner_list.push(exprs[0]);
+            }
+        }
+    });
+    if (inner_list.length > 0) {
+        if (inner_list.length > 1) {
+            expr_list.push({
+                "or" : inner_list
+            });
+        }
+        else {
+            expr_list.push(inner_list[0]);
+        }
+    }
+}
+return expr_list;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getNotificationRules" args="queryConfig" private="true">
+        <CodeText>
+          <![CDATA[return this.__getNotificationRulesV2(queryConfig);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_hasAnomalyConfig" args="queryConfig,metricId,configName" private="true">
+        <CodeText>
+          <![CDATA[var ds = queryConfig["data-source"]["anomaly-config"];
+var sql = Context.getLocalResource("ANOMALY_CONFIG_EXISTS_SQL");
+sql = this._doValueSubstitution(sql, {
+    "owner_id" : Context.getCurrentUserId(),
+    "metric_id" : metricId,
+    "config_name" : configName,
+});
+var result = this.executeSQLQuery(queryConfig, ["AnomalyConfig"], ["Exist"], ds, sql, null);
+if (result != null && result.total == 1 && result.items.length == 1) {
+    var count = result.items[0]["count"];
+    return count == 1;
+}
+return false;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_hasFavoriteList" args="queryConfig,favoriteName" private="true">
+        <CodeText>
+          <![CDATA[var ds = queryConfig["data-source"]["favorite-list"];
+var sql = Context.getLocalResource("FAVORITE_LIST_EXISTS_SQL");
+sql = this._doValueSubstitution(sql, {
+    "owner_id" : Context.getCurrentUserId(),
+    "favorite_name" : favoriteName,
+});
+var result = this.executeSQLQuery(queryConfig, ["FavoriteList"], ["Exist"], ds, sql, null);
+if (result != null && result.total == 1 && result.items.length == 1) {
+    var count = result.items[0]["count"];
+    return count == 1;
+}
+return false;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="computeScoreFactor" args="baselines" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+var factor = 0;
+switch (queryConfig["score-factor-function"] || "median") {
+    case "median":
+        baselines.sort(function(a,b) {
+            if (a > b) return 1;
+            else if (a < b) return -1;
+            return 0;
+        });
+        factor = (baselines[Math.floor((baselines.length-1)/2)] + baselines[Math.floor(baselines.length/2)])/2;
+        break;
+    case "mean":
+        var sum = 0;
+        baselines.forEach(function(baseline) {
+            sum += baseline;
+        });
+        factor = sum / baselines.length;
+        factor = Number(factor.toFixed(2));
+        break;
+}
+
+// DO-222: custom adjustments to factor
+if (factor < 25) factor += 25;
+else if (factor < 50) factor = 50;
+
+//print("_computeScoreFactor: baselines="+__prettyPrintJSON(baselines));
+//print("_computeScoreFactor: factor="+factor);
+return factor;
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="deleteAnomalyConfig" args="metricId,configName" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+var ds = queryConfig["data-source"]["anomaly-config"];
+var sql = Context.getLocalResource("ANOMALY_CONFIG_DELETE_SQL");
+sql = this._doValueSubstitution(sql, {
+    "owner_id" : Context.getCurrentUserId(),
+    "metric_id" : metricId,
+    "config_name" : configName,
+});
+this.executeSQLUpdate(queryConfig, ["AnomalyConfig"], ["Delete"], ds, sql, null);
+this.anomalyAudit([Context.getCurrentUserId(), metricId, configName, null], "delete");
+return true;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="deleteFavoriteList" args="favoriteName" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+var ds = queryConfig["data-source"]["favorite-list"];
+var sql = Context.getLocalResource("FAVORITE_LIST_DELETE_SQL");
+sql = this._doValueSubstitution(sql, {
+    "owner_id" : Context.getCurrentUserId(),
+    "favorite_name" : favoriteName,
+});
+this.executeSQLUpdate(queryConfig, ["FavoriteList"], ["Delete"], ds, sql, null);
+this.anomalyFavoiteListAudit([[Context.getCurrentUserId(), favoriteName, null, null, null]], "delete");
+return true;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getAnomalyConfigByMetricID" args="metricID,timeRange,filters,version" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+//print("_getAnomalyConfigByMetricID: metricID="+metricID);
+//print("_getAnomalyConfigByMetricID: timeRange="+timeRange);
+//print("_getAnomalyConfigByMetricID: filters="+__prettyPrintJSON(filters));
+
+// DO-401
+var wildcard = null;
+if (filters != null) {
+    for (var i=0; i<filters.length; i++) {
+        var filter = filters[i];
+        if (filter.name == "$.wildcard") {
+            wildcard = filter.value;
+            filters.splice(i, 1);
+            break;
+        }
+    }
+}
+
+function getConfigItem(key)
+{
+    return {
+        "median_baseline" : null,
+        "high_threshold" : 0,
+        "medium_threshold" : 0,
+        "low_threshold" : 0,
+        "above_threshold" : false,
+        "below_threshold" : false,
+        "warmup_threshold" : 0,
+        "warmup_period" : 0,
+        "cooldown_period" : 0,
+        "min_call_dev" : 0,
+        "min_call_vol" : 0,
+        "min_metric_dev" : 0,
+        "min_metric_vol" : 0,
+        "med_threshold_period" : 0,
+        "high_threshold_period" : 0,
+        "med_call_vol_pct" : 0,
+        "high_call_vol_pct" : 0,
+        "metric_hist_per" : 0,
+        "max_low_per" : 0,
+        "max_med_per" : 0,
+        "tot_max_low_per" : 86400,
+        "tot_max_med_per" : 86400,
+    };
+}
+
+function asNumber(value, defaultValue)
+{
+    if (defaultValue == null) defaultValue = 0;
+    if (value == null) return defaultValue;
+    var num = Number(value);
+    if (isNaN(num)) return defaultValue;
+    return num;
+}
+
+var item = getConfigItem(metricID);
+
+// CHAR-103 / APOAUTO-1222
+// - refactored to process the history data INSIDE the __getScoreFactorByMetricID function
+// - so that we can re-use in _getScoreFactorByMetricID, used to update score factor
+// - when time window changes
+var median_baseline = this.__getScoreFactorByMetricID(queryConfig, metricID, timeRange);
+//print("_getAnomalyConfigByMetricID: median_baseline="+median_baseline);
+if (median_baseline != null) {
+    item["median_baseline"] = median_baseline;
+}
+
+if (item["median_baseline"] == null && filters != null) {
+    var factor = this.__computeFactorByMetricID(queryConfig, filters);
+    //print("_getAnomalyConfigByMetricID: factor="+factor);
+    if (factor != null) {
+        item["median_baseline"] = factor;
+    }
+}
+
+if (item["median_baseline"] == null) {
+    item["median_baseline"] = 0;
+}
+
+// add notification rules to config
+this.__getNotificationRuleByMetricID(queryConfig, item, metricID);
+
+// add user defined config
+switch (version) {
+    case "V1":
+        this.__getIncidentModelV1ByMetricID(queryConfig, item, metricID);
+        break;
+    case "V2":
+        // DO-401
+        this.__getIncidentModelV2ByMetricID(queryConfig, item, metricID, wildcard);
+        break;
+}
+
+// for DEMO purposes... attach demo profile, if defined
+var start = Date.now();
+var demoProfile = this.getDemoProfile != null ? this.getDemoProfile() : null;
+if (demoProfile != null && demoProfile["anomaly-viewer"] != null) {
+    item["__event_text__"] = demoProfile["anomaly-viewer"]["event-text"];
+    item["__event_label__"] = demoProfile["anomaly-viewer"]["event-label"];
+}
+print("_getAnomalyConfigByMetricID: getDemoProfile() " + (Date.now()-start) + "ms");
+
+return item;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getConfigDefaults" args="metricId" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+//print("_getConfigDefaults: metricId="+metricId);
+var configDefaults = queryConfig["config-defaults"];
+if (configDefaults == null) {
+    return {
+        "mode" : "percentile",
+        "defaults" : {
+            "high"   : 99,
+            "medium" : 97,
+            "low"    : 95,
+            "warmup" : 70,
+        }
+    }
+}
+
+var toks = metricId.split("|");
+var record = {
+    svcName    : toks[0],
+    compName   : toks[1],
+    appName    : toks[2],
+    metricName : toks[3],
+};
+var rules = [];
+this._findAllRules(record, function(key) {
+    var cfg = configDefaults[key];
+    return cfg;
+}).forEach(function(rule) {
+    rules.push(rule);
+});
+//print("_getConfigDefaults: rules=" + __prettyPrintJSON(rules));
+return {
+    "mode" : "percentile",
+    "defaults" : {
+        "high"   : 99,
+        "medium" : 97,
+        "low"    : 95,
+        "warmup" : 70,
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getScoreFactorByMetricID" args="metricID,timeRange,filters" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+if (timeRange == null) {
+    // CHAR-103 / APOAUTO-1222
+    // - expose new API so that we can get updated score factor when time window changes
+    for (var i=0; i<filters.length; i++) {
+        var filter = filters[i];
+        if (filter.name == queryConfig["filters"]["time"]) {
+            if (filter.value != null && filter.value != "") {
+                timeRange = filter.value;
+            }
+            break;
+        }
+    }
+}
+
+var median_baseline = this.__getScoreFactorByMetricID(queryConfig, metricID, timeRange);
+//print("getScoreFactorByMetricID: median_baseline="+median_baseline);
+if (median_baseline != null) {
+    return median_baseline;
+}
+if (filters != null) {
+    var factor = this.__computeFactorByMetricID(queryConfig, filters);
+    //print("getScoreFactorByMetricID: factor="+factor);
+    if (factor != null) {
+        return factor;
+    }
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getSummaryConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[return JSON.parse(Context.getLocalResource("SummaryConfig"));
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getTrendData" args="filters" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+
+// automatically include customer call IF trending metric
+for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    switch (filter.name) {
+        case "data.metric":
+            if (filter.value != "Customer Call Volume") {
+                filter.value = [filter.value, "Customer Call Volume"];
+            }
+            break;
+    }
+}
+
+var metaFilters = [
+    {
+        "name"  : "$.aggregation.interval",
+        "value" : [{ "seconds": null, "interval": "5*M" }]
+    }
+];
+filters = filters.concat(metaFilters);
+
+// filters = filters.filter(function(a) {
+//     return !Array.isArray(a.value) || a.value.length > 0;
+// });
+// print("_getTrendData: filters="+__prettyPrintJSON(filters));
+
+var start = Date.now();
+var result = this._invokeTrendAnalysisService(queryConfig, filters);
+print("_getTrendData: elapsed="+(Date.now()-start)+"ms");
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="loadAnomalyConfig" args="metricId,ownedOnly" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+var ds = queryConfig["data-source"]["anomaly-config"];
+
+var ownerId = Context.getCurrentUserId();
+
+var sql = Context.getLocalResource("ANOMALY_CONFIG_SELECT_SQL");
+sql = this._doValueSubstitution(sql, {
+    "owner_id" : ownedOnly ? ownerId : "*",
+    "metric_id" : metricId
+});
+var result = this.executeSQLQuery(queryConfig, ["AnomalyConfig"], ["Load"], ds, sql, null);
+result = result != null ? result.items : [];
+if (ownedOnly) {
+    result.forEach(function(item) {
+        item["is_owned"] = true;
+    });
+}
+else {
+    result.forEach(function(item) {
+        item["is_owned"] = item["owner_id"] == ownerId;
+    });
+}
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="loadFavoriteList" args="ownedOnly" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+var ds = queryConfig["data-source"]["favorite-list"];
+
+var ownerId = Context.getCurrentUserId();
+
+var sql = Context.getLocalResource("FAVORITE_LIST_SELECT_SQL");
+sql = this._doValueSubstitution(sql, {
+    "owner_id" : ownedOnly ? ownerId : "*",
+});
+var result = this.executeSQLQuery(queryConfig, ["FavoriteList"], ["Load"], ds, sql, null);
+result = result != null ? result.items : [];
+if (ownedOnly) {
+    result.forEach(function(item) {
+        item["is_owned"] = true;
+    });
+}
+else {
+    result.forEach(function(item) {
+        item["is_owned"] = item["owner_id"] == ownerId;
+    });
+}
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="saveAnomalyConfig" args="metricId,configName,configJSON" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+var ds = queryConfig["data-source"]["anomaly-config"];
+
+if (this._hasAnomalyConfig(queryConfig, metricId, configName)) {
+    var sql = Context.getLocalResource("ANOMALY_CONFIG_UPDATE_SQL");
+    var args = [];
+    args.push([configJSON, configName, metricId, Context.getCurrentUserId()]);
+    this.executeSQLUpdate(queryConfig, ["AnomalyConfig"], ["Update"], ds, sql, args);
+     this.anomalyAudit([Context.getCurrentUserId(), metricId, configName, configJSON], "modify");
+    return true;
+}
+else {
+    var sql = Context.getLocalResource("ANOMALY_CONFIG_INSERT_SQL");
+    var args = [];
+    args.push([configName, metricId, Context.getCurrentUserId(), configJSON]);
+    this.executeSQLUpdate(queryConfig, ["AnomalyConfig"], ["Insert"], ds, sql, args);
+    this.anomalyAudit([Context.getCurrentUserId(), metricId, configName, configJSON], "add");
+    return true;
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="saveFavoriteList" args="favoriteName,metricId,configJSON,filterJSON" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+var ds = queryConfig["data-source"]["favorite-list"];
+
+if (this._hasFavoriteList(queryConfig, favoriteName)) {
+    var sql = Context.getLocalResource("FAVORITE_LIST_UPDATE_SQL");
+    var args = [];
+    args.push([metricId, configJSON, filterJSON, favoriteName, Context.getCurrentUserId()]);
+    this.executeSQLUpdate(queryConfig, ["FavoriteList"], ["Update"], ds, sql, args);
+    this.anomalyFavoriteListAudit([[Context.getCurrentUserId(), favoriteName, metricId, configJSON, filterJSON]], "modify");
+    return true;
+}
+else {
+    var sql = Context.getLocalResource("FAVORITE_LIST_INSERT_SQL");
+    var args = [];
+    args.push([favoriteName, Context.getCurrentUserId(), metricId, configJSON, filterJSON]);
+    this.executeSQLUpdate(queryConfig, ["FavoriteList"], ["Insert"], ds, sql, args);
+    this.anomalyFavoriteListAudit([[Context.getCurrentUserId(), favoriteName, metricId, configJSON, filterJSON]], "add");
+    return true;
+}
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="7641facc-40e0-4340-8580-2b669ee2f4b7" name="ANOMALY_CONFIG_DELETE_SQL" type="application/sql" size="129" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="2b16ce62-591a-4c72-8838-c3d42912edd0" name="ANOMALY_CONFIG_EXISTS_SQL" type="application/sql" size="146" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="e5df4e2c-4111-44df-8c4c-3c11e94b6a08" name="ANOMALY_CONFIG_INSERT_SQL" type="application/sql" size="102" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="43da469d-c8b2-4633-82b4-6593f6a5eaf9" name="ANOMALY_CONFIG_SELECT_SQL" type="application/sql" size="177" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="4c63f942-1f07-4c14-89eb-2eb5620b70e9" name="ANOMALY_CONFIG_UPDATE_SQL" type="application/sql" size="149" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="1a623c4a-2aa8-4a76-86ca-942cc8fe1b89" name="ANOMALY-CSS" type="text/css" size="7112" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="ab486725-0b81-4c96-8149-5ca3871edafb" name="FAVORITE_LIST_DELETE_SQL" type="application/sql" size="107" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="18499b49-90fd-48e0-84af-76f8a5c53183" name="FAVORITE_LIST_EXISTS_SQL" type="application/sql" size="124" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="467324ce-076d-47e1-8220-6726a963a0f8" name="FAVORITE_LIST_INSERT_SQL" type="application/sql" size="123" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="df8555ef-2323-482f-8357-609fdc731898" name="FAVORITE_LIST_SELECT_SQL" type="application/sql" size="178" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="804090e8-6463-4945-84c6-b08106086b8d" name="FAVORITE_LIST_UPDATE_SQL" type="application/sql" size="176" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="b1e61058-c401-40af-8b48-d53d15371874" name="INCIDENT_MODEL_BY_METRIC_ID_SQL_1" type="application/sql" size="536" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="8bcedde0-61eb-4a44-83a1-5b53933d6762" name="INCIDENT_MODEL_BY_METRIC_ID_SQL_2" type="application/sql" size="575" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="762b8513-2412-47e8-8d0e-db9e5eb1f3cf" name="MEDIAN_BASELINE_BY_METRIC_ID_SQL" type="application/sql" size="381" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="28221ca0-5763-49af-86de-93731c84751a" name="NOTIFICATION_ACTION_LIST_SQL" type="application/sql" size="48" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="c6f53bd8-e073-4686-8dd3-9bf6cfac03e4" name="NOTIFICATION_FLOOR_DISPATCH_SQL_1" type="application/sql" size="131" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="bb477462-d1bf-4764-8e15-d809fb3ee289" name="NOTIFICATION_FLOOR_DISPATCH_SQL_2" type="application/sql" size="278" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="b3159aff-80a1-42a8-8deb-2ebc2c893183" name="NOTIFICATION_IVR_DEFLECT_SQL_1" type="application/sql" size="125" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="85a8f85a-6bc3-4489-87ae-54f375f72313" name="NOTIFICATION_IVR_DEFLECT_SQL_2" type="application/sql" size="275" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="c1e77f64-07dc-4474-868e-274103208cc4" name="NOTIFICATION_METRIC_SEVERITY_SQL_1" type="application/sql" size="606" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="4050309c-fd32-49a2-800a-c49a4e141286" name="NOTIFICATION_METRIC_SEVERITY_SQL_2" type="application/sql" size="155" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="38ff71db-23b7-41c9-8bc5-93c1c8ba0a21" name="NOTIFICATION_NOC_NOTIFY_SQL_1" type="application/sql" size="137" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="747172a6-8fc4-40ba-8903-bb65210a87cf" name="NOTIFICATION_NOC_NOTIFY_SQL_2" type="application/sql" size="284" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="f0591266-9530-49db-8c08-0dd22a9e0067" name="NOTIFICATION_RULE_SQL_1" type="application/sql" size="26" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="99642b4f-c38d-414a-878d-7bf89bd07f9a" name="SQL Scripts" type="application/sql" size="662" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="ab54345c-00fc-4c0c-87a7-4f58f2e8bbeb" name="SummaryConfig" type="application/json" size="25420" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/space/another/dbpm/VIAOps - Base Service"/>
+      <Plugin uri="/app/dbp/space/another/dbpm/VIAOps - Demo Service"/>
+      <Plugin uri="/app/dbp/space/another/dbpm/VIAOps - Config Audit Service"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

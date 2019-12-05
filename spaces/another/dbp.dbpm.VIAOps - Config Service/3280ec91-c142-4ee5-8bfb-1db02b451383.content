@@ -1,0 +1,3 @@
+select *
+from viaops_anomaly_sol
+where adm_name = '${adm_name}'

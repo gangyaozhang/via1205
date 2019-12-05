@@ -1,0 +1,2 @@
+select *
+from rule_dim_v2

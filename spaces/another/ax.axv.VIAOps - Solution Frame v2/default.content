@@ -1,0 +1,1935 @@
+<AnalyticsExplorerView description="" name="VIAOps - Solution Frame v2" is_init="false">
+  <ModelInfo validated="false" nextPageId="9">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties>
+      <Property name="show" label="show" type="boolean" value="true" constraints="" runtimeControl="false" enableAll="false" enableOthers="false" withQuotes="false" defaultAll="false"/>
+      <Property name="Locale" label="Locale" type="string" value="en-US" constraints="en-US,de-DE,es-ES,it-IT" runtimeControl="false" stringType="enumeration" enums="en-US=English/US,de-DE=German/Germany,es-ES=Spanish/Spain,it-IT=Italian/Italy" enableAll="false" enableOthers="false" withQuotes="false" defaultAll="false">
+        <Value valueType="static" value="en-US" sourceURL="" DataSource="" lastValue="" lastSourceURL="" lastDataSource=""/>
+      </Property>
+      <Property name="timeZone" label="Time Zone" type="string" value="UTC" constraints="UTC,America/New_York,America/Chicago,America/Denver,America/Los_Angeles" runtimeControl="false" stringType="enumeration" enums="UTC,America/New_York,America/Chicago,America/Denver,America/Los_Angeles" enableAll="false" enableOthers="false" withQuotes="false" defaultAll="false">
+        <Value valueType="static" value="UTC" sourceURL="" DataSource="" lastValue="" lastSourceURL="" lastDataSource=""/>
+      </Property>
+      <Property name="Interval" label="Interval" type="string" value="Auto" constraints="Auto,15 minutes,1 Hour,8 Hours,1 Day" runtimeControl="false" stringType="enumeration" enums="Auto,15 minutes,1 Hour, 8 Hours,1 Day" enableAll="false" enableOthers="false" withQuotes="false" defaultAll="false">
+        <Value valueType="static" value="Auto" sourceURL="" DataSource="" lastValue="" lastSourceURL="" lastDataSource=""/>
+      </Property>
+      <Property name="showMapControls" label="showMapControls" type="boolean" value="true" constraints="" runtimeControl="false" enableAll="false" enableOthers="false" withQuotes="false" defaultAll="false"/>
+      <Property name="showAnomalies" label="Show Anomalies" type="string" value="true,true" constraints="" runtimeControl="false" stringType="constant" enableAll="false" enableOthers="false" withQuotes="false" defaultAll="false"/>
+    </GlobalProperties>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="0"/>
+      <NoTileSpacing value="true"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="false"/>
+    <DWRSetting disable="false"/>
+    <CustomCSSSetting><![CDATA[@font-face {
+  font-family: vitriaDefaultFont;
+  src: url(/vitria-oi/rest/app/dbp/space/VIA%20Common%20Library/dbpm/VIA%20-%20FontResource?op=vt:dbp:resource:OxygenRegular.tff);
+}
+
+body, input, textarea, div, span, table, select, svg g, p {
+    font-family: vitriaDefaultFont,Arial,sans-serif !important;
+}
+
+.valueBar {
+    border-radius: 8px;
+}
+
+.template-navigation .menuItem,
+.template-controls .menuItem {
+    margin: 0px !important;
+    padding: 0px !important;
+    opacity: 1 !important;
+}
+
+.template-controls .menuItem I {
+    opacity: 1 !important;
+    color: black !important;   
+}
+
+.template-controls .menuItem:hover I {
+    color: #148ac4 !important;   
+}
+
+.HeaderButtonDiv {
+    border: 1px solid #cccccc !important;
+    border-radius: 3px;
+}
+
+
+.growl_div TABLE {
+    background: transparent;   
+}
+
+.pageFrameLayout .GridsterViewerWidget.tileSpacing .gridster.ready .gs-w {
+    border: 1px solid transparent;
+}
+
+
+.filterBar {
+    background-color: rgba(127, 206, 255, 0) !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: transparent transparent transparent transparent !important;
+    border-image: initial !important;
+}
+
+.filterBar .tileHolder .groupBorder.tile.smallTile,
+.filterBar.left .tileHolder .groupBorder.tile.smallTile,
+.filterBar.right .tileHolder .groupBorder.tile.smallTile {
+    background-color: transparent !important;
+}
+
+.dimension-filter .enumeration-control,
+.dimension-filter .time-interval-control,
+.app .dijitValidationTextBox, 
+.app .dijitSelect, 
+.app input.dijitTextBox, 
+.app select {
+    background-color: rgba(255,255,255,1) !important;
+    border: none !important;
+    font-family: arial !important;
+    border-bottom: 1px solid #148ac4 !important;
+}
+
+span {
+    padding-bottom: 1px !important;
+}
+
+.app .tabbar.tabBarWithTitle {
+    display: block;
+}
+
+.app .ListCheckValueTD {
+    border-bottom: none;
+}
+
+.viewerContent .GridsterViewerWidget {
+    background-color: #fff;
+    z-index: 0;
+}
+
+.app .smallTile .titleholder {
+    padding-top: 0px !important;
+    height: unset !important;
+    line-height: unset !important;
+}
+
+.app .smallTile .title {
+    border: none !important;
+    font-size: 18px;
+    font-weight: bold !important;
+    height: 30px !important;
+    border-bottom: 1px solid #EAEDEF !important;
+}
+
+.app .smallTile .maxTileIcon {
+    height: 38px !important;
+    border-bottom: 1px solid #EAEDEF !important;
+}
+
+    
+.mapListProcess .tileContainer .title.nowrap {
+    display: none !important;
+}
+
+BODY.portlet .t-df2.vit-menu-main ~ DIV {
+    display: none;
+}
+
+.app .tabbar.tabBarWithTitle {
+    background-image: none;
+    background-color: #111111 ;
+    border-color: transparent !important;
+}
+
+.app .tabbar .titleDiv {
+    display: none !important;
+}
+
+BODY DIV table {
+   background: transparent !important; 
+}
+
+BODY DIV li.extraButtonContainer table {
+    background: unset;   
+}
+
+.app .dgrid .dgrid-header .dgrid-cell {
+    text-align: left !important;
+    white-space: nowrap !important;
+    vertical-align: top;
+    background-color: #ffffff;
+}
+
+.app .rendererDataGrid .dgrid-header .dgrid-cell,
+.app .rendererDataGrid .dgrid-header .dgrid-cell .dgrid-resize-header-container DIV {
+    font-size: 12px !important;
+    font-weight: bold;
+    background-image: none;
+    border-bottom: none;
+}
+
+.app .rendererDataGrid .dgrid-content .dgrid-cell,
+.app .rendererDataGrid .dgrid-content .dgrid-cell.customCell{
+    padding-top: 7px !important;
+    padding-bottom: 8px !important;
+    border-color: transparent !important;
+    vertical-align: top;
+    white-space: nowrap !important;
+    font-size: 12px !important;
+    height: 33.4px !important;
+}
+
+.app .dgrid dgrid-scroller {
+    margin-top: 40px !important;   
+}
+
+
+.app .rendererDataGrid .dgrid-row {
+    border: none !important;   
+}
+
+.app .rendererDataGrid .dgrid-row-even {
+    background-color: #f5f5f5;
+}
+
+.dgrid-sort-arrow {
+    margin: 0;
+    filter: brightness(100);
+    height: 12px;
+    width: 11px;
+}
+
+.app .dgrid .grid-content .customCell {
+    white-space: normal; 
+    padding-bottom: 0;
+    overflow: hidden;
+    text-overflow: unset;
+    line-height: 16px;
+}
+
+.app .dgrid .dgrid-selected TD {
+    background: none;
+    color: unset !important;
+    font-weight: bold;
+}
+
+.click-to-open-div {
+    width: calc(100% - 5px);
+    height: 20px;
+    text-align: left;
+    vertical-align: top;
+    color: white;
+    font-size: 10px;
+}
+
+.app .smallTile .tileContainer {
+    padding-bottom: 3px;
+}
+
+
+TABLE.CartesianChartRendererMainCanvas SVG TEXT, DIV.noTextSelectRenderer SVG TEXT {
+    fill: rgb(64,64,64) !important;
+}
+
+DIV.noTextSelectRenderer {
+    color: rgb(64,64,64) !important;   
+}
+
+.IconChartRenderer .iconDiv {
+    margin: 1px;
+}
+
+.app .rendererErrorTable {
+    background-color: transparent;
+}
+
+.tileIcon {
+    padding-top: 5px !important;
+}
+
+.rendererDataGrid .dgrid-header .dgrid-cell {
+    background: transparent;
+}
+
+.common-plugin.dimension-filter  .dimension-table-anomaly-metric {
+    margin-top: -10px;
+}
+
+.common-plugin.dimension-filter .apply-fa-div,
+.common-plugin.dimension-filter .popup-button-fa-div, 
+.common-plugin.dimension-filter .enumeration-fa-bar-control {
+    border: none !important;
+    height: 30px !important;
+}
+
+.causationAnalysisComp td.category-control-value.dimension-filter-category-data, 
+.incidentAnalysisComp td.category-control-value.dimension-filter-category-data {
+    top: 4px !important;
+}
+
+.popup-button-fa-icon,
+.apply-fa-icon {
+    font-size: 18px !important;
+}
+
+.fa-bar-icon {
+    font-size: 0px !important;   
+}
+
+.popup-button-fa-label,
+.fa-bar-label,
+.apply-fa-label {
+    font-size: 12px !important;
+    padding-top: 2px;
+}
+
+
+.dimension-filter-item-timeRange .popup-button-fa-label, .dimension-apply .apply-fa-icon .apply-fa-label {
+    display: none !important;
+}
+
+.dimension-filter-item-timeRange .popup-button-fa-label, 
+.dimension-apply .apply-fa-icon .apply-fa-label {
+    display: none !important;
+}
+
+.common-plugin.dimension-filter .apply-fa-icon,
+.common-plugin.dimension-filter .apply-fa-icon:hover{
+    margin-top: -3px !important;
+}
+
+
+.causationAnalysisComp td.category-control-value.dimension-filter-category-data,
+.incidentAnalysisComp td.category-control-value.dimension-filter-category-data {
+    position: relative;
+    top: 15px;
+    text-align: left;
+}
+
+.menuItem.fa-bar-menu-item {
+    width: 90px !important;
+    margin-left: 0px !important;
+}
+
+.menuItem.fa-bar-menu-item.selected,
+.menuItem.fa-bar-menu-item.selected .fa-bar-label{
+    background-color: transparent;
+    color: #148ac4 !important;
+}
+
+
+/* Tile borders page by page */
+
+/* Incident Analysis and Causation Analysis */
+
+.tileContainer.incident-list {
+    border-top: 20px solid #f1f2f2 !important;
+    border-left: 20px solid #f1f2f2 !important;
+    border-right: 10px solid #f1f2f2 !important;
+    border-bottom:  10px solid #f1f2f2 !important;
+}
+
+.tileContainer.incident-trend-tile {
+    border-bottom: 20px solid #f1f2f2 !important;
+    border-left: 20px solid #f1f2f2 !important;
+    border-right: 10px solid #f1f2f2 !important;
+    border-top:  10px solid #f1f2f2 !important;
+}
+
+.tileContainer.dimension-analysis-tile {
+    border-top: 20px solid #f1f2f2 !important;
+    border-right: 20px solid #f1f2f2 !important;
+    border-left: 10px solid #f1f2f2 !important;
+    border-bottom: none;
+}
+
+.tileContainer.dimension-analysis-tile.bottom  {
+    border-bottom: 20px solid #f1f2f2 !important;
+    border-right: 20px solid #f1f2f2 !important;
+    border-left: 10px solid #f1f2f2 !important;
+    border-top: none !important;
+}
+
+.tileContainer.causationAnalysis {
+    border-bottom: 20px solid #f1f2f2 !important;
+    border-right: 20px solid #f1f2f2 !important;
+    border-left: 10px solid #f1f2f2 !important;
+    border-top: 20px solid #f1f2f2 !important;
+}
+
+.tileContainer.tile-spacer-vertical {
+    border-top: none;
+    border-bottom: none;
+}
+
+.tileContainer.tile-spacer-vertical.left {
+    border-left: 20px solid #f1f2f2 !important;
+    border-right: 10px solid #f1f2f2 !important;
+}
+
+.tileContainer.tile-spacer-vertical.right {
+    border-right: 20px solid #f1f2f2 !important;
+    border-left: 10px solid #f1f2f2 !important;
+}
+
+/* Causation PAge */
+
+
+.tileContainer.dimension-analysis-tile {
+    border-top: 20px solid #f1f2f2 !important;
+    border-right: 20px solid #f1f2f2 !important;
+    border-left: 10px solid #f1f2f2 !important;
+    border-bottom: 20px solid #f1f2f2 !important;;
+}
+
+
+/* Execution Monitor */
+
+.em_main .em_body .em_commit_detail {
+    background-color: #f1f2f2;
+    top: 43px !important;
+    width: 349px !important;
+    border: 20px solid #f1f2f2;
+}
+
+.em_main .em_body .em_commit_detail.open {
+    background-color: white;
+    border: 20px solid #f1f2f2;
+}
+
+.em_main .em_body .em_commit_detail .em_commit_detail_inner {
+    left: -5px !important; 
+    width: 367px !important;
+}
+
+.em_main .em_body .em_commit_detail .em_commit_detail_inner .em_service_impact_desc, 
+.em_main .em_body .em_commit_detail .em_commit_detail_inner .em_commit_detail_desc, 
+.em_main .em_body .em_commit_detail .em_commit_detail_inner .em_impact_desc {
+    width: 350px !important;
+}
+
+.em_main .em_body .em_commit_detail .em_commit_detail_inner  #em_acknowledge_notes {
+    width: 330px !important;
+}
+]]></CustomCSSSetting>
+    <Page id="1" name="page1" title="page1" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="demoContent">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[
+
+<div class="template-body">
+	
+	<div class="template-header template-separator template-header-border template-cap"></div>
+	
+	<div class="template-header template-header-body template-header-color">
+	    <div class="vitriaLogo"><img id="frameLogo" src="data:image/png;base64,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"></div>
+	<!--	<div class="vitriaLogo"><img src="/vitria-oi/app/dojoclient/html/themes/hybrid/default/images/frame/logonew.png"></div> -->
+	
+	
+	
+	
+	
+	
+		<div class="brandSeparator"></div>
+	
+		<div class="template-brand" onclick="document.location='/vitria-oi/app/?portlet=true#uri=/app/ax/user/charter_admin/axv/Digital Operations Solution'">
+			
+			<div id="solutionName" class="template-brand-label1">VIA</div>
+		
+		<!-- 	<div class="template-brand-label2">Powered by Vitria VIA� analytics</div> -->
+	
+		</div>
+		
+		<div class="template-navigation" data-vitria-type="tile" data-vitria-tile-name="navigation"></div>
+		
+		<div class="template-info" id="frameMenuToggle">
+		
+                <i class="fa fa-wrench"></i>
+		
+		</div>
+		
+	</div>
+	
+	<div class="template-header template-separator template-header-border bottom"></div>
+	
+	<div class="template-breadcrumb" data-vitria-type="tile" data-vitria-tile-name=""></div>
+	
+	<div class="template-main">
+	
+	    <input type="checkbox" id="sidebartoggler">
+        
+        <div class="page-wrapper">
+
+            <div class="page-content" data-vitria-type="tile" data-vitria-tile-name="Tile1"></div>
+            
+        </div>
+
+	</div>
+	
+	<div class="template-footer template-header-border">
+		<div class="template-footer-label left" id="timeZoneFooter"></div>
+		<div class="template-footer-label right" id="copyrightFooter">Copyright © Vitria Technology, Inc. 2017</div>
+	
+	</div>
+
+    
+</div>
+]]></PageFrameContent>
+      <PageCustomCSS><![CDATA[    .template-navigation .menuItem {
+        padding: 0 5px !important;
+        height: 100% !important;
+        border-left: 1px solid rgba(255,255,255,0);
+        background-color: rgba(255,255,255,0);
+        margin: 0;
+        padding-top: 14px;
+        cursor: pointer;
+        display: inline-block;
+    }
+    
+    .template-navigation .menuItem {
+	    padding: 0px !important;   
+	}
+    
+    .template-navigation .menuItem.selected {
+        opacity: 1;
+        border-left-color: rgba(255,255,255,0) !important;
+        background-color: rgba(255,255,255,0) !important;
+
+    }
+
+    .template-navigation .menuItem.selected I DIV {
+        margin-top: 0px !important;
+        color: #4cbaff !important;
+        font-weight:bold;
+    }
+
+    .template-navigation .menuItem:hover {
+        background-color: rgba(255,255,255,.025) !important;   
+    }
+    
+    .template-navigation .menuItem I DIV {
+        font-size: 13px !important;
+        padding-top: 2px; 
+        margin-top: 1px !important;
+        color: rgba(255,255,255,1);
+        font-weight: 300;
+    }
+    
+    .template-navigation .menuItem:hover I DIV {
+        color: rgba(77,187,255,.7) !important;   
+    }
+    
+    .template-navigation .menuItem I {
+        opacity: 1 !important;
+        padding: 10px 10px !important;
+    }
+    
+    .template-navigation .menuItem.selected I:after {
+        content: '';
+        position: relative;
+        top: -2px;
+        /* left: 75px; 
+        margin-left: -10px;*/
+        width: 0;
+        height: 0;
+        border-bottom: solid 6px #ffffff;
+        border-left: solid 6px #2c3538;
+        border-right: solid 6px #2c3538;
+    }
+    
+    .dimension-group .menuItem.selected I:after {
+        top: 0px;
+        border-bottom: solid 6px #148AC4;
+        border-left: solid 6px #ffffff;
+        border-right: solid 6px #ffffff;
+    }
+    
+    .buttonNavigationInner {
+        margin-top: -4px;
+    }
+    
+    .template-navigation .menuItem:last-child {
+        border-right: 1px solid transparent;
+    }
+    
+    .template-navigation .menuItem:first-child, 
+    .template-navigation .menuItem:first-child.selected {
+        border-left-color: transparent !important;
+    }
+
+    .downloadBtn .btnContainer .btnIcon {
+        margin-top: 2px !important;
+    }
+    
+    .filterBtn .btnContainer .btnIcon,
+    .timeSettingBtn .btnContainer .btnIcon, 
+    .downloadBtn .btnContainer .btnIcon {
+        margin-top: 5px !important;
+        height: 24px !important;
+        width: 24px !important;
+        cursor: pointer !important;
+        background-position: center center !important;
+        background-size: 24px !important;
+        background-repeat: no-repeat !important;
+    }
+
+	#legendToggle IMG,
+	#filterToggle IMG {
+		filter: contrast(5) invert( 100% ) ;
+		fill: #fff;
+		width: 16px !important;
+		height: 16px !important;
+	}
+	
+	#filterToggle, 
+	#legendToggle {
+		border: none !important;
+		border-radius: 4px !important;
+		background-image: none !important;
+		padding: 5px !important;
+		background-color: #2d3538 !important;
+		margin: 0 10px;
+	}
+	
+	#filterToggle:hover, 
+	#legendToggle:hover {
+		background-color: #4cbaff !important;
+	}
+	
+	.HeaderButtonDiv {
+		border: 1px solid #999999;
+		padding: 3px;
+		border-radius: 5px;
+		width: 15px;
+		height: 15px;
+		display: inline-block;
+	}
+
+    .app .appDialogTitleBar {
+        background-color: #575D60;
+        color: #fff;
+    }
+    
+    .app .appDialog .appDialogButtonBar {
+        background-color: #575D60;
+        
+    } 
+    
+    .template-breadcrumb {
+        top: 44px !important;
+        width: calc( 100% - 0px ) !important;
+        background-color: rgba(45,53,56,0.9);
+        height: 35px;
+        border-color: transparent;
+        display: none !important;
+    }
+
+	.template-main{
+		position: absolute;
+		top: 46px !important;
+		bottom: 5px;
+		width: calc( 100% - 5px );
+		overflow-y: hidden;
+	    margin: 0 0 0 0;
+	}
+
+    .template-body .vitriaLogo {
+        width: 145px;
+        background-color: #1D2325;
+    }
+
+    .template-body .vitriaLogo IMG {
+        margin-top: 5px;
+        margin-left: 15px;
+        filter: brightness(1);
+        height: 26px;
+    }
+    
+    .template-body .brandSeparator {
+        margin-top: 2px;
+        height: 44px;
+        width: 1px;
+        background-color: rgba(255,255,255,0);
+    }
+
+    .template-body .page-content .smallTile .title {
+        color: #2d3538 !important;
+    }
+    
+    .template-body .page-content .tileIcon img {
+        opacity: .5;
+    }
+    
+    .template-main .page-content td.dgrid-cell {
+        color: #2d3538 !important;
+        font-size: 14px !important;
+    }
+    
+    .frameMenuControl td.dgrid-cell {
+        color: #dddddd !important;
+        font-size: 14px !important;
+    }
+
+   .dijitDialogTitleBar {
+        border: none !important;
+        background-color: #f5f5f5  !important; 
+        _background-image: none !important;
+         padding: 0 !important;
+    }
+    
+    .dijitDialogPaneContent {
+        background: #f5f5f5  repeat-x top left !important;       
+        border-top: none !important;
+        padding: 2px 8px 10px 8px !important;
+        position: relative;
+    }
+    
+    .dijitDialogCloseIcon {
+        top: 5px;
+        opacity: .25;
+    }
+    
+    .dijitDialogTitleBar:hover .dijitDialogCloseIcon {
+        opacity: 1;
+    }
+    
+
+    .demoContent .dijitMenu .dijitMenuItem td, 
+    .claro .dijitComboBoxMenu .dijitMenuItem {
+        background-color: white;
+    }   
+
+    .app .rendererDataGrid .dgrid-cell {
+        border-color: #e0e0e0;
+        vertical-align: top;
+    }
+
+    .app .rendererDataGrid .dgrid-header .dgrid-cell {
+        background: transparent;   
+    }
+
+    .common-plugin.dimension-filter .choice-control {
+        width: 110px !important;   
+    }
+    
+    .common-plugin.dimension-filter .category-control-value {
+        padding: 10px;
+        padding-top: 5px !important;
+        padding-bottom: 0px;
+        white-space: normal;
+    }
+    
+    .dimensionFilter .datetimeBox,
+    .dimensionFilter .dijitSelectLabel,
+    .dimensionFilter .dijitInputInner,
+    .dimensionFilter .dijitTextBox,
+    .dimensionFilter .dijitInputContainer,
+    .dimensionFilter .dijitSpinner,
+    .dimensionFilter .dijitSpinnerButtonInner {
+        font-size: 11px;   
+    }
+
+
+    .dijitMenuItem {
+        background-color: white;
+    }
+    
+    .SummaryMetricDataRendererFlagDiv IMG {
+        filter: brightness(1.25);
+    }
+
+    .demoContent .common-plugin.dimension-filter .category-table {
+        background: none;
+        
+    }
+    
+    .demoContent .tabbar.tabBarWithTitle {
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #148ac4 !important;
+        margin-top: 0px;
+    }
+    
+    .demoContent .tabbar .tabBarItem.tabTD {
+        background: none !important;
+        background-image: none !important;
+        background-color: transparent !important;
+        border-top: 1px solid transparent;
+        border-radius: 0px;
+        color: #2d3538;
+    
+    }
+    
+    
+    .demoContent .tabbar .tabBarItem.tabTD.dojoDndItemSelected {
+        background-color: rgba(20,138,196,0.05) !important;
+        border: none !important;
+        border-top: 1px solid #148ac4 !important;
+        border-bottom: 2px solid transparent !important;
+        color: #148ac4 !important;
+    }
+
+    /*
+    .demoContent .smallTile .tileContainer {
+        padding: 0px;
+        margin: 0px;
+        margin-left: 0px;
+    }
+    */
+    .demoContent .pageContent {
+        margin: 0 !important;   
+    }
+    
+    .demoContent .pageFrameLayout {
+        background-color: transparent !important;
+        overflow: hidden;
+    }
+    
+    .demoContent .pageFrameLayout.tileSpacing [data-vitria-type="tile"] {
+        border: none;
+        
+    }
+    
+    .demoContent .viewerContent{
+        border-top: none;
+    }
+    
+    .commonsFilterControl{
+        visibility: hidden;   
+    }
+
+    .maxBox .tileContainer {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        padding: 0 !important;
+    }
+    
+    .maxBox .tileContainer .rendererBox {
+        background-color: #ffffff;
+        padding-right: 10px;
+    }
+    
+    .maxBox table.category-table {
+        text-align: left;
+        padding: 20px 10px;
+        background-color: rgba(127, 206, 255, 0.2 ) !important;
+        border-radius: 5px;
+        border: 1px solid rgba(127, 206, 255, 1);
+        margin: 5px 10px;
+    }
+
+    
+    
+    .maxBox .category-label {
+        font-size: 16px !important;
+        font-weight: normal !important;
+        padding-left: 5px !important;
+        padding-bottom: 7px;
+        color: black;
+    }
+
+    
+    .healthMonitor .maxBox .tileContainer .rendererBox,
+    .anomalyEvents .maxBox .tileContainer .rendererBox{
+        background-color: rgba(255,255,255,1);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+	.template-body{
+		font-family: vitriaDefaultFont,Arial,sans-serif;
+		height: 100%;
+		width: 100%;
+		background-color: #ffffff;
+	}
+	
+	.template-header-color 	{ background-color:#2c3538; }
+	.template-header-border	{ background-color:#1D2325; }
+	.template-header-border.bottom	{ background-color:#ffffff; }
+	
+    .template-header{
+        position: absolute;
+        width: 100%;        
+    }
+    
+    .template-header-body{
+		top: 0px;
+        height: 45px;
+		display: inline-flex;
+    }
+	
+	.template-brand{
+		width: 0px;
+		height: 100%;
+		cursor: pointer;
+	}
+	
+	.template-brand-label1 {
+		font-size: 11px;
+		/*color: #4cbaff;*/
+		color: rgba(255,255,255,.7);
+		padding-left: 15px;
+		padding-top: 6px;
+		position: absolute;
+        left: 23px;
+        bottom: 2px;
+	}
+	
+	.template-brand-label2{
+		font-size: 12px;
+		font-style: italic;
+		color: rgba(255,255,255,.8);
+		padding-left: 15px;
+		margin-top: 0px;
+	}
+	
+	.template-navigation{
+		width: calc(100% - 470px);
+		height: 100%;
+		margin-top: 5px !important;
+	}
+	
+	.template-navigation .tileContainer{
+	    padding: 0px !important;   
+	}
+	
+	#frameMenuToggle {
+        display: none;
+    }
+	
+    .template-info {
+        display: block;
+        width: 24px;
+        height: 18px;
+        border-radius: 5px;
+        background-color: #62686a;
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        text-align: center;
+        vertical-align: middle;
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+    
+    .template-info:hover {
+        background-color: #000000;   
+    }
+	
+	.template-info I {
+	    color: #ffffff;
+	    font-size: 16px !important;
+	    
+	}
+	
+	.template-update {
+	    height: 25px;
+	}
+	
+	.template-filter{
+		position: relative;	
+	    height: 35px;
+		z-index: 99;
+	}
+    
+    .template-separator {
+        top: 45px;
+		height: 1px;
+    }
+	
+	.template-cap{
+		top: 0px;
+		height: 3px;
+		display: none;
+	}
+	
+	.template-footer{
+		position: absolute;
+		bottom: 0px;
+		width: 100%;		
+	}
+	
+	BODY.portlet .tempate-footer {
+	    bottom: 3px;   
+	}
+	
+	.template-footer-label{
+	    width: 300px;
+		font-size: 12px;
+		font-style: normal;
+		color: #ffffff;
+		margin-right: 10px;
+		margin-left: 10px;
+		text-align: right;
+		height: 20px;
+		line-height: 20px;
+	}
+	
+	.template-footer-label.left { float: left; opacity: 1;}
+	.template-footer-label.right { float:right; opacity: .6; }
+
+    .page-wrapper {
+        width: calc( 100% + 8px );
+        height: calc( 100% - 10px );
+    }
+  
+	.page-content {
+	  -webkit-transition: all 0.2s ease;
+	  -moz-transition: all 0.2s ease;
+	  transition: all 0.2s ease;
+	  position: relative;
+	  z-index: 0;
+	  width: 100%;
+	  height: 100%;
+	  margin: 0 auto;
+	  /* text-align: center; */
+	  color: #333;
+	  min-width:768px;
+	  top: 0px;
+	  padding: 0;
+	}
+
+
+
+	.toggle {
+	  position: relative;
+	  top: 10px;
+	  right: 0;
+	  bottom: 0;
+	  left: 16px;
+	  -webkit-transition: all 0.2s ease;
+	  -moz-transition: all 0.2s ease;
+	  transition: all 0.2s ease;
+	  z-index: 1;
+	  font-size: 18px;
+	  color: #999999;
+	  width: 20px;
+	  height: 20px;
+	  line-height: 20px;
+	  cursor: pointer;
+	}
+
+	.toggle:hover { 
+	    font-size: 20px;
+	    color: #148ac4;
+	    font-weight: bold;
+	  }
+
+	.sidebar {
+	  -webkit-transition: all 0.2s ease;
+	  -moz-transition: all 0.2s ease;
+	  transition: all 0.2s ease;
+	  position: absolute !important;
+	  top: 0px;
+	  right: 0;
+	  bottom: 0px;
+	  left: -220px;
+	  width: 200px;
+	  padding: 0px;
+	  background-color:rgba(36, 42, 56, 1);
+	  color: white;
+	  z-index: 0;
+	  padding: 5px 10px 5px 20px;
+	}
+
+	.sidebar .sidebarSub {
+	    width: 100%;
+	    min-height: 100px;
+	}
+	
+	.sidebar .sidebarSub.sub1{
+	    height: 100%;
+	    overflow: auto;
+	}
+	
+	.sidebar .sidebarSub.sub2 {
+	    height: 120px;
+	}
+	
+	.sidebar .sidebarSub.sub3{
+	    height: 120px;
+	}
+	
+	.sidebar .sidebarSub.sub4{
+	    height: 100px;
+	}
+	
+	
+	#sidebartoggler { display: none; }
+
+	#sidebartoggler:checked + .page-wrapper .sidebar { left: 0px; }
+
+	#sidebartoggler:checked + .page-wrapper .toggle { 
+	    left: 236px; 
+	    -ms-transform: rotate(180deg); /* IE 9 */
+        -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+        transform: rotate(180deg);
+        -webkit-transition: all 0.2s ease;
+	    -moz-transition: all 0.2s ease;
+	    transition: all 0.2s ease;
+	    color: #d25555;
+	}
+
+	#sidebartoggler:checked + .page-wrapper .page-content { padding-left: 250px; }
+	
+	.frameMenuControl td.dgrid-cell.field-label {
+        color: #dddddd !important;
+        font-size: 12px !important;
+    }
+    
+    .common-plugin.dimension-filter .click-to-open-div {
+        margin-top: 15px;
+        text-align: center !important;
+    }
+        
+    .common-plugin.dimension-filter .ok-cancel-div {
+        width: calc(100% - 5px);
+        height: 20px;
+        text-align: right;
+        margin-top: 15px;
+        padding-right: 10px;
+    }
+    
+    .CartesianChartFloatingLegend {
+        display: none;
+        left: unset !important;
+        right: 20px;
+        top: unset !important;
+        top: 30px !important;
+        box-shadow: none;
+        background-color: transparent !important;
+        border: none;
+    }
+    
+    .CartesianChartFloatingLegend DIV {
+        overflow: hidden !important;
+    }
+    
+    .CartesianChartFloatingLegendContent {
+        background: rgba(255,255,255, 0) !important;
+        height: calc( 100% + 5px ) !important;
+        border: 1px solid #f5f5f5 !important;
+        border-top: none;
+        border-radius: 5px;
+        padding-right: 18px;
+        overflow: none !important;
+        
+    }
+    
+    .CartesianChartFloatingLegend .dojoxLegendNode, 
+    .CartesianChartFloatingLegend .seriesTitle {
+        background-color: rgba(255,255,255,.75) !important;
+        padding-left: unset !important;
+        padding-left: 5px !important;
+    }
+    
+    .cartesianChartLegend {
+        display: none;
+    }
+    
+    .CartesianChartFloatingLegend .CartesianChartFloatingLegendTitle {
+        display: none;
+    }
+    
+    .CartesianChartFloatingLegend .dojoxResizeHandle {
+        display: none;   
+    }
+    
+    
+    .demoContent .digiops-filter.digiops-detail-filter.digiops-commonality-metric-filter {
+            margin-top: -5px !important;   
+    }
+    
+    .demoContent .digiops-detail-filter {
+        border: none;
+        border-bottom: 1px solid rgba(127, 206, 255, 1) !important;
+        position: relative !important;
+        top: -1px !important;
+        margin: 1px !important;
+    }
+    
+    
+    .demoContent .incidentAnalysis .incidents {
+        padding-top: 31px;
+        padding-left: 10px;
+    }
+    
+    .demoContent .incidentAnalysis .incidents .tileContainer.incidents {
+        padding-top: 8px;
+    }
+    
+    .demoContent .incidentAnalysis .incidents .tt.title {
+        border-top: 1px solid #148ac4 !important;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+
+.demoContent .dgrid-row-odd {
+    background-color: #ffffff;
+}
+
+.demoContent .dgrid-row-even {
+    background-color: #f5f5f5;
+}
+
+.demoContent .dgrid-selected.ui-state-active table {
+    background-color: #92DBFF !important;
+}
+
+.demoContent .dgrid-row:hover {
+    border-color: #148ac4 !important;
+    background-color: transparent !important;
+}
+    
+    
+
+]]></PageCustomCSS>
+      <PageProperties/>
+      <Layout type="10" numRow="1" numCol="1" count="0" templateType="21" screenHeight="1080" renderType="undefined" positions="[]" unitSize="undefined" viewRows="72" viewCols="120"/>
+      <frame_tile name="navigation" title="Tile1" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="frameNav" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:36" name="axflow:localstore:node:36" label="ls_NavSource" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="id" label="id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="name" label="name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="label" label="label" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="iconType" label="iconType" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="icon" label="icon" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="selected" label="selected" type="boolean" isDimension="false" isMeasure="false"/>
+          <Field name="view" label="view" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="service" label="service" type="object" isDimension="false" isMeasure="false"/>
+          <Field name="params" label="params" type="object" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/user/via_common/dbpm/VIA - NavButtons v4/ButtonNavigator&quot;,&quot;iconListAlign&quot;:&quot;left&quot;,&quot;itemHeight&quot;:0,&quot;displayLabels&quot;:&quot;display&quot;,&quot;labelSize&quot;:15,&quot;iconColor&quot;:&quot;#ffffff&quot;,&quot;labelColor&quot;:&quot;#ffffff&quot;,&quot;highlightColor&quot;:&quot;rgba(20,138,196, .8)&quot;,&quot;maintainState&quot;:true,&quot;itemWidth&quot;:146}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="breadcrumb" title="breadcrumb" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="false" advancedDisable="false" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+      </frame_tile>
+      <frame_tile name="ContentMain" title="ContentMain" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="contentMain" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="ax.DashboardView" label="Dashboard View" optional="false" minimode="false">
+          <Property name="model" value="/app/ax/space/VIA Digital Operations/axv/VIAOps - Landing Page"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+    </Page>
+    <Script>
+      <Stores/>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id="node:33" type="Tile" label="Content Main Tile" _undefined_title="" originHeight="160" width="220" height="177" x="2288" y="300">
+        <dynIn id="din:Context" type="any[]" label="Context" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:FrameMenuSelection" type="any[]" label="FrameMenuSelection" _undefined_default="" evaluate="always" _isArray="true"/>
+        <dynIn id="din:JNDI_Name" type="string" label="JNDI_Name" _undefined_default="" evaluate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:35" type="UserScript" label="Parse BaseConfig" _undefined_title="" originHeight="100" width="140" height="160" x="850" y="150">
+        <dynIn id="din:0" type="any[]" label="Selection" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any[]" label="ConfigData" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="BaseConfig" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="string" label="ViewPath" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any" label="serviceConfig" propagate="always" _isArray="true"/>
+        <dynOut id="dout:3" type="any" label="initProperties" propagate="always" _isArray="true"/>
+        <dynOut id="dout:4" type="boolean" label="dynamicView" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:36" type="LocalStore" label="ls_NavSource" _undefined_title="" _undefined_originHeight="" width="120" height="160" x="1269" y="150"/>
+      <Item id="node:37" type="UserScript" label="Set View" _undefined_title="" originHeight="100" width="120" height="100" x="1088" y="220">
+        <dynIn id="din:0" type="string" label="ViewPath" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any,json" label="Notify" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:38" type="Tile" label="Navigation Tile" _undefined_title="" _undefined_originHeight="" width="120" height="160" x="266" y="150"/>
+      <Item id="node:43" type="PortIn" label="Port IN" _undefined_title="" originHeight="100" width="189.00567999999998" height="337" x="200" y="400">
+        <dynOut id="dout:0" type="any[]" label="BaseConfig" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="string" label="Time Zone" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="string" label="Locale" propagate="always" _isArray="true"/>
+        <dynOut id="dout:3" type="string" label="Interval" propagate="always" _isArray="true"/>
+        <dynOut id="dout:4" type="any" label="FilterObj" propagate="always" _isArray="true"/>
+        <dynOut id="dout:5" type="string" label="Visualization" propagate="always" _isArray="true"/>
+        <dynOut id="dout:6" type="any" label="result" propagate="always" _isArray="true"/>
+        <dynOut id="dout:7" type="any,string" label="solutionName" propagate="always" _isArray="true"/>
+        <dynOut id="dout:8" type="string" label="Logo" propagate="always" _isArray="true"/>
+        <dynOut id="dout:9" type="string" label="opsJNDIName" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:51" type="UserScript" label="Script 0" _undefined_title="" originHeight="100" width="140" height="177" x="1770" y="460">
+        <dynIn id="din:0" type="any[]" label="UI Event" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Notify" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="Context" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="string" label="loadComplete" propagate="always" _isArray="true"/>
+        <dynOut id="dout:3" type="any[]" label="filterEvents" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:53" type="LocalStore" label="Page Context Store" _undefined_title="" _undefined_originHeight="" width="176" height="154" x="2607" y="534"/>
+      <Item id="node:54" type="UserScript" label="Parse Context" _undefined_title="" originHeight="100" width="200" height="217" x="2340" y="633">
+        <dynIn id="din:0" type="any[]" label="contextHistoryStructure" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="UIEvent" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="boolean" label="clearList" evaluate="always" _isArray="true"/>
+        <dynIn id="din:3" type="string" label="triggerComplete" evaluate="always" _isArray="true"/>
+        <dynIn id="din:4" type="boolean" label="viewIsDynamic" evaluate="always" _isArray="true"/>
+        <dynIn id="din:5" type="any[]" label="filterEvent" evaluate="always" _isArray="true"/>
+        <dynIn id="din:6" type="string" label="ViewPath" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="Out(0)" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="notifyResize" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:56" type="UserScript" label="Footer Info" _undefined_title="" _undefined_originHeight="" width="162" height="94" x="26" y="406"/>
+      <Item id="node:58" type="UserScript" label="Initialize Frame Menu Button" _undefined_title="" originHeight="100" width="198" height="177" x="160" y="960">
+        <dynIn id="din:0" type="integer" label="In(0)" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="boolean" label="showFrameMenu" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="frameMenuData" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any" label="triggerGridClear" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:60" type="WidgetOverlay" label="FrameMenu Widget" _undefined_title="" _undefined_originHeight="" width="130" height="160" x="660" y="940"/>
+      <Item id="node:65" type="LocalStore" label="Local Store 0" _undefined_title="" _undefined_originHeight="" width="130" height="160" x="440" y="926"/>
+      <Item id="node:67" type="UserScript" label="Trigger Refresh" _undefined_title="" originHeight="100" width="130" height="117" x="854" y="1214">
+        <dynIn id="din:0" type="event[]" label="In(0)" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="integer" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:71" type="UserScript" label="Script 1" _undefined_title="" _undefined_originHeight="" width="160" height="117" x="1600" y="50">
+        <dynIn id="din:0" type="boolean" label="showLegends" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="boolean" label="showFilters" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="boolean" label="showLegends" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="boolean" label="showFilters" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:73" type="UserScript" label="Script 2" _undefined_title="" originHeight="117" width="160" height="177" x="3260" y="52">
+        <dynIn id="din:0" type="string" label="toggleLegend" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="string" label="toggleFilter" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="boolean" label="toggleLegend" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="boolean" label="toggleFilter" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any" label="triggerResize" propagate="always" _isArray="true"/>
+        <dynOut id="dout:3" type="integer" label="filterClick" propagate="always" _isArray="true"/>
+        <dynOut id="dout:4" type="integer" label="legendClick" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:75" type="UserScript" label="Script 3" _undefined_title="" originHeight="100" width="130" height="117" x="3560" y="32">
+        <dynIn id="din:0" type="boolean" label="notify" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="showLegend" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:77" type="UserScript" label="Set Solution Name" _undefined_title="" originHeight="117" width="130" height="117" x="651" y="360">
+        <dynIn id="din:0" type="string" label="solutionName" evaluate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:79" type="UserScript" label="Script 4" _undefined_title="" _undefined_originHeight="" width="130" height="117" x="666" y="487">
+        <dynIn id="din:0" type="string" label="Logo" evaluate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:81" type="UserScript" label="ControlButtonDefinition" _undefined_title="" originHeight="117" width="130" height="117" x="2089" y="20">
+        <dynOut id="dout:0" type="any[]" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:82" type="LocalStore" label="ControlsData" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="2280" y="20"/>
+      <Item id="node:83" type="WidgetOverlay" label="Toggle Controls" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="2510" y="60"/>
+      <Item id="node:84" type="UserScript" label="Control Selection Parser" _undefined_title="" originHeight="117" width="200" height="117" x="2773" y="40">
+        <dynIn id="din:0" type="any[]" label="ControlSource" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any[]" label="selection" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Out(0)" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="updatedControlSource" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:90" type="Widget" label="Notice: System Outage" title=" " _undefined_originHeight="" width="130" height="177" x="749" y="660">
+        <dynIn id="din:outageItem" type="any[]" label="outageItem" _undefined_default="" evaluate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:92" type="UserScript" label="Script 6" _undefined_title="" originHeight="117" width="160" height="117" x="528" y="660">
+        <dynIn id="din:0" type="string" label="opsJNDIName" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="outageObject" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="boolean" label="show" propagate="always" _isArray="true"/>
+      </Item>
+      <Link srcId="node:43" srcPort="dout:9" tgtId="node:33" tgtPort="din:JNDI_Name"/>
+      <Link srcId="node:51" srcPort="dout:1" tgtId="node:33" tgtPort="din:Context"/>
+      <Link srcId="node:60" srcPort="out:0" tgtId="node:33" tgtPort="din:FrameMenuSelection"/>
+      <Link srcId="node:92" srcPort="dout:0" tgtId="node:90" tgtPort="din:outageItem"/>
+      <Link srcId="node:35" srcPort="dout:1" tgtId="node:54" tgtPort="din:6"/>
+      <Link srcId="node:84" srcPort="dout:1" tgtId="node:82" tgtPort="in:0"/>
+      <Link srcId="node:82" srcPort="out:0" tgtId="node:84" tgtPort="din:0"/>
+      <Link srcId="node:83" srcPort="out:0" tgtId="node:84" tgtPort="din:1"/>
+      <Link srcId="node:82" srcPort="out:0" tgtId="node:83" tgtPort="in:0"/>
+      <Link srcId="node:81" srcPort="dout:0" tgtId="node:82" tgtPort="in:0"/>
+      <Link srcId="node:73" srcPort="dout:0" tgtId="node:75" tgtPort="din:0"/>
+      <Link srcId="node:73" srcPort="dout:2" tgtId="node:33" tgtPort="in:0"/>
+      <Link srcId="node:54" srcPort="dout:1" tgtId="node:33" tgtPort="in:0"/>
+      <Link srcId="node:51" srcPort="dout:3" tgtId="node:54" tgtPort="din:5"/>
+      <Link srcId="node:65" srcPort="out:0" tgtId="node:60" tgtPort="in:0"/>
+      <Link srcId="node:58" srcPort="dout:1" tgtId="node:65" tgtPort="in:0"/>
+      <Link srcId="node:58" srcPort="dout:0" tgtId="node:60" tgtPort="in:1"/>
+      <Link srcId="node:43" srcPort="dout:0" tgtId="node:35" tgtPort="din:1"/>
+      <Link srcId="node:51" srcPort="dout:2" tgtId="node:54" tgtPort="din:3"/>
+      <Link srcId="node:51" srcPort="dout:0" tgtId="node:54" tgtPort="din:1"/>
+      <Link srcId="node:53" srcPort="out:0" tgtId="node:54" tgtPort="din:0"/>
+      <Link srcId="node:54" srcPort="dout:0" tgtId="node:53" tgtPort="in:0"/>
+      <Link srcId="node:33" srcPort="out:3" tgtId="node:51" tgtPort="din:0"/>
+      <Link srcId="node:35" srcPort="dout:0" tgtId="node:36" tgtPort="in:0"/>
+      <Link srcId="node:38" srcPort="out:0" tgtId="node:35" tgtPort="din:0"/>
+      <Link srcId="node:37" srcPort="dout:0" tgtId="node:33" tgtPort="in:0"/>
+      <Link srcId="node:35" srcPort="dout:1" tgtId="node:37" tgtPort="din:0"/>
+      <Link srcId="node:51" srcPort="dout:0" tgtId="node:38" tgtPort="in:0"/>
+      <Link srcId="node:35" srcPort="dout:4" tgtId="node:54" tgtPort="din:4"/>
+      <Link srcId="node:60" srcPort="out:1" tgtId="node:67" tgtPort="din:0"/>
+      <Link srcId="node:67" srcPort="dout:0" tgtId="node:58" tgtPort="din:0"/>
+      <Link srcId="node:58" srcPort="dout:2" tgtId="node:60" tgtPort="in:2"/>
+      <Link srcId="node:43" srcPort="dout:7" tgtId="node:77" tgtPort="din:0"/>
+      <Link srcId="node:43" srcPort="dout:8" tgtId="node:79" tgtPort="din:0"/>
+      <Link srcId="node:92" srcPort="dout:1" tgtId="node:90" tgtPort="in:1"/>
+      <Input key="node:33/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#ContentMain&quot;,&quot;path&quot;:[&quot;page1&quot;],&quot;name&quot;:&quot;ContentMain&quot;}]"/>
+      <Input key="node:35/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;BaseConfig&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;ViewPath&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;serviceConfig&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:3&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;initProperties&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:4&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;dynamicView&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:35/cfg:model/default" value="&quot;var selectedData        = getInput(\&quot;din:0\&quot;);\r\nvar selection           = null;\r\nvar view_path;\r\nvar view_id             = \&quot;\&quot;;\r\nvar view_name           = \&quot;\&quot;;\r\nvar view_action         = \&quot;\&quot;;\r\nvar view_showTools      = false;\r\nvar view_showContext    = false;\r\nvar serviceConfig;\r\nvar initProperties;\r\n\r\nvar _data = [\r\n\t{ id: &apos;page1&apos;, label: &apos;Page 1&apos;, iconType: &apos;fa&apos;, /* icon: &apos;&apos;,*/  icon: &apos;fa-tasks&apos;, tooltip: &apos;&apos;, selected: true },\r\n\t{ id: &apos;page2&apos;, label: &apos;Page 2&apos;, iconType: &apos;fa&apos;, /* icon: &apos;&apos;,*/  icon: &apos;fa-tv&apos;, tooltip: &apos;&apos;, selected: false },\r\n\t{ id: &apos;page3&apos;, label: &apos;Page 3&apos;, iconType: &apos;fa&apos;, /* icon: &apos;&apos;,*/  icon: &apos;fa-cogs&apos;, tooltip: &apos;&apos;, selected: false }\r\n];\r\n\r\nif(selectedData &amp;&amp; selectedData.length &gt; 0){\r\n    selection = selectedData[0];   \r\n}\r\n\r\nvar configItems = getInput(\&quot;din:1\&quot;);\r\n\r\nif( configItems ) {\r\n    var selPort = port;\r\n\r\n    if( selection &amp;&amp; configItems.length &gt; 0){\r\n        for(var i=0; i &lt; configItems.length; i++ ){\r\n            if(configItems[i].id == selection.id ){\r\n                configItems[i].selected     = true; \r\n                view_action                 = selection.initiator;\r\n                view_path                   = configItems[i].view;\r\n                view_id                     = configItems[i].id;\r\n                view_name                   = configItems[i].name;\r\n                view_showTools              = configItems[i].displayTools;\r\n                view_showContext            = configItems[i].showContextBar;\r\n                \r\n                if(configItems[i].service){\r\n                    serviceConfig   = configItems[i].service;\r\n                }\r\n                \r\n                if(configItems[i].properties){\r\n                    initProperties  = configItems[i].properties;\r\n                }\r\n               \r\n            } else {\r\n                configItems[i].selected = false;\r\n            }\r\n        }    \r\n    } else if( port == \&quot;din:1\&quot; &amp;&amp; configItems.length &gt; 0) {\r\n    \r\n        for( var j=0; j &lt; configItems.length; j++ ){\r\n            if(configItems[j].selected == true ){\r\n                configItems[j].selected = true; \r\n                view_action             = \&quot;load\&quot;;\r\n                view_path               = configItems[j].view;\r\n                view_id                 = configItems[j].id;\r\n                view_name               = configItems[j].name;\r\n                view_showTools          = configItems[j].displayTools;\r\n                view_showContext        = configItems[j].showContextBar;\r\n                if(configItems[j].service){\r\n                    serviceConfig = configItems[j].service;\r\n                }\r\n                \r\n                if(configItems[j].properties){\r\n                    initProperties = configItems[j].properties;\r\n                }\r\n               \r\n            }\r\n        \r\n        }\r\n    }\r\n} \r\n\r\nif(view_path &amp;&amp; view_path != \&quot;\&quot;){\r\n    setOutput(\&quot;dout:1\&quot;, view_path);   \r\n}\r\n\r\n\r\n$(&apos;#frameMenuToggle&apos;).ready(function(){\r\n    if($(&apos;#frameMenuToggle&apos;).css(\&quot;display\&quot;) == \&quot;none\&quot; || $(&apos;#frameMenuToggle&apos;).css(\&quot;display\&quot;) == \&quot;block\&quot;){\r\n        if(view_showTools){\r\n            $(&apos;#frameMenuToggle&apos;).css(\&quot;display\&quot;, \&quot;block\&quot;);\r\n        } else {\r\n            $(&apos;#frameMenuToggle&apos;).css(\&quot;display\&quot;, \&quot;none\&quot;);\r\n        }\r\n    }\r\n});\r\n\r\n$(&apos;.template-breadcrumb&apos;).ready(function(){\r\n    if($(&apos;.template-breadcrumb&apos;).css(\&quot;display\&quot;) == \&quot;none\&quot; || $(&apos;#frameMenuToggle&apos;).css(\&quot;display\&quot;) == \&quot;block\&quot;){\r\n        if(view_showContext){\r\n            $(&apos;.template-breadcrumb&apos;).css(\&quot;display\&quot;, \&quot;block\&quot;);\r\n            $(&apos;.template-main&apos;).css(\&quot;top\&quot;, \&quot;75px\&quot;);\r\n        } else {\r\n            $(&apos;.template-breadcrumb&apos;).css(\&quot;display\&quot;, \&quot;none\&quot;);\r\n            $(&apos;.template-main&apos;).css(\&quot;top\&quot;, \&quot;45px\&quot;);\r\n        }\r\n    }\r\n});\r\n\r\n\r\n\r\nif( view_action == &apos;dynamic&apos;){\r\n        setOutput(\&quot;dout:4\&quot;, true); \r\n      \r\n} else { \r\n    setOutput(\&quot;dout:4\&quot;, false);\r\n}\r\n\r\n\r\nsetOutput(\&quot;dout:0\&quot;, configItems);\r\nsetOutput(\&quot;dout:2\&quot;, serviceConfig);\r\nsetOutput(\&quot;dout:3\&quot;, initProperties);\r\n&quot;"/>
+      <Input key="node:35/cfg:schema/default" value="&quot;var schema = [];\n\nschema.push({ name: \&quot;id\&quot;, label: \&quot;id\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;name\&quot;, label: \&quot;name\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;label\&quot;, label: \&quot;label\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;iconType\&quot;, label: \&quot;iconType\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;icon\&quot;, label: \&quot;icon\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;selected\&quot;, label: \&quot;selected\&quot;, type: \&quot;boolean\&quot; });\nschema.push({ name: \&quot;view\&quot;, label: \&quot;view\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;service\&quot;, label: \&quot;service\&quot;, type: \&quot;object\&quot; });\nschema.push({ name: \&quot;params\&quot;, label: \&quot;params\&quot;, type: \&quot;object\&quot; });\n\nsetOutputSchema( \&quot;dout:0\&quot;, schema );&quot;"/>
+      <Input key="node:35/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;ConfigData&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:37/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;ViewPath&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:37/cfg:model/default" value="&quot;if (port == null) {\n    // window.body.style[\&quot;pointer-events\&quot;] = \&quot;none\&quot;;\n    return;\n}\n\nvar path_val    = getInput(\&quot;din:0\&quot;);\nvar id_val      = getInput(\&quot;din:1\&quot;);\nvar name_val    = getInput(\&quot;din:2\&quot;);\nvar action_val  = getInput(\&quot;din:3\&quot;);\n\nif( path_val != null &amp;&amp; path_val != \&quot;\&quot;){\n        \n            //console.log(path_val);\n            setOutput(\&quot;dout:0\&quot;, {\n                axflow : {\n                    \&quot;change-nested-component\&quot; : true,\n                    \&quot;cache-nested-component\&quot; : false,\n                },\n                widget : {\n                    path : path_val,\n                   \n                },\n                \n            });\n            var filters = getLocal(\&quot;Filters\&quot;);\n            if (filters != null) {\n                setOutput(\&quot;dout:1\&quot;, filters);\n                setLocal(\&quot;Filters\&quot;, null);\n            }\n            \n            // var loaded = getLocal(\&quot;COMPONENTS-LOADED\&quot;);\n            // if (loaded == null) loaded = {};\n            // if (loaded[path_val] == null) {\n            //     // first time... block events\n            //     window.body.style[\&quot;pointer-events\&quot;] = \&quot;none\&quot;;\n            //     loaded[path_val] = true;\n            //     setLocal(\&quot;COMPONENTS-LOADED\&quot;, loaded);\n            // }\n        \n}\n&quot;"/>
+      <Input key="node:37/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any,json&quot;,&quot;portLabel&quot;:&quot;Notify&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:38/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#navigation&quot;,&quot;path&quot;:[&quot;page1&quot;],&quot;name&quot;:&quot;navigation&quot;}]"/>
+      <Input key="node:43/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;BaseConfig&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Time Zone&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Locale&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:3&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Interval&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:4&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;FilterObj&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:5&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Visualization&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:6&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;result&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:7&quot;,&quot;portType&quot;:&quot;any,string&quot;,&quot;portLabel&quot;:&quot;solutionName&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:8&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Logo&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:9&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;opsJNDIName&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:43/cfg:schema/default" value="&quot;var schema = [];\n\nschema.push({ name: \&quot;id\&quot;, label: \&quot;id\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;name\&quot;, label: \&quot;name\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;label\&quot;, label: \&quot;label\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;iconType\&quot;, label: \&quot;iconType\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;icon\&quot;, label: \&quot;icon\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;selected\&quot;, label: \&quot;selected\&quot;, type: \&quot;boolean\&quot; });\nschema.push({ name: \&quot;view\&quot;, label: \&quot;view\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;service\&quot;, label: \&quot;service\&quot;, type: \&quot;object\&quot; });\nschema.push({ name: \&quot;props\&quot;, label: \&quot;props\&quot;, type: \&quot;object\&quot; });\n\nsetOutputSchema( \&quot;dout:0\&quot;, schema );&quot;"/>
+      <Input key="node:51/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;UI Event&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:51/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portLabel&quot;:&quot;Notify&quot;,&quot;portTrigger&quot;:&quot;always&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portValue&quot;:&quot;&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portLabel&quot;:&quot;Context&quot;,&quot;portTrigger&quot;:&quot;always&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portValue&quot;:&quot;&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;loadComplete&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:3&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;filterEvents&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:51/cfg:model/default" value="&quot;if (port == null) return;\n\nvar evt = getInput(port);\nif (evt != null &amp;&amp; evt.length == 1) {\n    if (evt[0][\&quot;__TYPE__\&quot;] == \&quot;it.ops.navigate.to\&quot; &amp;&amp; evt[0][\&quot;__EVENT__\&quot;] != null) {\n        //debugger\n        evt = evt[0][\&quot;__EVENT__\&quot;];\n        var evtData = {};\n        \n        if( getInput(port)[0][\&quot;__DATA__\&quot;] != null ){\n            evtData = getInput(port)[0][\&quot;__DATA__\&quot;];   \n        }\n        \n        if (evt.navId != null &amp;&amp; evt.context != null) {\n            setOutput(\&quot;dout:0\&quot;, {\n                navId : evt.navId,\n                eventData : evtData\n            });\n            setLocal(\&quot;Context\&quot;, evt.context);\n        }\n    }\n    else if (evt[0][\&quot;__TYPE__\&quot;] == \&quot;uiComponentReady\&quot;) {\n        //debugger\n        var context = getLocal(\&quot;Context\&quot;);\n        \n        if (context != null) {\n            setLocal(\&quot;Context\&quot;, null);\n            setOutput(\&quot;dout:1\&quot;, context);\n            \n        }\n        \n        setOutput(\&quot;dout:2\&quot;, \&quot;complete\&quot;);\n        \n    } else if (evt[0][\&quot;__TYPE__\&quot;] == \&quot;filter\&quot;) {\n        \n        setOutput( \&quot;dout:3\&quot;, evt );\n        \n        window.body.style[\&quot;pointer-events\&quot;] = \&quot;auto\&quot;;\n        \n    }\n}\n&quot;"/>
+      <Input key="node:38/in:0/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:54/cfg:model/default" value="&quot;var contextObj = { \&quot;id\&quot;:\&quot;home\&quot;, \&quot;label\&quot;: \&quot;? context\&quot;, \&quot;source\&quot;: \&quot;system\&quot;, \&quot;origin\&quot;: \&quot;home\&quot;, \&quot;filters\&quot;:null, \&quot;data\&quot;: null, \&quot;selected\&quot;: false};\nvar data = \t{\n\t\&quot;linkItems\&quot;: [ /* contextObj */ ]\n};\n\t\nif( port == \&quot;din:2\&quot; &amp;&amp; getInput(\&quot;din:2\&quot;) == true ){\n    setOutput(\&quot;dout:0\&quot;, data ); \n   // resizeScreen();\n    \n} else if( port == \&quot;din:3\&quot; ){\n    // embed complete trigger\n    \n    var hist = null;//getInput(\&quot;din:0\&quot;);\n    var histArr;\n    if( hist &amp;&amp; hist[0][\&quot;linkItems\&quot;])\n        histArr = hist[0][\&quot;linkItems\&quot;];\n    var evt     = getInput(\&quot;din:1\&quot;);\n    \n   if( getInput(\&quot;din:4\&quot;) == true ){ \n       //no clear\n       var eventData = evt[\&quot;eventData\&quot;];\n       if( histArr != null &amp;&amp; histArr.length &gt; 0 )\n            data[\&quot;linkItems\&quot;] = [];\n       \n       var isUnique = true;\n       //debugger\n       var obj = { \n                 \&quot;id\&quot;       : eventData[\&quot;id\&quot;], \n                 \&quot;label\&quot;    : eventData[\&quot;label\&quot;],\n                 \&quot;source\&quot;   : eventData[\&quot;source\&quot;],\n                 \&quot;origin\&quot;   : eventData[\&quot;origin\&quot;], \n                 \&quot;filters\&quot;  : eventData[\&quot;filters\&quot;], \n                 \&quot;data\&quot;     : eventData[\&quot;data\&quot;], \n                 \&quot;selected\&quot; : false\n                 };\n       \n        if (histArr != null) {\n           for( var i=0; i &lt; histArr.length; i++ ){\n                if( histArr[i][\&quot;origin\&quot;] == obj[\&quot;origin\&quot;] ){\n                    data[\&quot;linkItems\&quot;].push(obj); \n                    isUnique = false;\n                } else {\n                    data[\&quot;linkItems\&quot;].push(histArr[i]);\n                }\n                \n           }\n        }\n      \n        if( isUnique ){\n            data.linkItems.push( obj );\n            \n        }\n        setOutput(\&quot;dout:0\&quot;, data );\n       // resizeScreen();\n    } else {\n        // clear\n        setOutput(\&quot;dout:0\&quot;, data );\n        //resizeScreen();\n    }\n    \n    // DONT KNOW WHAT THE CODE BELOW DOES... BUT DOESNT SEEM TO WORK\n    // -engkee\n    var currentViewPath = getInput(\&quot;din:6\&quot;);\n    if (currentViewPath != null) {\n        var filterObjByViewPaths = getLocal(\&quot;FilterObjByViewPaths\&quot;);\n        if (filterObjByViewPaths != null) {\n            var filterObj = filterObjByViewPaths[currentViewPath];\n            if (filterObj != null) {\n                setTimeout(function() {\n                    data = \t{\n                    \t\&quot;linkItems\&quot;: [ /* contextObj */ ]\n                    };\n                    data[\&quot;linkItems\&quot;].push(filterObj);\n                    setOutput(\&quot;dout:0\&quot;, data );\n                }, 20);\n            }\n        }\n    }\n\n} else if( port == \&quot;din:5\&quot; ){\n    var dat = getInput(\&quot;din:5\&quot;)[0];\n    if( dat &amp;&amp; dat[\&quot;__TYPE__\&quot;] == &apos;filter&apos; ){\n        if( dat[\&quot;__EVENT__\&quot;] != null &amp;&amp; ( dat[\&quot;__EVENT__\&quot;][\&quot;label\&quot;] != null &amp;&amp; dat[\&quot;__EVENT__\&quot;][\&quot;label\&quot;] != \&quot;\&quot; ) ){\n    \n            var filterObj = { \n                         \&quot;id\&quot;       : null, \n                         \&quot;label\&quot;    : dat[\&quot;__EVENT__\&quot;][\&quot;label\&quot;],\n                         \&quot;source\&quot;   : \&quot;filterBar\&quot;,\n                         \&quot;origin\&quot;   : dat[\&quot;__EVENT__\&quot;][\&quot;origin\&quot;], \n                         \&quot;filters\&quot;  : dat[\&quot;__EVENT__\&quot;][\&quot;data\&quot;], \n                         \&quot;data\&quot;     : dat[\&quot;__EVENT__\&quot;][\&quot;data\&quot;], \n                         \&quot;selected\&quot; : false\n                         };\n        \n            data[\&quot;linkItems\&quot;].push(filterObj);\n            setOutput(\&quot;dout:0\&quot;, data );\n            \n            var currentViewPath = getInput(\&quot;din:6\&quot;);\n            if (currentViewPath != null) {\n                var filterObjByViewPaths = getLocal(\&quot;FilterObjByViewPaths\&quot;);\n                if (filterObjByViewPaths == null) {\n                    filterObjByViewPaths = {};\n                }\n                filterObjByViewPaths[currentViewPath] = filterObj;\n                setLocal(\&quot;FilterObjByViewPaths\&quot;, filterObjByViewPaths);\n            }\n            \n          // resizeScreen();\n        }\n    }\n    \n} else {\n    \n    if( port == \&quot;din:1\&quot; ){\n        var uiEvt = getInput(\&quot;din:1\&quot;); \n        //debugger\n    }\n   // setOutput(\&quot;dout:0\&quot;, data );\n    //resizeScreen();\n}\n\nfunction resizeScreen(){\n    setTimeout(function(){\n       // debugger\n        if( data[\&quot;linkItems\&quot;].length == 0 ){\n            $(\&quot;.template-breadcrumb\&quot;).css(\&quot;height\&quot;, \&quot;0px\&quot;);\n            $(\&quot;.template-main\&quot;).css(\&quot;top\&quot;, \&quot;44px\&quot;);\n            $(\&quot;.template-breadcrumb\&quot;).css( \&quot;border-bottom\&quot;, \&quot;1px solid transparent\&quot; );\n           // $(\&quot;.demoContent .viewerContent\&quot;).css( \&quot;border-top\&quot;, \&quot;1px solid transparent\&quot; );\n        } else {\n            $(\&quot;.template-breadcrumb\&quot;).css(\&quot;height\&quot;, \&quot;30px\&quot;);\n            $(\&quot;.template-main\&quot;).css(\&quot;top\&quot;, \&quot;76px\&quot;);\n            $(\&quot;.template-breadcrumb\&quot;).css( \&quot;border-bottom\&quot;, \&quot;1px solid #4cbaff\&quot; );\n            //$(\&quot;.demoContent .viewerContent\&quot;).css( \&quot;border-top\&quot;, \&quot;1px solid #4cbaff\&quot; );\n        }\n        \n    }, 50);\n    /*    setTimeout(function(){\n\n            setOutput( \&quot;dout:1\&quot;, {\n                tile: {\n                    resize: true   \n                }\n            });  \n        \n    }, 500); */\n}\n\n&quot;"/>
+      <Input key="node:54/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;notifyResize&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:54/cfg:schema/default" value="&quot;var schema = [];\n\nschema.push(\n    {\n        name: \&quot;group\&quot;,\n        label: \&quot;Group\&quot;,\n        type: \&quot;string\&quot;\n    }\n);\n\nschema.push(\n    {\n        name: \&quot;buttonItems\&quot;,\n        label: \&quot;ButtonItems\&quot;,\n        type: \&quot;any\&quot;\n    }\n);\n\nschema.push(\n    {\n        name: \&quot;linkItems\&quot;,\n        label: \&quot;LinkItems\&quot;,\n        type: \&quot;any\&quot;\n    }\n);\nsetOutputSchema( &apos;dout:0&apos;, schema );&quot;"/>
+      <Input key="node:54/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;contextHistoryStructure&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;UIEvent&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;clearList&quot;,&quot;portValue&quot;:&quot;false&quot;,&quot;portTrigger&quot;:&quot;change&quot;},{&quot;portId&quot;:&quot;din:3&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;triggerComplete&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:4&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;viewIsDynamic&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:5&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;filterEvent&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:6&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;ViewPath&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:56/cfg:model/default" value="&quot;//\n\nsetTimeout( function() {\n    var dd = new Date();\n    var yr = dd.getFullYear();\n    var copyrightStr = \&quot;Copyright &amp;copy; Vitria Technology, Inc. \&quot; + yr;\n    document.getElementById(\&quot;copyrightFooter\&quot;).innerHTML = copyrightStr;\n    \n    var tzStr = new Date().toTimeString().split(\&quot;(\&quot;)[1].replace(&apos;)&apos;, &apos; - &apos;);\n\t\t\ttzStr += Intl.DateTimeFormat().resolvedOptions().timeZone.replace(&apos;/&apos;, &apos; / &apos;);\n\t\t\ttzStr += \&quot; ( UTC \&quot; + new Date().getTimezoneOffset() / -60 + \&quot;hr )\&quot;;\n    document.getElementById(\&quot;timeZoneFooter\&quot;).innerHTML = tzStr;\n    \n}, 1000);\n\n\nsetTimeout( function() {\n    // install easter-egg to get presentation server\n    var node = document.getElementById(\&quot;copyrightFooter\&quot;);\n    if (node != null) {\n        var click_time = Date.now();\n        var click_count = 0;\n        node.addEventListener(\&quot;click\&quot;, function() {\n            var now = Date.now();\n            if ((now - click_time) &lt; 2000) {\n                click_count++;\n            }\n            else {\n                click_count = 0;\n            }\n            click_time = now;\n            if (click_count &gt;= 4) {\n                Plugin(\&quot;Common\&quot;).getServerInfo(function(response) {\n                    if( response.status == \&quot;OK\&quot; ) {\n                        var buf = [];\n                        buf.push(\&quot;Server: \&quot; + response.value.server);\n                        buf.push(\&quot;Host: \&quot; + response.value.host);\n                        alert(buf.join(\&quot;\\\\n\&quot;));\n                    }\n                });\n            }\n        });\n    }\n\n}, 1000);&quot;"/>
+      <Input key="node:33/in:0/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:58/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;showFrameMenu&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;frameMenuData&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;triggerGridClear&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;}]"/>
+      <Input key="node:58/cfg:model/default" value="&quot;//debugger\nsetTimeout(function(){\n    \n    var frameMenuToggle = $(\&quot;#frameMenuToggle\&quot;);\n        frameMenuToggle.click(function(){\n            debugger\n            setOutput(\&quot;dout:0\&quot;, true );\n            var evt = {    \n                    selection : function(item) { \n                             return false;\n                    }\n                    \n                };\n                setOutput(\&quot;dout:2\&quot;, evt);\n                \n        });\n    \n        refreshMenu();\n    \n}, 1000 );\n\nsetOutput(\&quot;dout:0\&quot;, false );\n\nfunction refreshMenu(){\n    \n    var frameMenuConfig = [\n        { label: \&quot;Manage Populations\&quot;, value: \&quot;onMangePopulation\&quot; },\n        { label: \&quot;Manage Population Groups\&quot;, value: \&quot;onMangePopulationGroups\&quot; }\n    ];\n    \n    setOutput(\&quot;dout:1\&quot;, frameMenuConfig );\n       \n}&quot;"/>
+      <Input key="node:58/cfg:schema/default" value="&quot;var schema = [];\n\nschema.push({\n    name:\&quot;label\&quot;,\n    label:\&quot;label\&quot;,\n    type:\&quot;string\&quot;\n});\nschema.push({\n    name:\&quot;value\&quot;,\n    label:\&quot;value\&quot;,\n    type:\&quot;string\&quot;\n});\nsetOutputSchema(\&quot;dout:1\&quot;, schema);&quot;"/>
+      <Input key="node:60/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#ContentMain&quot;,&quot;path&quot;:[&quot;page1&quot;],&quot;name&quot;:&quot;ContentMain&quot;}]"/>
+      <Input key="node:60/cfg:refCorner/default" value="&quot;TopRight&quot;"/>
+      <Input key="node:60/cfg:xOffset/default" value="15"/>
+      <Input key="node:60/cfg:yOffset/default" value="0"/>
+      <Input key="node:60/cfg:widget/default" value="[{&quot;viewer&quot;:&quot;DataGrid&quot;,&quot;label&quot;:&quot;Data Grid&quot;,&quot;properties&quot;:{&quot;showHeader&quot;:&quot;enable&quot;,&quot;headerStyle&quot;:&quot;{\&quot;header\&quot;:{\&quot;style\&quot;:{\&quot;fontStyle\&quot;:\&quot;normal\&quot;,\&quot;fontSize\&quot;:\&quot;16px\&quot;,\&quot;fontWeight\&quot;:\&quot;normal\&quot;,\&quot;color\&quot;:\&quot;#ffffff\&quot;}}}&quot;,&quot;borderType&quot;:&quot;none&quot;,&quot;rowSpacing&quot;:&quot;5&quot;,&quot;columnResize&quot;:&quot;enable&quot;,&quot;columnReorder&quot;:&quot;disable&quot;,&quot;columnSortable&quot;:&quot;enable&quot;,&quot;dataExport&quot;:&quot;enable&quot;,&quot;pagination&quot;:&quot;disable&quot;,&quot;lockedColumns&quot;:&quot;0&quot;,&quot;highlightColor&quot;:&quot;#7fceff&quot;,&quot;hoverColor&quot;:&quot;#7fceff&quot;,&quot;selectionMode&quot;:&quot;single&quot;,&quot;showSummary&quot;:&quot;disable&quot;,&quot;lineWrapping&quot;:&quot;disable&quot;,&quot;columnSetting&quot;:&quot;[{\&quot;name\&quot;:\&quot;label\&quot;,\&quot;label\&quot;:\&quot;Solution Menu\&quot;,\&quot;type\&quot;:\&quot;string\&quot;,\&quot;defaultListId\&quot;:1,\&quot;opened\&quot;:true,\&quot;style\&quot;:{\&quot;fontStyle\&quot;:\&quot;normal\&quot;,\&quot;fontWeight\&quot;:\&quot;normal\&quot;,\&quot;fontSize\&quot;:\&quot;14\&quot;,\&quot;color\&quot;:\&quot;#dcdcdc\&quot;,\&quot;textAlign\&quot;:\&quot;left\&quot;},\&quot;isKeyField\&quot;:false},{\&quot;name\&quot;:\&quot;value\&quot;,\&quot;label\&quot;:\&quot;value\&quot;,\&quot;type\&quot;:\&quot;string\&quot;,\&quot;defaultListId\&quot;:2,\&quot;opened\&quot;:true,\&quot;display\&quot;:\&quot;false\&quot;,\&quot;isKeyField\&quot;:false}]&quot;},&quot;schema&quot;:[{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}]}]"/>
+      <Input key="node:60/cfg:frameStyle/default" value="[{&quot;name&quot;:&quot;padding&quot;,&quot;value&quot;:&quot;10px&quot;},{&quot;name&quot;:&quot;border&quot;,&quot;value&quot;:&quot;1px solid #000000&quot;},{&quot;name&quot;:&quot;border-radius&quot;,&quot;value&quot;:&quot;5px&quot;},{&quot;name&quot;:&quot;background-color&quot;,&quot;value&quot;:&quot;#2d3538&quot;}]"/>
+      <Input key="node:60/cfg:width/default" value="150"/>
+      <Input key="node:60/cfg:height/default" value="100"/>
+      <Input key="node:60/cfg:customClass/default" value="&quot;frameMenuControl&quot;"/>
+      <Input key="node:58/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;integer&quot;,&quot;portLabel&quot;:&quot;In(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;}]"/>
+      <Input key="node:65/in:3/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:65/in:1/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:60/in:0/evaluate" value="&quot;change&quot;"/>
+      <Input key="node:67/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;In(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:67/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;integer&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:67/cfg:model/default" value="&quot;var events = getInput(\&quot;din:0\&quot;);\n\n\nif( events != null &amp;&amp; events.length &gt; 0 ){\n \n    if( events[0][\&quot;__TYPE__\&quot;] == \&quot;click\&quot; ){\n      // debugger \n        setOutput(\&quot;dout:0\&quot;, new Date().getMilliseconds() );   \n    }\n    \n}&quot;"/>
+      <Input key="node:71/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;showLegends&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;showFilters&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:71/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;showLegends&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;showFilters&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:71/cfg:model/default" value="&quot;if( port == null ){\n    setOutput(\&quot;dout:0\&quot;, true );\n    setOutput(\&quot;dout:1\&quot;, true );\n    \n} else { \n    \n    if ( port == \&quot;din:0\&quot;) {\n        setOutput(\&quot;dout:0\&quot;, getInput(\&quot;din:0\&quot;) );\n    }\n    \n    if( port == \&quot;din:1\&quot;) {\n        setOutput(\&quot;dout:1\&quot;, getInput(\&quot;din:1\&quot;) );\n    }\n    \n}\n\nsetOutput(\&quot;dout:0\&quot;, false );\nsetOutput(\&quot;dout:1\&quot;, false );&quot;"/>
+      <Input key="node:73/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;toggleLegend&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;toggleFilter&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:73/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;toggleLegend&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;toggleFilter&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;triggerResize&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:3&quot;,&quot;portType&quot;:&quot;integer&quot;,&quot;portLabel&quot;:&quot;filterClick&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:4&quot;,&quot;portType&quot;:&quot;integer&quot;,&quot;portLabel&quot;:&quot;legendClick&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:73/cfg:model/default" value="&quot;if( port != null ){\n\n    switch(port){\n        case \&quot;din:0\&quot;:\n            setOutput(\&quot;dout:0\&quot;, true );\n            setOutput( \&quot;dout:4\&quot;, Date.now());\n            break;\n        case \&quot;din:1\&quot;:\n            setOutput(\&quot;dout:1\&quot;, true );\n            setOutput( \&quot;dout:3\&quot;, Date.now());\n            break;\n    }\n\n\n    \n}\n\n\n&quot;"/>
+      <Input key="node:75/cfg:model/default" value="&quot;var show = false;\n\nif( port == null ) return;\n\nif( getInput(\&quot;din:0\&quot;) != null &amp;&amp; getInput(\&quot;din:0\&quot;) ){\n    show = $(\&quot;.CartesianChartFloatingLegend\&quot;).css( \&quot;display\&quot; ) == \&quot;none\&quot;;    \n}\n\n   //debugger\n    if( show &amp;&amp; $ != null ){\n        \n        var x = document.getElementsByClassName(\&quot;CartesianChartFloatingLegend\&quot;);\n        for (var i = 0; i &lt; x.length; i++) {\n            x[i].style.cssText += \&quot;background-color: transparent !important; box-shadow: none !important; border: none !important\&quot;;\n\n        }\n        \n\n        $(\&quot;.CartesianChartFloatingLegend\&quot;).css( \&quot;display\&quot;, \&quot;block\&quot;); \n       /* \n        $(\&quot;.CartesianChartFloatingLegend\&quot;).css( \&quot;left\&quot;, \&quot;unset !important\&quot;); \n        $(\&quot;.CartesianChartFloatingLegend\&quot;).css( \&quot;top\&quot;, \&quot;unset !important\&quot;);\n        $(\&quot;.CartesianChartFloatingLegend\&quot;).css( \&quot;top\&quot;, \&quot;20px !important\&quot;);\n        $(\&quot;.CartesianChartFloatingLegend\&quot;).css( \&quot;right\&quot;, \&quot;20px !important\&quot;);\n        $(\&quot;.CartesianChartFloatingLegend\&quot;).css( \&quot;box-shadow\&quot;, \&quot;none !important\&quot;);\n        \n        $(\&quot;.CartesianChartFloatingLegend\&quot;).css( \&quot;border\&quot;, \&quot;none !important\&quot;); */\n            var seriesTitles = $(\&quot;.seriesTitle\&quot;);\n            for( var i=0; i &lt; seriesTitles.length; i++ ){\n                var obj = seriesTitles[i];\n                \n               if( obj.innerHTML== \&quot;Referential Data\&quot;){\n                   obj.style.display = \&quot;none\&quot;;   \n               }\n               \n               if( obj.innerHTML == \&quot;Plotted Series\&quot; ){\n                    obj.style.display = \&quot;block\&quot;;   \n               }\n               \n            }\n            \n             \n    \n       // setOutput( \&quot;dout:0\&quot; , false );\n    } else {\n        $(\&quot;.CartesianChartFloatingLegend\&quot;).css( \&quot;display\&quot;, \&quot;none\&quot;); \n       // setOutput( \&quot;dout:0\&quot;, true );   \n    }\n    \n    \n    \n\n&quot;"/>
+      <Input key="node:75/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;notify&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:75/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;showLegend&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:75/cfg:schema/default" value="&quot;&quot;"/>
+      <Input key="node:77/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;solutionName&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:77/cfg:model/default" value="&quot;var solutionName = getInput(\&quot;din:0\&quot;);\n\n$(&apos;#solutionName&apos;).ready(function(){\n    if( solutionName &amp;&amp; solutionName != \&quot;\&quot; ){\n        $(&apos;#solutionName&apos;).text(solutionName);   \n    }\n    \n});\n&quot;"/>
+      <Input key="node:79/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Logo&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:79/cfg:model/default" value="&quot;if( port !== null ){\n    var logoString = getInput(\&quot;din:0\&quot;);\n    if( logoString &amp;&amp; logoString !== null &amp;&amp; logoString !== \&quot;\&quot; ){\n        $(&apos;#frameLogo&apos;).attr(&apos;src&apos;, logoString);\n    }\n}&quot;"/>
+      <Input key="node:81/cfg:model/default" value="&quot;var items= [\r\n    \r\n\t{\r\n\t\t\&quot;id\&quot;: \&quot;c1\&quot;,\r\n\t\t\&quot;name\&quot;: \&quot;toggleLegends\&quot;,\r\n\t\t\&quot;label\&quot;: \&quot;Legends\&quot;,\r\n\t\t\&quot;iconType\&quot;: \&quot;fas\&quot;,\r\n\t\t\&quot;icon\&quot;: \&quot;fa-sliders-h\&quot;,\r\n\t\t\&quot;selected\&quot;: false\r\n\t},\r\n\t{\r\n\t\t\&quot;id\&quot;: \&quot;c2\&quot;,\r\n\t\t\&quot;name\&quot;: \&quot;toggleCalendar\&quot;,\r\n\t\t\&quot;label\&quot;: \&quot;Time Picker\&quot;,\r\n\t\t\&quot;iconType\&quot;: \&quot;fa\&quot;,\r\n\t\t\&quot;icon\&quot;: \&quot;fa-calendar-alt\&quot;,\r\n\t\t\&quot;selected\&quot;: false\r\n\t},\r\n\t{\r\n\t\t\&quot;id\&quot;: \&quot;c3\&quot;,\r\n\t\t\&quot;name\&quot;: \&quot;toggleFilters\&quot;,\r\n\t\t\&quot;label\&quot;: \&quot;Filters\&quot;,\r\n\t\t\&quot;iconType\&quot;: \&quot;fa\&quot;,\r\n\t\t\&quot;icon\&quot;: \&quot;fa-filter\&quot;,\r\n\t\t\&quot;selected\&quot;: false\r\n\t}\r\n];\r\n\r\nsetOutput(\&quot;dout:0\&quot;, items);\r\n&quot;"/>
+      <Input key="node:81/cfg:schema/default" value="&quot;var schema = [];\n\nschema.push({ name: \&quot;id\&quot;, label: \&quot;id\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;name\&quot;, label: \&quot;name\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;label\&quot;, label: \&quot;label\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;iconType\&quot;, label: \&quot;iconType\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;icon\&quot;, label: \&quot;icon\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;selected\&quot;, label: \&quot;selected\&quot;, type: \&quot;boolean\&quot; });\nschema.push({ name: \&quot;view\&quot;, label: \&quot;view\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;service\&quot;, label: \&quot;service\&quot;, type: \&quot;object\&quot; });\nschema.push({ name: \&quot;params\&quot;, label: \&quot;params\&quot;, type: \&quot;object\&quot; });\n\nsetOutputSchema( \&quot;dout:0\&quot;, schema );&quot;"/>
+      <Input key="node:81/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:83/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#breadcrumb&quot;,&quot;path&quot;:[&quot;page1&quot;],&quot;name&quot;:&quot;breadcrumb&quot;}]"/>
+      <Input key="node:83/in:1/evaluate" value="&quot;ignore&quot;"/>
+      <Input key="node:83/cfg:yOffset/default" value="-3"/>
+      <Input key="node:83/cfg:xOffset/default" value="0"/>
+      <Input key="node:83/cfg:refCorner/default" value="&quot;TopRight&quot;"/>
+      <Input key="node:83/cfg:width/default" value="300"/>
+      <Input key="node:83/cfg:height/default" value="30"/>
+      <Input key="node:83/cfg:widget/default" value="[{&quot;viewer&quot;:&quot;dbp.Renderer&quot;,&quot;label&quot;:&quot;Dashboard Module&quot;,&quot;properties&quot;:{&quot;generalProperties&quot;:&quot;{\&quot;_model\&quot;:\&quot;/app/dbp/user/via_common/dbpm/VIA - NavButtons v4/ButtonNavigator\&quot;,\&quot;iconListAlign\&quot;:\&quot;right\&quot;,\&quot;itemWidth\&quot;:40,\&quot;itemHeight\&quot;:30,\&quot;displayLabels\&quot;:\&quot;false\&quot;,\&quot;iconColor\&quot;:\&quot;black\&quot;,\&quot;labelColor\&quot;:\&quot;black\&quot;,\&quot;highlightColor\&quot;:\&quot;#148ac4\&quot;}&quot;},&quot;schema&quot;:[{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;},{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;},{&quot;name&quot;:&quot;params&quot;,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;}]}]"/>
+      <Input key="node:83/cfg:frameStyle/default" value="[{&quot;name&quot;:&quot;padding&quot;,&quot;value&quot;:&quot;none&quot;},{&quot;name&quot;:&quot;border&quot;,&quot;value&quot;:&quot;none&quot;},{&quot;name&quot;:&quot;border-radius&quot;,&quot;value&quot;:&quot;none&quot;},{&quot;name&quot;:&quot;background-color&quot;,&quot;value&quot;:&quot;rgba(255,255,255,0)&quot;}]"/>
+      <Input key="node:83/cfg:customClass/default" value="&quot;template-controls&quot;"/>
+      <Input key="node:84/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;ControlSource&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:84/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;updatedControlSource&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:84/cfg:schema/default" value="&quot;var schema = [];\n\nschema.push({ name: \&quot;id\&quot;, label: \&quot;id\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;name\&quot;, label: \&quot;name\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;label\&quot;, label: \&quot;label\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;iconType\&quot;, label: \&quot;iconType\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;icon\&quot;, label: \&quot;icon\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;selected\&quot;, label: \&quot;selected\&quot;, type: \&quot;boolean\&quot; });\nschema.push({ name: \&quot;view\&quot;, label: \&quot;view\&quot;, type: \&quot;string\&quot; });\nschema.push({ name: \&quot;service\&quot;, label: \&quot;service\&quot;, type: \&quot;object\&quot; });\nschema.push({ name: \&quot;params\&quot;, label: \&quot;params\&quot;, type: \&quot;object\&quot; });\n\nsetOutputSchema( \&quot;dout:1\&quot;, schema );&quot;"/>
+      <Input key="node:84/cfg:model/default" value="&quot;if( port == &apos;din:1&apos; ){\n \n    var data       = getInput(\&quot;din:0\&quot;);\n    var selection  = getInput(\&quot;din:1\&quot;);\n    if( data != null &amp;&amp; selection != null ){\n        for( var i=0; i &lt; data.length; i++ ){ \n            if( data[i][\&quot;id\&quot;] == selection[0].id ){\n                data[i].selected = ! selection[0].selected;   \n            }\n        }\n        \n        setOutput(\&quot;dout:1\&quot;, data );\n    }\n}&quot;"/>
+      <Input key="node:60/in:1/default" value="false"/>
+      <Input key="node:83/in:1/default" value="false"/>
+      <Input key="node:90/cfg:widget/default" value="[{&quot;viewer&quot;:&quot;ax.DashboardView&quot;,&quot;label&quot;:&quot;Dashboard View&quot;,&quot;properties&quot;:{&quot;model&quot;:&quot;/app/ax/space/VIA Digital Operations/axv/VIAOps - Outage Popup Comp&quot;},&quot;schema&quot;:[]}]"/>
+      <Input key="node:90/cfg:height/default" value="500"/>
+      <Input key="node:90/cfg:width/default" value="600"/>
+      <Input key="node:90/in:1/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:92/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;opsJNDIName&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:92/cfg:model/default" value="&quot;var SchedulerPlugin = Plugin(\&quot;Scheduler\&quot;);\nvar opsJNDIName = getInput( \&quot;din:0\&quot; );\nvar pollingFrequency = 60000;\nif( opsJNDIName == null || opsJNDIName == \&quot;\&quot; ) return;\n\nsetInterval(init, pollingFrequency);\n\nfunction init(){\n    SchedulerPlugin.checkForOutage( opsJNDIName, function( response ){\n        if( response.status.toLowerCase() == \&quot;ok\&quot; ){\n            var outageItems = response.value || [];\n            if( outageItems.length &gt; 0 ){\n                var citem           = outageItems[0];\n                    citem[&apos;type&apos;]   = \&quot;outage\&quot;;\n                    setOutput( \&quot;dout:0\&quot;, [citem] );\n                    setOutput(&apos;dout:1&apos;, true);\n            } else {\n                setOutput(&apos;dout:1&apos;, false);   \n            }\n            \n        }\n    });\n}\n\n&quot;"/>
+      <Input key="node:92/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;outageObject&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;show&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:90/in:0/evaluate" value="&quot;always&quot;"/>
+      <Schema id="node:35/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <Schema id="node:36/out:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <Schema id="node:36/in:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <Schema id="node:43/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;props&quot;,&quot;label&quot;:&quot;props&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <Schema id="node:33/din:FilterObj">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+        <JSON value="{&quot;name&quot;:&quot;context&quot;,&quot;label&quot;:&quot;Context&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:53/in:0">
+        <JSON value="{&quot;name&quot;:&quot;group&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;buttonItems&quot;,&quot;label&quot;:&quot;ButtonItems&quot;,&quot;type&quot;:&quot;any&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;linkItems&quot;,&quot;label&quot;:&quot;LinkItems&quot;,&quot;type&quot;:&quot;any&quot;}"/>
+      </Schema>
+      <Schema id="node:53/out:0">
+        <JSON value="{&quot;name&quot;:&quot;group&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;buttonItems&quot;,&quot;label&quot;:&quot;ButtonItems&quot;,&quot;type&quot;:&quot;any&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;linkItems&quot;,&quot;label&quot;:&quot;LinkItems&quot;,&quot;type&quot;:&quot;any&quot;}"/>
+      </Schema>
+      <Schema id="node:54/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;group&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;buttonItems&quot;,&quot;label&quot;:&quot;ButtonItems&quot;,&quot;type&quot;:&quot;any&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;linkItems&quot;,&quot;label&quot;:&quot;LinkItems&quot;,&quot;type&quot;:&quot;any&quot;}"/>
+      </Schema>
+      <Schema id="node:54/din:0">
+        <JSON value="{&quot;name&quot;:&quot;group&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;buttonItems&quot;,&quot;label&quot;:&quot;ButtonItems&quot;,&quot;type&quot;:&quot;any&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;linkItems&quot;,&quot;label&quot;:&quot;LinkItems&quot;,&quot;type&quot;:&quot;any&quot;}"/>
+      </Schema>
+      <Schema id="node:38/out:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:35/din:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:38/out:1">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:38/out:2">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:38/out:3">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:54/din:2">
+        <JSON value="{&quot;name&quot;:&quot;clearBreadcrumbs&quot;,&quot;label&quot;:&quot;clearBreadcrumbs&quot;,&quot;type&quot;:&quot;boolean&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:35/din:1">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;props&quot;,&quot;label&quot;:&quot;props&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <Schema id="node:58/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:60/out:0">
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:60/out:1">
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:60/in:0">
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:65/in:0">
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:65/out:0">
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:33/din:FrameMenuSelection">
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:67/din:0">
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:71/din:0">
+        <JSON value="{&quot;name&quot;:&quot;displayLegendToggle&quot;,&quot;label&quot;:&quot;displayLegendToggle&quot;,&quot;type&quot;:&quot;boolean&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:71/din:1">
+        <JSON value="{&quot;name&quot;:&quot;displayFilterToggle&quot;,&quot;label&quot;:&quot;displayFilterToggle&quot;,&quot;type&quot;:&quot;boolean&quot;,&quot;_isKey&quot;:false,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false,&quot;_isTimestamp&quot;:false}"/>
+      </Schema>
+      <Schema id="node:75/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;show&quot;,&quot;label&quot;:&quot;Show&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:75/din:0">
+        <JSON value="{&quot;name&quot;:&quot;show&quot;,&quot;label&quot;:&quot;Show&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:81/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <Schema id="node:82/in:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <Schema id="node:82/out:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <Schema id="node:83/in:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <Schema id="node:83/out:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <Schema id="node:83/out:1">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <Schema id="node:84/din:1">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <Schema id="node:84/din:0">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <Schema id="node:84/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;iconType&quot;,&quot;label&quot;:&quot;iconType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;icon&quot;,&quot;label&quot;:&quot;icon&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;selected&quot;,&quot;label&quot;:&quot;selected&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;view&quot;,&quot;label&quot;:&quot;view&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;params&quot;,&quot;label&quot;:&quot;params&quot;,&quot;type&quot;:&quot;object&quot;}"/>
+      </Schema>
+      <DynInput id="node:35">
+        <Port id="din:0" type="any[]" label="Selection" evaluate="always"/>
+        <Port id="din:1" type="any[]" label="ConfigData" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:37">
+        <Port id="din:0" type="string" label="ViewPath" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:51">
+        <Port id="din:0" type="any[]" label="UI Event" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:54">
+        <Port id="din:0" type="any[]" label="contextHistoryStructure" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="any" label="UIEvent" evaluate="always" _isArray="true"/>
+        <Port id="din:2" type="boolean" label="clearList" evaluate="always" _isArray="true"/>
+        <Port id="din:3" type="string" label="triggerComplete" evaluate="always" _isArray="true"/>
+        <Port id="din:4" type="boolean" label="viewIsDynamic" evaluate="always" _isArray="true"/>
+        <Port id="din:5" type="any[]" label="filterEvent" evaluate="always" _isArray="true"/>
+        <Port id="din:6" type="string" label="ViewPath" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:58">
+        <Port id="din:0" type="integer" label="In(0)" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:67">
+        <Port id="din:0" type="event[]" label="In(0)" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:71">
+        <Port id="din:0" type="boolean" label="showLegends" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="boolean" label="showFilters" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:73">
+        <Port id="din:0" type="string" label="toggleLegend" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="string" label="toggleFilter" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:75">
+        <Port id="din:0" type="boolean" label="notify" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:77">
+        <Port id="din:0" type="string" label="solutionName" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:79">
+        <Port id="din:0" type="string" label="Logo" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:84">
+        <Port id="din:0" type="any[]" label="ControlSource" evaluate="always"/>
+        <Port id="din:1" type="any[]" label="selection" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:90">
+        <Port id="din:outageItem" type="any[]" label="outageItem" _undefined_default="" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:92">
+        <Port id="din:0" type="string" label="opsJNDIName" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:33">
+        <Port id="din:Context" type="any[]" label="Context" _undefined_default="" evaluate="always"/>
+        <Port id="din:FrameMenuSelection" type="any[]" label="FrameMenuSelection" _undefined_default="" evaluate="always"/>
+        <Port id="din:JNDI_Name" type="string" label="JNDI_Name" _undefined_default="" evaluate="always"/>
+      </DynInput>
+      <DynOutput id="node:35">
+        <Port id="dout:0" type="any[]" label="BaseConfig" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="string" label="ViewPath" propagate="always" _isArray="true"/>
+        <Port id="dout:2" type="any" label="serviceConfig" propagate="always" _isArray="true"/>
+        <Port id="dout:3" type="any" label="initProperties" propagate="always" _isArray="true"/>
+        <Port id="dout:4" type="boolean" label="dynamicView" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:37">
+        <Port id="dout:0" type="any,json" label="Notify" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:43">
+        <Port id="dout:0" type="any[]" label="BaseConfig" propagate="always"/>
+        <Port id="dout:1" type="string" label="Time Zone" propagate="always"/>
+        <Port id="dout:2" type="string" label="Locale" propagate="always"/>
+        <Port id="dout:3" type="string" label="Interval" propagate="always"/>
+        <Port id="dout:4" type="any" label="FilterObj" propagate="always"/>
+        <Port id="dout:5" type="string" label="Visualization" propagate="always"/>
+        <Port id="dout:6" type="any" label="result" propagate="always"/>
+        <Port id="dout:7" type="any,string" label="solutionName" propagate="always"/>
+        <Port id="dout:8" type="string" label="Logo" propagate="always"/>
+        <Port id="dout:9" type="string" label="opsJNDIName" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:51">
+        <Port id="dout:0" type="any" label="Notify" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="any[]" label="Context" propagate="always" _isArray="true"/>
+        <Port id="dout:2" type="string" label="loadComplete" propagate="always" _isArray="true"/>
+        <Port id="dout:3" type="any[]" label="filterEvents" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:54">
+        <Port id="dout:0" type="any[]" label="Out(0)" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="any" label="notifyResize" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:58">
+        <Port id="dout:0" type="boolean" label="showFrameMenu" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="any[]" label="frameMenuData" propagate="always" _isArray="true"/>
+        <Port id="dout:2" type="any" label="triggerGridClear" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:67">
+        <Port id="dout:0" type="integer" label="Out(0)" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:71">
+        <Port id="dout:0" type="boolean" label="showLegends" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="boolean" label="showFilters" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:73">
+        <Port id="dout:0" type="boolean" label="toggleLegend" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="boolean" label="toggleFilter" propagate="always" _isArray="true"/>
+        <Port id="dout:2" type="any" label="triggerResize" propagate="always" _isArray="true"/>
+        <Port id="dout:3" type="integer" label="filterClick" propagate="always" _isArray="true"/>
+        <Port id="dout:4" type="integer" label="legendClick" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:75">
+        <Port id="dout:0" type="event[]" label="showLegend" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:81">
+        <Port id="dout:0" type="any[]" label="Out(0)" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:84">
+        <Port id="dout:0" type="any" label="Out(0)" propagate="always"/>
+        <Port id="dout:1" type="any[]" label="updatedControlSource" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:92">
+        <Port id="dout:0" type="any[]" label="outageObject" propagate="always"/>
+        <Port id="dout:1" type="boolean" label="show" propagate="always"/>
+      </DynOutput>
+      <Version id="node:33" version="1"/>
+      <Version id="node:35" version="2"/>
+      <Version id="node:36" version="2"/>
+      <Version id="node:37" version="2"/>
+      <Version id="node:38" version="1"/>
+      <Version id="node:43" version="1"/>
+      <Version id="node:51" version="2"/>
+      <Version id="node:53" version="2"/>
+      <Version id="node:54" version="2"/>
+      <Version id="node:56" version="2"/>
+      <Version id="node:58" version="2"/>
+      <Version id="node:60" version="1"/>
+      <Version id="node:65" version="2"/>
+      <Version id="node:67" version="2"/>
+      <Version id="node:71" version="2"/>
+      <Version id="node:73" version="2"/>
+      <Version id="node:75" version="2"/>
+      <Version id="node:77" version="2"/>
+      <Version id="node:79" version="2"/>
+      <Version id="node:81" version="2"/>
+      <Version id="node:82" version="2"/>
+      <Version id="node:83" version="1"/>
+      <Version id="node:84" version="2"/>
+      <Version id="node:90" version="1"/>
+      <Version id="node:92" version="2"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/user/via_common/dbpm/VIA - Common" alias="Common"/>
+      <DashboardPlugin uri="/app/dbp/user/via_common/dbpm/VIA - NavButtons v4" alias="Buttons"/>
+      <DashboardPlugin uri="/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Maintenance Scheduler Service" alias="Scheduler"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

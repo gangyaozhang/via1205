@@ -1,0 +1,20 @@
+INSERT INTO viaops_anomaly_baseline_score (
+    adm_name,
+    metric_id,
+    score_method,
+    stat_seasonality,
+    anomaly_trigger,
+    lower_scale,
+    upper_scale,
+    enabled
+)
+VALUES (
+    "${adm_name}",
+    "${metric_id}",
+    "${score_method}",
+    "${stat_seasonality}",
+    "${anomaly_trigger}",
+    ${lower_scale},
+    ${upper_scale},
+    ${enabled}
+)

@@ -1,0 +1,8 @@
+INSERT INTO viaops_incident_group_audit (
+    user_id,
+    user_full_name,
+    audit_action,
+    group_rule_name,
+    max_lookback,
+    expire_after
+) VALUES (?, ?, ?, ?, ?, ?)

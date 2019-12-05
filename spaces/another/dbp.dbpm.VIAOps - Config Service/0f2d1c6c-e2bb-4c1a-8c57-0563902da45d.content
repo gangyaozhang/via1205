@@ -1,0 +1,7 @@
+DELETE FROM
+    metric_severity_dim
+WHERE metric_id in (
+    SELECT id
+    FROM metric_dim
+    WHERE metric_id=?
+)

@@ -1,0 +1,7 @@
+UPDATE
+    viaops_incident_group
+SET
+    max_lookback=${max_lookback},
+    expire_after=${expire_after},
+    modified_ts=current_timestamp()
+WHERE group_rule_name="${group_rule_name}"

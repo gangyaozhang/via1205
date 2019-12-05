@@ -1,0 +1,5 @@
+select distinct
+    concat(service,"|",sub_service,"|",dim_values) as metric_id,
+    dim_keys,
+    dim_values
+from viaops_incident_model

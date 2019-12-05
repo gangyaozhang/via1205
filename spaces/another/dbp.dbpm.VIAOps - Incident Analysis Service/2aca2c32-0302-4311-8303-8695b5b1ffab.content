@@ -1,0 +1,151 @@
+SELECT  LAST(a.group_id) as group_id,
+        LAST( a.incident_id ) AS id,
+        LAST( a.incident_metric_id  ) AS metric_id,
+        LAST( a.incident_config_metric_id  ) AS config_metric_id,
+        LAST( a.incident_algorithm ) AS algorithm,
+        CASE  
+            WHEN MAX( a.incident_severity_scale ) = 3 THEN "High"
+            WHEN MAX( a.incident_severity_scale ) = 2 THEN "Medium"
+            WHEN MAX( a.incident_severity_scale ) = 1 THEN "Low"
+            WHEN MAX( a.incident_severity_scale ) = 0 THEN ""
+            WHEN MAX( a.incident_severity_scale ) = -1 THEN "Cooldown"
+            WHEN MAX( a.incident_severity_scale ) = -2 THEN "Warmup"
+        END  AS severity,
+        MAX( a.incident_severity_scale ) as severity_scale,
+            
+        CASE  
+            WHEN MAX( a.incident_derived_severity_scale ) = 3 THEN "High"
+            WHEN MAX( a.incident_derived_severity_scale ) = 2 THEN "Medium"
+            WHEN MAX( a.incident_derived_severity_scale ) = 1 THEN "Low"
+            WHEN MAX( a.incident_derived_severity_scale ) = 0 THEN ""
+            WHEN MAX( a.incident_derived_severity_scale ) = -1 THEN "Cooldown"
+            WHEN MAX( a.incident_derived_severity_scale ) = -2 THEN "Warmup"
+        END  AS derived_severity,
+        MAX( a.incident_derived_severity_scale ) as derived_severity_scale,
+        
+        CASE  
+            WHEN MAX( a.incident_max_severity_scale ) = 3 THEN "High"
+            WHEN MAX( a.incident_max_severity_scale ) = 2 THEN "Medium"
+            WHEN MAX( a.incident_max_severity_scale ) = 1 THEN "Low"
+            WHEN MAX( a.incident_max_severity_scale ) = 0 THEN ""
+            WHEN MAX( a.incident_max_severity_scale ) = -1 THEN "Cooldown"
+            WHEN MAX( a.incident_max_severity_scale ) = -2 THEN "Warmup"
+        END  AS max_severity,
+        MAX( a.incident_max_severity_scale ) as max_severity_scale,
+        
+        LAST( a.incident_operation ) AS operation,
+        LAST( a.incident_state ) AS status,
+        
+        MIN( a.incident_start_tm ) AS start_epoch,
+        MAX( a.incident_end_tm ) AS end_epoch,
+        
+        MIN( a.incident_call_start_tm ) AS cust_call_start_tm,
+        MAX( a.incident_call_end_tm ) AS cust_call_end_tm,
+        
+        ( MAX(a.incident_call_end_tm ) - MAX(a.incident_call_start_tm) + 300 ) AS call_duration,
+        ( MAX(a.incident_end_tm ) - MAX(a.incident_start_tm) + 300 ) AS duration,
+        
+        SUM( a.incident_call_count ) AS cust_call_count,
+        SUM( a.incident_call_baseline ) AS cust_call_baseline,
+        SUM( a.incident_call_deviation ) AS cust_call_deviation,
+        
+        ( MAX( a.incident_end_tm ) - MIN( a.incident_start_tm ) + 300 ) as duration,
+        ( MAX( a.incident_call_end_tm ) - MIN( a.incident_call_start_tm ) + 300 ) as call_duration,
+        
+        "" AS service,
+        "" AS sub_service,		
+        "" AS dim_keys,
+        "" AS dim_values,
+        
+        LAST( a.incident_window ) AS anomaly_window,
+        MAX( a.incident_event_tm ) AS event_epoch,
+        
+        'Service' AS causation,
+        'Informational' AS type,
+        
+        COUNT(DISTINCT(a.incident_id)) AS correlated_count, 
+        'Not Actioned' as notification,
+        
+        ROUND(MAX( a.incident_peak_score ),2) AS display_max,
+        ROUND(MAX( a.incident_peak_score ),2) AS max_score,
+        ROUND(MAX( a.incident_peak_score ),2) AS peak_score,
+        LAST( a.incident_factor ) as score_factor,
+        SUM( a.incident_metric_measure ) as metric_measure,
+        SUM( a.incident_metric_baseline ) as metric_baseline,
+        
+        "y" AS above,
+        "n" AS below,
+        concat(to_utc_timestamp(from_unixtime(FIRST(a.incident_start_tm)),'Etc/UTC'),'Z') AS start_date,
+        IF(LAST(a.incident_end_tm) == 0, "", concat(to_utc_timestamp(from_unixtime(LAST(a.incident_end_tm)),'Etc/UTC'),'Z')) AS end_date,
+        concat(to_utc_timestamp(from_unixtime(LAST(a.incident_event_tm)),'Etc/UTC'),'Z') AS event_date,
+        concat(to_utc_timestamp(from_unixtime(LAST(a.incident_call_end_tm)),'Etc/UTC'),'Z') AS call_date,
+        LAST(a.date_key) AS date_key
+
+FROM
+(   SELECT  
+        group_id,
+        CASE 
+            WHEN incident_severity = "High" THEN 3
+            WHEN incident_severity = "Medium" THEN 2
+            WHEN incident_severity = "Low" THEN 1
+            WHEN incident_severity = "Cooldown" THEN -11
+            WHEN incident_severity = "Warmup" THEN -2
+            WHEN incident_severity = "" THEN 0
+        END AS incident_severity_scale,
+
+        CASE
+            WHEN incident_derived_severity = "High" THEN 3
+            WHEN incident_derived_severity = "Medium" THEN 2
+            WHEN incident_derived_severity = "Low" THEN 1
+            WHEN incident_derived_severity = "Cooldown" THEN -11
+            WHEN incident_derived_severity = "Warmup" THEN -2
+            WHEN incident_derived_severity = "" THEN 0
+        END AS incident_derived_severity_scale,
+
+        CASE
+            WHEN incident_max_severity = "High" THEN 3
+            WHEN incident_max_severity = "Medium" THEN 2
+            WHEN incident_max_severity = "Low" THEN 1
+            WHEN incident_max_severity = "Cooldown" THEN -11
+            WHEN incident_max_severity = "Warmup" THEN -2
+            WHEN incident_max_severity = "" THEN 0
+        END AS incident_max_severity_scale, 
+        incident_id,
+        incident_metric_id,
+        incident_config_metric_id,
+        incident_algorithm,
+        incident_operation,
+        incident_state,
+        incident_start_tm,
+        incident_end_tm,
+        incident_call_start_tm,
+        incident_call_end_tm,
+        incident_call_count,
+        incident_call_deviation,
+        incident_call_baseline,
+        "" AS incident_service,
+        "" AS incident_sub_service,
+        incident_window,
+        incident_event_tm,
+        'Service' AS incident_causation,
+        incident_peak_score,
+        incident_metric_measure,
+        incident_metric_baseline,
+        incident_factor,
+        date_key
+        
+        from viaops_incident_group_history
+        WHERE date_key in (${dateKeys}) AND ( ( incident_start_tm BETWEEN 0 AND ${toEpoch} 
+        AND ( incident_end_tm > ${fromEpoch}) ) 
+        OR ( incident_start_tm BETWEEN ${fromEpoch} AND ${toEpoch} AND incident_end_tm = 0 ) )
+        AND  incident_start_tm > 0
+        ${metricIdWhereClause} 
+        ORDER BY incident_event_tm ASC
+    ) a    
+    
+    GROUP BY incident_id
+    ORDER BY start_epoch DESC, end_epoch DESC
+        
+
+        
+        

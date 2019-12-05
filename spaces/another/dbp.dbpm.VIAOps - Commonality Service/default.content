@@ -1,0 +1,2950 @@
+<DashboardPluginModel is_init="false" name="VIAOps - Commonality Service" description=" ">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services>
+      <Service name="_addBaselineFilterClause" args="sql,indent,timeColumn,fromTime,toTime,baselineWeeks,refTime" private="false">
+        <CodeText>
+          <![CDATA[var fromOper = refTime == "StartTime" ? " >= " : " > ";
+var toOper   = refTime == "StartTime" ? " < " : " <= ";
+
+sql.push(indent + "and ((" + timeColumn + fromOper + fromTime + " and " + timeColumn + toOper + toTime + ")");
+for (var i=0; i<baselineWeeks; i++) {
+    fromTime -= 7*24*60*60;
+    toTime   -= 7*24*60*60;
+    sql.push(indent + "  or (" + timeColumn + fromOper + fromTime + " and " + timeColumn + toOper + toTime + ")");
+}
+sql.push(indent + ")");]]>
+        </CodeText>
+      </Service>
+      <Service name="_addBaselineFilterClauseDST" args="sql,indent,timeColumn,timeRangeList,refTime" private="false">
+        <CodeText>
+          <![CDATA[java.util.Collections.sort(timeRangeList);
+var fromOper = refTime == "StartTime" ? " >= " : " > ";
+var toOper   = refTime == "StartTime" ? " < " : " <= ";
+
+sql.push(indent + "and ((" + timeColumn + fromOper + timeRangeList.get(0).getStartTime() + " and " + timeColumn + toOper +  timeRangeList.get(0).getEndTime() + ")");
+for (var i=1; i<timeRangeList.size(); i++) {
+    sql.push(indent + "  or (" + timeColumn + fromOper + timeRangeList.get(i).getStartTime() + " and " + timeColumn + toOper +  timeRangeList.get(i).getEndTime() + ")");
+}
+sql.push(indent + ")");
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_addCountAndBaseline" args="sql,indent,timeColumn,fromTime,toTime,valueField,aggrFunc,asValue,asBaseline,hasMore,baselineWeeks,refTime" private="false">
+        <CodeText>
+          <![CDATA[var fromOper = refTime == "StartTime" ? " >= " : " > ";
+var toOper   = refTime == "StartTime" ? " < " : " <= ";
+
+var timeExpr = timeColumn + fromOper + fromTime + " and " + timeColumn + toOper + toTime;
+switch (aggrFunc) {
+    case "sum":
+        sql.push(indent+"cast(sum(if("+timeExpr+","+valueField+",0)) as decimal(16,2)) as "+asValue+",");
+        break;
+    case "avg":
+        sql.push(indent+"cast(avg(if("+timeExpr+","+valueField+",null)) as decimal(16,2)) as "+asValue+",");
+        break;
+}
+sql.push(indent + "cast(sort_array(array(");
+for (var i=0; i<baselineWeeks; i++) {
+    fromTime -= 7*24*60*60;
+    toTime   -= 7*24*60*60;
+    timeExpr = timeColumn + fromOper + fromTime + " and " + timeColumn + toOper + toTime;
+    switch (aggrFunc) {
+        case "sum":
+            sql.push(indent+"    sum(if("+timeExpr+","+valueField+",0))"+(i < (baselineWeeks-1) ? "," : ""));
+            break;
+        case "avg":
+            sql.push(indent+"    nvl(avg(if("+timeExpr+","+valueField+",null)),0)"+(i < (baselineWeeks-1) ? "," : ""));
+            break;
+    }
+}
+sql.push(indent + "))[2] as decimal(16,2)) as " + asBaseline + (hasMore ? "," : ""));
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_addCountAndBaselineDST" args="sql,indent,timeColumn,timeRangeList,valueField,aggrFunc,asValue,asBaseline,hasMore,refTime" private="false">
+        <CodeText>
+          <![CDATA[java.util.Collections.sort(timeRangeList);
+var fromOper = refTime == "StartTime" ? " >= " : " > ";
+var toOper   = refTime == "StartTime" ? " < " : " <= ";
+var fromTime = timeRangeList.get(timeRangeList.size() - 1).getStartTime();
+var toTime   = timeRangeList.get(timeRangeList.size() - 1).getEndTime();
+var timeExpr = timeColumn + fromOper + fromTime + " and " + timeColumn + toOper + toTime;
+switch (aggrFunc) {
+    case "sum":
+        sql.push(indent+"cast(sum(if("+timeExpr+","+valueField+",0)) as decimal(16,2)) as "+asValue+",");
+        break;
+    case "avg":
+        sql.push(indent+"cast(avg(if("+timeExpr+","+valueField+",null)) as decimal(16,2)) as "+asValue+",");
+        break;
+}
+sql.push(indent + "cast(sort_array(array(");
+var baselineWeeks = timeRangeList.size() - 1;
+for (var i=0; i<baselineWeeks; i++) {
+    fromTime = timeRangeList.get(i).getStartTime();
+    toTime   = timeRangeList.get(i).getEndTime();
+    timeExpr = timeColumn + fromOper + fromTime + " and " + timeColumn + toOper + toTime;
+    switch (aggrFunc) {
+        case "sum":
+            sql.push(indent+"    sum(if("+timeExpr+","+valueField+",0))"+(i < (baselineWeeks-1) ? "," : ""));
+            break;
+        case "avg":
+            sql.push(indent+"    nvl(avg(if("+timeExpr+","+valueField+",null)),0)"+(i < (baselineWeeks-1) ? "," : ""));
+            break;
+    }
+}
+sql.push(indent + "))[2] as decimal(16,2)) as " + asBaseline + (hasMore ? "," : ""));
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_addFilterClause" args="sql,indent,filters,valueSubMap" private="false">
+        <CodeText>
+          <![CDATA[//print("valueSubMap="+__prettyPrintJSON(valueSubMap));
+for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    if (filter.name != null && filter.value != null) {
+        var filterName = filter.name.toLowerCase();
+        var filterValue = filter.value;
+        filterValue = this._stripDupAndHashItems(filterValue);
+        var filterExpr = this._toFilterExpression(filterName, filterValue);
+        if (filterExpr != null) {
+            sql.push(indent + "and (" + filterExpr + ")");
+        }
+    }
+    else if (filter.expr != null) {
+        sql.push(indent + this._doValueSubstitution(filter.expr, valueSubMap));
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_addTimeWindowIndex" args="sql,indent,timeColumn,fromTime,toTime,baselineWeeks,refTime" private="false">
+        <CodeText>
+          <![CDATA[var fromOper = refTime == "StartTime" ? " >= " : " > ";
+var toOper   = refTime == "StartTime" ? " < " : " <= ";
+
+sql.push(indent + "case");
+var timeExpr = timeColumn + fromOper + fromTime + " and " + timeColumn + toOper + toTime;
+sql.push(indent + "    when " + timeExpr + " then 0");
+for (var i=0; i<baselineWeeks; i++) {
+    fromTime -= 7*24*60*60;
+    toTime   -= 7*24*60*60;
+    timeExpr = timeColumn + fromOper + fromTime + " and " + timeColumn + toOper + toTime;
+    sql.push(indent + "    when " + timeExpr + " then " + (0-(i+1)));
+}
+sql.push(indent + "end as idx,");
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_addTimeWindowIndexDST" args="sql,indent,timeColumn,timeRangeList,refTime" private="false">
+        <CodeText>
+          <![CDATA[java.util.Collections.sort(timeRangeList);
+var fromOper = refTime == "StartTime" ? " >= " : " > ";
+var toOper   = refTime == "StartTime" ? " < " : " <= ";
+sql.push(indent + "case");
+for (var i = 0; i < timeRangeList.size(); i ++) {
+    var timeExpr = timeColumn + fromOper + timeRangeList.get(i).getStartTime() + " and " + timeColumn + toOper + timeRangeList.get(i).getEndTime();
+    sql.push(indent + "    when " + timeExpr + " then " + (i-timeRangeList.size()+1));
+}
+sql.push(indent + "end as idx,");
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_checkQueryParams" args="params" private="false">
+        <CodeText>
+          <![CDATA[if (params == null) return false;
+if (params["calls-event-type"] == null && params["metric-event-type"] == null) return false;
+return true;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getAggregationFilters" args="filters,aggr" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+var aggrFilters = JSON.parse(JSON.stringify(filters || []));
+for (var i=0; i<aggrFilters.length; i++) {
+    var filter = aggrFilters[i];
+    if (filter.name == queryConfig["filters"]["svc"] && aggr.svc != null) {
+        filter.value = [aggr.svc];
+    }
+    else if (filter.name == queryConfig["filters"]["comp"] && aggr.comp != null) {
+        filter.value = [aggr.comp];
+    }
+    else if (filter.name == queryConfig["filters"]["app"] && aggr.app != null) {
+        filter.value = [aggr.app];
+    }
+    else if (filter.name == queryConfig["filters"]["metric"]) {
+        filter.value = [];
+        if (aggr.qdc != null) {
+            for (var j=0; j<aggr.qdc.length; j++) {
+                var qdc = aggr.qdc[j];
+                if (qdc.name == "$.METRIC") {
+                    if (Array.isArray(qdc.value)) {
+                        filter.value = qdc.value.slice(0);
+                    }
+                    else {
+                        filter.value.push(qdc.value);
+                    }
+                }
+            }
+        }
+        if (filter.value.length == 0) {
+            filter.value.push(aggr.metric);
+        }
+    }
+}
+//print("_getAggregationFilters: filters="+__prettyPrintJSON(aggrFilters));
+return aggrFilters;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getApexQuery" args="queryConfig,eventType,fromUnixTime,toUnixTime,filters,metricAggr,valueSubMap" private="false">
+        <CodeText>
+          <![CDATA[var baselineMissingValue = queryConfig["baseline-missing-value"];
+if (baselineMissingValue != null) {
+    if (queryConfig["enable-dst"] == true) {
+        return this._getApexQueryV2DST(queryConfig, eventType, fromUnixTime, toUnixTime, filters, metricAggr, valueSubMap);
+    } else {
+        return this._getApexQueryV2(queryConfig, eventType, fromUnixTime, toUnixTime, filters, metricAggr, valueSubMap);
+    }
+}
+else {
+    if (queryConfig["enable-dst"] == true) {
+        return this._getApexQueryV1DST(queryConfig, eventType, fromUnixTime, toUnixTime, filters, metricAggr, valueSubMap);
+    } else {
+        return this._getApexQueryV1(queryConfig, eventType, fromUnixTime, toUnixTime, filters, metricAggr, valueSubMap);
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getApexQueryV1" args="queryConfig,eventType,fromUnixTime,toUnixTime,filters,metricAggr,valueSubMap" private="false">
+        <CodeText>
+          <![CDATA[//print("####### _getApexQueryV1");
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+var refTime = queryConfig["round-time-to"] || "StartTime";
+var baselineWeeks = queryConfig["baseline-weeks"] || 5;
+var tc = {
+    from : fromUnixTime,
+    to : toUnixTime
+};
+var datekeys = this._getDateKeysFromUnixtimeRange(tc.from, tc.to) + "," + this._getDateKeysForNumWeeks(tc.from, tc.to, baselineWeeks);
+var hasMore = metricAggr.avgs > 0;
+var sql = [];
+sql.push("select ");
+this._addCountAndBaseline(sql, "    ", this._getTimeColumn(queryConfig, eventType), tc.from, tc.to, 
+                          this._getValueColumn(queryConfig, eventType), "sum", "count", "baseline",
+                          hasMore, baselineWeeks, refTime);
+if (hasMore) {
+    this._addCountAndBaseline(sql, "    ", this._getTimeColumn(queryConfig, eventType), tc.from, tc.to,
+                              this._getValueColumn(queryConfig, eventType), "avg", "average", "baselineAvg",
+                              false, baselineWeeks, refTime);
+}
+sql.push("from " + this._getTableName(queryConfig, eventType, this._getRollupTableSuffix(tc, null)));
+sql.push("where " + this._getDatekeyColumn(queryConfig, eventType) + " in (" + datekeys + ")");
+this._addFilterClause(sql, "", filters, valueSubMap);
+this._addBaselineFilterClause(sql, "", this._getTimeColumn(queryConfig, eventType), tc.from, tc.to, baselineWeeks, refTime);
+return sql.join("\n");]]>
+        </CodeText>
+      </Service>
+      <Service name="_getApexQueryV1DST" args="queryConfig,eventType,fromUnixTime,toUnixTime,filters,metricAggr,valueSubMap" private="false">
+        <CodeText>
+          <![CDATA[//print("####### _getApexQueryV1DST");
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+var refTime = queryConfig["round-time-to"] || "StartTime";
+var baselineWeeks = queryConfig["baseline-weeks"] || 5;
+var tc = {
+    from : fromUnixTime,
+    to : toUnixTime
+};
+
+var TimeZoneUtil = com.vitria.dbp.resource.utils.TimeZoneUtil;
+var dstConfig = queryConfig["dst-config"];
+var solutionTimezone = dstConfig["time_zone"];
+var timeRanges =  TimeZoneUtil.getBaselineTimeRange(tc.from, tc.to, solutionTimezone, baselineWeeks, -7, true);
+var timeRangeList = timeRanges.getEpochRange();
+var baselineDateKeys = timeRanges.getDateKeys("UTC", "yyyyMMdd");
+var dateKeyCol = this._getDatekeyColumn(queryConfig, eventType);
+var dateKeyCriteria = this._createInCriteria(dateKeyCol, baselineDateKeys);
+
+var hasMore = metricAggr.avgs > 0;
+var sql = [];
+sql.push("select ");
+this._addCountAndBaselineDST(sql, "    ", this._getTimeColumn(queryConfig, eventType), timeRangeList, 
+                             this._getValueColumn(queryConfig, eventType), "sum", "count", "baseline",
+                             hasMore, refTime);
+if (hasMore) {
+    this._addCountAndBaselineDST(sql, "    ", this._getTimeColumn(queryConfig, eventType), timeRangeList,
+                                 this._getValueColumn(queryConfig, eventType), "avg", "average", "baselineAvg",
+                                 false, refTime);
+}
+sql.push("from " + this._getTableName(queryConfig, eventType, this._getRollupTableSuffix(tc, null)));
+sql.push("where " + dateKeyCriteria);
+this._addFilterClause(sql, "", filters, valueSubMap);
+this._addBaselineFilterClauseDST(sql, "", this._getTimeColumn(queryConfig, eventType), timeRangeList, refTime);
+return sql.join("\n");
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getApexQueryV2" args="queryConfig,eventType,fromUnixTime,toUnixTime,filters,metricAggr,valueSubMap" private="false">
+        <CodeText>
+          <![CDATA[//print("####### _getApexQueryV2");
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+var refTime = queryConfig["round-time-to"] || "StartTime";
+var baselineWeeks = queryConfig["baseline-weeks"] || 5;
+var tc = {
+    from : fromUnixTime,
+    to : toUnixTime
+};
+var datekeys = this._getDateKeysFromUnixtimeRange(tc.from, tc.to) + "," + this._getDateKeysForNumWeeks(tc.from, tc.to, baselineWeeks);
+var hasMore = metricAggr.avgs > 0;
+var sql = [];
+sql.push("select");
+if (metricAggr.avgs > 0) {
+    //sql.push("    cast(avg(if (idx=0, metricavg, 0)) as decimal(16,2)) as average,");
+    sql.push("    cast(sum(if (idx=0, metricavg, 0)) as decimal(16,2)) as average,");
+    sql.push("    cast((sort_array(collect_list(if(idx < 0, metricavg, null)))[floor(count(if(idx <0, 0, null))/2)] + sort_array(collect_list(if(idx < 0, metricavg, null)))[floor((count(if(idx <0, 0, null)) - 1)/2)])/2 as decimal(16,2)) as baselineAvg,");
+}
+sql.push("    cast(sum(if (idx=0, metricsum, 0)) as decimal(16,2)) as count,");
+sql.push("    cast((sort_array(collect_list(if(idx < 0, metricsum, null)))[floor(count(if(idx <0, 0, null))/2)] + sort_array(collect_list(if(idx < 0, metricsum, null)))[floor((count(if(idx <0, 0, null)) - 1)/2)])/2 as decimal(16,2)) as baseline");
+sql.push("from (");
+sql.push("    select");
+if (metricAggr.avgs > 0) {
+    sql.push("        avg(metricvalue) as metricavg,");
+}
+sql.push("        sum(metricvalue) as metricsum,");
+sql.push("        idx");
+sql.push("    from (");
+sql.push("        select");
+_addTimeWindowIndex(sql, "            ", this._getTimeColumn(queryConfig, eventType), tc.from, tc.to, baselineWeeks, refTime);
+sql.push("            " + this._getValueColumn(queryConfig, eventType) + " as metricvalue");
+sql.push("        from " + this._getTableName(queryConfig, eventType, this._getRollupTableSuffix(tc, null)));
+sql.push("        where " + this._getDatekeyColumn(queryConfig, eventType) + " in (" + datekeys + ")");
+this._addFilterClause(sql, "        ", filters, valueSubMap);
+this._addBaselineFilterClause(sql, "        ", this._getTimeColumn(queryConfig, eventType), tc.from, tc.to, baselineWeeks, refTime);
+sql.push("    )");
+sql.push("    group by idx");
+sql.push(")");
+return sql.join("\n");]]>
+        </CodeText>
+      </Service>
+      <Service name="_getApexQueryV2DST" args="queryConfig,eventType,fromUnixTime,toUnixTime,filters,metricAggr,valueSubMap" private="false">
+        <CodeText>
+          <![CDATA[//print("####### _getApexQueryV2DST");
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+var refTime = queryConfig["round-time-to"] || "StartTime";
+var baselineWeeks = queryConfig["baseline-weeks"] || 5;
+var tc = {
+    from : fromUnixTime,
+    to : toUnixTime
+};
+
+var TimeZoneUtil = com.vitria.dbp.resource.utils.TimeZoneUtil;
+var dstConfig = queryConfig["dst-config"];
+var solutionTimezone = dstConfig["time_zone"];
+var timeRanges =  TimeZoneUtil.getBaselineTimeRange(tc.from, tc.to, solutionTimezone, baselineWeeks, -7, true);
+var timeRangeList = timeRanges.getEpochRange();
+var baselineDateKeys = timeRanges.getDateKeys("UTC", "yyyyMMdd");
+var dateKeyCol = this._getDatekeyColumn(queryConfig, eventType);
+var dateKeyCriteria = this._createInCriteria(dateKeyCol, baselineDateKeys);
+
+var hasMore = metricAggr.avgs > 0;
+var sql = [];
+sql.push("select");
+if (metricAggr.avgs > 0) {
+    //sql.push("    cast(avg(if (idx=0, metricavg, 0)) as decimal(16,2)) as average,");
+    sql.push("    cast(sum(if (idx=0, metricavg, 0)) as decimal(16,2)) as average,");
+    sql.push("    cast((sort_array(collect_list(if(idx < 0, metricavg, null)))[floor(count(if(idx <0, 0, null))/2)] + sort_array(collect_list(if(idx < 0, metricavg, null)))[floor((count(if(idx <0, 0, null)) - 1)/2)])/2 as decimal(16,2)) as baselineAvg,");
+}
+sql.push("    cast(sum(if (idx=0, metricsum, 0)) as decimal(16,2)) as count,");
+sql.push("    cast((sort_array(collect_list(if(idx < 0, metricsum, null)))[floor(count(if(idx <0, 0, null))/2)] + sort_array(collect_list(if(idx < 0, metricsum, null)))[floor((count(if(idx <0, 0, null)) - 1)/2)])/2 as decimal(16,2)) as baseline");
+sql.push("from (");
+sql.push("    select");
+if (metricAggr.avgs > 0) {
+    sql.push("        avg(metricvalue) as metricavg,");
+}
+sql.push("        sum(metricvalue) as metricsum,");
+sql.push("        idx");
+sql.push("    from (");
+sql.push("        select");
+_addTimeWindowIndexDST(sql, "            ", this._getTimeColumn(queryConfig, eventType), timeRangeList, refTime);
+sql.push("            " + this._getValueColumn(queryConfig, eventType) + " as metricvalue");
+sql.push("        from " + this._getTableName(queryConfig, eventType, this._getRollupTableSuffix(tc, null)));
+sql.push("        where " + dateKeyCriteria);
+this._addFilterClause(sql, "        ", filters, valueSubMap);
+this._addBaselineFilterClauseDST(sql, "        ", this._getTimeColumn(queryConfig, eventType), timeRangeList, refTime);
+sql.push("    )");
+sql.push("    group by idx");
+sql.push(")");
+return sql.join("\n");
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getApplicableDimensions" args="queryConfig,eventType,filters,dimInclExcl" private="false">
+        <CodeText>
+          <![CDATA[var DIMENSIONS = queryConfig["event-type-dimensions"] || [];
+
+function addAvailableDimensions(dimList, dimSets)
+{
+    if (dimSets != null) {
+        for (var i=0; i<dimSets.length; i++) {
+            if ((dimSets[i]).charAt(0) != "#") {
+                dimList.push(dimSets[i]);
+            }
+        }
+    }
+}
+
+function addExcludedDimensions(exclDimList, dimSets, filterName, filterValues)
+{
+    if (dimSets != null) {
+        for (var i=0; i<dimSets.length; i++) {
+            var dimHierarchy = dimSets[i];
+            var index = dimHierarchy.indexOf(filterName);
+            if (index != -1) {
+                // exclude all dimension UP TO
+                if (filterValues.length == 1) {
+                    // if only ONE value, exclude filterName
+                    if (index > 0) {
+                        exclDimList.push(dimHierarchy.substring(0, index) + filterName);
+                    }
+                    else {
+                        exclDimList.push(filterName);
+                    }
+                    return true;
+                }
+                else if (filterValues.length > 1) {
+                    // if more then ONE values, do not exclude
+                    if (index > 0) {
+                        exclDimList.push(dimHierarchy.substring(0, index));
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+var availableDimensions = [];
+addAvailableDimensions(availableDimensions, DIMENSIONS[eventType] || DIMENSIONS["*"] || []);
+availableDimensions = availableDimensions.join(",").split(",");
+
+var excludedDimensions = [];
+for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    if (filter.value != null && filter.value != "" && filter.value.length > 0) {
+        var filterName = filter.name.toLowerCase();
+        addExcludedDimensions(excludedDimensions, DIMENSIONS[eventType] || DIMENSIONS["*"] || [], filterName, filter.value);
+    }
+}
+excludedDimensions = excludedDimensions.join(",");
+
+var applicableDimensions = [];
+for (var i=0; i<availableDimensions.length; i++) {
+    var dim = availableDimensions[i];
+    if (excludedDimensions.indexOf(dim) == -1) {
+        // not exclude
+        applicableDimensions.push(dim);
+    }
+}
+//print("applicableDimensions="+__prettyPrintJSON(applicableDimensions));
+//print("dimInclExcl="+__prettyPrintJSON(dimInclExcl));
+if (dimInclExcl != null && dimInclExcl[eventType] != null) {
+    for (var dim in dimInclExcl[eventType]) {
+        var index = applicableDimensions.indexOf(dim);
+        if (dimInclExcl[eventType][dim] == true) {
+            // force include
+            if (index == -1) {
+                applicableDimensions.push(dim);
+            }
+        }
+        else if (dimInclExcl[eventType][dim] == false) {
+            // force exclude
+            if (index != -1) {
+                applicableDimensions.splice(index, 1);
+            }
+        }
+    }
+}
+//print("applicableDimensions="+__prettyPrintJSON(applicableDimensions));
+return applicableDimensions;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getColumnLabel" args="queryConfig,eventTypes,filterName" private="false">
+        <CodeText>
+          <![CDATA[var COLUMN_LABELS = queryConfig["column-labels"] || {};
+if (eventTypes != null) {
+    if (typeof eventTypes == "string") {
+        eventTypes = [eventTypes];
+    }
+    for (var i=0; i<eventTypes.length; i++) {
+        var label = COLUMN_LABELS[eventTypes[i]][filterName];
+        if (label != null) return label;
+    }
+}
+else {
+    for (var key in COLUMN_LABELS) {
+        if (key != "*") {
+            var label = COLUMN_LABELS[key][filterName];
+            if (label != null) return label;
+        }
+    }
+}
+return COLUMN_LABELS["*"][filterName];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getColumnLabels" args="queryConfig,eventType" private="false">
+        <CodeText>
+          <![CDATA[var COLUMN_LABELS = queryConfig["column-labels"] || {};
+var labels = [];
+if (COLUMN_LABELS[eventType] != null) {
+    for (var key in COLUMN_LABELS[eventType]) {
+        labels.push(COLUMN_LABELS[eventType][key]);
+    }
+}
+if (COLUMN_LABELS["*"] != null) {
+    for (var key in COLUMN_LABELS["*"]) {
+        var label = COLUMN_LABELS["*"][key];
+        if (labels.indexOf(label) == -1) {
+            labels.push(label);
+        }
+    }
+}
+return labels;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getColumnName" args="queryConfig,eventTypes,filterName" private="false">
+        <CodeText>
+          <![CDATA[var COLUMN_NAMES = queryConfig["column-names"] || {};
+if (eventTypes != null) {
+    if (typeof eventTypes == "string") {
+        eventTypes = [eventTypes];
+    }
+    for (var i=0; i<eventTypes.length; i++) {
+        var name = COLUMN_NAMES[eventTypes[i]][filterName];
+        if (name != null) return name;
+    }
+}
+else {
+    for (var key in COLUMN_LABELS) {
+        if (key != "*") {
+            var name = COLUMN_NAMES[key][filterName];
+            if (name != null) return name;
+        }
+    }
+}
+return COLUMN_NAMES["*"][filterName];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getColumnNames" args="queryConfig,eventType" private="false">
+        <CodeText>
+          <![CDATA[var COLUMN_NAMES = queryConfig["column-names"] || {};
+var names = [];
+if (COLUMN_NAMES[eventType] != null) {
+    for (var key in COLUMN_NAMES[eventType]) {
+        names.push(COLUMN_NAMES[eventType][key]);
+    }
+}
+if (COLUMN_NAMES["*"] != null) {
+    for (var key in COLUMN_NAMES["*"]) {
+        var name = COLUMN_NAMES["*"][key];
+        if (names.indexOf(name) == -1) {
+            names.push(name);
+        }
+    }
+}
+return names;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getColumnSetting" args="width,fontWeight,color,backgroundColor" private="false">
+        <CodeText>
+          <![CDATA[if (fontWeight == null) fontWeight = "normal";
+if (color == null) color = "#000000";
+if (backgroundColor == null) backgroundColor = "";
+return {
+    "style": {
+        "fontStyle": "normal",
+        "fontSize": "12",
+        "fontWeight": fontWeight,
+        "textAlign": "center",
+        "color": color,
+        "width": width,
+        "backgroundColor": backgroundColor,
+    },
+    "format": {
+        "type": "string",
+        "pattern": "0"
+    },
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getColumnValue" args="queryConfig,eventTypes,filterName,filterValue" private="false">
+        <CodeText>
+          <![CDATA[// no special value mapping required
+return filterValue;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getCommonalitiesImpl" args="vtServiceRefId,serviceConfig,queryConfig,timeRange,filters,dimInclExcl,metricAggr,queryParams,eventTypeFilters,timeStamp" private="false">
+        <CodeText>
+          <![CDATA[//print("_getCommonalitiesImpl: queryParams="+__prettyPrintJSON(queryParams));
+var apex = [];
+var items = [];
+
+if (!this._checkQueryParams(queryParams)) {
+    return {
+        apex  : apex,
+        items : items
+    };
+}
+
+var aggr = metricAggr.aggr[0];
+var eventType = aggr.metric == "Customer Call Volume" ? queryParams["calls-event-type"] : queryParams["metric-event-type"];
+if (eventType == null) {
+    return {
+        apex  : apex,
+        items : items
+    };
+}
+var valueMaps = aggr.metric == "Customer Call Volume" ? queryParams["calls-value-map"] : queryParams["metric-value-map"];
+var obj = this._parseFilters(queryConfig, eventType, timeRange, filters, valueMaps);
+if (obj != null) {
+    var dimensionWhereClause = this._getDimensionWhereClause(serviceConfig, queryConfig, queryParams, aggr, [aggr.svc, aggr.comp, aggr.app]);
+    if (dimensionWhereClause != null && dimensionWhereClause.length > 0) {
+        obj.whereClause = obj.whereClause.concat(dimensionWhereClause);
+    }
+    var valueSubMap = this._getValueSubMap(obj.startTime, obj.endTime, filters, queryConfig);
+    var result = this._getCommonality(vtServiceRefId, queryConfig, eventType,
+                                      obj.startTime, obj.endTime, obj.whereClause, obj.topN,
+                                      dimInclExcl, metricAggr, eventTypeFilters,
+                                      [aggr.svc, aggr.comp, aggr.app], valueSubMap, timeStamp);
+    if (result != null) {
+        if (result.status == "Error") return result;
+        apex = apex.concat(result.apex);
+        items = items.concat(result.items);
+    }
+}
+
+return {
+    apex  : apex,
+    items : items
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getCommonality" args="vtServiceRefId,queryConfig,eventType,fromDate,toDate,filters,topN,dimInclExcl,metricAggr,eventTypeFilters,executeContext,valueSubMap,timeStamp" private="false">
+        <CodeText>
+          <![CDATA[function isValidDim(dim)
+{
+    if (dim.length != 2) return false;
+    if ((dim[0]).indexOf("|") == -1) {
+        // simple 1D
+        return true;
+    }
+    // is n-D compound dimensions... check and discard empty values
+    var values = (dim[1]).split("|");
+    for (var i=0; i<values.length; i++) {
+        if (values[i] == "") return false;
+    }
+    return true;
+}
+function getDimLabel(queryConfig, eventType, dimName)
+{
+    if (dimName.indexOf("|") == -1) {
+        // simple 1D
+        return this._getDimensionLabel(queryConfig, eventType, dimName);
+    }
+    else {
+        var names = dimName.split("|");
+        for (var i=0; i<names.length; i++) {
+            names[i] = this._getDimensionLabel(queryConfig, eventType, names[i]);
+        }
+        return names.join("|");
+    }
+}
+function getDimValue(queryConfig, dimValue)
+{
+    return dimValue;
+}
+
+// check if we need to add demo profile
+if (queryConfig["demo-labels"] == undefined && queryConfig["demo-values"] == undefined) {
+    var start = Date.now();
+    var demoProfile = this.getDemoProfile != null ? this.getDemoProfile() : null;
+    if (demoProfile != null && demoProfile["dimension-analysis"] != null) {
+        queryConfig["demo-labels"] = demoProfile["dimension-analysis"]["dimension-labels"];
+        if (queryConfig["demo-labels"] == undefined) queryConfig["demo-labels"] = null;
+        queryConfig["demo-values"] = demoProfile["dimension-analysis"]["dimension-values"];
+        if (queryConfig["demo-values"] == undefined) queryConfig["demo-values"] = null;
+    }
+    else {
+        // stub so that we avoid doing this on subsequent pass
+        queryConfig["demo-labels"] = null;
+        queryConfig["demo-values"] = null;
+    }
+    //print("_getCommonality: getDemoProfile() " + (Date.now()-start) + "ms");
+}
+
+/*
+ * eventType : call
+ * fromDate  : 2017-07-19T22:00:00.000-07:00
+ * toDate    : 2017-07-19T23:00:00.000-07:00
+ * filters   : [{"name":"LOB","value":["2"]},{"name":"IS_DEFLECTED","value":["f"]},{"name":"REGION_NAME","value":["freedom"]}]
+ * topN      : 25
+ */
+var eventTypeDimensions = "";
+var eventLabelDimensions = "";
+if (eventTypeFilters != null) {
+    //print("_getCommonality: eventTypeFilters=" + __prettyPrintJSON(eventTypeFilters));
+    eventTypeDimensions = [];
+    eventLabelDimensions = [];
+    for (var i=0; i<eventTypeFilters.length; i++) {
+        var filterValue = eventTypeFilters[i]["value"];
+        var filterLabel = eventTypeFilters[i]["label"];
+        var isHiddenFilter = eventTypeFilters[i]["_hidden_"] == true;
+        if (filterValue != null && !isHiddenFilter) {
+            if (Array.isArray(filterValue)) {
+                if (filterValue.length == 0) {
+                    eventTypeDimensions.push("*");
+                    eventLabelDimensions.push("*");
+                }
+                else {
+                    eventTypeDimensions.push(filterValue.join(","));
+                    eventLabelDimensions.push(filterLabel || filterValue.join(","));
+                }
+            }
+            else {
+                if (filterValue == "") {
+                    eventTypeDimensions.push("*");
+                    eventLabelDimensions.push("*");
+                }
+                else {
+                    eventTypeDimensions.push(filterValue);
+                    eventLabelDimensions.push(filterLabel || filterValue);
+                }
+            }
+        }
+    }
+    eventTypeDimensions = eventTypeDimensions.join("|");
+    eventLabelDimensions = eventLabelDimensions.join("|");
+}
+//print("_getCommonality("+eventType+eventTypeDimensions+")");
+
+var fromUnixTime = typeof fromDate == "number" ? fromDate : this._getUnixTime(fromDate);
+var toUnixTime = typeof toDate == "number" ? toDate : this._getUnixTime(toDate);
+
+if (dimInclExcl == null) dimInclExcl = {};
+if (typeof dimInclExcl == "string") {
+    dimInclExcl = JSON.parse(dimInclExcl);
+}
+
+var exclEventFilters = queryConfig["vt-exclude-event-filters"] == true;
+
+// special setup for use as service if interested in only one measure
+var resultConfig = queryConfig["vt-result-config"];
+if (resultConfig != null && (metricAggr.sums + metricAggr.avgs) > 1) {
+    // should never happen anymore since we should be doing one metric at a time
+    // but in case it was called with multiple metrics, we cannot ignore resultConfig
+    // as it is _not_ set up to distinguish result for different metrics... for simplicity
+    resultConfig = null;
+}
+
+var result = [];
+var apexQuery  = this._getApexQuery(queryConfig, eventType, fromUnixTime, toUnixTime, filters, metricAggr, valueSubMap);
+var apexContext = [queryConfig["module-name"] || "DA", "APEX"];
+var apexResult = this.executeSQLQuery(queryConfig, executeContext, apexContext, "VT_ODA_QS", apexQuery, vtServiceRefId, true, timeStamp);
+if (apexResult && apexResult.status == "Error") return apexResult;
+if (apexResult != null && apexResult.total == 1 && apexResult.items != null && apexResult.items.length == 1) {
+    var apexCount = apexResult.items[0].count;
+    if (apexCount == null) apexCount = 0;
+    var apexBaseline = apexResult.items[0].baseline;
+    if (apexBaseline == null) apexBaseline = 0;
+    var apexAvg = apexResult.items[0].average;
+    if (apexAvg == null) apexAvg = 0;
+    var apexBaselineAvg = apexResult.items[0].baselineAvg;
+    if (apexBaselineAvg == null) apexBaselineAvg = 0;
+    var dimsQuery = this._getCommonalityQuery(apexCount, apexBaseline, apexAvg, apexBaselineAvg,
+                                              queryConfig, eventType, fromUnixTime, toUnixTime, filters, topN,
+                                              dimInclExcl, metricAggr, valueSubMap);
+    var dimsContext = [queryConfig["module-name"] || "DA", "DIMS"];
+    var dimsResult = this.executeSQLQuery(queryConfig, executeContext, dimsContext, "VT_ODA_QS", dimsQuery, vtServiceRefId, true, timeStamp);
+    if (dimsResult && dimsResult.status == "Error") return dimsResult;
+    if (dimsResult != null && dimsResult.items != null) {
+        result = [];
+        for (var i=0, n=dimsResult.items.length;i<n; i++) {
+            var item = dimsResult.items[i];
+            var dim = item.dim.split("#");
+            if (isValidDim(dim)) {
+                var dimLabel = getDimLabel(queryConfig, eventType, dim[0]);
+                if (queryConfig["demo-labels"] != null && this.applyDemoProfileToDimensionLabel != null) {
+                    dimLabel = this.applyDemoProfileToDimensionLabel(queryConfig["demo-labels"], eventLabelDimensions, dimLabel);
+                }
+                var dimValue = getDimValue(queryConfig, dim[1]);
+                if (queryConfig["demo-values"] != null && this.applyDemoProfileToDimensionValue != null) {
+                    dimValue = this.applyDemoProfileToDimensionValue(queryConfig["demo-values"], eventLabelDimensions, dimLabel, dimValue);
+                }
+                if (resultConfig == null || resultConfig["measure"] == null) {
+                    // output ALL measures
+                    result.push({
+                        "_id_"          : eventType + eventTypeDimensions + ":" + dim[0] + "=" + dim[1],
+                        "_eventType"    : eventTypeDimensions,
+                        "_eventLabel"   : eventLabelDimensions,
+                        "_eventFilters" : !exclEventFilters && eventTypeFilters != null ? JSON.stringify(eventTypeFilters) : "",
+                        "_name"         : dim[0],
+                        "_label"        : dimLabel,
+                        "_filterName"   : this._getFilterName(queryConfig, eventType, dim[0]),
+                        "_value"        : dimValue,
+                        "_count"        : item["count"],
+                        "_baseline"     : item["baseline"],
+                        "_diff"         : item["baselineDiff"],
+                        "_diffPct"      : item["baselineDiffPct"],
+                        "_pBaseline"    : item["baselinePopPct"],
+                        "_pTotal"       : item["countPopPct"],
+                        "_pctDev"       : item["pctDev"],
+                        "_relDiff"      : item["relDiff"],
+                        "_sScore"       : item["sScore"],
+                        "_nsScore"      : item["nsScore"],
+                        "_eScore"       : item["eScore"],
+                    });
+                }
+                else {
+                    // output only single measure, with simplified schema
+                    // intended for use as service
+                    // resultConfig['measure'] should be one of
+                    // ... count, baseline, baselineDiff, baselineDiffPct,
+                    // ... baselinePopPct, countPopPct, pctDev, relDiff,
+                    // ... sScore, nsScore, escore
+                    result.push({
+                        "id"             : eventType + eventTypeDimensions + ":" + dim[0] + "=" + dim[1],
+                        "dimensionName"  : dim[0],
+                        "dimensionLabel" : dimLabel,
+                        "dimensionValue" : dimValue,
+                        "measureValue"   : item[resultConfig["measure"]],
+                    });
+                }
+            }
+        }
+    }
+}
+if (Context.isCancelled(vtServiceRefId)) {
+    print("Commonality query cancelled... discard result");
+    return {
+        apex : [],
+        items : []
+    };
+}
+
+var apex;
+if (resultConfig == null) {
+    if (metricAggr.sums == 0 && metricAggr.avgs > 0) {
+        apex = {
+            "_eventType"  : eventTypeDimensions,
+            "_eventLabel" : eventLabelDimensions,
+            "_count"      : apexAvg,
+            "_baseline"   : apexBaselineAvg,
+            "_diff"       : Number((apexAvg - apexBaselineAvg).toFixed(2)),
+            "_diffPct"    : Number((apexBaselineAvg > 0 ? (apexAvg - apexBaselineAvg)/apexBaselineAvg : 0).toFixed(2)),
+        };
+    }
+    else {
+        apex = {
+            "_eventType"  : eventTypeDimensions,
+            "_eventLabel" : eventLabelDimensions,
+            "_count"      : apexCount,
+            "_baseline"   : apexBaseline,
+            "_diff"       : Number((apexCount - apexBaseline).toFixed(2)),
+            "_diffPct"    : Number((apexBaseline > 0 ? (apexCount - apexBaseline)/apexBaseline : 0).toFixed(2)),
+        };
+    }
+}
+else {
+    if (metricAggr.sums == 0 && metricAggr.avgs > 0) {
+        apex = {
+            "count"      : apexAvg,
+            "baseline"   : apexBaselineAvg,
+            "diff"       : Number((apexAvg - apexBaselineAvg).toFixed(2)),
+            "diffPct"    : Number((apexBaselineAvg > 0 ? (apexAvg - apexBaselineAvg)/apexBaselineAvg : 0).toFixed(2)),
+        };
+    }
+    else {
+        apex = {
+            "count"      : apexCount,
+            "baseline"   : apexBaseline,
+            "diff"       : Number((apexCount - apexBaseline).toFixed(2)),
+            "diffPct"    : Number((apexBaseline > 0 ? (apexCount - apexBaseline)/apexBaseline : 0).toFixed(2)),
+        };
+    }
+    // since we have only one measure, we can sort in descending order
+    result.sort(function(a,b) {
+        if (a["measureValue"] == null || b["measureValue"] == null) return 0;
+        else if (a["measureValue"] < b["measureValue"]) return 1;
+        else if (a["measureValue"] > b["measureValue"]) return -1;
+        else return 0;
+    });
+}
+return {
+    apex : [apex],
+    items : result
+};]]>
+        </CodeText>
+        <DocText segment="#description">
+          <![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc condimentum justo eget efficitur ullamcorper. 
+Nulla tellus mauris, dictum non nisi vel, sagittis pellentesque est. 
+Donec rutrum nunc elit, non tristique dui facilisis in. Nam fringilla nibh quis ex vulputate egestas. 
+Donec imperdiet porta est et luctus. In eleifend nec purus sit amet blandit. 
+Nullam molestie commodo tincidunt.]]>
+        </DocText>
+      </Service>
+      <Service name="_getCommonalityQuery" args="apexCount,apexBaseline,apexAvg,apexBaselineAvg,queryConfig,eventType,fromUnixTime,toUnixTime,filters,topN,dimInclExcl,metricAggr,valueSubMap" private="false">
+        <CodeText>
+          <![CDATA[var baselineMissingValue = queryConfig["baseline-missing-value"];
+if (baselineMissingValue != null) {
+    if (queryConfig["enable-dst"] == true) {
+        return this._getCommonalityQueryV2DST(apexCount, apexBaseline, apexAvg, apexBaselineAvg,
+                                              queryConfig, eventType, fromUnixTime, toUnixTime, filters, topN,
+                                              dimInclExcl, metricAggr, valueSubMap);
+    } else {
+        return this._getCommonalityQueryV2(apexCount, apexBaseline, apexAvg, apexBaselineAvg,
+                                           queryConfig, eventType, fromUnixTime, toUnixTime, filters, topN,
+                                           dimInclExcl, metricAggr, valueSubMap);
+    }
+}
+else {
+    if (queryConfig["enable-dst"] == true) {
+        return this._getCommonalityQueryV1DST(apexCount, apexBaseline, apexAvg, apexBaselineAvg,
+                                              queryConfig, eventType, fromUnixTime, toUnixTime, filters, topN,
+                                              dimInclExcl, metricAggr, valueSubMap);
+    } else {
+        return this._getCommonalityQueryV1(apexCount, apexBaseline, apexAvg, apexBaselineAvg,
+                                           queryConfig, eventType, fromUnixTime, toUnixTime, filters, topN,
+                                           dimInclExcl, metricAggr, valueSubMap);
+    }
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getCommonalityQueryV1" args="apexCount,apexBaseline,apexAvg,apexBaselineAvg,queryConfig,eventType,fromUnixTime,toUnixTime,filters,topN,dimInclExcl,metricAggr,valueSubMap" private="false">
+        <CodeText>
+          <![CDATA[//print("####### _getCommonalityQueryV1");
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+var refTime = queryConfig["round-time-to"] || "StartTime";
+var baselineWeeks = queryConfig["baseline-weeks"] || 5;
+var tc = {
+    from : fromUnixTime,
+    to : toUnixTime
+};
+var datekeys = this._getDateKeysFromUnixtimeRange(tc.from, tc.to) + "," + this._getDateKeysForNumWeeks(tc.from, tc.to, baselineWeeks);
+// by default, we use count when only sum-based metrics or mixed metrics are involved
+var aggrFunc = "sum";
+var apexCountDenom = apexCount;
+var apexBaselineDenom = apexBaseline;
+if (metricAggr.sums == 0 && metricAggr.avgs > 0) {
+    // ONLY if we don't have any COUNT metrics, do we use average
+    aggrFunc = "avg";
+    apexCountDenom = apexAvg;
+    apexBaselineDenom = apexBaselineAvg;
+}
+var sql = [];
+sql.push("select");
+sql.push("    dim,");
+sql.push("    count,");
+sql.push("    baseline,");
+sql.push("    baselineDiff,");
+sql.push("    cast(baselineDiffPct as decimal(6,2)) as baselineDiffPct,");
+sql.push("    cast(countPopPct as decimal(6,2)) as countPopPct,");
+sql.push("    cast(baselinePopPct as decimal(6,2)) as baselinePopPct,");
+sql.push("    cast(relDiff as decimal(6,2)) as relDiff,");
+sql.push("    cast(pctDev as decimal(6,2)) as pctDev,");
+sql.push("    rank() over (order by count desc) as countRank,");
+sql.push("    rank() over (order by baseline desc) as baselineRank,");
+sql.push("    rank() over (order by baselineDiff desc) as baselineDiffRank,");
+sql.push("    rank() over (order by baselineDiffPct desc) as baselineDiffPctRank,");
+sql.push("    rank() over (order by countPopPct desc) as countPopPctRank,");
+sql.push("    rank() over (order by baselinePopPct desc) as baselinePopPctRank,");
+sql.push("    rank() over (order by relDiff desc) as relDiffRank,");
+sql.push("    rank() over (order by pctDev desc) as pctDevRank");
+sql.push("from (");
+sql.push("    select");
+sql.push("        dim,");
+sql.push("        count,");
+sql.push("        baseline,");
+sql.push("        (count-baseline) as baselineDiff,");
+sql.push("        ((count-baseline)/baseline) as baselineDiffPct,");
+if (apexCountDenom != 0) {
+    sql.push("        (count/" + apexCountDenom + ") as countPopPct,");
+}
+else {
+    sql.push("        0 as countPopPct,");
+}
+if (apexBaselineDenom != 0) {
+    sql.push("        (baseline/" + apexBaselineDenom + ") as baselinePopPct,");
+}
+else {
+    sql.push("        0 as baselinePopPct,");
+}
+if (apexCountDenom != 0 && apexBaselineDenom != 0) {
+    sql.push("        ((count/" + apexCountDenom + ")-(baseline/" + apexBaselineDenom + ")) as relDiff,");
+}
+else {
+    sql.push("        0 as relDiff,");
+}
+if ((apexCount-apexBaseline) != 0) {
+    sql.push("        ((count-baseline)/(" + (apexCount-apexBaseline) + ")) as pctDev");
+}
+else {
+    sql.push("        0 as pctDev");
+}
+sql.push("    from (");
+sql.push("        select");
+sql.push("            dim,");
+this._addCountAndBaseline(sql, "            ", this._getTimeColumn(queryConfig, eventType), tc.from, tc.to,
+                          this._getValueColumn(queryConfig, eventType), aggrFunc, "count", "baseline", false, baselineWeeks, refTime);
+sql.push("        from (");
+sql.push("            select *");
+sql.push("            from " + this._getTableName(queryConfig, eventType, this._getRollupTableSuffix(tc, null)));
+sql.push("            where " + this._getDatekeyColumn(queryConfig, eventType) + " in (" + datekeys + ")");
+this._addFilterClause(sql, "            ", filters, valueSubMap);
+this._addBaselineFilterClause(sql, "            ", this._getTimeColumn(queryConfig, eventType), tc.from, tc.to, baselineWeeks, refTime);
+sql.push("        )");
+sql.push("        lateral view explode (array(");
+var dimList = this._getApplicableDimensions(queryConfig, eventType, filters, dimInclExcl);
+var simpleDimList = this._getSimpleDimensions(queryConfig, eventType, dimList);
+var compoundDimList = this._getCompoundDimensions(queryConfig, eventType, dimList);
+var totalDimCount = simpleDimList.length + compoundDimList.length;
+for (var i=0; i<simpleDimList.length; i++) {
+    totalDimCount--;
+    var dim = simpleDimList[i];
+    sql.push("            concat('" + dim + "#', ifnull(" + dim + ", ''))" + (totalDimCount > 0 ? "," : ""));
+}
+for (var i=0; i<compoundDimList.length; i++) {
+    totalDimCount--;
+    var cDim = compoundDimList[i];
+    var expr = "            concat('" + cDim.join("|") + "#'";
+    for (var j=0; j<cDim.length; j++) {
+        if (j > 0) expr += ", '|'";
+        expr += ", ifnull(" + cDim[j] + ", '')";
+    }
+    sql.push(expr + ")" + (totalDimCount > 0 ? "," : ""));
+}
+sql.push("        )) table1 as dim");
+sql.push("        group by dim");
+sql.push("    )");
+sql.push(")");
+sql.push("where substring(dim,locate('#',dim)) != '#'");
+sql.push("having countRank < 25");
+sql.push("or baselineRank < 25");
+sql.push("or baselineDiffRank < 25");
+sql.push("or baselineDiffPctRank < 25");
+sql.push("or countPopPctRank < 25");
+sql.push("or baselinePopPctRank < 25");
+sql.push("or relDiffRank < 25");
+sql.push("or pctDevRank < 25");
+return sql.join("\n");]]>
+        </CodeText>
+      </Service>
+      <Service name="_getCommonalityQueryV1DST" args="apexCount,apexBaseline,apexAvg,apexBaselineAvg,queryConfig,eventType,fromUnixTime,toUnixTime,filters,topN,dimInclExcl,metricAggr,valueSubMap" private="false">
+        <CodeText>
+          <![CDATA[//print("####### _getCommonalityQueryV1DST");
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+var refTime = queryConfig["round-time-to"] || "StartTime";
+var baselineWeeks = queryConfig["baseline-weeks"] || 5;
+var tc = {
+    from : fromUnixTime,
+    to : toUnixTime
+};
+
+var TimeZoneUtil = com.vitria.dbp.resource.utils.TimeZoneUtil;
+var dstConfig = queryConfig["dst-config"];
+var solutionTimezone = dstConfig["time_zone"];
+var timeRanges =  TimeZoneUtil.getBaselineTimeRange(tc.from, tc.to, solutionTimezone, baselineWeeks, -7, true);
+var timeRangeList = timeRanges.getEpochRange();
+var baselineDateKeys = timeRanges.getDateKeys("UTC", "yyyyMMdd");
+var dateKeyCol = this._getDatekeyColumn(queryConfig, eventType);
+var dateKeyCriteria = this._createInCriteria(dateKeyCol, baselineDateKeys);
+
+// by default, we use count when only sum-based metrics or mixed metrics are involved
+var aggrFunc = "sum";
+var apexCountDenom = apexCount;
+var apexBaselineDenom = apexBaseline;
+if (metricAggr.sums == 0 && metricAggr.avgs > 0) {
+    // ONLY if we don't have any COUNT metrics, do we use average
+    aggrFunc = "avg";
+    apexCountDenom = apexAvg;
+    apexBaselineDenom = apexBaselineAvg;
+}
+var sql = [];
+sql.push("select");
+sql.push("    dim,");
+sql.push("    count,");
+sql.push("    baseline,");
+sql.push("    baselineDiff,");
+sql.push("    cast(baselineDiffPct as decimal(6,2)) as baselineDiffPct,");
+sql.push("    cast(countPopPct as decimal(6,2)) as countPopPct,");
+sql.push("    cast(baselinePopPct as decimal(6,2)) as baselinePopPct,");
+sql.push("    cast(relDiff as decimal(6,2)) as relDiff,");
+sql.push("    cast(pctDev as decimal(6,2)) as pctDev,");
+sql.push("    rank() over (order by count desc) as countRank,");
+sql.push("    rank() over (order by baseline desc) as baselineRank,");
+sql.push("    rank() over (order by baselineDiff desc) as baselineDiffRank,");
+sql.push("    rank() over (order by baselineDiffPct desc) as baselineDiffPctRank,");
+sql.push("    rank() over (order by countPopPct desc) as countPopPctRank,");
+sql.push("    rank() over (order by baselinePopPct desc) as baselinePopPctRank,");
+sql.push("    rank() over (order by relDiff desc) as relDiffRank,");
+sql.push("    rank() over (order by pctDev desc) as pctDevRank");
+sql.push("from (");
+sql.push("    select");
+sql.push("        dim,");
+sql.push("        count,");
+sql.push("        baseline,");
+sql.push("        (count-baseline) as baselineDiff,");
+sql.push("        ((count-baseline)/baseline) as baselineDiffPct,");
+if (apexCountDenom != 0) {
+    sql.push("        (count/" + apexCountDenom + ") as countPopPct,");
+}
+else {
+    sql.push("        0 as countPopPct,");
+}
+if (apexBaselineDenom != 0) {
+    sql.push("        (baseline/" + apexBaselineDenom + ") as baselinePopPct,");
+}
+else {
+    sql.push("        0 as baselinePopPct,");
+}
+if (apexCountDenom != 0 && apexBaselineDenom != 0) {
+    sql.push("        ((count/" + apexCountDenom + ")-(baseline/" + apexBaselineDenom + ")) as relDiff,");
+}
+else {
+    sql.push("        0 as relDiff,");
+}
+if ((apexCount-apexBaseline) != 0) {
+    sql.push("        ((count-baseline)/(" + (apexCount-apexBaseline) + ")) as pctDev");
+}
+else {
+    sql.push("        0 as pctDev");
+}
+sql.push("    from (");
+sql.push("        select");
+sql.push("            dim,");
+this._addCountAndBaselineDST(sql, "            ", this._getTimeColumn(queryConfig, eventType), timeRangeList,
+                          this._getValueColumn(queryConfig, eventType), aggrFunc, "count", "baseline", false, refTime);
+sql.push("        from (");
+sql.push("            select *");
+sql.push("            from " + this._getTableName(queryConfig, eventType, this._getRollupTableSuffix(tc, null)));
+sql.push("            where " + dateKeyCriteria);
+this._addFilterClause(sql, "            ", filters, valueSubMap);
+this._addBaselineFilterClauseDST(sql, "            ", this._getTimeColumn(queryConfig, eventType), timeRangeList, refTime);
+sql.push("        )");
+sql.push("        lateral view explode (array(");
+var dimList = this._getApplicableDimensions(queryConfig, eventType, filters, dimInclExcl);
+var simpleDimList = this._getSimpleDimensions(queryConfig, eventType, dimList);
+var compoundDimList = this._getCompoundDimensions(queryConfig, eventType, dimList);
+var totalDimCount = simpleDimList.length + compoundDimList.length;
+for (var i=0; i<simpleDimList.length; i++) {
+    totalDimCount--;
+    var dim = simpleDimList[i];
+    sql.push("            concat('" + dim + "#', ifnull(" + dim + ", ''))" + (totalDimCount > 0 ? "," : ""));
+}
+for (var i=0; i<compoundDimList.length; i++) {
+    totalDimCount--;
+    var cDim = compoundDimList[i];
+    var expr = "            concat('" + cDim.join("|") + "#'";
+    for (var j=0; j<cDim.length; j++) {
+        if (j > 0) expr += ", '|'";
+        expr += ", ifnull(" + cDim[j] + ", '')";
+    }
+    sql.push(expr + ")" + (totalDimCount > 0 ? "," : ""));
+}
+sql.push("        )) table1 as dim");
+sql.push("        group by dim");
+sql.push("    )");
+sql.push(")");
+sql.push("where substring(dim,locate('#',dim)) != '#'");
+sql.push("having countRank < 25");
+sql.push("or baselineRank < 25");
+sql.push("or baselineDiffRank < 25");
+sql.push("or baselineDiffPctRank < 25");
+sql.push("or countPopPctRank < 25");
+sql.push("or baselinePopPctRank < 25");
+sql.push("or relDiffRank < 25");
+sql.push("or pctDevRank < 25");
+return sql.join("\n");
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getCommonalityQueryV2" args="apexCount,apexBaseline,apexAvg,apexBaselineAvg,queryConfig,eventType,fromUnixTime,toUnixTime,filters,topN,dimInclExcl,metricAggr,valueSubMap" private="false">
+        <CodeText>
+          <![CDATA[//print("####### _getCommonalityQueryV2");
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+var refTime = queryConfig["round-time-to"] || "StartTime";
+var baselineWeeks = queryConfig["baseline-weeks"] || 5;
+var tc = {
+    from : fromUnixTime,
+    to : toUnixTime
+};
+var datekeys = this._getDateKeysFromUnixtimeRange(tc.from, tc.to) + "," + this._getDateKeysForNumWeeks(tc.from, tc.to, baselineWeeks);
+// by default, we use count when only sum-based metrics or mixed metrics are involved
+var aggrFunc = "sum";
+var apexCountDenom = apexCount;
+var apexBaselineDenom = apexBaseline;
+if (metricAggr.sums == 0 && metricAggr.avgs > 0) {
+    // ONLY if we don't have any COUNT metrics, do we use average
+    aggrFunc = "avg";
+    apexCountDenom = apexAvg;
+    apexBaselineDenom = apexBaselineAvg;
+}
+var rankLimit = queryConfig["vt-rank-limit"];
+if (rankLimit == null) {
+    // backward compat... but increase to 100 now that ranking is based on more precise value (before rounding)
+    rankLimit = 100;
+}
+var sql = [];
+sql.push("select");
+if (rankLimit == 0) {
+    // unlimited result set... no need to rank
+    sql.push("    *");
+}
+else {
+    sql.push("    dim,");
+    sql.push("    count,");
+    sql.push("    baseline,");
+    sql.push("    baselineDiff,");
+    sql.push("    cast(baselineDiffPct as decimal(6,2)) as baselineDiffPct,");
+    if (aggrFunc == "sum") {
+        sql.push("    cast(sScore as decimal(6,2)) as sScore,");
+        sql.push("    cast(nsScore as decimal(6,2)) as nsScore,");
+        sql.push("    cast(eScore as decimal(6,2)) as eScore,");
+    }
+    sql.push("    cast(countPopPct as decimal(6,2)) as countPopPct,");
+    sql.push("    cast(baselinePopPct as decimal(6,2)) as baselinePopPct,");
+    sql.push("    cast(relDiff as decimal(6,2)) as relDiff,");
+    sql.push("    cast(pctDev as decimal(6,2)) as pctDev,");
+    sql.push("    rank() over (order by count desc) as countRank,");
+    sql.push("    rank() over (order by baseline desc) as baselineRank,");
+    sql.push("    rank() over (order by baselineDiff desc) as baselineDiffRank,");
+    sql.push("    rank() over (order by baselineDiffPct desc) as baselineDiffPctRank,");
+    if (aggrFunc == "sum") {
+        sql.push("    rank() over (order by sScore desc) as sScoreRank,");
+        sql.push("    rank() over (order by nsScore desc) as nsScoreRank,");
+        sql.push("    rank() over (order by eScore desc) as eScoreRank,");
+    }
+    sql.push("    rank() over (order by countPopPct desc) as countPopPctRank,");
+    sql.push("    rank() over (order by baselinePopPct desc) as baselinePopPctRank,");
+    sql.push("    rank() over (order by relDiff desc) as relDiffRank,");
+    sql.push("    rank() over (order by pctDev desc) as pctDevRank");
+}
+sql.push("from (");
+sql.push("    select");
+sql.push("        dim,");
+sql.push("        count,");
+sql.push("        baseline,");
+sql.push("        (count-baseline) as baselineDiff,");
+sql.push("        ((count-baseline)/baseline) as baselineDiffPct,");
+if (aggrFunc == "sum") {
+    var s_score = "((count/baseline) - (("+apexCount+"-count)/("+apexBaseline+"-baseline)))";
+    var normalized_s_score = "((" + s_score + "/(" + apexCount + "/" + apexBaseline + ")) * 100)";
+    var eccentricity = "((count/baseline) / (("+apexCount+"-count) / ("+apexBaseline+"-baseline)))";
+    sql.push("        ("+s_score+") as sScore,");
+    sql.push("        ("+normalized_s_score+") as nsScore,");
+    sql.push("        ("+eccentricity+") as eScore,");
+}
+if (apexCountDenom != 0) {
+    sql.push("        (count/" + apexCountDenom + ") as countPopPct,");
+}
+else {
+    sql.push("        NULL as countPopPct,");
+}
+if (apexBaselineDenom != 0) {
+    sql.push("        (baseline/" + apexBaselineDenom + ") as baselinePopPct,");
+}
+else {
+    sql.push("        NULL as baselinePopPct,");
+}
+if (apexCountDenom != 0 && apexBaselineDenom != 0) {
+    sql.push("        ((count/" + apexCountDenom + ")-(baseline/" + apexBaselineDenom + ")) as relDiff,");
+}
+else {
+    sql.push("        NULL as relDiff,");
+}
+if ((apexCount-apexBaseline) != 0) {
+    sql.push("        ((count-baseline)/(" + (apexCount-apexBaseline) + ")) as pctDev");
+}
+else {
+    sql.push("        NULL as pctDev");
+}
+sql.push("    from (");
+sql.push("        select");
+sql.push("            dim,");
+// sql.push("            cast(" + aggrFunc + "(if (idx=0, metricvalue, 0)) as decimal(16,2)) as count,");
+sql.push("            cast(sum(if (idx=0, metricvalue, 0)) as decimal(16,2)) as count,");
+sql.push("            cast((sort_array(collect_list(if(idx < 0, metricvalue, null)))[floor(count(if(idx <0, 0, null))/2)] + sort_array(collect_list(if(idx < 0, metricvalue, null)))[floor((count(if(idx <0, 0, null)) - 1)/2)])/2 as decimal(16,2)) as baseline");
+sql.push("        from (");
+sql.push("            select");
+sql.push("                dim,");
+sql.push("                idx,");
+sql.push("                " + aggrFunc + "(" + this._getValueColumn(queryConfig, eventType) + ") as metricvalue");
+sql.push("            from (");
+sql.push("                select");
+_addTimeWindowIndex(sql, "                    ", this._getTimeColumn(queryConfig, eventType), tc.from, tc.to, baselineWeeks, refTime);
+sql.push("                    *");
+sql.push("                from " + this._getTableName(queryConfig, eventType, this._getRollupTableSuffix(tc, null)));
+sql.push("                where " + this._getDatekeyColumn(queryConfig, eventType) + " in (" + datekeys + ")");
+this._addFilterClause(sql, "                ", filters, valueSubMap);
+this._addBaselineFilterClause(sql, "                ", this._getTimeColumn(queryConfig, eventType), tc.from, tc.to, baselineWeeks, refTime);
+sql.push("            )");
+sql.push("            lateral view explode (array(");
+var dimList = this._getApplicableDimensions(queryConfig, eventType, filters, dimInclExcl);
+var simpleDimList = this._getSimpleDimensions(queryConfig, eventType, dimList);
+var compoundDimList = this._getCompoundDimensions(queryConfig, eventType, dimList);
+var totalDimCount = simpleDimList.length + compoundDimList.length;
+for (var i=0; i<simpleDimList.length; i++) {
+    totalDimCount--;
+    var dim = simpleDimList[i];
+    sql.push("                concat('" + dim + "#', ifnull(" + dim + ", ''))" + (totalDimCount > 0 ? "," : ""));
+}
+for (var i=0; i<compoundDimList.length; i++) {
+    totalDimCount--;
+    var cDim = compoundDimList[i];
+    var expr = "                concat('" + cDim.join("|") + "#'";
+    for (var j=0; j<cDim.length; j++) {
+        if (j > 0) expr += ", '|'";
+        expr += ", ifnull(" + cDim[j] + ", '')";
+    }
+    sql.push(expr + ")" + (totalDimCount > 0 ? "," : ""));
+}
+sql.push("            )) table1 as dim");
+sql.push("            group by dim, idx");
+sql.push("        )");
+sql.push("        group by dim");
+sql.push("    )");
+sql.push(")");
+sql.push("where substring(dim,locate('#',dim)) != '#'");
+sql.push("  and substring(dim,locate('#',dim)) != '#|'");
+sql.push("  and substring(dim,locate('#',dim)) != '#||'");
+sql.push("  and substring(dim,locate('#',dim)) != '#|||'");
+if (rankLimit > 0) {
+    sql.push("having countRank < " + rankLimit);
+    sql.push("or baselineRank < " + rankLimit);
+    sql.push("or baselineDiffRank < " + rankLimit);
+    sql.push("or baselineDiffPctRank < " + rankLimit);
+    if (aggrFunc == "sum") {
+        sql.push("or sScoreRank < " + rankLimit);
+        sql.push("or nsScoreRank < " + rankLimit);
+        sql.push("or eScoreRank < " + rankLimit);
+    }
+    sql.push("or countPopPctRank < " + rankLimit);
+    sql.push("or baselinePopPctRank < " + rankLimit);
+    sql.push("or relDiffRank < " + rankLimit);
+    sql.push("or pctDevRank < " + rankLimit);
+}
+return sql.join("\n");]]>
+        </CodeText>
+      </Service>
+      <Service name="_getCommonalityQueryV2DST" args="apexCount,apexBaseline,apexAvg,apexBaselineAvg,queryConfig,eventType,fromUnixTime,toUnixTime,filters,topN,dimInclExcl,metricAggr,valueSubMap" private="false">
+        <CodeText>
+          <![CDATA[//print("####### _getCommonalityQueryV2DST");
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+var refTime = queryConfig["round-time-to"] || "StartTime";
+var baselineWeeks = queryConfig["baseline-weeks"] || 5;
+var tc = {
+    from : fromUnixTime,
+    to : toUnixTime
+};
+
+var TimeZoneUtil = com.vitria.dbp.resource.utils.TimeZoneUtil;
+var dstConfig = queryConfig["dst-config"];
+var solutionTimezone = dstConfig["time_zone"];
+var timeRanges =  TimeZoneUtil.getBaselineTimeRange(tc.from, tc.to, solutionTimezone, baselineWeeks, -7, true);
+var timeRangeList = timeRanges.getEpochRange();
+var baselineDateKeys = timeRanges.getDateKeys("UTC", "yyyyMMdd");
+var dateKeyCol = this._getDatekeyColumn(queryConfig, eventType);
+var dateKeyCriteria = this._createInCriteria(dateKeyCol, baselineDateKeys);
+
+// by default, we use count when only sum-based metrics or mixed metrics are involved
+var aggrFunc = "sum";
+var apexCountDenom = apexCount;
+var apexBaselineDenom = apexBaseline;
+if (metricAggr.sums == 0 && metricAggr.avgs > 0) {
+    // ONLY if we don't have any COUNT metrics, do we use average
+    aggrFunc = "avg";
+    apexCountDenom = apexAvg;
+    apexBaselineDenom = apexBaselineAvg;
+}
+var rankLimit = queryConfig["vt-rank-limit"];
+if (rankLimit == null) {
+    // backward compat... but increase to 100 now that ranking is based on more precise value (before rounding)
+    rankLimit = 100;
+}
+var sql = [];
+sql.push("select");
+if (rankLimit == 0) {
+    // unlimited result set... no need to rank
+    sql.push("    *");
+}
+else {
+    sql.push("    dim,");
+    sql.push("    count,");
+    sql.push("    baseline,");
+    sql.push("    baselineDiff,");
+    sql.push("    cast(baselineDiffPct as decimal(6,2)) as baselineDiffPct,");
+    if (aggrFunc == "sum") {
+        sql.push("    cast(sScore as decimal(6,2)) as sScore,");
+        sql.push("    cast(nsScore as decimal(6,2)) as nsScore,");
+        sql.push("    cast(eScore as decimal(6,2)) as eScore,");
+    }
+    sql.push("    cast(countPopPct as decimal(6,2)) as countPopPct,");
+    sql.push("    cast(baselinePopPct as decimal(6,2)) as baselinePopPct,");
+    sql.push("    cast(relDiff as decimal(6,2)) as relDiff,");
+    sql.push("    cast(pctDev as decimal(6,2)) as pctDev,");
+    sql.push("    rank() over (order by count desc) as countRank,");
+    sql.push("    rank() over (order by baseline desc) as baselineRank,");
+    sql.push("    rank() over (order by baselineDiff desc) as baselineDiffRank,");
+    sql.push("    rank() over (order by baselineDiffPct desc) as baselineDiffPctRank,");
+    if (aggrFunc == "sum") {
+        sql.push("    rank() over (order by sScore desc) as sScoreRank,");
+        sql.push("    rank() over (order by nsScore desc) as nsScoreRank,");
+        sql.push("    rank() over (order by eScore desc) as eScoreRank,");
+    }
+    sql.push("    rank() over (order by countPopPct desc) as countPopPctRank,");
+    sql.push("    rank() over (order by baselinePopPct desc) as baselinePopPctRank,");
+    sql.push("    rank() over (order by relDiff desc) as relDiffRank,");
+    sql.push("    rank() over (order by pctDev desc) as pctDevRank");
+}
+sql.push("from (");
+sql.push("    select");
+sql.push("        dim,");
+sql.push("        count,");
+sql.push("        baseline,");
+sql.push("        (count-baseline) as baselineDiff,");
+sql.push("        ((count-baseline)/baseline) as baselineDiffPct,");
+if (aggrFunc == "sum") {
+    var s_score = "((count/baseline) - (("+apexCount+"-count)/("+apexBaseline+"-baseline)))";
+    var normalized_s_score = "((" + s_score + "/(" + apexCount + "/" + apexBaseline + ")) * 100)";
+    var eccentricity = "((count/baseline) / (("+apexCount+"-count) / ("+apexBaseline+"-baseline)))";
+    sql.push("        ("+s_score+") as sScore,");
+    sql.push("        ("+normalized_s_score+") as nsScore,");
+    sql.push("        ("+eccentricity+") as eScore,");
+}
+if (apexCountDenom != 0) {
+    sql.push("        (count/" + apexCountDenom + ") as countPopPct,");
+}
+else {
+    sql.push("        NULL as countPopPct,");
+}
+if (apexBaselineDenom != 0) {
+    sql.push("        (baseline/" + apexBaselineDenom + ") as baselinePopPct,");
+}
+else {
+    sql.push("        NULL as baselinePopPct,");
+}
+if (apexCountDenom != 0 && apexBaselineDenom != 0) {
+    sql.push("        ((count/" + apexCountDenom + ")-(baseline/" + apexBaselineDenom + ")) as relDiff,");
+}
+else {
+    sql.push("        NULL as relDiff,");
+}
+if ((apexCount-apexBaseline) != 0) {
+    sql.push("        ((count-baseline)/(" + (apexCount-apexBaseline) + ")) as pctDev");
+}
+else {
+    sql.push("        NULL as pctDev");
+}
+sql.push("    from (");
+sql.push("        select");
+sql.push("            dim,");
+// sql.push("            cast(" + aggrFunc + "(if (idx=0, metricvalue, 0)) as decimal(16,2)) as count,");
+sql.push("            cast(sum(if (idx=0, metricvalue, 0)) as decimal(16,2)) as count,");
+sql.push("            cast((sort_array(collect_list(if(idx < 0, metricvalue, null)))[floor(count(if(idx <0, 0, null))/2)] + sort_array(collect_list(if(idx < 0, metricvalue, null)))[floor((count(if(idx <0, 0, null)) - 1)/2)])/2 as decimal(16,2)) as baseline");
+sql.push("        from (");
+sql.push("            select");
+sql.push("                dim,");
+sql.push("                idx,");
+sql.push("                " + aggrFunc + "(" + this._getValueColumn(queryConfig, eventType) + ") as metricvalue");
+sql.push("            from (");
+sql.push("                select");
+_addTimeWindowIndexDST(sql, "                    ", this._getTimeColumn(queryConfig, eventType), timeRangeList, refTime);
+sql.push("                    *");
+sql.push("                from " + this._getTableName(queryConfig, eventType, this._getRollupTableSuffix(tc, null)));
+sql.push("            where " + dateKeyCriteria);
+this._addFilterClause(sql, "                ", filters, valueSubMap);
+this._addBaselineFilterClauseDST(sql, "                ", this._getTimeColumn(queryConfig, eventType), timeRangeList, refTime);
+sql.push("            )");
+sql.push("            lateral view explode (array(");
+var dimList = this._getApplicableDimensions(queryConfig, eventType, filters, dimInclExcl);
+var simpleDimList = this._getSimpleDimensions(queryConfig, eventType, dimList);
+var compoundDimList = this._getCompoundDimensions(queryConfig, eventType, dimList);
+var totalDimCount = simpleDimList.length + compoundDimList.length;
+for (var i=0; i<simpleDimList.length; i++) {
+    totalDimCount--;
+    var dim = simpleDimList[i];
+    sql.push("                concat('" + dim + "#', ifnull(" + dim + ", ''))" + (totalDimCount > 0 ? "," : ""));
+}
+for (var i=0; i<compoundDimList.length; i++) {
+    totalDimCount--;
+    var cDim = compoundDimList[i];
+    var expr = "                concat('" + cDim.join("|") + "#'";
+    for (var j=0; j<cDim.length; j++) {
+        if (j > 0) expr += ", '|'";
+        expr += ", ifnull(" + cDim[j] + ", '')";
+    }
+    sql.push(expr + ")" + (totalDimCount > 0 ? "," : ""));
+}
+sql.push("            )) table1 as dim");
+sql.push("            group by dim, idx");
+sql.push("        )");
+sql.push("        group by dim");
+sql.push("    )");
+sql.push(")");
+sql.push("where substring(dim,locate('#',dim)) != '#'");
+sql.push("  and substring(dim,locate('#',dim)) != '#|'");
+sql.push("  and substring(dim,locate('#',dim)) != '#||'");
+sql.push("  and substring(dim,locate('#',dim)) != '#|||'");
+if (rankLimit > 0) {
+    sql.push("having countRank < " + rankLimit);
+    sql.push("or baselineRank < " + rankLimit);
+    sql.push("or baselineDiffRank < " + rankLimit);
+    sql.push("or baselineDiffPctRank < " + rankLimit);
+    if (aggrFunc == "sum") {
+        sql.push("or sScoreRank < " + rankLimit);
+        sql.push("or nsScoreRank < " + rankLimit);
+        sql.push("or eScoreRank < " + rankLimit);
+    }
+    sql.push("or countPopPctRank < " + rankLimit);
+    sql.push("or baselinePopPctRank < " + rankLimit);
+    sql.push("or relDiffRank < " + rankLimit);
+    sql.push("or pctDevRank < " + rankLimit);
+}
+return sql.join("\n");
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getCompoundDimensions" args="queryConfig,eventType,applicableDimList" private="false">
+        <CodeText>
+          <![CDATA[// THIS IS to demonstrate an example of generating dimension analysis on multiple dimensions
+// -Engkee
+
+var COMPOUND_DIMENSIONS = queryConfig["compound-dimensions"] || {};
+
+function isDimsInApplicableList(dims, list)
+{
+    for (var i=0; i<dims.length; i++) {
+        var ok = false;
+        for (var j=0; j<list.length; j++) {
+            if (dims[i] == list[j]) {
+                ok = true;
+                break;
+            }
+        }
+        if (!ok) return false;
+    }
+    return true;
+}
+
+var compounds = [];
+var candidates = COMPOUND_DIMENSIONS[eventType] || COMPOUND_DIMENSIONS["*"] || [];
+for (var i=0; i<candidates.length; i++) {
+    var dims = candidates[i];
+    if (isDimsInApplicableList(dims, applicableDimList)) {
+        compounds.push(dims);
+    }
+}
+return compounds;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDatekeyColumn" args="queryConfig,eventType" private="false">
+        <CodeText>
+          <![CDATA[var EVENT_TYPES = queryConfig["event-types"] || {};
+var type = EVENT_TYPES[eventType];
+if (type != null) {
+    return type["datekey-column"] || (queryConfig["default-column-names"] || {})["datekey-column"];
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDimensionLabel" args="queryConfig,eventType,dimensionName" private="false">
+        <CodeText>
+          <![CDATA[dimensionName = dimensionName.toLowerCase();
+var COLUMN_NAMES = queryConfig["column-names"] || {};
+if (COLUMN_NAMES != null) {
+    if (COLUMN_NAMES[eventType] != null) {
+        for (var filterName in COLUMN_NAMES[eventType]) {
+            var dimName = COLUMN_NAMES[eventType][filterName];
+            if (dimName != null && dimName.toLowerCase() == dimensionName) {
+                // found it
+                return this._getColumnLabel(queryConfig, eventType, filterName);
+            }
+        }
+    }
+    if (COLUMN_NAMES["*"] != null) {
+        for (var filterName in COLUMN_NAMES["*"]) {
+            var dimName = COLUMN_NAMES["*"][filterName];
+            if (dimName != null && dimName.toLowerCase() == dimensionName) {
+                // found it
+                return this._getColumnLabel(queryConfig, eventType, filterName);
+            }
+        }
+    }
+}
+return dimensionName;]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDimensionWhereClause" args="serviceConfig,queryConfig,queryParams,aggr,executeContext" private="false">
+        <CodeText>
+          <![CDATA[var dimensionWhereClause = [];
+var whereClause = aggr.metric == "Customer Call Volume"
+                ? queryParams["calls-where-clause"]
+                : queryParams["metric-where-clause"];
+if (whereClause != null && whereClause.length > 0) {
+    for (var i=0; i<whereClause.length; i++) {
+        if ((whereClause[i]).indexOf("#") != 0 && (whereClause[i]).indexOf("--") != 0) {
+            dimensionWhereClause.push({
+                expr : whereClause[i],
+            });
+        }
+    }
+}
+
+var dimensionColumns = aggr.metric == "Customer Call Volume"
+                     ? queryParams["calls-dimension-columns"] || {}
+                     : queryParams["metric-dimension-columns"] || {};
+var dimensionValues = this._getDimensionValuesForSingleMetric(serviceConfig, aggr.svc, aggr.comp, aggr.app, aggr.metric);
+var whereClause = this._convertDimensionValuesToWhereClause(queryConfig, executeContext, dimensionValues, dimensionColumns);
+if (whereClause != "") {
+    dimensionWhereClause.push({
+        expr : "and (" + whereClause + ")",
+    });
+}
+
+var conditionalWhereClause = aggr.metric == "Customer Call Volume"
+                           ? queryConfig["conditional-calls-where-clause"]
+                           : queryConfig["conditional-metric-where-clause"];
+if (conditionalWhereClause != null && conditionalWhereClause.length > 0) {
+    for (var i=0; i<conditionalWhereClause.length; i++) {
+        var ifMatch = conditionalWhereClause[i]["if-match"] || {};
+        var whereClause = conditionalWhereClause[i]["where-clause"] || [];
+        if (ifMatch.svc == aggr.svc && (ifMatch.comp == null || ifMatch.comp == aggr.comp) && whereClause.length > 0) {
+            for (var i=0; i<whereClause.length; i++) {
+                dimensionWhereClause.push({
+                    expr : whereClause[i],
+                });
+            }
+        }
+    }
+}
+//print(__prettyPrintJSON(dimensionWhereClause));
+return dimensionWhereClause;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getEventTypeFilters" args="serviceConfig,aggr,filters" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+
+//print("_getEventTypeFilters: filters=" + JSON.stringify(filters));
+if (aggr.comp == null) {
+    if (filters != null) {
+        for (var i=0; i<filters.length; i++) {
+            var filter = filters[i];
+            if (filter.name == queryConfig["filters"]["comp"]) {
+                aggr.comp = filter.value;
+                break;
+            }
+        }
+    }
+    if (aggr.comp == null) {
+        var list = this._getFilteredGroups(serviceConfig, [[aggr.svc]]);
+        aggr.comp = [];
+        for (var i=0; i<list.length; i++) {
+            var item = list[i];
+            aggr.comp.push(item["name"]);
+        }
+    }
+}
+if (aggr.app == null) {
+    if (filters != null) {
+        for (var i=0; i<filters.length; i++) {
+            var filter = filters[i];
+            if (filter.name == queryConfig["filters"]["app"]) {
+                aggr.app = filter.value;
+                break;
+            }
+        }
+    }
+    if (aggr.app == null) {
+        var list = this._getFilteredGroups(serviceConfig, [[aggr.svc], aggr.comp]);
+        aggr.app = [];
+        for (var i=0; i<list.length; i++) {
+            var item = list[i];
+            aggr.app.push(item["name"]);
+        }
+    }
+}
+var dataTimeRange = null;
+for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    if (filter.name == queryConfig["filters"]["time"]) {
+        dataTimeRange = {
+            name  : filter.name,
+            value : filter.value,
+            _hidden_ : true,
+        };
+        break;
+    }
+}
+var filters = null;
+if (aggr.qdc != null) {
+    // enhanced to support synthetic metrics with metric-level qdc
+    for (var i=0; i<aggr.qdc.length; i++) {
+        var qdc = aggr.qdc[i];
+        if (qdc.name == "metricname") {
+            var labels = this._getGroupItemLabels(serviceConfig, [aggr.svc, aggr.comp, aggr.app]);
+            filters = [{
+                name  : queryConfig["filters"]["svc"],
+                value : aggr.svc,
+                label : labels[0],
+            },
+            {
+                name  : queryConfig["filters"]["comp"],
+                value : aggr.comp,
+                label : labels[1],
+            },
+            {
+                name  : queryConfig["filters"]["app"],
+                value : aggr.app,
+                label : labels[2],
+            }];
+            if (Array.isArray(qdc.value)) {
+                filters.push({
+                    name  : queryConfig["filters"]["metric"],
+                    value : qdc.value.slice(0),
+                    alias : aggr.metric,
+                    label : aggr.metric,
+                });
+            }
+            else {
+                filters.push({
+                    name  : queryConfig["filters"]["metric"],
+                    value : qdc.value,
+                    alias : aggr.metric,
+                    label : aggr.metric,
+                });
+            }
+            break;
+        }
+    }
+}
+if (filters == null) {
+    // original
+    var labels = this._getGroupItemLabels(serviceConfig, [aggr.svc, aggr.comp, aggr.app, aggr.metric]);
+    filters = [{
+        name  : queryConfig["filters"]["svc"],
+        value : aggr.svc,
+        label : labels[0],
+    },
+    {
+        name  : queryConfig["filters"]["comp"],
+        value : aggr.comp,
+        label : labels[1],
+    },
+    {
+        name  : queryConfig["filters"]["app"],
+        value : aggr.app,
+        label : labels[2],
+    },
+    {
+        name  : queryConfig["filters"]["metric"],
+        value : aggr.metric,
+        label : labels[3],
+    }];
+}
+//print("_getEventTypeFilters: filters=" + __prettyPrintJSON(filters));
+if (dataTimeRange != null) {
+    filters.push(dataTimeRange);
+}
+return filters;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getFilterName" args="queryConfig,eventType,dimensionName" private="false">
+        <CodeText>
+          <![CDATA[var COLUMN_NAMES = queryConfig["column-names"] || {};
+if (COLUMN_NAMES == null) return null;
+
+function matchColumnName(columnName)
+{
+    if (COLUMN_NAMES[eventType] != null) {
+        for (var filterName in COLUMN_NAMES[eventType]) {
+            var dimName = COLUMN_NAMES[eventType][filterName];
+            if (dimName != null && dimName.toLowerCase() == columnName) {
+                // found it
+                return filterName;
+            }
+        }
+    }
+    if (COLUMN_NAMES["*"] != null) {
+        for (var filterName in COLUMN_NAMES["*"]) {
+            var dimName = COLUMN_NAMES["*"][filterName];
+            if (dimName != null && dimName.toLowerCase() == columnName) {
+                // found it
+                return filterName;
+            }
+        }
+    }
+    return "";
+}
+
+if (dimensionName.indexOf("|") != -1) {
+    // UI-372: handling compound dimensions
+    var columnNames = dimensionName.toLowerCase().split("|");
+    var filterNames = [];
+    columnNames.forEach(function(columnName) {
+        filterNames.push(matchColumnName(columnName));
+    });
+    return filterNames.join("|");
+}
+else {
+    return matchColumnName(dimensionName.toLowerCase());
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getMetricAggregation" args="serviceConfig,svc,comp,app,metric" private="false">
+        <CodeText>
+          <![CDATA[function stripHash(name)
+{
+    var hash = name.indexOf("#");
+    if (hash != -1) {
+        name = name.substring(0, hash);
+    }
+    return name;
+}
+
+if (serviceConfig == null) {
+    serviceConfig = this.getServiceConfig();
+}
+var list = this._getFilteredItems(serviceConfig, [svc, comp, app]);
+var aggrs = [];
+for (var i=0; i<list.length; i++) {
+    var item = list[i];
+    if (metric.length == 0 || metric.indexOf(item["name"]) != -1) {
+        var path = item["path"];
+        aggrs.push({
+            svc    : path.length > 0 ? stripHash(item["path"][0]) : null,
+            comp   : path.length > 1 ? stripHash(item["path"][1]) : null,
+            app    : path.length > 2 ? stripHash(item["path"][2]) : null,
+            metric : item["name"],
+            func   : item["aggr"],
+            qdc    : item["meta"] && item["meta"]["dimension-values"],
+        });
+    }
+}
+var sums = 0;
+var avgs = 0;
+for (var i=0; i<aggrs.length; i++) {
+    switch (aggrs[i]["func"]) {
+        case "sum":
+            sums++;
+            break;
+        case "avg":
+        case "pct":
+            avgs++;
+            break;
+    }
+}
+return {
+    sums : sums,
+    avgs : avgs,
+    aggr : aggrs
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getSimpleDimensions" args="queryConfig,eventType,dimList" private="false">
+        <CodeText>
+          <![CDATA[// This option allows us to identify applicable dimension BUT exclude them from exploding breakdown
+// -Engkee
+
+var EXCLUDE_DIMENSIONS = queryConfig["exclude-dimensions"] || {};
+
+function isDimsInApplicableList(dims, list)
+{
+    for (var i=0; i<dims.length; i++) {
+        var ok = false;
+        for (var j=0; j<list.length; j++) {
+            if (dims[i] == list[j]) {
+                ok = true;
+                break;
+            }
+        }
+        if (!ok) return false;
+    }
+    return true;
+}
+
+var simples = [];
+var exclude1D = EXCLUDE_DIMENSIONS[eventType] || EXCLUDE_DIMENSIONS["*"] || {};
+for (var i=0; i<dimList.length; i++) {
+    var dim = dimList[i];
+    if (exclude1D[dim] != true) {
+        simples.push(dim);
+    }
+}
+return simples;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getTableName" args="queryConfig,eventType,suffix" private="false">
+        <CodeText>
+          <![CDATA[var EVENT_TYPES = queryConfig["event-types"] || {};
+var type = EVENT_TYPES[eventType];
+if (type != null) {
+    var tableName = type["table-name"];
+    if (tableName != null) {
+        if (suffix != null && suffix != "") {
+            tableName = tableName + suffix;
+        }
+        return tableName;
+    }
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getTimeColumn" args="queryConfig,eventType" private="false">
+        <CodeText>
+          <![CDATA[var EVENT_TYPES = queryConfig["event-types"] || {};
+var type = EVENT_TYPES[eventType];
+if (type != null) {
+    return type["time-column"] || (queryConfig["default-column-names"] || {})["time-column"];
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getValueColumn" args="queryConfig,eventType" private="false">
+        <CodeText>
+          <![CDATA[var EVENT_TYPES = queryConfig["event-types"] || {};
+var type = EVENT_TYPES[eventType];
+if (type != null) {
+    return type["value-column"] || (queryConfig["default-column-names"] || {})["value-column"];
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getValueSubMap" args="fromEpoch,toEpoch,filters,queryConfig" private="false">
+        <CodeText>
+          <![CDATA[var valueSubMap = {
+    "date_keys" : this._getDateKeysFromUnixtimeRange(fromEpoch, toEpoch),
+    "from_epoch" : String(fromEpoch),
+    "to_epoch" : String(toEpoch),
+};
+filters.forEach(function(filter) {
+    var filterName = filter.name;
+    if (filterName != queryConfig["filters"]["time"] && filterName != queryConfig["filters"]["interval"]) {
+        var toks = filterName.split(".");
+        if (toks.length == 2 && toks[0] != "$") {
+            var filterValue = filter.value;
+            if (typeof filterValue == "string" && filterValue != "") {
+                var hash = filterValue.indexOf("#");
+                if (hash != -1) filterValue = filterValue.substring(0, hash);
+                valueSubMap[filterName] = filterValue;
+            }
+            else if (Array.isArray(filterValue) && filterValue.length > 0) {
+                var inClauseValues = [];
+                filterValue.forEach(function(value) {
+                    var hash = value.indexOf("#");
+                    inClauseValues.push(hash != -1 ? value.substring(0, hash) : value);
+                });
+                valueSubMap[filterName] = this._formatArrayForInClause(inClauseValues);
+            }
+        }
+    }
+});
+//print("valueSubMap="+__prettyPrintJSON(valueSubMap));
+return valueSubMap;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getWhereClause" args="queryConfig,filters" private="false">
+        <CodeText>
+          <![CDATA[//print("_getWhereClause: filters=" + filters);
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+var where = {};
+for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    var filterName = filter.name;
+    var filterValue = filter.value;
+    if (Array.isArray(filterValue)) {
+        filterValue = this._stripDupAndHashItems(filterValue);
+    }
+    var label = this._getColumnLabel(queryConfig, null, filterName);
+    if (label != null) {
+        var value = this._getColumnValue(queryConfig, null, filterName, filterValue);
+        if (where[label] == null) {
+            where[label] = value;
+        }
+        else {
+            where[label] = (where[label]).concat(value);
+        }
+    }
+}
+var result = [];
+for (var label in where) {
+    var value = where[label];
+    if (Array.isArray(value)) {
+        if (value.length > 0) {
+            result.push({
+                name  : label + ":",
+                value : value.join(", "),
+            });
+        }
+    }
+    else {
+        if (String(value) != "") {
+            result.push({
+                name  : label + ":",
+                value : String(value),
+            });
+        }
+    }
+}
+if (result.length > 0) {
+    result.sort(function(a,b) {
+        return a.name.localeCompare(b.name);
+    });
+}
+// print("_getWhereClause: result=" + __prettyPrintJSON(result));
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_parseFilters" args="queryConfig,eventTypes,timeRange,filters,valueMaps" private="false">
+        <CodeText>
+          <![CDATA[if (typeof eventTypes == "string") {
+    eventTypes = [eventTypes];
+}
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+//print("_parseFilters: eventTypes=" + __prettyPrintJSON(eventTypes));
+//print("_parseFilters: filters=" + __prettyPrintJSON(filters));
+
+var whereClause = [];
+var topN = 25;
+for (var i=0; i<filters.length; i++) {
+    var filter = filters[i];
+    if (filter.name == "$.dimensionWhereClause") {
+        if (filter.value != null) {
+            for (var colName in filter.value) {
+                whereClause.push({
+                    name : colName,
+                    value : filter.value[colName],
+                });
+            }
+        }
+    }
+    else {
+        var filterValue = this._getColumnValue(queryConfig, eventTypes, filter.name, filter.value);
+        var colName = this._getColumnName(queryConfig, eventTypes, filter.name);
+        if (colName != null) {
+            if (valueMaps != null && valueMaps[colName] != null) {
+                var valueMap = valueMaps[colName];
+                if (typeof filterValue == "string") {
+                    var whereExpr = valueMap[filterValue];
+                    if (whereExpr != null) {
+                        whereClause.push({
+                            expr : whereExpr,
+                        });
+                    }
+                    else {
+                        whereClause.push({
+                            name  : colName,
+                            value : filterValue,
+                        });
+                    }
+                }
+                else if (Array.isArray(filterValue)) {
+                    var customClauses = [];
+                    for (var j=0; j<filterValue.length; j++) {
+                        var customClause = valueMap[filterValue[j]];
+                        if (customClause != null) {
+                            if (typeof customClause == "string") {
+                                customClauses.push(customClause);
+                            }
+                            else if (Array.isArray(customClause)) {
+                                var clauses = [];
+                                customClause.forEach(function(clause) {
+                                    if (typeof clause == "string") {
+                                        clauses.push(clause);
+                                    }
+                                    else if (clause.column != null && clause.filter != null) {
+                                        var values = this._getFilterValue(filters, clause.filter, [], true);
+                                        if (values.length > 0) {
+                                            clauses.push(this._toFilterExpression(clause.column, values));
+                                        }
+                                    }
+                                });
+                                customClauses.push("(" + clauses.join(" and ") + ")");
+                            }
+                            filterValue.splice(j, 1);
+                        }
+                    }
+                    if (customClauses.length > 0) {
+                        if (filterValue.length > 0) {
+                            customClauses.push(this._toFilterExpression(colName, filterValue));
+                        }
+                        whereClause.push({
+                            expr : "and (" + customClauses.join(" or ") + ")",
+                        });
+                    }
+                    else if (filterValue.length > 0) {
+                        whereClause.push({
+                            name  : colName,
+                            value : filterValue,
+                        });
+                    }
+                }
+            }
+            else {
+                whereClause.push({
+                    name  : colName,
+                    value : filterValue,
+                });
+            }
+        }
+    }
+}
+//print("_parseFilters: whereClause=" + __prettyPrintJSON(whereClause));
+
+return {
+    startTime   : timeRange.fromUnixTime,
+    endTime     : timeRange.toUnixTime,
+    whereClause : whereClause,
+    topN        : topN
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="checkFilters" args="filters" private="false">
+        <CodeText>
+          <![CDATA[if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+var queryConfig = this.getQueryConfig();
+var result = {
+    errors : [],
+    warns  : [],
+};
+
+var svc = this._getFilterValue(filters, queryConfig["filters"]["svc"], [], true);
+if (svc.length == 0) return null;
+
+var comp = this._getFilterValue(filters, queryConfig["filters"]["comp"], [], true);
+//if (comp.length == 0) return null;
+
+var app = this._getFilterValue(filters, queryConfig["filters"]["app"], [], true);
+app = this._stripDupAndHashItems(app);
+//if (app.length == 0) return null;
+
+var metric = this._getFilterValue(filters, queryConfig["filters"]["metric"], [], true);
+metric = this._stripDupAndHashItems(metric);
+if (metric.length == 0) return null;
+
+var timeRange = this.getTimeRange(filters);
+var obj = this._parseFilters(queryConfig, [], timeRange, filters, null);
+if (obj == null) {
+    result.errors.push("Invalid filters. Check event type, start time, end time setting.");
+}
+else if (obj.startTime > obj.endTime) {
+    result.errors.push("Invalid filters. Start Time must be before End Time.");
+}
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getCommonalities" args="filters,vtServiceRefId,timeStamp" private="false">
+        <CodeText>
+          <![CDATA[function getEventTypeFilters(serviceConfig, metricAggrs, filters)
+{
+    if (metricAggrs.aggr.length == 1) {
+        var aggr = metricAggrs.aggr[0];
+        return this._getEventTypeFilters(serviceConfig, aggr, filters);
+    }
+    return null;
+}
+
+function getQueryKey(svc, comp, app)
+{
+    var buf = [];
+    if (svc != null) {
+        var hash = svc.indexOf("#");
+        buf.push(hash != -1 ? svc.substring(0,hash) : svc);
+    }
+    if (comp != null) {
+        var hash = comp.indexOf("#");
+        buf.push(hash != -1 ? comp.substring(0,hash) : comp);
+    }
+    if (app != null) {
+        var hash = app.indexOf("#");
+        buf.push(hash != -1 ? app.substring(0,hash) : app);
+    }
+    return buf.join("|");
+}
+
+// try explicit and implicit ANY
+// eg. Video|*|* == Video
+// but Video|*|* is more explicit and more distinctive
+function getQueryContext(queryDims, queryConfig)
+{
+    var explicitQueryDims = queryDims.slice(0);
+    for (var i=0; i<explicitQueryDims.length; i++) {
+        if (explicitQueryDims[i] == null) explicitQueryDims[i] = "*";
+    }
+    var ctx = _getQueryContext(explicitQueryDims, queryConfig);
+    if (ctx != null) return ctx;
+    return _getQueryContext(queryDims, queryConfig);
+}
+
+function _getQueryContext(queryDims, queryConfig)
+{
+    var queryEntry = null;
+    var queryFName = null;
+    
+    var queryDim0 = queryDims[0];
+    var queryDim1 = queryDims[1];
+    var queryDim2 = queryDims[2];
+    
+    while (queryFName == null) {
+        queryKey = getQueryKey(queryDim0, queryDim1, queryDim2);
+        //print("getCommonalities/getQueryContext: queryKey=" + queryKey);
+        queryEntry = queryConfig["service-queries"][queryKey];
+        if (queryEntry != null && queryEntry["function"] == null) {
+            queryEntry["function"] = "_getCommonalitiesImpl";
+        }
+        queryFName = queryEntry != null ? queryEntry["function"] : null;
+        if (queryFName == "") {
+            queryFName = null;
+        }
+        if (queryFName == null) {
+            if (queryDim2 != null) {
+                if (queryDim1 != "*") {
+                    queryDim1 = "*";
+                }
+                else if (queryDim0 != "*") {
+                    queryDim0 = "*"
+                }
+                else {
+                    break;
+                }
+            }
+            else if (queryDim1 != null) {
+                if (queryDim0 != "*") {
+                    queryDim0 = "*"
+                }
+                else {
+                    break;
+                }
+            }
+            else {
+                // matching only on dim0... if no match, we are done
+                // handle incomplete configuration of new service situation where service was added
+                // to system model but no query config set up here
+                break;
+            }
+        }
+    }
+    if (queryFName != null) {
+        return {
+            queryKeys  : getQueryKey(queryDims[0], queryDims[1], queryDims[2]),
+            queryEntry : queryEntry,
+            queryFName : queryFName
+        };
+    }
+    return null;
+}
+
+var ServiceUtil = com.vitria.dbp.resource.utils.ServiceUtil;
+var StringRepresentation = org.restlet.representation.StringRepresentation;
+
+function getTimeoutMessage(id, timeout)
+{
+    return "Query (" + id + ") timed out (" + timeout + "s). Please limit the filter scope (eg. smaller time range, fewer components)";
+}
+
+function seeErrorLogMessage(error)
+{
+    return error + ".\r\nPlease refer the server log for detail stack.";
+}
+
+function hasFailedResult()
+{
+    var isTimeOut = cache.get("isTimeOut");
+    if (isTimeOut == true) {
+        cache.remove("isTimeOut");
+        var checkResult = new StringRepresentation(ServiceUtil.createResult(null, getTimeoutMessage(vtServiceRefId, queryTimeOut), ""));
+        return {status: true, result : checkResult};
+    }
+    if (result && result.status == "Error") {
+        var checkResult = new StringRepresentation(ServiceUtil.createResult(null, seeErrorLogMessage(result.error), ""));
+        return {status: true, result : checkResult};
+    }
+    return {status : false};
+}
+
+// initialize variables for multi-threaded execution
+var Executors = java.util.concurrent.Executors;
+var TimeUnit  = java.util.concurrent.TimeUnit;
+var ArrayList = java.util.ArrayList;
+var executor = null;
+var parallel = false;
+var results = new ArrayList();
+
+function invokeQueryFunc(queryDims, serviceConfig, queryConfig, filters, aggr, dimInclExcl, vtServiceRefId, metricAggr, aggrFilters, eventTypeFilters, timeRange)
+{
+    var ctx = getQueryContext(queryDims, queryConfig);
+    if (ctx != null) {
+        //print("getCommonalities/invokeQueryFunc: queryFName=" + ctx.queryFName);
+        var queryFunc = this[ctx.queryFName];
+        if (queryFunc != null && typeof queryFunc == "function") {
+            var queryParams = ctx.queryEntry != null ? ctx.queryEntry["params"] : null;
+            if (!Context.isCancelled(vtServiceRefId)) {
+                var commonalities = queryFunc(vtServiceRefId, serviceConfig, queryConfig, timeRange, aggrFilters, 
+                                              dimInclExcl, metricAggr, queryParams, eventTypeFilters, timeStamp);
+                if (commonalities != null && !Context.isCancelled(vtServiceRefId)) {
+                    return commonalities;
+                }
+            }
+            else {
+                print("QUERY cancelled... skip dimension analysis for " + ctx.queryKeys);
+            }
+        }
+        else {
+            print("Query function not defined: " + ctx.queryFName);
+        }
+    }
+    return null;
+}
+
+var EMPTY_RESULT = {
+    apex  : [],
+    items : [],
+    aggrs : metricAggrs,
+};
+
+if (typeof filters == "string") {
+    filters = JSON.parse(filters);
+}
+
+if (vtServiceRefId == null) {
+    vtServiceRefId = Date.now() + "_" + Math.round(100000*Math.random()) + "_" + Math.round(100000*Math.random());
+    //print("getCommonalities: vtServiceRefId=" + vtServiceRefId);
+}
+
+//print("getCommonalities: userId=" + Context.getCurrentUserId());
+//print("getCommonalities: filters=" + __prettyPrintJSON(filters));
+//print("getCommonalities: vtServiceRefId=" + vtServiceRefId);
+
+if (filters == null || filters.length == 0) return EMPTY_RESULT;
+
+var serviceConfig = this.getServiceConfig();
+if (serviceConfig == null) return EMPTY_RESULT;
+
+var queryConfig = this.getQueryConfig();
+if (queryConfig == null || queryConfig["service-queries"] == null) return EMPTY_RESULT;
+
+if (this.addNuovaStellaDimensionQueryConfig != null) {
+    //var checkpoint = Date.now();
+    this.addNuovaStellaDimensionQueryConfig(queryConfig);
+    //print("############ getCommonalities: addNuovaStellaDimensionQueryConfig=" + (Date.now() - checkpoint) + " ms");
+}
+
+if (timeStamp != null && timeStamp != "undefined" && queryConfig["query-delay-tolerance"] != null && Number(queryConfig["query-delay-tolerance"]) > 0) {
+    var queryDelayToleranceInMinutes = Number(queryConfig["query-delay-tolerance"]);
+    var timeStampDelay = Date.now() - Number(timeStamp);
+    if (timeStampDelay > queryDelayToleranceInMinutes * 60 * 1000) return EMPTY_RESULT;
+}
+
+if (queryConfig["print-query-timestamp"] == null || queryConfig["print-query-timestamp"] == false) {
+    timeStamp = null;
+}
+
+var customDimensionList = null;
+var vtExclEventFilters = null;
+var vtDimInclExcl = null;
+var vtResultConfig = null;
+var vtRankLimit = null;
+var vtQueryTimeout = null;
+var vtCacheConfig = null;
+var vtMetricID = null;
+var tmp = filters;
+filters = [];
+for (var i=0; i<tmp.length; i++) {
+    var filter = tmp[i];
+    if (filter.name == "$.dimensionList") {
+        customDimensionList = filter.value;
+    }
+    else if (filter.name == "$.excludeEventFilters") {
+        vtExclEventFilters = filter.value;
+    }
+    else if (filter.name == "$.dimensionInclExcl") {
+        vtDimInclExcl = filter.value;
+    }
+    else if (filter.name == "$.resultConfig") {
+        vtResultConfig = filter.value;
+    }
+    else if (filter.name == "$.rankLimit") {
+        vtRankLimit = filter.value;
+    }
+    else if (filter.name == "$.cacheConfig") {
+        vtCacheConfig = filter.value;
+    }
+    else if (filter.name == "$.queryTimeout") {
+        vtQueryTimeout = Number(filter.value);
+        if (isNaN(vtQueryTimeout)) vtQueryTimeout = null;
+    }
+    else if (filter.name == "$.metricID") {
+        vtMetricID = filter.value;
+    }
+    else {
+        filters.push(filter);
+    }
+}
+
+if (vtMetricID != null) {
+    this._mapMetricIDToFilters(queryConfig, filters, vtMetricID);
+}
+
+if (vtCacheConfig != null) {
+    var start = Date.now();
+    var result = this._cacheLoad(queryConfig, vtCacheConfig);
+    if (result != null) {
+        print("Load cached dimension analysis for " + vtCacheConfig.key1 + "/" + vtCacheConfig.key2 + " in " + (Date.now()-start) + "ms");
+        return result;
+    }
+}
+
+var svc = this._getFilterValue(filters, queryConfig["filters"]["svc"], [], true);
+//print("getCommonalities: svc=" + __prettyPrintJSON(svc));
+if (svc.length == 0) return EMPTY_RESULT;
+
+var comp = this._getFilterValue(filters, queryConfig["filters"]["comp"], [], true);
+//print("getCommonalities: comp=" + __prettyPrintJSON(comp));
+comp = this._stripDupAndHashItems(comp);
+
+if (comp.length == 1 && (comp[0]).indexOf("][") != -1) {
+    // we have [...][...] sub-services
+    var mergedComp = comp[0];
+    comp = mergedComp.substring(1, mergedComp.length-1).split("][");
+    //print("getCommonalities: comp=" + __prettyPrintJSON(comp));
+}
+
+var app = this._getFilterValue(filters, queryConfig["filters"]["app"], [], true);
+//print("getCommonalities: app=" + __prettyPrintJSON(app));
+app = this._stripDupAndHashItems(app);
+
+var metric = this._getFilterValue(filters, queryConfig["filters"]["metric"], [], true);
+//print("getCommonalities: metric=" + __prettyPrintJSON(metric));
+metric = this._stripDupAndHashItems(metric);
+if (metric.length == 0) return EMPTY_RESULT;
+
+var services = serviceConfig.groups;
+if (services == null || services.length == 0) return EMPTY_RESULT;
+
+if (queryConfig["thread-pool-size"] != null && Number(queryConfig["thread-pool-size"]) > 1) {
+    parallel = true;
+    executor = Executors.newFixedThreadPool(Number(queryConfig["thread-pool-size"]));
+}
+
+var queryTimeOut = -1;
+var cacheTimeoutInMinutes = 20;
+if (vtQueryTimeout != null) {
+    queryTimeOut = vtQueryTimeout;
+}
+else if (queryConfig["query-time-out"] != null && Number(queryConfig["query-time-out"]) >= 0) {
+    queryTimeOut = Number(queryConfig["query-time-out"]);
+}
+if (queryTimeOut > 0) {
+    cacheTimeoutInMinutes = 1 + Math.round(queryTimeOut / 60);
+}
+var CacheUtil = com.vitria.util.CacheUtil;
+var cache = CacheUtil.getCache(vtServiceRefId, cacheTimeoutInMinutes);
+cache.put("isTimeOut", false);
+cache.put("idList", "");
+
+if (queryTimeOut > 0) {
+    TimerTask.setTimeout("QueryTimeOut", queryTimeOut, function(queryId, cache, parallel, Context, executor) {
+        if (!parallel) {
+            if(!Context.isCancelled(queryId)) Context.cancelSQL(queryId);
+        } else {
+            var idListCache = cache.get("idList");
+            var idList = idListCache.split("/");
+            for (var i = 0; i < idList.length; i++) {
+                var id = idList[i];
+                if(id != "" && !Context.isCancelled(id)) {
+                    Context.cancelSQL(id);
+                }
+            }
+            cache.remove("idList");
+            executor.shutdownNow();
+        }
+        cache.put("isTimeOut", true);
+    }, vtServiceRefId, cache, parallel, Context, executor);
+}
+
+if (customDimensionList != null) {
+    if (customDimensionList["event-type-dimensions"] != null) {
+        queryConfig["event-type-dimensions"] = {
+            "*" : customDimensionList["event-type-dimensions"] || []
+        };
+    }
+    if (customDimensionList["exclude-dimensions"] != null) {
+        queryConfig["exclude-dimensions"] = {
+            "*" : customDimensionList["exclude-dimensions"] || {}
+        };
+    }
+    if (customDimensionList["compound-dimensions"] != null) {
+        queryConfig["compound-dimensions"] = {
+            "*" : customDimensionList["compound-dimensions"] || []
+        };
+    }
+}
+
+if (vtExclEventFilters == true || vtExclEventFilters == "true") {
+    queryConfig["vt-exclude-event-filters"] = true;
+}
+
+if (vtResultConfig != null) {
+    queryConfig["vt-result-config"] = vtResultConfig;
+}
+
+if (vtRankLimit != null) {
+    queryConfig["vt-rank-limit"] = Number(vtRankLimit);
+    if (isNaN(queryConfig["vt-rank-limit"])) {
+        delete queryConfig["vt-rank-limit"];
+    }
+}
+
+if (queryConfig["enable-dst"] == true) {
+    queryConfig["dst-config"] = {
+        time_zone : this._getConfigProperty(queryConfig, "time_zone", true) || "America/Denver",
+    };
+}
+
+var metricAggrs = this._getMetricAggregation(serviceConfig, svc, comp, app, metric);
+print("getCommonalities: metricAggrs=" + __prettyPrintJSON(metricAggrs));
+if (metricAggrs.sums == 0 && metricAggrs.avgs == 0) {
+    // no metrics discovered... no result
+    return EMPTY_RESULT;
+}
+
+var apex = [];
+var items = [];
+var timeRange = null;
+var commonalities = null;
+var startTime = Date.now();
+var servletRequest = com.vitria.flex.fds.ServletContextUtil.getRequest();
+var vtToken = Context.getToken();
+var userName = Context.getCurrentUserId();
+var self = this;
+
+for (var i=0; i<metricAggrs.aggr.length; i++) {
+    var aggr = metricAggrs.aggr[i];
+    var metricAggr = {
+        sums : aggr.func == "sum" ? 1 : 0,
+        avgs : (aggr.func == "avg" || aggr.func == "pct") ? 1 : 0,
+        aggr : [aggr]
+    };
+    var aggrFilters = this._getAggregationFilters(filters, aggr);
+    var eventTypeFilters = getEventTypeFilters(serviceConfig, metricAggr, aggrFilters);
+    if (timeRange == null) {
+        timeRange = this.getTimeRange(aggrFilters);
+    }
+    if (Context.isCancelled(vtServiceRefId)) {
+        return EMPTY_RESULT;
+    }
+    if (!parallel) {
+        var queryDims = [aggr.svc, aggr.comp, aggr.app];
+        var result = invokeQueryFunc(queryDims, serviceConfig, queryConfig, filters, aggr, vtDimInclExcl, vtServiceRefId, metricAggr, aggrFilters, eventTypeFilters, timeRange);
+        var failedResult = hasFailedResult(result);
+        if (failedResult.status) return failedResult.result;
+        if (result != null) {
+            apex = apex.concat(result.apex);
+            items = items.concat(result.items);
+        }
+        else {
+            var queryDims = [aggr.svc, aggr.comp, null];
+            var result = invokeQueryFunc(queryDims, serviceConfig, queryConfig, filters, aggr, vtDimInclExcl, vtServiceRefId, metricAggr, aggrFilters, eventTypeFilters, timeRange);
+            var failedResult = hasFailedResult(result);
+            if (failedResult.status) return failedResult.result;
+            if (result != null) {
+                apex = apex.concat(result.apex);
+                items = items.concat(result.items);
+            }
+            else {
+                var queryDims = [aggr.svc, null, null];
+                var result = invokeQueryFunc(queryDims, serviceConfig, queryConfig, filters, aggr, vtDimInclExcl, vtServiceRefId, metricAggr, aggrFilters, eventTypeFilters, timeRange);
+                var failedResult = hasFailedResult(result);
+                if (failedResult.status) return failedResult.result;
+                if (result != null) {
+                    apex = apex.concat(result.apex);
+                    items = items.concat(result.items);
+                }
+            }
+        }
+    }
+    else {
+        var threadNumber = i;
+        results.add((function(threadNumber, aggr, serviceConfig, queryConfig, filters, dimInclExcl, vtServiceRefId, metricAggr, aggrFilters, eventTypeFilters, timeRange) {
+            var queryId = vtServiceRefId + "_" + Date.now() + "_" + Math.round(100000*Math.random()) + "_" + Math.round(100000*Math.random());
+            if (Context.isCancelled(vtServiceRefId)) {
+                return EMPTY_RESULT;
+            }
+            function addition() {
+                var loginContext = self._loginWithToken(userName, vtToken, servletRequest);
+                var currentList = cache.get("idList") + '/' + queryId;
+                cache.put("idList", currentList);
+                //var aggr = metricAggrs.aggr[threadNumber];
+                var queryDims = [aggr.svc, aggr.comp, aggr.app];
+                var result = invokeQueryFunc(queryDims, serviceConfig, queryConfig, filters, aggr, dimInclExcl, queryId, metricAggr, aggrFilters, eventTypeFilters, timeRange);
+                if (result == null) {
+                    queryDims = [aggr.svc, aggr.comp, null];
+                    result = invokeQueryFunc(queryDims, serviceConfig, queryConfig, filters, aggr, vtDimInclExcl, queryId, metricAggr, aggrFilters, eventTypeFilters, timeRange);
+                    if (result == null) {
+                        queryDims = [aggr.svc, null, null];
+                        result = invokeQueryFunc(queryDims, serviceConfig, queryConfig, filters, aggr, vtDimInclExcl, queryId, metricAggr, aggrFilters, eventTypeFilters, timeRange);
+                    }
+                }
+                self._logoutWithToken(loginContext);
+                return result;
+            }
+            if (Context.isCancelled(queryId)) {
+                print("Commonality query cancelled... skip the rest");
+            }
+            return executor["submit(java.util.concurrent.Callable)"](addition);
+        })(threadNumber, aggr, serviceConfig, queryConfig, filters, vtDimInclExcl, vtServiceRefId, metricAggr, aggrFilters, eventTypeFilters, timeRange));
+    }
+    if (Context.isCancelled(vtServiceRefId)) {
+        print("Commonality query cancelled... skip the rest");
+        break;
+    }
+}
+
+if (parallel) {
+    try {
+        var currentTime = Date.now();
+        print("Finished getCommonalities threads: " + results.size() + " Time: " + (currentTime - startTime)/1000 + "s");
+        executor.shutdown();
+        executor.awaitTermination(10, TimeUnit.MINUTES);
+    }
+    catch (ex) {
+        print(ex);
+    }
+    for (var j=0; j < results.size(); j++) {
+        var r = results[j];
+        if (r != null) {
+            var result = r.get();
+            if(cache.get("isTimeOut")){
+                cache.remove("isTimeOut");
+                result = new StringRepresentation(ServiceUtil.createResult(null, getTimeoutMessage(vtServiceRefId, queryTimeOut), ""));
+                return result;
+            }
+            if(result && result.status == "Error") {
+                result = new StringRepresentation(ServiceUtil.createResult(null, seeErrorLogMessage(result.error), ""));
+                return result;
+            }
+            apex = apex.concat(result.apex);
+            items = items.concat(result.items);
+        }
+    }
+}
+var endTime = Date.now();
+if (timeStamp != null && timeStamp != "undefined") {
+    print("[" +  timeStamp + "] getCommonalities total time: " + (endTime - startTime) + "ms");
+} else {
+    print("getCommonalities total time: " + (endTime - startTime) + "ms");
+}
+
+// how to merge apex? represents population commonalities but populations are not interchangeable or mergeable
+var result = {
+    apex  : apex,
+    items : items,
+    aggrs : metricAggrs,
+};
+if (vtCacheConfig != null && result != null && result.apex != null && result.items != null) {
+    result.filters = filters;
+    if (queryConfig["cache-analysis-results"] == true) {
+        if (queryConfig["cache-empty-results"] == true || result.items.length > 0) {
+            this._cacheSave(queryConfig, vtCacheConfig, result);
+        }
+    }
+}
+return result;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getKeyDimensions" args="svc,comp,app,metric" private="false">
+        <CodeText>
+          <![CDATA[function getQueryKey(svc, comp, app)
+{
+    var buf = [];
+    if (svc != null) {
+        var hash = svc.indexOf("#");
+        buf.push(hash != -1 ? svc.substring(0,hash) : svc);
+    }
+    if (comp != null) {
+        var hash = comp.indexOf("#");
+        buf.push(hash != -1 ? comp.substring(0,hash) : comp);
+    }
+    if (app != null) {
+        var hash = app.indexOf("#");
+        buf.push(hash != -1 ? app.substring(0,hash) : app);
+    }
+    return buf.join("|");
+}
+
+function getQueryContext(queryDims, queryConfig)
+{
+    var queryEntry = null;
+    var queryFName = null;
+    
+    var queryDim0 = queryDims[0];
+    var queryDim1 = queryDims[1];
+    var queryDim2 = queryDims[2];
+    
+    while (queryFName == null) {
+        queryKey = getQueryKey(queryDim0, queryDim1, queryDim2);
+        //print("getKeyDimensions/getQueryContext: queryKey=" + queryKey);
+        queryEntry = queryConfig["service-queries"][queryKey];
+        queryFName = queryEntry != null ? queryEntry["function"] : null;
+        if (queryFName == null) {
+            if (queryDim2 != null) {
+                if (queryDim1 != "*") {
+                    queryDim1 = "*";
+                }
+                else if (queryDim0 != "*") {
+                    queryDim0 = "*"
+                }
+                else {
+                    break;
+                }
+            }
+            else if (queryDim1 != null) {
+                if (queryDim0 != "*") {
+                    queryDim0 = "*"
+                }
+                else {
+                    break;
+                }
+            }
+            else {
+                // matching only on dim0... if no match, we are done
+                // handle incomplete configuration of new service situation where service was added
+                // to system model but no query config set up here
+                break;
+            }
+        }
+    }
+    if (queryFName != null) {
+        return {
+            queryKeys  : getQueryKey(queryDims[0], queryDims[1], queryDims[2]),
+            queryEntry : queryEntry,
+            queryFName : queryFName
+        };
+    }
+    return null;
+}
+
+var queryConfig = this.getQueryConfig();
+var queryDims = [svc, comp, app];
+var ctx = getQueryContext(queryDims, queryConfig);
+if (ctx == null) {
+    queryDims = [svc, comp, null];
+    ctx = getQueryContext(queryDims, queryConfig);
+    if (ctx == null) {
+        queryDims = [svc, null, null];
+        ctx = getQueryContext(queryDims, queryConfig);
+    }
+}
+var keyDims = [];
+if (ctx != null) {
+    var queryParams = ctx.queryEntry != null ? ctx.queryEntry["params"] : null;
+    if (queryParams != null) {
+        var eventType = metric == "Customer Call Volume" ? queryParams["calls-event-type"] : queryParams["metric-event-type"];
+        //print("getKeyDimensions: eventType="+eventType);
+        keyDims = this._getColumnLabels(queryConfig, eventType);
+    }
+}
+keyDims.sort();
+return keyDims;
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getWhereClause" args="filters" private="false">
+        <CodeText>
+          <![CDATA[function matchName(obj, name)
+{
+    var objName = obj.name;
+    var hash = objName.indexOf("#");
+    if (hash != -1) objName = objName.substring(0, hash);
+    
+    hash = name.indexOf("#");
+    if (hash != -1) name = name.substring(0, hash);
+    
+    return objName == name;
+}
+
+function lookupAppLabel(serviceConfig, appName)
+{
+    for (var i=0; i<serviceConfig.groups.length; i++) {
+        var svc = serviceConfig.groups[i];
+        if (svc.groups != null) {
+            for (var j=0; j<svc.groups.length; j++) {
+                var comp = svc.groups[j];
+                if (comp.groups != null) {
+                    for (var k=0; k<comp.groups.length; k++) {
+                        var app = comp.groups[k];
+                        if (matchName(app, appName)) {
+                            return app.label || app.name;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return appName;
+}
+
+var serviceConfig = this.getServiceConfig();
+var queryConfig = this.getQueryConfig();
+var dataAppColumnLabel = queryConfig["column-labels"] && queryConfig["column-labels"]["*"] && queryConfig["column-labels"]["*"][queryConfig["filters"]["app"]];
+if (dataAppColumnLabel != null) {
+    dataAppColumnLabel = dataAppColumnLabel + ":";
+}
+var list = this._getWhereClause(queryConfig, filters);
+for (var i=0; i<list.length; i++) {
+    var item = list[i];
+    if (dataAppColumnLabel != null && item.name == dataAppColumnLabel) {
+        var apps = item.value.split(",");
+        for (var j=0; j<apps.length; j++) {
+            apps[j] = lookupAppLabel(serviceConfig, apps[j]);
+        }
+        item.value = apps.join(",");
+    }
+}
+return list;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="mapDimensionWhereClauseToFilter" args="values" private="false">
+        <CodeText>
+          <![CDATA[function findEventType(queryConfig, values)
+{
+    var serviceQueries = queryConfig["service-queries"];
+    if (serviceQueries == null) return null;
+    
+    var svc    = values[queryConfig["filters"]["svc"]];
+    var comp   = values[queryConfig["filters"]["comp"]];
+    var app    = values[queryConfig["filters"]["app"]];
+    var metric = values[queryConfig["filters"]["metric"]];
+    var queryMap = null;
+    for (var i=0; i<svc.length; i++) {
+        for (var j=0; j<comp.length; j++) {
+            for (var k=0; k<app.length; k++) {
+                for (var m=0; m<metric.length; m++) {
+                    queryMap = serviceQueries[svc[i] + "|" + comp[j] + "|" + app[k] + "|" + metric[m]];
+                    if (queryMap != null) return queryMap["params"]["metric-event-type"];
+                }
+                queryMap = serviceQueries[svc[i] + "|" + comp[j] + "|" + app[k]];
+                if (queryMap != null) return queryMap["params"]["metric-event-type"];
+                queryMap = serviceQueries[svc[i] + "|*|" + app[k]];
+                if (queryMap != null) return queryMap["params"]["metric-event-type"];
+            }
+            for (var m=0; m<metric.length; m++) {
+                queryMap = serviceQueries[svc[i] + "|" + comp[j] + "|*|" + metric[m]];
+                if (queryMap != null) return queryMap["params"]["metric-event-type"];
+            }
+            queryMap = serviceQueries[svc[i] + "|" + comp[j]];
+            if (queryMap != null) return queryMap["params"]["metric-event-type"];
+        }
+        for (var m=0; m<metric.length; m++) {
+            queryMap = serviceQueries[svc[i] + "|*|*|" + metric[m]];
+            if (queryMap != null) return queryMap["params"]["metric-event-type"];
+        }
+        queryMap = serviceQueries[svc[i]];
+        if (queryMap != null) return queryMap["params"]["metric-event-type"];
+    }
+    return null;
+}
+
+if (values && values["$.dimensionWhereClause"] != null) {
+    var queryConfig = this.getQueryConfig();
+    var eventType = findEventType(queryConfig, values);
+    if (eventType != null) {
+        var columnNames = queryConfig["column-names"][eventType];
+        for (var colName in values["$.dimensionWhereClause"]) {
+            var colValue = values["$.dimensionWhereClause"][colName];
+            for (var filterName in columnNames) {
+                var dimCol = columnNames[filterName];
+                if (dimCol == colName) {
+                    values[filterName] = [colValue];
+                }
+            }
+        }
+    }
+    delete values["$.dimensionWhereClause"];
+}
+return values;
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="86857ba3-6d8a-4dd5-8612-287aaac3f622" name="Computed Metrics" type="text/plain" size="1450" private="true">
+        <Description>
+          <![CDATA[addition of s-score, normalized-s-score, and e-score (eccentricity)]]>
+        </Description>
+      </Resource>
+      <Resource uuid="8dcdf761-e02a-47e7-8852-412ba5747f7a" name="S/NS/E Score SQL" type="application/sql" size="5171" private="true">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/space/another/dbpm/VIAOps - Base Service"/>
+      <Plugin uri="/app/dbp/space/another/dbpm/VIAOps - Demo Service"/>
+      <Plugin uri="/app/dbp/space/another/dbpm/VIAOps - Config Property"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

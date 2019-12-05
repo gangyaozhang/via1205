@@ -1,0 +1,21 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "locale"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": " ",
+    "_RESOURCE_Type": "axv",
+    "__references__": "/app/dbp/user/via_common/dbpm/VIA - Common,/app/dbp/space/another/dbpm/VIAOps - Commonality Plugin",
+    "modelStatus": "valid",
+    "name": "VIAOps - Commonality View - Breakdown",
+    "theme": "null"
+  }
+}

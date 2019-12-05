@@ -1,0 +1,4 @@
+SELECT count(*) as count
+FROM viaops_incident_correlation
+where service_name='${service_name}'
+  and sub_service_name='${sub_service_name}'

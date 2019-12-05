@@ -1,0 +1,21 @@
+--- VIAOps - Trend Service > CALLS_SQL_NO_BL
+select
+    a._group_,
+    a._data_,
+    ${epochProjectionSQL} as _epoch_,
+    ${timeProjectionSQL} as _time_,
+    max(a._value_) as _value2_
+from (
+    select
+        "${groupKey}" as _group_,
+        "${groupData}" as _data_,
+        ${epochExpr} as _epoch_,
+        sum(${callsCount}) as _value_
+    from ${callsTable}
+    where ${epochExpr} ${fromOper} ${fromTime} and ${epochExpr} ${toOper} ${toTime}
+    and ${dateKeyColumn} in (${dateKeys})
+    ${dimensionWhereClause}
+    group by 3
+    order by _epoch_) a
+group by 1,2,3
+order by _epoch_

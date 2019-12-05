@@ -1,0 +1,20 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "locale"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "axv",
+    "__references__": "/app/dbp/space/Charter Digital Operations/dbpm/Charter - Plugin v11,/app/dbp/space/VIA Common Library/dbpm/VIA - Common,/app/dbp/space/Charter Digital Operations/dbpm/Charter - Causal Analysis Service v3,/app/dbp/space/VIA Common Library/dbpm/VIA - Hierarchy Grid",
+    "modelStatus": "valid",
+    "name": "Dimension Summary Comp v2"
+  }
+}

@@ -1,0 +1,22 @@
+INSERT INTO metric_severity_dim (
+    metric_id,
+    vitria_sev,
+    action,
+    vendor_netcool_sev,
+    network_condition,
+    remedy_sev,
+    metric_message_desc,
+    key_dimensions,
+    contact_groups
+)
+VALUES (
+    ${next_id},
+    "${vitria_sev}",
+    "",
+    "null",
+    "null",
+    "null",
+    "",
+    "null",
+    "null"
+)

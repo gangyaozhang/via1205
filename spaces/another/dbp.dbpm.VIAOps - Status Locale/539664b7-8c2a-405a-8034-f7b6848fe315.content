@@ -1,0 +1,20 @@
+{
+    "attr.type"         : "Тип",
+    "attr.started"      : "Начал",
+    "attr.last_account" : "Последняя учетная запись",
+    "attr.attribute"    : "Атрибут",
+    "attr.from_value"   : "От стоимости",
+    "attr.to_value"     : "Оценивать",
+    
+    "metric.calls"            : "Вызовы",
+    "metric.tickets"          : "Билеты",
+    "metric.truck_rolls"      : "Грузовые вагоны",
+    "metric.subscriber_count" : "Подписчик",
+    "metric.customer_score"   : "Оценка клиента",
+    
+    "value.type.network"      : "сеть",
+    "value.type.manual_load"  : "Ручная нагрузка",
+    "value.type.service"      : "обслуживание",
+    "value.type.device"       : "устройство",
+    "value.type.new_accounts" : "Новые учетные записи"
+}

@@ -1,0 +1,21 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "e86af781-10f0-4dc8-8750-8abf05c0c564"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "Based on captured Comcast DP pilot",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "e86af781-10f0-4dc8-8750-8abf05c0c564",
+    "__references__": "/app/dbp/space/another/dbpm/VIAOps - Base Service",
+    "modelStatus": "valid",
+    "name": "VIAOps - Status Service"
+  }
+}

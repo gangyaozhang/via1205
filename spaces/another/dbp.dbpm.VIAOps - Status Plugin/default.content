@@ -1,0 +1,116 @@
+<DashboardPluginModel description="" name="VIAOps - Status Plugin" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions>
+      <Function name="getDevBaseConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[var SERVICE = "/app/dbp/user/viaops_admin/dbpm/VIAOps - Status Service";
+var LOCALE = "/app/dbp/user/viaops_admin/dbpm/VIAOps - Status Locale";
+return {
+    "hover" : true,
+    "filter-config" : {
+        "method" : "POST",
+        "url" : SERVICE + "/getFilterConfig",
+    },
+    "base-config" : {
+        "method" : "POST",
+        "url" : SERVICE + "/getBaseConfig",
+    },
+    "metric-config" : {
+        "method" : "POST",
+        "url" : SERVICE + "/getMetricConfig",
+    },
+    "drilldown-rules" : {
+        "method" : "POST",
+        "url" : SERVICE + "/getDrilldownRules",
+    },
+    "drilldown-config" : {
+        "method" : "POST",
+        "url" : SERVICE + "/getDrilldownConfig",
+    },
+    "hover-config" : {
+        "method" : "POST",
+        "url" : SERVICE + "/getHoverConfig",
+    },
+    "locales" : [{
+        "code" : "de",
+        "url"  : LOCALE + "/de"
+    }, {
+        "code" : "en",
+        "url"  : LOCALE + "/en"
+    }, {
+        "code" : "fr",
+        "url"  : LOCALE + "/fr"
+    }, {
+        "code" : "ko",
+        "url"  : LOCALE + "/ko"
+    }, {
+        "code" : "ru",
+        "url"  : LOCALE + "/ru"
+    }, {
+        "code" : "zh",
+        "url"  : LOCALE + "/zh"
+    }]
+};
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getDevDataFilter" args="" private="false">
+        <CodeText>
+          <![CDATA[return [{
+    "name": "data.dateEnd",
+    "type": "date",
+    "value": "1518566400",
+    "context": null
+}, {
+    "name": "data.dateBegin",
+    "type": "date",
+    "value": "1513209600",
+    "context": null
+}, {
+    "name": "data.type",
+    "type": "choice",
+    "value": [
+        "device",
+        "manual_load",
+        "network",
+        "new_accounts",
+        "service"
+    ],
+    "context": null
+}];
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getDevLanguage" args="" private="false">
+        <CodeText>
+          <![CDATA[return "en";
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getDevMetricFilter" args="" private="false">
+        <CodeText>
+          <![CDATA[return [{
+    "name": "view.metrics",
+    "type": "choice",
+    "value": [
+        "calls",
+        "tickets",
+        "trucks",
+        "subs",
+        "score",
+        "stooges",
+        "horsemen"
+    ],
+    "context": null
+}];
+]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services/>
+    <Resources/>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

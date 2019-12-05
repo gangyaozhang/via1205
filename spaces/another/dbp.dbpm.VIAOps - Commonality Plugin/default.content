@@ -1,0 +1,850 @@
+<DashboardPluginModel description=" " name="VIAOps - Commonality Plugin" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions>
+      <Function name="getCommonalities" args="CommonPlugin,config,language,primary,secondary,getLocal,setLocal,callback" private="false">
+        <CodeText>
+          <![CDATA[var EXPLORING_COMMONALITIES = "Exploring commonalities...";
+var FILTERS_ERROR_MESSAGE = "Error found in filter settings. Cannot run commonality queries.";
+var FILTERS_WARN_MESSAGE = "Filter settings may cause issue when running commonality query. Do you want to proceed?";
+var PROMPT_TITLE = "Dimension Analysis";
+
+if (config != null && config.i18n_namespace != null && language != null) {
+    EXPLORING_COMMONALITIES = this.__getLocaleString(config.i18n_namespace, language, "exploring.commonalities", EXPLORING_COMMONALITIES);
+    FILTERS_ERROR_MESSAGE = this.__getLocaleString(config.i18n_namespace, language, "filters.error.message", FILTERS_ERROR_MESSAGE);
+    FILTERS_WARN_MESSAGE = this.__getLocaleString(config.i18n_namespace, language, "filters.warn.message", FILTERS_WARN_MESSAGE);
+    PROMPT_TITLE = this.__getLocaleString(config.i18n_namespace, language, "prompt.title", PROMPT_TITLE);
+}
+
+function getCommonalities(filters)
+{
+    setLocal("commonalities-query-id", Date.now());
+    CommonPlugin.pbShowProgressBar("adhoc-commonalities", EXPLORING_COMMONALITIES, function() {
+        // if user cancelled, we update the query-id so that we ignore the result returned
+        CommonPlugin.cancelService(config["commonalities-config"], getLocal("commonalities-query-id"), function(response) {
+            if (response.status == "OK") {
+                console.debug("commonalities-query-id="+getLocal("commonalities-query-id") + " cancelled=" + response.value);
+            }
+            else {
+                console.debug("commonalities-query-id="+getLocal("commonalities-query-id") + " cancellation not supported");
+            }
+        });
+        setLocal("commonalities-query-id", Date.now());
+    });
+    var headers = {
+        filters : JSON.stringify(filters),
+    };
+    CommonPlugin.invokeService(config["commonalities-config"], {timeStamp:Date.now()}, headers, lang.partial(function(queryId, response) {
+        if (response.status == "OK" && queryId == getLocal("commonalities-query-id")) {
+            var result = response.value;
+            var obj = {
+                items : [], 
+                apex  : [], 
+                aggr  : "SUM"
+            }
+            if (result != null && result.items != null && result.items.length > 0) {
+                // result also contains an "apex" structure with count and baseline
+                // can get population count and baseline but have no place to show at this time
+                obj.items = result.items;
+            }
+            if (result != null && result.apex != null && result.apex.length > 0) {
+                // result also contains an "apex" structure with count and baseline
+                // can get population count and baseline but have no place to show at this time
+                for (var i=0; i<result.apex.length; i++) {
+                    result.apex[i]["_diffPct"] = Number((Number(result.apex[i]["_diffPct"]) * 100).toFixed(2));
+                }
+                obj.apex = result.apex;
+            }
+            if (result != null) {
+                var sums = (result.aggrs || {}).sums;
+                if (sums == null) sums = 0;
+                var avgs = (result.aggrs || {}).avgs;
+                if (avgs == null) avgs = 0;
+                obj.aggr = sums == 0 && avgs > 0 ? "AVG" : "SUM";
+            }
+            callback("result", obj);
+        }
+        else {
+            if (response.error && response.error !== '') {
+                message("warn", "Warning", response.error);
+            }
+        }
+        CommonPlugin.pbHideProgressBar("adhoc-commonalities");
+    }, getLocal("commonalities-query-id")), false, getLocal("commonalities-query-id"));
+}
+
+function mergeFilters(primary, secondary)
+{
+    function findFilter(list, name)
+    {
+        for (var i=0; i<list.length; i++) {
+            if (list[i].name == name) return list[i];
+        }
+        return null;
+    }
+    var filters = lang.clone(primary);
+    for (var i=0; i<secondary.length; i++) {
+        var f2 = secondary[i];
+        if (f2.value != null) {
+            var f1 = findFilter(filters, f2.name);
+            if (f1 == null) {
+                filters.push(lang.clone(f2));
+            }
+            else {
+                // secondary should ONLY contribute filters NOT in primary, not override values
+                // f1.value = lang.clone(f2.value);
+            }
+        }
+    }
+    return filters;
+}
+
+function wrapMessage(value, msg)
+{
+    var buf = [];
+    buf.push("<table style='width:100%;font-size:small;'>");
+    for (var i=0; i<value.errors.length; i++) {
+        buf.push("<tr style='vertical-align:top;'>");
+        buf.push("<td style='color:red;width:1%;padding-right:3px;'>Error</td>");
+        buf.push("<td style='width:99%;'>"+value.errors[i]+"</td>");
+        buf.push("</tr>");
+    }
+    for (var i=0; i<value.warns.length; i++) {
+        buf.push("<tr style='vertical-align:top;'>");
+        buf.push("<td style='width:1%;padding-right:3px;'>Warn</td>");
+        buf.push("<td style='width:99%;'>"+value.warns[i]+"</td>");
+        buf.push("</tr>");
+    }
+    buf.push("<tr style='vertical-align:top;'>");
+    buf.push("<td colspan='2' style='padding-top:5px;font-weight:bold;'>"+msg+"</td>");
+    buf.push("</tr>");
+    buf.push("</table>");
+    return buf.join("");
+}
+
+if (config != null && primary != null && secondary != null) {
+    var filters = mergeFilters(primary, secondary);
+    filters.push({
+        name : "$.clientTimezoneOffset",
+        value : (new Date()).getTimezoneOffset()
+    });
+    callback("filters", filters);
+    if (config["check-filters"] != null) {
+        CommonPlugin.invokeService(config["check-filters"], null, {filters:JSON.stringify(filters)}, function(response) {
+            if (response.status == "OK" && response.value != null) {
+                if (response.value.errors != null && response.value.errors.length > 0) {
+                    message("error", "Error", wrapMessage(response.value, FILTERS_ERROR_MESSAGE), function(value) {
+                        // value will be true... continue
+                    });
+                }
+                else if (response.value.warns != null && response.value.warns.length > 0) {
+                    message("confirm", "Warning", wrapMessage(response.value, FILTERS_WARN_MESSAGE), function(value) {
+                        // value is true if user clicks Yes, false if user clicks No
+                        if (value == true) {
+                            // value is true, proceed
+                            getCommonalities(filters);
+                        }
+                    });
+                }
+                else {
+                    getCommonalities(filters);
+                }
+            }
+            else if (response.status == "OK") {
+                // alert("NULL value from check-filters");
+                // INCOMPLETE filter settings... ignore... do not compute commonalities
+            }
+            else if (response.status == "Error") {
+                alert("check-filters: " + response.error);
+            }
+        });
+    }
+    else {
+        getCommonalities(filters);
+    }
+    if (config["get-time-range"] != null) {
+        CommonPlugin.invokeService(config["get-time-range"], null, {filters:JSON.stringify(filters)}, function(response) {
+            if (response.status == "OK") {
+                var timeRange = response.value;
+                var timeText = [];
+                timeText.push({
+                    "name" : "Start Time:",
+                    "value" : CommonPlugin.getLocaleDateTime(timeRange.fromUnixTime, config.locale, config.timezone, 
+                                                             timeRange.interval, (timeRange.toUnixTime - timeRange.fromUnixTime))
+                });
+                timeText.push({
+                    "name" : "End Time:",
+                    "value" : CommonPlugin.getLocaleDateTime(timeRange.toUnixTime, config.locale, config.timezone, 
+                                                             timeRange.interval, (timeRange.toUnixTime - timeRange.fromUnixTime))
+                });
+                callback("time-range", timeText);
+            }
+            else {
+                callback("time-range", []);
+            }
+        });
+    }
+    else {
+        callback("time-range", []);
+    }
+    if (config["get-where-clause"] != null) {
+        CommonPlugin.invokeService(config["get-where-clause"], null, {filters:JSON.stringify(filters)}, function(response) {
+            if (response.status == "OK") {
+                callback("where-clause", response.value);
+            }
+            else {
+                callback("where-clause", []);
+            }
+        });
+    }
+    else {
+        callback("where-clause", []);
+    }
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getComputedMeasureConfig" args="numEventTypes,metricAggregation,config,language,defaultValue" private="false">
+        <CodeText>
+          <![CDATA[var METRIC_LABELS = this.getMetricLabels(config, language);
+var model = {
+    "div-style" : "overflow:hidden;",
+    "categories" : [{
+        "name" : "anomaly",
+        "name-style" : "padding-left:0px;width:0px;",
+        "value-style" : "padding:0px;width:100%;",
+        "dimensions" : [{
+            "name" : "metric",
+            "label" : METRIC_LABELS["computed.metric.title"],
+            "type" : "enumeration",
+            "style" : "font-family:arial;",
+            "default" : "_count/value",
+            "none" : false,
+            "enums" : [
+            ]
+        }]
+    }]
+};
+
+// additional config for more control
+if (config["computed-measure-label"] != null) {
+    model["categories"][0]["dimensions"][0]["label"] = config["computed-measure-label"];
+}
+// only allow certain measures to be hidden... 
+var hideMeasures = config["hide-computed-measures"] || {};
+
+var enums = [];
+if (numEventTypes == 1) {
+    model["categories"][0]["dimensions"][0]["default"] = defaultValue || "_count/value";
+    switch (metricAggregation) {
+        case "SUM":
+            enums.push({
+                "value" : "_count/value",
+                "label" : METRIC_LABELS["computed.metric.count"]
+            });
+            break;
+        case "AVG":
+            // if no SUM based metrics and ONLY AVG based metrics... aggregation used is AVG
+            enums.push({
+                "value" : "_count/value",
+                "label" : METRIC_LABELS["computed.metric.average"]
+            });
+            break;
+    }
+    if (hideMeasures["_baseline/value"] != true) {
+        enums.push({
+            "value" : "_baseline/value",
+            "label" : METRIC_LABELS["computed.metric.baseline"]
+        });
+    }
+    enums.push({
+        "value" : "_diff/value",
+        "label" : METRIC_LABELS["computed.metric.difference"]
+    });
+}
+else {
+    model["categories"][0]["dimensions"][0]["default"] = defaultValue || "_diffPct/percent";
+}
+enums.push({
+    "value" : "_diffPct/percent",
+    "label" : METRIC_LABELS["computed.metric.difference.pct"]
+});
+if (metricAggregation == "SUM") {
+    if (hideMeasures["_sScore/score"] != true) {
+        enums.push({
+            "value" : "_sScore/score",
+            "label" : METRIC_LABELS["computed.metric.s.score"]
+        });
+    }
+    if (hideMeasures["_nsScore/score"] != true) {
+        enums.push({
+            "value" : "_nsScore/score",
+            "label" : METRIC_LABELS["computed.metric.ns.score"]
+        });
+    }
+    if (hideMeasures["_eScore/score"] != true) {
+        enums.push({
+            "value" : "_eScore/score",
+            "label" : METRIC_LABELS["computed.metric.e.score"]
+        });
+    }
+    if (hideMeasures["_pTotal/percent"] != true) {
+        enums.push({
+            "value" : "_pTotal/percent",
+            "label" : METRIC_LABELS["computed.metric.proportion.total"]
+        });
+    }
+}
+if (hideMeasures["_pBaseline/percent"] != true) {
+    enums.push({
+        "value" : "_pBaseline/percent",
+        "label" : METRIC_LABELS["computed.metric.proportion.baseline"]
+    });
+}
+if (hideMeasures["_pctDev/percent"] != true) {
+    enums.push({
+        "value" : "_pctDev/percent",
+        "label" : METRIC_LABELS["computed.metric.proportion.deviation"]
+    });
+}
+if (hideMeasures["_relDiff/percent"] != true) {
+    enums.push({
+        "value" : "_relDiff/percent",
+        "label" : METRIC_LABELS["computed.metric.relative.difference"]
+    });
+}
+model["categories"][0]["dimensions"][0]["enums"] = enums;
+return model;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getFilteredProportion" args="result,eventType,name,metricStyle,metricAggregation,config,language,metricField" private="false">
+        <CodeText>
+          <![CDATA[var METRIC_LABELS = this.getMetricLabels(config, language);
+var filtered = [];
+var meta = {
+    grid : {
+        labels : {
+            "_value" : METRIC_LABELS["proportion.metric.value"],
+            "_pctText" : METRIC_LABELS["proportion.metric.percent"],
+        },
+        displays : {
+            "_pct" : true,
+            "_pctText" : false,
+        },
+        columnSetting : {
+            "_metricText" : {
+                type : "number",
+                format : {
+                    type : "number",
+                    pattern : "2",
+                    option : "preComputed",
+                }
+            },
+            "_pct" : {
+                type : "number",
+                renderer : {
+                    dataType : "percent",
+                    format : {
+                        type    : "percent",
+                        pattern : "2",
+                        reduce  : false
+                    },
+                    percentOption : "preComputed",
+                }
+            }
+        },
+        contextMenu : {
+            columnItems : {}
+        }
+    }
+};
+for (var i=0, n=result.length; i<n; i++) {
+    var record = result[i];
+    if (record["_eventType"] == eventType && record["_name"] == name) {
+        filtered.push(lang.clone(record));
+    }
+}
+switch (metricStyle) {
+    case "value":
+        if (metricField == "_diff" || metricAggregation == "AVG") {
+            switch (metricAggregation) {
+                case "SUM":
+                    for (var i=0, n=filtered.length; i<n; i++) {
+                        var record = filtered[i];
+                        record["_pct"] = record["_metric"];
+                    }
+                    meta.grid.labels["_pct"] = METRIC_LABELS["proportion.metric.count"];
+                    meta.grid.columnSetting["_pct"].renderer.format.pattern = "0";
+                    break;
+                case "AVG":
+                    for (var i=0, n=filtered.length; i<n; i++) {
+                        var record = filtered[i];
+                        record["_pct"] = Number((record["_metric"]).toFixed(2));
+                    }
+                    meta.grid.labels["_pct"] = METRIC_LABELS["proportion.metric.average"];
+                    meta.grid.columnSetting["_pct"].renderer.format.pattern = "2";
+                    break;
+            }
+            meta.grid.displays["_pctText"] = false;
+            meta.grid.displays["_metricText"] = false;
+            meta.grid.columnSetting["_pct"].type = "number";
+            meta.grid.columnSetting["_pct"].renderer.dataType = "number";
+            meta.grid.columnSetting["_pct"].renderer.format.type = "number";
+        }
+        else {
+            // if showing SUM metric value, then we compute relative ratio within filter population
+            var total = 0;
+            for (var i=0, n=filtered.length; i<n; i++) {
+                var record = filtered[i];
+                total += Number(record["_metric"]);
+            }
+            for (var i=0, n=filtered.length; i<n; i++) {
+                var record = filtered[i];
+                var pct = Number((100 * Number(record["_metric"]) / total).toFixed(2));
+                record["_pct"] = pct
+                record["_pctText"] = pct.toFixed(2);
+            }
+            switch (metricAggregation) {
+                case "SUM":
+                    meta.grid.labels["_metricText"] = METRIC_LABELS["proportion.metric.count"];
+                    break;
+                case "AVG":
+                    meta.grid.labels["_metricText"] = METRIC_LABELS["proportion.metric.average"];
+                    break;
+            }
+            meta.grid.displays["_pctText"] = false;
+            meta.grid.columnSetting["_metricText"].format.type = "number";
+        }
+        break;
+    case "score":
+        for (var i=0, n=filtered.length; i<n; i++) {
+            var record = filtered[i];
+            record["_pct"] = record["_metric"];
+        }
+        meta.grid.displays["_pctText"] = false;
+        meta.grid.displays["_metricText"] = false;
+        meta.grid.labels["_pct"] = METRIC_LABELS["proportion.metric.score"];
+        meta.grid.columnSetting["_pct"].type = "number";
+        meta.grid.columnSetting["_pct"].renderer.dataType = "number";
+        meta.grid.columnSetting["_pct"].renderer.format.type = "number";
+        meta.grid.columnSetting["_pct"].renderer.format.pattern = "2";
+        break;
+    case "percent":
+        // if already showing percent, just show as-is
+        for (var i=0, n=filtered.length; i<n; i++) {
+            var record = filtered[i];
+            record["_pct"] = Number(record["_metric"]);
+            record["_pctText"] = String(record["_metricText"]);
+        }
+        meta.grid.labels["_metricText"] = METRIC_LABELS["proportion.metric.percent"];
+        meta.grid.displays["_metricText"] = false;
+        meta.grid.displays["_pctText"] = false;
+        break;
+    case "rank":
+        // if showing rank, show proportion of rank on max rank
+        // max rank is metrix value of first record in unfiltered list
+        var maxRank = Number(result[0]["_metric"]);
+        for (var i=0, n=filtered.length; i<n; i++) {
+            var record = filtered[i];
+            var pct = Number((100 * Number(record["_metric"]) / maxRank).toFixed(2));
+            record["_pct"] = pct
+            record["_pctText"] = pct.toFixed(2);
+        }
+        meta.grid.labels["_metricText"] = METRIC_LABELS["proportion.metric.rank"];
+        meta.grid.displays["_pctText"] = false;
+        meta.grid.columnSetting["_metricText"].format.type = "number";
+        break;
+}
+filtered.sort(function(a,b) {
+    if (a["_pct"] > b["_pct"]) return -1;
+    else if (a["_pct"] < b["_pct"]) return 1;
+    else return 0;
+});
+Object.keys(meta.grid.displays).forEach(function(key) {
+    if (meta.grid.displays[key] == false) {
+        meta.grid.contextMenu.columnItems[key] = false;
+    }
+});
+return {
+    data : filtered,
+    meta : meta,
+};
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getMetricLabels" args="config,language" private="false">
+        <CodeText>
+          <![CDATA[var NS = config.i18n_namespace;
+var METRIC_LABELS = {
+    "computed.metric.title"                : this.__getLocaleString(NS, language, "computed.metric.title", "Computed Measure"),
+    "computed.metric.count"                : this.__getLocaleString(NS, language, "computed.metric.count", "Number of Associated Events"),
+    "computed.metric.average"              : this.__getLocaleString(NS, language, "computed.metric.average", "Average of Associated Events"),
+    "computed.metric.baseline"             : this.__getLocaleString(NS, language, "computed.metric.baseline", "Baseline of Associated Events"),
+    "computed.metric.difference.pct"       : this.__getLocaleString(NS, language, "computed.metric.difference.pct", "+/- Percentage to Baseline"),
+    "computed.metric.difference"           : this.__getLocaleString(NS, language, "computed.metric.difference", "+/- to Baseline"),
+    "computed.metric.proportion.total"     : this.__getLocaleString(NS, language, "computed.metric.proportion.total", "Proportion of Total Events"),
+    "computed.metric.proportion.baseline"  : this.__getLocaleString(NS, language, "computed.metric.proportion.baseline", "Baseline Proportion of Total Events"),
+    "computed.metric.proportion.deviation" : this.__getLocaleString(NS, language, "computed.metric.proportion.deviation", "Deviation Proportion of Total Events"),
+    "computed.metric.relative.difference"  : this.__getLocaleString(NS, language, "computed.metric.relative.difference", "Relative Difference over Baseline"),
+    "computed.metric.index.dissimilarity"  : this.__getLocaleString(NS, language, "computed.metric.index.dissimilarity", "Index of Dissimilarity"),
+    "computed.metric.s.score"              : this.__getLocaleString(NS, language, "computed.metric.s.score", "S-Score"),
+    "computed.metric.ns.score"             : this.__getLocaleString(NS, language, "computed.metric.ns.score", "Normalized S-Score"),
+    "computed.metric.e.score"              : this.__getLocaleString(NS, language, "computed.metric.e.score", "E-Score"),
+
+    "proportion.metric.value"   : this.__getLocaleString(NS, language, "proportion.metric.value", "Dimension Value"),
+    "proportion.metric.percent" : this.__getLocaleString(NS, language, "proportion.metric.percent", "Percent"),
+    "proportion.metric.count"   : this.__getLocaleString(NS, language, "proportion.metric.count", "Count"),
+    "proportion.metric.score"   : this.__getLocaleString(NS, language, "proportion.metric.score", "Score"),
+    "proportion.metric.average" : this.__getLocaleString(NS, language, "proportion.metric.average", "Average"),
+    "proportion.metric.rank"    : this.__getLocaleString(NS, language, "proportion.metric.rank", "Rank"),
+
+    "selected.event.type"      : this.__getLocaleString(NS, language, "selected.event.type", "Event Type"),
+    "selected.column.name"     : this.__getLocaleString(NS, language, "selected.column.name", "Column Name"),
+    "selected.dimension.name"  : this.__getLocaleString(NS, language, "selected.dimension.name", "Dimension Name"),
+    "selected.dimension.value" : this.__getLocaleString(NS, language, "selected.dimension.value", "Dimension Value"),
+
+    "metric.event" : this.__getLocaleString(NS, language, "metric.event", "Event Type"),
+    "metric.name"  : this.__getLocaleString(NS, language, "metric.name", "Dimension"),
+    "metric.value" : this.__getLocaleString(NS, language, "metric.value", "Value"),
+};
+if (config["computed-measure-labels"] != null) {
+    for (var key in config["computed-measure-labels"]) {
+        METRIC_LABELS[key] = config["computed-measure-labels"][key];
+    }
+}
+return METRIC_LABELS;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getSelectedDetail" args="config,language,metricType,aggregation,selection,dimensions,measures" private="false">
+        <CodeText>
+          <![CDATA[var CommonPlugin = Plugin("Common");
+
+function toFixed(num)
+{
+    if (num == null) return "--";
+    num = Number(num);
+    if (isNaN(num)) return "--";
+    return Number(num).toFixed(2);
+}
+
+function toPercent(num)
+{
+    if (num == null) return "--";
+    num = Number(num);
+    if (isNaN(num)) return "--";
+    return (Number(num) * 100).toFixed(2) + "%";
+}
+
+if (selection != null && selection.length == 1) {
+    // only allow certain measures to be hidden... 
+    var hideMeasures = config["hide-computed-measures"] || {};
+    // allow for label customization
+    var METRIC_LABELS = this.getMetricLabels(config, language);
+    var record = selection[0];
+    dimensions.push({
+        name  : METRIC_LABELS["selected.event.type"],
+        value : record["_eventLabel"] || record["_eventType"],
+    });
+    dimensions.push({
+        name  : METRIC_LABELS["selected.column.name"],
+        value : record["_name"],
+    });
+    dimensions.push({
+        name  : METRIC_LABELS["selected.dimension.name"],
+        value : record["_label"],
+    });
+    dimensions.push({
+        name  : METRIC_LABELS["selected.dimension.value"],
+        value : record["_value"],
+    });
+    if (config["show-as-dimensions"] != null) {
+        // expect an array of {name, value}
+        (config["show-as-dimensions"]).forEach(function(item) {
+            dimensions.push({
+                name  : item.name,
+                value : item.value,
+            });
+        });
+    }
+    switch (aggregation) {
+        case "SUM":
+            measures.push({
+                name  : METRIC_LABELS["computed.metric.count"],
+                value : record["_count"],
+            });
+            break;
+        case "AVG":
+            measures.push({
+                name  : METRIC_LABELS["computed.metric.average"],
+                value : record["_count"],
+            });
+            break;
+    }
+    // while it may not make much sense to sort by baseline in ITEMS display, we should show baseline value in detail
+    measures.push({
+        name  : METRIC_LABELS["computed.metric.baseline"],
+        value : record["_baseline"] != null ? record["_baseline"] : "--",
+    });
+    if (metricType == "_diffPct/percent") {
+        // if user chose '+/- Percentage to Baseline', show _diffPct first and _diff in ()
+        measures.push({
+            name  : METRIC_LABELS["computed.metric.difference.pct"],
+            value : toPercent(record["_diffPct"]) + " (" + (record["_diff"] != null ? String(record["_diff"]) : "--") + ")",
+        });
+    }
+    else {
+        // else default to showing _diff first and _diffPct in ()
+        measures.push({
+            name  : METRIC_LABELS["computed.metric.difference"],
+            value : (record["_diff"] != null ? String(record["_diff"]) : "--") + " (" + toPercent(record["_diffPct"]) + ")",
+        });
+    }
+    if (aggregation == "SUM") {
+        if (hideMeasures["_sScore/score"] != true) {
+            measures.push({
+                name  : METRIC_LABELS["computed.metric.s.score"],
+                value : toFixed(record["_sScore"]),
+            });
+        }
+        if (hideMeasures["_nsScore/score"] != true) {
+            measures.push({
+                name  : METRIC_LABELS["computed.metric.ns.score"],
+                value : toFixed(record["_nsScore"]),
+            });
+        }
+        if (hideMeasures["_eScore/score"] != true) {
+            measures.push({
+                name  : METRIC_LABELS["computed.metric.e.score"],
+                value : toFixed(record["_eScore"]),
+            });
+        }
+        if (hideMeasures["_pTotal/percent"] != true) {
+            measures.push({
+                name  : METRIC_LABELS["computed.metric.proportion.total"],
+                value : toPercent(record["_pTotal"]),
+            });
+        }
+    }
+    if (hideMeasures["_pBaseline/percent"] != true) {
+        measures.push({
+            name  : METRIC_LABELS["computed.metric.proportion.baseline"],
+            value : toPercent(record["_pBaseline"]),
+        });
+    }
+    if (hideMeasures["_pctDev/percent"] != true) {
+        measures.push({
+            name  : METRIC_LABELS["computed.metric.proportion.deviation"],
+            value : toPercent(record["_pctDev"]),
+        });
+    }
+    if (hideMeasures["_relDiff/percent"] != true) {
+        measures.push({
+            name  : METRIC_LABELS["computed.metric.relative.difference"],
+            value : toPercent(record["_relDiff"]),
+        });
+    }
+    if (hideMeasures["_iod/percent"] != true && record["_iod"] != null) {
+        measures.push({
+            name  : METRIC_LABELS["computed.metric.index.dissimilarity"],
+            value : toPercent(record["_iod"]),
+        });
+    }
+    if (config["show-as-measures"] != null) {
+        // expect an array of {name, value}
+        (config["show-as-measures"]).forEach(function(item) {
+            measures.push({
+                name  : item.name,
+                value : item.value,
+            });
+        });
+    }
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="updateMetricFields" args="input,metricField,metricStyle,metricAggregation,config,language,maxrows" private="false">
+        <CodeText>
+          <![CDATA[var METRIC_LABELS = this.getMetricLabels(config, language);
+var output = [];
+var meta = {
+    grid : {
+        labels : {
+            "_eventLabel" : METRIC_LABELS["metric.event"],
+            "_label" : METRIC_LABELS["metric.name"],
+            "_value" : METRIC_LABELS["metric.value"],
+            "_metricText" : "#",
+            "_metric" : "#",
+        },
+        displays : {
+            "_metric" : true,
+            "_metricText" : true,
+        },
+        columnSetting : {
+            "_metricText" : {
+                type : "number",
+                format : {
+                    type : "number",
+                    pattern : "2",
+                    option : "preComputed",
+                }
+            },
+            "_metric" : {
+                type : "number",
+                renderer : {
+                    dataType : "number",
+                    format : {
+                        type    : "number",
+                        pattern : "0",
+                        reduce  : false
+                    },
+                    percentOption : "preComputed",
+                }
+            }
+        }
+    }
+};
+if (input != null && input.length > 0) {
+    for (var i=0, n=input.length; i<n; i++) {
+        var record = lang.clone(input[i]);
+        var metricValue = Number(record[metricField]);
+        if (isNaN(metricValue)) metricValue = 0;
+        record["_metric"] = metricValue;
+        output.push(record);
+    }
+    output.sort(function(a, b) {
+        if (a["_metric"] < b["_metric"]) {
+            return 1;
+        }
+        else if (a["_metric"] > b["_metric"]) {
+            return -1;
+        }
+        return 0;
+    });
+    if (maxrows != null && maxrows > 0 && output.length > maxrows) {
+        output = output.slice(0, maxrows);
+    }
+    var metricLabel = "Metric Value";
+    switch (metricField) {
+        case "_count":
+            switch (metricAggregation) {
+                case "SUM":
+                    metricLabel = METRIC_LABELS["computed.metric.count"]
+                    break;
+                case "AVG":
+                    metricLabel = METRIC_LABELS["computed.metric.average"]
+                    break;
+            }
+            break;
+        case "_baseline":
+            metricLabel = METRIC_LABELS["computed.metric.baseline"]
+            break;
+        case "_diff":
+            metricLabel = METRIC_LABELS["computed.metric.difference"]
+            break;
+        case "_diffPct":
+            metricLabel = METRIC_LABELS["computed.metric.difference.pct"]
+            break;
+        case "_sScore":
+            metricLabel = METRIC_LABELS["computed.metric.s.score"]
+            break;
+        case "_nsScore":
+            metricLabel = METRIC_LABELS["computed.metric.ns.score"]
+            break;
+        case "_eScore":
+            metricLabel = METRIC_LABELS["computed.metric.e.score"]
+            break;
+        case "_pTotal":
+            metricLabel = METRIC_LABELS["computed.metric.proportion.total"]
+            break;
+        case "_pBaseline":
+            metricLabel = METRIC_LABELS["computed.metric.proportion.baseline"]
+            break;
+        case "_pctDev":
+            metricLabel = METRIC_LABELS["computed.metric.proportion.deviation"]
+            break;
+        case "_relDiff":
+            metricLabel = METRIC_LABELS["computed.metric.relative.difference"]
+            break;
+        case "_iod":
+            metricLabel = METRIC_LABELS["computed.metric.index.dissimilarity"]
+            break;
+    }
+    meta.grid.labels["_metric"] = metricLabel;
+    meta.grid.labels["_metricText"] = metricLabel;
+    switch (metricStyle) {
+        case "value":
+            for (var i=0, n=output.length; i<n; i++) {
+                var record = output[i];
+                record["_metricText"] = Number(record["_metric"]);
+            }
+            switch (metricAggregation) {
+                case "SUM":
+                    meta.grid.columnSetting["_metric"].renderer.format.pattern = "0";
+                    break;
+                case "AVG":
+                    meta.grid.columnSetting["_metric"].renderer.format.pattern = "2";
+                    break;
+            }
+            meta.grid.displays["_metricText"] = false;
+            break;
+        case "score":
+            for (var i=0, n=output.length; i<n; i++) {
+                var record = output[i];
+                record["_metricText"] = Number(record["_metric"]);
+            }
+            meta.grid.columnSetting["_metric"].renderer.format.pattern = "2";
+            meta.grid.displays["_metricText"] = false;
+            break;
+        case "percent":
+            for (var i=0, n=output.length; i<n; i++) {
+                var record = output[i];
+                var pct = Number((Number(record["_metric"]) * 100).toFixed(2));
+                record["_metric"] = pct;
+                record["_metricText"] = pct.toFixed(2)
+            }
+            meta.grid.columnSetting["_metric"].renderer.dataType = "percent";
+            meta.grid.columnSetting["_metric"].renderer.format.type = "percent";
+            meta.grid.columnSetting["_metricText"].format.type = "percent";
+            meta.grid.displays["_metricText"] = false;
+            break;
+        case "rank":
+            var last = NaN;
+            var rank = 1;
+            for (var i=0, n=output.length; i<n; i++) {
+                var record = output[i];
+                var curr = Number(record["_metric"]);
+                if (isNaN(last)) {
+                    last = curr;
+                }
+                else if (last == curr) {
+                    // same rank as last
+                }
+                else {
+                    // next rank
+                    last = curr;
+                    rank = 1 + i;
+                }
+                record["_metric"] = output.length - rank;
+                record["_metricText"] = String(rank);
+            }
+            meta.grid.columnSetting["_metric"].format.type = "number";
+            meta.grid.displays["_metricText"] = false;
+            break;
+    }
+}
+return {
+    data : output,
+    meta : meta,
+};
+]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services/>
+    <Resources/>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

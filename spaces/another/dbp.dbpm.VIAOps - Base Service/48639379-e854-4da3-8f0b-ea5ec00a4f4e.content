@@ -1,0 +1,9 @@
+select distinct(${distinctColumn}) as value
+from ${tableName}
+${epochWhereClause}
+${datekeyWhereClause}
+${optionWhereClause}
+${customWhereClause}
+${searchWhereClause}
+${dimensionWhereClauses}
+order by value asc

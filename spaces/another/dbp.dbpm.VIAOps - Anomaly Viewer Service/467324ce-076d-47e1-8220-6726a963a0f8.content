@@ -1,0 +1,2 @@
+INSERT INTO viaops_anomaly_favorites (favorite_name, owner_id, metric_id, config_json, filter_json)
+VALUES (?, ?, ?, ?, ?)

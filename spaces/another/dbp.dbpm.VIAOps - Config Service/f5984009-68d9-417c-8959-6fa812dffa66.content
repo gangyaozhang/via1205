@@ -1,0 +1,15 @@
+-- NOTIFICATION_SEVERITY_SELECT_SQL
+SELECT
+    b.metric_id,
+    a.metric_id as _id_,
+    a.vitria_sev,
+    a.action,
+    a.vendor_netcool_sev,
+    a.network_condition,
+    a.remedy_sev,
+    a.metric_message_desc,
+    a.key_dimensions,
+    a.contact_groups
+FROM metric_severity_dim a, metric_dim b
+WHERE b.metric_id in (${metric_id_list})
+  AND a.metric_id = b.id

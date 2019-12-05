@@ -1,0 +1,7 @@
+select
+    concat(service_name,"|",sub_service_name) as correlation_name,
+    service_name,
+    sub_service_name,
+    correlation_time
+from viaops_incident_correlation
+-- where correlation_time is not null

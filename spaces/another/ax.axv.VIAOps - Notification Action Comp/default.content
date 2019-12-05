@@ -1,0 +1,583 @@
+<AnalyticsExplorerView is_init="false" name="VIAOps - Notification Action Comp" description="">
+  <ModelInfo nextPageId="2" validated="true">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="0.8"/>
+      <TileFontColor color="#000000"/>
+      <NoTileSpacing value="true"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <Page id="1" name="Default" title="Default" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="popup_target ">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<div class="tab" id="tabContainer">
+
+</div>
+
+<div class="content" id="tabContent">
+
+</div>]]></PageFrameContent>
+      <PageCustomCSS><![CDATA[.popup_target {
+    background-color: white !important;   
+}
+
+.popup_target .pageFrameLayout {
+    overflow: hidden;
+}
+    
+.popup_target .tab,
+.popup_target #tabContainer{
+    margin-left: 4px;
+    overflow: hidden;
+    border: none;
+    background-color: white !important;
+}
+
+/* Style the buttons inside the tab */
+.popup_target .tab button {
+    background-color: rgba(20,138,196,0);
+    color: rgba(20,138,196,1);
+    float: left;
+    border: 1px solid rgba(20,138,196,.15);
+    border-bottom: none;
+    border-radius: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: 0.3s;
+    font-size: 12px;
+    height: 24px;
+}
+
+/* Change background color of buttons on hover */
+.popup_target .tab button:hover {
+  background-color: rgba(20,138,196,0.15);
+}
+
+/* Create an active/current tablink class */
+.popup_target .tab button.active {
+  background-color: #148ac4;
+  color: white;
+  border-color: #148ac4;
+}
+
+/* Style the tab content */
+.popup_target .tabcontent {
+  display: none;
+  padding: 5px;
+}
+	
+.popup_target .content {
+    position: absolute;
+    bottom: 5px;
+    top: 25px;
+    left: 5px;
+    right: 8px;
+    border: 1px solid #148ac4;	
+	font-family: Arial;
+}
+	
+.popup_target .content .lineItem {
+    margin: 0;
+	margin-top: 2px;
+}
+
+.popup_target .content .lineItem.list {
+    height: 155px;
+}
+
+.popup_target .content .lineItem.id {
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+
+.popup_target .content .lineItem .label{
+    display: inline-block;
+    font-size: 11px;
+    width: 150px;
+    background-color: #eeeeee;
+    padding: 5px;
+    margin-right: 3px;
+    /* border-bottom: 1px solid #2d3538; */
+    vertical-align: top;
+}
+
+.popup_target .content .lineItem.list .label {
+    height: 160px; 
+    padding-bottom: 0px;
+}
+
+.popup_target .content .lineItem .value{
+    display: inline-block;
+    font-size: 11px;
+    font-weight: bold;
+    color: #148ac4;
+    width: 448px;
+    background-color: rgba( 0,0,0,0.03);
+    padding: 5px;
+}
+
+.popup_target .content .lineItem.list .value {
+    height: 155px;
+    overflow-y: visible;
+    overflow-x: hidden;
+}
+
+.popup_target .content .lineItem.list .value .listValue {
+    height: 16px;
+    display: block;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+}
+
+.popup_target .content .lineItem.list .value .listValue DIV {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.popup_target .content  input[type="button"].inci_button {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    padding: 5px 10px;
+    border-radius: 0px;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    background-color: #148ac4;
+    height: 26px;
+}
+
+.popup_target .content  input[type="button"].inci_button:hover {
+    color: #148ac4;
+    border: 1px solid #148ac4;
+    background-color: transparent;
+}]]></PageCustomCSS>
+      <PageProperties/>
+      <Layout type="10" numRow="NaN" numCol="NaN" count="NaN" templateType="7" screenHeight="undefined" renderType="undefined" positions="[]" unitSize="undefined" viewRows="NaN" viewCols="NaN"/>
+    </Page>
+    <Script>
+      <Stores/>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id="node:1" type="PortIn" label="Port IN 0" _undefined_title="" originHeight="160" width="130" height="217" x="60" y="80">
+        <dynOut id="dout:0" type="any[]" label="filter" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="notification" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any[]" label="dimensionItems" propagate="always" _isArray="true"/>
+        <dynOut id="dout:3" type="any[]" label="dimFilter" propagate="always" _isArray="true"/>
+        <dynOut id="dout:4" type="any" label="plugins" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:5" type="UserScript" label="Process Data" _undefined_title="" originHeight="117" width="180" height="177" x="560" y="28">
+        <dynIn id="din:0" type="any[]" label="filters" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any[]" label="selection" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="any[]" label="dimensionItems" evaluate="always" _isArray="true"/>
+        <dynIn id="din:3" type="any" label="plugins" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="selection" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="notifications" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any[]" label="dimensionItems" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:7" type="UserScript" label="Display Formatting" _undefined_title="" originHeight="117" width="180" height="177" x="1309" y="28">
+        <dynIn id="din:0" type="any[]" label="selection" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any[]" label="notifications" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="any[]" label="dimensionItems" evaluate="always" _isArray="true"/>
+        <dynIn id="din:3" type="string" label="metricField" evaluate="always" _isArray="true"/>
+        <dynIn id="din:4" type="string" label="metricFormat" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="integer" label="triggerNotification" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:9" type="UserScript" label="Script 0" _undefined_title="" originHeight="100" width="130" height="117" x="700" y="232">
+        <dynIn id="din:0" type="any[]" label="In(0)" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="string" label="Metric Field" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="string" label="Metric Style" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:11" type="UserScript" label="DimensionAnalysis" _undefined_title="" originHeight="117" width="160" height="267" x="460" y="547">
+        <dynIn id="din:0" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="Plugins" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Config" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="string" label="Language" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="event[]" label="Items" propagate="always" _isArray="true"/>
+        <dynOut id="dout:3" type="event[]" label="APEX" propagate="always" _isArray="true"/>
+        <dynOut id="dout:4" type="any[]" label="Metric Type" propagate="always" _isArray="true"/>
+        <dynOut id="dout:5" type="string" label="Metric Aggregation" propagate="always" _isArray="true"/>
+        <dynOut id="dout:6" type="any[]" label="Filters" propagate="always" _isArray="true"/>
+        <dynOut id="dout:7" type="any" label="Metric Config" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:13" type="UserScript" label="Script 2" _undefined_title="" originHeight="117" width="140" height="117" x="1040" y="567">
+        <dynIn id="din:0" type="string" label="metricField" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any[]" label="items" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="sortedItems" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="groupedItems" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:14" type="UserScript" label="Script 3" _undefined_title="" originHeight="117" width="130" height="117" x="800" y="647">
+        <dynIn id="din:0" type="string" label="func" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any[]" label="filters" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="aggr" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:15" type="UserScript" label="ProcessNotification" _undefined_title="" originHeight="117" width="147" height="267" x="1640" y="340">
+        <dynIn id="din:0" type="any[]" label="selection" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any[]" label="aggr" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="any[]" label="apex" evaluate="always" _isArray="true"/>
+        <dynIn id="din:3" type="any[]" label="filters" evaluate="always" _isArray="true"/>
+        <dynIn id="din:4" type="any[]" label="items" evaluate="always" _isArray="true"/>
+        <dynIn id="din:5" type="integer" label="triggerNotification" evaluate="always" _isArray="true"/>
+        <dynIn id="din:6" type="any[]" label="causationFactors" evaluate="always" _isArray="true"/>
+        <dynIn id="din:7" type="any" label="plugins" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="integer" label="trigger" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:18" type="UserScript" label="Script 4" _undefined_title="" originHeight="117" width="160" height="117" x="1090" y="800">
+        <dynIn id="din:0" type="any[]" label="selection" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="plugins" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="causationFactors" propagate="always" _isArray="true"/>
+      </Item>
+      <Link srcId="node:7" srcPort="dout:0" tgtId="node:15" tgtPort="din:5"/>
+      <Link srcId="node:14" srcPort="dout:0" tgtId="node:15" tgtPort="din:1"/>
+      <Link srcId="node:1" srcPort="dout:1" tgtId="node:15" tgtPort="din:0"/>
+      <Link srcId="node:11" srcPort="dout:3" tgtId="node:15" tgtPort="din:2"/>
+      <Link srcId="node:11" srcPort="dout:6" tgtId="node:15" tgtPort="din:3"/>
+      <Link srcId="node:13" srcPort="dout:0" tgtId="node:15" tgtPort="din:4"/>
+      <Link srcId="node:11" srcPort="dout:6" tgtId="node:14" tgtPort="din:1"/>
+      <Link srcId="node:11" srcPort="dout:5" tgtId="node:14" tgtPort="din:0"/>
+      <Link srcId="node:11" srcPort="dout:2" tgtId="node:13" tgtPort="din:1"/>
+      <Link srcId="node:9" srcPort="dout:0" tgtId="node:13" tgtPort="din:0"/>
+      <Link srcId="node:5" srcPort="dout:1" tgtId="node:7" tgtPort="din:1"/>
+      <Link srcId="node:5" srcPort="dout:0" tgtId="node:7" tgtPort="din:0"/>
+      <Link srcId="node:1" srcPort="dout:1" tgtId="node:5" tgtPort="din:1"/>
+      <Link srcId="node:1" srcPort="dout:0" tgtId="node:5" tgtPort="din:0"/>
+      <Link srcId="node:1" srcPort="dout:2" tgtId="node:5" tgtPort="din:2"/>
+      <Link srcId="node:1" srcPort="dout:3" tgtId="node:9" tgtPort="din:0"/>
+      <Link srcId="node:9" srcPort="dout:0" tgtId="node:7" tgtPort="din:3"/>
+      <Link srcId="node:9" srcPort="dout:1" tgtId="node:7" tgtPort="din:4"/>
+      <Link srcId="node:1" srcPort="dout:1" tgtId="node:11" tgtPort="din:0"/>
+      <Link srcId="node:13" srcPort="dout:1" tgtId="node:7" tgtPort="din:2"/>
+      <Link srcId="node:1" srcPort="dout:1" tgtId="node:18" tgtPort="din:0"/>
+      <Link srcId="node:18" srcPort="dout:0" tgtId="node:15" tgtPort="din:6"/>
+      <Link srcId="node:1" srcPort="dout:4" tgtId="node:5" tgtPort="din:3"/>
+      <Link srcId="node:1" srcPort="dout:4" tgtId="node:11" tgtPort="din:1"/>
+      <Link srcId="node:1" srcPort="dout:4" tgtId="node:18" tgtPort="din:1"/>
+      <Link srcId="node:1" srcPort="dout:4" tgtId="node:15" tgtPort="din:7"/>
+      <Input key="node:1/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;filter&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;notification&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;dimensionItems&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:3&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;dimFilter&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:4&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;plugins&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:5/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;filters&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;dimensionItems&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:3&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;plugins&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:5/cfg:model/default" value="&quot;var plugins = getInput(\&quot;din:3\&quot;);\nif (plugins == null) return;\n\nif( port != null ){\n \n    var filters         = getInput(\&quot;din:0\&quot;) || [];\n    var selection       = getInput(\&quot;din:1\&quot;) || [];\n    var dimensions      = getInput(\&quot;din:2\&quot;) || [];\n\n    \n    if( ( filters != null &amp;&amp; filters.length &gt; 0 ) &amp;&amp; ( selection != null &amp;&amp; selection.length &gt; 0 ) ){ \n        \n        var id = selection[0][\&quot;id\&quot;];\n        \n        if( id != null &amp;&amp; id != \&quot;\&quot; ){\n            plugins.Incident.getIncidentNotifications(filters, id, function(response) {\n                if (response.status == \&quot;OK\&quot;) {\n                    var result = response.value;\n                    setOutput(\&quot;dout:1\&quot;, result );\n                    setOutput(\&quot;dout:2\&quot;, dimensions );\n                } else {\n                    setOutput(\&quot;dout:1\&quot;, [] );\n                    setOutput(\&quot;dout:2\&quot;, [] );\n                }\n            });\n        }\n        \n        setOutput(\&quot;dout:0\&quot;, selection);\n    \n    }\n    \n}\n\n&quot;"/>
+      <Input key="node:5/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;notifications&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;dimensionItems&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:7/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;notifications&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;dimensionItems&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:3&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;metricField&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:4&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;metricFormat&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:7/cfg:model/default" value="&quot;var CommonPlugin = Plugin(\&quot;Common\&quot;);\n\nvar selection \t\t\t= [];\nvar notificationArr \t= [];\n\nvar dimensionItems      = [];\nvar metricField         = null;\nvar metricFormat        = null;\nvar metricType          = null;\nvar dimDisplayCt        = 5;\nvar dimDisplayArr       = [];\n\nvar data                = [];\n\nvar idArr\t\t        = [];\nvar countmap \t        = {};\nvar objmap\t\t        = {};\n\nvar notifications       = [];\n\nvar metricEnums = [{\n\t\t\t\t\&quot;value\&quot;: \&quot;_count/value\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;Number of Associated Events\&quot;\n\t\t\t},\n\t\t\t{\n\t\t\t\t\&quot;value\&quot;: \&quot;_baseline/value\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;Baseline of Associated Events\&quot;\n\t\t\t},\n\t\t\t{\n\t\t\t\t\&quot;value\&quot;: \&quot;_diff/value\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;+/- to Baseline\&quot;\n\t\t\t},\n\t\t\t{\n\t\t\t\t\&quot;value\&quot;: \&quot;_diffPct/percent\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;+/- Percentage to Baseline\&quot;\n\t\t\t},\n\t\t\t{\n\t\t\t\t\&quot;value\&quot;: \&quot;_pTotal/percent\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;Proportion of Total Events\&quot;\n\t\t\t},\n\t\t\t{\n\t\t\t\t\&quot;value\&quot;: \&quot;_pBaseline/percent\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;Baseline Proportion of Total Events\&quot;\n\t\t\t},\n\t\t\t{\n\t\t\t\t\&quot;value\&quot;: \&quot;_pctDev/percent\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;Deviation Proportion of Total Events\&quot;\n\t\t\t},\n\t\t\t{\n\t\t\t\t\&quot;value\&quot;: \&quot;_relDiff/percent\&quot;,\n\t\t\t\t\&quot;label\&quot;: \&quot;Relative Difference over Baseline\&quot;\n\t\t\t}]\n\n\n    function init() {\n\t\tselection \t\t\t= getInput(\&quot;din:0\&quot;) || [];\n\t\tnotificationArr \t= getInput(\&quot;din:1\&quot;) || [];\n\t\tdimensionItems      = getInput(\&quot;din:2\&quot;) || [];\n\t\tmetricField         = getInput(\&quot;din:3\&quot;);\n\t\tmetricFormat        = getInput(\&quot;din:4\&quot;);\n\t\t\n\t\tfor(var ec=0; ec &lt; metricEnums.length; ec++ ){\n\t\t    var eobj = metricEnums[ec];\n\t\t    if ( eobj[\&quot;value\&quot;].indexOf(metricField) &gt; -1 ){\n\t\t        metricType = eobj[\&quot;label\&quot;];   \n\t\t    }\n\t\t}\n\t\t\n\t\t//dimDisplayArr = getTopDimensions(dimDisplayCt);\n\t\t\n\t\tdimDisplayArr = dimensionItems || [];\n\t\t\n\t\tif(\tnotificationArr != null &amp;&amp; notificationArr.length &gt; 0 ){\n\t\t\tprocessNotifications( );\t\n\t\t}\n\t\t\n\t\tif( selection != null &amp;&amp; selection.length &gt; 0 ){\n\t\t\tprocessTabData( );\n\t\t}\n\t}\n\t\n\tfunction getTopDimensions(dimDisplayCt) {\n\t   \n\t    var arr = [];\n\t    arr = dimensionItems.sort(function(a, b){\n            return b[metricField]-a[metricField];\n        })\n        \n        return arr.slice(0,dimDisplayCt);\n        \n\t}\n\t\n\tfunction processNotifications(){\n\t\t\n\t\tfor ( var ntl=0, ntlen = notificationArr.length; ntl &lt; ntlen; ntl++ ){\n    \n\t\t\tvar obj\t= notificationArr[ntl];\n\n\t\t\tif( !countmap[ obj[\&quot;target_name\&quot;] ] ){\n\t\t\t\tcountmap[ obj[\&quot;target_name\&quot;] ] = 1;\n\t\t\t\tidArr.push( obj[\&quot;target_name\&quot;] );\n\t\t\t} else {\n\t\t\t\tcountmap[ obj[\&quot;target_name\&quot;] ] ++;\n\t\t\t}\n\n\t\t\tobj[\&quot;notification_count\&quot;] = countmap[ obj[\&quot;target_name\&quot;] ];\n\t\t\tobjmap[ obj[\&quot;target_name\&quot;] ] = obj;\n\t\t}\n\n\t\tfor( var im=0; im &lt; idArr.length; im++ ){\n\t\t\tvar ob = objmap[idArr[im]];\n\t\t\tnotifications.push(ob);\n\n\t\t}\n\t\t\n\t}\n\t\n\tfunction processTabData(){\n\t    \n\t    var incidentTime = selection[0][\&quot;local_detect\&quot;];\n\t    \n\t\tif( notifications != null &amp;&amp; notifications.length &gt; 0 ){\n\t\t    \n\t\t\tfor( var n=0; n &lt; notifications.length; n++ ){\n\t\t\t\tvar obj         = notifications[n];\n\t\t\t\tvar tsEpoch     = new Date(  parseInt( obj[\&quot;event_tm\&quot;] )  * 1000 );\n\t\t\t\tvar event_tm    = CommonPlugin.formatShortDate(tsEpoch);\n\t\t\t\t\n\t\t\t\tvar firstTS = 0;\n\t\t\t\tvar lastTS  = 0;\n\t\t\t\tfor ( var ntl=0, ntlen = notificationArr.length; ntl &lt; ntlen; ntl++ ){\n\t\t\t\t    var ntObj = notificationArr[ntl];\n\t\t\t\t\tif( ntObj[\&quot;target_name\&quot;] == obj[\&quot;target_name\&quot;] ){\n\t\t\t\t\t\t\n\t\t\t\t        if( firstTS == 0 || ntObj[\&quot;audit_ts\&quot;] &lt; firstTS){\n\t\t\t\t            firstTS = ntObj[\&quot;audit_ts\&quot;];   \n\t\t\t\t        }\n\t\t\t\t        if( lastTS == 0 || ntObj[\&quot;audit_ts\&quot;] &gt; lastTS ){\n\t\t\t\t            lastTS = ntObj[\&quot;audit_ts\&quot;];   \n\t\t\t\t        }\n\t\t\t\t    }\n\t\t\t\t}\n\t\t\t\t\n\t\t\t//\tvar firstNotifyMS       = new Date(  parseInt( firstTS )  * 1000 );\n\t\t\t//\tvar lastNotifyMS        = new Date(  parseInt( lastTS )  * 1000 );\n                    \n                var firstNotifyTS     = new Date( firstTS );\n                var lastNotifyTS      = new Date( lastTS );\n                    \n                var firstNotifyLabel    = CommonPlugin.formatShortDate(firstNotifyTS);\n                var lastNotifyLabel     = CommonPlugin.formatShortDate(lastNotifyTS);\n                //firstNotifyLabel = firstTS;\n                //lastNotifyLabel = lastTS;\n                var notify_window       = firstNotifyLabel + \&quot; - \&quot; + lastNotifyLabel;\n\n\t\t\t\tdata.push({\n\t\t\t\t\tcontext:            \&quot;automatic\&quot;,\n\t\t\t\t\tid:                 obj[\&quot;id\&quot;],\n\t\t\t\t\tcount:              obj[\&quot;notification_count\&quot;], \n\t\t\t\t\tservice:            obj[\&quot;service\&quot;],\n\t\t\t\t\tsubService:         obj[\&quot;sub_service\&quot;],\n\t\t\t\t\tmetric:             obj[\&quot;metricname\&quot;],\n\t\t\t\t\tincidentTime:       incidentTime,\n\t\t\t\t\tfirstNotification:  firstNotifyLabel,\n\t\t\t\t\tlastNotification:   lastNotifyLabel,\n\t\t\t\t\ttarget:             obj[\&quot;target_name\&quot;],\n\t\t\t\t\ttargetAddress:      obj[\&quot;target_addr\&quot;],\n\t\t\t\t\ttargetInterface:    obj[\&quot;target_interface\&quot;]\n\t\t\t\t});\n\n\t\t\t}\n\t\t}\n\t\t\n\t\tfor( var s=0; s &lt; selection.length; s++ ){\n\t\t\tvar obj2 = selection[s];\n\n\t\t\tdata.push({\n\t\t\t\tcontext:            \&quot;manual\&quot;,\n\t\t\t\tid:                 obj2[\&quot;id\&quot;],\n\t\t\t\tservice:            obj2[\&quot;service\&quot;],\n\t\t\t\tservice_label:      obj2[\&quot;service_label\&quot;],\n\t\t\t\tsubService:         obj2[\&quot;sub_service\&quot;],\n\t\t\t\tsub_service_label:  obj2[\&quot;sub_service_label\&quot;],\n\t\t\t\tcomponent_label:    obj2[\&quot;component_label\&quot;],\n\t\t\t\tmetric:             obj2[\&quot;dim_values\&quot;],\n\t\t\t\tmetric_label:       obj2[\&quot;metric_label\&quot;],\n\t\t\t\ttarget:             \&quot;Take Action\&quot;,\n\t\t\t\tincidentTime:       incidentTime,\n\t\t\t\tincidentType:       obj2[\&quot;type\&quot;],\n\t\t\t\tcausation:          obj2[\&quot;causation\&quot;],\n\t\t\t\tscoreMinMax:        obj2[\&quot;score_min_max\&quot;],\n\t\t\t\tscore_bl:           obj2[\&quot;metric_value_bl\&quot;],\n\t\t\t\tcalls_bl:           obj2[\&quot;call_count_bl\&quot;]\n\t\t\t});\n\t\t}\n\t\t\n\t\tif( data != null &amp;&amp; data.length &gt; 0 ){\n\n\t\t\t//setOutput(\&quot;dout:0\&quot;, data);   \n\t\t\tprocessOutput(data);\n\t\t}\n\t\t\n\t}\n\t\n\t\n\tfunction processOutput(data){\t\t\n\t\t\n\t\tconstructTabs();\n\t\tconstructTabContent();\n\t\tinitializeTabs();\t\n\t\t\n\t}\n\t\n\n\tfunction constructTabs(){\n\t\tvar tabTarget\t= $(\&quot;#tabContainer\&quot;);\n\t\t\ttabTarget.empty();\n\t\tfor( var i=0; i&lt;data.length; i++ ){\n\t\t\tvar active = ( i == 0 ) ? &apos; active&apos; : &apos;&apos;;\n\t\t\tvar count = \&quot;\&quot;;\n\t\t\tif( data[i][\&quot;count\&quot;] ) { count = \&quot; ( \&quot; + data[i][\&quot;count\&quot;] + \&quot; )\&quot;; }\n\t\t\tvar _tab = $(&apos;&lt;button&gt;&apos;, { class: &apos;tablinks&apos;+active, id: data[i][\&quot;target\&quot;].split(\&quot; \&quot;).join(\&quot;\&quot;) }).text( data[i][\&quot;target\&quot;] + count );\n\t\t\ttabTarget.append(_tab);\n\t\t}\n\t}\n\n\tfunction constructTabContent(){\n\t\tvar tabContent\t= $(\&quot;#tabContent\&quot;);\n\t\t\ttabContent.empty();\n\t\t\n\t\tfor( var i=0; i&lt; data.length; i++ ){\n\t\t\tvar dObj \t= data[i];\n\t\t\tvar style\t= \&quot;\&quot;;\n\t\t\t\n\t\t\tif( i == 0 ) { \n\t\t\t\tstyle = \&quot;display: block;\&quot;; \n\t\t\t}\n\t\t\t\n\t\t\tvar cont \t= $(&apos;&lt;div&gt;&apos;, { id: data[i][\&quot;target\&quot;].split(\&quot; \&quot;).join(\&quot;\&quot;), class: &apos;tabcontent&apos;, style: style } );\n\t\t\t\n\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem id&apos;&gt;\&quot; + data[i][\&quot;id\&quot;] + \&quot;&lt;/div&gt;\&quot;);\n\t\t\t\n\t\t\tif(dObj[&apos;context&apos;] == &apos;automatic&apos;){\n\t\t\t\t\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Service: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;service\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Sub-Service: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;subService\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tvar dim_val     = data[i][\&quot;metric\&quot;];\n\t\t\t\tvar metricArr   = dim_val.split(\&quot;|\&quot;);\n\n\t\t\t\tif( metricArr.length &gt; 1 ){\n\t\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Component: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+metricArr[0]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Metric: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+metricArr[1]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\t} else {\n\t\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Metric: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;metric\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\t}\n                cont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Incident Time: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;incidentTime\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;First Notification: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;firstNotification\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Last Notification: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;lastNotification\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Notification Count: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;count\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Notification Target: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;target\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Target Address: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;targetAddress\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Notification Protocol: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;targetInterface\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\t\n\t\t\t} else {\n\t\t\t\t\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Service: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;service_label\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Sub-Service: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;sub_service_label\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Component: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;component_label\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Metric: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;metric_label\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Incident Time: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;incidentTime\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Incident Type: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;incidentType\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Causation: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;causation\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Score Range: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;scoreMinMax\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Score over Baseline: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;score_bl\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\tcont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Calls over Baseline: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+data[i][\&quot;calls_bl\&quot;]+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\t\n\t\t\t\tif( metricType != null ){\n\t\t\t\t    cont.append(\&quot;&lt;div class=&apos;lineItem&apos;&gt;&lt;div class=&apos;label&apos;&gt;Dimension Metric Displayed: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;+metricType+\&quot;&lt;/div&gt;&lt;/div&gt;\&quot;);\n\t\t\t\t}\n\t\t\t\t\n\t\t\t\tif( dimDisplayArr.length &gt; 0 ){\n\t\t\t\tvar dimCont = \&quot;&lt;div class=&apos;lineItem list&apos;&gt;&lt;div class=&apos;label&apos;&gt;Relevant Dimensions: &lt;/div&gt;&lt;div class=&apos;value&apos;&gt;\&quot;;\n\t\t\t\tvar dims = \&quot;\&quot;;\n\t\t\t\t    \n\t\t\t\t    for( var da=0, dalen=dimDisplayArr.length; da &lt; dalen; da++ ){\n\t\t\t\t        var dimensionName = dimDisplayArr[da][\&quot;name\&quot;];\n\t\t\t\t        var itemArr = dimDisplayArr[da][\&quot;items\&quot;] || [];\n\t\t\t\t        var itemCount = ( itemArr.length &lt; dimDisplayCt ) ? itemArr.length : dimDisplayCt;\n\t\t\t\t        for( var dai=0; dai &lt; itemCount; dai++ ){\n\t\t\t\t            dims += \&quot;&lt;div class=&apos;listValue&apos;&gt;&lt;div style=&apos;width: 68%;display: inline-block;&apos;&gt;\&quot;;\n    \t\t\t\t        dims += /*dimensionName + \&quot;: \&quot; +*/ itemArr[dai][\&quot;_label\&quot;];\n    \t\t\t\t        dims += \&quot;: \&quot;;\n    \t\t\t\t        dims += itemArr[dai][\&quot;_value\&quot;];\n    \t\t\t\t        dims += \&quot;&lt;/div&gt;\&quot;;\n    \t\t\t\t        \n    \t\t\t\t        dims += \&quot;&lt;div style=&apos;width: 15%; display: inline-block; text-align: right; padding-right: 7px&apos;&gt;\&quot;;\n    \t\t\t\t        if( metricFormat == \&quot;percent\&quot; ){\n    \t\t\t\t            dims += Math.round( parseFloat(itemArr[dai][metricField]) * 100 ) + \&quot;%\&quot;;\n    \t\t\t\t            \n    \t\t\t\t        } else {\n    \t\t\t\t            dims += itemArr[dai][metricField];\n    \t\t\t\t        }\n    \t\t\t\t        dims += \&quot;&lt;/div&gt;\&quot;;\n    \t\t\t\t        \n    \t\t\t\t        dims += \&quot;&lt;div style=&apos;width: 15%; display: inline-block; text-align: left; padding-right: 7px; color: #6C7173;&apos;&gt;(\&quot;;\n    \t\t\t\t        dims += itemArr[dai][\&quot;_count\&quot;];\n    \t\t\t\t        dims += \&quot;)&lt;/div&gt;\&quot;;\n    \t\t\t\t        \n    \t\t\t\t        dims += \&quot;&lt;/div&gt;\&quot;;    \n\t\t\t\t            \n\t\t\t\t        }\n\t\t\t\t        \n\t\t\t\t    }\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t    /*for ( var da=0; da &lt; dimDisplayArr.length; da++ ){\n\t\t\t\t        dims += \&quot;&lt;div class=&apos;value&apos; style=&apos;display: block; border: none&apos;&gt;&lt;div style=&apos;width: 60%; display: inline-block;&apos;&gt;\&quot;;\n\t\t\t\t        dims += dimDisplayArr[da][\&quot;_label\&quot;];\n\t\t\t\t        dims += \&quot;: \&quot;;\n\t\t\t\t        dims += dimDisplayArr[da][\&quot;_value\&quot;];\n\t\t\t\t        dims += \&quot;&lt;/div&gt;\&quot;;\n\t\t\t\t        \n\t\t\t\t        dims += \&quot;&lt;div style=&apos;width: 20%; display: inline-block; text-align: right; padding-right: 7px&apos;&gt;\&quot;;\n\t\t\t\t        if( metricFormat == \&quot;percent\&quot; ){\n\t\t\t\t            dims += Math.round( parseFloat(dimDisplayArr[da][metricField]) * 100 ) + \&quot;%\&quot;;\n\t\t\t\t            \n\t\t\t\t        } else {\n\t\t\t\t            dims += dimDisplayArr[da][metricField];\n\t\t\t\t        }\n\t\t\t\t        dims += \&quot;&lt;/div&gt;\&quot;;\n\t\t\t\t        \n\t\t\t\t        dims += \&quot;&lt;div style=&apos;width: 18%; display: inline-block; text-align: right; padding-right: 7px; color: #6C7173;&apos;&gt;(\&quot;;\n\t\t\t\t        dims += dimDisplayArr[da][\&quot;_count\&quot;];\n\t\t\t\t        dims += \&quot;)&lt;/div&gt;\&quot;;\n\t\t\t\t        \n\t\t\t\t        dims += \&quot;&lt;/div&gt;\&quot;;\n\t\t\t\t    }*/\n\t\t\t\tdimCont += dims;\n\t\t\t\tdimCont += \&quot;&lt;/div&gt;&lt;/div&gt;\&quot;;\n\t\t\t\t\n\t\t\t\tcont.append(dimCont);\n\t\t\t\tconsole.log( \&quot;dimCont\&quot; );\n\t\t\t\t\n\t\t\t\t}\n\t\t\t\t\n\n\t\t\t\tbutton              = document.createElement(\&quot;input\&quot;);\n\t\t\t\tbutton.type         = \&quot;button\&quot;;\n\t\t\t\tbutton.className    = \&quot;inci_button\&quot;;\n\t\t\t\tbutton.value        = \&quot;Submit Notification\&quot;;\n\t\t\t\tbutton.onclick = function(){\n\t\t\t\t\tsubmitNotification( selection[0], this );\n\t\t\t\t\tsetOutput( \&quot;dout:0\&quot;, Math.round( Math.random() * 1000000000000000 ) )\n\t\t\t\t};\n\t\t\t\tcont.append(button);\n\t\t\t\t\n\t\t\t}\n\t\t\t\n\t\t\ttabContent.append(cont);\n\t\t}\n\t\t\n\t}\n\t\n\tfunction initializeTabs(){\n\t\t$(&apos;.tablinks&apos;).click(function(){\n\t\t\tvar _this \t= $(this)[0];\n\t\t\tvar _id \t= _this[\&quot;id\&quot;].replace(\&quot; \&quot;, \&quot;\&quot; );\n\n\t\t\t$(&apos;.tabcontent&apos;).css(&apos;display&apos;, &apos;none&apos;);\n\t\t\t$(&apos;.tablinks&apos;).removeClass(\&quot;active\&quot;);\n\n\t\t\t$(this).addClass(\&quot;active\&quot;);\n\t\t\t$(&apos;DIV#&apos;+_id).css(&apos;display&apos;, &apos;block&apos;);\n\n\t\t});\n\t}\n\n\n\t\n\tfunction submitNotification( obj, btn ){\n\t\tbtn.value = \&quot;Notification Submitted\&quot;;\n\t\tbtn.style.backgroundColor   = \&quot;#68AD80\&quot;;\n\t\tbtn.style.borderColor       = \&quot;5A8E6A\&quot;;\n\t\tbtn.style.color             = \&quot;#ffffff\&quot;\n\t\tconsole.log( \&quot;Notification Submitted: \&quot; + obj.id ); \n\t}\n\n\n\n\n\n\n\n\n\n\n\n\n\nrequire([(window.vtAppId ||  &apos;/vitria-oi/app/dojoclient&apos;) + \&quot;/html/scripts/Jquery/src/jquery.js\&quot;],function() {\n    jQuery(document).ready(function ($) {\n        init();\n    });\n});\n&quot;"/>
+      <Input key="node:9/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;In(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:9/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Metric Field&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Metric Style&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:9/cfg:model/default" value="&quot;if (port != null) {\n    var selection = getInput(\&quot;din:0\&quot;);\n    if (selection !== null &amp;&amp; selection.length &gt; 0) {\n        var name = null;\n        var value = null;\n        for (var i=0; i&lt;selection.length; i++) {\n            var record = selection[i];\n            switch (record.name) {\n                case \&quot;anomaly.metric\&quot;:\n                    var toks = (record.value || \&quot;_count/value\&quot;).split(\&quot;/\&quot;);\n            \t\tvar metricField = toks[0];\n            \t\tvar metricStyle = toks[1];\n                    setOutput(\&quot;dout:0\&quot;, metricField);\n                    setOutput(\&quot;dout:1\&quot;, metricStyle);\n                    break;\n            }\n        }\n    }\n}\n&quot;"/>
+      <Input key="node:5/cfg:schema/default" value="&quot;var schema = [];\r\nschema.push({\r\n    name:\&quot;_eventType\&quot;,\r\n    label:\&quot;Event Type\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_eventLabel\&quot;,\r\n    label:\&quot;Event Label\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_name\&quot;,\r\n    label:\&quot;Column Name\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_label\&quot;,\r\n    label:\&quot;Dimension Name\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_value\&quot;,\r\n    label:\&quot;Dimension Value\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_count\&quot;,\r\n    label:\&quot;Count\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_baseline\&quot;,\r\n    label:\&quot;Baseline\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_diff\&quot;,\r\n    label:\&quot;Difference\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_diffPct\&quot;,\r\n    label:\&quot;Percentage Difference\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_pBaseline\&quot;,\r\n    label:\&quot;Baseline Proportion\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_pTotal\&quot;,\r\n    label:\&quot;Total Proportion\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_relDiff\&quot;,\r\n    label:\&quot;Relative Difference\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_pctDev\&quot;,\r\n    label:\&quot;Deviation Proportion\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nsetOutputSchema(\&quot;dout:2\&quot;, schema);&quot;"/>
+      <Input key="node:11/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Plugins&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:11/cfg:model/default" value="&quot;var plugins = getInput(\&quot;din:1\&quot;);\nif (plugins == null) return;\n\nvar CommonPlugin = Plugin(\&quot;Common\&quot;);\nvar CommonalityPlugin = Plugin(\&quot;Commonality\&quot;);\n\nvar METRIC_TYPES = [\n    \&quot;_count/value\&quot;,\n    \&quot;_baseline/value\&quot;,\n    \&quot;_diff/value\&quot;,\n    \&quot;_diffPct/percent\&quot;,\n    \&quot;_pTotal/percent\&quot;,\n    \&quot;_pBaseline/percent\&quot;,\n    \&quot;_pctDev/percent\&quot;,\n    \&quot;_relDiff/percent\&quot;\n];\n\nvar config = {\n    \&quot;locale\&quot; : \&quot;en-US\&quot;,\n    \&quot;i18n_namespace\&quot; : \&quot;com.vitria.dimension.analysis\&quot;,\n    \&quot;commonalities-config\&quot; : {\n        \&quot;method\&quot; : \&quot;POST\&quot;,\n        \&quot;url\&quot; : plugins.Dimension[\&quot;$uri\&quot;] + \&quot;/getCommonalities\&quot;,\n        \&quot;cancel-url\&quot; : plugins.Dimension[\&quot;$uri\&quot;] + \&quot;/abortSQLQuery\&quot;\n    },\n    \&quot;locales\&quot; : [{\n        \&quot;code\&quot; : \&quot;en\&quot;,\n        \&quot;url\&quot;  : plugins.Dimension[\&quot;$uri\&quot;] + \&quot;/en\&quot;\n    }],\n    \&quot;hide-computed-measures\&quot; : {\n        \&quot;_baseline/value\&quot;    : true,\n        \&quot;_pBaseline/percent\&quot; : true,\n        \&quot;_pctDev/percent\&quot;    : true\n    },\n\t\&quot;computed-measure-labels\&quot; : {\n\t\t\&quot;computed.metric.title\&quot; : \&quot;Dimension Analysis Measure\&quot;,\n\t\t\&quot;computed.metric.count\&quot; : \&quot;Value of Associated Events\&quot;,\n\t},\n};\nif (getOutput(\&quot;dout:7\&quot;) == null) {\n    setOutput(\&quot;dout:7\&quot;, {\n        model : CommonalityPlugin.getComputedMeasureConfig(1, \&quot;SUM\&quot;, config, \&quot;en\&quot;)\n    });\n}\n\nif (port == \&quot;din:0\&quot;) {\n    var selection = getInput(port) || [];\n    if (selection.length == 1) {\n        var selected = selection[0];\n        setOutput(\&quot;dout:2\&quot;, []);\n        setOutput(\&quot;dout:3\&quot;, []);\n        plugins.Incident.getFiltersFromIncident(selected, \&quot;dimensionAnalysis\&quot;, (new Date()).getTimezoneOffset(), function(response) {\n            if (response.status == \&quot;OK\&quot; &amp;&amp; response.value != null) {\n                var filters = response.value;\n                CommonPlugin.loadLocaleResources(config.i18n_namespace, config.locales.slice(0), function() {\n                    CommonalityPlugin.getCommonalities(CommonPlugin, config, \&quot;en\&quot;, filters, [], getLocal, setLocal, function(name, value) {\n                        if (name == \&quot;result\&quot;) {\n                            var dimensions = value.items;\n                            if( dimensions &amp;&amp; dimensions != null &amp;&amp; dimensions.length &gt; 0 ){\n                                for( var d=0, dlen=dimensions.length; d &lt; dlen; d++ ){\n                                    dimensions[d][&apos;_eventFilters&apos;] = \&quot;\&quot;;\n                                    if( !dimensions[d][&apos;_sScore&apos;] || dimensions[d][&apos;_sScore&apos;] == null ){\n                                        dimensions[d][&apos;_sScore&apos;] = 0;   \n                                    }\n                                    if( !dimensions[d][&apos;_nsScore&apos;] || dimensions[d][&apos;_nsScore&apos;] == null ){\n                                        dimensions[d][&apos;_nsScore&apos;] = 0;   \n                                    }\n                                }\n                            }\n                            setOutput(\&quot;dout:0\&quot;, config);\n                            setOutput(\&quot;dout:1\&quot;, \&quot;en\&quot;);\n                            setOutput(\&quot;dout:2\&quot;, dimensions);\n                            setOutput(\&quot;dout:3\&quot;, value.apex);\n                            setOutput(\&quot;dout:4\&quot;, [{\n                                \&quot;name\&quot;: \&quot;anomaly.metric\&quot;,\n                                \&quot;value\&quot;: METRIC_TYPES[7]\n                            }]);\n                            setOutput(\&quot;dout:5\&quot;, value.aggr);\n                            setOutput(\&quot;dout:6\&quot;, filters);\n                        }\n                    });\n                });\n            }\n        });\n    }\n}\n&quot;"/>
+      <Input key="node:11/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Language&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Items&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:3&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;APEX&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:4&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Metric Type&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:5&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;Metric Aggregation&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:6&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Filters&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:7&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Metric Config&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:11/cfg:schema/default" value="&quot;var schema = [];\r\nschema.push({\r\n    name:\&quot;_eventType\&quot;,\r\n    label:\&quot;Event Type\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_eventLabel\&quot;,\r\n    label:\&quot;Event Label\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_name\&quot;,\r\n    label:\&quot;Column Name\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_label\&quot;,\r\n    label:\&quot;Dimension Name\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_value\&quot;,\r\n    label:\&quot;Dimension Value\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_count\&quot;,\r\n    label:\&quot;Count\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_baseline\&quot;,\r\n    label:\&quot;Baseline\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_diff\&quot;,\r\n    label:\&quot;Difference\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_diffPct\&quot;,\r\n    label:\&quot;Percentage Difference\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_pBaseline\&quot;,\r\n    label:\&quot;Baseline Proportion\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_pTotal\&quot;,\r\n    label:\&quot;Total Proportion\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_relDiff\&quot;,\r\n    label:\&quot;Relative Difference\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_pctDev\&quot;,\r\n    label:\&quot;Deviation Proportion\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nsetOutputSchema(\&quot;dout:2\&quot;, schema);\r\n\r\nschema = [];\r\nschema.push({\r\n    name:\&quot;_eventType\&quot;,\r\n    label:\&quot;Event Type\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_eventLabel\&quot;,\r\n    label:\&quot;Event Label\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_count\&quot;,\r\n    label:\&quot;Count\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_baseline\&quot;,\r\n    label:\&quot;Baseline\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_diff\&quot;,\r\n    label:\&quot;Difference\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;_diffPct\&quot;,\r\n    label:\&quot;Pct Difference\&quot;,\r\n    type:\&quot;number\&quot;\r\n});\r\nsetOutputSchema(\&quot;dout:3\&quot;, schema);\r\n&quot;"/>
+      <Input key="node:13/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;metricField&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;items&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:13/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;sortedItems&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;groupedItems&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:13/cfg:model/default" value="&quot;var sortField   = getInput(\&quot;din:0\&quot;);\nvar dimItems    = getInput(\&quot;din:1\&quot;) || [];\n\nif( sortField != null &amp;&amp; sortField != \&quot;\&quot; &amp;&amp; dimItems.length &gt; 0 ){\n    \n    var dimArr = [];\n\t    dimArr = dimItems.sort(function(a, b){\n            return b[sortField]-a[sortField];\n        }) \n    \n    setOutput(\&quot;dout:0\&quot;, dimArr)\n        \n    var groups = [];\n    var dimMap = [];\n    for( var i=0, ilen=dimArr.length; i &lt; ilen; i++ ){\n           var _label = dimArr[i][\&quot;_label\&quot;];\n           if( dimMap.indexOf(_label) &lt; 0 ){\n               dimMap.push( _label );\n           }\n    }\n    \n    for( var dm=0, dmlen=dimMap.length; dm &lt; dmlen; dm++ ){\n        var groupName = dimMap[dm];\n        var group = { name: groupName, items: [] };\n        for( var dmi=0, dmilen=dimArr.length; dmi &lt; dmilen; dmi++ ){\n            var _item = dimArr[dmi];\n            if( _item[\&quot;_label\&quot;] == groupName ){\n                group[\&quot;items\&quot;].push(_item);\n            }\n        \n        }\n        \n        groups.push(group);\n        \n    }\n    \n    setOutput( \&quot;dout:1\&quot;, groups );\n    \n}&quot;"/>
+      <Input key="node:14/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;func&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;filters&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:14/cfg:model/default" value="&quot;var func    = getInput(\&quot;din:0\&quot;).toLowerCase() || \&quot;\&quot;;\nvar filters = getInput(\&quot;din:1\&quot;) || [];\n\nif( func != \&quot;\&quot; &amp;&amp; filters.length &gt; 0 ){\n    \n    var aggr = {};   \n    \n    for( var f=0; f &lt; filters.length; f++ ){\n        if( filters[f][\&quot;name\&quot;].split(\&quot;.\&quot;)[0] == &apos;data&apos; ){\n            var _fName  = filters[f][\&quot;name\&quot;].split(\&quot;.\&quot;)[1];\n            var _fVal   = filters[f][\&quot;value\&quot;];\n            aggr[_fName] = _fVal.toString();\n        }\n    }\n    \n    setOutput( \&quot;dout:0\&quot;, [aggr] );\n    \n}\n\n&quot;"/>
+      <Input key="node:14/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;aggr&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:15/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;aggr&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;apex&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:3&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;filters&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:4&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;items&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:5&quot;,&quot;portType&quot;:&quot;integer&quot;,&quot;portLabel&quot;:&quot;triggerNotification&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;},{&quot;portId&quot;:&quot;din:6&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;causationFactors&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:7&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;plugins&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:15/cfg:model/default" value="&quot;var plugins = getInput(\&quot;din:7\&quot;);\nif (plugins == null) return;\n\nvar FSPlugin            = Plugin(\&quot;HDFS\&quot;);\nvar CommonPlugin        = Plugin(\&quot;Common\&quot;);\n\nvar fsHost              = \&quot;hdfs://apoopsintmln-ncw-clm01:8020\&quot;;\nvar path                = \&quot;/viaops/incident_plus_da/\&quot;;\nvar filename            = \&quot;\&quot;; // \&quot;foo-\&quot; + getUUID() + \&quot;.json\&quot;;\n\nvar selection           = getInput(\&quot;din:0\&quot;) || []; \nvar aggr                = getInput(\&quot;din:1\&quot;) || [];\nvar apex                = getInput(\&quot;din:2\&quot;) || [];\nvar filters             = getInput(\&quot;din:3\&quot;) || [];\nvar items               = getInput(\&quot;din:4\&quot;) || [];\nvar trigger             = getInput(\&quot;din:5\&quot;);\n\nvar causationFactors    = getInput(\&quot;din:6\&quot;) || [];\n\nvar content = {\n    data: \&quot;\&quot;\n}\n\nvar payload = { \n    call_da: {},\n    incident_da: {\n        aggrs:      {    \n                        aggr: [], \n                        avgs: 0, \n                        sums: 0 \n                    },\n        apex :      [],\n        filters:    [],\n        items:      []\n    },\n    incident: {},\n    status: \&quot;OK\&quot;\n}\n\n\nif( port == \&quot;din:5\&quot; \n    &amp;&amp; selection.length &gt; 0 \n    &amp;&amp; aggr.length &gt; 0 \n    &amp;&amp; apex.length &gt; 0  \n    &amp;&amp; filters.length &gt; 0 \n    &amp;&amp; items.length &gt; 0 \n    &amp;&amp; causationFactors.length &gt; 0  ){\n    \n    var selected        = selection[0];\n    var causationObj    = causationFactors[0];\n    var dateKey         = selected[\&quot;date_key\&quot;];\n    var idKey           = selected[\&quot;id\&quot;].split(\&quot;#\&quot;)[1];\n    var service         = selected[\&quot;service\&quot;];\n    var sub_service     = selected[\&quot;sub_service\&quot;];\n    var dim_keys        = selected[\&quot;dim_keys\&quot;];\n    var dim_values      = selected[\&quot;dim_values\&quot;];\n    \n    var fileName    = selected[\&quot;date_key\&quot;]+ \&quot;\&quot; + idKey + \&quot;.\&quot; + getUUID()+\&quot;.json\&quot;;\n    var currEpoch   = Math.round( new Date().getTime() / 1000 );\n    \n    payload[\&quot;incident_da\&quot;][\&quot;aggrs\&quot;][\&quot;aggr\&quot;] = aggr;\n    payload[\&quot;incident_da\&quot;][\&quot;apex\&quot;]          = apex;\n    payload[\&quot;incident_da\&quot;][\&quot;filters\&quot;]       = filters;\n    payload[\&quot;incident_da\&quot;][\&quot;items\&quot;]         = items;\n   \n   plugins.Incident.getLatestIncidentRecordById( selected[\&quot;id\&quot;], function(response){\n        if( response.status.toLowerCase() == \&quot;ok\&quot; ){\n            var iArr = response.value || [];\n            var incident = null;\n            var incidentStr = \&quot;\&quot;;\n            \n            if( iArr.length &gt; 0 ){\n                incident = iArr[0];   \n            }\n            \n            incident[\&quot;target\&quot;] = \&quot;3\&quot;;\n            incident[\&quot;causation_measure\&quot;]       = causationObj[\&quot;causation_measure\&quot;];\n            incident[\&quot;causation_min_measure\&quot;]   = causationObj[\&quot;causation_min_measure\&quot;];\n            incident[\&quot;causation_rule_name\&quot;]     = causationObj[\&quot;causation_rule_name\&quot;];\n            incident[\&quot;causation_suppl_measure\&quot;] = causationObj[\&quot;causation_suppl_measure\&quot;];\n            incident[\&quot;causation_top_count\&quot;]     = causationObj[\&quot;causation_top_count\&quot;];\n            incident[\&quot;cust_call_dim\&quot;]           = causationObj[\&quot;call_metric_id\&quot;];\n\n            if( incident != null ){\n                incidentStr = JSON.stringify(incident);   \n            }\n            \n            payload[\&quot;incident\&quot;] = incident;\n            \n            //console.log(payload);\n            content[\&quot;data\&quot;] = JSON.stringify(payload);\n            \n            FSPlugin.writeDataToFS( fsHost, path, fileName, JSON.stringify(content), function(response){\n                console.log( response );\n                setOutput(\&quot;dout:0\&quot;, Math.round( Math.random() * 1000000000000000 ));\n            });\n            \n        }           \n    \n    }); \n    \n}\n\n\n\n\n\n\n\n\n\n\n\n\nfunction getUUID() {\n    //var pattern = &apos;xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx&apos;;\n    var pattern = &apos;part-00001-xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx-c000&apos;\n  return pattern.replace(/[xy]/g, function(c) {\n    var r = Math.random() * 16 | 0, v = c == &apos;x&apos; ? r : (r &amp; 0x3 | 0x8);\n    return v.toString(16);\n  });\n}&quot;"/>
+      <Input key="node:15/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;integer&quot;,&quot;portLabel&quot;:&quot;trigger&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;}]"/>
+      <Input key="node:7/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;integer&quot;,&quot;portLabel&quot;:&quot;triggerNotification&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;}]"/>
+      <Input key="node:18/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;plugins&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:18/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;causationFactors&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:18/cfg:model/default" value="&quot;var plugins = getInput(\&quot;din:1\&quot;);\nif (plugins == null) return;\n\nif( port != null ){\n    var selection = getInput( \&quot;din:0\&quot; ) || [];   \n    \n    if( selection.length &gt; 0 ){\n        var selected = selection[0];\n        \n        plugins.Incident.getCausationFactors( selected[&apos;config_metric_id&apos;], function(response){\n            if( response.status.toLowerCase() == &apos;ok&apos; ){\n                var causationObj = response.value; \n                if( causationObj != null &amp;&amp; causationObj.length &gt; 0 ){\n                    setOutput( \&quot;dout:0\&quot;, causationObj );\n                } else {\n                    setOutput( \&quot;dout:0\&quot;, [] );   \n                }\n            }\n        });\n        \n    }\n}&quot;"/>
+      <Schema id="node:5/dout:2">
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:11/din:0">
+        <JSON value="{&quot;name&quot;:&quot;detect&quot;,&quot;label&quot;:&quot;detect&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_detect&quot;,&quot;label&quot;:&quot;call_detect&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_detect&quot;,&quot;label&quot;:&quot;local_detect&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_call_detect&quot;,&quot;label&quot;:&quot;local_call_detect&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;id_label&quot;,&quot;label&quot;:&quot;id_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_label&quot;,&quot;label&quot;:&quot;component_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomalies&quot;,&quot;label&quot;:&quot;anomalies&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_score&quot;,&quot;label&quot;:&quot;min_score&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_score&quot;,&quot;label&quot;:&quot;max_score&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_max&quot;,&quot;label&quot;:&quot;display_max&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;duration&quot;,&quot;label&quot;:&quot;duration&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_duration&quot;,&quot;label&quot;:&quot;call_duration&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_epoch&quot;,&quot;label&quot;:&quot;event_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_start_tm&quot;,&quot;label&quot;:&quot;cust_call_start_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_end_tm&quot;,&quot;label&quot;:&quot;cust_call_end_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_date&quot;,&quot;label&quot;:&quot;start_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_date&quot;,&quot;label&quot;:&quot;end_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_date&quot;,&quot;label&quot;:&quot;event_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_date&quot;,&quot;label&quot;:&quot;call_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_measure&quot;,&quot;label&quot;:&quot;metric_measure&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_baseline&quot;,&quot;label&quot;:&quot;metric_baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_count&quot;,&quot;label&quot;:&quot;cust_call_count&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_baseline&quot;,&quot;label&quot;:&quot;cust_call_baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity&quot;,&quot;label&quot;:&quot;severity&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_min_max&quot;,&quot;label&quot;:&quot;score_min_max&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_value_bl&quot;,&quot;label&quot;:&quot;metric_value_bl&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_count_bl&quot;,&quot;label&quot;:&quot;call_count_bl&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation&quot;,&quot;label&quot;:&quot;causation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;typeVal&quot;,&quot;label&quot;:&quot;typeVal&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;notification&quot;,&quot;label&quot;:&quot;notification&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_level&quot;,&quot;label&quot;:&quot;score_level&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:11/dout:2">
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:11/dout:3">
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Pct Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:13/din:1">
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_name&quot;,&quot;label&quot;:&quot;Column Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_label&quot;,&quot;label&quot;:&quot;Dimension Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_value&quot;,&quot;label&quot;:&quot;Dimension Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Percentage Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pBaseline&quot;,&quot;label&quot;:&quot;Baseline Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pTotal&quot;,&quot;label&quot;:&quot;Total Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_relDiff&quot;,&quot;label&quot;:&quot;Relative Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_pctDev&quot;,&quot;label&quot;:&quot;Deviation Proportion&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <Schema id="node:15/din:0">
+        <JSON value="{&quot;name&quot;:&quot;manual&quot;,&quot;type&quot;:&quot;string&quot;,&quot;label&quot;:&quot;manual&quot;}"/>
+      </Schema>
+      <Schema id="node:15/din:1">
+        <JSON value="{&quot;name&quot;:&quot;detect&quot;,&quot;label&quot;:&quot;detect&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_detect&quot;,&quot;label&quot;:&quot;call_detect&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_detect&quot;,&quot;label&quot;:&quot;local_detect&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;local_call_detect&quot;,&quot;label&quot;:&quot;local_call_detect&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;id_label&quot;,&quot;label&quot;:&quot;id_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_values&quot;,&quot;label&quot;:&quot;dim_values&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service_label&quot;,&quot;label&quot;:&quot;service_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;component_label&quot;,&quot;label&quot;:&quot;component_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_label&quot;,&quot;label&quot;:&quot;metric_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomaly_window&quot;,&quot;label&quot;:&quot;anomaly_window&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;anomalies&quot;,&quot;label&quot;:&quot;anomalies&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;min_score&quot;,&quot;label&quot;:&quot;min_score&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;max_score&quot;,&quot;label&quot;:&quot;max_score&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;display_max&quot;,&quot;label&quot;:&quot;display_max&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;duration&quot;,&quot;label&quot;:&quot;duration&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_duration&quot;,&quot;label&quot;:&quot;call_duration&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_epoch&quot;,&quot;label&quot;:&quot;event_epoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_start_tm&quot;,&quot;label&quot;:&quot;cust_call_start_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_end_tm&quot;,&quot;label&quot;:&quot;cust_call_end_tm&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_date&quot;,&quot;label&quot;:&quot;start_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_date&quot;,&quot;label&quot;:&quot;end_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;event_date&quot;,&quot;label&quot;:&quot;event_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_date&quot;,&quot;label&quot;:&quot;call_date&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_measure&quot;,&quot;label&quot;:&quot;metric_measure&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_baseline&quot;,&quot;label&quot;:&quot;metric_baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_count&quot;,&quot;label&quot;:&quot;cust_call_count&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cust_call_baseline&quot;,&quot;label&quot;:&quot;cust_call_baseline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;service&quot;,&quot;label&quot;:&quot;service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service&quot;,&quot;label&quot;:&quot;sub_service&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;sub_service_label&quot;,&quot;label&quot;:&quot;sub_service_label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;severity&quot;,&quot;label&quot;:&quot;severity&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_min_max&quot;,&quot;label&quot;:&quot;score_min_max&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metric_value_bl&quot;,&quot;label&quot;:&quot;metric_value_bl&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;call_count_bl&quot;,&quot;label&quot;:&quot;call_count_bl&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;causation&quot;,&quot;label&quot;:&quot;causation&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;typeVal&quot;,&quot;label&quot;:&quot;typeVal&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;notification&quot;,&quot;label&quot;:&quot;notification&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;score_level&quot;,&quot;label&quot;:&quot;score_level&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:15/din:2">
+        <JSON value="{&quot;name&quot;:&quot;_eventType&quot;,&quot;label&quot;:&quot;Event Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_eventLabel&quot;,&quot;label&quot;:&quot;Event Label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_count&quot;,&quot;label&quot;:&quot;Count&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_baseline&quot;,&quot;label&quot;:&quot;Baseline&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diff&quot;,&quot;label&quot;:&quot;Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_diffPct&quot;,&quot;label&quot;:&quot;Pct Difference&quot;,&quot;type&quot;:&quot;number&quot;}"/>
+      </Schema>
+      <DynInput id="node:5">
+        <Port id="din:0" type="any[]" label="filters" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="any[]" label="selection" evaluate="always" _isArray="true"/>
+        <Port id="din:2" type="any[]" label="dimensionItems" evaluate="always" _isArray="true"/>
+        <Port id="din:3" type="any" label="plugins" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:7">
+        <Port id="din:0" type="any[]" label="selection" evaluate="always"/>
+        <Port id="din:1" type="any[]" label="notifications" evaluate="always"/>
+        <Port id="din:2" type="any[]" label="dimensionItems" evaluate="always"/>
+        <Port id="din:3" type="string" label="metricField" evaluate="always"/>
+        <Port id="din:4" type="string" label="metricFormat" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:9">
+        <Port id="din:0" type="any[]" label="In(0)" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:11">
+        <Port id="din:0" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="any" label="Plugins" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:13">
+        <Port id="din:0" type="string" label="metricField" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="any[]" label="items" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:14">
+        <Port id="din:0" type="string" label="func" evaluate="always"/>
+        <Port id="din:1" type="any[]" label="filters" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:15">
+        <Port id="din:0" type="any[]" label="selection" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="any[]" label="aggr" evaluate="always" _isArray="true"/>
+        <Port id="din:2" type="any[]" label="apex" evaluate="always" _isArray="true"/>
+        <Port id="din:3" type="any[]" label="filters" evaluate="always" _isArray="true"/>
+        <Port id="din:4" type="any[]" label="items" evaluate="always" _isArray="true"/>
+        <Port id="din:5" type="integer" label="triggerNotification" evaluate="always" _isArray="true"/>
+        <Port id="din:6" type="any[]" label="causationFactors" evaluate="always" _isArray="true"/>
+        <Port id="din:7" type="any" label="plugins" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:18">
+        <Port id="din:0" type="any[]" label="selection" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="any" label="plugins" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynOutput id="node:1">
+        <Port id="dout:0" type="any[]" label="filter" propagate="always"/>
+        <Port id="dout:1" type="any[]" label="notification" propagate="always"/>
+        <Port id="dout:2" type="any[]" label="dimensionItems" propagate="always"/>
+        <Port id="dout:3" type="any[]" label="dimFilter" propagate="always"/>
+        <Port id="dout:4" type="any" label="plugins" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:5">
+        <Port id="dout:0" type="any[]" label="selection" propagate="always"/>
+        <Port id="dout:1" type="any[]" label="notifications" propagate="always"/>
+        <Port id="dout:2" type="any[]" label="dimensionItems" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:9">
+        <Port id="dout:0" type="string" label="Metric Field" propagate="always"/>
+        <Port id="dout:1" type="string" label="Metric Style" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:11">
+        <Port id="dout:0" type="any" label="Config" propagate="always"/>
+        <Port id="dout:1" type="string" label="Language" propagate="always"/>
+        <Port id="dout:2" type="event[]" label="Items" propagate="always"/>
+        <Port id="dout:3" type="event[]" label="APEX" propagate="always"/>
+        <Port id="dout:4" type="any[]" label="Metric Type" propagate="always"/>
+        <Port id="dout:5" type="string" label="Metric Aggregation" propagate="always"/>
+        <Port id="dout:6" type="any[]" label="Filters" propagate="always"/>
+        <Port id="dout:7" type="any" label="Metric Config" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:13">
+        <Port id="dout:0" type="any[]" label="sortedItems" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="any[]" label="groupedItems" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:14">
+        <Port id="dout:0" type="any[]" label="aggr" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:15">
+        <Port id="dout:0" type="integer" label="trigger" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:7">
+        <Port id="dout:0" type="integer" label="triggerNotification" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:18">
+        <Port id="dout:0" type="any[]" label="causationFactors" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <Version id="node:1" version="1"/>
+      <Version id="node:5" version="2"/>
+      <Version id="node:7" version="2"/>
+      <Version id="node:9" version="2"/>
+      <Version id="node:11" version="2"/>
+      <Version id="node:13" version="2"/>
+      <Version id="node:14" version="2"/>
+      <Version id="node:15" version="2"/>
+      <Version id="node:18" version="2"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/space/another/dbpm/VIAOps - Commonality Plugin" alias="Commonality"/>
+      <DashboardPlugin uri="/app/dbp/user/via_common/dbpm/VIA - Common" alias="Common"/>
+      <DashboardPlugin uri="/app/dbp/user/via_common/dbpm/VIA - HDFS Interface" alias="HDFS"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

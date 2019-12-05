@@ -1,0 +1,17 @@
+INSERT INTO viaops_anomaly_sol (
+    adm_name,
+    window_size,
+    anomaly_step_size,
+    value_field,
+    source_table,
+    timezone
+)
+VALUES (
+    "${adm_name}",
+    ${window_size},
+    ${anomaly_step_size},
+    "${value_field}",
+    "${source_table}",
+    "${timezone}"
+)
+

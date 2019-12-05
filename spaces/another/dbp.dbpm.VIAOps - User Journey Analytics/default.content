@@ -1,0 +1,1079 @@
+<DashboardPluginModel is_init="false" name="VIAOps - User Journey Analytics" description="">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions>
+      <Function name="_buildConfetti" args="data,dimension,selectedValue,dimensionList,Confetti,callback" private="true">
+        <CodeText>
+          <![CDATA[var viewer =  window._doCurrentViewer;
+var width = $(".viaops-solution-frame").width();
+var height = $(".viaops-solution-frame").height();
+
+if (!data) {
+    Plugin("VIAOps - User Journey Analytics").getConfettiData(viewer, dimension, width, height, function (result) {
+        if (result.status == "OK") {
+            result = result.value;
+        } else {
+            return;
+        }
+        
+        if (callback) callback(result);
+        buildConfetti(result);
+    });
+} else {
+    buildConfetti(data);
+}
+
+function buildConfetti (result) {
+    if (!result || result.lendth == 0) {
+        if (window._doConfetti) {
+            window._doConfetti.clear();
+            delete window._doConfetti;
+        }
+        return;
+    }
+    
+    result = result.filter(function (data) {
+        return selectedValue.indexOf(data.name) >= 0;
+    });
+    
+    if (window._doConfetti) {
+        window._doConfetti.clear();
+    }
+    
+    var dimensionMap = {};
+    for (var i = 0; i < dimensionList.length; i++) {
+        dimensionMap[dimensionList[i].name] = dimensionList[i];
+        dimensionList[i].rgb = (new dojo.Color(dimensionList[i].color)).toRgb();
+    }
+    var data = result.map(function (data) {
+        return {
+            x: data.x,
+            y: data.y,
+            size: 6,
+            color: dimensionMap[data.name].rgb
+        };
+    });
+    var confettiSettings = {animate:false,  targetEl: $(".viaops-solution-frame")[0], width: width, height: height, data: data};
+    window._doConfetti = new Confetti(confettiSettings);
+    window._doConfetti.render();
+}]]>
+        </CodeText>
+      </Function>
+      <Function name="_buildConfettiLegend" args="AppFrame,AppUtil,Confetti,Rainbow,StickyFloat,onDisplayListChange" private="true">
+        <CodeText>
+          <![CDATA[var legendDiv = jQuery("<div/>",  {
+    'class': 'confetti-legend vertical-flex'
+});
+$('.viaops-solution-frame').append(legendDiv);
+
+var legendHeader = jQuery("<div/>", {
+   'class': 'horizontal-flex confetti-legend-header' 
+});
+$(legendDiv).append(legendHeader);
+
+var legendContent = jQuery("<div/>", {
+   'class': 'confetti-legend-content vertical-flex' 
+});
+$(legendDiv).append(legendContent);
+
+var iconDiv = jQuery("<div/>", {
+   'class': 'confetti-legend-header-icon' 
+});
+$(legendHeader).append(iconDiv);
+
+var icon = jQuery("<i/>", {
+    'class': 'fas fa-minus-circle'
+})
+$(iconDiv).append(icon);
+
+var dimensionDiv = jQuery("<div/>", {
+    'class': 'confetti-legend-dimension'
+});
+$(legendHeader).append(dimensionDiv);
+
+var self = this;
+this._buildConfettiLegendDimensionSelect(function (dimension) {
+    self._buildConfettiLegenDistribution(dimension, Rainbow, function(selectedValue, dimensionList) {
+        if (onDisplayListChange) onDisplayListChange(dimension, selectedValue, dimensionList);
+    });
+});
+
+$(iconDiv).click(function(evt) {
+    if ($(legendContent).css('display') == 'none' || $(legendContent).css("visibility") == "hidden"){
+        $(icon).removeClass('fa-plus-circle').addClass('fa-minus-circle');
+        $(legendContent).css('display', '');
+        
+    } else {
+        $(icon).removeClass('fa-minus-circle').addClass('fa-plus-circle');
+        $(legendContent).css('display', 'none');
+    }
+});
+
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_buildConfettiLegendBottom" args="parentNode,dimensionList" private="true">
+        <CodeText>
+          <![CDATA[var self = this;
+var pkg = [
+    "af/utils/AppFrame",
+    "af/utils/AppUtil",
+    "af/utils/NumberUtil",
+    "af/viewers/ViewerUtil"
+];
+
+require(pkg, function (AppFrame, AppUtil, NumberUtil, ViewerUtil) {
+    var total = dimensionList.map(function (item) {
+        return item.value;
+    }).reduce( function (a, b) {
+        return a + b;
+    }, 0);
+    
+    var row = $("<div/>", {
+       'class': 'horizontal-flex confetti-legend-distribution-row' 
+    });
+    parentNode.append(row);
+    
+    var left = $("<div/>", {
+        'class': 'horizontal-flex confetti-legend-distribution-left-item'
+    }).html('Total');
+    row.append(left);
+    
+    var reduceValue = NumberUtil.getReduceValueAndUnit(total);
+    var right = $("<div/>", {
+        'class': 'horizontal-flex confetti-legend-distribution-right-item'
+    }).html(reduceValue[0] + reduceValue[1]);
+    row.append(right);
+});
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_buildConfettiLegendDimensionSelect" args="onDimensionChange" private="true">
+        <CodeText>
+          <![CDATA[var self = this;
+var pkg = [
+    "af/utils/AppFrame",
+    "af/utils/AppUtil",
+    "af/viewers/ViewerUtil"
+];
+
+require(pkg, function (AppFrame, AppUtil, ViewerUtil) {
+    var options = [{
+        value: "user_id",
+        label: "User"
+    }, {
+        value: "browser",
+        label: "Browser"
+    }, {
+        value: "os",
+        label: "OS"
+    }, {
+        value: "event_type",
+        label: "Event Type"
+    }];
+    var style = "font-family:monospace; width: 100%";
+    var select = ViewerUtil.createControlDojoSelect("confittiLegendDimension", options, window._doConfettiLegend || "user_id", null, function (widget) {
+        if (onDimensionChange) {
+            window._doConfettiLegend = widget.value;
+            onDimensionChange(widget.value);
+        }
+    }, style, "button");
+    select.placeAt($(".confetti-legend-dimension")[0]);
+    $(select.domNode).removeClass("selectMXStyle");
+    $(select.domNode).addClass("noBorderSelect maintxt commonFieldSelector");
+    select.startup();
+    
+    if (onDimensionChange) {
+        onDimensionChange( window._doConfettiLegend || "user_id");
+    }
+});
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_buildConfettiLegendDistributionList" args="parentNode,dimensionList,onChange" private="true">
+        <CodeText>
+          <![CDATA[var self = this;
+var pkg = [
+    "af/utils/AppFrame",
+    "af/utils/AppUtil",
+    "af/utils/NumberUtil",
+    "af/viewers/ViewerUtil"
+];
+
+require(pkg, function (AppFrame, AppUtil, NumberUtil, ViewerUtil) {
+    var selectedValue = dimensionList.map(function (dimension) {
+        return dimension.name; 
+    });
+    var checkBoxMap = {};
+    var allCheckBox = buildHeader(parentNode, ViewerUtil, function (value) {
+        if (value) {
+            selectedValue = dimensionList.map(function (dimension) {
+                return dimension.name; 
+            });
+            dimensionList.forEach(function(dimension) {
+                checkBoxMap[dimension.name].set('checked', true, false); 
+            });
+        } else {
+            selectedValue = [];
+            dimensionList.forEach(function(dimension) {
+                checkBoxMap[dimension.name].set('checked', false, false); 
+            });
+        }
+        
+        if (onChange) onChange(selectedValue, dimensionList);
+    }); 
+    
+    for (var i = 0; i < dimensionList.length; i++) {
+        var dimension = dimensionList[i];
+        (function (dimension) {
+            checkBoxMap[dimension.name] = buildDistributionItem(parentNode, ViewerUtil, NumberUtil, dimension, function(value) {
+                if (value) {
+                    if (selectedValue.indexOf(dimension.name) < 0) {
+                        selectedValue.push(dimension.name);
+                        if (selectedValue.length == dimensionList.length) {
+                            allCheckBox.set('checked', true, false);
+                        }
+                    }
+                } else {
+                    if (selectedValue.indexOf(dimension.name) >= 0) {
+                        selectedValue.splice(selectedValue.indexOf(dimension.name), 1);
+                    }
+                    allCheckBox.set('checked', false, false);
+                }
+                
+                if (onChange) onChange(selectedValue, dimensionList);
+            });
+        })(dimension);
+    }
+    
+    if (onChange) onChange(selectedValue, dimensionList)
+});
+
+function buildHeader(parentNode, ViewerUtil, onChange) {
+    var row = $("<div/>", {
+       'class': 'horizontal-flex confetti-legend-distribution-row' 
+    });
+    parentNode.append(row);
+    
+    var left = $("<div/>", {
+        'class': 'horizontal-flex confetti-legend-distribution-left-item'
+    });
+    row.append(left);
+    
+    var right = $("<div/>", {
+        'class': 'horizontal-flex confetti-legend-distribution-right-item'
+    }).html('Amount');
+    row.append(right);
+    
+    var checkBox = ViewerUtil.createControlCheckBox('confetti-legend-distribution-all', true, null, function (value) {
+        if (onChange) onChange(value.value);
+    }, true);
+    checkBox.placeAt(left[0]);
+    
+    var label = $('<label />', { 
+        text: 'Name' 
+    });
+    left.append(label);
+    
+    return checkBox;
+}
+
+function buildDistributionItem(parentNode, ViewerUtil, NumberUtil, dimension, onChange) {
+    var row = $("<div/>", {
+       'class': 'horizontal-flex confetti-legend-distribution-row' 
+    });
+    parentNode.append(row);
+    
+    var left = $("<div/>", {
+        'class': 'horizontal-flex confetti-legend-distribution-left-item'
+    });
+    row.append(left);
+    
+    var right = $("<div/>", {
+        'class': 'horizontal-flex confetti-legend-distribution-right-item'
+    });
+    row.append(right);
+    
+    var reduceValue = NumberUtil.getReduceValueAndUnit(dimension.value);
+    dimension.label = reduceValue[0] + reduceValue[1];
+    buildDistributionItemChart(right, dimension);
+    
+    var checkBox = ViewerUtil.createControlCheckBox('confetti-legend-distribution-' + dimension.name, true, null, function (value) {
+        if (onChange) onChange(value.value);
+    }, true);
+    checkBox.placeAt(left[0]);
+    
+    var label = $('<label />', { 
+        text: dimension.name
+    });
+    left.append(label);
+    
+    return checkBox;
+}
+
+function buildDistributionItemChart(parentNode, dimension) {
+    var chart = jQuery('<div/>', {
+        'class': 'horizontal-flex confetti-legend-distribution-chart'
+    }).css('background-color', dimension.color);
+    parentNode.append(chart);
+    
+    var chartContent = jQuery('<div/>', {
+        'class': 'horizontal-flex confetti-legend-distribution-chart-content'
+    });
+    chart.append(chartContent);
+    
+    var chartBg = jQuery('<div/>', {
+        'class': 'horizontal-flex confetti-legend-distribution-chart-background' 
+    }).css('width', dimension.width).css('background-color', dimension.color).css('opacity', 0.6);
+    chartContent.append(chartBg);
+    
+    var chartLabel = jQuery('<div/>', {
+        'class': 'horizontal-flex confetti-legend-distribution-chart-label' 
+    }).html(dimension.label).css('color', invertColor(dimension.color));
+    chart.append(chartLabel);
+    
+}
+
+function invertColor(hex, bw) {
+    if (hex.indexOf('#') === 0) {
+        hex = hex.slice(1);
+    }
+    // convert 3-digit hex to 6-digits.
+    if (hex.length === 3) {
+        hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    }
+    if (hex.length !== 6) {
+        throw new Error('Invalid HEX color.');
+    }
+    var r = parseInt(hex.slice(0, 2), 16),
+        g = parseInt(hex.slice(2, 4), 16),
+        b = parseInt(hex.slice(4, 6), 16);
+    if (bw) {
+        // http://stackoverflow.com/a/3943023/112731
+        return (r * 0.299 + g * 0.587 + b * 0.114) > 186
+            ? '#000000'
+            : '#FFFFFF';
+    }
+    // invert color components
+    r = (255 - r).toString(16);
+    g = (255 - g).toString(16);
+    b = (255 - b).toString(16);
+    // pad each with zeros and return
+    return "#" + padZero(r) + padZero(g) + padZero(b);
+}
+
+function padZero(str, len) {
+    len = len || 2;
+    var zeros = new Array(len).join('0');
+    return (zeros + str).slice(-len);
+}]]>
+        </CodeText>
+      </Function>
+      <Function name="_buildConfettiLegenDistribution" args="dimension,Rainbow,onDisplayListChange" private="true">
+        <CodeText>
+          <![CDATA[jQuery('.confetti-legend-content').empty();
+
+var dimensionContent = jQuery("<div/>", {
+    'class': 'vertical-flex confetti-legend-dimension-content'
+});
+jQuery('.confetti-legend-content').append(dimensionContent);
+
+var dimensionBottom = jQuery("<div/>", {
+    'class': 'confetti-legend-dimension-bottom horizontal-flex'
+});
+jQuery('.confetti-legend-content').append(dimensionBottom);
+
+var self = this;
+Plugin("VIAOps - User Journey Analytics").getConfettiDistributionData(window._doCurrentViewer, dimension, function (result) {
+   if (result.status == "OK") {
+        result = result.value;
+    } else {
+        return;
+    }
+    
+    var total = result.map(function (item) {
+        return item.value;
+    }).reduce( function (a, b) {
+        return a + b;
+    }, 0);
+    var rainbow = new Rainbow();
+    rainbow.setSpectrum('red', 'yellow', 'darkorange', 'chartreuse', 'green', 'magenta', 'orangered', 'purple',  'blue', 'aqua', 'teal', 'dodgerblue', 'gray');
+    rainbow.setNumberRange(0, Math.max(12, result.length - 1));
+    for (var i = 0; i < result.length; i++) {
+        var item = result[i];
+        item.color = "#" + rainbow.colorAt(i);
+        item.width = Math.floor((item.value * 100)/total) + '%';
+    }
+    
+    self._buildConfettiLegendDistributionList(dimensionContent, result, function(selectedValue, dimensionList) {
+        if (onDisplayListChange) onDisplayListChange(selectedValue, dimensionList);
+    });
+    
+    self._buildConfettiLegendBottom(dimensionBottom, result);
+});
+]]>
+        </CodeText>
+      </Function>
+      <Function name="_buildMouseEvent" args="event,agent" private="true">
+        <CodeText>
+          <![CDATA[var offset = $(".viaops-solution-frame").offset();
+if (!offset) return null;
+
+var item = lang.clone(agent);
+item.current_viewer = window._doCurrentViewer;
+item.event_ts = (new Date()).getTime();
+item.event_type = event.type;
+item.event_x = event.clientX;
+item.event_y = event.clientY - offset.top;
+item.resolution_x = $(".viaops-solution-frame").width();
+item.resolution_y = $(".viaops-solution-frame").height();
+item.percent_x = item.event_x/item.resolution_x;
+item.percent_y = item.event_y/item.resolution_y;
+return item;]]>
+        </CodeText>
+      </Function>
+      <Function name="_recordMouseClickEvent" args="agent" private="true">
+        <CodeText>
+          <![CDATA[var self = this;
+this._clickEventHandler = function (event) {
+    var offset = $(".viaops-solution-frame").offset();
+    if (!offset || offset.top > event.clientY) return;
+
+    var record = self._buildMouseEvent(event, agent);
+    if (record) {
+        self._mouseEvents.push(record);
+    }
+};
+window.document.addEventListener("click", this._clickEventHandler, true);
+window.document.addEventListener("dblclick", this._clickEventHandler, true);
+
+this._rightClickEventHandler = function (event) {
+    if (event.button != 2 && event.which != 3) return;
+    var offset = $(".viaops-solution-frame").offset();
+    if (!offset || offset.top > event.clientY) return;
+    
+    var record = self._buildMouseEvent({
+        clientX: event.clientX,
+        clientY: event.clientY,
+        type: "rightclick"
+    }, agent);
+    if (record) {
+        self._mouseEvents.push(record);
+    }
+};
+window.document.addEventListener("mousedown", this._rightClickEventHandler, true);]]>
+        </CodeText>
+      </Function>
+      <Function name="_recordMouseMoveEvent" args="agent" private="true">
+        <CodeText>
+          <![CDATA[var self = this;
+
+var trackData = false;
+this._mouseTrackDataInterval = window.setInterval(function () {
+    trackData = true;
+}, 50);
+
+var idleTimeout, idleInterval;
+
+var lastX = null, lastY = null;
+var idleCount;
+
+function startIdle() {
+    idleCount = 0;
+
+    function idle() {
+        var offset = $(".viaops-solution-frame").offset();
+        if (!offset || offset.top > lastY) return;
+        
+        var record = self._buildMouseEvent({
+            type: "hold",
+            clientX: lastX,
+            clientY: lastY
+        }, agent);
+        
+        if (record != null) {
+            self._mouseEvents.push();
+        }
+        
+        idleCount++;
+        if (idleCount > 10) {
+            window.clearInterval(idleInterval);
+        }
+    }
+    idle();
+    idleInterval = window.setInterval(idle, 1000);
+    self._mouseIdleInterval = idleInterval;
+}
+
+function isValidMove (event, lastX, lastY) {
+    if (lastX == null || lastY == null) return true;
+    
+    return (Math.abs(event.clientX - lastX) >= 20) || (Math.abs(event.clientY - lastY) >= 20);
+}
+
+this._mouseMoveHandler = function (event) {
+    var offset = $(".viaops-solution-frame").offset();
+    if (!offset || offset.top > event.clientY) return;
+    
+    if (idleTimeout) window.clearTimeout(idleTimeout);
+    if (idleInterval) window.clearInterval(idleInterval);
+
+    if (trackData && isValidMove(event, lastX, lastY)) {
+        lastX = event.clientX;
+        lastY = event.clientY;
+        var record = self._buildMouseEvent(event, agent);
+        if (record) {
+            self._mouseEvents.push(record);
+        }
+        trackData = false;
+    }
+    idleTimeout = window.setTimeout(startIdle, 500);
+};
+
+window.document.addEventListener("mousemove", this._mouseMoveHandler, true);]]>
+        </CodeText>
+      </Function>
+      <Function name="_showConfettiLegend" args="AppFrame,AppUtil,Confetti,Rainbow,StickyFloat" private="true">
+        <CodeText>
+          <![CDATA[if (window._doConfetti) {
+    window._doConfetti.clear();
+    delete window._doConfetti;
+}
+
+$(".confetti-legend").remove();
+
+var self = this;
+var selectedDimension = null;
+var data = null;
+this._buildConfettiLegend(AppFrame, AppUtil, Confetti, Rainbow, StickyFloat, function (dimension, selectedValue, dimensionList) {
+    if (selectedDimension != dimension) {
+        selectedDimension = dimension;
+        data = null;
+    }
+    self._buildConfetti(data, dimension, selectedValue, dimensionList, Confetti, function (result) {
+        data = result;
+    });
+});]]>
+        </CodeText>
+      </Function>
+      <Function name="hideConfetti" args="" private="false">
+        <CodeText>
+          <![CDATA[if (window._doConfetti) {
+    window._doConfetti.clear();
+    delete window._doConfetti;
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="hideHeatmap" args="" private="false">
+        <CodeText>
+          <![CDATA[ $(".viaops-solution-frame").remove(".heatmap-canvas");
+ if (window._doHeatMap) {
+    delete window._doHeatMap;
+ }]]>
+        </CodeText>
+      </Function>
+      <Function name="showConfetti" args="" private="false">
+        <CodeText>
+          <![CDATA[var self = this;
+var pkg = [
+    "af/utils/AppFrame",
+    "af/utils/AppUtil",
+    "/vitria-oi/rest/app/dbp/user/viaops_admin/dbpm/VIAOps - User Journey Analytics?op=vt:dbp:resource:confetti.js",
+    "/vitria-oi/rest/app/dbp/user/viaops_admin/dbpm/VIAOps - User Journey Analytics?op=vt:dbp:resource:rainbowvis.js",
+    "/vitria-oi/rest/app/dbp/user/viaops_admin/dbpm/VIAOps - User Journey Analytics?op=vt:dbp:resource:stickyfloat.js"
+];
+
+require(pkg, function (AppFrame, AppUtil, Confetti, Rainbow, StickyFloat) {
+    if (AppUtil.getParamsFromURL().confetti != "true") return;
+    self._showConfettiLegend(AppFrame, AppUtil, Confetti, Rainbow, StickyFloat);
+});]]>
+        </CodeText>
+      </Function>
+      <Function name="showHeatmap" args="" private="false">
+        <CodeText>
+          <![CDATA[var self = this;
+var pkg = [
+    "af/utils/AppFrame",
+    "af/utils/AppUtil",
+    "/vitria-oi/rest/app/dbp/user/viaops_admin/dbpm/VIAOps - User Journey Analytics?op=vt:dbp:resource:heatmap.js"
+];
+
+require(pkg, function (AppFrame, AppUtil, HeatMap) {
+    if (AppUtil.getParamsFromURL().heatmap != "true") return;
+    
+    var viewer =  window._doCurrentViewer;
+    var width = $(".viaops-solution-frame").width();
+    var height = $(".viaops-solution-frame").height();
+    var min = 0;
+    var max = 0;
+    Plugin("VIAOps - User Journey Analytics").getHeatmapData(viewer, width, height, function (result) {
+        if (result.status == "OK") {
+            result = result.value;
+            result.forEach(function (item) {
+                if (item.value > max) {
+                    max = item.value;
+                }
+                
+                if (item.value < min || min == 0) {
+                    min = item.value;
+                }
+            });
+            
+            if (!window._doHeatMap) {
+                window._doHeatMap = HeatMap.create({
+                    container: $(".viaops-solution-frame")[0]
+                });
+                $(".viaops-solution-frame .heatmap-canvas").css("pointer-events", "none").css("opacity", 0.6);
+            }
+            
+            window._doHeatMap.setData({
+                min: min,
+                max: max,
+                data: result
+            });
+        }
+    });
+});
+
+]]>
+        </CodeText>
+      </Function>
+      <Function name="startRecord" args="agent" private="false">
+        <CodeText>
+          <![CDATA[var pkg = [
+    "af/utils/AppFrame",
+    "af/utils/AppUtil",
+    "/vitria-oi/rest/app/dbp/user/viaops_admin/dbpm/VIAOps - User Journey Analytics?op=vt:dbp:resource:ua-parser.min.js"
+];
+
+this._mouseEvents = [];
+
+var self = this;
+if (this._doSyncMouseEventsInterval) {
+    clearInterval(this._doSyncMouseEventsInterval);
+}
+
+this._doSyncMouseEventsInterval = setInterval(function(){
+    if (self._mouseEvents.length > 0) {
+        Plugin("VIAOps - User Journey Analytics").syncMouseEvents(self._mouseEvents.splice(0));
+    }
+}, 1000 * 5);
+
+require(pkg, function (AppFrame, AppUtil, UAParser) {
+    var agent = null;
+    if (self._vtUsageAnalyticsAgent == null) {
+        var uAParser = new UAParser(navigator.userAgent);
+        agent = {};
+        agent.user_id = AppFrame.getUserName();
+        agent.user_full_name = AppFrame.getUserFullName(false) || agent.user_id;
+        agent.ip = AppUtil.getAddressFromURL(window.location.href);
+        agent.browser = uAParser.getBrowser().name;
+        agent.device = uAParser.getDevice().name;
+        agent.os = uAParser.getOS().name;
+        self._vtUsageAnalyticsAgent = agent;
+    } else {
+        agent = self._vtUsageAnalyticsAgent;
+    }
+    
+    self._recordMouseClickEvent(agent);
+    self._recordMouseMoveEvent(agent);
+});]]>
+        </CodeText>
+      </Function>
+      <Function name="stopRecord" args="" private="false">
+        <CodeText>
+          <![CDATA[if (window._doSyncMouseEventsInterval) {
+    clearInterval(window._doSyncMouseEventsInterval);
+}
+
+window.document.removeEventListener("click", self._clickEventHandler, true);
+window.document.removeEventListener("dblclick", self._clickEventHandler, true);
+window.document.removeEventListener("mousedown", this._rightClickEventHandler, true);
+
+window.document.removeEventListener("mousemove", self._mouseMoveHandler, true);
+
+window.clearInterval(this._mouseTrackDataInterval);
+window.clearTimeout(this._mouseIdleInterval);
+
+]]>
+        </CodeText>
+      </Function>
+      <Function name="switchViewer" args="fromViewer,toViewer" private="false">
+        <CodeText>
+          <![CDATA[var pkg = [
+    "af/utils/AppFrame",
+    "af/utils/AppUtil",
+    "/vitria-oi/rest/app/dbp/user/viaops_admin/dbpm/VIAOps - User Journey Analytics?op=vt:dbp:resource:ua-parser.min.js"
+];
+
+require(pkg, function (AppFrame, AppUtil, UAParser) {
+    var agent = null;
+    if (window._vtUsageAnalyticsAgent == null) {
+        var uAParser = new UAParser(navigator.userAgent);
+        agent = {};
+        agent.user_id = AppFrame.getUserName();
+        agent.user_full_name = AppFrame.getUserFullName(false) || agent.user_id;
+        agent.ip = AppUtil.getAddressFromURL(window.location.href);
+        agent.browser = uAParser.getBrowser().name;
+        agent.device = uAParser.getDevice().name;
+        agent.os = uAParser.getOS().name;
+        window._vtUsageAnalyticsAgent = agent;
+    } else {
+        agent = window._vtUsageAnalyticsAgent;
+    }
+    
+    var event = buildEvent(agent);
+    Plugin("VIAOps - User Journey Analytics").syncJourneyEvents([event]);
+});
+
+function buildEvent (agent) {
+    var evt = lang.clone(agent);
+    evt.event_ts = (new Date()).getTime();
+    evt.from_viewer = fromViewer;
+    evt.to_viewer = toViewer;
+    return evt;
+}]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services>
+      <Service name="_mapXToResolution" args="queryConfig,viewer,width,height" private="false">
+        <CodeText>
+          <![CDATA[var config = queryConfig['position-convert-config'][viewer];
+var buf = [];
+buf.push("case");
+config.forEach(function(group) {
+    generateXCase(buf, group, width, height);
+});
+buf.push("    else ");
+buf.push("        percent_x * " + width + " ");
+buf.push("end as x");
+return buf.join("\n");
+
+function generateXCase(buf, group, width, height) {
+    if (group.length == 1) {
+        var range = group[0].range;
+        buf.push("    when ");
+        buf.push("        event_y >= " + range[0] + " ");
+        buf.push("        and ");
+        buf.push("        event_y < " + range[1] + " ");
+        buf.push("    then event_x ");
+    } else {
+        var yRange = group[0].range;
+        var xRange = group[1].range;
+
+        if (xRange[0] > 0 & xRange[0] < 1) {
+            generateCenter(buf, yRange, xRange, width, height);
+        } else if (xRange[0] < 0) {
+            generateRight(buf, yRange, xRange, width, height);
+        } else {
+            generateLeft(buf, yRange, xRange, width, height);
+        }
+    }
+}
+ 
+function generateLeft(buf, yRange, xRange, width, height) {
+    buf.push("    when ");
+    buf.push("        event_y >= " + yRange[0] + " ");
+    buf.push("        and ");
+    buf.push("        event_y < " + yRange[1] + " ");
+    buf.push("        and event_x >= " + xRange[0] + " ");
+    buf.push("        and ");
+    buf.push("        event_x <= " + xRange[1] + " ");
+    buf.push("    then event_x ");
+
+}
+
+function generateCenter(buf, yRange, xRange, width, height) {
+    buf.push("    when ");
+    buf.push("        event_y >= " + yRange[0] + " ");
+    buf.push("        and ");
+    buf.push("        event_y < " + yRange[1] + " ");
+    buf.push("        and ");
+    if (xRange[1] > 0) {
+        buf.push("        event_x >= (resolution_x * " + xRange[0] + ") ");
+        buf.push("        and ");
+        buf.push("        event_x <= (resolution_x * " + xRange[0] + " + " + xRange[1] + ") ");
+        buf.push("    then + (" + width + " - resolution_x) * " + xRange[0] + " + event_x ");
+    } else {
+        buf.push("        event_x <= (resolution_x * " + xRange[0] + ") ");
+        buf.push("        and ");
+        buf.push("        event_x <= (resolution_x * " + xRange[0] + " - " + Math.abs(xRange[1]) + ") ");
+        buf.push("    then + (" + width + " - resolution_x) * " + xRange[0] + " + event_x ");
+    }
+}
+
+function generateRight(buf, yRange, xRange, width, height) {
+    buf.push("    when ");
+    buf.push("        event_y >= " + yRange[0] + " ");
+    buf.push("        and ");
+    buf.push("        event_y < " + yRange[1] + " ");
+    buf.push("        and ");
+    buf.push("        event_x >= (resolution_x - " + Math.abs(xRange[0]) + ") ");
+    buf.push("    then (event_x + (" + width + " - resolution_x)) ");
+}]]>
+        </CodeText>
+      </Service>
+      <Service name="_mapYToResolution" args="queryConfig,viewer,width,height" private="false">
+        <CodeText>
+          <![CDATA[var min = -1;
+var max = -1;
+
+var config = queryConfig['position-convert-config'][viewer];
+var items = [];
+config.forEach(function (group) {
+    items = items.concat(group);
+});
+
+items.forEach(function (item) {
+    if (item.relative != 'y') return;
+
+    var range = item.range;
+    var from = range[0];
+    var to = range[1];
+    if (min == -1 || min > from) {
+        min = from;
+    } 
+
+    if (max == -1 || max < to) {
+        max = to;
+    }
+});
+
+var buf = [];
+buf.push("case");
+buf.push("    when event_y >= " + min + " ");
+buf.push("        and event_y < " + max + " ");
+buf.push("        then event_y ");
+buf.push("    else ");
+buf.push("        percent_y * " + height + " ");
+buf.push("end as y");
+return buf.join("\n");]]>
+        </CodeText>
+      </Service>
+      <Service name="_syncEvents" args="events,type" private="true">
+        <CodeText>
+          <![CDATA[if (!events || events.length == 0) return;
+
+var queryConfig = this.getQueryConfig();
+var ds = queryConfig["data-source"]["user-journey"];
+var fields = queryConfig["event-field"][type == "mouse" ? "mouse-event" : "journey-event"];
+var sql = Context.getLocalResource(type == "mouse" ? "USER_MOUSE_EVENT_INSERT_SQL" : "USER_JOURNEY_EVENT_INSERT_SQL");
+
+var data = [];
+for (var i = 0; i < events.length; i++) {
+    var item = [];
+    for (var j = 0; j < fields.length; j++) {
+        item.push(events[i][fields[j]]);
+    }
+    data.push(item);
+};
+
+SQL.executeUpdate(ds, sql, data);]]>
+        </CodeText>
+      </Service>
+      <Service name="getConfettiData" args="viewer,dimension,width,height" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var ds = queryConfig["data-source"]["user-journey"];
+var xExpression = this._mapXToResolution(queryConfig, viewer, width, height);
+var yExpression = this._mapYToResolution(queryConfig, viewer, width, height);
+
+var sql = Context.getLocalResource("USER_CONFETTI_DATA_QUERY_SQL");
+var values = {
+    viewer: viewer,
+    width: width,
+    height: height,
+    xExpression: xExpression,
+    yExpression: yExpression,
+    dimension: dimension
+};
+sql = this._doValueSubstitution(sql, values);
+print("Confetti query sql: " + sql);
+
+var result = SQL.executeQuery(ds, sql);
+if (result != null && result != "") {
+    result = JSON.parse(result);
+    return result.items;
+} else {
+    return [];
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getConfettiDistributionData" args="viewer,dimension" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var ds = queryConfig["data-source"]["user-journey"];
+
+var sql = Context.getLocalResource("USER_CONFETTI_DISTRIBUTION_SQL");
+var values = {
+    viewer: viewer,
+    dimension: dimension
+};
+sql = this._doValueSubstitution(sql, values);
+
+var result = SQL.executeQuery(ds, sql);
+if (result != null && result != "") {
+    result = JSON.parse(result);
+    return result.items;
+} else {
+    return [];
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getHeatmapData" args="viewer,width,height" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var ds = queryConfig["data-source"]["user-journey"];
+var xExpression = this._mapXToResolution(queryConfig, viewer, width, height);
+var yExpression = this._mapYToResolution(queryConfig, viewer, width, height);
+
+var sql = Context.getLocalResource("USER_HEATMAP_DATA_QUERY_SQL");
+var values = {
+    viewer: viewer,
+    width: width,
+    height: height,
+    xExpression: xExpression,
+    yExpression: yExpression
+};
+sql = this._doValueSubstitution(sql, values);
+print("Heatmap query sql: " + sql);
+
+var result = SQL.executeQuery(ds, sql);
+if (result != null && result != "") {
+    result = JSON.parse(result);
+    return result.items;
+} else {
+    return [];
+}]]>
+        </CodeText>
+      </Service>
+      <Service name="getHeatmapMax" args="viewer,width,height" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var ds = queryConfig["data-source"]["user-journey"];
+var xExpression = this._mapXToResolution(queryConfig, viewer, width, height);
+var yExpression = this._mapYToResolution(queryConfig, viewer, width, height);
+
+var sql = Context.getLocalResource("USER_HEATMAP_MAX_QUERY_SQL");
+var values = {
+    viewer: viewer,
+    width: width,
+    height: height,
+    xExpression: xExpression,
+    yExpression: yExpression
+};
+sql = this._doValueSubstitution(sql, values);
+
+var result = SQL.executeQuery(ds, sql);
+if (result != null && result != "") {
+    result = JSON.parse(result);
+    return result.items;
+} else {
+    return 0;
+}]]>
+        </CodeText>
+      </Service>
+      <Service name="getUsageAnalytics" args="" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+return queryConfig.usageAnalytics;]]>
+        </CodeText>
+      </Service>
+      <Service name="syncJourneyEvents" args="events" private="false">
+        <CodeText>
+          <![CDATA[if (!events || events.length == 0) return;
+
+this._syncEvents(events, "journey");]]>
+        </CodeText>
+      </Service>
+      <Service name="syncMouseEvents" args="events" private="false">
+        <CodeText>
+          <![CDATA[if (!events || events.length == 0) return;
+
+this._syncEvents(events, "mouse");
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="70ff9dff-5761-42cb-81bf-77ec3fa94b72" name="CONFETTI-CSS" type="text/css" size="1939" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="e70acc37-73cf-4a50-8389-61eeca4a95b4" name="confetti.js" type="application/javascript" size="8772" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="3359527c-1a88-4deb-8e47-c50f2d6f3933" name="heatmap.js" type="application/javascript" size="19585" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="51a1142e-7095-48e7-85ae-85a9a4523242" name="QueryConfig" type="application/json" size="5678" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="4c4f2643-cfd8-4e16-8660-ec4b67dbe61c" name="rainbowvis.js" type="application/javascript" size="7589" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="dd174035-223f-4ab8-87e9-dd71a6c3e386" name="SQL Scripts" type="application/sql" size="868" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="e481ca4e-1dcd-4f35-8fad-d80d4ab89b51" name="stickyfloat.js" type="application/javascript" size="9581" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="c7aa8a67-7628-43b5-85fd-dca80cfd313e" name="ua-parser.min.js" type="application/javascript" size="18230" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="a79080e6-8a10-4c4c-8f1d-bb656d07dcf0" name="USER_CONFETTI_DATA_QUERY_SQL" type="application/sql" size="173" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="11a19fcb-07db-4259-8ec1-50d119ff4ac1" name="USER_CONFETTI_DISTRIBUTION_SQL" type="application/sql" size="164" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="37ce8199-dc09-4cda-8920-25659e4cc436" name="USER_HEATMAP_DATA_QUERY_SQL" type="application/sql" size="160" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="38817a71-e865-4143-8496-3b28dd3c74e3" name="USER_HEATMAP_MAX_QUERY_SQL" type="application/sql" size="178" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="1116e8c7-56c3-47e1-8039-4b2f471c1183" name="USER_JOURNEY_EVENT_INSERT_SQL" type="application/sql" size="181" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="bc878100-9173-4170-8107-7ff9e14a4f42" name="USER_MOUSE_EVENT_INSERT_SQL" type="application/sql" size="274" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/space/another/dbpm/VIAOps - Base Service"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

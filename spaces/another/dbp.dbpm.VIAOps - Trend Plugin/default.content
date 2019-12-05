@@ -1,0 +1,115 @@
+<DashboardPluginModel description=" " name="VIAOps - Trend Plugin" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions>
+      <Function name="_mixinDeep" args="dest,source" private="true">
+        <CodeText>
+          <![CDATA[// Recursively mix the properties of two objects
+dest = dest || {};
+source = source || {};
+
+var empty = {};
+for (var name in source) {
+    if(!(name in dest) || (dest[name] !== source[name] && (!(name in empty) || empty[name] !== source[name]))){
+        try {
+            if ( source[name].constructor==Object ) {
+                 dest[name] = this._mixinDeep(dest[name], source[name]);
+            } else {
+                 dest[name] = source[name];
+            };
+        } catch(e) {
+            // Property in destination object not set. Create it and set its value.
+            dest[name] = source[name];
+        };
+    };
+}
+return dest;
+]]>
+        </CodeText>
+      </Function>
+      <Function name="getCustomChartStyle" args="result,baseConfig,timeIntervalAndFormat" private="false">
+        <CodeText>
+          <![CDATA[if (result.length == 0) return null;
+
+// see https://dojotoolkit.org/reference-guide/1.10/dojo/date/locale/format.html for formatting
+
+// WE CAN NOT ASSUME result is sorted on _epoch_
+// used to be but when we start executing multiple queries, we need to re-sort or
+// this logic will be wrong
+result.sort(function(a,b) {
+    if (a["_epoch_"] < b["_epoch_"]) return -1;
+    else if (a["_epoch_"] > b["_epoch_"]) return 1;
+    else return 0;
+});
+var minEpoch = result[0]["_epoch_"];
+var maxEpoch = result[result.length-1]["_epoch_"];
+
+var evt = {
+    chart : {
+        axis : {
+            dimension : {
+                config : {
+                    "labelFormat" : timeIntervalAndFormat.format
+                }
+            },
+        },
+        axisConfig : {
+            dimensionAxisTimeIntervalVal : timeIntervalAndFormat.value,
+            dimensionAxisTimeIntervalUnit : timeIntervalAndFormat.unit,
+        },
+    }
+};
+var config = {};
+if (baseConfig["config"] != null && baseConfig["config"]["style"] != null) {
+    config = baseConfig["config"]["style"];
+    if (config != null && config.chart != null && config.chart.axisConfig != null) {
+        var axisConfig = config.chart.axisConfig;
+        if (axisConfig.dimensionAxisRangeFromValue != null) {
+            if (axisConfig.dimensionAxisRangeFromValue == "FROM") {
+                if (timeIntervalAndFormat.from > 0) {
+                    var fromDateTime = new Date((timeIntervalAndFormat.from - timeIntervalAndFormat.interval) * 1000);
+                    axisConfig.dimensionAxisRangeFromValue = fromDateTime;
+                }
+                else {
+                    delete axisConfig.dimensionAxisRangeFromValue;
+                }
+            }
+            else if (axisConfig.dimensionAxisRangeFromValue == "MIN") {
+                var minDateTime = new Date((minEpoch - timeIntervalAndFormat.interval) * 1000);
+                axisConfig.dimensionAxisRangeFromValue = minDateTime;
+            }
+            else {
+                delete axisConfig.dimensionAxisRangeFromValue;
+            }
+        }
+        if (axisConfig.dimensionAxisRangeToValue != null) {
+            if (axisConfig.dimensionAxisRangeToValue == "TO") {
+                if (timeIntervalAndFormat.to > 0) {
+                    var toDateTime = new Date((timeIntervalAndFormat.to + timeIntervalAndFormat.interval) * 1000);
+                    axisConfig.dimensionAxisRangeToValue = toDateTime;
+                }
+                else {
+                    delete axisConfig.dimensionAxisRangeToValue;
+                }
+            }
+            else if (axisConfig.dimensionAxisRangeToValue == "MAX") {
+                var maxDateTime = new Date((maxEpoch + timeIntervalAndFormat.interval) * 1000);
+                axisConfig.dimensionAxisRangeToValue = maxDateTime;
+            }
+            else {
+                delete axisConfig.dimensionAxisRangeToValue;
+            }
+        }
+    }
+}
+return this._mixinDeep(evt, config);
+]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services/>
+    <Resources/>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

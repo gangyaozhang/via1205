@@ -1,0 +1,11 @@
+DROP TABLE viaops_analysis_cache;
+
+CREATE TABLE viaops_analysis_cache (
+    key1 VARCHAR(1024) NOT NULL,
+    key2 VARCHAR(1024) NOT NULL,
+    data MEDIUMTEXT NOT NULL,
+    modified_ts TIMESTAMP DEFAULT current_timestamp(),
+    PRIMARY KEY (key1, key2)
+);
+
+ALTER TABLE viaops_analysis_cache ADD modified_ts TIMESTAMP DEFAULT current_timestamp();

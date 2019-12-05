@@ -1,0 +1,29 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "1c4f7f5b-d576-4794-8bdd-f265c92a3bcf"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "bd8e16ff-dc31-4049-8009-c4439cb62001"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "ad3cbe11-0553-4d4c-89c6-9cc3f58ec072"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "bd8e16ff-dc31-4049-8009-c4439cb62001,ad3cbe11-0553-4d4c-89c6-9cc3f58ec072,1c4f7f5b-d576-4794-8bdd-f265c92a3bcf",
+    "__references__": "/app/dbp/space/VIA Common Library/dbpm/VIA - File Service",
+    "modelStatus": "valid",
+    "name": "VIAOps - Demo Service"
+  }
+}

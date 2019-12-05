@@ -1,0 +1,12 @@
+UPDATE
+    viaops_anomaly_baseline_score
+SET
+    score_method="${score_method}",
+    stat_seasonality="${stat_seasonality}",
+    anomaly_trigger="${anomaly_trigger}",
+    lower_scale=${lower_scale},
+    upper_scale=${upper_scale},
+    enabled=${enabled},
+    modified_ts=current_timestamp()
+WHERE adm_name="${adm_name}"
+  AND metric_id="${metric_id}"

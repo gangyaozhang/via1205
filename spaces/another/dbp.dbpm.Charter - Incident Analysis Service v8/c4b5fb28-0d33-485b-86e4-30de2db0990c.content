@@ -1,0 +1,6 @@
+SELECT count(*) as count
+FROM viaops_incident_history
+WHERE date_key = ${dateKey}
+  AND id = '${incidentId}'
+  AND start_tm > 0
+  AND state != "Cooldown"

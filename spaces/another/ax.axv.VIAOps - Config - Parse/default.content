@@ -1,0 +1,308 @@
+<AnalyticsExplorerView description="" name="VIAOps - Config - Parse" is_init="false">
+  <ModelInfo validated="true" nextPageId="3">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="0.8"/>
+      <NoTileSpacing value="false"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <CustomCSSSetting><![CDATA[@import '/vitria-oi/rest/app/dbp/user/via_common/dbpm/VIA - Common/VIA-CSS';
+
+.dimension-values .dgrid-cell.field-name {
+    font-family: Arial;
+    vertical-align: top;
+}
+.dimension-values .dgrid-cell.field-not {
+    font-family: Arial;
+    vertical-align: top;
+}
+.dimension-values .dgrid-cell.field-value {
+    font-family: Arial;
+    vertical-align: top;
+    word-break: break-all;
+}
+
+.anomaly-config .dgrid-cell.field-service {
+    font-family: Arial;
+}
+.anomaly-config .dgrid-cell.field-sub_service {
+    font-family: Arial;
+}
+.anomaly-config .dgrid-cell.field-dim_values {
+    font-family: Arial;
+}
+
+.anomaly-config-table {
+    border-collapse: unset;
+}
+
+.soflow {
+   -webkit-appearance: button;
+   -webkit-border-radius: 2px;
+   -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+   -webkit-padding-end: 20px;
+   -webkit-padding-start: 2px;
+   -webkit-user-select: none;
+   background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+   background-position: 97% center;
+   background-repeat: no-repeat;
+   border: 1px solid #AAA;
+   color: #555;
+   font-size: 12pt !important;
+   overflow: hidden;
+   padding: 5px 10px;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   width: 430px !important;
+   height: auto !important;
+}
+
+select.soflow:disabled {
+   color: #BBB;
+}
+
+]]></CustomCSSSetting>
+    <Page id="1" name="Service Config" title="Service Config" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<div style="width:calc(100% - 2px);height:100%;background-color:white;padding:0px;">
+    <div data-vitria-type="tile" style="width:100%;height:29px;padding:0px;border:none;" data-vitria-tile-name="ActionBar"></div>
+    <div style="width:100%;height:calc(100% - 29px);" data-vitria-type="layout"></div> 
+</div>]]></PageFrameContent>
+      <PageProperties/>
+      <Layout type="10" numRow="1" numCol="1" count="1" templateType="1" screenHeight="1080" renderType="null" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:72,&quot;id&quot;:0,&quot;title&quot;:&quot;Main Tile&quot;}]" unitSize="undefined" viewRows="72" viewCols="120"/>
+      <Tile name="Main Tile" title="Main Tile" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="via-scroller" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:43" name="axflow:localstore:node:43" label="Parser Model" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="metricId" label="metricId" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="parseSourceGroup" label="parseSourceGroup" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="parseSourceName" label="parseSourceName" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="parseAggrFunc" label="parseAggrFunc" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="parseTargetGroup" label="parseTargetGroup" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="parseTargetApp" label="parseTargetApp" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="parseTargetMetric" label="parseTargetMetric" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="_dup_" label="_dup_" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="extended"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;_dup_&quot;,&quot;label&quot;:&quot;&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:20},&quot;renderer&quot;:{&quot;type&quot;:&quot;icon&quot;,&quot;checkDisplayField&quot;:&quot;false&quot;,&quot;labelFieldSelect&quot;:&quot;_dup_&quot;,&quot;iconType&quot;:&quot;signal&quot;,&quot;cases&quot;:[{&quot;shape&quot;:&quot;circle&quot;,&quot;value&quot;:&quot;true&quot;,&quot;color&quot;:&quot;#cd4343&quot;}]},&quot;shapeOnly&quot;:false,&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;metricId&quot;,&quot;label&quot;:&quot;Metric ID&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:300}},{&quot;name&quot;:&quot;sqlQDC&quot;,&quot;label&quot;:&quot;Qualifying Dimension Constraints (SQL)&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;display&quot;:&quot;true&quot;,&quot;style&quot;:{&quot;width&quot;:400},&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;parseSourceGroup&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;group&quot;:&quot;Source&quot;,&quot;style&quot;:{&quot;width&quot;:120},&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;parseSourceName&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;group&quot;:&quot;Source&quot;,&quot;style&quot;:{&quot;width&quot;:120},&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;parseAggrFunc&quot;,&quot;label&quot;:&quot;Aggr&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:6,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;group&quot;:&quot;Source&quot;,&quot;style&quot;:{&quot;width&quot;:50},&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;parseTargetGroup&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:7,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;group&quot;:&quot;Target&quot;,&quot;style&quot;:{&quot;width&quot;:120},&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;parseTargetApp&quot;,&quot;label&quot;:&quot;App&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:8,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;group&quot;:&quot;Target&quot;,&quot;style&quot;:{&quot;width&quot;:100},&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;parseTargetMetric&quot;,&quot;label&quot;:&quot;Metric&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:9,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;group&quot;:&quot;Target&quot;,&quot;style&quot;:{&quot;width&quot;:150},&quot;isKeyField&quot;:false}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <frame_tile name="ActionBar" title="ActionBar" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="via-action-bar" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/user/via_common/dbpm/VIA - Common/Action Bar&quot;,&quot;model&quot;:&quot;{\r\n\t\&quot;toolbar\&quot;: [\r\n    \t{\r\n    \t\t\&quot;label\&quot;: \&quot;Parse Config\&quot;,\r\n    \t\t\&quot;title\&quot;: \&quot;Parse Config for the Parser, Baseline and Anomaly (aka Peanut Butter and Avocado) Framework.\&quot;\r\n    \t},\r\n    \t{\r\n    \t\t\&quot;label\&quot;: \&quot;&amp;lt;i class=&apos;fas fa-cube&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n    \t\t\&quot;title\&quot;: \&quot;Download parse model as JSON.\&quot;,\r\n    \t\t\&quot;value\&quot;: \&quot;download/parser/model\&quot;\r\n    \t},\r\n    \t{\r\n    \t\t\&quot;label\&quot;: \&quot;&amp;lt;i class=&apos;fas fa-database&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n    \t\t\&quot;title\&quot;: \&quot;Update parse model table.\&quot;,\r\n    \t\t\&quot;value\&quot;: \&quot;update/parser/model\&quot;\r\n        },\r\n        {\r\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-redo&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n            \&quot;title\&quot; : \&quot;Refresh entries from system model.\&quot;,\r\n            \&quot;value\&quot; : \&quot;config/refresh\&quot;\r\n    \t}\r\n\t]\r\n}&quot;}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+    </Page>
+    <DataFlow showFooter="true">
+      <Item id="node:42" type="UserScript" label="Get Parser Model" _undefined_title="" originHeight="117" width="130" height="117" x="632" y="320">
+        <dynIn id="din:0" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="Refresh" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:43" type="LocalStore" label="Parser Model" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="870" y="320"/>
+      <Item id="node:45" type="Tile" label="Tile 0" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="148" y="60"/>
+      <Item id="node:46" type="UserScript" label="Script 0" _undefined_title="" originHeight="117" width="140" height="117" x="428" y="60">
+        <dynIn id="din:0" type="event[]" label="Action" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Refresh" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:48" type="PortIn" label="Port IN 0" _undefined_title="" originHeight="117" width="130" height="117" x="147" y="300">
+        <dynOut id="dout:0" type="any" label="Config Plugin" propagate="always" _isArray="true"/>
+      </Item>
+      <Link srcId="node:42" srcPort="dout:0" tgtId="node:43" tgtPort="in:0"/>
+      <Link srcId="node:45" srcPort="out:0" tgtId="node:46" tgtPort="din:0"/>
+      <Link srcId="node:48" srcPort="dout:0" tgtId="node:46" tgtPort="din:1"/>
+      <Link srcId="node:48" srcPort="dout:0" tgtId="node:42" tgtPort="din:0"/>
+      <Link srcId="node:46" srcPort="dout:0" tgtId="node:42" tgtPort="din:1"/>
+      <Input key="node:42/cfg:model/default" value="&quot;var CommonPlugin = Plugin(\&quot;Common\&quot;);\nvar ConfigPlugin = getInput(\&quot;din:0\&quot;);\nif (ConfigPlugin == null) return;\n\nCommonPlugin.pbShowProgressBar(\&quot;load-parser-model\&quot;, \&quot;Loading parser model...\&quot;);\nConfigPlugin.getParseModel(function(response) {\n    if (response.status == \&quot;OK\&quot;) {\n        setOutput(\&quot;dout:0\&quot;, response.value);\n        CommonPlugin.pbHideProgressBar(\&quot;load-parser-model\&quot;);\n    }\n});\n&quot;"/>
+      <Input key="node:42/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:42/cfg:schema/default" value="&quot;var fields = \&quot;metricId,parseSourceGroup,parseSourceName,parseAggrFunc,parseTargetGroup,parseTargetApp,parseTargetMetric,_dup_\&quot;.split(\&quot;,\&quot;);\nvar schema = [];\nfields.forEach(function(field) {\n    schema.push({\n        name  : field,\n        label : field,\n        type  : \&quot;string\&quot;\n    })\n});\nsetOutputSchema(\&quot;dout:0\&quot;, schema);&quot;"/>
+      <Input key="node:45/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#ActionBar&quot;,&quot;path&quot;:[&quot;Service Config&quot;],&quot;name&quot;:&quot;ActionBar&quot;}]"/>
+      <Input key="node:46/cfg:model/default" value="&quot;var CommonPlugin = Plugin(\&quot;Common\&quot;);\nvar ConfigPlugin = getInput(\&quot;din:1\&quot;);\nif (ConfigPlugin == null) return;\n\nif (port == \&quot;din:0\&quot;) {\n    var actions = getInput(\&quot;din:0\&quot;);\n    for (var i=0; i&lt;actions.length; i++) {\n        var action = actions[i];\n        if (action.type == \&quot;toolbarSelect\&quot;) {\n            switch (action.value) {\n                case \&quot;download/parser/model\&quot;:\n                    CommonPlugin.pbShowProgressBar(\&quot;download/parser/model\&quot;, \&quot;Generating parse model...\&quot;);\n                    ConfigPlugin.downloadParseModelAsJSON(function(response) {\n                        CommonPlugin.pbHideProgressBar(\&quot;download/parser/model\&quot;);\n                        if (response.status == \&quot;OK\&quot;) {\n                            var uuid = response.value;\n                            window.open(\&quot;/vitria-oi/rest/app/dojoclient/user/*/*/ParseModel.json?op=downloadcsv&amp;uid=\&quot;+uuid);\n                        }\n                    });\n                    break;\n                case \&quot;update/parser/model\&quot;:\n                    CommonPlugin.pbShowProgressBar(\&quot;update/parser/model\&quot;, \&quot;Updating parse model table...\&quot;);\n                    ConfigPlugin.updateParseModelTable(function(response) {\n                        if (response.status == \&quot;OK\&quot;) {\n                            CommonPlugin.pbHideProgressBar(\&quot;update/parser/model\&quot;);\n                        }\n                    });\n                    break;\n                case \&quot;config/refresh\&quot;:\n                    setOutput(\&quot;dout:0\&quot;, Date.now());\n                    break;\n            }\n        }\n    }\n}\n&quot;"/>
+      <Input key="node:46/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Refresh&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:46/cfg:schema/default" value="&quot;var fields = \&quot;svcName,compName,appName,metricName,sqlQDC,parseSourceGroup,parseSourceTable,parseSourceName,parseAggrFunc,parseSourceUOM,_merged_\&quot;.split(\&quot;,\&quot;);\nvar schema = [];\nfields.forEach(function(field) {\n    schema.push({\n        name  : field,\n        label : field,\n        type  : \&quot;string\&quot;\n    })\n});\nsetOutputSchema(\&quot;dout:0\&quot;, schema);\n\nvar fields = \&quot;metricId,sqlQDC,parseSourceGroup,parseSourceTable,parseSourceName,parseAggrFunc,parseSourceUOM,parseTargetGroup,parseTargetApp,parseTargetMetric,_dup_\&quot;.split(\&quot;,\&quot;);\nvar schema = [];\nfields.forEach(function(field) {\n    schema.push({\n        name  : field,\n        label : field,\n        type  : \&quot;string\&quot;\n    })\n});\nsetOutputSchema(\&quot;dout:1\&quot;, schema);&quot;"/>
+      <Input key="node:46/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Action&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:42/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Refresh&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:48/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Schema id="node:42/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;metricId&quot;,&quot;label&quot;:&quot;metricId&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceGroup&quot;,&quot;label&quot;:&quot;parseSourceGroup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceName&quot;,&quot;label&quot;:&quot;parseSourceName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseAggrFunc&quot;,&quot;label&quot;:&quot;parseAggrFunc&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseTargetGroup&quot;,&quot;label&quot;:&quot;parseTargetGroup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseTargetApp&quot;,&quot;label&quot;:&quot;parseTargetApp&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseTargetMetric&quot;,&quot;label&quot;:&quot;parseTargetMetric&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_dup_&quot;,&quot;label&quot;:&quot;_dup_&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:43/in:0">
+        <JSON value="{&quot;name&quot;:&quot;metricId&quot;,&quot;label&quot;:&quot;metricId&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceGroup&quot;,&quot;label&quot;:&quot;parseSourceGroup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceName&quot;,&quot;label&quot;:&quot;parseSourceName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseAggrFunc&quot;,&quot;label&quot;:&quot;parseAggrFunc&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseTargetGroup&quot;,&quot;label&quot;:&quot;parseTargetGroup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseTargetApp&quot;,&quot;label&quot;:&quot;parseTargetApp&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseTargetMetric&quot;,&quot;label&quot;:&quot;parseTargetMetric&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_dup_&quot;,&quot;label&quot;:&quot;_dup_&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:43/out:0">
+        <JSON value="{&quot;name&quot;:&quot;metricId&quot;,&quot;label&quot;:&quot;metricId&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceGroup&quot;,&quot;label&quot;:&quot;parseSourceGroup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceName&quot;,&quot;label&quot;:&quot;parseSourceName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseAggrFunc&quot;,&quot;label&quot;:&quot;parseAggrFunc&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseTargetGroup&quot;,&quot;label&quot;:&quot;parseTargetGroup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseTargetApp&quot;,&quot;label&quot;:&quot;parseTargetApp&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseTargetMetric&quot;,&quot;label&quot;:&quot;parseTargetMetric&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_dup_&quot;,&quot;label&quot;:&quot;_dup_&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:45/out:0">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:45/out:1">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:45/out:2">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:45/out:3">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:46/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;svcName&quot;,&quot;label&quot;:&quot;svcName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;compName&quot;,&quot;label&quot;:&quot;compName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;appName&quot;,&quot;label&quot;:&quot;appName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricName&quot;,&quot;label&quot;:&quot;metricName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sqlQDC&quot;,&quot;label&quot;:&quot;sqlQDC&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceGroup&quot;,&quot;label&quot;:&quot;parseSourceGroup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceTable&quot;,&quot;label&quot;:&quot;parseSourceTable&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceName&quot;,&quot;label&quot;:&quot;parseSourceName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseAggrFunc&quot;,&quot;label&quot;:&quot;parseAggrFunc&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceUOM&quot;,&quot;label&quot;:&quot;parseSourceUOM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_merged_&quot;,&quot;label&quot;:&quot;_merged_&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:46/din:0">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:46/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;metricId&quot;,&quot;label&quot;:&quot;metricId&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sqlQDC&quot;,&quot;label&quot;:&quot;sqlQDC&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceGroup&quot;,&quot;label&quot;:&quot;parseSourceGroup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceTable&quot;,&quot;label&quot;:&quot;parseSourceTable&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceName&quot;,&quot;label&quot;:&quot;parseSourceName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseAggrFunc&quot;,&quot;label&quot;:&quot;parseAggrFunc&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceUOM&quot;,&quot;label&quot;:&quot;parseSourceUOM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseTargetGroup&quot;,&quot;label&quot;:&quot;parseTargetGroup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseTargetApp&quot;,&quot;label&quot;:&quot;parseTargetApp&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseTargetMetric&quot;,&quot;label&quot;:&quot;parseTargetMetric&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_dup_&quot;,&quot;label&quot;:&quot;_dup_&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:42/din:1">
+        <JSON value="{&quot;name&quot;:&quot;svcName&quot;,&quot;label&quot;:&quot;svcName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;compName&quot;,&quot;label&quot;:&quot;compName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;appName&quot;,&quot;label&quot;:&quot;appName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricName&quot;,&quot;label&quot;:&quot;metricName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;sqlQDC&quot;,&quot;label&quot;:&quot;sqlQDC&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceGroup&quot;,&quot;label&quot;:&quot;parseSourceGroup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceTable&quot;,&quot;label&quot;:&quot;parseSourceTable&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceName&quot;,&quot;label&quot;:&quot;parseSourceName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseAggrFunc&quot;,&quot;label&quot;:&quot;parseAggrFunc&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;parseSourceUOM&quot;,&quot;label&quot;:&quot;parseSourceUOM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_merged_&quot;,&quot;label&quot;:&quot;_merged_&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <DynInput id="node:46">
+        <Port id="din:0" type="event[]" label="Action" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:42">
+        <Port id="din:0" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="any" label="Refresh" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynOutput id="node:42">
+        <Port id="dout:0" type="event[]" label="Out(0)" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:48">
+        <Port id="dout:0" type="any" label="Config Plugin" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:46">
+        <Port id="dout:0" type="any" label="Refresh" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <Version id="node:42" version="2"/>
+      <Version id="node:43" version="2"/>
+      <Version id="node:45" version="1"/>
+      <Version id="node:46" version="2"/>
+      <Version id="node:48" version="1"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/user/via_common/dbpm/VIA - Common" alias="Common"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

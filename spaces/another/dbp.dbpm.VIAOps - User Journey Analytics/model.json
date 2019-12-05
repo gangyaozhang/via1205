@@ -1,0 +1,81 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "c7aa8a67-7628-43b5-85fd-dca80cfd313e"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "bc878100-9173-4170-8107-7ff9e14a4f42"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "1116e8c7-56c3-47e1-8039-4b2f471c1183"
+    },
+    {
+      "fileref": "ModelContentFile4",
+      "name": "51a1142e-7095-48e7-85ae-85a9a4523242"
+    },
+    {
+      "fileref": "ModelContentFile5",
+      "name": "3359527c-1a88-4deb-8e47-c50f2d6f3933"
+    },
+    {
+      "fileref": "ModelContentFile6",
+      "name": "37ce8199-dc09-4cda-8920-25659e4cc436"
+    },
+    {
+      "fileref": "ModelContentFile7",
+      "name": "38817a71-e865-4143-8496-3b28dd3c74e3"
+    },
+    {
+      "fileref": "ModelContentFile8",
+      "name": "e70acc37-73cf-4a50-8389-61eeca4a95b4"
+    },
+    {
+      "fileref": "ModelContentFile9",
+      "name": "e481ca4e-1dcd-4f35-8fad-d80d4ab89b51"
+    },
+    {
+      "fileref": "ModelContentFile10",
+      "name": "4c4f2643-cfd8-4e16-8660-ec4b67dbe61c"
+    },
+    {
+      "fileref": "ModelContentFile11",
+      "name": "70ff9dff-5761-42cb-81bf-77ec3fa94b72"
+    },
+    {
+      "fileref": "ModelContentFile12",
+      "name": "11a19fcb-07db-4259-8ec1-50d119ff4ac1"
+    },
+    {
+      "fileref": "ModelContentFile13",
+      "name": "a79080e6-8a10-4c4c-8f1d-bb656d07dcf0"
+    },
+    {
+      "fileref": "ModelContentFile14",
+      "name": "dd174035-223f-4ab8-87e9-dd71a6c3e386"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "70ff9dff-5761-42cb-81bf-77ec3fa94b72,e70acc37-73cf-4a50-8389-61eeca4a95b4,3359527c-1a88-4deb-8e47-c50f2d6f3933,51a1142e-7095-48e7-85ae-85a9a4523242,4c4f2643-cfd8-4e16-8660-ec4b67dbe61c,dd174035-223f-4ab8-87e9-dd71a6c3e386,e481ca4e-1dcd-4f35-8fad-d80d4ab89b51,c7aa8a67-7628-43b5-85fd-dca80cfd313e,a79080e6-8a10-4c4c-8f1d-bb656d07dcf0,11a19fcb-07db-4259-8ec1-50d119ff4ac1,37ce8199-dc09-4cda-8920-25659e4cc436,38817a71-e865-4143-8496-3b28dd3c74e3,1116e8c7-56c3-47e1-8039-4b2f471c1183,bc878100-9173-4170-8107-7ff9e14a4f42,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:e7ad0afd-5240-433e-8fa8-3954ddc76d38",
+    "__payload_timestamp__1116e8c7-56c3-47e1-8039-4b2f471c1183": "1567490048853",
+    "__payload_timestamp__11a19fcb-07db-4259-8ec1-50d119ff4ac1": "1569375572640",
+    "__payload_timestamp__3359527c-1a88-4deb-8e47-c50f2d6f3933": "1567474767732",
+    "__payload_timestamp__37ce8199-dc09-4cda-8920-25659e4cc436": "1569395479072",
+    "__payload_timestamp__38817a71-e865-4143-8496-3b28dd3c74e3": "1569395736289",
+    "__payload_timestamp__51a1142e-7095-48e7-85ae-85a9a4523242": "1569375546353",
+    "__payload_timestamp__a79080e6-8a10-4c4c-8f1d-bb656d07dcf0": "1569395042661",
+    "__payload_timestamp__bc878100-9173-4170-8107-7ff9e14a4f42": "1567489737767",
+    "__references__": "/app/dbp/space/another/dbpm/VIAOps - Base Service",
+    "modelStatus": "valid",
+    "name": "VIAOps - User Journey Analytics"
+  }
+}

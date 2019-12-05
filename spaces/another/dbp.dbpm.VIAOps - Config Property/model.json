@@ -1,0 +1,33 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "09f69f18-270e-4b01-8995-078e1c892da4"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "b0613b6d-5040-4b4c-820d-8da4b99487b7"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "6dfdf6cc-b4cb-48fb-8006-a7d2775a43e7"
+    },
+    {
+      "fileref": "ModelContentFile4",
+      "name": "ffceee2a-ebdf-40e8-8e25-4c74117c3da9"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "09f69f18-270e-4b01-8995-078e1c892da4,b0613b6d-5040-4b4c-820d-8da4b99487b7,6dfdf6cc-b4cb-48fb-8006-a7d2775a43e7,ffceee2a-ebdf-40e8-8e25-4c74117c3da9,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:4fa80cae-ab79-41c0-850f-68c371d35cbf,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:48639379-e854-4da3-8f0b-ea5ec00a4f4e,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:e7ad0afd-5240-433e-8fa8-3954ddc76d38",
+    "__references__": "/app/dbp/space/another/dbpm/VIAOps - Base Service,/app/dbp/space/another/dbpm/VIAOps - Config Audit Service",
+    "modelStatus": "valid",
+    "name": "VIAOps - Config Property"
+  }
+}

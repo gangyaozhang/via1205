@@ -1,0 +1,21 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "locale"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": " ",
+    "_RESOURCE_Type": "axv",
+    "__references__": "/app/dbp/user/via_common/dbpm/VIA - Common,/app/dbp/space/another/dbpm/VIAOps - Commonality Plugin,/app/ax/space/another/axv/VIAOps - Commonality View - Items,/app/ax/space/another/axv/VIAOps - Commonality View - Info,/app/ax/space/another/axv/VIAOps - Commonality View - Breakdown,/app/ax/space/another/axv/VIAOps - Commonality View - Apex",
+    "modelStatus": "valid",
+    "name": "VIAOps - Commonality Detail",
+    "theme": "null"
+  }
+}

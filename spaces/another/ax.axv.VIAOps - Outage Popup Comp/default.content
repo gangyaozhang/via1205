@@ -1,0 +1,213 @@
+<AnalyticsExplorerView is_init="false" name="VIAOps - Outage Popup Comp" description="">
+  <ModelInfo nextPageId="2" validated="true">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="0.8"/>
+      <NoTileSpacing value="false"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <Page id="1" name="Default" title="Default" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<style>
+    
+    .motd {
+        height: calc( 100% - 40px );
+        width: calc( 100% - 20px );
+        padding: 10px;
+		font-family: Arial;
+		background-color: white;
+    }
+    
+    .motd .title {
+        height: 35px;
+        line-height: 35px;
+        padding: 0 10px;
+        width: calc( 100% - 20px );
+        background-color: #148ac4;
+        color: white;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+    
+    .motd .subject_line {
+        height: 35px;
+        line-height: 35px;
+        padding: 0 10px;
+        width: calc( 100% - 20px );
+        background-color: white;
+        color: #2d3538;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+    
+    .motd .container {
+        width: calc( 100% - 20px );
+        margin-bottom: 4px;
+		flex-flow: row;	
+    }
+    
+    .motd .container .label_time_window {
+        color: #148ac4;
+        width: 125px;
+		line-height: 25px;
+        font-size: 12px;
+        display: inline-flex;
+        padding: 0 10px;
+        background-color: #f5f5f5;
+    }
+    
+    .motd .container .time_window {
+        line-height: 25px;
+        padding: 0 10px;
+        background-color: white;
+        color: #2d3538;
+        font-size: 12px;
+        margin-top: 0px;
+        display: inline-flex;
+    }
+    
+    .motd .container .label_description {
+		color: #148ac4;
+		height: 100%;
+		vertical-align: top;
+		width: 125px;
+		display: inline-block;
+		background-color: #f5f5f5;
+		font-size: 12px;
+		margin-top: 0px;
+		padding: 5px 10px;
+	}
+    
+    .motd .container .text.description {
+        height: 100%;
+        padding: 0 10px;
+        width: calc( 100% - 185px );
+        background-color: white;
+        color: #2d3538;
+        font-size: 18px;
+        margin-top: 3px; 
+        white-space: normal;
+        display: inline-block;
+		font-size: 12px;
+    }
+    
+    .motd .container .label_tags {
+        color: #148ac4;
+		line-height: 25px;
+		vertical-align: top;
+		width: 125px;
+		display: inline-block;
+		background-color: #f5f5f5;
+		font-size: 12px;
+		padding: 0 10px;
+		margin-top: 0px;
+    }
+    
+    .motd .container .tags {
+        height: 25px;
+        line-height: 25px;
+        padding: 0 10px;
+        width: calc( 100% - 185px );
+        background-color: white;
+        color: #2d3538;
+        font-size: 12px;
+        display: inline-block;
+    }
+    
+</style>
+
+<div class="motd">
+    <div class="title"></div>
+    <div class="subject_line"></div>
+    <div class="container">
+        <div class="label_time_window">Time Window:</div>
+        <div class="time_window"></div>
+    </div>
+    <div class="container" style="height: calc(100% - 160px );">
+        <div class="label_description">Description:</div>
+    	<div class="text description"></div>
+    </div>
+    <div class="container" style="margin-top: 14px;">
+        <div class="label_tags">Tags:</div>
+        <div class="tags"></div>
+    </div>
+    
+</div>]]></PageFrameContent>
+      <PageProperties/>
+      <Layout type="10" numRow="NaN" numCol="NaN" count="NaN" templateType="7" screenHeight="undefined" renderType="undefined" positions="[]" unitSize="undefined" viewRows="NaN" viewCols="NaN"/>
+    </Page>
+    <DataFlow showFooter="true">
+      <Item id="node:1" type="PortIn" label="Port IN 0" _undefined_title="" _undefined_originHeight="" width="130" height="100" x="80" y="60">
+        <dynOut id="dout:0" type="any[]" label="outageItem" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:3" type="UserScript" label="Dummy Source" _undefined_title="" _undefined_originHeight="" width="130" height="117" x="80" y="180">
+        <dynOut id="dout:0" type="any[]" label="outageObject" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:5" type="UserScript" label="Script 1" _undefined_title="" _undefined_originHeight="" width="130" height="117" x="340" y="80">
+        <dynIn id="din:0" type="any[]" label="In(0)" evaluate="always" _isArray="true"/>
+      </Item>
+      <Link srcId="node:1" srcPort="dout:0" tgtId="node:5" tgtPort="din:0"/>
+      <Input key="node:1/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;outageItem&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:3/cfg:model/default" value="&quot;var outageObject = [\r\n   {\r\n    \&quot;reason\&quot;: \&quot;\&quot;,\r\n    \&quot;subject_line\&quot;: \&quot;System Will Be Down For Maintenance\&quot;,\r\n    \&quot;user_id\&quot;: \&quot;charter_admin\&quot;,\r\n    \&quot;end_epoch\&quot;: 1559159280,\r\n    \&quot;start_epoch\&quot;: 1559155680,\r\n    \&quot;description\&quot;: \&quot;\&quot;,\r\n    \&quot;active\&quot;: \&quot;1\&quot;,\r\n    \&quot;id\&quot;: 5,\r\n    \&quot;type\&quot;: \&quot;outage\&quot;\r\n   }\r\n  ];\r\n  \r\n  setOutput( \&quot;din:0\&quot;, outageObject );&quot;"/>
+      <Input key="node:3/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;outageObject&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:5/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;In(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:5/cfg:model/default" value="&quot;var SchedulerPlugin = Plugin(&apos;Scheduler&apos;);\n\nfunction init(){\n   var selection = getInput( \&quot;din:0\&quot; ) || [];\n   if( selection.length &gt; 0){\n        var selected = selection[0];\n        \n        var title = \&quot;\&quot;;\n        if( selected[&apos;type&apos;] == &apos;outage&apos; ){\n            title = \&quot;System is Currently Undergoing Maintenance\&quot;;\n        } else {\n            title = \&quot;Next Scheduled Maintenance Outage\&quot;;\n        }\n        $(&apos;.motd .title&apos;).text(title);\n        \n        $(&apos;.motd .subject_line&apos;).text( selected[&apos;subject_line&apos;] );\n        \n        var startDate   = SchedulerPlugin.parseDate( new Date( parseInt(selected[&apos;start_epoch&apos;]) * 1000 ) );\n        var endDate     = SchedulerPlugin.parseDate( new Date( parseInt(selected[&apos;end_epoch&apos;]) * 1000 ) );\n        var timeWindow  = startDate + \&quot; - \&quot; + endDate;\n        $(&apos;.motd .time_window&apos;).text( timeWindow );\n        \n        $(&apos;.motd .description&apos;).text( selected[&apos;description&apos;] );\n        $(&apos;.motd .tags&apos;).text( selected[&apos;reason&apos;] );\n   }\n}\n\n/*\n\n{\n    \&quot;reason\&quot;: \&quot;\&quot;,\n    \&quot;subject_line\&quot;: \&quot;System Will Be Down For Maintenance\&quot;,\n    \&quot;user_id\&quot;: \&quot;charter_admin\&quot;,\n    \&quot;end_epoch\&quot;: 1559159280,\n    \&quot;start_epoch\&quot;: 1559155680,\n    \&quot;description\&quot;: \&quot;\&quot;,\n    \&quot;active\&quot;: \&quot;1\&quot;,\n    \&quot;id\&quot;: 5,\n    \&quot;type\&quot;: \&quot;outage\&quot;\n   }\n\n*/\n\nrequire([(window.vtAppId ||  &apos;/vitria-oi/app/dojoclient&apos;) + \&quot;/html/scripts/Jquery/src/jquery.js\&quot;],function() {\n    jQuery(document).ready(function ($) {\n        init();\n    });\n});&quot;"/>
+      <DynInput id="node:5">
+        <Port id="din:0" type="any[]" label="In(0)" evaluate="always"/>
+      </DynInput>
+      <DynOutput id="node:1">
+        <Port id="dout:0" type="any[]" label="outageItem" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:3">
+        <Port id="dout:0" type="any[]" label="outageObject" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <Version id="node:1" version="1"/>
+      <Version id="node:3" version="2"/>
+      <Version id="node:5" version="2"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/space/another/dbpm/VIAOps - Maintenance Scheduler Service" alias="Scheduler"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

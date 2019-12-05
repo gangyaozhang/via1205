@@ -1,0 +1,6 @@
+UPDATE viaops_parse_table
+SET
+    parse_source_group=?, parse_source_name=?, aggr_func=?,
+    parse_target_group=?, parse_target_app=?, parse_target_metric=?,
+    modified_ts=current_timestamp()
+WHERE metric_id=?

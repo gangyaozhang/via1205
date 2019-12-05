@@ -1,0 +1,42 @@
+--- VIAOps - Trend Service > METRIC_SQL
+select
+    a._group_ as _group_,
+    a._data_ as _data_,
+    ${epochProjectionSQL} as _epoch_,
+    ${timeProjectionSQL} as _time_,
+    max(a._value_) as _value1_,
+    (sort_array(collect_list(b._value_))[floor((count(*)-1)/2)] + sort_array(collect_list(b._value_))[floor((count(*))/2)]) / 2 as _baseline1_
+from (
+    select
+        concat(${groupKey}) as _group_,
+        concat(${groupData}) as _data_,
+        ${epochExpr} as _epoch_,
+        ${appColumnClause}
+        ${metricNameColumn},
+${aggrCaseClause}
+    from ${metricTable}
+    where ${epochExpr} ${fromOper} ${fromTime} and ${epochExpr} ${toOper} ${toTime}
+    and ${dateKeyColumn} in (${dateKeys})
+    ${appWhereClause}
+    and ${metricNameColumn} in (${metric})
+    ${dimensionWhereClause}
+    group by ${metricValueGroupBy} ) a
+left join (
+    select
+        concat(${groupKey}) as _group_,
+        ${epochExpr} as _epoch_,
+        ${appColumnClause}
+        ${metricNameColumn},
+${aggrCaseClause}
+    from ${metricTable}
+    where ${baselineEpochWhereClause}
+    ${baselineDateKeyWhereClause}
+    ${appWhereClause}
+    and ${metricNameColumn} in (${metric})
+    ${dimensionWhereClause}
+    group by ${metricBaselineGroupBy} ) b
+on a._group_ = b._group_
+and date_format(from_unixtime(a._epoch_),'u|HHmm') = date_format(from_unixtime(b._epoch_),'u|HHmm')
+and b._epoch_ >= a._epoch_ - (5*7*24*60*60) and b._epoch_ < a._epoch_
+group by 1,2,3
+order by _epoch_

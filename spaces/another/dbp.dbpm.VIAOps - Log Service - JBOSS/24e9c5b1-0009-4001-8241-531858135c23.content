@@ -1,0 +1,6 @@
+{
+    "attr.timestamp" : "Timestamp",
+    "attr.loglevel"  : "Log Level",
+    "attr.source"    : "Source",
+    "attr.text"      : "Text"
+}

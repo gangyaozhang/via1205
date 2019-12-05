@@ -1,0 +1,424 @@
+<DashboardPluginModel is_init="false" name="VIAOps - Config Audit Service" description="This SDK Model include the service/resource to audit config changes.">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions>
+      <Function name="avoidNPEFFunction" args="" private="false">
+        <CodeText>
+          <![CDATA[// add this function to avoid DBP generate script NPE
+// should fix in DBP function.]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services>
+      <Service name="_buildAuditWhere" args="filter" private="false">
+        <CodeText>
+          <![CDATA[if (filter == null) return "";
+if (filter.fromDate == null || filter.toDate == null) return "";
+
+return " where modified_ts between from_unixtime(" + filter.fromDate + ") and from_unixtime(" + filter.toDate + ") ";]]>
+        </CodeText>
+      </Service>
+      <Service name="anomalyAudit" args="anomalyValue,action" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+if (queryConfig == null || queryConfig['enable-config-audit'] != true) return;
+if (anomalyValue == null || anomalyValue.length == 0) return;
+if (action == null) return;
+
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = Context.getLocalResource("ANOMALY_CONFIG_AUDIT_SQL");
+
+anomalyValue.forEach(function(item) {
+    item.unshift(action);
+    item.unshift(null);
+    item.unshift(Context.getCurrentUserId());
+});
+SQL.executeUpdate(DS, sql, anomalyValue);]]>
+        </CodeText>
+      </Service>
+      <Service name="anomalyFavoriteListAudit" args="anomalyValue,action" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+if (queryConfig == null || queryConfig['enable-config-audit'] != true) return;
+if (anomalyValue == null || anomalyValue.length == 0) return;
+if (action == null) return;
+
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = Context.getLocalResource("ANOMALY_FAVORITES_AUDIT_SQL");
+
+anomalyValue.forEach(function(item) {
+    item.unshift(action);
+    item.unshift(null);
+    item.unshift(Context.getCurrentUserId());
+});
+SQL.executeUpdate(DS, sql, anomalyValue);]]>
+        </CodeText>
+      </Service>
+      <Service name="configPropertyAudit" args="auditValue" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+if (queryConfig == null || queryConfig['enable-config-audit'] != true) return;
+if (auditValue == null || auditValue.length == 0) return;
+
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = Context.getLocalResource("CONFIG_PROPERTY_AUDIT_SQL");
+
+auditValue.forEach(function(item) {
+    item.unshift("modify");
+    item.unshift(null);
+    item.unshift(Context.getCurrentUserId());
+});
+SQL.executeUpdate(DS, sql, auditValue);]]>
+        </CodeText>
+      </Service>
+      <Service name="getAnomalyAudit" args="filter" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = "select * from viaops_anomaly_config_audit " + this._buildAuditWhere(filter) + " order by modified_ts desc";
+
+var result = this.executeSQLQuery(queryConfig, [], ["AnomalyAudit", "Select"], DS, sql, null);
+if (result != null && result.items != null) {
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getAnomalyFavoriteListAudit" args="filter" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = "select * from viaops_anomaly_favorites_audit " + this._buildAuditWhere(filter) + " order by modified_ts desc";
+
+var result = this.executeSQLQuery(queryConfig, [], ["AnomalyFavoriteAudit", "Select"], DS, sql, null);
+if (result != null && result.items != null) {
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getConfigAuditFilterConfig" args="" private="false">
+        <CodeText>
+          <![CDATA[return JSON.parse(Context.getLocalResource("Config-Audit-FilterConfig"));]]>
+        </CodeText>
+      </Service>
+      <Service name="getConfigPropertyAudit" args="filter" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = "select * from viaops_config_property_audit " + this._buildAuditWhere(filter) + " order by modified_ts desc";
+
+var result = this.executeSQLQuery(queryConfig, [], ["ConfigPropertyAudit", "Select"], DS, sql, null);
+if (result != null && result.items != null) {
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getIncidentGroupAudit" args="filter" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = "select * from viaops_incident_group_audit " + this._buildAuditWhere(filter) + " order by modified_ts desc";
+
+var result = this.executeSQLQuery(queryConfig, [], ["IncidentGroupAudit", "Select"], DS, sql, null);
+if (result != null && result.items != null) {
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getIncidentGroupContextualAudit" args="filter" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = "select * from viaops_incident_group_contextual_audit " + this._buildAuditWhere(filter) + " order by modified_ts desc";
+
+var result = this.executeSQLQuery(queryConfig, [], ["IncidentGroupContextualAudit", "Select"], DS, sql, null);
+if (result != null && result.items != null) {
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getIncidentGroupCorrelationAudit" args="filter" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = "select * from viaops_incident_group_correlation_audit " + this._buildAuditWhere(filter) + " order by modified_ts desc";
+
+var result = this.executeSQLQuery(queryConfig, [], ["IncidentGroupCorrelationAudit", "Select"], DS, sql, null);
+if (result != null && result.items != null) {
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getIncidentTableAudit" args="filter" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = "select * from viaops_incident_table_audit " + this._buildAuditWhere(filter) + " order by modified_ts desc";
+
+var result = this.executeSQLQuery(queryConfig, [], ["IncidentTableAudit", "Select"], DS, sql, null);
+if (result != null && result.items != null) {
+    return result.items;
+}
+return [];]]>
+        </CodeText>
+      </Service>
+      <Service name="getMetricInfoAudit" args="filter" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = "select * from viaops_metric_info_audit " + this._buildAuditWhere(filter) + " order by modified_ts desc";
+
+var result = this.executeSQLQuery(queryConfig, [], ["MetricInfoAudit", "Select"], DS, sql, null);
+if (result != null && result.items != null) {
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getParseModelAudit" args="filter" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = "select * from viaops_parse_table_audit " + this._buildAuditWhere(filter) + " order by modified_ts desc";
+
+var result = this.executeSQLQuery(queryConfig, [], ["ParseModelAudit", "Select"], DS, sql, null);
+if (result != null && result.items != null) {
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getQDCTableAudit" args="filter" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = "select * from viaops_qdc_table_audit " + this._buildAuditWhere(filter) + " order by modified_ts desc";
+
+var result = this.executeSQLQuery(queryConfig, [], ["QDCTableAudit", "Select"], DS, sql, null);
+if (result != null && result.items != null) {
+    return result.items;
+}
+return [];
+]]>
+        </CodeText>
+      </Service>
+      <Service name="incidentAudit" args="incidentValue,action" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+if (queryConfig == null || queryConfig['enable-config-audit'] != true) return;
+if (incidentValue == null || incidentValue.length == 0) return;
+if (action == null) return;
+
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = Context.getLocalResource("INCIDENT_TABLE_AUDIT_SQL");
+
+var fields = JSON.parse(Context.getLocalResource("INCIDENT_TABLE_AUDIT_FIELDS_LIST"));
+var value = [];
+incidentValue.forEach(function (incident) {
+    var item = [];
+    item.push(Context.getCurrentUserId());
+    item.push(null);
+    item.push(action);
+    fields.forEach(function (field) {
+        if (incident[field] != null) {
+            item.push(incident[field]);
+        } else {
+            item.push(null);
+        }
+    });
+    value.push(item);
+});
+SQL.executeUpdate(DS, sql, value);
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="incidentGroupAudit" args="incidentValue,action" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+if (queryConfig == null || queryConfig['enable-config-audit'] != true) return;
+if (incidentValue == null || incidentValue.length == 0) return;
+if (action == null) return;
+
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = Context.getLocalResource("INCIDENT_GROUP_AUDIT_SQL");
+
+incidentValue.forEach(function(item) {
+    item.unshift(action);
+    item.unshift(null);
+    item.unshift(Context.getCurrentUserId());
+});
+SQL.executeUpdate(DS, sql, incidentValue);]]>
+        </CodeText>
+      </Service>
+      <Service name="incidentGroupContextualAudit" args="incidentValue,action" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+if (queryConfig == null || queryConfig['enable-config-audit'] != true) return;
+if (incidentValue == null || incidentValue.length == 0) return;
+if (action == null) return;
+
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = Context.getLocalResource("INCIDENT_GROUP_CONTEXTUAL_AUDIT_SQL");
+
+incidentValue.forEach(function(item) {
+    item.unshift(action);
+    item.unshift(null);
+    item.unshift(Context.getCurrentUserId());
+});
+SQL.executeUpdate(DS, sql, incidentValue);]]>
+        </CodeText>
+      </Service>
+      <Service name="incidentGroupCorrelationAudit" args="incidentValue,action" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+if (queryConfig == null || queryConfig['enable-config-audit'] != true) return;
+if (incidentValue == null || incidentValue.length == 0) return;
+if (action == null) return;
+
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = Context.getLocalResource("INCIDENT_GROUP_CORRELATION_AUDIT_SQL");
+
+incidentValue.forEach(function(item) {
+    item.unshift(action);
+    item.unshift(null);
+    item.unshift(Context.getCurrentUserId());
+});
+SQL.executeUpdate(DS, sql, incidentValue);]]>
+        </CodeText>
+      </Service>
+      <Service name="metricInfoAudit" args="metricAuditValue" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+if (queryConfig == null || queryConfig['enable-config-audit'] != true) return;
+if (metricAuditValue == null || metricAuditValue.length == 0) return;
+
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = Context.getLocalResource("METRIC_INFO_AUDIT_SQL");
+metricAuditValue.forEach(function (item) {
+    item.unshift(null);
+    item.unshift(Context.getCurrentUserId());
+});
+SQL.executeUpdate(DS, sql, metricAuditValue);
+]]>
+        </CodeText>
+      </Service>
+      <Service name="metricQDCAudit" args="metricQDCValue" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+if (queryConfig == null || queryConfig['enable-config-audit'] != true) return;
+if (metricQDCValue == null || metricQDCValue.length == 0) return;
+
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = Context.getLocalResource("QDC_TABLE_AUDIT_SQL");
+metricQDCValue.forEach(function (item) {
+    item.unshift(null);
+    item.unshift(Context.getCurrentUserId());
+});
+SQL.executeUpdate(DS, sql, metricQDCValue);
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="parseModelAudit" args="parseAuditValue" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this.getQueryConfig();
+if (queryConfig == null || queryConfig['enable-config-audit'] != true) return;
+if (parseAuditValue == null || parseAuditValue.length == 0) return;
+
+var DS = queryConfig["data-source"]["config-audit"];
+var sql = Context.getLocalResource("PARSE_MODEL_AUDIT");
+parseAuditValue.forEach(function (item) {
+    item.unshift(null);
+    item.unshift(Context.getCurrentUserId());
+});
+SQL.executeUpdate(DS, sql, parseAuditValue);]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="1f9fcced-e444-4b19-8a27-1443cc9f85e5" name="ANOMALY_CONFIG_AUDIT_SQL" type="application/sql" size="185" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="7285ca1d-c841-4cca-896f-cd07dbccee55" name="ANOMALY_FAVORITES_AUDIT_SQL" type="application/sql" size="210" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="2a793937-9e31-43d3-8fe2-6e17fd2e2bb9" name="CONFIG_PROPERTY_AUDIT_SQL" type="application/sql" size="138" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="2b8d2f6d-d037-4397-8545-533d7fa1e995" name="Config-Audit-FilterConfig" type="application/json" size="5313" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="1154c92a-2675-456c-8c15-db16cc620eac" name="INCIDENT_GROUP_AUDIT_SQL" type="application/sql" size="176" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="9b73a67e-4e45-4292-8eb6-00577009f781" name="INCIDENT_GROUP_CONTEXTUAL_AUDIT_SQL" type="application/sql" size="187" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="d6f413bd-2f49-499e-876a-fc7d49a4c343" name="INCIDENT_GROUP_CORRELATION_AUDIT_SQL" type="text/plain" size="212" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="0c5d5f13-e0b5-46db-8b74-f8cf1f98f6e8" name="INCIDENT_TABLE_AUDIT_FIELDS_LIST" type="application/json" size="896" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="49b47948-109f-49fc-80e1-63336770536e" name="INCIDENT_TABLE_AUDIT_SQL" type="application/sql" size="950" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="f144a137-7c89-4615-8bc1-f8cc5b0b6198" name="METRIC_INFO_AUDIT_SQL" type="application/sql" size="0" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="bd1ce3aa-a029-440c-83a0-c67d4449e78f" name="PARSE_MODEL_AUDIT" type="application/sql" size="0" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="9df1205e-2ee6-480f-8195-aa45576c0fd0" name="QDC_TABLE_AUDIT_SQL" type="application/sql" size="201" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="3cd5ee49-6714-433d-84ac-f45e2d79187d" name="SQL Scripts" type="application/sql" size="5694" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+      <Plugin uri="/app/dbp/space/another/dbpm/VIAOps - Base Service"/>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

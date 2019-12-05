@@ -1,0 +1,5 @@
+select *
+from viaops_incident_history
+where ${incidentWhereClause}
+order by event_tm desc
+limit 1

@@ -1,0 +1,32 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile1",
+      "name": "f190a058-e15e-4149-8a4f-5142a8c1eff9"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile2",
+      "name": "432c82e9-c093-4db1-833f-9b4fecbaa8b7"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile3",
+      "name": "707acc62-548f-4aef-8818-fd6a54f7faf2"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "f190a058-e15e-4149-8a4f-5142a8c1eff9,432c82e9-c093-4db1-833f-9b4fecbaa8b7,707acc62-548f-4aef-8818-fd6a54f7faf2",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "VIAOps - Drilldown Service"
+  }
+}

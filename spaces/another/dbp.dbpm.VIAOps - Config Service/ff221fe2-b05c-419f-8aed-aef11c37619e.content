@@ -1,0 +1,17 @@
+-- NOTIFICATION_ACTION_SELECT_SQL
+SELECT
+    action_id,
+    action_category,
+    action_name,
+    effective_sev,
+    target_type,
+    target_addr1,
+    target_addr2,
+    target_attr1,
+    target_attr2,
+    target_attr3,
+    target_attr4,
+    act_on_test,
+    include_screenshot
+FROM action_dim
+WHERE action_id in (${action_id_list})

@@ -1,0 +1,69 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "cdbc72be-8785-4bbd-8fb1-5c2bf817e040"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "a1caf84d-beba-417a-8fcc-a2816150ef00"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "3709ab08-5473-4849-82f3-11e3e3293100"
+    },
+    {
+      "fileref": "ModelContentFile4",
+      "name": "cd0f9d7e-c804-460d-8a52-c55efeda5d39"
+    },
+    {
+      "fileref": "ModelContentFile5",
+      "name": "34959900-cca5-4bc3-8c0d-ed4810019b01"
+    },
+    {
+      "fileref": "ModelContentFile6",
+      "name": "c8d1fb4b-3184-44f5-86f7-dbbfdb03a798"
+    },
+    {
+      "fileref": "ModelContentFile7",
+      "name": "bc517976-b9ff-4d6f-83c8-dd8cf3bbed13"
+    },
+    {
+      "fileref": "ModelContentFile8",
+      "name": "5dc83baf-ca94-4f32-886b-8abea5bb6f4e"
+    },
+    {
+      "fileref": "ModelContentFile9",
+      "name": "0c18bb07-227b-4d20-87ab-4a73fd027991"
+    },
+    {
+      "fileref": "ModelContentFile10",
+      "name": "ec0b87a2-62ad-4ada-8cd7-cae47b3679ca"
+    },
+    {
+      "fileref": "ModelContentFile11",
+      "name": "c4b5fb28-0d33-485b-86e4-30de2db0990c"
+    },
+    {
+      "fileref": "ModelContentFile12",
+      "name": "4696787c-5e38-4219-8dfc-0c2a2f1382f9"
+    },
+    {
+      "fileref": "ModelContentFile13",
+      "name": "2aca2c32-0302-4311-8303-8695b5b1ffab"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "c4b5fb28-0d33-485b-86e4-30de2db0990c,c8d1fb4b-3184-44f5-86f7-dbbfdb03a798,bc517976-b9ff-4d6f-83c8-dd8cf3bbed13,cd0f9d7e-c804-460d-8a52-c55efeda5d39,0c18bb07-227b-4d20-87ab-4a73fd027991,2aca2c32-0302-4311-8303-8695b5b1ffab,4696787c-5e38-4219-8dfc-0c2a2f1382f9,ec0b87a2-62ad-4ada-8cd7-cae47b3679ca,34959900-cca5-4bc3-8c0d-ed4810019b01,a1caf84d-beba-417a-8fcc-a2816150ef00,cdbc72be-8785-4bbd-8fb1-5c2bf817e040,5dc83baf-ca94-4f32-886b-8abea5bb6f4e,3709ab08-5473-4849-82f3-11e3e3293100,/app/dbp/user/viaops_admin/dbpm/VIAOps - Base Service:4fa80cae-ab79-41c0-850f-68c371d35cbf,/app/dbp/user/viaops_admin/dbpm/VIAOps - Base Service:48639379-e854-4da3-8f0b-ea5ec00a4f4e,/app/dbp/user/viaops_admin/dbpm/VIAOps - Base Service:e7ad0afd-5240-433e-8fa8-3954ddc76d38,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Demo Service:bd8e16ff-dc31-4049-8009-c4439cb62001,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Demo Service:ad3cbe11-0553-4d4c-89c6-9cc3f58ec072,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Demo Service:1c4f7f5b-d576-4794-8bdd-f265c92a3bcf",
+    "__references__": "/app/dbp/user/via_common/dbpm/VIA - File Service,/app/dbp/space/another/dbpm/VIAOps - Base Service,/app/dbp/space/another/dbpm/VIAOps - Demo Service",
+    "modelStatus": "valid",
+    "name": "VIAOps - Incident Analysis Service"
+  }
+}

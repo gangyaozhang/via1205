@@ -1,0 +1,25 @@
+-- NOTIFICATION_ACTION_RULE_VALUE_SQL
+SELECT
+    a.metric_id,
+    a.vitria_sev,
+    a.action_id,
+    b.rule_id,
+    a.target_addr1,
+    a.target_addr2,
+    a.target_attr1,
+    a.target_attr2,
+    a.target_attr3,
+    a.target_attr4,
+    b.measured_attr,
+    b.value1,
+    b.value2,
+    b.value3,
+    b.value4
+FROM action_params a, rule_params b
+WHERE a.metric_id = '${metric_id}'
+  AND a.vitria_sev = '${vitria_sev}'
+  AND a.action_id in (${action_id_list})
+  AND b.metric_id = a.metric_id
+  AND b.vitria_sev = a.vitria_sev
+  AND b.action_id = a.action_id
+ORDER BY 1,2

@@ -1,0 +1,10 @@
+INSERT INTO viaops_anomaly_favorites_audit (
+    user_id,
+    user_full_name,
+    audit_action,
+    owner_id,
+    favorite_name,
+    metric_id,
+    config_json,
+    filter_json
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?)

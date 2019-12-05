@@ -1,0 +1,25 @@
+DROP TABLE viaops_anomaly_config;
+
+CREATE TABLE viaops_anomaly_config (
+    owner_id VARCHAR(20) NOT NULL,
+    metric_id VARCHAR(1024) NOT NULL,
+    config_name VARCHAR(80) NOT NULL,
+    config_json text NOT NULL,
+    modified_ts TIMESTAMP DEFAULT current_timestamp(),
+    PRIMARY KEY (owner_id, metric_id, config_name)
+);
+
+DROP TABLE viaops_anomaly_favorites;
+
+CREATE TABLE viaops_anomaly_favorites (
+    owner_id VARCHAR(20) NOT NULL,
+    favorite_name VARCHAR(80) NOT NULL,
+    metric_id VARCHAR(1024) NULL,
+    config_json text NOT NULL,
+    filter_json text NOT NULL,
+    modified_ts TIMESTAMP DEFAULT current_timestamp(),
+    PRIMARY KEY (owner_id, favorite_name)
+);
+
+ALTER TABLE viaops_anomaly_favorites
+ADD metric_id VARCHAR(1024);

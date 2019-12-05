@@ -1,0 +1,20 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "locale"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "axv",
+    "__references__": "/app/dbp/space/another/dbpm/VIAOps - Commonality Plugin,/app/dbp/user/via_common/dbpm/VIA - Common,/app/dbp/user/via_common/dbpm/VIA - HDFS Interface",
+    "modelStatus": "valid",
+    "name": "VIAOps - Notification Action Comp"
+  }
+}

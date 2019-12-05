@@ -1,0 +1,6 @@
+UPDATE
+    viaops_anomaly_config
+SET
+    config_json=?,
+    modified_ts=current_timestamp()
+WHERE config_name=? AND metric_id=? AND owner_id=?

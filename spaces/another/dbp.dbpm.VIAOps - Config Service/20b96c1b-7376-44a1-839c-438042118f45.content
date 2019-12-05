@@ -1,0 +1,6 @@
+INSERT INTO viaops_incident_group_contextual (
+    group_rule_name,
+    metric_id,
+    display_options
+)
+VALUES (?, ?, ?)

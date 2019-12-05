@@ -1,0 +1,223 @@
+<AnalyticsExplorerView description="" name="overlayToolbar" is_init="false">
+  <ModelInfo validated="true" nextPageId="2">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="0.8"/>
+      <NoTileSpacing value="false"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <CustomCSSSetting><![CDATA[.tileContainer.CustomTile1 .content{
+    overflow: visible;
+}
+.tileContainer.CustomTile1 .content .rendererBox {
+    overflow: visible !important;
+}
+.tileContainer.CustomTile1 .content .rendererBox div:last-child {
+    overflow: visible !important;
+    z-index: 0 !important;
+}]]></CustomCSSSetting>
+    <Page id="1" name="Default" title="Default" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageProperties/>
+      <Layout type="10" numRow="19" numCol="31" count="4" templateType="8" screenHeight="NaN" renderType="null" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:36,&quot;id&quot;:0,&quot;title&quot;:&quot;OverlayToolbar&quot;},{&quot;data_col&quot;:61,&quot;data_row&quot;:1,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:36,&quot;id&quot;:1,&quot;title&quot;:&quot;Tile1&quot;},{&quot;data_col&quot;:1,&quot;data_row&quot;:37,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:36,&quot;id&quot;:2,&quot;title&quot;:&quot;Tile2&quot;},{&quot;data_col&quot;:61,&quot;data_row&quot;:37,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:36,&quot;id&quot;:3,&quot;title&quot;:&quot;Tile3&quot;}]" unitSize="undefined" viewRows="72" viewCols="120"/>
+      <Tile name="Main Tile" title="OverlayToolbar" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="CustomTile1" parentSelect="false" advancedConfig="false" advancedDisable="false" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:3" name="axflow:localstore:node:3" label="Local Store 0" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="name" label="name" type="undefined" isDimension="false" isMeasure="false"/>
+          <Field name="val1" label="val1" type="undefined" isDimension="false" isMeasure="false"/>
+          <Field name="val2" label="val2" type="undefined" isDimension="false" isMeasure="false"/>
+          <Field name="val3" label="val3" type="undefined" isDimension="false" isMeasure="false"/>
+          <Field name="total" label="total" type="undefined" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"fontSize":"30px","color":"#2d3538"}]]></LabelStyle>
+        <DataViewer name="DataGrid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+        </DataViewer>
+      </Tile>
+      <Tile name="Tile1" title="Tile1" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="null" advancedDisable="false" allowFullscreen="true">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+      </Tile>
+      <Tile name="Tile2" title="Tile2" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="null" advancedDisable="false" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+      </Tile>
+      <Tile name="Tile3" title="Tile3" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="undefined" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+      </Tile>
+    </Page>
+    <DataFlow showFooter="true">
+      <Item id="node:1" type="ToolbarOverlay" label="Overlay Toolbar 0" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="574" y="73">
+        <dynOut id="dout:but1" type="string" label="but1" propagate="always" _isArray="true"/>
+        <dynOut id="dout:but2" type="string" label="but2" propagate="always" _isArray="true"/>
+        <dynOut id="dout:maxsize" type="boolean" label="maxsize" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:3" type="LocalStore" label="Local Store 0" _undefined_title="" _undefined_originHeight="" width="140" height="177" x="1139" y="334"/>
+      <Item id="node:4" type="UserScript" label="Script 0" _undefined_title="" _undefined_originHeight="" width="130" height="117" x="849" y="334">
+        <dynOut id="dout:0" type="any" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:6" type="UserScript" label="Script 1" _undefined_title="" originHeight="117" width="130" height="117" x="200" y="73">
+        <dynOut id="dout:0" type="any" label="Out(0)" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="Out(1)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:8" type="UserScript" label="Script 2" _undefined_title="" originHeight="117" width="130" height="117" x="180" y="286">
+        <dynIn id="din:0" type="any" label="max/min" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:9" type="Tile" label="Tile 0" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="440" y="286"/>
+      <Link srcId="node:4" srcPort="dout:0" tgtId="node:3" tgtPort="in:0"/>
+      <Link srcId="node:6" srcPort="dout:0" tgtId="node:1" tgtPort="in:0"/>
+      <Link srcId="node:8" srcPort="dout:0" tgtId="node:9" tgtPort="in:0"/>
+      <Link srcId="node:1" srcPort="dout:maxsize" tgtId="node:8" tgtPort="din:0"/>
+      <Link srcId="node:6" srcPort="dout:1" tgtId="node:1" tgtPort="in:1"/>
+      <Input key="node:1/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#Main Tile&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Main Tile&quot;}]"/>
+      <Input key="node:1/cfg:toolbarItems/default" value="[{&quot;itemName&quot;:&quot;but1&quot;,&quot;itemLabel&quot;:&quot;&quot;,&quot;itemType&quot;:&quot;dropDown&quot;,&quot;extData&quot;:[{&quot;name&quot;:&quot;one&quot;,&quot;value&quot;:&quot;One&quot;},{&quot;name&quot;:&quot;two&quot;,&quot;value&quot;:&quot;Two&quot;},{&quot;name&quot;:&quot;three&quot;,&quot;value&quot;:&quot;Three&quot;}]},{&quot;itemName&quot;:&quot;but2&quot;,&quot;itemLabel&quot;:&quot;&quot;,&quot;itemType&quot;:&quot;dropDown&quot;,&quot;extData&quot;:[]},{&quot;itemName&quot;:&quot;maxsize&quot;,&quot;itemLabel&quot;:&quot;&quot;,&quot;itemType&quot;:&quot;imageButton&quot;,&quot;extData&quot;:[{&quot;name&quot;:&quot;type&quot;,&quot;value&quot;:&quot;stateful&quot;},{&quot;name&quot;:&quot;url&quot;,&quot;value&quot;:&quot;dojoclient/html/themes/hybrid/default/images/controls/max_tile.png&quot;}]}]"/>
+      <Input key="node:1/cfg:refCorner/default" value="&quot;TopRight&quot;"/>
+      <Input key="node:1/cfg:yOffset/default" value="-30"/>
+      <Input key="node:1/cfg:customClass/default" value="&quot;&quot;"/>
+      <Input key="node:4/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:4/cfg:model/default" value="&quot;var value = \n[\n    {\&quot;_startIndex\&quot;:\&quot;0\&quot;,\&quot;name\&quot;:\&quot;gl6\&quot;,\&quot;total\&quot;:109,\&quot;tend\&quot;:\&quot;24,33,25,28,32,19,25\&quot;,\&quot;val3\&quot;:-60,\&quot;val2\&quot;:-50,\&quot;val1\&quot;:4},\n    {\&quot;_startIndex\&quot;:\&quot;0\&quot;,\&quot;name\&quot;:\&quot;gl0\&quot;,\&quot;total\&quot;:102,\&quot;tend\&quot;:\&quot;24,33,25,28,32,19,25\&quot;,\&quot;val3\&quot;:-19,\&quot;val2\&quot;:27,\&quot;val1\&quot;:3},\n    {\&quot;_startIndex\&quot;:\&quot;0\&quot;,\&quot;name\&quot;:\&quot;gl0\&quot;,\&quot;total\&quot;:102,\&quot;tend\&quot;:\&quot;24,33,25,28,32,19,25\&quot;,\&quot;val3\&quot;:19,\&quot;val2\&quot;:27,\&quot;val1\&quot;:3}\n];\n\n\n\nsetOutput(\&quot;dout:0\&quot;, value)&quot;"/>
+      <Input key="node:4/cfg:schema/default" value="&quot;var SCHEMA = [\n    {\n        name:\&quot;name\&quot;\n    },\n    {\n        name:\&quot;val1\&quot;\n    },\n    {\n        name:\&quot;val2\&quot;\n    },\n    {\n        name:\&quot;val3\&quot;\n    },\n    {\n        name:\&quot;total\&quot;\n    },\n    ]\n\nsetOutputSchema(\&quot;dout:0\&quot;, SCHEMA)&quot;"/>
+      <Input key="node:6/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Out(1)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:6/cfg:model/default" value="&quot;setOutput(\&quot;dout:0\&quot;, true);\n\nsetOutput(\&quot;dout:1\&quot;, {\n    actions: [\n        {command: \&quot;setData\&quot;, name: \&quot;but2\&quot;, value: [{name: \&quot;one\&quot;, label: \&quot;One\&quot;}]}\n    ]\n});&quot;"/>
+      <Input key="node:1/cfg:frameStyle/default" value="[{&quot;name&quot;:&quot;padding-top&quot;,&quot;value&quot;:&quot;4px&quot;},{&quot;name&quot;:&quot;padding-bottom&quot;,&quot;value&quot;:&quot;0px&quot;},{&quot;name&quot;:&quot;padding-left&quot;,&quot;value&quot;:&quot;4px&quot;},{&quot;name&quot;:&quot;padding-right&quot;,&quot;value&quot;:&quot;4px&quot;},{&quot;name&quot;:&quot;border&quot;,&quot;value&quot;:&quot;none&quot;},{&quot;name&quot;:&quot;border-radius&quot;,&quot;value&quot;:&quot;5px&quot;},{&quot;name&quot;:&quot;box-shadow&quot;,&quot;value&quot;:&quot;none&quot;},{&quot;name&quot;:&quot;background-color&quot;,&quot;value&quot;:&quot;none&quot;},{&quot;name&quot;:&quot;color&quot;,&quot;value&quot;:&quot;black&quot;},{&quot;name&quot;:&quot;vt-extended-styles&quot;,&quot;value&quot;:&quot;&quot;}]"/>
+      <Input key="node:8/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;max/min&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:8/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:9/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#Main Tile&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Main Tile&quot;}]"/>
+      <Input key="node:8/cfg:model/default" value="&quot;if (port == null) return;\ndebugger\n\nvar maxSize = getInput( \&quot;din:0\&quot; ) || false;\n\n/*\nif (maxSize == null){\n     setLocal(\&quot;maxSize\&quot;, false);\n     return;\n};\n\n*/\n\nif (maxSize == true) {\n    var evt = {\n        tile: {\n            maxTile: true\n        }\n    };\n    setOutput(\&quot;dout:0\&quot;, evt);\n    setLocal(\&quot;maxSize\&quot;, true);\n} else {\n    var evt = {\n        tile: {\n            maxTile: false\n        }\n    };\n    setOutput(\&quot;dout:0\&quot;, evt);\n}&quot;"/>
+      <Schema id="node:1/out:0">
+        <JSON value="{&quot;name&quot;:&quot;but1&quot;,&quot;type&quot;:&quot;string&quot;,&quot;label&quot;:&quot;but1&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;but2&quot;,&quot;type&quot;:&quot;string&quot;,&quot;label&quot;:&quot;but2&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;maxsize&quot;,&quot;type&quot;:&quot;boolean&quot;,&quot;label&quot;:&quot;maxsize&quot;}"/>
+      </Schema>
+      <Schema id="node:3/in:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;val1&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;val2&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;val3&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;total&quot;}"/>
+      </Schema>
+      <Schema id="node:3/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;val1&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;val2&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;val3&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;total&quot;}"/>
+      </Schema>
+      <Schema id="node:4/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;val1&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;val2&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;val3&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;total&quot;}"/>
+      </Schema>
+      <Schema id="node:9/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;val1&quot;,&quot;label&quot;:&quot;val1&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;val2&quot;,&quot;label&quot;:&quot;val2&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;val3&quot;,&quot;label&quot;:&quot;val3&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;total&quot;,&quot;label&quot;:&quot;total&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:9/out:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;val1&quot;,&quot;label&quot;:&quot;val1&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;val2&quot;,&quot;label&quot;:&quot;val2&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;val3&quot;,&quot;label&quot;:&quot;val3&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;total&quot;,&quot;label&quot;:&quot;total&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:9/out:2">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;val1&quot;,&quot;label&quot;:&quot;val1&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;val2&quot;,&quot;label&quot;:&quot;val2&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;val3&quot;,&quot;label&quot;:&quot;val3&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;total&quot;,&quot;label&quot;:&quot;total&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:9/out:3">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;val1&quot;,&quot;label&quot;:&quot;val1&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;val2&quot;,&quot;label&quot;:&quot;val2&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;val3&quot;,&quot;label&quot;:&quot;val3&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;total&quot;,&quot;label&quot;:&quot;total&quot;,&quot;type&quot;:&quot;undefined&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <DynInput id="node:8">
+        <Port id="din:0" type="any" label="max/min" evaluate="always"/>
+      </DynInput>
+      <DynOutput id="node:1">
+        <Port id="dout:but1" type="string" label="but1" propagate="always" _isArray="true"/>
+        <Port id="dout:but2" type="string" label="but2" propagate="always" _isArray="true"/>
+        <Port id="dout:maxsize" type="boolean" label="maxsize" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:4">
+        <Port id="dout:0" type="any" label="Out(0)" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:6">
+        <Port id="dout:0" type="any" label="Out(0)" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="any" label="Out(1)" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:8">
+        <Port id="dout:0" type="any" label="Out(0)" propagate="always"/>
+      </DynOutput>
+      <Version id="node:1" version="3"/>
+      <Version id="node:3" version="2"/>
+      <Version id="node:4" version="2"/>
+      <Version id="node:6" version="2"/>
+      <Version id="node:8" version="2"/>
+      <Version id="node:9" version="1"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins/>
+  </ModelInfo>
+</AnalyticsExplorerView>

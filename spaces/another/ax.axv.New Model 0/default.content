@@ -1,0 +1,154 @@
+<AnalyticsExplorerView description="" name="New Model 0" is_init="false">
+  <ModelInfo validated="true" nextPageId="2">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties>
+      <Property name="Property1" label="Property1" type="string" value="" constraints="" runtimeControl="true"/>
+    </GlobalProperties>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="0.8"/>
+      <NoTileSpacing value="false"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <Page id="1" name="Default" title="Default" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageProperties/>
+      <Layout type="10" numRow="1" numCol="1" count="1" templateType="21" screenHeight="1080" renderType="null" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:72,&quot;id&quot;:0,&quot;title&quot;:&quot;Main Tile&quot;}]" unitSize="{&quot;x&quot;:11.033333333333333,&quot;y&quot;:8.958333333333334}" viewRows="72" viewCols="120"/>
+      <Tile name="Main Tile" title="Main Tile" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="null" advancedDisable="false" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:3" name="axflow:localstore:node:3" label="Local Store 0" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="_id" label="_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="_parent" label="_parent" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="_typedimension" label="_typedimension" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="dim_name" label="dim_name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="incident_id" label="incident_id" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="dim_label" label="dim_label" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="dim_score" label="dim_score" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="incident_dim_values" label="incident_dim_values" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="incident_dim_labels" label="incident_dim_labels" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="dim_score_text" label="dim_score_text" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="dim_value" label="dim_value" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="dim_filters" label="dim_filters" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <DataViewer name="DataGrid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+        </DataViewer>
+      </Tile>
+    </Page>
+    <DataFlow showFooter="true">
+      <Item id="node:1" type="UserScript" label="Script 0" _undefined_title="" _undefined_originHeight="" width="130" height="100" x="127" y="108">
+        <dynOut id="dout:0" type="any[]" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:3" type="LocalStore" label="Local Store 0" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="340" y="106"/>
+      <Link srcId="node:1" srcPort="dout:0" tgtId="node:3" tgtPort="in:0"/>
+      <Input key="node:1/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:1/cfg:model/default" value="&quot;var data = [\r\n\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;stream\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Stream Type\&quot;,\r\n    \&quot;dim_score\&quot;: 341006,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|STVA Watch|[] (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;STVA|Watch (MOS)|Buffering Events (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;341006\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;Stream Type_00020\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;netstatus\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Network Status\&quot;,\r\n    \&quot;dim_score\&quot;: 322792,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|STVA Watch|[] (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;STVA|Watch (MOS)|Buffering Events (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;322792\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;Network Status_00026\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;platform\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Platform\&quot;,\r\n    \&quot;dim_score\&quot;: 277042,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|STVA Watch|[] (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;STVA|Watch (MOS)|Buffering Events (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;277042\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;Platform_00016\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;streamformat\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Stream Format\&quot;,\r\n    \&quot;dim_score\&quot;: 260122,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|STVA Watch|[] (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;STVA|Watch (MOS)|Buffering Events (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;260122\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;Stream Format_00162\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;cluster\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Cluster\&quot;,\r\n    \&quot;dim_score\&quot;: 7620.84,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|Application|IP2MAC|LL Receiver (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|Application|IP2MAC|LL Receiver (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;7620.84\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;Charlotte_02\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;location\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Location\&quot;,\r\n    \&quot;dim_score\&quot;: 7614.46,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|Application|IP2MAC|LL Receiver (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|Application|IP2MAC|LL Receiver (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;7614.46\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;NCE\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;cluster\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Cluster\&quot;,\r\n    \&quot;dim_score\&quot;: 7608.09,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|Application|IP2MAC|LL Receiver (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|Application|IP2MAC|LL Receiver (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;7608.09\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;Charlotte_01\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;cluster\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Cluster\&quot;,\r\n    \&quot;dim_score\&quot;: 7594.05,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|Application|IP2MAC|LL Receiver (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|Application|IP2MAC|LL Receiver (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;7594.05\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;Denver_01\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;location\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Location\&quot;,\r\n    \&quot;dim_score\&quot;: 7594.05,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|Application|IP2MAC|LL Receiver (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|Application|IP2MAC|LL Receiver (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;7594.05\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;NCW\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;cust_type\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Customer Type\&quot;,\r\n    \&quot;dim_score\&quot;: 129,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|*|*|Customer Call Volume (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|*|*|Customer Call Volume (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;129\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;Residential\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;issue\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Issue\&quot;,\r\n    \&quot;dim_score\&quot;: 124,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|*|*|Customer Call Volume (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|*|*|Customer Call Volume (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;124\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;Spectrum TV App\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;category\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Call Type\&quot;,\r\n    \&quot;dim_score\&quot;: 120,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|*|*|Customer Call Volume (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|*|*|Customer Call Volume (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;120\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;HSI\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;location\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Location\&quot;,\r\n    \&quot;dim_score\&quot;: 70.31,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|Application|IP2MAC|DLN Delay (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|Application|IP2MAC|DLN Delay (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;70.31\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;St. Louis\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;cluster\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Cluster\&quot;,\r\n    \&quot;dim_score\&quot;: 70.31,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|Application|IP2MAC|DLN Delay (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|Application|IP2MAC|DLN Delay (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;70.31\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;DLN01\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;location\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Location\&quot;,\r\n    \&quot;dim_score\&quot;: 70.29,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|Application|IP2MAC|DLN Delay (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|Application|IP2MAC|DLN Delay (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;70.29\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;Spartanburg\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;cluster\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Cluster\&quot;,\r\n    \&quot;dim_score\&quot;: 70.29,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|Application|IP2MAC|DLN Delay (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|Application|IP2MAC|DLN Delay (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;70.29\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;DLN03\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;cluster\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Cluster\&quot;,\r\n    \&quot;dim_score\&quot;: 69.83,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|Application|IP2MAC|DLN Delay (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|Application|IP2MAC|DLN Delay (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;69.83\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;DLN02\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;location\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Location\&quot;,\r\n    \&quot;dim_score\&quot;: 69.83,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|Application|IP2MAC|DLN Delay (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|Application|IP2MAC|DLN Delay (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;69.83\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;Peakview\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;host\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Host\&quot;,\r\n    \&quot;dim_score\&quot;: 7.24,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|STVA Network|CAPM_SR|Port Utilization (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|STVA Network|CAPM_SR|Port Utilization (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;7.24\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;chrcnc-mfcore-1.netops.charter.com\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;host\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Host\&quot;,\r\n    \&quot;dim_score\&quot;: 7.2,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|STVA Network|CAPM_SR|Port Utilization (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|STVA Network|CAPM_SR|Port Utilization (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;7.2\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;chrcnc-mfleaf-1.netops.charter.com\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;host\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Host\&quot;,\r\n    \&quot;dim_score\&quot;: 7.07,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|STVA Network|CAPM_SR|Port Utilization (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|STVA Network|CAPM_SR|Port Utilization (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;7.07\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;dnvr3-e09-xg-7010-c1.netops.charter.com\&quot;\r\n  },\r\n  {\r\n    \&quot;dim_name\&quot;: \&quot;host\&quot;,\r\n    \&quot;incident_id\&quot;: \&quot;201910211449#71814\&quot;,\r\n    \&quot;dim_label\&quot;: \&quot;Host\&quot;,\r\n    \&quot;dim_score\&quot;: 5.59,\r\n    \&quot;incident_dim_values\&quot;: \&quot;Video|STVA Network|CAPM_SR|Port Utilization (201910211449#71814)\&quot;,\r\n    \&quot;incident_dim_labels\&quot;: \&quot;Video|STVA Network|CAPM_SR|Port Utilization (201910211449#71814)\&quot;,\r\n    \&quot;dim_score_text\&quot;: \&quot;5.59\&quot;,\r\n    \&quot;dim_value\&quot;: \&quot;chrcnc-mfcore-2.netops.charter.com\&quot;\r\n  }\r\n\r\n];\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nfunction init(){\r\n\t\r\n\tvar uniqueLabels = [];\r\n\tfor( var i=0, len=data.length; i &lt; len; i++ ){\r\n\t\tif( uniqueLabels.indexOf( data[i][&apos;incident_dim_labels&apos;] ) &lt; 0 ){\r\n\t\t\tuniqueLabels.push(data[i][&apos;incident_dim_labels&apos;]);\r\n\t\t}\r\n\t\tdata[i][&apos;_id&apos;] =  data[i][&apos;incident_dim_labels&apos;] + &apos;&apos; + data[i][&apos;dim_value&apos;];\r\n\t\tdata[i][&apos;_parent&apos;] = data[i][&apos;incident_dim_labels&apos;];\r\n\t\tdata[i][&apos;_type&apos;] = &apos;item&apos;;\r\n\t}\r\n\t\r\n\tfor( var j=0, jlen=uniqueLabels.length; j &lt; jlen; j++ ){\r\n\t\tdata.push({ &apos;_id&apos;: uniqueLabels[j], &apos;dimension&apos;:  uniqueLabels[j], &apos;_type&apos;: &apos;group&apos;, &apos;_parent&apos;: &apos;&apos; });\r\n\t}\r\n\t\r\n\tsetOutput(&apos;dout:0&apos;, data );\r\n\tconsole.log(data);\r\n\t\r\n}\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nalert(&apos;Foo&apos;);\r\ninit();&quot;"/>
+      <Input key="node:1/cfg:schema/default" value="&quot;var fields  = \&quot;_id,_parent,_type,\&quot;;\r\n\tfields += \&quot;dimension,dim_name,incident_id,dim_label,dim_score,incident_dim_values,incident_dim_labels,dim_score_text,dim_value,dim_filters\&quot;;\r\n\t\r\nvar schema  = [];\r\nvar fieldArr = fields.split(\&quot;,\&quot;);\r\n\r\nfor( var f=0, len=fieldArr.length; f&lt;len; f++ ){\r\n    schema.push({\r\n        name:   fieldArr[f],\r\n        label:  fieldArr[f],\r\n        type:   &apos;string&apos;\r\n    });    \r\n    \r\n}\r\n\r\nsetOutputSchema(\&quot;dout:0\&quot;, schema);&quot;"/>
+      <Schema id="node:1/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;_id&quot;,&quot;label&quot;:&quot;_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_parent&quot;,&quot;label&quot;:&quot;_parent&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_type&quot;,&quot;label&quot;:&quot;_type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimension&quot;,&quot;label&quot;:&quot;dimension&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_name&quot;,&quot;label&quot;:&quot;dim_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;incident_id&quot;,&quot;label&quot;:&quot;incident_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_label&quot;,&quot;label&quot;:&quot;dim_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_score&quot;,&quot;label&quot;:&quot;dim_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;incident_dim_values&quot;,&quot;label&quot;:&quot;incident_dim_values&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;incident_dim_labels&quot;,&quot;label&quot;:&quot;incident_dim_labels&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_score_text&quot;,&quot;label&quot;:&quot;dim_score_text&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_value&quot;,&quot;label&quot;:&quot;dim_value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_filters&quot;,&quot;label&quot;:&quot;dim_filters&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:3/in:0">
+        <JSON value="{&quot;name&quot;:&quot;_id&quot;,&quot;label&quot;:&quot;_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_parent&quot;,&quot;label&quot;:&quot;_parent&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_type&quot;,&quot;label&quot;:&quot;_type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimension&quot;,&quot;label&quot;:&quot;dimension&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_name&quot;,&quot;label&quot;:&quot;dim_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;incident_id&quot;,&quot;label&quot;:&quot;incident_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_label&quot;,&quot;label&quot;:&quot;dim_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_score&quot;,&quot;label&quot;:&quot;dim_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;incident_dim_values&quot;,&quot;label&quot;:&quot;incident_dim_values&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;incident_dim_labels&quot;,&quot;label&quot;:&quot;incident_dim_labels&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_score_text&quot;,&quot;label&quot;:&quot;dim_score_text&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_value&quot;,&quot;label&quot;:&quot;dim_value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_filters&quot;,&quot;label&quot;:&quot;dim_filters&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:3/out:0">
+        <JSON value="{&quot;name&quot;:&quot;_id&quot;,&quot;label&quot;:&quot;_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_parent&quot;,&quot;label&quot;:&quot;_parent&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;_type&quot;,&quot;label&quot;:&quot;_type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimension&quot;,&quot;label&quot;:&quot;dimension&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_name&quot;,&quot;label&quot;:&quot;dim_name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;incident_id&quot;,&quot;label&quot;:&quot;incident_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_label&quot;,&quot;label&quot;:&quot;dim_label&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_score&quot;,&quot;label&quot;:&quot;dim_score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;incident_dim_values&quot;,&quot;label&quot;:&quot;incident_dim_values&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;incident_dim_labels&quot;,&quot;label&quot;:&quot;incident_dim_labels&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_score_text&quot;,&quot;label&quot;:&quot;dim_score_text&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_value&quot;,&quot;label&quot;:&quot;dim_value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dim_filters&quot;,&quot;label&quot;:&quot;dim_filters&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <DynOutput id="node:1">
+        <Port id="dout:0" type="any[]" label="Out(0)" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <Version id="node:1" version="2"/>
+      <Version id="node:3" version="2"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins/>
+  </ModelInfo>
+</AnalyticsExplorerView>

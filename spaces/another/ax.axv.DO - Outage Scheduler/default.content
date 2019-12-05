@@ -1,0 +1,545 @@
+<AnalyticsExplorerView description="" name="DO - Outage Scheduler" is_init="false">
+  <ModelInfo validated="false" nextPageId="2">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties>
+      <Property name="jndiNameOps" label="OPS JNDI Name" type="string" value="charter_ref_db" constraints="" runtimeControl="false" enableAll="false" enableOthers="false" withQuotes="false" defaultAll="false" stringType="constant"/>
+    </GlobalProperties>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="1"/>
+      <NoTileSpacing value="true"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <Page id="1" name="Default" title="Default" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<style>
+   
+   .scheduleBody {
+       height: 100%;
+       width: 100%;
+       margin: 0;
+       padding: 0;
+       background-color: white;
+   }
+   
+   .scheduleBody .filterBar {
+       height: 65px;
+       idth: calc( 100% - 20px );
+       margin: 0 10px;
+       padding: 0;
+   }
+   
+   .scheduleBody .scheduleMain {
+       height: calc( 100% - 65px );
+       width: calc( 100% - 20px );
+       margin: 0 10px;
+   }
+   
+   .scheduleBody .scheduleMain .scheduleList {
+       display: inline-block;
+       width: calc( 100% - 503px );
+       height: 100%;
+   }
+   
+   .scheduleBody .scheduleMain .scheduleDetail {
+       display: inline-block;
+       width: 500px;
+       height: 100%;
+       background-color: #f8f8f8;
+       vertical-align: top;
+       padding: 8px;
+   }
+    
+</style>
+
+
+<div class="scheduleBody">
+    <div class="filterBar" data-vitria-type="tile" data-vitria-tile-name="Tile1"></div>
+    <div class="scheduleMain">
+        <div class="scheduleList" data-vitria-type="tile" data-vitria-tile-name="Scheduled Events"></div>
+        <div class="scheduleDetail"></div>
+    </div>
+</div>]]></PageFrameContent>
+      <PageCustomCSS><![CDATA[.detailTitle{
+    color: #2d3538;
+    font-size: 16px;
+}
+
+.detailItem {
+    line-height: 24px;
+    margin: 5px;
+    }
+
+.detailInput {
+    padding: 3px;
+    color: #2d3538;
+    display: inline-block;
+    width: calc(100% - 180px);
+    border-color: rgba(165,165,165, 0.2);
+    border-style: solid;
+    border-width: 1px;
+    border-bottom-color: #148ac4;
+}
+
+textarea.detailInput {
+    width: calc( 100% - 174px);
+    height: 200px;
+}
+
+.detailInput:read-only {
+    background-color: #f0f0f0;
+    cursor: default;
+    border-style: solid;
+    border-width: 1px;
+    color: #818688;
+    width: calc(100% - 178px);
+}
+
+input.detailInput#active {
+    left: -148px;
+    position: relative;
+}
+
+.detailItem.buttonItem {
+    flex-flow: row;
+    text-align: right;
+    padding-right: 13px;
+}
+
+.detailItem.buttonItem button {
+    height: 24px;
+    margin: 2px;
+    font-size: 14px;
+    border-radius: 2px;
+    padding: 0 15px;
+}
+
+.detailItem.buttonItem button.submitButton:hover {
+    color: #148ac4;
+    background-color: white;
+}
+
+.detailItem.buttonItem button.submitButton {
+    color: white;
+    background-color: #148ac4;
+    border: 1px solid #148ac4;
+}
+
+.detailItem.buttonItem button.resetButton:HOVER {
+    background-color: white;
+    color: #818688;
+}
+
+.detailItem.buttonItem button.resetButton {
+    background-color: #818688;
+    color: white;
+    border: 1px solid #148ac4;
+}
+
+.detailItem.buttonItem button.resetButton {
+    
+}
+
+.detailLabel {
+    color: #148ac4;
+    font-size: 14px;
+    display: inline-block;
+    width: 150px;
+    vertical-align: top;
+}]]></PageCustomCSS>
+      <PageProperties/>
+      <Layout type="10" numRow="NaN" numCol="NaN" count="NaN" templateType="7" screenHeight="undefined" renderType="undefined" positions="[]" unitSize="undefined" viewRows="NaN" viewCols="NaN"/>
+      <frame_tile name="Tile1" title="Tile1" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/user/via_common/dbpm/VIA - Common/Dimension Filter&quot;,&quot;model&quot;:&quot;{\n    \&quot;div-style\&quot; : \&quot;overflow:hidden;\&quot;,\n    \&quot;type-mixins\&quot; : {\n        \&quot;AbsoluteTimePicker\&quot; : {\n            \&quot;type\&quot; : \&quot;timeinterval\&quot;,\n            \&quot;timezoneOffset\&quot; : true,\n            \&quot;asLocalTime\&quot; : true,\n            \&quot;style\&quot; : \&quot;white-space:normal;height:22px;\&quot;,\n            \&quot;secHide\&quot; : true,\n            \&quot;minInterval\&quot; : 5\n        },\n        \&quot;TimeIntervalPicker\&quot; : {\n            \&quot;type\&quot;  : \&quot;popup\&quot;,\n            \&quot;data-type\&quot; : \&quot;timeinterval\&quot;,\n            \&quot;timezoneOffset\&quot; : true,\n            \&quot;asLocalTime\&quot; : true,\n            \&quot;style\&quot; : \&quot;font-size:7pt;font-family:arial;border-radius:2px;margin-left:2px;height:12px;\&quot;,\n            \&quot;text\&quot;: {\n                \&quot;style\&quot;       : \&quot;width:250px;font-family:monospace;color:black;\&quot;,\n                \&quot;placeholder\&quot; : \&quot;Select time range from picker...\&quot;\n            },\n            \&quot;dialog\&quot;: {\n                \&quot;type\&quot;     : \&quot;editor\&quot;,\n                \&quot;label\&quot;    : \&quot;Set Time\&quot;,\n                \&quot;title\&quot;    : \&quot;Select Time Range\&quot;,\n                \&quot;width\&quot;    : \&quot;500px\&quot;,\n                \&quot;height\&quot;   : \&quot;355px\&quot;,\n                \&quot;maximize\&quot; : false,\n                \&quot;widget\&quot;   : {\n                    \&quot;path\&quot;   : \&quot;/app/dbp/user/via_common/dbpm/VIA - Time Range Picker/TimeRangePicker\&quot;,\n                    \&quot;config\&quot; : {\n                        \&quot;predefined\&quot; : [\n                            { \&quot;value\&quot; : \&quot;4H\&quot;, \&quot;label\&quot; : \&quot;Last 4 Hours\&quot; },\n                            { \&quot;value\&quot; : \&quot;24H\&quot;, \&quot;label\&quot; : \&quot;Last 24 Hours\&quot; },\n                            { \&quot;value\&quot; : \&quot;today\&quot;, \&quot;label\&quot; : \&quot;Today\&quot; },\n                            { \&quot;value\&quot; : \&quot;yesterday\&quot;, \&quot;label\&quot; : \&quot;Yesterday\&quot; },\n                            { \&quot;value\&quot; : \&quot;8D\&quot;, \&quot;label\&quot; : \&quot;Last 8 Days\&quot; },\n                            { \&quot;value\&quot; : \&quot;30D\&quot;, \&quot;label\&quot; : \&quot;Last 30 Days\&quot; },\n                            { \&quot;value\&quot; : \&quot;60D\&quot;, \&quot;label\&quot; : \&quot;Last 60 Days\&quot; }\n                        ]\n                    }\n                }\n            }\n        }\n        \n    },\n    \&quot;categories\&quot; : [{\n        \&quot;name\&quot; : \&quot;data\&quot;,\n        \&quot;label\&quot; : \&quot;\&quot;,\n        \&quot;submit\&quot; : \&quot;manual\&quot;,\n        \&quot;fa-label\&quot; : \&quot;Apply\&quot;,\n        \&quot;name-style\&quot; : \&quot;padding-left:0px;width:0px;\&quot;,\n        \&quot;value-style\&quot; : \&quot;padding:0px;width:100%;\&quot;,\n        \&quot;dimensions\&quot; : [{\n            \&quot;name\&quot; : \&quot;timeRange\&quot;,\n            \&quot;label\&quot; : \&quot;Time Range\&quot;,\n            \&quot;type\&quot; : \&quot;TimeIntervalPicker\&quot;,\n            \&quot;fa-class-button\&quot; : \&quot;far fa-clock\&quot;,\n            \&quot;fa-label\&quot; : \&quot;Time Range\&quot;,\n            \&quot;fa-style\&quot; : \&quot;margin-right:20px\&quot;,\n            \&quot;default\&quot; : \&quot;predefined:24H\&quot;\n        }]\n    }]\n}\n&quot;,&quot;minimizedMode&quot;:false}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="Scheduled Events" title="Scheduled Events" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:8" name="axflow:localstore:node:8" label="ScheduleHistory" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="reason" label="reason" type="String" isDimension="false" isMeasure="false"/>
+          <Field name="subject_line" label="subject_line" type="String" isDimension="false" isMeasure="false"/>
+          <Field name="user_id" label="user_id" type="String" isDimension="false" isMeasure="false"/>
+          <Field name="end_epoch" label="end_epoch" type="String" isDimension="false" isMeasure="false"/>
+          <Field name="endEpoch" label="endEpoch" type="String" isDimension="false" isMeasure="false"/>
+          <Field name="start_epoch" label="start_epoch" type="String" isDimension="false" isMeasure="false"/>
+          <Field name="startEpoch" label="startEpoch" type="String" isDimension="false" isMeasure="false"/>
+          <Field name="description" label="description" type="String" isDimension="false" isMeasure="false"/>
+          <Field name="id" label="id" type="String" isDimension="false" isMeasure="false"/>
+          <Field name="active" label="active" type="String" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#a1d0e7"/>
+          <Property name="hoverColor" value="#a1d0e7"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;startEpoch&quot;,&quot;label&quot;:&quot;startEpoch&quot;,&quot;type&quot;:&quot;number&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:100,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;12&quot;,&quot;color&quot;:&quot;#000000&quot;,&quot;textAlign&quot;:&quot;left&quot;},&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;endEpoch&quot;,&quot;label&quot;:&quot;endEpoch&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:100,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;12&quot;,&quot;color&quot;:&quot;#000000&quot;,&quot;textAlign&quot;:&quot;left&quot;},&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;subject_line&quot;,&quot;label&quot;:&quot;Subject&quot;,&quot;type&quot;:&quot;String&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:400},&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;reason&quot;,&quot;label&quot;:&quot;Tags&quot;,&quot;type&quot;:&quot;String&quot;,&quot;defaultListId&quot;:4,&quot;opened&quot;:true,&quot;display&quot;:&quot;true&quot;,&quot;style&quot;:{&quot;width&quot;:100},&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;active&quot;,&quot;label&quot;:&quot;Is Active&quot;,&quot;type&quot;:&quot;String&quot;,&quot;defaultListId&quot;:5,&quot;opened&quot;:true,&quot;renderer&quot;:{&quot;type&quot;:&quot;icon&quot;,&quot;checkDisplayField&quot;:&quot;false&quot;,&quot;labelFieldSelect&quot;:&quot;active&quot;,&quot;iconType&quot;:&quot;signal&quot;,&quot;cases&quot;:[{&quot;shape&quot;:&quot;image&quot;,&quot;value&quot;:&quot;0&quot;},{&quot;shape&quot;:&quot;image&quot;,&quot;value&quot;:&quot;1&quot;,&quot;color&quot;:{&quot;imgdata&quot;:&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNS8yNC8xOdmAhRUAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAFOklEQVQ4ja3Vb0wTZxgA8KdHr9e79nr9Q+VKr6UpBKGVf4PILItTopEMI3MJG0u0G4sjcaAjUbNkSwckc7gwEQxbMMriB00gbJnRLSFhMyQaOzf/AJurFWRiaaUlC1BKKe3dvfvUBpnTL3s/Ps9zv3vf5717XwlCCP6v0dLS8no8Hhfa29uvSF4A48ePH98UiURYiUQiwXF8vq2t7S4AxNYX9vT0lIyOjg7TNB21Wq0Hnwn39PTkjo+P15Mk+aZcLrdKpVLAMAxEUQSe50MrKytX9Hr9GZfL9RsAQF9fX7bb7f7RYrFsNJlMgGHYgX/Bhw4d+kAQhHaTyaTKycl5otVqRwiCeAAAPM/zOZFIpNTn822amZmBWCzWUVxc/NW1a9fO6fX6HYWFhaDVar/YuXPnx0/BjY2NHQqF4mhBQcFCUVHRR0aj8bJOp5tdtyCl1+vdfv/+/ZaJiYlSv9//RCaTGex2O6hUquscx+0oKytbTcFNTU1HKYrqKC8vv1lRUfEey7J/vmCvmN7e3hsIIRtJkkDT9COTyVS1efNmLwCAFADg2LFjZRiGfZ6fnz9VWVlZq9FofC9A4fDhw3t5njcXFBRALBYDDMPOJVEAAAwAsEQicdBgMOBWq/WIRqPxTU5OUs9DW1tbX1taWuo2Go1KiqIAwzB+ampq78jICJOsSWNZNndhYaGDZdl7tbW1R/r7+w19fX3fjY2N+bdt2za1Hu3q6rJ5PJ5Bs9mcznEc6HS6yyqV6mooFKqZm5u77nA4JgAAsGAwWIzjuFar1V4EAHC73W9LpdLtoVDowsmTJ19Zi546dSr99u3bF/R6fSbHcSCXyx/l5eU1RaPRPgzDACG0I9UKURRLcRxHKpXqF7fbreR5/kOLxQIGgyHD6/V+73K5krj8zp0751UqVYnZbAYcxxM6na4hNzfXF4/HFwRB+Dsej+clYWkikcjHcTwmiuKizWbjs7OzJ3AcNwMACIKQHggEvu3o6KjzeDx7CIKotlgsQJIkMAzTVlVVNQwAIJVK+dXV1VWSJPHUjBUKRSAWi8mDwaCaYZhYTU3NuxRFjYuiCAzDAMuyGdPT0z8QBNGYlZUFFEUBSZKXt27d+mUSQQhJeJ7HRFFMtQ2jaXpMEARJOBzeCACQnZ09w7KsUyaT+UVRBJqmwWg0Ksxms0ypVIJcLp/Iz89vTE9PX00ifr9fG41GN5Ak6U/BHMfdkMlky8FgcG8yWF1dPZaZmbmPIIhI8gdKS0sDkiQjHMc1lJaWzqzd1MePH7+KYRhmMBiupuCKiooHNE2PRKPRPZ2dneXJRE1NzQjDMAdwHE+IoggymQzUanXrrl27Rtait27dosPh8EG1Wr1QUlLycwrOyMiIsiz7NU3T4PF4PgMAeTK5f//+AY1G84lWqwW1Wt1fV1fXBetGd3e3i6KojSaTqddms6VaAQghQAjB6dOnLzY3N6P6+vpvEELSZBwhRA4MDByYnp7esCYGCCFwOp0NTqcTdXZ2jq6srOjW5lKH0NzcHDM4ODg0OTn5cigU+onjuOYTJ07cWz9DAICzZ88ah4eHPyVJsqGwsPDRli1b3nA4HHfX1jx1bC4vL6svXbrU5fV63wkEArC0tNSP4/gQz/N/8TwvKpVK9eLiYhVBEPtYlmXsdvtNh8Pxvt1u/339y595gwwNDb01Ozvb4PP5KsPhMMTjcUAIJb8MMBqNf2RlZZ3fvXv3GQCIPGtVz7vz6IcPH5aEQqGX5ufniwRBUDEMM6rX68etVuuvBEE8+a8HAQD+AY+fOzpngmf4AAAAAElFTkSuQmCC&quot;,&quot;fname&quot;:&quot;check.png&quot;,&quot;uuid&quot;:&quot;69e1396d-2313-4930-8024-5ab5ccbee3ff&quot;,&quot;width&quot;:22,&quot;height&quot;:22}}]},&quot;shapeOnly&quot;:false,&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;String&quot;,&quot;defaultListId&quot;:6,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;,&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;description&quot;,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;String&quot;,&quot;defaultListId&quot;:7,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;,&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;String&quot;,&quot;defaultListId&quot;:8,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;}]"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+    </Page>
+    <Script>
+      <Stores/>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id="node:1" type="UserScript" label="Script 0" _undefined_title="" _undefined_originHeight="" width="130" height="100" x="120" y="50"/>
+      <Item id="node:4" type="Tile" label="Time Filter" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="128" y="200"/>
+      <Item id="node:6" type="UserScript" label="Script 1" _undefined_title="" originHeight="117" width="180" height="177" x="822" y="740">
+        <dynIn id="din:0" type="any[]" label="filters" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="integer" label="triggerRefresh" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="string" label="opsJNDIName" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="Schedule Items" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="integer" label="triggerAdd" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:8" type="LocalStore" label="ScheduleHistory" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="1430" y="740"/>
+      <Item id="node:10" type="Tile" label="Schedule List" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="410" y="13"/>
+      <Item id="node:11" type="UserScript" label="Script 2" _undefined_title="" originHeight="117" width="130" height="117" x="610" y="20">
+        <dynIn id="din:0" type="any[]" label="Selection" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="formInfo" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:14" type="UserScript" label="Script 4" _undefined_title="" originHeight="117" width="160" height="117" x="1033" y="280">
+        <dynIn id="din:0" type="any[]" label="formRecord" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="string" label="opsJNDIName" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="integer" label="triggerRefresh" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:16" type="ToolbarOverlay" label="Overlay Toolbar 0" _undefined_title="" originHeight="117" width="130" height="117" x="378" y="260">
+        <dynOut id="dout:Add New" type="string" label="Add" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:17" type="UserScript" label="Script 5" _undefined_title="" _undefined_originHeight="" width="160" height="117" x="558" y="280">
+        <dynIn id="din:0" type="string" label="TriggerAdd" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any[]" label="nullSelectObject" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:19" type="Sort" label="Sort 0" _undefined_title="" _undefined_originHeight="" width="130" height="117" x="1210" y="740"/>
+      <Item id="node:21" type="GlobalProperty" label="Property 0" _undefined_title="" originHeight="117" width="180" height="117" x="60" y="420">
+        <dynIn id="din:jndiNameOps" type="string" label="OPS JNDI Name" default="charter_ops_db" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:.${user}" type="string" label="UserID" propagate="always" title="Current user id." _isArray="true"/>
+        <dynOut id="dout:jndiNameOps" type="string" label="OPS JNDI Name" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:23" type="GlobalProperty" label="Property 1" _undefined_title="" originHeight="117" width="180" height="117" x="780" y="330">
+        <dynIn id="din:jndiNameOps" type="string" label="OPS JNDI Name" default="charter_ops_db" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:.${user}" type="string" label="UserID" propagate="always" title="Current user id." _isArray="true"/>
+        <dynOut id="dout:jndiNameOps" type="string" label="OPS JNDI Name" propagate="always" _isArray="true"/>
+      </Item>
+      <Link srcId="node:14" srcPort="dout:0" tgtId="node:6" tgtPort="din:1"/>
+      <Link srcId="node:17" srcPort="dout:0" tgtId="node:14" tgtPort="din:0"/>
+      <Link srcId="node:16" srcPort="dout:Add New" tgtId="node:17" tgtPort="din:0"/>
+      <Link srcId="node:11" srcPort="dout:0" tgtId="node:14" tgtPort="din:0"/>
+      <Link srcId="node:4" srcPort="out:1" tgtId="node:6" tgtPort="din:0"/>
+      <Link srcId="node:10" srcPort="out:0" tgtId="node:11" tgtPort="din:0"/>
+      <Link srcId="node:6" srcPort="dout:0" tgtId="node:19" tgtPort="in:0"/>
+      <Link srcId="node:19" srcPort="out:0" tgtId="node:8" tgtPort="in:0"/>
+      <Link srcId="node:6" srcPort="dout:1" tgtId="node:17" tgtPort="din:0"/>
+      <Link srcId="node:21" srcPort="dout:jndiNameOps" tgtId="node:6" tgtPort="din:2"/>
+      <Link srcId="node:23" srcPort="dout:jndiNameOps" tgtId="node:14" tgtPort="din:1"/>
+      <Input key="node:1/cfg:model/default" value="&quot;var Scheduler = Plugin(\&quot;Scheduler\&quot;);\n/*\nScheduler.checkForOutage(function(response){\n    if( response.status.toLowerCase() == \&quot;ok\&quot; ){\n        console.log(response.value); \n    }\n});\n\nvar start_epoch     = Math.round( new Date().getTime() / 1000 ) + 43200;\nvar end_epoch       = Math.round( new Date().getTime() / 1000 ) + 64800;\nvar subject_line    = \&quot;This is a test outage\&quot;;\nvar description     = \&quot;Lorem ipsum dolor sit amet...\&quot;;\nvar reason          = \&quot;NA\&quot;;\n        \nScheduler.addScheduledOutage(start_epoch, end_epoch, subject_line, description, reason, function(response){\n    console.log(response); \n});  \n\nScheduler.modifyScheduledOutage( 14, null, Math.round( Math.random() * 9999999999 ), null, null, null, function(response){\n    console.log( response );\n});\n        \n        \n\n\nScheduler.getScheduleHistory(null, null, function(response){\n    console.log(response);\n});\n\n*/&quot;"/>
+      <Input key="node:4/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#Tile1&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Tile1&quot;}]"/>
+      <Input key="node:6/cfg:model/default" value="&quot;var SchedulePlugin = Plugin(\&quot;Scheduler\&quot;);\n\nif( port == null ) return;\nvar filters = getInput(\&quot;din:0\&quot;);\nvar jndiName = getInput(\&quot;din:2\&quot;);\n\nif( jndiName == null || jndiName == \&quot;\&quot; ) return;\n\nSchedulePlugin.getTimeRange(jndiName,filters, function(response){\n    if( response.status.toLowerCase() == \&quot;ok\&quot; ){\n        var timeObj = response.value;\n        var startEpoch = timeObj.fromUnixTime;\n        var endEpoch = timeObj.toUnixTime;\n        \n            SchedulePlugin.getScheduleHistory(jndiName, startEpoch, endEpoch, function( response ){\n                if( response.status.toLowerCase() == &apos;ok&apos;){\n                    if( response.value &amp;&amp; response.value != null){\n                        \n                        var responseVal = response.value;\n                        for( var i=0; i &lt; responseVal.length; i++ ){\n                            responseVal[i][\&quot;startEpoch\&quot;] = SchedulePlugin.parseDate( new Date( responseVal[i][\&quot;start_epoch\&quot;] * 1000 ) );\n                            responseVal[i][\&quot;endEpoch\&quot;]   = SchedulePlugin.parseDate( new Date( responseVal[i][\&quot;end_epoch\&quot;]   * 1000 ) );\n                        }\n                        \n                        setOutput(\&quot;dout:0\&quot;, responseVal);\n                        if( responseVal.length == 0 ){\n                            setOutput( &apos;dout:1&apos;, Math.round( Math.random() * 1000000000000000000000 ) );   \n                        }\n                        \n                    }\n                }\n            });\n            \n    }\n});\n\n\n\n\n\n\n\n\n\n\n/*\n\n  \&quot;Drilldown\&quot;: [\n   {\n    \&quot;name\&quot;: \&quot;data.timeRange\&quot;,\n    \&quot;type\&quot;: \&quot;popup:timeinterval\&quot;,\n    \&quot;value\&quot;: \&quot;predefined:24H\&quot;,\n    \&quot;timezoneOffset\&quot;: 420\n   }\n  ],\n\n*/&quot;"/>
+      <Input key="node:6/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;filters&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;integer&quot;,&quot;portLabel&quot;:&quot;triggerRefresh&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;opsJNDIName&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:6/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Schedule Items&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;integer&quot;,&quot;portLabel&quot;:&quot;triggerAdd&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:6/cfg:schema/default" value="&quot;var fields = [\&quot;reason\&quot;,\&quot;subject_line\&quot;,\&quot;user_id\&quot;,\&quot;end_epoch\&quot;, \&quot;endEpoch\&quot;,\&quot;start_epoch\&quot;, \&quot;startEpoch\&quot;,\&quot;description\&quot;,\&quot;id\&quot;,\&quot;active\&quot;];\n\nvar schema = [];\n\nfor( var i=0; i &lt; fields.length; i++ ){\n    schema.push({\n        name: fields[i],\n        label: fields[i],\n        type: \&quot;String\&quot;\n    });   \n}\n\nsetOutputSchema( \&quot;dout:0\&quot;, schema );&quot;"/>
+      <Input key="node:11/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:11/cfg:model/default" value="&quot;if( port != null ){\n \n    var selection = getInput(\&quot;din:0\&quot;) || [];\n    \n    if( selection.length &gt; 0 ){\n        setOutput(\&quot;dout:0\&quot;, selection);   \n    } else {\n        setOutput(\&quot;dout:0\&quot;, null);\n    }\n    \n}&quot;"/>
+      <Input key="node:11/cfg:schema/default" value="&quot;var fields = [\&quot;reason\&quot;,\&quot;subject_line\&quot;,\&quot;user_id\&quot;,\&quot;end_epoch\&quot;,\&quot;start_epoch\&quot;,\&quot;description\&quot;,\&quot;id\&quot;,\&quot;active\&quot;];\n\nvar schema = [];\n\nfor( var i=0; i &lt; fields.length; i++ ){\n    schema.push({\n        name: fields[i],\n        label: fields[i],\n        type: \&quot;String\&quot;\n    });   \n}\n\nsetOutputSchema( \&quot;dout:0\&quot;, schema );&quot;"/>
+      <Input key="node:11/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;formInfo&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:14/cfg:model/default" value="&quot;var SchedulePlugin = Plugin(\&quot;Scheduler\&quot;);\nvar fields = [ \n        { field: \&quot;subject_line\&quot;, label: &apos;Subject&apos;, type: \&quot;text\&quot;, readOnly: false, value: null }, \n        { field: \&quot;reason\&quot;, label: &apos;Tags&apos;, type: \&quot;text\&quot;, readOnly: false, value : null }, \n        { field: \&quot;start_epoch\&quot;, label: &apos;Outage Start&apos;, type: \&quot;text\&quot;, readOnly: false, value: Math.round( new Date().getTime() / 1000 ) },\n        { field: \&quot;end_epoch\&quot;, label: &apos;Outage End&apos;, type: \&quot;text\&quot;, readOnly: false, value: Math.round( new Date().getTime() / 1000 ) }, \n        { field: \&quot;description\&quot;, label: &apos;Outage Description&apos;, type: \&quot;textarea\&quot;, readOnly: false, value: null }, \n        { field: \&quot;user_id\&quot;, label: &apos;Request User&apos;, type: \&quot;text\&quot;, readOnly: true, value: null }, \n        { field: \&quot;id\&quot;, label: &apos;Outage ID&apos;, type: \&quot;text\&quot;, readOnly: true, value: null }, \n        { field: \&quot;active\&quot;, label: &apos;Status&apos;, type: \&quot;checkbox\&quot;, readOnly: false, value: 1 }\n    ];\n\nvar selection = [];\n\nvar jndiName = getInput(\&quot;din:1\&quot;);\n\nif( jndiName == null || jndiName == \&quot;\&quot; ) return;\n\nfunction init( selObj ){\n    var selected = selObj[0];\n    clearForm();\n    $(\&quot;.scheduleDetail\&quot;).ready(function(){\n        var title = $(&apos;&lt;div /&gt;&apos;, {\n                                    class: &apos;detailTitle&apos;,\n                                    text: &apos;Outage Details&apos;\n                                });\n                                \n        $(\&quot;.scheduleDetail\&quot;).append(title);\n    \n        for( var i=0; i &lt; fields.length; i++ ){\n            var field = fields[i];\n            var lineItem = $(\&quot;&lt;div&gt;\&quot;, {\n                                class: &apos;detailItem&apos;,\n                            });\n                            \n            var label = $(\&quot;&lt;div&gt;\&quot;, {\n                            class: &apos;detailLabel&apos;,\n                            text: field[&apos;label&apos;]\n                        });\n            lineItem.append(label);\n            \n            var fObj;\n            \n            switch( field[&apos;type&apos;] ){\n            case \&quot;textarea\&quot;:\n                fObj    = $(&apos;&lt;textarea&gt;&apos;,{\n                                    class: \&quot;detailInput\&quot;,\n                                    id: field[&apos;field&apos;]\n                                });\n                \n                \n                break;\n            default:\n                fObj    = $(&apos;&lt;input&gt;&apos;,{\n                                    type: field[&apos;type&apos;],\n                                    class: \&quot;detailInput\&quot;,\n                                    id: field[&apos;field&apos;]\n                                });\n                break                    \n                                \n            } \n            \n           \n                                \n            fObj.attr(&apos;readonly&apos;, field[&apos;readOnly&apos;]);                    \n            \n            var objValue = selected[field[&apos;field&apos;]] || \&quot;\&quot;;\n            var checked = false;\n            if( ( field[&apos;field&apos;] == \&quot;start_epoch\&quot; || field[&apos;field&apos;] == \&quot;end_epoch\&quot; ) &amp;&amp; ( objValue != null &amp;&amp; objValue != \&quot;\&quot; ) ){\n                objValue = SchedulePlugin.parseDate( new Date( selected[field[&apos;field&apos;]] * 1000 ) );\n            } else if(  field[&apos;field&apos;] == \&quot;active\&quot; ){\n                if( objValue == null || objValue == \&quot;\&quot; || objValue == 1 ){\n                    objValue = 1;   \n                } else {\n                    objValue = 0;   \n                }\n                \n                if( objValue == 1 ){\n                    fObj.attr(&apos;checked&apos;, true);     \n                }\n                   \n            }\n            \n            fObj.val(objValue);                   \n                                \n            lineItem.append(fObj);\n            $(\&quot;.scheduleDetail\&quot;).append(lineItem);    \n        }\n        \n        var buttonItem = $(\&quot;&lt;div&gt;\&quot;, {\n                                class: &apos;detailItem buttonItem&apos;,\n                            });\n        var submitButton = $( \&quot;&lt;button&gt;\&quot;, {\n            text: \&quot;Submit\&quot;,\n            class: \&quot;submitButton\&quot;\n        } );\n        \n        submitButton.click(function(){\n            submitUpdate();\n        });\n        \n        var resetButton = $( \&quot;&lt;button&gt;\&quot;, {\n            text: \&quot;Reset\&quot;,\n            class: \&quot;resetButton\&quot;\n        } );\n        \n        resetButton.click(function(){\n            init([selected]);\n        });\n        \n        buttonItem.append(resetButton);\n        buttonItem.append(submitButton);\n        $(\&quot;.scheduleDetail\&quot;).append(buttonItem);\n        \n    });\n}\n\nfunction submitUpdate(){\n \n    for( var ii=0; ii &lt; fields.length; ii++ ){\n        fields[ii][&apos;value&apos;] = $( &apos;#&apos; + fields[ii][&apos;field&apos;] ).val();\n        if(fields[ii][&apos;type&apos;] == \&quot;checkbox\&quot;){\n            fields[ii][&apos;value&apos;] = 0;\n            var boxChecked = $( &apos;#&apos; + fields[ii][&apos;field&apos;] ).prop(&apos;checked&apos;);\n            if( boxChecked == true ){\n                fields[ii][&apos;value&apos;] = 1;\n            } else {\n                fields[ii][&apos;value&apos;] = 0;   \n            }\n        }\n        \n    }\n    //console.log( fields );\n    \n    var id = null;\n    var start_epoch = null;\n    var end_epoch = null;\n    var subject_line  = null;\n    var description  = null;\n    var reason = null;\n    var active = null;\n    var user_id = null;\n    \n    for( var j=0; j &lt; fields.length; j++ ){\n        if( ( fields[j][&apos;value&apos;] || fields[j][&apos;value&apos;] == 0 ) &amp;&amp; fields[j][&apos;value&apos;] != null ){\n            switch( fields[j][&apos;field&apos;] ){\n                case &apos;id&apos;:\n                    id = fields[j][&apos;value&apos;];\n                    break;\n                case &apos;start_epoch&apos;:\n                    start_epoch = Math.round(  new Date(fields[j][&apos;value&apos;]) / 1000 );\n                    break;\n                case &apos;end_epoch&apos;:\n                    end_epoch = Math.round(  new Date(fields[j][&apos;value&apos;]) / 1000 );\n                    break;\n                case &apos;subject_line&apos;:\n                    subject_line = fields[j][&apos;value&apos;];\n                    break;\n                case &apos;description&apos;:\n                    description = fields[j][&apos;value&apos;];\n                    break;\n                case &apos;reason&apos;:\n                    reason = fields[j][&apos;value&apos;];\n                    break;\n                case &apos;active&apos;:\n                    active = fields[j][&apos;value&apos;];\n                    break;\n                case &apos;user_id&apos;:\n                    user_id = fields[j][&apos;value&apos;];\n                    break;\n            }\n        }\n        \n    }\n    \n    if( id == null || id == \&quot;\&quot; ){\n        SchedulePlugin.addScheduledOutage(jndiName, start_epoch, end_epoch, subject_line, description, reason,active, function(response){\n            \n            if( response.status.toLowerCase() == \&quot;ok\&quot; ){\n                setOutput( &apos;dout:0&apos;, Math.round( Math.random() * 1000000000000000000 ) ); \n                clearForm();\n            }\n            \n        });\n    } else {\n    \n        SchedulePlugin.modifyScheduledOutage(jndiName, id, start_epoch, end_epoch, subject_line, description, reason, user_id, active, function(response){\n            \n            if( response.status.toLowerCase() == \&quot;ok\&quot; ){\n                setOutput( &apos;dout:0&apos;, Math.round( Math.random() * 1000000000000000000 ) );  \n            }\n            \n        });\n    \n    }\n    \n}\n\nfunction clearForm(){\n    $(\&quot;.scheduleDetail\&quot;).empty();   \n}\n\nif( typeof $ !== \&quot;undefined\&quot; &amp;&amp; $ !=null ){\n    \n    if( port != null ){\n        selection = getInput(\&quot;din:0\&quot;) || [];  \n        if( selection.length &gt; 0 ){\n            init(selection);   \n        } else {\n            clearForm();\n        }\n    }   \n} else {\n    require([(window.vtAppId ||  &apos;/vitria-oi/app/dojoclient&apos;) + \&quot;/html/scripts/Jquery/src/jquery.js\&quot;],function() {\n        jQuery(document).ready(function ($) {\n            \n            if( port != null ){\n                selection = getInput(\&quot;din:0\&quot;) || [];  \n                if( selection.length &gt; 0 ){\n                    init(selection);   \n                } else {\n                    clearForm();    \n                }\n                \n            }\n            \n        });\n    });   \n    \n}&quot;"/>
+      <Input key="node:14/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;formRecord&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;opsJNDIName&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:10/in:0/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:10/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#Scheduled Events&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Scheduled Events&quot;}]"/>
+      <Input key="node:16/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#Tile1&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Tile1&quot;}]"/>
+      <Input key="node:16/cfg:toolbarItems/default" value="[{&quot;itemName&quot;:&quot;Add New&quot;,&quot;itemLabel&quot;:&quot;Add&quot;,&quot;itemType&quot;:&quot;textButton&quot;,&quot;extData&quot;:[{&quot;name&quot;:&quot;type&quot;,&quot;value&quot;:&quot;stateless&quot;},{&quot;name&quot;:&quot;label&quot;,&quot;value&quot;:&quot;Add New&quot;}]}]"/>
+      <Input key="node:16/cfg:refCorner/default" value="&quot;TopRight&quot;"/>
+      <Input key="node:16/cfg:yOffset/default" value="10"/>
+      <Input key="node:16/cfg:frameStyle/default" value="[{&quot;name&quot;:&quot;padding-top&quot;,&quot;value&quot;:&quot;4px&quot;},{&quot;name&quot;:&quot;padding-bottom&quot;,&quot;value&quot;:&quot;0px&quot;},{&quot;name&quot;:&quot;padding-left&quot;,&quot;value&quot;:&quot;4px&quot;},{&quot;name&quot;:&quot;padding-right&quot;,&quot;value&quot;:&quot;4px&quot;},{&quot;name&quot;:&quot;border&quot;,&quot;value&quot;:&quot;none&quot;},{&quot;name&quot;:&quot;border-radius&quot;,&quot;value&quot;:&quot;5px&quot;},{&quot;name&quot;:&quot;box-shadow&quot;,&quot;value&quot;:&quot;none&quot;},{&quot;name&quot;:&quot;background-color&quot;,&quot;value&quot;:&quot;transparent&quot;},{&quot;name&quot;:&quot;color&quot;,&quot;value&quot;:&quot;black&quot;},{&quot;name&quot;:&quot;vt-extended-styles&quot;,&quot;value&quot;:&quot;&quot;}]"/>
+      <Input key="node:17/cfg:model/default" value="&quot;var obj = [\r\n  {\r\n    \&quot;reason\&quot;: null,\r\n    \&quot;subject_line\&quot;: \&quot;System Will Be Down For Maintenance\&quot;,\r\n    \&quot;user_id\&quot;: null,\r\n    \&quot;end_epoch\&quot;:  Math.round( new Date().getTime() / 1000 ) + 3600,\r\n    \&quot;start_epoch\&quot;:  Math.round( new Date().getTime() / 1000 ),\r\n    \&quot;description\&quot;: null,\r\n    \&quot;active\&quot;: 1,\r\n    \&quot;id\&quot;: null,\r\n    \&quot;startEpoch\&quot;: null,\r\n    \&quot;endEpoch\&quot;: null\r\n  }\r\n];\r\n\r\nif( port == \&quot;din:0\&quot; ){\r\n    setOutput( \&quot;dout:0\&quot;, obj );   \r\n}&quot;"/>
+      <Input key="node:17/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;string&quot;,&quot;portLabel&quot;:&quot;TriggerAdd&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;}]"/>
+      <Input key="node:17/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;nullSelectObject&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:16/in:0/evaluate" value="&quot;ignore&quot;"/>
+      <Input key="node:14/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;integer&quot;,&quot;portLabel&quot;:&quot;triggerRefresh&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:19/cfg:sort/default" value="[{&quot;sortField&quot;:&quot;start_epoch&quot;,&quot;sortFieldType&quot;:&quot;String&quot;,&quot;sortOrder&quot;:&quot;desc&quot;},{&quot;sortField&quot;:&quot;end_epoch&quot;,&quot;sortFieldType&quot;:&quot;String&quot;,&quot;sortOrder&quot;:&quot;desc&quot;}]"/>
+      <Input key="node:21/cfg:properties/default" value="[&quot;jndiNameOps&quot;]"/>
+      <Input key="node:23/cfg:properties/default" value="[&quot;jndiNameOps&quot;]"/>
+      <Schema id="node:6/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;reason&quot;,&quot;label&quot;:&quot;reason&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;subject_line&quot;,&quot;label&quot;:&quot;subject_line&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;endEpoch&quot;,&quot;label&quot;:&quot;endEpoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;startEpoch&quot;,&quot;label&quot;:&quot;startEpoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;active&quot;,&quot;label&quot;:&quot;active&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+      </Schema>
+      <Schema id="node:8/out:0">
+        <JSON value="{&quot;name&quot;:&quot;reason&quot;,&quot;label&quot;:&quot;reason&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;subject_line&quot;,&quot;label&quot;:&quot;subject_line&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;endEpoch&quot;,&quot;label&quot;:&quot;endEpoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;startEpoch&quot;,&quot;label&quot;:&quot;startEpoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;active&quot;,&quot;label&quot;:&quot;active&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+      </Schema>
+      <Schema id="node:11/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;reason&quot;,&quot;label&quot;:&quot;reason&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;subject_line&quot;,&quot;label&quot;:&quot;subject_line&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;active&quot;,&quot;label&quot;:&quot;active&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+      </Schema>
+      <Schema id="node:14/din:0">
+        <JSON value="{&quot;name&quot;:&quot;reason&quot;,&quot;label&quot;:&quot;reason&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;subject_line&quot;,&quot;label&quot;:&quot;subject_line&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;active&quot;,&quot;label&quot;:&quot;active&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+      </Schema>
+      <Schema id="node:10/out:0">
+        <JSON value="{&quot;name&quot;:&quot;reason&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;reason&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;subject_line&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;subject_line&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;endEpoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;endEpoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;startEpoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;startEpoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;active&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;active&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:11/din:0">
+        <JSON value="{&quot;name&quot;:&quot;reason&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;reason&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;subject_line&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;subject_line&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;endEpoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;endEpoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;startEpoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;startEpoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;active&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;active&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:10/out:1">
+        <JSON value="{&quot;name&quot;:&quot;reason&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;reason&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;subject_line&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;subject_line&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;endEpoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;endEpoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;startEpoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;startEpoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;active&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;active&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:10/out:2">
+        <JSON value="{&quot;name&quot;:&quot;reason&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;reason&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;subject_line&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;subject_line&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;endEpoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;endEpoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;startEpoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;startEpoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;active&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;active&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:10/out:3">
+        <JSON value="{&quot;name&quot;:&quot;reason&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;reason&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;subject_line&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;subject_line&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;endEpoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;endEpoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;startEpoch&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;startEpoch&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;active&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;active&quot;,&quot;type&quot;:&quot;String&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:16/out:0">
+        <JSON value="{&quot;name&quot;:&quot;Add New&quot;,&quot;type&quot;:&quot;string&quot;,&quot;label&quot;:&quot;Add&quot;}"/>
+      </Schema>
+      <Schema id="node:19/in:0">
+        <JSON value="{&quot;name&quot;:&quot;reason&quot;,&quot;label&quot;:&quot;reason&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;subject_line&quot;,&quot;label&quot;:&quot;subject_line&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;endEpoch&quot;,&quot;label&quot;:&quot;endEpoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;startEpoch&quot;,&quot;label&quot;:&quot;startEpoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;active&quot;,&quot;label&quot;:&quot;active&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+      </Schema>
+      <Schema id="node:19/out:0">
+        <JSON value="{&quot;name&quot;:&quot;reason&quot;,&quot;label&quot;:&quot;reason&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;subject_line&quot;,&quot;label&quot;:&quot;subject_line&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;endEpoch&quot;,&quot;label&quot;:&quot;endEpoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;startEpoch&quot;,&quot;label&quot;:&quot;startEpoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;active&quot;,&quot;label&quot;:&quot;active&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+      </Schema>
+      <Schema id="node:8/in:0">
+        <JSON value="{&quot;name&quot;:&quot;reason&quot;,&quot;label&quot;:&quot;reason&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;subject_line&quot;,&quot;label&quot;:&quot;subject_line&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user_id&quot;,&quot;label&quot;:&quot;user_id&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;end_epoch&quot;,&quot;label&quot;:&quot;end_epoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;endEpoch&quot;,&quot;label&quot;:&quot;endEpoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;start_epoch&quot;,&quot;label&quot;:&quot;start_epoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;startEpoch&quot;,&quot;label&quot;:&quot;startEpoch&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;id&quot;,&quot;label&quot;:&quot;id&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;active&quot;,&quot;label&quot;:&quot;active&quot;,&quot;type&quot;:&quot;String&quot;}"/>
+      </Schema>
+      <Schema id="node:4/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:4/out:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:6/din:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:4/out:2">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <Schema id="node:4/out:3">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:true}"/>
+      </Schema>
+      <DynInput id="node:6">
+        <Port id="din:0" type="any[]" label="filters" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="integer" label="triggerRefresh" evaluate="always" _isArray="true"/>
+        <Port id="din:2" type="string" label="opsJNDIName" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:11">
+        <Port id="din:0" type="any[]" label="Selection" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:14">
+        <Port id="din:0" type="any[]" label="formRecord" evaluate="always"/>
+        <Port id="din:1" type="string" label="opsJNDIName" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:17">
+        <Port id="din:0" type="string" label="TriggerAdd" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:21">
+        <Port id="din:jndiNameOps" type="string" label="OPS JNDI Name" default="charter_ops_db" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:23">
+        <Port id="din:jndiNameOps" type="string" label="OPS JNDI Name" default="charter_ops_db" evaluate="always"/>
+      </DynInput>
+      <DynOutput id="node:6">
+        <Port id="dout:0" type="any[]" label="Schedule Items" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="integer" label="triggerAdd" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:11">
+        <Port id="dout:0" type="any[]" label="formInfo" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:16">
+        <Port id="dout:Add New" type="string" label="Add" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:17">
+        <Port id="dout:0" type="any[]" label="nullSelectObject" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:14">
+        <Port id="dout:0" type="integer" label="triggerRefresh" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:21">
+        <Port id="dout:.${user}" type="string" label="UserID" propagate="always" title="Current user id."/>
+        <Port id="dout:jndiNameOps" type="string" label="OPS JNDI Name" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:23">
+        <Port id="dout:.${user}" type="string" label="UserID" propagate="always" title="Current user id."/>
+        <Port id="dout:jndiNameOps" type="string" label="OPS JNDI Name" propagate="always"/>
+      </DynOutput>
+      <Version id="node:1" version="2"/>
+      <Version id="node:4" version="1"/>
+      <Version id="node:6" version="2"/>
+      <Version id="node:8" version="2"/>
+      <Version id="node:10" version="1"/>
+      <Version id="node:11" version="2"/>
+      <Version id="node:14" version="2"/>
+      <Version id="node:16" version="3"/>
+      <Version id="node:17" version="2"/>
+      <Version id="node:19" version="1"/>
+      <Version id="node:21" version="3"/>
+      <Version id="node:23" version="3"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Maintenance Scheduler Service" alias="Scheduler"/>
+      <DashboardPlugin uri="/app/dbp/user/via_common/dbpm/VIA - Common" alias="Common"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

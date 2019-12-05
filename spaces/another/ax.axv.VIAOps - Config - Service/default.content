@@ -1,0 +1,449 @@
+<AnalyticsExplorerView is_init="false" name="VIAOps - Config - Service" description="">
+  <ModelInfo nextPageId="3" validated="true">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="0.8"/>
+      <NoTileSpacing value="false"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <CustomCSSSetting><![CDATA[@import '/vitria-oi/rest/app/dbp/user/via_common/dbpm/VIA - Common/VIA-CSS';
+
+.dimension-values .dgrid-cell.field-name {
+    font-family: Arial;
+    vertical-align: top;
+}
+.dimension-values .dgrid-cell.field-not {
+    font-family: Arial;
+    vertical-align: top;
+}
+.dimension-values .dgrid-cell.field-value {
+    font-family: Arial;
+    vertical-align: top;
+    word-break: break-all;
+}
+]]></CustomCSSSetting>
+    <Page id="1" name="Service Config" title="Service Config" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<div style="width:calc(100% - 2px);height:100%;background-color:white;padding:0px;">
+    <div data-vitria-type="tile" style="width:100%;height:29px;padding:0px;border:none;" data-vitria-tile-name="ActionBar"></div>
+    <div style="width:100%;height:calc(100% - 29px);" data-vitria-type="layout"></div> 
+</div>]]></PageFrameContent>
+      <PageProperties/>
+      <Layout type="10" numRow="48" numCol="74" count="3" templateType="21" screenHeight="1080" renderType="null" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:47,&quot;id&quot;:0,&quot;title&quot;:&quot;Main Tile&quot;},{&quot;data_col&quot;:1,&quot;data_row&quot;:48,&quot;data_sizex&quot;:73,&quot;data_sizey&quot;:25,&quot;id&quot;:1,&quot;title&quot;:&quot;Dimension Values (JSON)&quot;},{&quot;data_col&quot;:74,&quot;data_row&quot;:48,&quot;data_sizex&quot;:47,&quot;data_sizey&quot;:25,&quot;id&quot;:2,&quot;title&quot;:&quot;Dimension Values (SQL)&quot;}]" unitSize="{&quot;x&quot;:9.6,&quot;y&quot;:8.555555555555555}" viewRows="72" viewCols="120"/>
+      <Tile name="Main Tile" title="Main Tile" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="via-scroller" parentSelect="false" advancedConfig="null" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:2" name="axflow:localstore:node:2" label="Service Config Data" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="svcName" label="svcName" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="svcLabel" label="svcLabel" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="compName" label="compName" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="compLabel" label="compLabel" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="appName" label="appName" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="appLabel" label="appLabel" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="metricName" label="metricName" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="metricUoM" label="metricUoM" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="metricAggr" label="metricAggr" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="metricIsKey" label="metricIsKey" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="isQuickAccess" label="isQuickAccess" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="isSynthetic" label="isSynthetic" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="dimValuesSQL" label="dimValuesSQL" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="dimValuesJSON" label="dimValuesJSON" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="extended"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;svcName&quot;,&quot;label&quot;:&quot;Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:10,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;12&quot;,&quot;color&quot;:&quot;#000000&quot;,&quot;textAlign&quot;:&quot;left&quot;},&quot;group&quot;:&quot;&quot;},{&quot;name&quot;:&quot;svcLabel&quot;,&quot;label&quot;:&quot;Service Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:10,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;12&quot;,&quot;color&quot;:&quot;#000000&quot;,&quot;textAlign&quot;:&quot;left&quot;},&quot;isKeyField&quot;:false,&quot;group&quot;:&quot;&quot;},{&quot;name&quot;:&quot;compName&quot;,&quot;label&quot;:&quot;Sub-Service Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:10},&quot;group&quot;:&quot;&quot;},{&quot;name&quot;:&quot;compLabel&quot;,&quot;label&quot;:&quot;Sub-Service Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:10},&quot;isKeyField&quot;:false,&quot;group&quot;:&quot;&quot;},{&quot;name&quot;:&quot;appName&quot;,&quot;label&quot;:&quot;Component Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:10},&quot;group&quot;:&quot;&quot;},{&quot;name&quot;:&quot;appLabel&quot;,&quot;label&quot;:&quot;Component Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:6,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:10},&quot;isKeyField&quot;:false,&quot;group&quot;:&quot;&quot;},{&quot;name&quot;:&quot;metricName&quot;,&quot;label&quot;:&quot;Metric Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:7,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:40},&quot;group&quot;:&quot;&quot;},{&quot;name&quot;:&quot;metricUoM&quot;,&quot;label&quot;:&quot;Unit&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:8,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:3},&quot;isKeyField&quot;:false,&quot;group&quot;:&quot;&quot;},{&quot;name&quot;:&quot;metricAggr&quot;,&quot;label&quot;:&quot;Aggr Func&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:9,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:3},&quot;isKeyField&quot;:false,&quot;group&quot;:&quot;&quot;},{&quot;name&quot;:&quot;isQuickAccess&quot;,&quot;label&quot;:&quot;Quick Access&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:10,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;isKeyField&quot;:false,&quot;style&quot;:{&quot;width&quot;:3}},{&quot;name&quot;:&quot;isSynthetic&quot;,&quot;label&quot;:&quot;Synthetic&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:11,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;isKeyField&quot;:false,&quot;style&quot;:{&quot;width&quot;:3}},{&quot;name&quot;:&quot;dimValuesSQL&quot;,&quot;label&quot;:&quot;dimValuesSQL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:12,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;},{&quot;name&quot;:&quot;dimValuesJSON&quot;,&quot;label&quot;:&quot;dimValuesJSON&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:13,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;}]"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <Tile name="DimensionValuesJSON" title="Dimension Values (JSON)" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="via-scroller" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:6" name="axflow:localstore:node:6" label="Dimension Values JSON" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="name" label="Name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="not" label="Not" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="value" label="Value" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <DataViewer name="SimpleText" label="HTML Composition" optional="false" minimode="false">
+          <Property name="text" value="{&quot;value&quot;:&quot;&amp;lt;!DOCTYPE html&amp;gt;\r\n&amp;lt;html&amp;gt;\r\n&amp;lt;head&amp;gt;\r\n&amp;lt;/head&amp;gt;\r\n&amp;lt;body&amp;gt;\r\n&amp;lt;div class=\&quot;via-scroller\&quot; style=\&quot;font-family: Arial; width: calc(100% - 3px); height: calc(100% - 3px); vertical-align: top; padding-top: 3px; overflow-x: none; overflow-y: auto;\&quot;&amp;gt;\r\n&amp;lt;table style=\&quot;width: 100%;\&quot;&amp;gt;\r\n&amp;lt;tbody&amp;gt;&amp;lt;!-- OUTER-BEGIN --&amp;gt;\r\n&amp;lt;tr style=\&quot;vertical-align:top;\&quot;&amp;gt;\r\n&amp;lt;td style=\&quot;width: 1%;white-space: nowrap;font-family: Arial; font-weight: bold;font-size: 12px;padding:5px;padding-top:10px;\&quot;&amp;gt;${context}&amp;lt;/td&amp;gt;\r\n&amp;lt;td style=\&quot;width: 99%;white-space: normal;word-break: break-all;font-family: Arial;font-weight: bold;font-size: 12px;padding:5px;\&quot;&amp;gt;&amp;lt;pre style=\&quot;padding:5px;\&quot;&amp;gt;${expr}&amp;lt;/pre&amp;gt;&amp;lt;/td&amp;gt;\r\n&amp;lt;/tr&amp;gt;\r\n&amp;lt;!-- OUTER-END --&amp;gt;&amp;lt;/tbody&amp;gt;\r\n&amp;lt;/table&amp;gt;\r\n&amp;lt;/div&amp;gt;\r\n&amp;lt;/body&amp;gt;\r\n&amp;lt;/html&amp;gt;&quot;,&quot;editBySource&quot;:true}"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <Tile name="DimensionValuesSQL" title="Dimension Values (SQL)" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="via-scroller" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:36" name="axflow:localstore:node:36" label="Dimension Values SQL" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="value" label="Value" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"color":"#555555"}]]></LabelStyle>
+        <DataViewer name="SimpleText" label="HTML Composition" optional="false" minimode="false">
+          <Property name="text" value="{&quot;value&quot;:&quot;&amp;lt;!DOCTYPE html&amp;gt;\r\n&amp;lt;html&amp;gt;\r\n&amp;lt;head&amp;gt;\r\n&amp;lt;/head&amp;gt;\r\n&amp;lt;body&amp;gt;\r\n&amp;lt;div class=\&quot;via-scroller\&quot; style=\&quot;font-family: Arial; width: calc(100% - 3px); height: calc(100% - 3px); vertical-align: top; padding-top: 3px; overflow-x: none; overflow-y: auto;\&quot;&amp;gt;\r\n&amp;lt;table style=\&quot;width: 100%;\&quot;&amp;gt;\r\n&amp;lt;tbody&amp;gt;&amp;lt;!-- OUTER-BEGIN --&amp;gt;\r\n&amp;lt;tr style=\&quot;vertical-align:top;\&quot;&amp;gt;\r\n&amp;lt;td style=\&quot;width: 100%;white-space: normal;word-break: break-all;font-family: Arial;font-weight: bold;font-size: 12px;padding:5px;\&quot;&amp;gt;${value}&amp;lt;/td&amp;gt;\r\n&amp;lt;/tr&amp;gt;\r\n&amp;lt;!-- OUTER-END --&amp;gt;&amp;lt;/tbody&amp;gt;\r\n&amp;lt;/table&amp;gt;\r\n&amp;lt;/div&amp;gt;\r\n&amp;lt;/body&amp;gt;\r\n&amp;lt;/html&amp;gt;&quot;,&quot;editBySource&quot;:true}"/>
+          <Ports/>
+        </DataViewer>
+      </Tile>
+      <frame_tile name="ActionBar" title="ActionBar" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="via-action-bar" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:43" name="axflow:localstore:node:43" label="Action Bar Data" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="value" label="value" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="disable" label="disable" type="boolean" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/user/via_common/dbpm/VIA - Common/Action Bar&quot;,&quot;model&quot;:&quot;{\r\n\t\&quot;toolbar\&quot;: [\r\n    \t{\r\n    \t\t\&quot;label\&quot;: \&quot;Service Config\&quot;\r\n    \t},\r\n\t    {\r\n    \t\t\&quot;label\&quot;: \&quot;&amp;lt;i class=&apos;fas fa-cloud-download-alt&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n    \t\t\&quot;title\&quot;: \&quot;Download Service Config as JSON\&quot;,\r\n    \t\t\&quot;value\&quot;: \&quot;download/json\&quot;\r\n    \t},\r\n    \t{\r\n    \t\t\&quot;label\&quot;: \&quot;&amp;lt;i class=&apos;fas fa-download&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n    \t\t\&quot;title\&quot;: \&quot;Download Service Config as CSV\&quot;,\r\n    \t\t\&quot;value\&quot;: \&quot;download/csv\&quot;\r\n    \t},\r\n    \t{\r\n    \t\t\&quot;label\&quot;: \&quot;&amp;lt;i class=&apos;fas fa-trash-alt&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n    \t\t\&quot;title\&quot;: \&quot;Delete cached system model\&quot;,\r\n    \t\t\&quot;value\&quot;: \&quot;cache/delete\&quot;\r\n        },\r\n        {\r\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-redo&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n            \&quot;title\&quot; : \&quot;Refresh entries from system model.\&quot;,\r\n            \&quot;value\&quot; : \&quot;config/refresh\&quot;\r\n    \t},\r\n        {\r\n            \&quot;separator\&quot; : true\r\n        },\r\n    \t{\r\n    \t\t\&quot;label\&quot;: \&quot;Tools\&quot;\r\n    \t},\r\n    \t{\r\n    \t\t\&quot;label\&quot;: \&quot;&amp;lt;i class=&apos;fas fa-clipboard-list&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n    \t\t\&quot;title\&quot;: \&quot;Config Property\&quot;,\r\n    \t\t\&quot;value\&quot;: \&quot;config/property\&quot;\r\n    \t},\r\n        {\r\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-sitemap&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n            \&quot;title\&quot; : \&quot;Update metric QDC table.\&quot;,\r\n            \&quot;value\&quot; : \&quot;update/metric/qdc\&quot;\r\n    \t},\r\n    \t{\r\n    \t\t\&quot;label\&quot;: \&quot;&amp;lt;i class=&apos;fas fa-tags&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n    \t\t\&quot;title\&quot;: \&quot;Update metric info table\&quot;,\r\n    \t\t\&quot;value\&quot;: \&quot;update/metric/info\&quot;\r\n        },\r\n\t\t{\r\n\t\t\t\&quot;label\&quot;: \&quot;&amp;lt;i class=&apos;fas fa-street-view&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n\t\t\t\&quot;title\&quot;: \&quot;Manage demo profiles.\&quot;,\r\n\t\t\t\&quot;value\&quot;: \&quot;manage/demo/profile\&quot;\r\n    \t},\r\n    \t{\r\n    \t\t\&quot;label\&quot;: \&quot;&amp;lt;i class=&apos;fas fa-broom&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n    \t\t\&quot;title\&quot;: \&quot;Clear cached Dashboard SDK models\&quot;,\r\n    \t\t\&quot;value\&quot;: \&quot;dbp/cache/clear\&quot;\r\n\t\t}\r\n\t],\r\n\t\&quot;#\&quot; : [\r\n        {\r\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-link&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n            \&quot;title\&quot; : \&quot;Revert URI of depedent Dashboard SDK models to user-based format.\&quot;,\r\n            \&quot;value\&quot; : \&quot;tool/revert-uri\&quot;\r\n    \t},\r\n        {\r\n            \&quot;label\&quot; : \&quot;&amp;lt;i class=&apos;fas fa-save&apos;&amp;gt;&amp;lt;/i&amp;gt;\&quot;,\r\n            \&quot;title\&quot; : \&quot;Force re-save of Dashboard SDK models to pick up changes in dependent models.\&quot;,\r\n            \&quot;value\&quot; : \&quot;tool/force-save\&quot;\r\n    \t}\r\n\t]\r\n}&quot;}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+    </Page>
+    <Script>
+      <Stores/>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id="node:2" type="LocalStore" label="Service Config Data" _undefined_title="" _undefined_originHeight="" width="130" height="160" x="680" y="389"/>
+      <Item id="node:4" type="Tile" label="Service Config Tile" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="120" y="160"/>
+      <Item id="node:5" type="UserScript" label="Get Dimension Values" _undefined_title="" originHeight="117" width="200" height="117" x="380" y="160">
+        <dynIn id="din:0" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Dimension Values (JSON)" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="event[]" label="Dimension Values (SQL)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:6" type="LocalStore" label="Dimension Values JSON" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="860" y="100"/>
+      <Item id="node:33" type="Tile" label="Action Bar" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="120" y="389"/>
+      <Item id="node:34" type="UserScript" label="Script 2" _undefined_title="" originHeight="117" width="160" height="177" x="380" y="389">
+        <dynIn id="din:0" type="event[]" label="Action" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="any" label="Options Plugin" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Services" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="event[]" label="Tool Logs" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:36" type="LocalStore" label="Dimension Values SQL" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="689" y="180"/>
+      <Item id="node:38" type="PortIn" label="Port IN 0" _undefined_title="" originHeight="117" width="130" height="177" x="120" y="589">
+        <dynOut id="dout:0" type="any" label="Config Plugin" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="Options Plugin" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:40" type="Widget" label="Tool Logs" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="680" y="568"/>
+      <Item id="node:42" type="UserScript" label="Script 3" _undefined_title="" originHeight="117" width="130" height="117" x="120" y="807">
+        <dynOut id="dout:0" type="event[]" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:43" type="LocalStore" label="Action Bar Data" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="380" y="807"/>
+      <Link srcId="node:38" srcPort="dout:1" tgtId="node:34" tgtPort="din:2"/>
+      <Link srcId="node:42" srcPort="dout:0" tgtId="node:43" tgtPort="in:0"/>
+      <Link srcId="node:5" srcPort="dout:1" tgtId="node:36" tgtPort="in:0"/>
+      <Link srcId="node:33" srcPort="out:0" tgtId="node:34" tgtPort="din:0"/>
+      <Link srcId="node:5" srcPort="dout:0" tgtId="node:6" tgtPort="in:0"/>
+      <Link srcId="node:4" srcPort="out:0" tgtId="node:5" tgtPort="din:0"/>
+      <Link srcId="node:34" srcPort="dout:0" tgtId="node:2" tgtPort="in:0"/>
+      <Link srcId="node:38" srcPort="dout:0" tgtId="node:34" tgtPort="din:1"/>
+      <Link srcId="node:34" srcPort="dout:1" tgtId="node:40" tgtPort="in:0"/>
+      <Input key="node:4/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#Main Tile&quot;,&quot;path&quot;:[&quot;Service Config&quot;],&quot;name&quot;:&quot;Main Tile&quot;}]"/>
+      <Input key="node:5/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:5/cfg:model/default" value="&quot;var CONTEXT_LABELS = {\n    \&quot;svc\&quot;    : \&quot;Service\&quot;,\n    \&quot;comp\&quot;   : \&quot;Sub-Service\&quot;,\n    \&quot;app\&quot;    : \&quot;Component\&quot;,\n    \&quot;metric\&quot; : \&quot;Metric\&quot;\n};\n\nfunction _formatDimValue(indent, dim)\n{\n    if (Array.isArray(dim.value) &amp;&amp; dim.value.length &gt; 0) {\n        if (dim.not == true) {\n            return indent + dim.name + \&quot; not in (&apos;\&quot; + dim.value.join(\&quot;&apos;,&apos;\&quot;) + \&quot;&apos;)\&quot;;\n        }\n        else {\n            return indent + dim.name + \&quot; in (&apos;\&quot; + dim.value.join(\&quot;&apos;,&apos;\&quot;) + \&quot;&apos;)\&quot;;\n        }\n    }\n    else if (typeof dim.value == \&quot;string\&quot;) {\n        if (dim.not == true) {\n            return indent + dim.name + \&quot; != &apos;\&quot; + dim.value + \&quot;&apos;\&quot;;\n        }\n        else {\n            return indent + dim.name + \&quot; = &apos;\&quot; + dim.value + \&quot;&apos;\&quot;;\n        }\n    }\n    else if (typeof dim.value == \&quot;number\&quot;) {\n        if (dim.not == true) {\n            return indent + dim.name + \&quot; != \&quot; + dim.value + \&quot;\&quot;;\n        }\n        else {\n            return indent + dim.name + \&quot; = \&quot; + dim.value + \&quot;\&quot;;\n        }\n    }\n    return \&quot;Unsupported type on \&quot; + dim.name;\n}\n\nfunction formatDimValues(dim)\n{\n    var buf = [];\n    if (dim.sql == true) {\n        if (dim.name != null) {\n            if (dim.not == true) {\n                buf.push(dim.name + \&quot; not in (\&quot; + dim.value + \&quot;)\&quot;);\n            }\n            else {\n                buf.push(dim.name + \&quot; in (\&quot; + dim.value + \&quot;)\&quot;);\n            }\n        }\n        else {\n            buf.push(dim.value);\n        }\n    }\n    else if (dim.or) {\n        buf.push(\&quot;OR (\&quot;);\n        dim.or.forEach(function(dim2) {\n            buf.push(_formatDimValue(\&quot;    \&quot;, dim2));\n        });\n        buf.push(\&quot;)\&quot;);\n    }\n    else if (dim.and) {\n        buf.push(\&quot;AND (\&quot;);\n        dim.and.forEach(function(dim2) {\n            buf.push(_formatDimValue(\&quot;    \&quot;, dim2));\n        });\n        buf.push(\&quot;)\&quot;);\n    }\n    else {\n        buf.push(_formatDimValue(\&quot;\&quot;, dim));\n    }\n    return buf.join(\&quot;\\\\n\&quot;);\n}\n\nif (port == \&quot;din:0\&quot;) {\n    var selection = getInput(port) || [];\n    if (selection.length == 1) {\n        var dimValuesJSON = selection[0][\&quot;dimValuesJSON\&quot;];\n        if (dimValuesJSON != null &amp;&amp; dimValuesJSON != \&quot;\&quot;) {\n            var result = [];\n            dimValuesJSON = JSON.parse(dimValuesJSON);\n            for (var i=0; i&lt;dimValuesJSON.length; i++) {\n                result.push({\n                    context : CONTEXT_LABELS[dimValuesJSON[i][\&quot;context\&quot;]] || dimValuesJSON[i][\&quot;context\&quot;],\n                    expr    : formatDimValues(dimValuesJSON[i]),\n                })\n            }\n            setOutput(\&quot;dout:0\&quot;, result);\n        }\n        else {\n            setOutput(\&quot;dout:0\&quot;, []);\n        }\n        var dimValuesSQL = selection[0][\&quot;dimValuesSQL\&quot;];\n        if (dimValuesSQL != null &amp;&amp; dimValuesSQL != \&quot;\&quot;) {\n            setOutput(\&quot;dout:1\&quot;, [{\n                value : dimValuesSQL\n            }]);\n        }\n        else {\n            setOutput(\&quot;dout:1\&quot;, []);\n        }\n    }\n}\n&quot;"/>
+      <Input key="node:5/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Dimension Values (JSON)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Dimension Values (SQL)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:5/cfg:schema/default" value="&quot;setOutputSchema(\&quot;dout:0\&quot;, [{\n    name  : \&quot;name\&quot;,\n    label : \&quot;Name\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;not\&quot;,\n    label : \&quot;Not\&quot;,\n    type  : \&quot;string\&quot;\n}, {\n    name  : \&quot;value\&quot;,\n    label : \&quot;Value\&quot;,\n    type  : \&quot;string\&quot;\n}]);\n\nsetOutputSchema(\&quot;dout:1\&quot;, [{\n    name  : \&quot;value\&quot;,\n    label : \&quot;Value\&quot;,\n    type  : \&quot;string\&quot;\n}]);&quot;"/>
+      <Input key="node:33/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#ActionBar&quot;,&quot;path&quot;:[&quot;Service Config&quot;],&quot;name&quot;:&quot;ActionBar&quot;}]"/>
+      <Input key="node:34/cfg:model/default" value="&quot;var CommonPlugin = Plugin(\&quot;Common\&quot;);\nvar ConfigPlugin = getInput(\&quot;din:1\&quot;);\nif (ConfigPlugin == null) return;\n\nvar DemoPlugin = Plugin(\&quot;Demo\&quot;);\nvar controller = this.axflow.config.controller;\n\nvar MODEL_PATHS = [\n    \&quot;/app/dbp/space/Charter Digital Operations/dbpm/Charter - Plugin v11\&quot;,\n    \&quot;/app/dbp/space/Charter Digital Operations/dbpm/Charter - Options Service v3\&quot;,\n    \&quot;/app/dbp/space/Charter Digital Operations/dbpm/Charter - Trend Analysis Service v4\&quot;,\n    \&quot;/app/dbp/space/Charter Digital Operations/dbpm/Charter - Config Service v2\&quot;,\n    \&quot;/app/dbp/space/Charter Digital Operations/dbpm/Charter - Dimension Analysis Service v5\&quot;,\n    \&quot;/app/dbp/space/Charter Digital Operations/dbpm/Charter - Incident Analysis Service v7\&quot;,\n    \&quot;/app/dbp/space/Charter Digital Operations/dbpm/Charter - Causal Analysis Service v2\&quot;,\n    \&quot;/app/dbp/space/Charter Digital Operations/dbpm/Charter - Anomaly Viewer Service v2\&quot;,\n];\n\nfunction fixupPluginPath(modelPaths, results, callback)\n{\n    if (modelPaths == null) {\n        modelPaths = MODEL_PATHS;\n        CommonPlugin.pbShowProgressBar(\&quot;tool/revert-uri\&quot;, \&quot;Fixup model URI format of dependent Dashboard SDK...\&quot;);\n        modelPaths.forEach(function(modelPath) {\n            CommonPlugin.pbShowProgressBar(\&quot;tool/revert-uri/\&quot;+modelPath, \&quot;--- \&quot; + modelPath);\n        });\n    }\n    if (results == null) {\n        results = [];\n    }\n    if (modelPaths.length == 0) {\n        CommonPlugin.pbHideProgressBar(\&quot;tool/revert-uri\&quot;);\n        callback(results);\n    }\n    else {\n        var modelPath = modelPaths.shift();\n        CommonPlugin.fixupDependentPluginPath(modelPath, function(response) {\n            if (response.status == \&quot;OK\&quot;) {\n                CommonPlugin.pbHideProgressBar(\&quot;tool/revert-uri/\&quot;+modelPath);\n                if (response.value.patched.length &gt; 0) {\n                    results.push({text:\&quot;Fixed Path: \&quot; + response.value.model});\n                    response.value.patched.forEach(function(msg) {\n                        results.push({text:\&quot;--- \&quot; + msg});\n                    });\n                }\n                else {\n                    results.push({text:\&quot;Skipped Path: \&quot; + response.value.model});\n                }\n            }\n            else {\n                results.push({text:\&quot;Error: \&quot; + response.error});\n            }\n            fixupPluginPath(modelPaths, results, callback);\n        });\n    }\n}\n\nfunction forceSavePlugin(modelPaths, results, callback)\n{\n    if (modelPaths == null) {\n        modelPaths = MODEL_PATHS;\n        CommonPlugin.pbShowProgressBar(\&quot;tool/force-save\&quot;, \&quot;Force re-save of Dashboard SDK to pick up changes in dependent models...\&quot;);\n        modelPaths.forEach(function(modelPath) {\n            CommonPlugin.pbShowProgressBar(\&quot;tool/force-save/\&quot;+modelPath, \&quot;--- \&quot; + modelPath);\n        });\n    }\n    if (results == null) {\n        results = [];\n    }\n    if (modelPaths.length == 0) {\n        CommonPlugin.pbHideProgressBar(\&quot;tool/force-save\&quot;);\n        callback(results);\n    }\n    else {\n        var modelPath = modelPaths.shift();\n        CommonPlugin.forceSavePluginModel(modelPath, function(response) {\n            if (response.status == \&quot;OK\&quot;) {\n                CommonPlugin.pbHideProgressBar(\&quot;tool/force-save/\&quot;+modelPath);\n                results.push({text:response.value});\n            }\n            else {\n                results.push({text:\&quot;Error: \&quot; + response.error});\n            }\n            forceSavePlugin(modelPaths, results, callback);\n        });\n    }\n}\n\nfunction resolveConflictedMetrics(metrics)\n{\n    var OptionsPlugin = getInput(\&quot;din:2\&quot;);\n    if (OptionsPlugin == null) return;\n    ConfigPlugin.popupMissingMetricInfoWidget(CommonPlugin, OptionsPlugin, controller, \&quot;Resolve Conflicts\&quot;, null, null, metrics, {}, function(selection) {\n        if (selection != null &amp;&amp; selection.length &gt; 0) {\n            CommonPlugin.pbShowProgressBar(\&quot;resolve/metric/qdc\&quot;, \&quot;Resolve conflicted metric QDC entries...\&quot;);\n            ConfigPlugin.updateMetricQdcConflicts(selection, function(response) {\n                if (response.status == \&quot;OK\&quot;) {\n                }\n                CommonPlugin.pbHideProgressBar(\&quot;resolve/metric/qdc\&quot;);\n            });\n        }\n    });\n}\n\nfunction editDemoProfile(demoProfile)\n{\n    var buttonDefs = [{\n        name     : \&quot;export\&quot;,\n        label    : \&quot;Export\&quot;,\n        tooltip  : \&quot;Export demo profile.\&quot;,\n        callback : function(widget, evt) {\n            DemoPlugin.exportDemoProfile(function(response) {\n                if (response.status == \&quot;OK\&quot;) {\n                    var uuid = response.value;\n                    window.open(\&quot;/vitria-oi/rest/app/dojoclient/user/*/*/DemoProfile.json?op=downloadcsv&amp;uid=\&quot;+uuid);\n                }\n            });\n        },\n    }, {\n        name     : \&quot;import\&quot;,\n        label    : \&quot;Import\&quot;,\n        tooltip  : \&quot;Import demo profile.\&quot;,\n        callback : function(widget, evt) {\n            CommonPlugin.uploadFile([\&quot;application/json\&quot;], false, function(data) {\n                DemoPlugin.importDemoProfile(data.uid, function(response) {\n                    if (response.status == \&quot;OK\&quot; &amp;&amp; response.value != null) {\n                        widget._editor.setModel(response.value);\n                    }\n                });\n            });\n        },\n    }];\n    DemoPlugin.popupDemoProfile(CommonPlugin, controller, \&quot;Manage Demo Profiles\&quot;, null, null, demoProfile, null, function(profile) {\n        DemoPlugin.saveDemoProfile(profile, function(response) {\n        });\n    }, buttonDefs);\n}\n\nfunction getServiceConfigData()\n{\n    CommonPlugin.pbShowProgressBar(\&quot;getServiceConfigAsRecords\&quot;, \&quot;Loading system model...\&quot;);\n    ConfigPlugin.getServiceConfigAsRecords(function(response2) {\n        if (response2.status == \&quot;OK\&quot;) {\n            setOutput(\&quot;dout:0\&quot;, response2.value);\n        }\n        CommonPlugin.pbHideProgressBar(\&quot;getServiceConfigAsRecords\&quot;);\n    });\n}\n\nif (port == null || port == \&quot;din:1\&quot;) {\n    getServiceConfigData();\n}\nelse if (port == \&quot;din:0\&quot;) {\n    var actions = getInput(\&quot;din:0\&quot;);\n    var ConfigPlugin = getInput(\&quot;din:1\&quot;);\n    for (var i=0; i&lt;actions.length; i++) {\n        var action = actions[i];\n        if (action.type == \&quot;toolbarSelect\&quot;) {\n            switch (action.value) {\n                case \&quot;download/json\&quot;:\n                    ConfigPlugin.downloadServiceConfigAsJSON(function(response) {\n                        if (response.status == \&quot;OK\&quot;) {\n                            var uuid = response.value;\n                            window.open(\&quot;/vitria-oi/rest/app/dojoclient/user/*/*/ServiceConfig.json?op=downloadcsv&amp;uid=\&quot;+uuid);\n                        }\n                    });\n                    break;\n                case \&quot;download/csv\&quot;:\n                    ConfigPlugin.downloadServiceConfigAsCSV(function(response) {\n                        if (response.status == \&quot;OK\&quot;) {\n                            var uuid = response.value;\n                            window.open(\&quot;/vitria-oi/rest/app/dojoclient/user/*/*/ServiceConfig.csv?op=downloadcsv&amp;uid=\&quot;+uuid);\n                        }\n                    });\n                    break;\n                case \&quot;cache/delete\&quot;:\n                    message(\&quot;confirm\&quot;, \&quot;Confirmation Required\&quot;, \&quot;Clear cached system model?\&quot;, function(ok) {\n                        if (ok == true) {\n                            ConfigPlugin.deleteCache(function(response) {\n                                if (response.status == \&quot;OK\&quot;) {\n                                    message(\&quot;growl\&quot;, \&quot;Info\&quot;, \&quot;Cache deleted.\&quot;, function(value) {\n                                        // value is always true... continue\n                                    });\n                                    ConfigPlugin.getServiceConfigAsRecords(function(response2) {\n                                        if (response2.status == \&quot;OK\&quot;) {\n                                            setOutput(\&quot;dout:0\&quot;, response2.value);\n                                        }\n                                    });\n                                }\n                            });\n                        }\n                    });\n                    break;\n                case \&quot;config/refresh\&quot;:\n                    getServiceConfigData();\n                    break;\n                case \&quot;config/property\&quot;:\n                    CommonPlugin.pbShowProgressBar(\&quot;config/property\&quot;, \&quot;Retrieving config properties...\&quot;);\n                    ConfigPlugin.getConfigProperty(null, false, function(response) {\n                        if (response.status == \&quot;OK\&quot;) {\n                            var description = [\n                                \&quot;&lt;div style=&apos;background-color: #f2f2f2f2; width: calc(100% - 20px); padding: 10px; white-space: normal; line-height: 2em;&apos;&gt;\&quot;,\n                                \&quot;Configuration properties used to affect the affect the general operations of the system.\&quot;,\n                                \&quot;Some properties are used by specific modules while others apply across many different modules.\&quot;,\n                                \&quot;Be cautious when changing config properties and make sure you understand its implications before making changes.\&quot;,\n                                \&quot;&lt;div&gt;\&quot;,\n                            ];\n                            ConfigPlugin.editConfigProperty(CommonPlugin, controller, response.value, description, function(values) {\n                                var properties = [];\n                                for (var name in values) {\n                                    properties.push({\n                                        name  : name,\n                                        value : values[name]\n                                    });\n                                }\n                                CommonPlugin.pbShowProgressBar(\&quot;config/property/update\&quot;, \&quot;Saving config properties...\&quot;);\n                                ConfigPlugin.setConfigProperty(properties, function(response) {\n                                    if (response.status == \&quot;OK\&quot;) {\n                                        message(\&quot;growl\&quot;, \&quot;Success\&quot;, \&quot;Config property updated\&quot;, function(value) {\n                                            // do nothing\n                                        });\n                                    }\n                                    CommonPlugin.pbHideProgressBar(\&quot;config/property/update\&quot;);\n                                });\n                            }, [{\n                                name     : \&quot;ResetConfigProperty\&quot;,\n                                label    : \&quot;Reset Config Properties\&quot;,\n                                tooltip  : \&quot;Reset configuration properties to default values defined in solution model.\&quot;,\n                                callback : function(formDef, evt) {\n                                    CommonPlugin.pbShowProgressBar(\&quot;config/property/reset\&quot;, \&quot;Reset config properties...\&quot;);\n                                    ConfigPlugin.resetConfigProperty(function(response) {\n                                        if (response.status == \&quot;OK\&quot; &amp;&amp; response.value != null) {\n                                            CommonPlugin.updateFormWidget(formDef, response.value);\n                                            message(\&quot;growl\&quot;, \&quot;Success\&quot;, \&quot;Config property reset to defaults.\&quot;, function(value) {\n                                                // do nothing\n                                            });\n                                        }\n                                        CommonPlugin.pbHideProgressBar(\&quot;config/property/reset\&quot;);\n                                    });\n                                },\n                            }]);\n                        }\n                        CommonPlugin.pbHideProgressBar(\&quot;config/property\&quot;);\n                    });\n                    break;\n                case \&quot;update/metric/qdc\&quot;:\n                    message(\&quot;confirm\&quot;, \&quot;Confirmation Required\&quot;, \&quot;Update metric QDC table? If you do not understand the implication, please cancel by clicking &apos;No&apos;.\&quot;, function(ok) {\n                        if (ok) {\n                            CommonPlugin.pbShowProgressBar(\&quot;update/metric/qdc\&quot;, \&quot;Updating metric QDC table...\&quot;);\n                            ConfigPlugin.updateMetricQdcTable(function(response) {\n                                if (response.status == \&quot;OK\&quot;) {\n                                    CommonPlugin.pbHideProgressBar(\&quot;update/metric/qdc\&quot;);\n                                    var metrics = response.value;\n                                    if (metrics.length &gt; 0) {\n                                        // we have unresolved conflicts\n                                        resolveConflictedMetrics(metrics);\n                                    }\n                                }\n                            });\n                        }\n                        else {\n                            message(\&quot;growl\&quot;, \&quot;Action aborted\&quot;, \&quot;Metric QDC table not updated\&quot;, function(value) {\n                                // do nothing\n                            });\n                        }\n                    });\n                    break;\n                case \&quot;update/metric/info\&quot;:\n                    message(\&quot;confirm\&quot;, \&quot;Confirmation Required\&quot;, \&quot;Update metric info table? If you do not understand the implication, please cancel by clicking &apos;No&apos;.\&quot;, function(ok) {\n                        if (ok) {\n                            CommonPlugin.pbShowProgressBar(\&quot;update/metric/info\&quot;, \&quot;Updating metric info table...\&quot;);\n                            ConfigPlugin.updateMetricInfoTable(function(response) {\n                                if (response.status == \&quot;OK\&quot;) {\n                                    CommonPlugin.pbHideProgressBar(\&quot;update/metric/info\&quot;);\n                                }\n                            });\n                        }\n                        else {\n                            message(\&quot;growl\&quot;, \&quot;Action aborted\&quot;, \&quot;Metric info table not updated\&quot;, function(value) {\n                                // do nothing\n                            });\n                        }\n                    });\n                    break;\n                case \&quot;tool/revert-uri\&quot;:\n                    fixupPluginPath(null, null, function(result) {\n                        setOutput(\&quot;dout:1\&quot;, result);\n                    });\n                    break;\n                case \&quot;tool/force-save\&quot;:\n                    forceSavePlugin(null, null, function(result) {\n                        setOutput(\&quot;dout:1\&quot;, result);\n                    });\n                    break;\n                case \&quot;manage/demo/profile\&quot;:\n                    DemoPlugin.loadDemoProfile(function(response) {\n                        if (response.status == \&quot;OK\&quot;) {\n                            if (typeof response.value == \&quot;string\&quot;) {\n                                // JSON error in DEMO profile model\n                                // show in TEXT dialog for repair\n                                CommonPlugin.popupTextDialog(response.value, \&quot;Repair DEMO profile JSON\&quot;, 800, 600, true, function(text) {\n                                    editDemoProfile(JSON.parse(text));\n                                }, \&quot;OK\&quot;, {\n                                    \&quot;white-space\&quot;:\&quot;normal\&quot;,\n                                });\n                            }\n                            else {\n                                editDemoProfile(response.value);\n                            }\n                        }\n                    });\n                    break;\n                case \&quot;dbp/cache/clear\&quot;:\n                    message(\&quot;confirm\&quot;, \&quot;Confirmation Required\&quot;, \&quot;Clear cached Dashboard SDK models?\&quot;, function(ok) {\n                        if (ok == true) {\n                            var url = \&quot;/vitria-oi/rest/app/dbp/user/vtbaadmin/dbpm/*\&quot;;\n                            var params = {\n                                op : \&quot;clearCache\&quot;,\n                            };\n                            GET(url, params, function(response) {\n                                // do nothing\n                            });\n                        }\n                    });\n                    break;\n            }\n        }\n    }\n}\n&quot;"/>
+      <Input key="node:34/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Services&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Tool Logs&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:34/cfg:schema/default" value="&quot;var fields = \&quot;svcName,svcLabel,compName,compLabel,appName,appLabel,metricName,metricUoM,metricAggr,metricIsKey,isQuickAccess,isSynthetic,dimValuesSQL,dimValuesJSON\&quot;.split(\&quot;,\&quot;);\nvar schema = [];\nfields.forEach(function(field) {\n    schema.push({\n        name  : field,\n        label : field,\n        type  : \&quot;string\&quot;\n    })\n});\nsetOutputSchema(\&quot;dout:0\&quot;, schema);\n\nsetOutputSchema(\&quot;dout:1\&quot;, [{\n    name  : \&quot;text\&quot;,\n    label : \&quot;Text\&quot;,\n    type  : \&quot;string\&quot;\n}]);&quot;"/>
+      <Input key="node:34/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Action&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;change&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Options Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:38/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Config Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Options Plugin&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:40/cfg:widget/default" value="[{&quot;viewer&quot;:&quot;DataGrid&quot;,&quot;label&quot;:&quot;Data Grid&quot;,&quot;properties&quot;:{&quot;showHeader&quot;:&quot;disable&quot;,&quot;borderType&quot;:&quot;all&quot;,&quot;rowSpacing&quot;:&quot;5&quot;,&quot;columnResize&quot;:&quot;enable&quot;,&quot;columnReorder&quot;:&quot;disable&quot;,&quot;columnSortable&quot;:&quot;disable&quot;,&quot;dataExport&quot;:&quot;enable&quot;,&quot;pagination&quot;:&quot;disable&quot;,&quot;lockedColumns&quot;:&quot;0&quot;,&quot;highlightColor&quot;:&quot;#148AC4&quot;,&quot;hoverColor&quot;:&quot;#148AC4&quot;,&quot;selectionMode&quot;:&quot;single&quot;,&quot;showSummary&quot;:&quot;disable&quot;,&quot;lineWrapping&quot;:&quot;disable&quot;,&quot;autoSelectFirst&quot;:&quot;disable&quot;},&quot;schema&quot;:[{&quot;name&quot;:&quot;text&quot;,&quot;label&quot;:&quot;Text&quot;,&quot;type&quot;:&quot;string&quot;}]}]"/>
+      <Input key="node:40/cfg:width/default" value="800"/>
+      <Input key="node:42/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:42/cfg:model/default" value="&quot;var DemoPlugin = Plugin(\&quot;Demo\&quot;);\nDemoPlugin.enableDemoMode(function(response) {\n    if (response.status == \&quot;OK\&quot; &amp;&amp; response.value == true) {\n        DemoPlugin.getDemoProfile(function(response) {\n            if (response.status == \&quot;OK\&quot; &amp;&amp; response.value != null) {\n                var disables = [{\n                    \&quot;value\&quot;   : \&quot;update/metric/qdc\&quot;,\n                    \&quot;disable\&quot; : true,\n                }, {\n                    \&quot;value\&quot;   : \&quot;update/metric/info\&quot;,\n                    \&quot;disable\&quot; : true,\n                }, {\n                    \&quot;value\&quot;   : \&quot;config/migrate\&quot;,\n                    \&quot;disable\&quot; : true,\n                }];\n                setOutput(\&quot;dout:0\&quot;, disables);\n            }\n        });\n    }\n    else {\n        setOutput(\&quot;dout:0\&quot;, [{\n            \&quot;value\&quot;   : \&quot;manage/demo/profile\&quot;,\n            \&quot;display\&quot; : false,\n        }]);\n    }\n});\n&quot;"/>
+      <Input key="node:42/cfg:schema/default" value="&quot;setOutputSchema(\&quot;dout:0\&quot;, [{\n    name  : \&quot;value\&quot;,\n    label : \&quot;value\&quot;,\n    type  : \&quot;string\&quot;,\n}, {\n    name  : \&quot;disable\&quot;,\n    label : \&quot;disable\&quot;,\n    type  : \&quot;boolean\&quot;,\n}]);\n&quot;"/>
+      <Schema id="node:2/in:0">
+        <JSON value="{&quot;name&quot;:&quot;svcName&quot;,&quot;label&quot;:&quot;svcName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;svcLabel&quot;,&quot;label&quot;:&quot;svcLabel&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;compName&quot;,&quot;label&quot;:&quot;compName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;compLabel&quot;,&quot;label&quot;:&quot;compLabel&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;appName&quot;,&quot;label&quot;:&quot;appName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;appLabel&quot;,&quot;label&quot;:&quot;appLabel&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricName&quot;,&quot;label&quot;:&quot;metricName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricUoM&quot;,&quot;label&quot;:&quot;metricUoM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricAggr&quot;,&quot;label&quot;:&quot;metricAggr&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricIsKey&quot;,&quot;label&quot;:&quot;metricIsKey&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;isQuickAccess&quot;,&quot;label&quot;:&quot;isQuickAccess&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;isSynthetic&quot;,&quot;label&quot;:&quot;isSynthetic&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesSQL&quot;,&quot;label&quot;:&quot;dimValuesSQL&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesJSON&quot;,&quot;label&quot;:&quot;dimValuesJSON&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:2/out:0">
+        <JSON value="{&quot;name&quot;:&quot;svcName&quot;,&quot;label&quot;:&quot;svcName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;svcLabel&quot;,&quot;label&quot;:&quot;svcLabel&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;compName&quot;,&quot;label&quot;:&quot;compName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;compLabel&quot;,&quot;label&quot;:&quot;compLabel&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;appName&quot;,&quot;label&quot;:&quot;appName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;appLabel&quot;,&quot;label&quot;:&quot;appLabel&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricName&quot;,&quot;label&quot;:&quot;metricName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricUoM&quot;,&quot;label&quot;:&quot;metricUoM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricAggr&quot;,&quot;label&quot;:&quot;metricAggr&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricIsKey&quot;,&quot;label&quot;:&quot;metricIsKey&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;isQuickAccess&quot;,&quot;label&quot;:&quot;isQuickAccess&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;isSynthetic&quot;,&quot;label&quot;:&quot;isSynthetic&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesSQL&quot;,&quot;label&quot;:&quot;dimValuesSQL&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesJSON&quot;,&quot;label&quot;:&quot;dimValuesJSON&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:4/out:0">
+        <JSON value="{&quot;name&quot;:&quot;svcName&quot;,&quot;label&quot;:&quot;svcName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;svcLabel&quot;,&quot;label&quot;:&quot;svcLabel&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;compName&quot;,&quot;label&quot;:&quot;compName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;compLabel&quot;,&quot;label&quot;:&quot;compLabel&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;appName&quot;,&quot;label&quot;:&quot;appName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;appLabel&quot;,&quot;label&quot;:&quot;appLabel&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricName&quot;,&quot;label&quot;:&quot;metricName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricUoM&quot;,&quot;label&quot;:&quot;metricUoM&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricAggr&quot;,&quot;label&quot;:&quot;metricAggr&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricIsKey&quot;,&quot;label&quot;:&quot;metricIsKey&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isQuickAccess&quot;,&quot;label&quot;:&quot;isQuickAccess&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isSynthetic&quot;,&quot;label&quot;:&quot;isSynthetic&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesSQL&quot;,&quot;label&quot;:&quot;dimValuesSQL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesJSON&quot;,&quot;label&quot;:&quot;dimValuesJSON&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:4/out:1">
+        <JSON value="{&quot;name&quot;:&quot;svcName&quot;,&quot;label&quot;:&quot;svcName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;svcLabel&quot;,&quot;label&quot;:&quot;svcLabel&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;compName&quot;,&quot;label&quot;:&quot;compName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;compLabel&quot;,&quot;label&quot;:&quot;compLabel&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;appName&quot;,&quot;label&quot;:&quot;appName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;appLabel&quot;,&quot;label&quot;:&quot;appLabel&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricName&quot;,&quot;label&quot;:&quot;metricName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricUoM&quot;,&quot;label&quot;:&quot;metricUoM&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricAggr&quot;,&quot;label&quot;:&quot;metricAggr&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricIsKey&quot;,&quot;label&quot;:&quot;metricIsKey&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isQuickAccess&quot;,&quot;label&quot;:&quot;isQuickAccess&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isSynthetic&quot;,&quot;label&quot;:&quot;isSynthetic&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesSQL&quot;,&quot;label&quot;:&quot;dimValuesSQL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesJSON&quot;,&quot;label&quot;:&quot;dimValuesJSON&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:4/out:2">
+        <JSON value="{&quot;name&quot;:&quot;svcName&quot;,&quot;label&quot;:&quot;svcName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;svcLabel&quot;,&quot;label&quot;:&quot;svcLabel&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;compName&quot;,&quot;label&quot;:&quot;compName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;compLabel&quot;,&quot;label&quot;:&quot;compLabel&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;appName&quot;,&quot;label&quot;:&quot;appName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;appLabel&quot;,&quot;label&quot;:&quot;appLabel&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricName&quot;,&quot;label&quot;:&quot;metricName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricUoM&quot;,&quot;label&quot;:&quot;metricUoM&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricAggr&quot;,&quot;label&quot;:&quot;metricAggr&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricIsKey&quot;,&quot;label&quot;:&quot;metricIsKey&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isQuickAccess&quot;,&quot;label&quot;:&quot;isQuickAccess&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isSynthetic&quot;,&quot;label&quot;:&quot;isSynthetic&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesSQL&quot;,&quot;label&quot;:&quot;dimValuesSQL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesJSON&quot;,&quot;label&quot;:&quot;dimValuesJSON&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:4/out:3">
+        <JSON value="{&quot;name&quot;:&quot;svcName&quot;,&quot;label&quot;:&quot;svcName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;svcLabel&quot;,&quot;label&quot;:&quot;svcLabel&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;compName&quot;,&quot;label&quot;:&quot;compName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;compLabel&quot;,&quot;label&quot;:&quot;compLabel&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;appName&quot;,&quot;label&quot;:&quot;appName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;appLabel&quot;,&quot;label&quot;:&quot;appLabel&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricName&quot;,&quot;label&quot;:&quot;metricName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricUoM&quot;,&quot;label&quot;:&quot;metricUoM&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricAggr&quot;,&quot;label&quot;:&quot;metricAggr&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricIsKey&quot;,&quot;label&quot;:&quot;metricIsKey&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isQuickAccess&quot;,&quot;label&quot;:&quot;isQuickAccess&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isSynthetic&quot;,&quot;label&quot;:&quot;isSynthetic&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesSQL&quot;,&quot;label&quot;:&quot;dimValuesSQL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesJSON&quot;,&quot;label&quot;:&quot;dimValuesJSON&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:5/din:0">
+        <JSON value="{&quot;name&quot;:&quot;svcName&quot;,&quot;label&quot;:&quot;svcName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;svcLabel&quot;,&quot;label&quot;:&quot;svcLabel&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;compName&quot;,&quot;label&quot;:&quot;compName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;compLabel&quot;,&quot;label&quot;:&quot;compLabel&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;appName&quot;,&quot;label&quot;:&quot;appName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;appLabel&quot;,&quot;label&quot;:&quot;appLabel&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricName&quot;,&quot;label&quot;:&quot;metricName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricUoM&quot;,&quot;label&quot;:&quot;metricUoM&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricAggr&quot;,&quot;label&quot;:&quot;metricAggr&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricIsKey&quot;,&quot;label&quot;:&quot;metricIsKey&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isQuickAccess&quot;,&quot;label&quot;:&quot;isQuickAccess&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isSynthetic&quot;,&quot;label&quot;:&quot;isSynthetic&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesSQL&quot;,&quot;label&quot;:&quot;dimValuesSQL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesJSON&quot;,&quot;label&quot;:&quot;dimValuesJSON&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:5/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;not&quot;,&quot;label&quot;:&quot;Not&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:6/in:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;not&quot;,&quot;label&quot;:&quot;Not&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:6/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;not&quot;,&quot;label&quot;:&quot;Not&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:33/out:0">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:33/out:1">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:33/out:2">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:33/out:3">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:34/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;svcName&quot;,&quot;label&quot;:&quot;svcName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;svcLabel&quot;,&quot;label&quot;:&quot;svcLabel&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;compName&quot;,&quot;label&quot;:&quot;compName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;compLabel&quot;,&quot;label&quot;:&quot;compLabel&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;appName&quot;,&quot;label&quot;:&quot;appName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;appLabel&quot;,&quot;label&quot;:&quot;appLabel&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricName&quot;,&quot;label&quot;:&quot;metricName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricUoM&quot;,&quot;label&quot;:&quot;metricUoM&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricAggr&quot;,&quot;label&quot;:&quot;metricAggr&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;metricIsKey&quot;,&quot;label&quot;:&quot;metricIsKey&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;isQuickAccess&quot;,&quot;label&quot;:&quot;isQuickAccess&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;isSynthetic&quot;,&quot;label&quot;:&quot;isSynthetic&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesSQL&quot;,&quot;label&quot;:&quot;dimValuesSQL&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;dimValuesJSON&quot;,&quot;label&quot;:&quot;dimValuesJSON&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:34/din:0">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:5/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:36/in:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:36/out:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:34/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;text&quot;,&quot;label&quot;:&quot;Text&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:40/in:0">
+        <JSON value="{&quot;name&quot;:&quot;text&quot;,&quot;label&quot;:&quot;Text&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:40/out:0">
+        <JSON value="{&quot;name&quot;:&quot;text&quot;,&quot;label&quot;:&quot;Text&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:40/out:1">
+        <JSON value="{&quot;name&quot;:&quot;text&quot;,&quot;label&quot;:&quot;Text&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:42/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:43/in:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:43/out:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <DynInput id="node:5">
+        <Port id="din:0" type="event[]" label="Selection" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:34">
+        <Port id="din:0" type="event[]" label="Action" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="any" label="Config Plugin" evaluate="always" _isArray="true"/>
+        <Port id="din:2" type="any" label="Options Plugin" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynOutput id="node:5">
+        <Port id="dout:0" type="event[]" label="Dimension Values (JSON)" propagate="always"/>
+        <Port id="dout:1" type="event[]" label="Dimension Values (SQL)" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:34">
+        <Port id="dout:0" type="any" label="Services" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="event[]" label="Tool Logs" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:38">
+        <Port id="dout:0" type="any" label="Config Plugin" propagate="always"/>
+        <Port id="dout:1" type="any" label="Options Plugin" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:42">
+        <Port id="dout:0" type="event[]" label="Out(0)" propagate="always"/>
+      </DynOutput>
+      <Version id="node:2" version="2"/>
+      <Version id="node:4" version="1"/>
+      <Version id="node:5" version="2"/>
+      <Version id="node:6" version="2"/>
+      <Version id="node:33" version="1"/>
+      <Version id="node:34" version="2"/>
+      <Version id="node:36" version="2"/>
+      <Version id="node:38" version="1"/>
+      <Version id="node:40" version="1"/>
+      <Version id="node:42" version="2"/>
+      <Version id="node:43" version="2"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/user/via_common/dbpm/VIA - Common" alias="Common"/>
+      <DashboardPlugin uri="/app/dbp/space/another/dbpm/VIAOps - Demo Service" alias="Demo"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>

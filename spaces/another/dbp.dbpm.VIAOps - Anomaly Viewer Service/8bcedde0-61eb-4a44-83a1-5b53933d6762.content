@@ -1,0 +1,23 @@
+select
+    threshold_policy,
+    algorithm,
+    threshold_low, 
+    threshold_med, 
+    threshold_high,
+    warmup_threshold,
+    warmup_period,
+    cool_down_period,
+    min_call_deviation,
+    min_call_vol,
+    min_metric_deviation,
+    min_metric_vol,
+    med_threshold_period,
+    high_threshold_period,
+    med_call_deviation as med_call_vol_pct,
+    high_call_deviation as high_call_vol_pct
+from
+    viaops_incident_table
+where metric_id = '${metricID}'
+  and window = '5/5'
+  and algorithm in ('score', 'simple_threshold')
+  and threshold_policy in ('above', 'below')

@@ -1,0 +1,6 @@
+select ${dimension} as name, 
+    ${xExpression}, 
+    ${yExpression}
+    from viaops_user_mouse_event
+    where current_viewer = '${viewer}'
+    group by x, y, ${dimension}

@@ -1,0 +1,15 @@
+{
+  "contents": [{
+    "fileref": "ModelContentFile0",
+    "name": "default"
+  }],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:4fa80cae-ab79-41c0-850f-68c371d35cbf,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:48639379-e854-4da3-8f0b-ea5ec00a4f4e,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Base Service:e7ad0afd-5240-433e-8fa8-3954ddc76d38,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:1f9fcced-e444-4b19-8a27-1443cc9f85e5,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:7285ca1d-c841-4cca-896f-cd07dbccee55,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:2a793937-9e31-43d3-8fe2-6e17fd2e2bb9,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:1154c92a-2675-456c-8c15-db16cc620eac,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:9b73a67e-4e45-4292-8eb6-00577009f781,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:d6f413bd-2f49-499e-876a-fc7d49a4c343,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:0c5d5f13-e0b5-46db-8b74-f8cf1f98f6e8,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:49b47948-109f-49fc-80e1-63336770536e,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:f144a137-7c89-4615-8bc1-f8cc5b0b6198,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:bd1ce3aa-a029-440c-83a0-c67d4449e78f,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:9df1205e-2ee6-480f-8195-aa45576c0fd0,/app/dbp/space/VIA Digital Operations/dbpm/VIAOps - Config Audit Service:3cd5ee49-6714-433d-84ac-f45e2d79187d",
+    "__references__": "/app/dbp/space/another/dbpm/VIAOps - Base Service",
+    "modelStatus": "valid",
+    "name": "VIAOps - Operation Service"
+  }
+}

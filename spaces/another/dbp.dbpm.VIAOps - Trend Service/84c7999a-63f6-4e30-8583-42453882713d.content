@@ -1,0 +1,14 @@
+--- VIAOps - Trend Service > METRIC_CALL_SQL
+select
+    if(x._group_ is not null,x._group_,y._group_) as _group_,
+    if(x._data_ is not null,x._data_,y._data_) as _data_,
+    if(x._epoch_ is not null,x._epoch_,y._epoch_) as _epoch_,
+    if(x._time_ is not null,x._time_,y._time_) as _time_,
+    x._value1_ as _value1_,
+    x._baseline1_ as _baseline1_,
+    if(y._value2_ is not null,y._value2_,0) as _value2_,
+    if(y._baseline2_ is not null,y._baseline2_,0) as _baseline2_
+from (${metricSQL}) x
+full join (${callsSQL}) y
+on x._epoch_ = y._epoch_
+order by if(x._epoch_ is not null,x._epoch_,y._epoch_)
