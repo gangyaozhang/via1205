@@ -1,6 +1,7 @@
-<DashboardPluginModel description="Description of New Model 1" name="VIA - Tree Grid" is_init="false">
+<DashboardPluginModel description="Description of New Model 3" name="VIA - Tree Grid" is_init="false">
   <ModelInfo validated="true">
-    <Properties/>
+    <Properties>
+    </Properties>
     <Widgets>
       <Widget name="TreeGridRenderer" private="false">
         <PropertyText>
@@ -467,8 +468,10 @@
         </HtmlText>
       </Widget>
     </Widgets>
-    <Functions/>
-    <Services/>
+    <Functions>
+    </Functions>
+    <Services>
+    </Services>
     <Resources>
       <Resource uuid="0250e244-b460-43aa-80b4-ff2b2666c5cc" name="__Configs" type="text/plain" size="4261" private="true">
         <Description>
@@ -491,6 +494,7 @@
         </Description>
       </Resource>
     </Resources>
-    <Plugins/>
+    <Plugins>
+    </Plugins>
   </ModelInfo>
 </DashboardPluginModel>
