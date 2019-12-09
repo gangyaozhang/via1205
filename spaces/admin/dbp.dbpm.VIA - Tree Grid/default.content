@@ -2,6 +2,7 @@
   <ModelInfo validated="true">
     <Properties>
       <Property name='Property1' label='Property1' type='string' value='' constraints='' runtimeControl='true'/>
+      <Property name='Property2' label='Property2' type='string' _null_value='' constraints='' runtimeControl='true'/>
     </Properties>
     <Widgets>
       <Widget name="TreeGridRenderer" private="false">
