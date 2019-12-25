@@ -1,0 +1,10 @@
+<SparkModuleModel description="Description of New_Model_0" name="dddddd1" is_init="false">
+  <ModelInfo validated="true">
+    <Module><![CDATA[{"desc":"Description of New_Model_0","icon":"","version":"","backupDir":"","components":""}]]></Module>
+    <Files><![CDATA[[]]]></Files>
+    <Blocks>
+    </Blocks>
+    <UDFs>
+    </UDFs>
+  </ModelInfo>
+</SparkModuleModel>
