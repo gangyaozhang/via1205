@@ -1,0 +1,26 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile1",
+      "name": "TypeRegistry"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile2",
+      "name": "6ce62f45-86d7-4af1-a4f9-a1f6bc2df112"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "Description of New Model 0",
+    "_RESOURCE_Type": "bpmm",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "bpm_formerge"
+  }
+}
