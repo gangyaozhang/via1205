@@ -10,12 +10,7 @@
     <Services>
     </Services>
     <Resources>
-      <Resource uuid="4b984fb8-c231-4bb1-8b67-6de5f2cb1297" name="customResource" type="text/csv" size="0" private="false">
-        <Description>
-          <![CDATA[]]>
-        </Description>
-      </Resource>
-      <Resource uuid="a6903bc3-db8c-4938-8d7b-d5c0b501f7e7" name="customResource1" type="text/html" size="356827" private="false">
+      <Resource uuid="d43a1b63-5964-4c7c-85ee-493194559fb1" name="customResource" type="image/jpeg" size="1050762" private="false">
         <Description>
           <![CDATA[]]>
         </Description>
