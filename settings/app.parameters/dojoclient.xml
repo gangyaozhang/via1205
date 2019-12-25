@@ -55,8 +55,8 @@
   <parameter id="mobile.space.only" label="Show only @mobile space on mobile devices" value="false" type="boolean" group="others"/>
   <parameter value="true" groupLabel="Version Setting" group="version" type="boolean" label="Enable Version Control" id="version.manager.enabled"/>
   <parameter id="version.repo.autocommit" label="Auto-commit Model Change" value="false" type="boolean" group="version"/>
-  <parameter value="100" id="version.repo.update.frequency" label="Auto-Refresh of Local Repository (s)" type="int" constraints="min=30" group="version"/>
-  <parameter id="version.require.timeout" label="Require Lock Timout (s)" value="30" type="int" constraints="min=1" group="version"/>
+  <parameter value="100" group="version" constraints="min=30" type="int" label="Auto-Refresh of Local Repository (s)" id="version.repo.update.frequency"/>
+  <parameter value="40" group="version" constraints="min=1" type="int" label="Require Lock Timout (s)" id="version.require.timeout"/>
   <parameter id="version.wait.refresh.timeout" label="Wait Refresh Timeout (s)" value="60" type="int" constraints="min=1" group="version"/>
   <parameter value="Git" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="string" label="Repository Type" id="version.repo.type"/>
   <parameter value="https://github.com/gangyaozhang/via1205" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="string" label="Repository URL" id="version.repo.url"/>
