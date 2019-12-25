@@ -15,12 +15,17 @@
     {
       "fileref": "ModelContentFile3",
       "name": "b7084760-0adc-4ce1-8c2f-ea8340bd4b6c"
+    },
+    {
+      "fileref": "ModelContentFile4",
+      "name": "9a81cd9e-cf7e-4d8b-80a2-7d6a402624df"
     }
   ],
   "owner": "vtbaadmin",
   "properties": {
     "_RESOURCE_Description": "ggg\nffffd\ndddd\nddd",
     "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "9a81cd9e-cf7e-4d8b-80a2-7d6a402624df",
     "__references__": "",
     "modelStatus": "valid",
     "name": "dbk_formerge"
