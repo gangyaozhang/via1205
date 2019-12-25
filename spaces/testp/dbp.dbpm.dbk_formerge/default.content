@@ -30,6 +30,11 @@
           <![CDATA[]]>
         </Description>
       </Resource>
+      <Resource uuid="f637a652-d188-46fa-85ea-d604af670eb6" name="customResource4" type="text/plain" size="638278" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
     </Resources>
     <Plugins>
     </Plugins>
