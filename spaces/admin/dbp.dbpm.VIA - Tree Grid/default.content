@@ -1,4 +1,4 @@
-<DashboardPluginModel description="Description of New Model 7" name="VIA - Tree Grid" is_init="false">
+<DashboardPluginModel description="Description of New Model 8" name="VIA - Tree Grid" is_init="false">
   <ModelInfo validated="true">
     <Properties>
       <Property name='Property1' label='Property1' type='string' value='' constraints='' runtimeControl='true'/>
