@@ -5,7 +5,7 @@
   }],
   "owner": "vtbaadmin",
   "properties": {
-    "_RESOURCE_Description": "\"this is a new stream\"",
+    "_RESOURCE_Description": "\"this is a new stream\"\n'this a test'",
     "_RESOURCE_Type": "asm",
     "__references__": "",
     "com.vitria.as.references": "#",
