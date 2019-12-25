@@ -1,0 +1,21 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "a6903bc3-db8c-4938-8d7b-d5c0b501f7e7"
+    }
+  ],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "Description of New Model 0",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "4b984fb8-c231-4bb1-8b67-6de5f2cb1297,a6903bc3-db8c-4938-8d7b-d5c0b501f7e7",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "dbk_formerge"
+  }
+}
