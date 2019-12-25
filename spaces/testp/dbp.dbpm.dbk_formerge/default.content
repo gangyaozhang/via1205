@@ -35,6 +35,11 @@
           <![CDATA[]]>
         </Description>
       </Resource>
+      <Resource uuid="d6f1997b-8273-4a15-8b77-32ff1c4bb16a" name="customResource5" type="application/xml" size="497" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
     </Resources>
     <Plugins>
     </Plugins>

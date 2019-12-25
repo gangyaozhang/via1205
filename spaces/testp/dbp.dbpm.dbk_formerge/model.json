@@ -23,13 +23,17 @@
     {
       "fileref": "ModelContentFile5",
       "name": "f637a652-d188-46fa-85ea-d604af670eb6"
+    },
+    {
+      "fileref": "ModelContentFile6",
+      "name": "d6f1997b-8273-4a15-8b77-32ff1c4bb16a"
     }
   ],
   "owner": "vtbaadmin",
   "properties": {
     "_RESOURCE_Description": "ggg\nffffd\ndddd\nddd",
     "_RESOURCE_Type": "dbpm",
-    "__indexed_contents__": "9a81cd9e-cf7e-4d8b-80a2-7d6a402624df,f637a652-d188-46fa-85ea-d604af670eb6",
+    "__indexed_contents__": "9a81cd9e-cf7e-4d8b-80a2-7d6a402624df,f637a652-d188-46fa-85ea-d604af670eb6,d6f1997b-8273-4a15-8b77-32ff1c4bb16a",
     "__references__": "",
     "modelStatus": "valid",
     "name": "dbk_formerge"
