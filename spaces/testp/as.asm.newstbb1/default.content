@@ -1,0 +1,14 @@
+<ActivityStreamModel description="&quot;this is a new stream&quot;" name="newstbb1" timezone="Asia/Shanghai" daylight="false" is_init="false">
+  <ModelInfo validated="false">
+    <Samples>
+    </Samples>
+    <DeletedNamespaces>
+    </DeletedNamespaces>
+    <UserSchemas>
+    </UserSchemas>
+    <Views>
+    </Views>
+    <Markups>
+    </Markups>
+  </ModelInfo>
+</ActivityStreamModel>
