@@ -1,6 +1,6 @@
-<ActivityStreamModel description="&quot;this is a new stream&quot;&#x000A;&apos;this a test&apos;" name="newstbb1" timezone="Asia/Shanghai" daylight="false" is_init="false">
+<ActivityStreamModel description="&quot;this is a new stream&quot;&#x000A;&apos;this a test&apos;&#x000A;&lt;and&gt;test&lt;/and&gt;" name="newstbb1" timezone="Asia/Shanghai" daylight="false" is_init="false">
   <ModelInfo validated="false">
-    <DataSource category="undefined">
+    <DataSource category="undefined" untyped="false">
     </DataSource>
     <Samples>
     </Samples>
