@@ -1,4 +1,4 @@
-<DashboardPluginModel description="ggg" name="dbk_formerge" is_init="false">
+<DashboardPluginModel description="ggg&#x000A;ffffd&#x000A;dddd&#x000A;ddd" name="dbk_formerge" is_init="false">
   <ModelInfo validated="true">
     <Properties>
       <Property name='Property1' label='Property1' type='string' value='' constraints='' runtimeControl='true'/>

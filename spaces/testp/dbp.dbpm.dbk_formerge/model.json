@@ -19,7 +19,7 @@
   ],
   "owner": "vtbaadmin",
   "properties": {
-    "_RESOURCE_Description": "ggg",
+    "_RESOURCE_Description": "ggg\nffffd\ndddd\nddd",
     "_RESOURCE_Type": "dbpm",
     "__references__": "",
     "modelStatus": "valid",
