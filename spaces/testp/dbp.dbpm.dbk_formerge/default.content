@@ -15,6 +15,11 @@
           <![CDATA[hh]]>
         </Description>
       </Resource>
+      <Resource uuid="03434d53-6294-4aeb-82b5-f7771989b140" name="customResource1" type="application/pdf" size="631594" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
     </Resources>
     <Plugins>
     </Plugins>
