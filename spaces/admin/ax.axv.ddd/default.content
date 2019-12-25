@@ -1,4 +1,4 @@
-<AnalyticsExplorerView description="" name="ddd" is_init="false">
+<AnalyticsExplorerView description="fffff" name="ddd" is_init="false">
   <ModelInfo validated="true" nextPageId="2">
     <GlobalDSRSetting enabled="false">
     </GlobalDSRSetting>
@@ -26,7 +26,7 @@
       <Tile name="Tile2" title="Tile2" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="null" advancedDisable="false" allowFullscreen="false">
       </Tile>
     </Page>
-    <DataFlow showFooter="undefined">
+    <DataFlow showFooter="true">
       <Version type="Aggregate" version="1"/>
       <Version type="Columns" version="1"/>
       <Version type="DynPivot" version="1"/>
