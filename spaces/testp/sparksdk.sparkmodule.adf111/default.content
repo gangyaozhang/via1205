@@ -1,0 +1,21 @@
+<SparkModuleModel description="Description of New_Model_0" name="adf111" is_init="false">
+  <ModelInfo validated="true">
+    <Module><![CDATA[{"desc":"Description of New_Model_0","icon":"","version":"","backupDir":"","components":""}]]></Module>
+    <Files><![CDATA[[]]]></Files>
+    <Blocks>
+      <Block name="MyBlock" label="MyBlock"  enabled="true">
+        <Meta><![CDATA[{"name":"MyBlock","label":"MyBlock","desc":"","group":"Transform","displayOrder":1000,"image":"","inputMinCount":1,"inputMaxCount":1,"outputMinCount":1,"outputMaxCount":1,"acceptedSourceTypes":["RDD","DStream","DataFrame"],"outputType":"*","libraries":""}]]></Meta>
+        <Properties><![CDATA[[]]]></Properties>
+        <Controller>
+        </Controller>
+        <Generator type="undefined">
+          <Template>
+          </Template>
+        </Generator>
+        <I18N><![CDATA[{"default":{"block.label":"MyBlock","block.desc":""}}]]></I18N>
+      </Block>
+    </Blocks>
+    <UDFs>
+    </UDFs>
+  </ModelInfo>
+</SparkModuleModel>

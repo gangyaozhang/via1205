@@ -1,0 +1,14 @@
+{
+  "contents": [{
+    "fileref": "ModelContentFile0",
+    "name": "default"
+  }],
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "Description of New_Model_0",
+    "_RESOURCE_Type": "sparkmodule",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "adf111"
+  }
+}
