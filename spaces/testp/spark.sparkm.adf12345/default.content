@@ -1,0 +1,14 @@
+<DataPipeModel mode="streaming" name="New Model 0" description="Description of New Model 0">
+  <ModelInfo validated="false">
+    <Properties>
+    </Properties>
+    <Pipes>
+      <Pipe uuid="88b5a0e7-7bd3-4b8e-8ce7-129f63583748" name="Pipe1">
+      </Pipe>
+    </Pipes>
+    <Flows>
+      <Flow index="1000" uuid="Main" isNested="false" name="Main">
+      </Flow>
+    </Flows>
+  </ModelInfo>
+</DataPipeModel>
