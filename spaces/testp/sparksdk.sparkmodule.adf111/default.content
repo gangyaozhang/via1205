@@ -1,6 +1,6 @@
-<SparkModuleModel description="Description of New_Model_0" name="adf111" is_init="false">
+<SparkModuleModel description="ffff" name="adf111" is_init="false">
   <ModelInfo validated="true">
-    <Module><![CDATA[{"desc":"Description of New_Model_0","icon":"","version":"","backupDir":"","components":""}]]></Module>
+    <Module><![CDATA[{"desc":"ffff","icon":"","version":"","backupDir":"","components":""}]]></Module>
     <Files><![CDATA[[]]]></Files>
     <Blocks>
       <Block name="MyBlock" label="MyBlock"  enabled="true">
@@ -9,6 +9,8 @@
         <Controller>
         </Controller>
         <Generator type="undefined">
+          <Enrichment>
+          </Enrichment>
           <Template>
           </Template>
         </Generator>
