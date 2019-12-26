@@ -1,6 +1,6 @@
-<SparkModuleModel description="ffff1" name="adf111" is_init="false">
+<SparkModuleModel description="fffff" name="adf111" is_init="false">
   <ModelInfo validated="true">
-    <Module><![CDATA[{"desc":"ffff1","icon":"","version":"","backupDir":"","components":""}]]></Module>
+    <Module><![CDATA[{"desc":"fffff","icon":"","version":"","backupDir":"","components":""}]]></Module>
     <Files><![CDATA[[]]]></Files>
     <Blocks>
       <Block name="MyBlock" label="MyBlock"  enabled="true">
