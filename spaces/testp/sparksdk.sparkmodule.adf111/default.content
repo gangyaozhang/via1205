@@ -16,6 +16,9 @@
       </Block>
     </Blocks>
     <UDFs>
+      <UDF name="MyFunction" enabled="true">
+        <Meta><![CDATA[{"name":"MyFunction","enabled":true,"group":"Custom Functions","desc":"","libraries":"","qualifiedClass":"","method":"","result":"string","params":[]}]]></Meta>
+      </UDF>
     </UDFs>
   </ModelInfo>
 </SparkModuleModel>
