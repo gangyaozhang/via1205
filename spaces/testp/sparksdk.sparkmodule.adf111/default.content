@@ -1,6 +1,6 @@
-<SparkModuleModel description="ffff" name="adf111" is_init="false">
+<SparkModuleModel description="ffff1" name="adf111" is_init="false">
   <ModelInfo validated="true">
-    <Module><![CDATA[{"desc":"ffff","icon":"","version":"","backupDir":"","components":""}]]></Module>
+    <Module><![CDATA[{"desc":"ffff1","icon":"","version":"","backupDir":"","components":""}]]></Module>
     <Files><![CDATA[[]]]></Files>
     <Blocks>
       <Block name="MyBlock" label="MyBlock"  enabled="true">
@@ -19,7 +19,7 @@
     </Blocks>
     <UDFs>
       <UDF name="MyFunction" enabled="true">
-        <Meta><![CDATA[{"name":"MyFunction","enabled":true,"group":"Custom Functions","desc":"","libraries":"","qualifiedClass":"","method":"","result":"string","params":[]}]]></Meta>
+        <Meta><![CDATA[{"name":"MyFunction","enabled":true,"group":"Custom Functions","desc":"","libraries":"","qualifiedClass":"","method":"","result":"string","params":[],"label":0.028990062912117143}]]></Meta>
       </UDF>
     </UDFs>
   </ModelInfo>
